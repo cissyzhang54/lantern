@@ -7,8 +7,8 @@ const hbs = exphbs.create({});
 
 // set up Jade
 app.set('views', './views');
-app.engine('handlebars', hbs.engine);
-app.set('view engine', 'handlebars');
+app.engine('hbs', hbs.engine);
+app.set('view engine', 'hbs');
 
 import routes from "../shared/routes";
 
