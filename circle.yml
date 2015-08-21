@@ -1,0 +1,9 @@
+test:
+  post:
+    - git config --global user.name "circleci"
+    - git config --global user.email "peter.mouland@ft.com"
+machine:
+  timezone:
+    Europe/London
+  node:
+    version: v0.12.7

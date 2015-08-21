@@ -4,7 +4,7 @@
   "description": "Lantern - a data analytics platfor for the FT",
   "main": "src/server/server.js",
   "scripts": {
-    "test": "mocha",
+    "test": "mocha --compilers js:babel/register --recursive test/**/*.spec.js",
     "clean": "rm -rf lib",
     "watch-js": "./node_modules/.bin/babel src -d lib --experimental -w",
     "dev-server": "node lib/server/webpack",
@@ -29,6 +29,12 @@
     "nodemon": "^1.4.1",
     "react": "^0.13.3",
     "react-hot-loader": "^1.2.8",
-    "react-router": "^0.13.3"
+    "react-router": "^0.13.3",
+    "react-tools": "^0.13.3",
+    "testdom": "^1.1.0"
+  },
+  "devDependencies": {
+    "chai": "^3.2.0",
+    "jsdom": "^6.1.0"
   }
 }
