@@ -4,4 +4,9 @@ lib/
 public
 .env
 coverage/
+test/bin/*.jar
+test/nightwatch/*.txt
+test/nightwatch/report
+test/nightwatch/screenshots
+npm-debug.log.*
 npm-debug.log

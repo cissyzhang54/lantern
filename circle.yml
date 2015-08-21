@@ -1,7 +1,14 @@
 test:
+  pre:
+    - mkdir -p test/bin/
+    - wget http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar -O test/bin/selenium-server-standalone-2.47.1.jar
   post:
     - git config --global user.name "circleci"
     - git config --global user.email "peter.mouland@ft.com"
+general:
+  artifacts:
+    - test/nightwatch/report
+    - test/nightwatch/screenshots
 machine:
   timezone:
     Europe/London
