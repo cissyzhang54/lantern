@@ -12,6 +12,15 @@ app.set('view engine', 'hbs');
 
 import routes from "../shared/routes";
 
+app.get('/api/:category(article|topic|author)/:uuid', function (req, res) {
+  Router.run(routes, req.url, Handler => {
+    res.json({
+      uuid: req.params.uuid,
+      category: req.params.category
+      });
+  });
+});
+
 app.get('/*', function (req, res) {
   Router.run(routes, req.url, Handler => {
     let content = React.renderToString(<Handler />);
