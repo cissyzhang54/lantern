@@ -11,8 +11,9 @@ describe('Home component', function() {
   });
 
   it('should render the homepage', function() {
-    expect(home.props.children[0].type).to.equal('h1');
-    expect(home.props.children[1].type.name).to.equal('Search');
+    expect(home.props.children[0].type.name).to.equal('Link');
+    expect(home.props.children[1].type).to.equal('h1');
+    expect(home.props.children[2].type.name).to.equal('Search');
   });
 
 });

@@ -2,36 +2,47 @@ import express from "express";
 import exphbs from "express-handlebars";
 import React from "react";
 import Router from "react-router";
+import alt from "../shared/alt";
+import Iso from "iso";
+import config from "../shared/config";
+import dataPreloader from "./dataPreloader";
+
 const app = express();
 const hbs = exphbs.create({});
 
-// set up Jade
 app.set('views', './views');
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
-// setup the prod bundle server
 app.use(express.static('public'));
 
 
-// setup the api Router
+// Ready
+// ...setup the Routers
+import routes from "../shared/routes";
 import apiRouter from "./api-routes";
 app.use('/api/v0', apiRouter);
 
 
-// setup the React routes (frontend)
-import routes from "../shared/routes";
-app.get('/*', function (req, res) {
+//Steady
+// ....preload data for isomorphism
+app.use('/', dataPreloader);
+
+app.use(function (req, res) {
+
+  alt.bootstrap(JSON.stringify(res.locals.data || {}));
+  let iso = new Iso();
+
   Router.run(routes, req.url, Handler => {
-    let jsUrl = "//localhost:8081";
-    if (process.env.NODE_ENV === 'production') {
-      jsUrl = "";
-    }
     let content = React.renderToString(<Handler />);
-    res.render('index', { content: content , jsUrl: jsUrl});
+    iso.add(content, alt.flush());
+    res.render('index', { content: iso.render(), jsUrl: config.jsUrl });
   });
+
 });
 
-var server = app.listen(process.env.PORT || 3000, function () {
+
+//Go!!!
+var server = app.listen(config.port, function () {
   var host = server.address().address;
   var port = server.address().port;
 
