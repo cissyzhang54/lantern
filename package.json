@@ -5,6 +5,7 @@
   "main": "src/server/server.js",
   "scripts": {
     "test": "mocha --compilers js:babel/register --recursive test/**/*.spec.js",
+    "test-debug": "mocha --debug-brk --compilers js:babel/register --recursive test/**/*.spec.js",
     "clean": "rm -rf lib",
     "watch-js": "./node_modules/.bin/babel src -d lib --experimental -w",
     "dev-server": "node lib/server/webpack",
