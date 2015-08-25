@@ -9,8 +9,9 @@
     "clean": "rm -rf lib",
     "watch-js": "./node_modules/.bin/babel src -d lib --experimental -w",
     "dev-server": "node lib/server/webpack",
-    "start": "npm run build && nodemon lib/server/server",
-    "dev-start": "npm run build && npm run watch-js & npm run dev-server & npm run server",
+    "server": "nodemon lib/server/server",
+    "postinstall": "npm run build",
+    "start": "npm run watch-js & npm run dev-server & npm run server",
     "build": "npm run clean && ./node_modules/.bin/babel src -d lib --experimental"
   },
   "author": "Dario Villanueva",
