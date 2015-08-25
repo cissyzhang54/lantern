@@ -1,9 +1,9 @@
 let data = {
   article: {
     title: "some title",
-    pageViews: 22001,
-    timeOnPage: 170,
-    socialReaders: 876,
+    pageViews: (Math.random() * 1e5) | 0,
+    timeOnPage: (Math.random() * 1e3) | 0,
+    socialReaders: (Math.random() * 1e3) | 0,
     readTimes: makeTimes(),
     devices: makeDevices(),
     apps: makeApps()
@@ -33,17 +33,31 @@ function makeDevices() {
 }
 
 function makeApps() {
-  let x = Math.random();
-  let y = Math.random();
-  let z = Math.random();
-
-  let tot = x + y + z;
+  var sum = nRandomConstantSum(3, 100);
 
   return {
-    ftCom: (x/tot * 100) | 0,
-    webApp: (y/tot * 100) | 0,
-    next: (z/tot * 100) | 0
+    ftCom: sum[0],
+    webApp: sum[1],
+    next: sum[2]
   };
 }
+
+function nRandomConstantSum(n, sum){
+	var values = [0, sum];
+
+	for(var i=0; i<n-1; i++){
+		values.push( Math.random() * sum );
+	}
+
+	return values
+		.sort((a, b) => {return a-b;})
+		.reduce((previousValue, currentValue,i ,a) => {
+			if( i < (a.length - 1) ){
+				previousValue.push(a[i+1] - currentValue);
+			}
+		 	return previousValue;
+		}, []);
+}
+
 
 export default data;
