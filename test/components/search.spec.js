@@ -3,7 +3,7 @@ import React from 'react';
 import Search from '../../src/shared/components/Search';
 import createComponent from '../createComponent';
 
-describe('Home component', function() {
+describe('Search component', function() {
   let search;
 
   beforeEach(function() {
@@ -11,7 +11,9 @@ describe('Home component', function() {
   });
 
   it('should render the search field', function() {
-    expect(search.props.children.type).to.equal('input');
+    expect(search.props.children[0].type).to.equal('label');
+    expect(search.props.children[1].type).to.equal('br');
+    expect(search.props.children[2].type).to.equal('input');
   });
 
 });

@@ -17,3 +17,7 @@ export default class Logo extends React.Component {
         )
     }
 }
+
+Logo.defaultProps = {
+  src: "http://placehold.it/300x150"
+};

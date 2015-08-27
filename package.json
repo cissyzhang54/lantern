@@ -33,6 +33,7 @@
     "nodemon": "^1.4.1",
     "object-assign": "^4.0.1",
     "react": "^0.13.3",
+    "react-flexbox": "^2.0.2",
     "react-hot-loader": "^1.2.8",
     "react-router": "^0.13.3",
     "react-tools": "^0.13.3",

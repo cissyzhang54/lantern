@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import React from 'react';
-import Article from '../../src/shared/components/Article';
+import Article from '../../src/shared/handlers/Article';
 import createComponent from '../createComponent';
 
 describe('Article component', function() {
