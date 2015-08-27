@@ -12,8 +12,8 @@ describe('Article component', function() {
 
   it('should render an article', function() {
     const articleId = article.props;
-    expect(articleId.children[0].type).to.equal('h2');
-    expect(articleId.children[1].type).to.equal('h3');
+    expect(articleId.children[0].type).to.exists;
+    expect(articleId.children[1].type).to.equal('h2');
+    expect(articleId.children[2].type).to.equal('h3');
   });
-
 });
