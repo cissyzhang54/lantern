@@ -1,6 +1,8 @@
 let data = {
-  article: {
+    article: {
     title: "some title",
+    author: "Chris Evans",
+    published: "25-Aug-2015",
     pageViews: (Math.random() * 1e5) | 0,
     timeOnPage: (Math.random() * 1e3) | 0,
     socialReaders: (Math.random() * 1e3) | 0,

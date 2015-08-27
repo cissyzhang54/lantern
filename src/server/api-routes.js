@@ -6,7 +6,11 @@ import uuid from "uuid";
 let router = express.Router();
 router.use(bodyParser.json());
 
-router.get('/:category(articles|topics|authors)/:uuid', function (req, res) {
+router.get('/:category(articles|topics|authors)/:uuid', category);
+router.post('/:category(articles|topics|authors)/:uuid', category);
+router.post('/search', search);
+
+function category(req, res) {
   let obj;
 
   switch (req.params.category) {
@@ -22,12 +26,10 @@ router.get('/:category(articles|topics|authors)/:uuid', function (req, res) {
         category: req.params.category
       });
   }
+}
 
-});
-
-router.post('/search', function(req, res) {
+function search(req, res) {
   let obj;
-
   let query = req.body;
 
   res.json({
@@ -39,7 +41,6 @@ router.post('/search', function(req, res) {
       }
     ]
   });
-
-});
+}
 
 export default router;
