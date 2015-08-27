@@ -8,6 +8,6 @@ let configs = {
     default: configDefault
 };
 
-let config = assign(configDefault, process.env.NODE_ENV || 'default');
+let config = assign(configDefault, configs[(process.env.NODE_ENV || 'default')]);
 
 export default config;
