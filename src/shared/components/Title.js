@@ -7,9 +7,14 @@ var styles = {
 };
 
 export default class Title extends React.Component {
+
     render() {
         return (
             <h1 style={styles.title}>{this.props.title}</h1>
-        )
+        );
     }
 }
+
+Title.defaultProps = {
+  title: "Default Title"
+};

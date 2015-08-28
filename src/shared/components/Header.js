@@ -17,12 +17,6 @@ var styles = {
 export default class Header extends React.Component {
     constructor(props) {
         super(props);
-        this.propTypes = {
-          title: React.PropTypes.string.isRequired,
-          author: React.PropTypes.string.isRequired,
-          published: React.PropTypes.string.isRequired,
-          logoUrl: React.PropTypes.string.isRequired
-        };
     }
 
     render() {
@@ -38,3 +32,17 @@ export default class Header extends React.Component {
         );
     }
 }
+
+Header.defaultProps = {
+  title: "Default Title",
+  author: "Some author",
+  published: "2 days ago",
+  logoSrc: "http://placehold.it/300x150"
+};
+
+Header.propTypes = {
+  title: React.PropTypes.string.isRequired,
+  author: React.PropTypes.string.isRequired,
+  published: React.PropTypes.string.isRequired,
+  logoSrc: React.PropTypes.string.isRequired
+};

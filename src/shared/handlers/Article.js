@@ -1,7 +1,7 @@
 import React from 'react/addons';
 import { Link } from 'react-router';
 import connectToStores from 'alt/utils/connectToStores';
-import Header from "./Header";
+import Header from "../components/Header";
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
 

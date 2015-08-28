@@ -16,3 +16,7 @@ export default class InfoLabel extends React.Component {
         )
     }
 }
+
+InfoLabel.defaultProps = {
+  text: "I am a info label"
+};
