@@ -16,6 +16,8 @@ app.set('view engine', 'hbs');
 app.use(express.static('public'));
 app.use(express.static('src/server/resources'));
 
+delete process.env.BROWSER;
+
 // Ready
 // ...setup the Routers
 import routes from "../shared/routes";
