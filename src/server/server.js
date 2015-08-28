@@ -10,12 +10,11 @@ import dataPreloader from "./dataPreloader";
 const app = express();
 const hbs = exphbs.create({});
 
-app.set('views', './views');
+app.set('views', './src/server/views');
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
 app.use(express.static('src/server/resources'));
-
 
 // Ready
 // ...setup the Routers
