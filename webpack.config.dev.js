@@ -15,6 +15,11 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      "process.env": {
+        BROWSER: JSON.stringify(true)
+      }
+    })
   ],
   resolve: {
     extensions: ['', '.js']
