@@ -4,7 +4,9 @@ const comps = {
   header: require('../components/Header'),
   logo: require('../components/Logo'),
   search: require('../components/Search'),
-  singleMetric: require('../components/SingleMetric')
+  singleMetric: require('../components/SingleMetric'),
+  infoLabel: require('../components/InfoLabel'),
+  modifier: require('../components/Modifier')
 };
 
 export default class PlaygroundLoader extends React.Component {
