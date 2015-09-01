@@ -1,9 +1,10 @@
 import React from 'react/addons';
 import { Link } from 'react-router';
+import DocumentTitle from 'react-document-title';
 import connectToStores from 'alt/utils/connectToStores';
+
 import Header from "../components/Header";
 import Modifier from "../components/Modifier";
-
 import SingleMetric from "../components/SingleMetric";
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
@@ -34,8 +35,8 @@ class ArticleView extends React.Component {
   }
 
   render() {
-
-    return (
+    let title = (this.props.data) ? 'Lantern - ' + this.props.data.title : '';
+    return (<DocumentTitle title={title}>
       <div>
         <Header
             title={this.props.data ? this.props.data.title : 'loading'}
@@ -61,7 +62,7 @@ class ArticleView extends React.Component {
           <div>id: {this.props.data ? this.props.data.uuid : 'loading'}</div>
         </main>
       </div>
-    );
+    </DocumentTitle>);
   }
 }
 
