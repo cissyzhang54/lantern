@@ -1,34 +1,70 @@
 import React from 'react';
-import Title from './Title';
-import InfoLabel from './InfoLabel';
-import Logo from './Logo';
+import { Col, Row } from 'react-bootstrap';
 
-var styles = {
-    header : {
-        width: '100%',
-        'borderBottom': '1px solid #ccc'
+import responsiveStyles from '../utils/responsiveStyles';
+
+const componentStyles = [
+    {   mediaQuery: 'default',
+        title: {
+            margin: 0,
+            'text-align': 'center'
+        },
+        logo : {
+            'borderBottom': '1px solid #ccc'
+        },
+        header : {
+            'borderBottom': '1px solid #ccc'
+        },
+        titleContainer: {
+            'verticalAlign': 'middle'
+        },
+        text: {
+            color: '#666',
+            display: 'inline-block',
+            margin: 0
+        }
     },
-    titleContainer: {
-        'verticalAlign': 'middle',
-        display: 'inline-block'
+    {   mediaQuery: '(max-width: 550px)',
+        title: {
+            'font-size': '24px'
+        },
+        text: {
+            'font-size': '12px'
+        }
     }
-};
+];
 
 export default class Header extends React.Component {
     constructor(props) {
         super(props);
+        this.state = {
+            responsiveStyles : componentStyles[0]
+        };
+    }
+
+    componentDidMount() {
+        responsiveStyles.addListeners(this, componentStyles);
+    }
+
+    componentWillUnmount() {
+        responsiveStyles.removeListeners(this);
     }
 
     render() {
+        let styles = this.state.responsiveStyles;
+
         return (
-            <header style={styles.header}>
-                <Logo src={this.props.logoSrc} />
-                <div style={styles.titleContainer}>
-                  <Title title={this.props.title} />
-                  <InfoLabel text={this.props.author} position="left" />
-                  <InfoLabel text={this.props.published} position="right" />
-                </div>
-            </header>
+            <Row>
+                <header style={styles.header}  >
+                    <Col xs={12} >
+                        <div style={styles.titleContainer} >
+                          <h1 style={styles.title}>{this.props.title}</h1>
+                          <p style={styles.text}>{this.props.author}</p>
+                          <p style={styles.text} className="pull-right">{this.props.published}</p>
+                        </div>
+                    </Col>
+                </header>
+            </Row>
         );
     }
 }
@@ -36,13 +72,11 @@ export default class Header extends React.Component {
 Header.defaultProps = {
   title: "Default Title",
   author: "Some author",
-  published: "2 days ago",
-  logoSrc: "http://placehold.it/300x150"
+  published: "2 days ago"
 };
 
 Header.propTypes = {
   title: React.PropTypes.string.isRequired,
   author: React.PropTypes.string.isRequired,
-  published: React.PropTypes.string.isRequired,
-  logoSrc: React.PropTypes.string.isRequired
+  published: React.PropTypes.string.isRequired
 };

@@ -1,6 +1,6 @@
 import React from "react";
 import { RouteHandler, Link } from 'react-router';
-import View from 'react-flexbox';
+import { Col, Row } from 'react-bootstrap';
 
 
 export default class Playground extends React.Component {
@@ -13,14 +13,11 @@ export default class Playground extends React.Component {
     return (
       <div>
         <h2>Playground</h2>
-        <View row auto className="wrapper">
-          <View column width={1} className="sidebar" style={sidebarStyles}>
+        <Row>
+          <Col width={3} className="sidebar" style={sidebarStyles}>
             <ul>
               <li>
                 <Link to="/playground/header">Header</Link>
-              </li>
-              <li>
-                <Link to="/playground/infoLabel">Info Label</Link>
               </li>
               <li>
                 <Link to="/playground/logo">Logo</Link>
@@ -29,17 +26,14 @@ export default class Playground extends React.Component {
                 <Link to="/playground/search">Search</Link>
               </li>
               <li>
-                <Link to="/playground/title">Title</Link>
-              </li>
-              <li>
                 <Link to="/playground/singleMetric">Single Metric</Link>
               </li>
             </ul>
-          </View>
-          <View column width={4} className="stage">
+          </Col>
+          <Col width={9} className="stage">
             <RouteHandler/>
-          </View>
-        </View>
+          </Col>
+        </Row>
       </div>
     );
   }

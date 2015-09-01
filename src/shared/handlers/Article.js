@@ -38,25 +38,25 @@ class ArticleView extends React.Component {
             title={this.props.data ? this.props.data.title : 'loading'}
             author={this.props.data ? 'By: ' + this.props.data.author : 'loading'}
             published={this.props.data ? 'Date: ' + this.props.data.published : 'loading'}
-            logoSrc='http://pinsoftstudios.com/wp-content/uploads/2012/10/pie-chart-fi.jpg'
         />
-        <h2>Article View</h2>
-        <div>id: {this.props.data ? this.props.data.uuid : 'loading'}</div>
-        <SingleMetric
-          metric={this.props.pageViews}
-          comparitorMetric={8092}
-          metricType='integer'
-          label='Page Views'
-          size='large'
-        />
-        <SingleMetric
-          metric={this.props.socialReaders}
-          comparitorMetric={808}
-          metricType='integer'
-          label='Social Readers'
-          size='large'
+        <main>
+          <SingleMetric
+            metric={this.props.pageViews}
+            comparitorMetric={8092}
+            metricType='integer'
+            label='Page Views'
+            size='large'
           />
-        <div><Link to="/articles">&lt;&lt; Article List</Link></div>
+          <SingleMetric
+            metric={this.props.socialReaders}
+            comparitorMetric={808}
+            metricType='integer'
+            label='Social Readers'
+            size='large'
+            />
+          <div>id: {this.props.data ? this.props.data.uuid : 'loading'}</div>
+          <div><Link to="/articles">&lt;&lt; Article List</Link></div>
+        </main>
       </div>
     );
   }
