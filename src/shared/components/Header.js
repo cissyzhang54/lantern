@@ -7,16 +7,16 @@ const componentStyles = [
     {   mediaQuery: 'default',
         title: {
             margin: 0,
-            'textAlign': 'center'
+            textAlign: 'center'
         },
         logo : {
-            'borderBottom': '1px solid #ccc'
+            borderBottom: '1px solid #ccc'
         },
         header : {
-            'borderBottom': '1px solid #ccc'
+            borderBottom: '1px solid #ccc'
         },
         titleContainer: {
-            'verticalAlign': 'middle'
+            verticalAlign: 'middle'
         },
         text: {
             color: '#666',
@@ -24,12 +24,12 @@ const componentStyles = [
             margin: 0
         }
     },
-    {   mediaQuery: '(max-width: 550px)',
+    {   mediaQuery: '(max-width: 500px)',
         title: {
-            'fontSize': '24px'
+            fontSize: '24px'
         },
         text: {
-            'fontSize': '12px'
+            fontSize: '12px'
         }
     }
 ];

@@ -59,7 +59,6 @@ class ArticleView extends React.Component {
             size='large'
             />
           <div>id: {this.props.data ? this.props.data.uuid : 'loading'}</div>
-          <div><Link to="/articles">&lt;&lt; Article List</Link></div>
         </main>
       </div>
     );
