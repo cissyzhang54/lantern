@@ -31,6 +31,9 @@ export default class Playground extends React.Component {
               <li>
                 <Link to="/playground/title">Title</Link>
               </li>
+              <li>
+                <Link to="/playground/singleMetric">Single Metric</Link>
+              </li>
             </ul>
           </View>
           <View column width={4} className="stage">

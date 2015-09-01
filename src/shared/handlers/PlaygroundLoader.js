@@ -1,17 +1,12 @@
 import React from "react";
 
-import Logo from '../components/Logo';
-import InfoLabel from '../components/InfoLabel';
-import Search from '../components/Search';
-import Title from '../components/Title';
-
-
 const comps = {
   header: require('../components/Header'),
-  logo: Logo,
-  infoLabel: InfoLabel,
-  search: Search,
-  title: Title
+  logo: require('../components/Logo'),
+  infoLabel: require('../components/InfoLabel'),
+  search: require('../components/Search'),
+  title: require('../components/Title'),
+  singleMetric: require('../components/SingleMetric')
 };
 
 export default class PlaygroundLoader extends React.Component {

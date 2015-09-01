@@ -2,6 +2,8 @@ import React from 'react/addons';
 import { Link } from 'react-router';
 import connectToStores from 'alt/utils/connectToStores';
 import Header from "../components/Header";
+
+import SingleMetric from "../components/SingleMetric";
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
 
@@ -40,6 +42,20 @@ class ArticleView extends React.Component {
         />
         <h2>Article View</h2>
         <div>id: {this.props.data ? this.props.data.uuid : 'loading'}</div>
+        <SingleMetric
+          metric={this.props.pageViews}
+          comparitorMetric={8092}
+          metricType='integer'
+          label='Page Views'
+          size='large'
+        />
+        <SingleMetric
+          metric={this.props.socialReaders}
+          comparitorMetric={808}
+          metricType='integer'
+          label='Social Readers'
+          size='large'
+          />
         <div><Link to="/articles">&lt;&lt; Article List</Link></div>
       </div>
     );
