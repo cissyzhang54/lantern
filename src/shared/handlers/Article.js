@@ -2,10 +2,13 @@ import React from 'react/addons';
 import { Link } from 'react-router';
 import connectToStores from 'alt/utils/connectToStores';
 import Header from "../components/Header";
+import Modifier from "../components/Modifier";
 
 import SingleMetric from "../components/SingleMetric";
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
+
+
 
 class ArticleView extends React.Component {
 
@@ -39,6 +42,7 @@ class ArticleView extends React.Component {
             author={this.props.data ? 'By: ' + this.props.data.author : 'loading'}
             published={this.props.data ? 'Date: ' + this.props.data.published : 'loading'}
         />
+        <Modifier/>
         <main>
           <SingleMetric
             metric={this.props.pageViews}

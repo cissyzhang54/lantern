@@ -7,7 +7,7 @@ const componentStyles = [
     {   mediaQuery: 'default',
         title: {
             margin: 0,
-            'text-align': 'center'
+            'textAlign': 'center'
         },
         logo : {
             'borderBottom': '1px solid #ccc'
@@ -26,10 +26,10 @@ const componentStyles = [
     },
     {   mediaQuery: '(max-width: 550px)',
         title: {
-            'font-size': '24px'
+            'fontSize': '24px'
         },
         text: {
-            'font-size': '12px'
+            'fontSize': '12px'
         }
     }
 ];
