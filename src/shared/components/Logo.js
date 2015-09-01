@@ -3,9 +3,9 @@ import { Link } from 'react-router';
 
 var styles = {
     logo: {
-        width: '200px',
-        'min-width': '75px',
-        'verticalAlign': 'middle'
+        maxHeight: '3em',
+        minWidth: '75px',
+        verticalAlign: 'middle'
     },
     tagLine: {
         display: 'block'
@@ -17,7 +17,6 @@ export default class Logo extends React.Component {
         return (
           <Link to="/" >
             <img src='http://placehold.it/300x150' style={styles.logo}/>
-            <small style={styles.tagLine}>Analytics for FT</small>
           </Link>
         )
     }
