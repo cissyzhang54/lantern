@@ -2,6 +2,7 @@ import express from "express";
 import exphbs from "express-handlebars";
 import React from "react";
 import Router from "react-router";
+import DocumentTitle from 'react-document-title';
 import alt from "../shared/alt";
 import Iso from "iso";
 import config from "../shared/config";
@@ -37,7 +38,7 @@ app.use(function (req, res) {
   Router.run(routes, req.url, Handler => {
     let content = React.renderToString(<Handler />);
     iso.add(content, alt.flush());
-    res.render('index', { content: iso.render(), jsUrl: config.jsUrl });
+    res.render('index', { content: iso.render(), jsUrl: config.jsUrl, title: DocumentTitle.rewind() });
   });
 
 });

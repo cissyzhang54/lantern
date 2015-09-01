@@ -1,4 +1,5 @@
 import React from "react";
+import DocumentTitle from 'react-document-title';
 import { RouteHandler, Link } from 'react-router';
 import { Col, Row } from 'react-bootstrap';
 
@@ -10,7 +11,9 @@ export default class Playground extends React.Component {
       backgroundColor: '#ffa010'
     };
 
-    return (
+    let title = 'Lantern -  Playground';
+
+    return (<DocumentTitle title={title}>
       <div>
         <h2>Playground</h2>
         <Col className="sidebar" style={sidebarStyles}>
@@ -36,6 +39,6 @@ export default class Playground extends React.Component {
           <RouteHandler/>
         </Col>
       </div>
-    );
+    </DocumentTitle>);
   }
 }
