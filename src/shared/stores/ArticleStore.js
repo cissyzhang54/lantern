@@ -40,6 +40,8 @@ class ArticleStore {
         DataAPI.getArticleData(query)
             .then(function(data) {
                 ArticleActions.receiveData(data);
+            }).catch(function () {
+               alert('whoah!');
             })
     }
 
