@@ -1,12 +1,15 @@
 import express from 'express';
 import request from "superagent";
 import dataApiUtils from '../shared/utils/DataAPIUtils';
+import dotEnv from "dotenv";
+dotEnv.load();
 
 let router = express.Router();
+let apiKey = process.env.LANTERN_API_KEY;
 
 router.get('/articles/:uuid', (req, res, next) => {
 
-    dataApiUtils.getArticleData({uuid: req.params.uuid})
+    dataApiUtils.getArticleData({uuid: req.params.uuid}, apiKey)
         .then((data) => {
             res.locals.data = {
                 "ArticleStore": {

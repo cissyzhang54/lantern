@@ -7,6 +7,8 @@ import alt from "../shared/alt";
 import Iso from "iso";
 import config from "../shared/config";
 import dataPreloader from "./dataPreloader";
+import dotEnv from "dotenv";
+dotEnv.load();
 
 const app = express();
 const hbs = exphbs.create({});
@@ -23,14 +25,15 @@ delete process.env.BROWSER;
 // ...setup the Routers
 import routes from "../shared/routes";
 import apiRouter from "./api-routes";
-app.use('/api/v0', apiRouter);
-
+import authRouter from "./auth-router";
+app.use('/', authRouter);
+app.use('/api/v0', ensureApiAuthenticated, apiRouter);
 
 //Steady
 // ....preload data for isomorphism
-app.use('/', dataPreloader);
+app.use('/', ensureAuthenticated, dataPreloader);
 
-app.use(function (req, res) {
+app.use('/', ensureAuthenticated, function (req, res) {
 
   alt.bootstrap(JSON.stringify(res.locals.data || {}));
   let iso = new Iso();
@@ -51,3 +54,14 @@ var server = app.listen(config.port, function () {
 
   console.log('Example app listening at http://%s:%s', host, port);
 });
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) { return next(); }
+  req.session.gotoUrl = req.originalUrl;
+  res.redirect('/login');
+}
+
+function ensureApiAuthenticated(req, res, next) {
+  if (req.isAuthenticated() || req.query.apiKey == process.env.LANTERN_API_KEY) { return next(); }
+  res.sendStatus(401);
+}
