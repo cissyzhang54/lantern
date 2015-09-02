@@ -37,8 +37,8 @@ export default class Filters extends React.Component {
 
     var filters = fakeData.filters.map((f, i) => {
       return (
-        <Col sm={2} xs={6}>
-        <Filter name={f.name} options={f.options} key={i}/>
+        <Col sm={2} xs={6} key={i}>
+        <Filter name={f.name} options={f.options} />
         </Col>
       );
     });

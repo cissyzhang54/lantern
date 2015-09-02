@@ -67,7 +67,7 @@ export default class AppController extends React.Component {
     let rows = [];
     for (let i=0; i < numrows; i++) {
       rows.push(
-          <li style={styles.navitem}>
+          <li style={styles.navitem} key={i}>
             <Link to={navItems[i].link} style={styles.navlink}>{navItems[i].title}</Link>
           </li>);
     }
