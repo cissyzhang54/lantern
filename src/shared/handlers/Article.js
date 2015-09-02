@@ -5,10 +5,11 @@ import connectToStores from 'alt/utils/connectToStores';
 
 import Header from "../components/Header";
 import Modifier from "../components/Modifier";
+import LineChart from "../components/LineChart";
+
 import SingleMetric from "../components/SingleMetric";
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
-
 
 
 class ArticleView extends React.Component {
@@ -60,6 +61,11 @@ class ArticleView extends React.Component {
             size='large'
             />
           <div>id: {this.props.data ? this.props.data.uuid : 'loading'}</div>
+
+        <LineChart
+          data={this.props.data ? this.props.data.readTimes : []}
+          keys={['value']}
+          title="When did readers access the article?"/>
         </main>
       </div>
     </DocumentTitle>);

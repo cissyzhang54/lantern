@@ -1,6 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
-import data from "./fake_data";
+import fakeData from "./fake_data";
 import uuid from "uuid";
 
 let router = express.Router();
@@ -12,7 +12,8 @@ router.post('/search', search);
 
 function category(req, res) {
   let obj;
-
+  let data = fakeData();
+  
   switch (req.params.category) {
     case 'articles':
       // obj = Object.assign({}, {uuid: req.params.uuid}, data.article);

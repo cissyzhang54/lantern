@@ -33,6 +33,9 @@ export default class Playground extends React.Component {
             <li>
               <Link to="/playground/modifier">Modifier</Link>
             </li>
+            <li>
+              <Link to="/playground/lineChart">Line Chart</Link>
+            </li>
           </ul>
         </Col>
         <Col className="stage">
