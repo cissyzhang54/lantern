@@ -1,15 +1,18 @@
 let data = function() {
   return {
       article: {
-      title: "some title",
-      author: "Chris Evans",
-      published: "25-Aug-2015",
-      pageViews: (Math.random() * 1e5) | 0,
-      timeOnPage: (Math.random() * 1e3) | 0,
-      socialReaders: (Math.random() * 1e3) | 0,
-      readTimes: makeTimes(),
-      devices: makeDevices(),
-      apps: makeApps()
+    title: "some title",
+    author: "Chris Evans",
+    published: "25-Aug-2015",
+    pageViews: (Math.random() * 1e5) | 0,
+    timeOnPage: (Math.random() * 1e3) | 0,
+    socialReaders: (Math.random() * 1e3) | 0,
+    wordCount: (Math.random() * 1e3) | 0,
+    imageCount: (Math.random() * 10) | 0,
+    bodyLinksCount: (Math.random() * 10) | 0,
+    readTimes: makeTimes(),
+    devices: makeDevices(),
+    apps: makeApps()
     }
   }
 };
