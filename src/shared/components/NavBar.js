@@ -4,8 +4,8 @@ import { Link } from 'react-router';
 import responsiveStyles from '../utils/responsiveStyles';
 import Logo from '../components/Logo';
 
-var controllerStyles = [
-  {   mediaQuery: 'default',
+var controllerStyles = {
+  'default': {
     nav: {
       backgroundColor: '#f8f8f8',
       border: '1px solid transparent',
@@ -33,19 +33,18 @@ var controllerStyles = [
       display: 'block'
     }
   },
-  {
-    mediaQuery: '(max-width: 500px)',
+  '(max-width: 500px)' : {
     nav: {
       fontSize: '12px'
     }
   }
-];
+};
 
 export default class AppController extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      responsiveStyles : controllerStyles[0]
+      responsiveStyles : controllerStyles['default']
     };
   }
 

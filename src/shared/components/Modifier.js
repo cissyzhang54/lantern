@@ -5,6 +5,14 @@ import Comparator from "./Comparator";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
 
+const tags = [
+  "FT.com",
+  "UK",
+  "Business & Economy",
+  "Transport for London",
+  "Tanys Powley"
+];
+
 export default class Modifier extends React.Component {
 
   constructor(props) {
@@ -13,23 +21,8 @@ export default class Modifier extends React.Component {
 
   render() {
 
-    var tags = [
-      "FT.com",
-      "UK",
-      "Business & Economy",
-      "Transport for London",
-      "Tanys Powley"
-    ];
-
-    var style = {
-      'margin': '10px 0',
-      'paddingTop': '10px',
-      'borderTop': '1px solid #ccc',
-      'borderBottom': '1px solid #ccc'
-    };
-
     return (
-      <div style={style}>
+      <div>
         <Comparator tags={tags} />
         <Filters />
         <DateRange />

@@ -26,10 +26,10 @@ export default class Comparator extends React.Component {
     };
 
     return (<Row style={wrapperStyle}>
-      <Col xs={12} md={2}>
+      <Col xs={12} sm={2}>
         <div style={divStyle}>Comparator:</div>
       </Col>
-      <Col xs={12} md={10}>
+      <Col xs={12} sm={10}>
         {tags}
       </Col>
     </Row>);

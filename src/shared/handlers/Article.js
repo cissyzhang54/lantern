@@ -11,6 +11,11 @@ import SingleMetric from "../components/SingleMetric";
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
 
+const style = {
+  'margin': '10px 0',
+  'padding': '10px 0',
+  'borderBottom': '1px solid #ccc'
+};
 
 class ArticleView extends React.Component {
 
@@ -39,14 +44,18 @@ class ArticleView extends React.Component {
     let title = (this.props.data) ? 'Lantern - ' + this.props.data.title : '';
     return (<DocumentTitle title={title}>
       <div>
-        <Header
-            title={this.props.data ? this.props.data.title : 'loading'}
-            author={this.props.data ? 'By: ' + this.props.data.author : 'loading'}
-            published={this.props.data ? 'Date: ' + this.props.data.published : 'loading'}
-        />
-        <Modifier/>
+        <Row style={style}>
+          <Header
+              title={this.props.data ? this.props.data.title : 'loading'}
+              author={this.props.data ? 'By: ' + this.props.data.author : 'loading'}
+              published={this.props.data ? 'Date: ' + this.props.data.published : 'loading'}
+              />
+        </Row>
+        <Row  style={style}>
+          <Modifier/>
+        </Row>
         <main>
-          <Row>
+          <Row >
             <Col xs={12} sm={3} >
               <Col xs={4} sm={12} >
                 <SingleMetric metric={this.props.data ? this.props.data.wordCount : 0} metricType='integer' label='Article Wordcount' size='small' />
@@ -77,7 +86,6 @@ class ArticleView extends React.Component {
           <Row>
             <Col lg={12} >
               <div>id: {this.props.data ? this.props.data.uuid : 'loading'}</div>
-              <div><Link to="/articles">&lt;&lt; Article List</Link></div>
             </Col>
           </Row>
         </main>

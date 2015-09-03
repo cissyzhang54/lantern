@@ -3,9 +3,8 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import responsiveStyles from '../utils/responsiveStyles';
 import assign from 'object-assign';
 
-var componentStyles = [
-  {
-    mediaQuery: 'default',
+var componentStyles = {
+  'default': {
     large: {
       fontSize: '1.2em',
       margin: '1.2em',
@@ -18,7 +17,7 @@ var componentStyles = [
       fontSize: '0.8em',
       margin: '0.8em',
     },
-    singleMetric : {
+    singleMetric: {
       textAlign: 'center'
     },
     label: {
@@ -32,7 +31,7 @@ var componentStyles = [
       margin: '0 0 2px 0',
       fontSize: '1.5em'
     },
-    comparator : {
+    comparator: {
       display: 'block',
       fontSize: '0.6em'
     },
@@ -45,13 +44,12 @@ var componentStyles = [
       fontSize: '1.0em'
     }
   },
-    {
-      mediaQuery: '(max-width: 500px)',
-      comparator : {
-        display: 'inline-block'
-      }
+  '(max-width: 500px)': {
+    comparator: {
+      display: 'inline-block'
     }
-];
+  }
+};
 
 function getPercentageDifference (x , y) {
   if (x > y) {
@@ -63,13 +61,13 @@ function getPercentageDifference (x , y) {
 
 function checkSignClass (x) {
   if (x < 0) {
-    componentStyles[0].comparatorSymbol.color = 'red';
-    componentStyles[0].comparatorValue.color = 'red';
+    componentStyles['default'].comparatorSymbol.color = 'red';
+    componentStyles['default'].comparatorValue.color = 'red';
     return 'down';
   }
   else {
-    componentStyles[0].comparatorSymbol.color = 'green';
-    componentStyles[0].comparatorValue.color = 'green';
+    componentStyles['default'].comparatorSymbol.color = 'green';
+    componentStyles['default'].comparatorValue.color = 'green';
     return 'up';
   }
 }
@@ -120,7 +118,7 @@ export default class SingleMetric extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      responsiveStyles : componentStyles[0]
+      responsiveStyles : componentStyles['default']
     };
   }
 
@@ -156,7 +154,7 @@ export default class SingleMetric extends React.Component {
 
     return (
       <div className={'singleMetric'} style={assign(styles[this.props.size], styles.singleMetric)}>
-        <p style={styles.metric}>{metricValues.transformMetric}{comparatorHTML}</p>
+        <p style={styles.metric}>{metricValues.transformMetric} {comparatorHTML}</p>
         <h3 style={styles.label}>{this.props.label}</h3>
       </div>
     )

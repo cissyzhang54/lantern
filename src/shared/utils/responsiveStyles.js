@@ -1,23 +1,21 @@
-/*
+/* How To:
 
-How To:
 Step 1:
-Have a responseStyles array which contains objects of styling and a mediaQuery.
+ Have a responseStyles object which contains objects of styling named with a mediaQuery.
  i.e.
- const responsiveStyles = [
-     {   mediaQuery: 'default',
-         title: {
-            'text-align': 'center'
-         },
+ const responsiveStyles = {
+    'default': {
+         img: 'banner-large.jpg,
      },
-     {   mediaQuery: '(max-width: 550px)',
+    '(max-width: 550px)': {
+        img: 'banner-small.jpg,
          title: {
-            'font-size': '24px'
+            'font-size': '10px'
          }
      }
  ];
 
- Step 2:
+Step 2:
  Add the listeners once the component has mounted
  i.e.
 
@@ -25,7 +23,7 @@ Have a responseStyles array which contains objects of styling and a mediaQuery.
     responsiveStyleHandler.addListeners(this, responsiveStyles);
  }
 
- Step 3:
+Step 3:
  Don't forget to unmount those listeners
  i.e.
 
@@ -33,10 +31,11 @@ Have a responseStyles array which contains objects of styling and a mediaQuery.
     responsiveStyleHandler.removeListeners(this);
  }
 
- Step 4:
+Step 4:
  Your styles are available on the state
  i.e.
- let styles = this.state.responsiveStyle
+
+ let styles = this.state.responsiveStyles
  */
 import React from 'react';
 import assign from '../utils/ObjectAssignDeep';
@@ -44,7 +43,8 @@ import assign from '../utils/ObjectAssignDeep';
 function addListeners (component, responsiveStyles){
     let defaultStyle = {};
     let listeners = [];
-    responsiveStyles.forEach(function(style){
+    Object.keys(responsiveStyles).forEach(function(key){
+        let style = responsiveStyles[key];
         if (!style.mediaQuery || style.mediaQuery === 'default') return defaultStyle = style;
         let mq = window.matchMedia(style.mediaQuery);
         mq.addListener(mediaQueryChanged.bind(component, defaultStyle, style));

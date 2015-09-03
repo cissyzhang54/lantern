@@ -136,6 +136,13 @@ nav .active{
 
 
 /*# datepicker stuff*/
+.input-group-addon{
+  background: white!important;
+}
+.form-group {
+   margin-bottom: 10px;
+ }
+
 .DateRangePicker {
   display: inline-block;
   margin-bottom: 10px;
@@ -453,6 +460,10 @@ nav .active{
   width: 100%;
   z-index: 1;
 }
+
+
+
+
 
 /*-- Chart --*/
 .c3 svg {
