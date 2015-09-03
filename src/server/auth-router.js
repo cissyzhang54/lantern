@@ -4,6 +4,7 @@ import session, {MemoryStore} from "express-session";
 import {createClient as createRedisClient} from "redis";
 import RedisStore from "connect-redis";
 import {parse as parseUrl} from "url";
+import Logger from './logger';
 
 let router = express.Router();
 
@@ -40,6 +41,10 @@ router.get('/auth/google/callback',
         if (req.user && !endsWith(req.user.email, HOST_DOMAIN)) {
             res.sendStatus(403);
         }
+
+        let log = new Logger();
+        log.info('User Login: ' + req.user.email);
+
         let gotoUrl = req.session.gotoUrl || '/';
         req.session.gotoUrl = null;
         res.redirect(gotoUrl);

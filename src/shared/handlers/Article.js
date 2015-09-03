@@ -58,6 +58,12 @@ class ArticleView extends React.Component {
     ArticleStore.loadArticleData(this.props.query);
   }
 
+  componentDidMount() {
+    let analytics = require('../utils/analytics');
+    analytics.sendGAEvent('pageview');
+    analytics.trackScroll();
+  }
+
   render() {
     let data = this.props.data;
 

@@ -4,6 +4,11 @@ import { Link } from 'react-router';
 
 class ArticleList extends React.Component {
 
+  componentDidMount() {
+    let analytics = require('../utils/analytics');
+    analytics.sendGAEvent('pageview');
+  }
+
   render() {
     let title = 'Lantern -  Article List';
 

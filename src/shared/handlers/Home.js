@@ -6,6 +6,11 @@ import Loading from "../components/Loading";
 
 export default class Home extends React.Component {
 
+  componentDidMount() {
+    let analytics = require('../utils/analytics');
+    analytics.sendGAEvent('pageview');
+  }
+
   render () {
     let title = 'Lantern -  Search';
 
