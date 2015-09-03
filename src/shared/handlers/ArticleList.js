@@ -10,8 +10,7 @@ class ArticleList extends React.Component {
     return (<DocumentTitle title={title}>
       <div>
         <h2>Articles List</h2>
-        <div><Link to="/articles/1234">Article: 1234</Link></div>
-        <div><Link to="/articles/4321">Article: 4321</Link></div>
+        <div><Link to="/articles/0049a468-4be5-11e5-b558-8a9722977189">Private equity secondaries evolve with Palamon deal</Link></div>
       </div>
     </DocumentTitle>);
   }

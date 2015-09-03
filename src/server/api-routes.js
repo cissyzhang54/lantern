@@ -36,7 +36,6 @@ function category(req, res, next) {
         });
       break;
     default:
-      console.log('here!');
       res.json({
         uuid: req.params.uuid,
         category: req.params.category

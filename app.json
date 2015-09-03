@@ -33,9 +33,6 @@
     "ES_USER": {
       "required":true
     },
-    "ES_USER": {
-      "required":true
-    },
     "ES_INDEX_ROOT": {
       "required":true
     }

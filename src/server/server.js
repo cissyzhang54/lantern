@@ -1,6 +1,3 @@
-import dotEnv from "dotenv";
-dotEnv.load();
-
 import express from "express";
 import exphbs from "express-handlebars";
 import React from "react";
