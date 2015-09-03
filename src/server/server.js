@@ -30,17 +30,28 @@ app.use('/api/v0', apiRouter);
 // ....preload data for isomorphism
 app.use('/', dataPreloader);
 
+app.use('/status',function (req, res) {
+  res.sendStatus(200);
+  res.end();
+});
+
 app.use(function (req, res) {
 
   alt.bootstrap(JSON.stringify(res.locals.data || {}));
   let iso = new Iso();
 
-  Router.run(routes, req.url, Handler => {
+  Router.run(routes, req.url, (Handler, state) => {
+
+    let notfound = state.routes.filter(route => route.name === '404').length > 0;
     let content = React.renderToString(<Handler />);
     iso.add(content, alt.flush());
-    res.render('index', { content: iso.render(), jsUrl: config.jsUrl, title: DocumentTitle.rewind() });
-  });
 
+    if ( notfound ) {
+      res.status(404);
+    }
+    res.render('index', { content: iso.render(), jsUrl: config.jsUrl, title: DocumentTitle.rewind() });
+
+  });
 });
 
 
