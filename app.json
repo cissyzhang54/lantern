@@ -4,7 +4,25 @@
 
   },
   "env":{
-    "NODE_ENV": "production"
+    "NODE_ENV": "production",
+    "HEROKU_APP_NAME": {
+      "required": true
+    },
+    "OAUTH_CLIENT_ID": {
+      "required": true
+    },
+    "OAUTH_CLIENT_SECRET": {
+      "required": true
+    },
+    "LANTERN_API_KEY": {
+      "required": true
+    },
+    "SESSION_COOKIE_SECRET": {
+      "required": true
+    },
+    "HOST_DOMAIN": {
+      "required": true
+    }
   },
   "addons":[]
 }
