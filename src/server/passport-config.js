@@ -5,6 +5,7 @@ dotEnv.load();
 
 let GOOGLE_CLIENT_ID = process.env.OAUTH_CLIENT_ID;
 let GOOGLE_CLIENT_SECRET = process.env.OAUTH_CLIENT_SECRET;
+let HOST_URL = process.env.HOST_URL;
 
 let PassportWrapper = function() {};
 
@@ -30,7 +31,7 @@ PassportWrapper.prototype.create = function() {
     passport.use(new GoogleStrategy({
             clientID: GOOGLE_CLIENT_ID,
             clientSecret: GOOGLE_CLIENT_SECRET,
-            callbackURL: "http://localhost:3000/auth/google/callback"
+            callbackURL: HOST_URL + "/auth/google/callback"
         },
         function(accessToken, refreshToken, profile, done) {
             process.nextTick(function () {
