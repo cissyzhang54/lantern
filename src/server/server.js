@@ -1,3 +1,6 @@
+import dotEnv from "dotenv";
+dotEnv.load();
+
 import express from "express";
 import exphbs from "express-handlebars";
 import React from "react";
@@ -7,37 +10,31 @@ import alt from "../shared/alt";
 import Iso from "iso";
 import config from "../shared/config";
 import dataPreloader from "./dataPreloader";
-import dotEnv from "dotenv";
-dotEnv.load();
+import routes from "../shared/routes";
+import apiRouter from "./api-routes";
+import authRouter from "./auth-router";
 
+delete process.env.BROWSER;
 const app = express();
 const hbs = exphbs.create({});
 
+// Ready
+// ....setup the app
 app.set('views', './src/server/views');
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
 app.use(express.static('src/server/resources'));
 
-delete process.env.BROWSER;
-
-// Ready
-// ...setup the Routers
-import routes from "../shared/routes";
-import apiRouter from "./api-routes";
-import authRouter from "./auth-router";
-app.use('/', authRouter);
-app.use('/api/v0', ensureApiAuthenticated, apiRouter);
-
-//Steady
-// ....preload data for isomorphism
-app.use('/', ensureAuthenticated, dataPreloader);
-
+// Steady
+// ...setup the Routes
 app.use('/status',function (req, res) {
   res.sendStatus(200);
   res.end();
 });
-
+app.use('/', authRouter);
+app.use('/api/v0', ensureApiAuthenticated, apiRouter);
+app.use('/', ensureAuthenticated, dataPreloader);
 app.use('/', ensureAuthenticated, function (req, res) {
 
   alt.bootstrap(JSON.stringify(res.locals.data || {}));
