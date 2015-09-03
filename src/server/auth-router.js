@@ -1,13 +1,25 @@
 import express from "express";
 import PassportWrapper from "./passport-config"
-import session from "express-session";
+import session, {MemoryStore} from "express-session";
+import {createClient as createRedisClient} from "redis";
+import RedisStore from "connect-redis";
+import {parse as parseUrl} from "url";
 import dotEnv from "dotenv";
 dotEnv.load();
 
 let router = express.Router();
 
-let SESSION_COOKIE_SECRET = process.env.SESSION_COOKIE_SECRET;
-router.use(session({ secret: SESSION_COOKIE_SECRET, resave: false, saveUninitialized: false }));
+let sessionStore;
+if (process.env.USE_MEMORY_STORE === "true") {
+    sessionStore = new MemoryStore();
+} else {
+    let redisUrl = process.env.OPENREDIS_URL || "redis://:test@localhost:6379";
+    let redisClient = createRedisClient(redisUrl);
+    let redisStore = RedisStore(session);
+    sessionStore = new redisStore({ client: redisClient });
+}
+
+router.use(session({ secret: process.env.SESSION_COOKIE_SECRET, resave: false, saveUninitialized: true, store: sessionStore }));
 
 let passport = new PassportWrapper().create();
 router.use(passport.initialize());
