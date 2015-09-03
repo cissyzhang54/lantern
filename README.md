@@ -10,4 +10,6 @@ Required environmental variables:
 - OAUTH_CLIENT_SECRET
 - LANTERN_API_KEY
 - SESSION_COOKIE_SECRET
-- HOST_URL - for local development set to http://localhost:3000
+- HOST_URL - for local development set to `http://localhost:3000`
+- USE_MEMORY_STORE - `true` or `false` - whether to use local in memory session storage
+- OPENREDIS_URL - URL to Redis DB. Defaults to `redis://:test@localhost:6379` Ignored if USE_MEMORY_STORE set to true.
