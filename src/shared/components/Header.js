@@ -3,17 +3,11 @@ import { Col, Row } from 'react-bootstrap';
 
 import responsiveStyles from '../utils/responsiveStyles';
 
-const componentStyles = [
-    {   mediaQuery: 'default',
+const componentStyles = {
+    'default': {
         title: {
             margin: 0,
             textAlign: 'center'
-        },
-        logo : {
-            borderBottom: '1px solid #ccc'
-        },
-        header : {
-            borderBottom: '1px solid #ccc'
         },
         titleContainer: {
             verticalAlign: 'middle'
@@ -24,7 +18,7 @@ const componentStyles = [
             margin: 0
         }
     },
-    {   mediaQuery: '(max-width: 500px)',
+    '(max-width: 500px)': {
         title: {
             fontSize: '24px'
         },
@@ -32,13 +26,13 @@ const componentStyles = [
             fontSize: '12px'
         }
     }
-];
+};
 
 export default class Header extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            responsiveStyles : componentStyles[0]
+            responsiveStyles : componentStyles['default']
         };
     }
 
@@ -55,7 +49,7 @@ export default class Header extends React.Component {
 
         return (
             <Row>
-                <header style={styles.header}  >
+                <header style={styles.header} className="clearfix"  >
                     <Col xs={12} >
                         <div style={styles.titleContainer} >
                           <h1 style={styles.title}>{this.props.title}</h1>

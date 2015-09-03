@@ -6,21 +6,21 @@ import { Col, Row } from 'react-bootstrap';
 import Header from "../components/Header";
 import responsiveStyles from '../utils/responsiveStyles';
 
-const images = [
-  {   mediaQuery: 'default',
-    img: '404.png'
+const images = {
+  'default': {
+    img: '/404.png'
   },
-  {   mediaQuery: '(max-width: 500px)',
-    img: '404-small.png'
+  '(max-width: 500px)': {
+    img: '/404-small.png'
   }
-];
+};
 
 class Error404View extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      responsiveStyles : images[0]
+      responsiveStyles : images['default']
     };
   }
 

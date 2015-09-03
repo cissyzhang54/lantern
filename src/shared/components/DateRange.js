@@ -51,7 +51,8 @@ export default class DateRange extends React.Component {
       borderRadius: 3,
       marginLeft: -5,
       marginTop: -5,
-      padding: 10
+      padding: 10,
+      zIndex: 1
     };
 
     return (
@@ -62,15 +63,17 @@ export default class DateRange extends React.Component {
           </Col>
           <Col sm={4} xs={6}>
             <Input type="text"
+               bsSize='small'
               value={this.state.value ? this.state.value.start.format('LL') : null}
               readOnly={true}
-              label="Start Date"
+               addonBefore="Start Date"
               onClick={this.toggleRangePicker.bind(this)}
               placeholder="Start date"/>
           </Col>
           <Col sm={4} xs={6}>
             <Input type="text"
-              label="End Date"
+               bsSize='small'
+               addonBefore="End Date"
               value={this.state.value ? this.state.value.end.format('LL') : null}
               readOnly={true}
               onClick={this.toggleRangePicker.bind(this)}

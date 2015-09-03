@@ -3,17 +3,19 @@ import {Input} from "react-bootstrap";
 
 export default class Filter extends React.Component {
   render() {
-
-    var options = this.props.options.map((opt, i) => {
+    let options = this.props.options.map((opt, i) => {
       return (
         <option value={opt} key={i}>{opt}</option>
       );
     });
 
     return (<Input
+        labelClassName='small'
+        bsSize='small'
         type='select'
-        label={this.props.name}
-        placeholder={this.props.name}>
+        >
+        <option value='' >{this.props.name}</option>
+        <option value='' disabled>──────────</option>
         {options}
       </Input>);
   }

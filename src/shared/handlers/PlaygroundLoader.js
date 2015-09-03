@@ -5,7 +5,6 @@ const comps = {
   logo: require('../components/Logo'),
   search: require('../components/Search'),
   singleMetric: require('../components/SingleMetric'),
-  infoLabel: require('../components/InfoLabel'),
   modifier: require('../components/Modifier'),
   lineChart: require('../components/LineChart')
 };
