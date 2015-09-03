@@ -10,3 +10,4 @@ Required environmental variables:
 - OAUTH_CLIENT_SECRET
 - LANTERN_API_KEY
 - SESSION_COOKIE_SECRET
+- HOST_URL - for local development set to http://localhost:3000
