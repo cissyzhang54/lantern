@@ -31,6 +31,13 @@ var controllerStyles = {
       lineHeight: '3em',
       padding : '0 15px',
       display: 'block'
+    },
+    alpha:{
+      lineHeight: '3em',
+      padding : '0 15px',
+      display: 'block',
+      fontWeight: 800,
+      backgroundColor: '#F1C59B'
     }
   },
   '(max-width: 500px)' : {
@@ -70,6 +77,13 @@ export default class AppController extends React.Component {
             <Link to={navItems[i].link} style={styles.navlink}>{navItems[i].title}</Link>
           </li>);
     }
+
+    rows.push(
+      <li style={{float: 'right'}}>
+        <div style={styles.alpha}>ALPHA</div>
+      </li>
+    );
+
     return (
         <nav style={styles.nav} className="clearfix">
           <ul style={styles.navbar}>
