@@ -66,7 +66,7 @@ export default class AppController extends React.Component {
   render() {
     let styles = this.state.responsiveStyles;
     let navItems = [
-      { title:'Seach', link:'/'},
+      { title:'Search', link:'/'},
       { title: 'ArticleList', link:'/articles'}
     ];
     let numrows = navItems.length;

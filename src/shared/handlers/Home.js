@@ -10,12 +10,8 @@ export default class Home extends React.Component {
 
     return (<DocumentTitle title={title}>
       <div>
-      <h2>Home View</h2>
-      <Search/>
-      <ul>
-        <li><Link to="/articles">Article List</Link></li>
-        <li><Link to="/playground">Playground</Link></li>
-      </ul>
+        <h2 className="sr-only">Search</h2>
+        <Search/>
       </div>
     </DocumentTitle>);
   }

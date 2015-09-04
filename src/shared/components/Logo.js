@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import responsiveStyles from '../utils/responsiveStyles';
+import assign from '../utils/ObjectAssignDeep';
 
 var controllerStyles = {
   default: {
@@ -9,6 +10,13 @@ var controllerStyles = {
         minWidth: '75px',
         verticalAlign: 'middle',
         height: '100%'
+    },
+    logoLarge:{
+      display : 'block',
+      margin : '100px auto',
+      maxHeight: 'initial',
+      width : '256px',
+      height : '256px'
     },
     tagLine: {
         display: 'block'
@@ -51,10 +59,18 @@ export default class Logo extends React.Component {
 
   render() {
     let styles = this.state.responsiveStyles;
-
+    let optStyles = assign({}, styles);
+    let viewBox = "0 0 782.335 219"
+    let logoStyles = styles.logo;
+    if (this.props.iconOnly) optStyles.text.display = 'none'
+    if (this.props.large) {
+      viewBox = "0 0 219 219"
+      logoStyles = styles.logoLarge;
+    }
+    styles = assign({}, optStyles)
     return (
       <Link to="/" style={styles.link}>
-      <svg style={styles.logo} viewBox="0 0 782.335 219">
+      <svg style={logoStyles} viewBox={viewBox}>
       <g id="logo">
         <circle fill="#FFFFFF" stroke="#000000" strokeWidth="7" strokeMiterlimit="10" cx="109.5" cy="109.5" r="106"/>
         <g>
