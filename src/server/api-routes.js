@@ -20,7 +20,7 @@ function category(req, res, next) {
     case 'articles':
       const query = {
         uuid: req.params.uuid,
-        dateFrom: req.body.dateFrom || moment().add(-7, 'days').toISOString(),
+        dateFrom: req.body.dateFrom || moment().add(-2, 'weeks').toISOString(),
         dateTo: req.body.dateTo || moment().toISOString()
       };
       esClient(req.params.category, query)

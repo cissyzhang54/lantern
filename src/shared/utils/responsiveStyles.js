@@ -45,11 +45,14 @@ function addListeners (component, responsiveStyles){
     let listeners = [];
     Object.keys(responsiveStyles).forEach(function(key){
         let style = responsiveStyles[key];
-        if (!style.mediaQuery || style.mediaQuery === 'default') return defaultStyle = style;
-        let mq = window.matchMedia(style.mediaQuery);
+        if (key === 'default') {
+          defaultStyle = style;
+          return style;
+        }
+        let mq = window.matchMedia(key);
         mq.addListener(mediaQueryChanged.bind(component, defaultStyle, style));
         listeners.push(mq);
-        if (mq.matches) mediaQueryChanged.call(component, defaultStyle, style, {matches: true})
+        if (mq.matches) mediaQueryChanged.call(component, defaultStyle, style, {matches: true});
     });
     component.setState({listeners:listeners});
 }
