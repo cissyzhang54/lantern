@@ -13,6 +13,7 @@ The following keys all need to placed with corresponding values within a `.env` 
 - OAUTH_CLIENT_ID
 - OAUTH_CLIENT_SECRET
 - HOST_URL - for local development set to `http://localhost:3000`
+- HOST_DOMAIN - email host domain used to filter google emails
 
 #### Session Stores
 - SESSION_COOKIE_SECRET
@@ -23,4 +24,5 @@ The following keys all need to placed with corresponding values within a `.env` 
 - ES_HOST
 - ES_PORT
 - ES_USER
+- ES_PASS
 - ES_INDEX_ROOT
