@@ -23,7 +23,7 @@ export default class Modifier extends React.Component {
 
     return (
       <div>
-        <Comparator tags={tags} />
+        <Comparator tags={this.props.tags} />
         <Filters />
         <DateRange />
       </div>
@@ -31,3 +31,11 @@ export default class Modifier extends React.Component {
   }
 
 }
+
+Modifier.propTypes = {
+  tags: React.PropTypes.array.isRequired
+};
+
+Modifier.defaultProps = {
+  tags: ['one', 'two', 'three']
+};

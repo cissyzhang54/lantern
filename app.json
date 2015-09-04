@@ -23,6 +23,18 @@
     },
     "HOST_DOMAIN": {
       "required": true
+    },
+    "ES_HOST": {
+      "required":true
+    },
+    "ES_PORT": {
+      "required":true
+    },
+    "ES_USER": {
+      "required":true
+    },
+    "ES_INDEX_ROOT": {
+      "required":true
     }
   },
   "addons":[]

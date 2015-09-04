@@ -41,51 +41,53 @@ class ArticleView extends React.Component {
   }
 
   render() {
-    let title = (this.props.data) ? 'Lantern - ' + this.props.data.title : '';
+    let data = this.props.data;
+
+    let title = (data) ? 'Lantern - ' + data.article.title : '';
     return (<DocumentTitle title={title}>
       <div>
         <Row style={style}>
           <Header
-              title={this.props.data ? this.props.data.title : 'loading'}
-              author={this.props.data ? 'By: ' + this.props.data.author : 'loading'}
-              published={this.props.data ? 'Date: ' + this.props.data.published : 'loading'}
+              title={data ? data.article.title : 'loading'}
+              author={data ? 'By: ' + data.article.author : 'loading'}
+              published={data ? 'Published: ' + data.article.published_human : 'loading'}
               />
         </Row>
         <Row  style={style}>
-          <Modifier/>
+          <Modifier tags={data ? data.article.topics.concat(data.article.sections) : []}/>
         </Row>
         <main>
           <Row >
             <Col xs={12} sm={3} >
               <Col xs={4} sm={12} >
-                <SingleMetric metric={this.props.data ? this.props.data.wordCount : 0} metricType='integer' label='Article Wordcount' size='small' />
+                <SingleMetric metric={data ? data.article.wordCount : 0} metricType='integer' label='Article Wordcount' size='small' />
               </Col>
               <Col xs={4} sm={12} >
-                <SingleMetric metric={this.props.data ? this.props.data.imageCount : 0} metricType='integer' label='Images' size='small' />
+                <SingleMetric metric={data ? data.article.imageCount : 0} metricType='integer' label='Images' size='small' />
               </Col>
               <Col xs={4} sm={12} >
-                <SingleMetric metric={this.props.data ? this.props.data.bodyLinksCount : 0} metricType='integer' label='Body Links' size='small' />
+                <SingleMetric metric={data ? data.article.bodyLinksCount : 0} metricType='integer' label='Body Links' size='small' />
               </Col>
             </Col>
             <Col xs={12} sm={9} >
               <Col xs={12} sm={4} >
-                <SingleMetric metric={this.props.data ? this.props.data.timeOnPage : 0} comparatorMetric={2} metricType='time' label='Time on Page' size='large' />
+                <SingleMetric metric={data ? data.article.timeOnPage : 0} comparatorMetric={2} metricType='time' label='Time on Page' size='large' />
               </Col>
               <Col xs={12} sm={4} >
-                <SingleMetric metric={this.props.data ? this.props.data.pageViews : 0} comparatorMetric={8092} metricType='integer' label='Page Views' size='large' />
+                <SingleMetric metric={data ? data.article.pageViews : 0} comparatorMetric={8092} metricType='integer' label='Page Views' size='large' />
               </Col>
               <Col xs={12} sm={4} >
-                <SingleMetric metric={this.props.data ? this.props.data.socialReaders : 0} comparatorMetric={808} metricType='integer' label='Social Readers' size='large' />
+                <SingleMetric metric={data ? data.article.socialReaders : 0} comparatorMetric={808} metricType='integer' label='Social Readers' size='large' />
               </Col>
             </Col>
           </Row>
           <LineChart
-            data={this.props.data ? this.props.data.readTimes : []}
+            data={data ? data.article.readTimes : []}
             keys={['value']}
             title="When did readers access the article?"/>
           <Row>
             <Col lg={12} >
-              <div>id: {this.props.data ? this.props.data.uuid : 'loading'}</div>
+              <div>id: {data ? data.article.uuid : 'loading'}</div>
             </Col>
           </Row>
         </main>

@@ -23,7 +23,7 @@ class ArticleStore {
 
     update(param, updates) {
         if(query[param] && updates){
-            query[param] = assign(query[param], updates)
+            query[param] = assign(query[param], updates);
         }
     }
 
@@ -42,7 +42,7 @@ class ArticleStore {
                 ArticleActions.receiveData(data);
             }).catch(function () {
                alert('whoah!');
-            })
+            });
     }
 
     addFilter(filter) {
