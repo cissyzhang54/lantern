@@ -1,13 +1,13 @@
 import React from 'react/addons';
 import { Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
-import connectToStores from 'alt/utils/connectToStores';
-import Header from "../components/Header";
 import { Col, Row } from 'react-bootstrap';
+import connectToStores from 'alt/utils/connectToStores';
+
+import Header from "../components/Header";
 import Modifier from "../components/Modifier";
 import LineChart from "../components/LineChart";
 import Loading from "../components/Loading";
-
 import SingleMetric from "../components/SingleMetric";
 import ArticleStore from '../stores/ArticleStore';
 import QueryStore from '../stores/QueryStore';

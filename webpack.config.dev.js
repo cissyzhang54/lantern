@@ -17,7 +17,10 @@ module.exports = {
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
       "process.env": {
-        BROWSER: JSON.stringify(true)
+        BROWSER: JSON.stringify(true),
+        RAVEN_KEY: JSON.stringify(process.env.RAVEN_KEY),
+        RAVEN_SECRET: JSON.stringify(process.env.RAVEN_SECRET),
+        RAVEN_APP_ID: JSON.stringify(process.env.RAVEN_APP_ID)
       }
     })
   ],

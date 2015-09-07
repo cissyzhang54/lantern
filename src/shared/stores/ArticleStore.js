@@ -1,10 +1,10 @@
 import alt from '../alt';
 import assign from 'object-assign';
 import _ from 'underscore';
+import Raven from 'raven-js';
 
 import ArticleActions from '../actions/ArticleActions';
 import ArticleSource from '../sources/ArticleSource';
-
 import QueryStore from '../stores/QueryStore';
 
 class ArticleStore {
@@ -37,6 +37,9 @@ class ArticleStore {
   handleLoadingFailed(errorMessage) {
     this.loading = false;
     this.errorMessage = errorMessage;
+
+    //Raven.captureMessage(`Article not found: ${query.uuid}`, e)
+    Raven.captureMessage(`Error loading article`)
   }
 
 
