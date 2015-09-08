@@ -134,6 +134,175 @@ nav .active{
 }
 
 
+[class*=lantern],
+.lantern__glass::before,
+.lantern__glass::after,
+.lantern__base::after{
+  content: '';
+  display: block;
+  border: 6px solid black;
+  margin: 0 auto;
+}
+.lantern__circle{
+  height: 250px;
+  width: 250px;
+  border: 8px solid black;
+  border-radius:125px;
+}
+.lantern__hoop{
+  height: 36px;
+  width: 36px;
+  border-radius:18px;
+}
+.lantern__lid,
+.lantern__glass,
+.lantern__base{
+  width:39%;
+  height:20px;
+  border-radius:6px 6px 0 0;
+  margin-top: -6px;
+}
+.lantern__glass{
+  position: relative;
+  height: 94px;
+  border-radius:0 0 20px 20px;
+}
+.lantern__flame{
+  width: 30px;
+  height: 30px;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+  border-top-left-radius: 50%;
+  transform:rotate(-45deg);
+  border-width: 3px;
+  position: absolute;
+  bottom: 10px;
+  left: calc(50% - 15px);
+  animation: flicker 3s backwards  linear infinite;
+  z-index: 1;
+  background-color: white;
+  background-image: radial-gradient(59% 59%, red, orange);
+}
+.lantern__neck{
+  height: 18px;
+  width: calc(50% - 60px);
+  margin-top: -6px;
+}
+.lantern__base{
+  height: 50px;
+  border-radius:20px 20px 0 0;
+}
+.lantern__base::after{
+  height: 5px;
+  width: 5px;
+  margin: 20% auto;
+  border-radius: 5px;
+}
+.lantern__base--lower,
+.lantern__lid--lower{
+  width:50%;
+  border-radius: 6px;
+  height:20px;
+  margin-top: -6px;
+}
+.lantern__glass::after,
+.lantern__glass::before{
+  opacity: .5;
+  position: relative;
+  left: 20px;
+  top:10px;
+  height:20px;
+  width:2px;
+  border-width:2px;
+  border-radius: 3px;
+  border-color: transparent;
+  animation: flicker-reflection 3s backwards  linear infinite;
+}
+.lantern__glass::after{
+  top:-10px;
+  left: 27px;
+  height:45px;
+}
+.lantern__base--lower::after{
+  display: none;
+}
+.lantern__wick{
+  width: 1px;
+  height: 20px;
+  border-width: 2px;
+  position: absolute;
+  bottom: 0;
+  left: calc(50% - 2px);
+  animation: flicker-wick 3s backwards  linear infinite;
+  transform-origin: bottom;
+}
+
+@keyframes flicker-reflection {
+  5% {
+    border-color:yellow;
+  }
+  12% {
+    border-color:orange;
+  }
+  38% {
+    border-color:orange;
+  }
+  75.5% {
+    border-color:yellow;
+  }
+  85.5% {
+    border-color:orange;
+  }
+  100% {
+    border-color:yellow;
+  }
+}
+
+@keyframes flicker-wick {
+  12% {
+    transform: rotate(10deg) translateY(5px) translateX(0px);
+  }
+  65.5%  {
+    transform: rotate(-5deg) translateY(5px) translateX(0px);
+  }
+  75.5% {
+    transform: rotate(0deg) translateY(5px) translateX(0px);
+  }
+  85.5% {
+    transform: rotate(10deg) translateY(5px) translateX(0px);
+  }
+}
+
+@keyframes flicker {
+  5% {
+    transform: rotate(-50deg);
+    /*height: 40px;*/
+  }
+  12% {
+  transform: rotate(-35deg);
+    height: 40px;
+    width: 40px;
+  }
+  38% {
+  transform: rotate(-32deg);
+    height: 30px;
+    width: 40px;
+  }
+  75.5% {
+  transform: rotate(-55deg) ;
+    height: 30px;
+    width: 25px;
+  }
+  85.5% {
+  transform: rotate(-50deg) ;
+    height: 30px;
+    width: 45px;
+  }
+  100% {
+    transform: rotate(-45deg);
+  }
+
+}
 
 /*# datepicker stuff*/
 .input-group-addon{
