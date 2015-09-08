@@ -1,8 +1,6 @@
 import express from 'express';
 import request from "superagent";
 import dataApiUtils from '../shared/utils/DataAPIUtils';
-import dotEnv from "dotenv";
-dotEnv.load();
 
 let router = express.Router();
 let apiKey = process.env.LANTERN_API_KEY;
