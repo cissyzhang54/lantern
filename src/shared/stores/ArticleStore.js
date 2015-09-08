@@ -3,60 +3,42 @@ import assign from 'object-assign';
 import _ from 'underscore';
 
 import ArticleActions from '../actions/ArticleActions';
-import DataAPI from '../utils/DataAPIUtils';
+import ArticleSource from '../sources/ArticleSource';
 
-let query = {
-    uuid: null,
-    dateFrom: null,
-    dateTo: null,
-    comparator: null,
-    filters: []
-};
+import QueryStore from '../stores/QueryStore';
 
 class ArticleStore {
 
-    constructor() {
-        this.bindActions(ArticleActions);
-        this.data = null;
-        this.errorMessage = null;
-    }
+  constructor() {
+    this.data = null;
+    this.errorMessage = null;
+    this.loading = false;
+    this.bindListeners({
+      handleUpdateData: ArticleActions.UPDATE_DATA,
+      handleLoadingData: ArticleActions.LOADING_DATA,
+      handleLoadingFailed: ArticleActions.LOADING_FAILED
+    });
 
-    update(param, updates) {
-        if(query[param] && updates){
-            query[param] = assign(query[param], updates);
-        }
-    }
+    this.exportAsync(ArticleSource);
 
-    receiveData(newData) {
-        this.data = newData;
-        this.errorMessage = null;
-    }
+  }
 
-    receiveDataFailed(errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-    requestData(id) {
-        query.uuid = id;
-        DataAPI.getArticleData(query)
-            .then(function(data) {
-                ArticleActions.receiveData(data);
-            }).catch(function () {
-               alert('whoah!');
-            });
-    }
+  handleLoadingData() {
+    this.loading = true;
+    this.data = null;
+  }
 
-    addFilter(filter) {
-        this.update('filters', _.union(query.filters, [filter]));
-    }
-    removeFilter(filter) {
-        this.update('filters', _.without(query.filters, [filter]));
-    }
-    selectComparator(comparator) {
-        this.update('comparator', comparator);
-    }
-    destroy() {
-        alt.recycle(this);
-    }
+  handleUpdateData(newData) {
+    this.loading = false;
+    this.data = newData;
+    this.errorMessage = null;
+  }
+
+  handleLoadingFailed(errorMessage) {
+    this.loading = false;
+    this.errorMessage = errorMessage;
+  }
+
 
 }
 

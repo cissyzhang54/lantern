@@ -5,7 +5,6 @@ import config from "../config";
 let DataAPI = {
 
     getArticleData(query, apiKey) {
-
         return new Promise(function (resolve, reject) {
             let url = config.baseUrl + '/api/v0/articles/' + query.uuid;
             if (apiKey) {
