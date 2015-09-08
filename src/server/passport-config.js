@@ -1,7 +1,5 @@
 import Passport from "passport";
 import {Strategy as GoogleStrategy} from "passport-google-oauth2";
-import dotEnv from "dotenv";
-dotEnv.load();
 
 let GOOGLE_CLIENT_ID = process.env.OAUTH_CLIENT_ID;
 let GOOGLE_CLIENT_SECRET = process.env.OAUTH_CLIENT_SECRET;

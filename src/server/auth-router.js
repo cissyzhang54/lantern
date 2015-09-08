@@ -4,8 +4,6 @@ import session, {MemoryStore} from "express-session";
 import {createClient as createRedisClient} from "redis";
 import RedisStore from "connect-redis";
 import {parse as parseUrl} from "url";
-import dotEnv from "dotenv";
-dotEnv.load();
 
 let router = express.Router();
 
