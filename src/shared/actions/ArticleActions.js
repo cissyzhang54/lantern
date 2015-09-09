@@ -1,18 +1,26 @@
 import alt from '../alt';
 
+
+
 class ArticleActions {
-    constructor() {
-        this.generateActions(
-            'addFilter',
-            'removeFilter',
-            'selectComparator',
-            'selectDateRange',
-            'requestData',
-            'receiveData',
-            'receiveDataFailed',
-            'destroy'
-        )
-    }
+  constructor() {
+
+  }
+
+  updateData(data) {
+    this.dispatch(data);
+  }
+
+  loadingData() {
+    setImmediate(()=> {
+      this.dispatch();
+    });
+  }
+
+  loadingFailed(error) {
+    this.dispatch(error);
+  }
+
 }
 
 export default alt.createActions(ArticleActions);

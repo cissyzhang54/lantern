@@ -136,20 +136,20 @@ export default class SingleMetric extends React.Component {
 
     // Do the correct metric conversions
     if (this.props.metricType === 'integer') {
-      metricValues = integerMetricConversions(this.props)
+      metricValues = integerMetricConversions(this.props);
     }
     else if (this.props.metricType === 'time') {
-      metricValues = timeMetricConversions(this.props)
+      metricValues = timeMetricConversions(this.props);
     }
 
     //If there is no comparator leave the comparator HTML undefined
     if (typeof metricValues.transfromComparator !== 'undefined') {
-      comparatorHTML = [
+      comparatorHTML = (
         <span style={styles.comparator}>
           <Glyphicon glyph={'glyphicon glyphicon-chevron-' + metricValues.differenceSign} style={styles.comparatorSymbol} />
           <span style={styles.comparatorValue}>{metricValues.transfromComparator}</span>
         </span>
-      ]
+      );
     }
 
     return (
@@ -157,7 +157,7 @@ export default class SingleMetric extends React.Component {
         <p style={styles.metric}>{metricValues.transformMetric} {comparatorHTML}</p>
         <h3 style={styles.label}>{this.props.label}</h3>
       </div>
-    )
+    );
   }
 }
 
