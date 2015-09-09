@@ -1,12 +1,13 @@
 import pageDepth from './pageDepth';
-import config from '../config/index'
+import config from '../config/index';
+import ga from 'react-google-analytics';
 
 class Analytics {
   constructor () {
     this.trackingGifURL = 'http://track.ft.com/track/track.gif?';
     this.appname = 'lantern';
 
-    if (document.domain === 'localhost') {
+    if (document.domain === 'localhost' || typeof(ga) == 'undefined') {
       this.track = false;
       return;
     }
