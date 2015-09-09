@@ -1,5 +1,5 @@
 import React from "react";
-import {Glyphicon, Col} from "react-bootstrap";
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 const style = {
   padding: "5px 10px",

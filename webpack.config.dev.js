@@ -1,18 +1,21 @@
+var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
   devtool: 'inline-source-map',
-  entry: [
-    'webpack-dev-server/client?http://localhost:8081',
-    'webpack/hot/only-dev-server',
-    './src/client/entry',
-  ],
+  entry: {
+    app: [path.join(__dirname, './src/client/entry'),
+      'webpack/hot/only-dev-server',
+      'webpack-dev-server/client?http://localhost:8081'],
+  },
   output: {
-    path: __dirname + '/public/js/',
-    filename: 'app.js',
+    path: path.join(__dirname, '/public/js/'),
+    filename: '[name].js',
     publicPath: 'http://localhost:8081/js/',
   },
   plugins: [
+    new webpack.optimize.DedupePlugin(),
+    //new webpack.optimize.UglifyJsPlugin({output: {comments: false}, minimize: true, compress: { warnings: false }}),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
