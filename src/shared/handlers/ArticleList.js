@@ -1,6 +1,6 @@
 import React from 'react';
 import DocumentTitle from 'react-document-title';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/components/Link';
 
 class ArticleList extends React.Component {
 

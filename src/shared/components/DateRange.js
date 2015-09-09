@@ -2,7 +2,13 @@ import React from 'react';
 import RangePicker from 'react-daterange-picker';
 import moment from 'moment';
 import {} from 'moment-range';
-import {Input, Button, ButtonToolbar, Row, Col, Overlay, Popover} from 'react-bootstrap';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
+import Button from 'react-bootstrap/lib/Button';
+import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
+import Overlay from 'react-bootstrap/lib/Overlay';
+import Popover from 'react-bootstrap/lib/Popover';
+import Input from 'react-bootstrap/lib/Input';
 
 export default class DateRange extends React.Component {
 

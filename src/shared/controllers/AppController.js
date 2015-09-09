@@ -1,7 +1,8 @@
 import React from "react";
 import DocumentTitle from 'react-document-title';
-import { Router, RouteHandler, Route, Link } from 'react-router';
-import { Col, Row  } from 'react-bootstrap';
+import RouteHandler from 'react-router/lib/components/RouteHandler';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 import NavBar from '../components/NavBar';
 import Raven from 'raven-js';
 

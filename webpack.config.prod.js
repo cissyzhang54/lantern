@@ -1,15 +1,17 @@
+var path = require('path');
 var webpack = require('webpack');
 
 module.exports = {
-  devtool: 'inline-source-map',
-  entry: [
-    './lib/client/entry'
-  ],
+  entry: {
+    app: './lib/client/entry',
+  },
   output: {
-    path: __dirname + '/public/js/',
-    filename: 'app.js'
+    path: path.join(__dirname, '/public/js/'),
+    filename: '[name].js'
   },
   plugins: [
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.UglifyJsPlugin({output: {comments: false}, minimize: true, compress: { warnings: false }}),
     new webpack.DefinePlugin({
       "process.env": {
         BROWSER: JSON.stringify(true),

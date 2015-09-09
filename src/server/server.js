@@ -3,8 +3,9 @@ import exphbs from "express-handlebars";
 import React from "react";
 import Router from "react-router";
 import DocumentTitle from 'react-document-title';
-import alt from "../shared/alt";
+import compress from 'compression';
 import Iso from "iso";
+import alt from "../shared/alt";
 import config from "../shared/config";
 import dataPreloader from "./dataPreloader";
 import routes from "../shared/routes";
@@ -17,6 +18,7 @@ const hbs = exphbs.create({});
 
 // Ready
 // ....setup the app
+app.use(compress());
 app.set('views', './src/server/views');
 app.engine('hbs', hbs.engine);
 app.set('view engine', 'hbs');
