@@ -26,6 +26,8 @@ class Error404View extends React.Component {
 
   componentDidMount() {
     responsiveStyles.addListeners(this, images);
+    let analytics = require('../utils/analytics');
+    analytics.sendGAEvent('pageview');
   }
 
   componentWillUnmount() {
