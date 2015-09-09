@@ -26,3 +26,14 @@ The following keys all need to placed with corresponding values within a `.env` 
 - ES_USER
 - ES_PASS
 - ES_INDEX_ROOT
+
+#### Sentry Logging
+- RAVEN_KEY
+- RAVEN_SECRET
+- RAVEN_APP_ID
+
+### Client-Side Logging Information:
+
+ * Errors will be emailed to digitalnewsroom.alerts@ft.com
+ * Stats can be viewed here: https://app.getsentry.com/ft/production/
+ * For more logging know how see: https://docs.getsentry.com/hosted/clients/javascript/usage/#raven-js-reporting-errors

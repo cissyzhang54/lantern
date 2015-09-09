@@ -38,6 +38,15 @@
     },
     "ES_INDEX_ROOT": {
       "required":true
+    },
+    "RAVEN_KEY": {
+      "required":true
+    },
+    "RAVEN_SECRET": {
+      "required":true
+    },
+    "RAVEN_APP_ID": {
+      "required":true
     }
   },
   "addons":[]

@@ -31,7 +31,7 @@ router.get('/articles/:uuid', (req, res, next) => {
           next();
       })
       .catch((err) => {
-          next(new Error(err));
+          next(err);
       });
 });
 
