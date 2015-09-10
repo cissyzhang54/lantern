@@ -1,16 +1,17 @@
 import alt from '../alt';
 
-class ArticleActions {
+class SearchActions {
 
   constructor() {
     this.generateActions(
-      'updateData',
-      'loadingFailed',
+      'search',
+      'searchFailed',
+      'updateResults',
       'destroy'
     );
   }
 
-  loadingData() {
+  searching() {
     setImmediate(()=> {
       this.dispatch();
     });
@@ -18,4 +19,4 @@ class ArticleActions {
 
 }
 
-export default alt.createActions(ArticleActions);
+export default alt.createActions(SearchActions);

@@ -7,13 +7,14 @@ import moment from 'moment';
 import esClient from '../esClient';
 import ErrorHandler from '../apiErrorHandler';
 import ArticleDataFormater from '../formatters/Articles';
+import SearchDataFormatter from '../formatters/Search';
 
 let router = express.Router();
 router.use(bodyParser.json());
 
 router.get('/:category(articles|topics|authors)/:uuid', category);
 router.post('/:category(articles|topics|authors)/:uuid', category);
-router.post('/search', search);
+router.get('/search/:query', search);
 
 router.use(ErrorHandler(router));
 
@@ -53,19 +54,28 @@ function category(req, res, next) {
   }
 }
 
-function search(req, res) {
-  let obj;
-  let query = req.body;
+function search(req, res, next) {
+  var query = req.params.query;
 
-  res.json({
-    'results' : [
-      {
-        'type': 'article',
-        title: 'Some thing some thing',
-        uuid: uuid.v4()
+  esClient('search', query)
+    .then((response) => {
+      return SearchDataFormatter(response);
+    })
+    .then((formattedData) => {
+      res.json(formattedData);
+    })
+    .catch((error) => {
+      switch(error.name) {
+        case 'DataParsingError':
+          res.status(500);
+          break;
+        default:
+          res.status(500);
+          break;
       }
-    ]
-  });
+      next(error);
+    });
+
 }
 
 export default router;
