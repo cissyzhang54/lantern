@@ -1,8 +1,8 @@
 import express from 'express';
 import request from "superagent";
-import dataApiUtils from '../shared/utils/DataAPIUtils';
-
 import moment from 'moment';
+
+import dataApiUtils from '../../shared/utils/DataAPIUtils';
 
 let router = express.Router();
 let apiKey = process.env.LANTERN_API_KEY;
@@ -15,24 +15,24 @@ router.get('/articles/:uuid', (req, res, next) => {
     dateTo: moment().toISOString(),
     comparator: null,
     filters: []
-  }
-
+  };
 
   dataApiUtils.getArticleData(query, apiKey)
-      .then((data) => {
-          res.locals.data = {
-              "ArticleStore": {
-                data: data
-              },
-              "QueryStore" : {
-                query: query
-              }
-          };
-          next();
-      })
-      .catch((err) => {
-          next(err);
-      });
+    .then((data) => {
+      res.locals.data = {
+        "ArticleStore": {
+          data: data
+        },
+        "QueryStore" : {
+          query: query
+        }
+      };
+      next();
+    })
+    .catch((err) => {
+      if (err.status) res.status(err.status);
+      next(err);
+    });
 });
 
 export default router;

@@ -15,7 +15,8 @@ class ArticleStore {
     this.bindListeners({
       handleUpdateData: ArticleActions.UPDATE_DATA,
       handleLoadingData: ArticleActions.LOADING_DATA,
-      handleLoadingFailed: ArticleActions.LOADING_FAILED
+      handleLoadingFailed: ArticleActions.LOADING_FAILED,
+      handleDestroy: ArticleActions.DESTROY
     });
 
     this.exportAsync(ArticleSource);
@@ -33,14 +34,20 @@ class ArticleStore {
     this.errorMessage = null;
   }
 
-  handleLoadingFailed(errorMessage) {
+  handleLoadingFailed(error) {
     this.loading = false;
-    this.errorMessage = errorMessage;
-
-    //Raven.captureMessage(`Article not found: ${query.uuid}`, e)
-    Raven.captureMessage(`Error loading article`)
+    this.errorMessage = error.message;
+  
+    Raven.captureException(error, {
+      extra: error
+    });
   }
 
+  handleDestroy() {
+    this.loading = false;
+    this.data = null;
+    this.errorMessage = null;
+  }
 
 }
 

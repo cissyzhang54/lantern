@@ -44,6 +44,16 @@ class QueryStore {
     this.query.comparator = comparatorId;
   }
 
+  destroy() {
+    this.query = {
+        uuid: null,
+        datefrom: null, // XXX make this a default sensible range
+        dateTo: null,
+        comparator: null,
+        filters: []
+    };
+  }
+
 }
 
 export default alt.createStore(QueryStore, 'QueryStore');

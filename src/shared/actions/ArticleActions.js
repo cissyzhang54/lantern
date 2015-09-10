@@ -1,11 +1,6 @@
 import alt from '../alt';
 
-
-
 class ArticleActions {
-  constructor() {
-
-  }
 
   updateData(data) {
     this.dispatch(data);
@@ -19,6 +14,10 @@ class ArticleActions {
 
   loadingFailed(error) {
     this.dispatch(error);
+  }
+
+  destroy() {
+    this.dispatch();
   }
 
 }

@@ -1,13 +1,13 @@
 import { Route, DefaultRoute, NotFoundRoute } from "react-router";
 import React from "react";
 
-import AppController from "./controllers/AppController";
-import Home from "./handlers/Home";
-import Error404 from "./handlers/404";
-import Article from "./handlers/Article";
-import ArticleList from "./handlers/ArticleList";
-import Playground from './handlers/Playground';
-import PlaygroundLoader from './handlers/PlaygroundLoader';
+import AppController from "../controllers/AppController";
+import Home from "../handlers/Home";
+import Error404 from "../handlers/404";
+import Article from "../handlers/Article";
+import ArticleList from "../handlers/ArticleList";
+import Playground from '../handlers/Playground';
+import PlaygroundLoader from '../handlers/PlaygroundLoader';
 
 
 export default (

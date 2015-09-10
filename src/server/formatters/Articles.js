@@ -22,6 +22,9 @@ export default function formatData(data) {
         }
       });
     } catch (e) {
+      let error = new Error(e);
+      error.name = 'DataParsingError';
+      error.response = data;
       reject(e);
     }
   });

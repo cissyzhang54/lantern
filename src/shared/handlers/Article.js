@@ -11,8 +11,10 @@ import LineChart from "../components/LineChart";
 import Loading from "../components/Loading";
 import SingleMetric from "../components/SingleMetric";
 import ArticleStore from '../stores/ArticleStore';
+import ArticleActions from '../actions/ArticleActions';
 import QueryStore from '../stores/QueryStore';
 import QueryActions from '../actions/QueryActions';
+import Error404 from '../handlers/404';
 
 const style = {
   'margin': '10px 0',
@@ -45,13 +47,17 @@ class ArticleView extends React.Component {
     // XXX consider putting this inside ArticleStore?
     this._boundQueryHandlerRef = this._handleQueryChange.bind(this);
     QueryStore.listen(this._boundQueryHandlerRef);
-    if (this.props.params.id !== this.props.query.uuid) {
-      QueryActions.selectUUID(this.props.params.id);
+
+    if (this.props.data) {
+      return;
     }
-    // ArticleStore.loadArticleData(this.props.query);
+
+    QueryActions.selectUUID(this.props.params.id);
+
   }
 
   componentWillUnmount() {
+    ArticleActions.destroy();
     QueryStore.unlisten(this._boundQueryHandlerRef);
   }
 
@@ -66,6 +72,11 @@ class ArticleView extends React.Component {
   }
 
   render() {
+
+    if (this.props.errorMessage) {
+      return (<div><Error404/></div>);
+    }
+
     let data = this.props.data;
 
     if (!data || this.props.loading) {

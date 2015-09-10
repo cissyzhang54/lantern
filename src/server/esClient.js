@@ -37,6 +37,16 @@ function runArticleQuery(queryData) {
       if (error) {
         return reject(error);
       }
+
+      // handle article not found
+      if (!response.hits.hits.length) {
+        // no need to 'let'/'var' this
+        error = new Error('Article not found');
+        error.name = 'ArticleNotFoundError';
+        error.response = response;
+        return reject(error);
+      }
+
       return resolve(response);
     });
   });
