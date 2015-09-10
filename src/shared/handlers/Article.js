@@ -135,7 +135,10 @@ class ArticleView extends React.Component {
           <LineChart
             data={data.article.readTimes}
             keys={['value']}
-            title="When did readers access the article?"/>
+            title="When did readers access the article?"
+            yLabel='Unique Readers'
+            xLabel='Time'
+            />
           <Row>
             <Col lg={12} >
               <div>id: {data.article.uuid}</div>
