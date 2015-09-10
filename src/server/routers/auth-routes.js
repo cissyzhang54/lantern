@@ -42,20 +42,11 @@ router.get('/auth/google',
     // The request will be redirected to Google for authentication, so this function will not be called.
     () => {});
 
-
-let HOST_DOMAIN = process.env.HOST_DOMAIN;
 router.get('/auth/google/callback',
   passport.authenticate('google', { failureRedirect: '/login' }),
-  (req, res) => {
-    if (req.user && !endsWith(req.user.email, HOST_DOMAIN)) {
-      res.sendStatus(403);
-    }
-
+  (req, res, next) => {
     log.info('User Login: ' + req.user.email);
-
-    let gotoUrl = req.session.gotoUrl || '/';
-    req.session.gotoUrl = null;
-    res.redirect(gotoUrl);
+    res.redirect(req.session.gotoUrl || '/');
   });
 
 router.get('/logout', (req, res) => {
@@ -63,9 +54,11 @@ router.get('/logout', (req, res) => {
   res.redirect('/');
 });
 
-function endsWith(text, pattern) {
-    var lastIndex = text.lastIndexOf(pattern);
-    return (lastIndex !== -1) && (lastIndex + pattern.length === text.length);
-}
+
+router.use((err, req, res, next) => {
+  //console.log(err, "I CAUGHT IT");
+  next();
+})
+
 
 export default router;
