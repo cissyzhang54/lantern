@@ -7,7 +7,8 @@ class QueryActions {
         'removeFilter',
         'selectComparator',
         'selectDateRange',
-        'selectUUID'
+        'selectUUID',
+        'destroy'
     );
   }
 }

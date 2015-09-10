@@ -1,12 +1,12 @@
 import express from "express";
 import bodyParser from "body-parser";
-import fakeData from "./fake_data";
 import uuid from "uuid";
 import assign from "object-assign";
 import moment from 'moment';
-import esClient from './esClient';
 
-import ArticleDataFormater from './formatters/Articles';
+import esClient from '../esClient';
+import ErrorHandler from '../apiErrorHandler';
+import ArticleDataFormater from '../formatters/Articles';
 
 let router = express.Router();
 router.use(bodyParser.json());
@@ -14,6 +14,8 @@ router.use(bodyParser.json());
 router.get('/:category(articles|topics|authors)/:uuid', category);
 router.post('/:category(articles|topics|authors)/:uuid', category);
 router.post('/search', search);
+
+router.use(ErrorHandler(router));
 
 function category(req, res, next) {
   switch (req.params.category) {
@@ -31,7 +33,14 @@ function category(req, res, next) {
           res.json(formattedData);
         })
         .catch((error) => {
-          res.status(500);
+          switch (error.name) {
+            case 'ArticleNotFoundError':
+              res.status(404);
+              break;
+            default:
+              res.status(500);
+              break;
+          }
           next(error);
         });
       break;

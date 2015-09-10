@@ -2,7 +2,7 @@ import React from "react";
 import Iso from "iso";
 import alt from "../shared/alt";
 import Router from "react-router";
-import routes from "../shared/routes";
+import routes from "../shared/routers/routes";
 
 Iso.bootstrap(function (state, meta, container) {
   alt.bootstrap(state);

@@ -7,10 +7,11 @@ import compress from 'compression';
 import Iso from "iso";
 import alt from "../shared/alt";
 import config from "../shared/config";
-import dataPreloader from "./dataPreloader";
-import routes from "../shared/routes";
-import apiRouter from "./api-routes";
-import authRouter from "./auth-router";
+import routes from "../shared/routers/routes";
+import errorRoutes from "../shared/routers/error";
+import dataPreloader from "./routers/dataPreloader-routes";
+import apiRouter from "./routers/api-routes";
+import authRouter from "./routers/auth-routes";
 
 delete process.env.BROWSER;
 const app = express();
@@ -34,25 +35,32 @@ app.use('/status',function (req, res) {
 app.use('/', authRouter);
 app.use('/api/v0', ensureApiAuthenticated, apiRouter);
 app.use('/', ensureAuthenticated, dataPreloader);
-app.use('/', ensureAuthenticated, function (req, res) {
+app.use('/', ensureAuthenticated, renderRoute);
+
+// error handler for routes not on the api
+app.use(function(err, req, res, next) {
+  Router.run(errorRoutes, req.url, (Handler, state) => {
+    let content = React.renderToString(<Handler />);
+    res.render('index', { content: content, jsUrl: config.jsUrl, title: DocumentTitle.rewind() });
+  });
+});
+
+function renderRoute(req, res) {
 
   alt.bootstrap(JSON.stringify(res.locals.data || {}));
   let iso = new Iso();
 
   Router.run(routes, req.url, (Handler, state) => {
-
     let notfound = state.routes.filter(route => route.name === '404').length > 0;
-    let content = React.renderToString(<Handler />);
-    iso.add(content, alt.flush());
-
     if ( notfound ) {
       res.status(404);
     }
+    let content = React.renderToString(<Handler />);
+    iso.add(content, alt.flush());
     res.render('index', { content: iso.render(), jsUrl: config.jsUrl, title: DocumentTitle.rewind() });
 
   });
-});
-
+}
 
 //Go!!!
 var server = app.listen(config.port, function () {
