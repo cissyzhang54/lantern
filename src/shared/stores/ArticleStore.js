@@ -1,6 +1,5 @@
 import alt from '../alt';
 import assign from 'object-assign';
-import _ from 'underscore';
 import Raven from 'raven-js';
 
 import ArticleActions from '../actions/ArticleActions';

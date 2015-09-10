@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from 'react-router';
+import Link from 'react-router/lib/components/Link';
 
 import responsiveStyles from '../utils/responsiveStyles';
 import Logo from '../components/Logo';

@@ -1,5 +1,6 @@
 import React from "react";
-import {Row, Col} from 'react-bootstrap';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 
 export default class Comparator extends React.Component {
 

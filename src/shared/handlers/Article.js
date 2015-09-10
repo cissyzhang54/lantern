@@ -1,7 +1,8 @@
 import React from 'react/addons';
-import { Link } from 'react-router';
+import Link from 'react-router/lib/components/Link';
 import DocumentTitle from 'react-document-title';
-import { Col, Row } from 'react-bootstrap';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 import connectToStores from 'alt/utils/connectToStores';
 
 import Header from "../components/Header";
