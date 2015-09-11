@@ -26,6 +26,7 @@ The following keys all need to placed with corresponding values within a `.env` 
 - ES_USER
 - ES_PASS
 - ES_INDEX_ROOT
+- ES_SEARCH_INDEX_ROOT
 
 #### Sentry Logging
 - RAVEN_KEY
