@@ -2,11 +2,17 @@ import React from "react";
 import Tag from './Tag';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
+import FeatureFlag from '../utils/featureFlag';
 
 export default class Comparator extends React.Component {
 
   _handleTagClick(tag) {
     console.log(tag);
+  }
+
+  componentWillMount () {
+    let renderFeature = FeatureFlag.check(this.props.identifier);
+    this.render = renderFeature ? this.render : function () { return false };
   }
 
   render() {

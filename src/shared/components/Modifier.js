@@ -7,18 +7,25 @@ import Comparator from "./Comparator";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
 
+import FeatureFlag from '../utils/featureFlag';
+
 export default class Modifier extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
+  componentWillMount () {
+    let renderFeature = FeatureFlag.check(this.props.identifier);
+    this.render = renderFeature ? this.render : function () { return false };
+  }
+
   render() {
     return (
       <div>
-        <Comparator tags={this.props.tags} />
-        <Filters />
-        <DateRange />
+        <Comparator identifier={this.props.identifier + ':comparator'} tags={this.props.tags} />
+        <Filters identifier={this.props.identifier + ':filters'} />
+        <DateRange identifier={this.props.identifier + ':DateRange'} />
       </div>
     );
   }

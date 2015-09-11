@@ -96,6 +96,7 @@ class ArticleView extends React.Component {
       <div>
         <Row style={style}>
           <Header
+              identifier='article:title'
               title={data.article.title}
               author={'By: ' + data.article.author}
               published={'Published: ' + data.article.published_human}
@@ -103,6 +104,7 @@ class ArticleView extends React.Component {
         </Row>
         <Row  style={style}>
           <Modifier
+            identifier='article:modifier'
             tags={data.article.topics.concat(data.article.sections)}
             query={this.props.query}
             />
@@ -111,28 +113,29 @@ class ArticleView extends React.Component {
           <Row >
             <Col xs={12} sm={3} >
               <Col xs={4} sm={12} >
-                <SingleMetric metric={data.article.wordCount} metricType='integer' label='Article Wordcount' size='small' />
+                <SingleMetric identifier='article:wordCount' metric={data.article.wordCount} metricType='integer' label='Article Wordcount' size='small' />
               </Col>
               <Col xs={4} sm={12} >
-                <SingleMetric metric={data.article.imageCount} metricType='integer' label='Images' size='small' />
+                <SingleMetric identifier='article:imageCount' metric={data.article.imageCount} metricType='integer' label='Images' size='small' />
               </Col>
               <Col xs={4} sm={12} >
-                <SingleMetric metric={data.article.bodyLinksCount} metricType='integer' label='Body Links' size='small' />
+                <SingleMetric identifier='article:bodyLinksCount' metric={data.article.bodyLinksCount} metricType='integer' label='Body Links' size='small' />
               </Col>
             </Col>
             <Col xs={12} sm={9} >
               <Col xs={12} sm={4} >
-                <SingleMetric metric={data.article.timeOnPage} comparatorMetric={2} metricType='time' label='Time on Page' size='large' />
+                <SingleMetric identifier='article:timeOnPage' metric={data.article.timeOnPage} comparatorMetric={2} metricType='time' label='Time on Page' size='large' />
               </Col>
               <Col xs={12} sm={4} >
-                <SingleMetric metric={data.article.pageViews} comparatorMetric={8092} metricType='integer' label='Page Views' size='large' />
+                <SingleMetric identifier='article:pageViews' metric={data.article.pageViews} comparatorMetric={8092} metricType='integer' label='Page Views' size='large' />
               </Col>
               <Col xs={12} sm={4} >
-                <SingleMetric metric={data.article.socialReaders} comparatorMetric={808} metricType='integer' label='Social Readers' size='large' />
+                <SingleMetric identifier='article:socialReaders' metric={data.article.socialReaders} comparatorMetric={808} metricType='integer' label='Social Readers' size='large' />
               </Col>
             </Col>
           </Row>
           <LineChart
+            identifier='article:readTimes'
             data={data.article.readTimes}
             keys={['value']}
             title="When did readers access the article?"

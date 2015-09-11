@@ -1,6 +1,7 @@
 import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
+import FeatureFlag from '../utils/featureFlag';
 
 import responsiveStyles from '../utils/responsiveStyles';
 
@@ -39,6 +40,11 @@ export default class Header extends React.Component {
 
     componentDidMount() {
         responsiveStyles.addListeners(this, componentStyles);
+    }
+
+    componentWillMount () {
+        let renderFeature = FeatureFlag.check(this.props.identifier);
+        this.render = renderFeature ? this.render : function () { return false };
     }
 
     componentWillUnmount() {
