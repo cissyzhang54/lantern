@@ -10,10 +10,10 @@ class SearchStore {
   constructor() {
     this.results = [];
     this.errorMessage = null;
-    this.searching = false;
+    this.loading = false;
+    this.query = '';
     this.bindListeners({
       handleUpdateResults: SearchActions.UPDATE_RESULTS,
-      handleSearching: SearchActions.SEARCHING,
       handleSearchFailed: SearchActions.SEARCH_FAILED,
       handleSearch: SearchActions.SEARCH,
       handleDestroy: SearchActions.DESTROY
@@ -23,15 +23,10 @@ class SearchStore {
 
   }
 
-  handleSearching() {
-    this.loading = true;
-    this.results = [];
-  }
-
   handleUpdateResults(results) {
     this.loading = false;
     this.results = results;
-    this.errorMessage = null;
+    this.errorMessage = results.length ? null : 'Zero Results Found';
   }
 
   handleSearchFailed(error) {
@@ -44,10 +39,13 @@ class SearchStore {
   }
 
   handleSearch(query) {
+    this.loading = true;
+    this.query = query;
     this.getInstance().search(query);
   }
 
   handleDestroy() {
+    this.query = '';
     this.loading = false;
     this.results = [];
     this.errorMessage = null;

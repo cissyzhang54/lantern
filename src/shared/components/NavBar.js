@@ -37,7 +37,8 @@ var controllerStyles = {
       padding : '0 15px',
       display: 'block',
       fontWeight: 800,
-      backgroundColor: '#F1C59B'
+      backgroundColor: 'rgba(255, 0, 0, 0.15)',
+      color: 'red'
     }
   },
   '(max-width: 500px)' : {
@@ -66,8 +67,7 @@ export default class AppController extends React.Component {
   render() {
     let styles = this.state.responsiveStyles;
     let navItems = [
-      { title:'Search', link:'/'},
-      { title: 'ArticleList', link:'/articles'}
+      //{ title:'Search', link:'/'}
     ];
     let numrows = navItems.length;
     let rows = [];

@@ -178,10 +178,8 @@ nav .active{
   position: absolute;
   bottom: 10px;
   left: calc(50% - 15px);
-  animation: flicker 3s backwards  linear infinite;
   z-index: 1;
   background-color: white;
-  background-image: radial-gradient(59% 59%, red, orange);
 }
 .lantern__neck{
   height: 18px;
@@ -216,7 +214,6 @@ nav .active{
   border-width:2px;
   border-radius: 3px;
   border-color: transparent;
-  animation: flicker-reflection 3s backwards  linear infinite;
 }
 .lantern__glass::after{
   top:-10px;
@@ -233,8 +230,18 @@ nav .active{
   position: absolute;
   bottom: 0;
   left: calc(50% - 2px);
-  animation: flicker-wick 3s backwards  linear infinite;
   transform-origin: bottom;
+}
+.loading .lantern__glass::after,
+.loading .lantern__glass::before {
+  animation: flicker-reflection 3s backwards linear infinite;
+}
+.loading .lantern__wick {
+  animation: flicker-wick 3s backwards linear infinite;
+}
+.loading .lantern__flame {
+  background-image: radial-gradient(59% 59%, red, orange);
+  animation: flicker 3s backwards  linear infinite;
 }
 
 @keyframes flicker-reflection {

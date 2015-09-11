@@ -82,13 +82,12 @@ class ArticleView extends React.Component {
     if (!data || this.props.loading) {
 
       const loadingStyle = {
-        height: '100%',
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center'
       };
 
-      return (<div style={loadingStyle}><Loading /></div>);
+      return (<div style={loadingStyle}><Loading message="Loading Article..." /></div>);
     }
 
     let title = (data) ? 'Lantern - ' + data.article.title : '';
