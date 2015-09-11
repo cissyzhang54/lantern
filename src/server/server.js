@@ -17,8 +17,7 @@ delete process.env.BROWSER;
 const app = express();
 const hbs = exphbs.create({});
 
-// Ready
-// ....setup the app
+// Ready  ....setup the app
 app.use(compress());
 app.set('views', './src/server/views');
 app.engine('hbs', hbs.engine);
@@ -26,31 +25,33 @@ app.set('view engine', 'hbs');
 app.use(express.static('public'));
 app.use(express.static('src/server/resources'));
 
-// Steady
-// ...setup the Routes
-app.use('/status',function (req, res) {
+// Steady  ...setup the Routes
+app.use('/status', function (req, res) {
   res.sendStatus(200);
   res.end();
 });
 app.use('/', authRouter);
 app.use('/api/v0', ensureApiAuthenticated, apiRouter);
 app.use('/', ensureAuthenticated, dataPreloader);
-app.use('/', ensureAuthenticated, renderRoute);
-
-// error handler for routes not on the api
-app.use(function(err, req, res, next) {
-  Router.run(errorRoutes, req.url, (Handler, state) => {
-    let content = React.renderToString(<Handler />);
-    res.render('index', { content: content, jsUrl: config.jsUrl, title: DocumentTitle.rewind() });
-  });
+app.use('/', ensureAuthenticated, function appRouter(req, res) {
+  renderRoute(routes, req, res)
+});
+app.use(function ErrorHandler(err, req, res, next) {
+  renderRoute(errorRoutes, req, res)
 });
 
-function renderRoute(req, res) {
+//Go!!!
+var server = app.listen(config.port, function () {
+  var host = server.address().address;
+  var port = server.address().port;
+  console.log('Lantern app listening at http://%s:%s', host, port);
+});
 
+function renderRoute(route, req, res) {
   alt.bootstrap(JSON.stringify(res.locals.data || {}));
   let iso = new Iso();
 
-  Router.run(routes, req.url, (Handler, state) => {
+  Router.run(route, req.url, (Handler, state) => {
     let notfound = state.routes.filter(route => route.name === '404').length > 0;
     if ( notfound ) {
       res.status(404);
@@ -61,14 +62,6 @@ function renderRoute(req, res) {
 
   });
 }
-
-//Go!!!
-var server = app.listen(config.port, function () {
-  var host = server.address().address;
-  var port = server.address().port;
-
-  console.log('Lantern app listening at http://%s:%s', host, port);
-});
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
