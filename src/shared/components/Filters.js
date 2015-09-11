@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
 import Filter from './Filter';
+import FeatureFlag from '../utils/featureFlag';
 
 const fakeData = {
 
@@ -29,6 +30,11 @@ const fakeData = {
 
 
 export default class Filters extends React.Component {
+
+  componentWillMount () {
+    let renderFeature = FeatureFlag.check(this.props.identifier);
+    this.render = renderFeature ? this.render : function () { return false };
+  }
 
   render() {
 

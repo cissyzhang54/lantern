@@ -9,6 +9,8 @@ import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
 import Overlay from 'react-bootstrap/lib/Overlay';
 import Popover from 'react-bootstrap/lib/Popover';
 import Input from 'react-bootstrap/lib/Input';
+import FeatureFlag from '../utils/featureFlag';
+
 
 export default class DateRange extends React.Component {
 
@@ -34,6 +36,11 @@ export default class DateRange extends React.Component {
     this.setState({
       display: !this.state.display
     });
+  }
+
+  componentWillMount () {
+    let renderFeature = FeatureFlag.check(this.props.identifier);
+    this.render = renderFeature ? this.render : function () { return false };
   }
 
   render() {

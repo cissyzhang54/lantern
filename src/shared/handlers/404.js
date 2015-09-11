@@ -3,7 +3,6 @@ import Link from 'react-router/lib/components/Link';
 import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import Header from "../components/Header";
 import responsiveStyles from '../utils/responsiveStyles';
 
 const images = {

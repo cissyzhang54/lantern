@@ -2,6 +2,7 @@ import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
+import FeatureFlag from '../utils/featureFlag';
 
 let c3 = {};
 
@@ -72,6 +73,11 @@ export default class LineChart extends React.Component {
   componentDidMount() {
     if (this.props.data)
       this.drawChart();
+  }
+
+  componentWillMount () {
+    let renderFeature = FeatureFlag.check(this.props.identifier);
+    this.render = renderFeature ? this.render : function () { return false };
   }
 
   render() {
