@@ -39,6 +39,9 @@
     "ES_INDEX_ROOT": {
       "required":true
     },
+    "ES_SEARCH_INDEX_ROOT": {
+      "required":true
+    },
     "RAVEN_KEY": {
       "required":true
     },

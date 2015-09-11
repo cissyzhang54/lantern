@@ -1,5 +1,7 @@
 import elasticsearch from 'elasticsearch';
 import ArticlesQuery from './queries/Articles';
+import SearchQuery from './queries/Search';
+
 import Logger from './logger';
 
 
@@ -19,6 +21,8 @@ export default function runQuery(category, queryData) {
   switch (category) {
     case 'articles':
       return runArticleQuery(queryData);
+    case 'search':
+      return runSearchQuery(queryData);
     default:
       return null;
   }
@@ -48,6 +52,22 @@ function runArticleQuery(queryData) {
       }
 
       return resolve(response);
+    });
+  });
+}
+
+
+function runSearchQuery(queryData) {
+  return new Promise((resolve, reject) => {
+    let queryObject = SearchQuery(queryData);
+    client.search({
+      index: process.env.ES_SEARCH_INDEX_ROOT + '*',
+      body: queryObject
+    }, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      return resolve(response.hits.hits);
     });
   });
 }
