@@ -20,9 +20,6 @@ class Analytics {
 
   sendGAEvent(event) {
     if (!this.track) return;
-    console.log('%c ----- GA Start -----', 'color:blue');
-    console.log(event);
-    console.log('%c ----- GA End -------', 'color:blue');
     ga('send', event); // e.g. pageview
   }
 
