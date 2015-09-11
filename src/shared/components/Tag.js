@@ -29,3 +29,7 @@ Tag.propTypes = {
   name: React.PropTypes.string.isRequired,
   onClick: React.PropTypes.func
 };
+
+Tag.defaultProps = {
+  name: 'Financials'
+};

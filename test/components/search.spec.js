@@ -7,10 +7,14 @@ describe('Search component', function() {
   let search;
 
   beforeEach(function() {
-    search = createComponent(Search, {});
+    search = createComponent(Search, {
+
+    });
   });
 
-  it('should render the search field', function() {
+  it('Should render the search field', function() {
+    const props = search.props;
+
     //expect(search.props.children[0].type).to.equal('label');
     //expect(search.props.children[1].type).to.equal('br');
     //expect(search.props.children[2].type).to.equal('input');

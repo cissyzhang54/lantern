@@ -4,8 +4,8 @@
   "description": "Lantern - a data analytics platfor for the FT",
   "main": "src/server/server.js",
   "scripts": {
-    "test": "mocha --compilers js:babel/register --recursive test/**/*.spec.js",
-    "test-debug": "mocha --debug-brk --compilers js:babel/register --recursive test/**/*.spec.js",
+    "test": "env NODE_ENV=test mocha --compilers js:babel/register --recursive test/**/*.spec.js",
+    "test-debug": "env NODE_ENV=test mocha --debug-brk --compilers js:babel/register --recursive test/**/*.spec.js",
     "clean": "rm -rf lib",
     "watch-js": "babel src -d lib --experimental -w",
     "dev-server": "env $(cat .env) node lib/server/webpack",
