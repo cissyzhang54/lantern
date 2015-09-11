@@ -12,8 +12,10 @@ import errorRoutes from "../shared/routers/error";
 import dataPreloader from "./routers/dataPreloader-routes";
 import apiRouter from "./routers/api-routes";
 import authRouter from "./routers/auth-routes";
+import uuid from 'uuid';
 
 delete process.env.BROWSER;
+let cacheBustId = uuid();
 const app = express();
 const hbs = exphbs.create({});
 
@@ -58,7 +60,12 @@ function renderRoute(route, req, res) {
     }
     let content = React.renderToString(<Handler />);
     iso.add(content, alt.flush());
-    res.render('index', { content: iso.render(), jsUrl: config.jsUrl, title: DocumentTitle.rewind() });
+    res.render('index',
+      { content: iso.render(),
+        jsUrl: config.jsUrl,
+        version: '?v=' + cacheBustId,
+        title: DocumentTitle.rewind()
+      });
 
   });
 }
