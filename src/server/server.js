@@ -21,8 +21,12 @@ const hbs = exphbs.create({});
 
 // Ready  ....setup the app
 app.use(compress());
+app.enable('view cache');
 app.set('views', './src/server/views');
-app.engine('hbs', hbs.engine);
+app.engine('hbs', exphbs({
+  defaultLayout: 'main.hbs',
+  layoutsDir:"src/server/views/layouts/"
+  }));
 app.set('view engine', 'hbs');
 app.use(express.static('public'));
 app.use(express.static('src/server/resources'));
@@ -32,6 +36,18 @@ app.use('/status', function (req, res) {
   res.sendStatus(200);
   res.end();
 });
+app.use('/loginFailed', (req, res) =>{
+  let title = `Login Failed`
+  let message = `Sorry, you must use a valid FT.com email address`
+  let link = { message: `Try again?`, url:`${req.query.gotoUrl}`}
+  res.render('loggedOut',  { title, message, link});
+});
+app.use('/bye', (req, res) =>{
+  let title = `Logged Out`
+  let message = `Thanks for visiting, come again soon!`
+  res.render('loggedOut',  { title, message});
+});
+
 app.use('/', authRouter);
 app.use('/api/v0', ensureApiAuthenticated, apiRouter);
 app.use('/', ensureAuthenticated, dataPreloader);
@@ -72,7 +88,7 @@ function renderRoute(route, req, res) {
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
-  req.session.gotoUrl = req.originalUrl;
+  req.session.gotoUrl = req.session.gotoUrl || req.originalUrl;
   res.redirect('/login');
 }
 

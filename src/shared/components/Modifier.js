@@ -1,7 +1,6 @@
 import React from "react";
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 import Comparator from "./Comparator";
 import Filters from "./Filters";

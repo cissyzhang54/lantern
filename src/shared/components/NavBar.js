@@ -1,5 +1,6 @@
 import React from "react";
 import Link from 'react-router/lib/components/Link';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 import responsiveStyles from '../utils/responsiveStyles';
 import Logo from '../components/Logo';
@@ -71,7 +72,8 @@ export default class AppController extends React.Component {
     ];
     let numrows = navItems.length;
     let rows = [];
-    for (let i=0; i < numrows; i++) {
+    let i = 0;
+    for (i; i < numrows; i++) {
       rows.push(
           <li style={styles.navitem} key={i}>
             <Link to={navItems[i].link} style={styles.navlink}>{navItems[i].title}</Link>
@@ -79,8 +81,14 @@ export default class AppController extends React.Component {
     }
 
     rows.push(
-      <li style={{float: 'right'}}>
+      <li className='pull-right' key={i++}>
         <div style={styles.alpha}>ALPHA</div>
+      </li>,
+      <li className='pull-right' style={styles.navitem} key={i++}>
+        <a href='/logout' style={styles.navlink}>
+          <Glyphicon glyph={'log-out'} />
+          Logout
+        </a>
       </li>
     );
 
