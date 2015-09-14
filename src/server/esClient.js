@@ -1,7 +1,7 @@
 import elasticsearch from 'elasticsearch';
 import ArticlesQuery from './queries/Articles';
 import SearchQuery from './queries/Search';
-
+import assert from 'assert';
 import Logger from './logger';
 
 
@@ -18,16 +18,31 @@ var client = elasticsearch.Client({
 });
 
 export default function runQuery(category, queryData) {
+  try {
+    assert.equal(typeof category, 'string',
+      'argument "category" must be a string');
+
+    assert.equal(typeof queryData, 'object',
+      'argument "queryData" must be an object');
+  } catch (e) {
+    let error = new Error(e);
+    error.name = 'MalformedQueryArgumentsError';
+    error.query = queryData;
+    error.category = category;
+    return Promise.reject(error);
+  }
+
   switch (category) {
     case 'articles':
       return runArticleQuery(queryData);
     case 'search':
       return runSearchQuery(queryData);
     default:
-      return null;
+      let error = new Error('No Suitable Category');
+      error.name = 'CategoryNotFoundError';
+      error.category = category;
+      return Promise.reject(error);
   }
-  console.dir(p);
-  return p;
 }
 
 function runArticleQuery(queryData) {

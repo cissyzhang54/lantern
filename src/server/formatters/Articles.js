@@ -1,11 +1,24 @@
+import assert from 'assert';
 import moment from 'moment';
 
 export default function formatData(data) {
+  try {
+    assert.equal(typeof data, 'object',
+      "argument 'data' should be an object");
+  } catch (e) {
+    let error = new Error(e);
+    error.name = 'MalformedArgumentsError';
+    error.data = data;
+    return Promise.reject(error);
+  }
+
+
   return new Promise((resolve, reject) => {
     try {
-      let articleData = data.hits.hits[0]._source;
 
-      resolve({
+
+      let articleData = data.hits.hits[0]._source;
+      let results = {
         article: {
           title: articleData.title,
           uuid: articleData.article_uuid,
@@ -20,12 +33,15 @@ export default function formatData(data) {
           sections: articleData.sections,
           topics: articleData.topics
         }
-      });
+      };
+
+      resolve(results);
+
     } catch (e) {
       let error = new Error(e);
       error.name = 'DataParsingError';
       error.response = data;
-      reject(e);
+      reject(error);
     }
   });
 
