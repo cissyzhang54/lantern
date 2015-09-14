@@ -29,8 +29,12 @@ let passport = new PassportWrapper().create();
 router.use(passport.initialize());
 router.use(passport.session());
 
-router.get('/login', (req, res) =>{
-    res.redirect('/auth/google');
+router.use('/login', (req, res) =>{
+  res.redirect('/auth/google');
+});
+router.use('/logout', (req, res) => {
+  req.logout();
+  res.redirect('/bye');
 });
 
 router.get('/auth/google',
@@ -43,22 +47,14 @@ router.get('/auth/google',
     () => {});
 
 router.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/login' }),
+  passport.authenticate('google', { failureRedirect: '/loginFailed' }),
   (req, res, next) => {
     log.info('User Login: ' + req.user.email);
     res.redirect(req.session.gotoUrl || '/');
   });
 
-router.get('/logout', (req, res) => {
-  req.logout();
-  res.redirect('/');
-});
-
-
 router.use((err, req, res, next) => {
-  //console.log(err, "I CAUGHT IT");
-  next();
-})
-
+  res.redirect('/loginFailed?gotoUrl=' + req.session.gotoUrl);
+});
 
 export default router;

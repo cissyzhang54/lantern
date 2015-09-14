@@ -34,23 +34,18 @@ PassportWrapper.prototype.create = function() {
         },
         function(accessToken, refreshToken, profile, done) {
             process.nextTick(function () {
-                if (!endsWith(profile.email, process.env.HOST_DOMAIN)) {
-                  var e = new Error("Authentication failed");
-                  e.name = 'AuthError';
-                  e.user = profile;
-                  return done(e, profile);
-                }
-                // the user's Google profile is returned to represent the logged-in user.
+              let emailHost = profile.email.split('@').pop()
+              if (emailHost === process.env.HOST_DOMAIN) {
                 return done(null, profile);
+              }
+              var e = new Error("Authentication failed");
+              e.name = 'AuthError';
+              e.user = profile;
+              return done(e, profile);
             });
         }
     ));
     return passport;
 };
-
-function endsWith(text, pattern) {
-  var lastIndex = text.lastIndexOf(pattern);
-  return (lastIndex !== -1) && (lastIndex + pattern.length === text.length);
-}
 
 export default PassportWrapper;
