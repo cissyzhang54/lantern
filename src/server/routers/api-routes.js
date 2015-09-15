@@ -57,7 +57,7 @@ function category(req, res, next) {
 function search(req, res, next) {
   var query = req.params.query;
 
-  esClient('search', query)
+  esClient('search', {term: query})
     .then((response) => {
       return SearchDataFormatter(response);
     })

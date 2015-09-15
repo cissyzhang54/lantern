@@ -1,4 +1,19 @@
+import assert from 'assert';
+
 export default function PageViewsQuery(query) {
+
+  assert.equal(typeof query, 'object',
+    "argument 'query' should be an object");
+
+  assert.equal(typeof query.uuid, 'string',
+    "argument 'query' must contain a 'uuid' string property");
+
+  assert.equal(typeof query.dateFrom, 'string',
+    "argument 'query' must contain a 'dateFrom' date string property");
+
+  assert.equal(typeof query.dateTo, 'string',
+    "argument 'query' must contain a 'dateTo' date property");
+
   return {
     query : {
       filtered : {
