@@ -17,6 +17,11 @@ describe("Data Api Utils", () => {
       expect(() => DataAPIUtils.getArticleData({uuid:123})).to.throw();
     });
 
+
+    it('should not throw an exception if the uuid passed to the query is a string', () => {
+      expect(() => DataAPIUtils.getArticleData({uuid:'123'})).not.to.throw();
+    });
+
   });
 
   describe('#search()', () => {
@@ -29,6 +34,10 @@ describe("Data Api Utils", () => {
       expect(() => DataAPIUtils.search(123)).to.throw();
       expect(() => DataAPIUtils.search({})).to.throw();
       expect(() => DataAPIUtils.search(false)).to.throw();
+    });
+
+    it('should not throw  if a string query is passed', () => {
+      expect(() => DataAPIUtils.search('123')).not.to.throw();
     });
 
   });
