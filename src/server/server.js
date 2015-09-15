@@ -19,6 +19,9 @@ let cacheBustId = uuid();
 const app = express();
 const hbs = exphbs.create({});
 
+let prefetch = ['<https://fonts.googleapis.com/css?family=Work+Sans>; rel=prefetch',
+  '<https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css>; rel=prefetch'];
+
 // Ready  ....setup the app
 app.use(compress());
 app.enable('view cache');
@@ -66,6 +69,7 @@ var server = app.listen(config.port, function () {
 });
 
 function renderRoute(route, req, res) {
+  res.set('Link', prefetch.join(','));
   res.locals.data = res.locals.data || {};
   if (req.user){
     res.locals.data.UserStore = {

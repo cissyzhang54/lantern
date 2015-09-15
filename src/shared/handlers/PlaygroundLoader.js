@@ -2,7 +2,7 @@ import React from "react";
 
 const comps = {
   header: require('../components/Header'),
-  logo: require('../components/Logo'),
+  logoSVG: require('../components/LogoSVG'),
   search: require('../components/Search'),
   singleMetric: require('../components/SingleMetric'),
   modifier: require('../components/Modifier'),

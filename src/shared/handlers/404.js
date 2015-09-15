@@ -3,7 +3,7 @@ import Link from 'react-router/lib/components/Link';
 import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import Loading from '../components/Loading';
+import Logo from '../components/Logo';
 
 class Error404View extends React.Component {
 
@@ -24,7 +24,7 @@ class Error404View extends React.Component {
         <main>
           <Row>
             <Col xs={12}  >
-              <Loading message={message} error />
+              <Logo message={message} error />
               </Col>
           </Row>
         </main>

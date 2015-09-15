@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import React from 'react';
 import Search from '../../src/shared/components/Search';
-import Loading from '../../src/shared/components/Loading';
+import Logo from '../../src/shared/components/Logo';
 import Input from 'react-bootstrap/lib/Input';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
@@ -17,7 +17,7 @@ describe('Search component', function() {
       results:[]
     });
     let searchResults = search.props.children[3];
-    expect(TestUtils.isElementOfType(search.props.children[0], Loading)).to.equal(true);
+    expect(TestUtils.isElementOfType(search.props.children[0], Logo)).to.equal(true);
     expect(TestUtils.isElementOfType(search.props.children[1], Input)).to.equal(true);
     expect(TestUtils.isElementOfType(searchResults, ListGroup)).to.equal(true);
     expect(searchResults.props.children.length).to.equal(0)
