@@ -75,20 +75,13 @@ export default class AppController extends React.Component {
     let i = 0;
     for (i; i < numrows; i++) {
       rows.push(
-          <li style={styles.navitem} key={i}>
-            <Link to={navItems[i].link} style={styles.navlink}>{navItems[i].title}</Link>
-          </li>);
+        <li style={styles.navitem} key={i}>
+          <Link to={navItems[i].link} style={styles.navlink}>{navItems[i].title}</Link>
+        </li>);
     }
-
     rows.push(
       <li className='pull-right' key={i++}>
         <div style={styles.alpha}>ALPHA</div>
-      </li>,
-      <li className='pull-right' style={styles.navitem} key={i++}>
-        <a href='/logout' style={styles.navlink}>
-          <Glyphicon glyph={'log-out'} />
-          Logout
-        </a>
       </li>
     );
 

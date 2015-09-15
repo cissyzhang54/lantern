@@ -33,8 +33,13 @@ router.use('/login', (req, res) =>{
   res.redirect('/auth/google');
 });
 router.use('/logout', (req, res) => {
+  sessionStore.destroy(req.sessionID)
   req.logout();
-  res.redirect('/bye');
+  req.session.destroy(function(err){
+    if(err){    console.log(err);    }
+    res.clearCookie('connect.sid', { path: '/' });
+    res.redirect('/bye');
+  });
 });
 
 router.get('/auth/google',
