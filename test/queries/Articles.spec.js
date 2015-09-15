@@ -5,24 +5,32 @@ describe('Articles Query', () => {
   it('should be a function', () => {
     expect(ArticlesQuery).to.be.a.function;
   });
+  it('should not throw if passed a correct query object', () => {
+    const query = {
+      uuid: '123',
+      dateTo: new Date().toISOString(),
+      dateFrom: new Date().toISOString()
+    };
+    expect(() => ArticlesQuery(query)).not.to.throw();
+  });
   it('should throw if passed no query object', () => {
-    expect(() => ArticlesQuery()).to.throw;
+    expect(() => ArticlesQuery()).to.throw();
   });
   it('should throw if passed no query uuid', () => {
-    expect(() => ArticlesQuery({})).to.throw;
+    expect(() => ArticlesQuery({})).to.throw();
   });
   it('should throw if passed no dateFrom', () => {
     const query = {
       uuid: '123',
       dateTo: new Date().toISOString()
     };
-    expect(() => ArticlesQuery(query)).to.throw;
+    expect(() => ArticlesQuery(query)).to.throw();
   });
   it('should throw if passed no dateTo', () => {
     const query = {
       uuid: '123',
       dateFrom: new Date().toISOString()
     };
-    expect(() => ArticlesQuery(query)).to.throw;
+    expect(() => ArticlesQuery(query)).to.throw();
   });
 });
