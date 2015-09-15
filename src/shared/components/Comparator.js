@@ -4,6 +4,14 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import FeatureFlag from '../utils/featureFlag';
 
+const divStyle = {
+  fontWeight: "600"
+};
+
+const wrapperStyle = {
+  marginBottom: "10px"
+};
+
 export default class Comparator extends React.Component {
 
   _handleTagClick(tag) {
@@ -23,14 +31,6 @@ export default class Comparator extends React.Component {
         onClick={this._handleTagClick.bind(this, t)}
         key={i} />);
     });
-
-    const divStyle = {
-      fontWeight: "600"
-    };
-
-    const wrapperStyle = {
-      marginBottom: "10px"
-    };
 
     return (<Row style={wrapperStyle}>
       <Col xs={12} sm={2}>
