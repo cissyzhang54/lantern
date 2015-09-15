@@ -3,8 +3,9 @@ import session, {MemoryStore} from "express-session";
 import {createClient as createRedisClient} from "redis";
 import RedisStore from "connect-redis";
 import PassportWrapper from "../passport-config";
-import Logger from '../logger';
+import LoggerFactory from '../logger';
 
+let Logger = LoggerFactory('auth');
 let log = new Logger();
 let router = express.Router();
 let sessionStore;

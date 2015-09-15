@@ -2,7 +2,7 @@ import elasticsearch from 'elasticsearch';
 import ArticlesQuery from './queries/Articles';
 import SearchQuery from './queries/Search';
 import assert from 'assert';
-import Logger from './logger';
+import LoggerFactory from './logger';
 
 
 var client = elasticsearch.Client({
@@ -14,7 +14,7 @@ var client = elasticsearch.Client({
       protocol: 'https'
     }
   ],
-  log: Logger
+  log: LoggerFactory('elasticsearch')
 });
 
 export default function runQuery(category, queryData) {
