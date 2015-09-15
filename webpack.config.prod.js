@@ -15,6 +15,7 @@ module.exports = {
     new webpack.DefinePlugin({
       "process.env": {
         BROWSER: JSON.stringify(true),
+        NODE_ENV: JSON.stringify(process.env.NODE_ENV),
         RAVEN_KEY: JSON.stringify(process.env.RAVEN_KEY),
         RAVEN_SECRET: JSON.stringify(process.env.RAVEN_SECRET),
         RAVEN_APP_ID: JSON.stringify(process.env.RAVEN_APP_ID)

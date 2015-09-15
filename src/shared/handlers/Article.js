@@ -16,12 +16,6 @@ import QueryStore from '../stores/QueryStore';
 import QueryActions from '../actions/QueryActions';
 import Error404 from '../handlers/404';
 
-const style = {
-  'margin': '10px 0',
-  'padding': '10px 0',
-  'borderBottom': '1px solid #ccc'
-};
-
 class ArticleView extends React.Component {
 
   constructor(props) {
@@ -93,7 +87,7 @@ class ArticleView extends React.Component {
     let title = (data) ? 'Lantern - ' + data.article.title : '';
     return (<DocumentTitle title={title}>
       <div>
-        <Row style={style}>
+        <Row>
           <Header
               identifier='article:title'
               title={data.article.title}
@@ -101,7 +95,7 @@ class ArticleView extends React.Component {
               published={'Published: ' + data.article.published_human}
               />
         </Row>
-        <Row  style={style}>
+        <Row>
           <Modifier
             identifier='article:modifier'
             tags={data.article.topics.concat(data.article.sections)}

@@ -8,6 +8,12 @@ import DateRange from "./DateRange";
 
 import FeatureFlag from '../utils/featureFlag';
 
+const style = {
+  'margin': '10px 0',
+  'padding': '10px 0',
+  'borderBottom': '1px solid #ccc'
+};
+
 export default class Modifier extends React.Component {
 
   constructor(props) {
@@ -21,7 +27,7 @@ export default class Modifier extends React.Component {
 
   render() {
     return (
-      <div>
+      <div style={style}>
         <Comparator identifier={this.props.identifier + ':comparator'} tags={this.props.tags} />
         <Filters identifier={this.props.identifier + ':filters'} />
         <DateRange identifier={this.props.identifier + ':DateRange'} />

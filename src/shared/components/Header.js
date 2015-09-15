@@ -6,28 +6,33 @@ import FeatureFlag from '../utils/featureFlag';
 import responsiveStyles from '../utils/responsiveStyles';
 
 const componentStyles = {
-    'default': {
-        title: {
-            margin: 0,
-            textAlign: 'center'
-        },
-        titleContainer: {
-            verticalAlign: 'middle'
-        },
-        text: {
-            color: '#666',
-            display: 'inline-block',
-            margin: 0
-        }
+  'default': {
+    title: {
+      margin: 0,
+      textAlign: 'center'
     },
-    '(max-width: 500px)': {
-        title: {
-            fontSize: '24px'
-        },
-        text: {
-            fontSize: '12px'
-        }
+    titleContainer: {
+      verticalAlign: 'middle'
+    },
+    text: {
+      color: '#666',
+      display: 'inline-block',
+      margin: 0
+    },
+    container : {
+      'margin': '10px 0',
+      'padding': '10px 0',
+      'borderBottom': '1px solid #ccc'
     }
+  },
+  '(max-width: 500px)': {
+    title: {
+      fontSize: '24px'
+    },
+    text: {
+      fontSize: '12px'
+    }
+  }
 };
 
 export default class Header extends React.Component {
@@ -55,7 +60,7 @@ export default class Header extends React.Component {
         let styles = this.state.responsiveStyles;
 
         return (
-            <Row>
+            <Row style={styles.container}>
                 <header style={styles.header} className="clearfix"  >
                     <Col xs={12} >
                         <div style={styles.titleContainer} >
