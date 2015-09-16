@@ -243,6 +243,25 @@ nav .active{
   background-image: radial-gradient(59% 59%, red, orange);
   animation: flicker 3s backwards  linear infinite;
 }
+.error .lantern__flame{
+  width: 10px;
+  opacity: 0.35;
+  height: 60px;
+  transform: rotate(0deg) translateX(10px);
+  background-image: linear-gradient(white, rgba(255, 255, 255, 0));
+  background-color: black;
+  border: 0;
+  animation: flicker-out 2s forwards alternate infinite;
+}
+
+@keyframes flicker-out {
+  0% {
+    background-color: black;
+  }
+  100% {
+    background-color: lightgrey;
+  }
+}
 
 @keyframes flicker-reflection {
   5% {

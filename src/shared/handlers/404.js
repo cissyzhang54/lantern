@@ -3,48 +3,29 @@ import Link from 'react-router/lib/components/Link';
 import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import responsiveStyles from '../utils/responsiveStyles';
-
-const images = {
-  'default': {
-    img: '/404.png'
-  },
-  '(max-width: 500px)': {
-    img: '/404-small.png'
-  }
-};
+import Loading from '../components/Loading';
 
 class Error404View extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      responsiveStyles : images['default']
-    };
   }
 
   componentDidMount() {
-    responsiveStyles.addListeners(this, images);
     let analytics = require('../utils/analytics');
     analytics.sendGAEvent('pageview');
   }
 
-  componentWillUnmount() {
-    responsiveStyles.removeListeners(this);
-  }
-
-
   render() {
-    let styles = this.state.responsiveStyles;
     let title = 'Lantern - Page Not Found'
+    let message =["Ooops!","We could not find the article."," Perhaps the article was published less than 24 hours ago?"]
     return (<DocumentTitle title={title}>
       <div>
-
         <main>
           <Row>
             <Col xs={12}  >
-              <img src={styles.img} />
-            </Col>
+              <Loading message={message} error />
+              </Col>
           </Row>
         </main>
       </div>

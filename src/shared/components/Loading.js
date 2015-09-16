@@ -12,9 +12,15 @@ const style = {
 export default class Comparator extends React.Component {
 
   render() {
-    let className = this.props.message ? 'lantern__circle loading' : 'lantern__circle'
+    let classNames = ['lantern__circle']
+    if (this.props.loading) classNames.push('loading')
+    if (this.props.error) classNames.push('error')
+    let messages = Array.isArray(this.props.message) ? this.props.message : [this.props.message];
+    let message = messages.map(function(str){
+      return <div style={style}>{str}</div>
+    });
     return (<div>
-      <div className={className}>
+      <div className={classNames.join(' ')}>
         <div className="lantern__hoop"></div>
         <div className="lantern__lid lantern__lid--upper"></div>
         <div className="lantern__lid lantern__lid--lower"></div>
@@ -26,7 +32,7 @@ export default class Comparator extends React.Component {
         <div className="lantern__base lantern__base--lupper"></div>
         <div className="lantern__base lantern__base--lower"></div>
       </div>
-      <div style={style}>{this.props.message}</div>
+      {message}
     </div>);
   }
 }

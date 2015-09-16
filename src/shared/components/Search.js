@@ -70,7 +70,7 @@ class Search extends React.Component {
     }
 
     return (<div>
-      <Loading message={SearchStore.getState().loading?'Searching...':''}/>
+      <Loading message={SearchStore.getState().loading?'Searching...':''} loading/>
       <Input
         ref="searchinput"
         labelClassName='large'

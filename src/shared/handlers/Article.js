@@ -81,7 +81,7 @@ class ArticleView extends React.Component {
         justifyContent: 'center'
       };
 
-      return (<div style={loadingStyle}><Loading message="Loading Article..." /></div>);
+      return (<div style={loadingStyle}><Loading message="Loading Article..." loading/></div>);
     }
 
     let title = (data) ? 'Lantern - ' + data.article.title : '';
@@ -132,7 +132,7 @@ class ArticleView extends React.Component {
             data={data.article.readTimes}
             keys={['value']}
             title="When did readers access the article?"
-            yLabel='Unique Readers'
+            yLabel='Page Views'
             xLabel='Time'
             />
           <Row>
