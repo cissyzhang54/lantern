@@ -36,13 +36,18 @@ class Search extends React.Component {
   }
 
   componentDidMount() {
-    this.refs.searchinput.getInputDOMNode().focus();
+    let el = this.refs.searchinput.getInputDOMNode();
+    let query = SearchStore.getState().query;
+    el.setAttribute('value', query);
+    el.focus();
+    if (el.setSelectionRange) {
+      el.setSelectionRange(query.length, query.length);
+    }
   }
 
   _handleSearchInput() {
-    var value = this.refs.searchinput.getValue()
     this.setState({
-      query: value
+      query: this.refs.searchinput.getValue()
     });
     if (this.showSearchResults()) {
       SearchActions.search(this.state.query);
@@ -63,14 +68,9 @@ class Search extends React.Component {
       );
     });
     let additionalInfo = getAdditionalInfo()
-
-    var query = this.props.query;
-    if (this.state.query) {
-      query = this.state.query;
-    }
-
+    let isLoading = SearchStore.getState().loading;
     return (<div>
-      <Loading message={SearchStore.getState().loading?'Searching...':''} loading/>
+      <Loading message={isLoading?'Searching...':''} loading={isLoading}/>
       <Input
         ref="searchinput"
         labelClassName='large'
