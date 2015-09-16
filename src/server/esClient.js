@@ -46,20 +46,38 @@ export default function runQuery(category, queryData) {
 }
 
 function runArticleQuery(queryData) {
+  let proms = [];
 
-  return new Promise((resolve, reject) => {
+  // Get the article pageview data
+  proms.push(new Promise((resolve, reject) => {
     let queryObject = ArticlesQuery(queryData);
     client.search({
       index: calculateIndices(queryData), 
       ignore_unavailable: true,
+      search_type: 'count',
       body: queryObject
     }, (error, response) => {
       if (error) {
         return reject(error);
       }
 
+      return resolve(response);
+    });
+  }));
+
+  // get the article metadata
+  proms.push(new Promise((resolve, reject) => {
+    client.get({
+      index: process.env.ES_SEARCH_INDEX_ROOT,
+      type: 'logs', // XXX this should be articles!
+      id: queryData.uuid
+    }, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+
       // handle article not found
-      if (!response.hits.hits.length) {
+      if (!response.found) {
         // no need to 'let'/'var' this
         error = new Error('Article not found');
         error.name = 'ArticleNotFoundError';
@@ -67,9 +85,12 @@ function runArticleQuery(queryData) {
         return reject(error);
       }
 
-      return resolve(response);
+      return resolve(response._source);
+
     });
-  });
+  }));
+
+  return Promise.all(proms);
 }
 
 

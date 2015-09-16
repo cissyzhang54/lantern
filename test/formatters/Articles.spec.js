@@ -22,7 +22,7 @@ describe('Article Formatter', function() {
     p = ArticleFormat({});
     expect(p.then).to.be.a.function;
   });
-  it('should reject a promise with a MalformedArgumentsError', function(done) {
+  it('should reject a promise with a MalformedArgumentsError if passed a string', function(done) {
     ArticleFormat('donald trump')
       .catch((error) => {
         expect(error.name).to.equal('MalformedArgumentsError');
@@ -30,10 +30,10 @@ describe('Article Formatter', function() {
         done();
       });
   });
-  it('should reject the promise with a DataParsingError', function(done) {
+  it('should reject the promise with a MalformedArgumentsError if passed an object', function(done) {
     ArticleFormat({})
       .catch((error) => {
-        expect(error.name).to.equal('DataParsingError');
+        expect(error.name).to.equal('MalformedArgumentsError');
         done();
       });
   });
@@ -42,6 +42,9 @@ describe('Article Formatter', function() {
       .then((data) => {
         expect(data.article).to.be.a.object;
         done();
+      })
+      .catch((error) => {
+        console.error('error', error);
       });
   });
 });

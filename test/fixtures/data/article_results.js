@@ -1,4 +1,4 @@
-export default {
+export default [{
   "took": 16,
   "timed_out": false,
   "_shards": {
@@ -9,39 +9,7 @@ export default {
   "hits": {
     "total": 5614,
     "max_score": 6.517843,
-    "hits": [
-      {
-        "_index": "article_page_view-2015-08-27",
-        "_type": "logs",
-        "_id": "AU9zzXhWvg7dgn4RwDU8",
-        "_score": 6.517843,
-        "_source": {
-          "@version": "1",
-          "@timestamp": "2015-08-28T10:14:44.185Z",
-          "article_uuid": "0049a468-4be5-11e5-b558-8a9722977189",
-          "title": "Private equity secondaries evolve with Palamon deal",
-          "initial_publish_date": "2015-08-26T17:32:01.000Z",
-          "view_timestamp": "2015-08-27T10:00:04.000Z",
-          "view_date": "2015-08-27",
-          "authors": [
-            "Joseph Cotterill"
-          ],
-          "genre": [
-            "News"
-          ],
-          "sections": [
-            "Financials",
-            "Investment Strategy",
-            "Financial Services",
-            "Companies",
-            "UK Companies"
-          ],
-          "topics": [
-            "Private equity"
-          ]
-        }
-      }
-    ]
+    "hits": []
   },
   "aggregations": {
     "page_views_over_time": {
@@ -1137,6 +1105,33 @@ export default {
           "doc_count": 28
         }
       ]
+    },
+    "avg_time_on_page" : {
+      "value" : 0
     }
   }
-};
+}, {
+  "@version": "1",
+  "@timestamp": "2015-08-28T10:14:44.185Z",
+  "article_uuid": "0049a468-4be5-11e5-b558-8a9722977189",
+  "title": "Private equity secondaries evolve with Palamon deal",
+  "initial_publish_date": "2015-08-26T17:32:01.000Z",
+  "view_timestamp": "2015-08-27T10:00:04.000Z",
+  "view_date": "2015-08-27",
+  "authors": [
+    "Joseph Cotterill"
+  ],
+  "genre": [
+    "News"
+  ],
+  "sections": [
+    "Financials",
+    "Investment Strategy",
+    "Financial Services",
+    "Companies",
+    "UK Companies"
+  ],
+  "topics": [
+    "Private equity"
+  ]
+}];

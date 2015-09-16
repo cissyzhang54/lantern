@@ -40,6 +40,11 @@ export default function PageViewsQuery(query) {
           field : "view_timestamp",
           interval : calculateInterval(query)
         }
+      },
+      avg_time_on_page : {
+        avg : {
+          field: "time_on_page"
+        }
       }
     }
   };

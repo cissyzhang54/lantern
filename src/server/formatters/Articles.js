@@ -3,8 +3,17 @@ import moment from 'moment';
 
 export default function formatData(data) {
   try {
-    assert.equal(typeof data, 'object',
-      "argument 'data' should be an object");
+    assert.equal(Object.prototype.toString.call(data), '[object Array]',
+      "argument 'data' should be an array");
+
+    assert.equal(data.length, 2,
+      "argument 'data' should be an array of length 2");
+
+    assert.equal(typeof data[0], 'object',
+      "the first element of 'data' should be an object");
+
+    assert.equal(typeof data[1], 'object',
+      "the second element of 'data' should be an object");
   } catch (e) {
     let error = new Error(e);
     error.name = 'MalformedArgumentsError';
@@ -16,22 +25,21 @@ export default function formatData(data) {
   return new Promise((resolve, reject) => {
     try {
 
-
-      let articleData = data.hits.hits[0]._source;
+      let [articleData, metaData] = data;
       let results = {
         article: {
-          title: articleData.title,
-          uuid: articleData.article_uuid,
-          author: formatAuthors(articleData.authors),
-          published: articleData.initial_publish_date,//formatPublishDate(articleData.initial_publish_date),
-          published_human: formatPublishDate(articleData.initial_publish_date),
-          pageViews: data.hits.total,
-          timeOnPage: "n/a",
+          title: metaData.title,
+          uuid: metaData.article_uuid,
+          author: formatAuthors(metaData.authors),
+          published: metaData.initial_publish_date,//formatPublishDate(articleData.initial_publish_date),
+          published_human: formatPublishDate(metaData.initial_publish_date),
+          pageViews: articleData.hits.total,
+          timeOnPage: articleData.aggregations.avg_time_on_page.value,
           socialReaders: "n/a",
-          readTimes: formatTimeSeries(data),
-          genre: articleData.genre,
-          sections: articleData.sections,
-          topics: articleData.topics
+          readTimes: formatTimeSeries(articleData),
+          genre: metaData.genre,
+          sections: metaData.sections,
+          topics: metaData.topics
         }
       };
 
