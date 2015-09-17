@@ -6,7 +6,8 @@ const comps = {
   search: require('../components/Search'),
   singleMetric: require('../components/SingleMetric'),
   modifier: require('../components/Modifier'),
-  lineChart: require('../components/LineChart')
+  lineChart: require('../components/LineChart'),
+  barChart: require('../components/BarChart')
 };
 
 export default class PlaygroundLoader extends React.Component {
@@ -19,7 +20,9 @@ export default class PlaygroundLoader extends React.Component {
       return (<div>Component not found</div>);
     }
 
-    return React.createElement(Component);
+    return React.createElement(Component, {
+      identifier: 'playground:' + componentName.toLowerCase()
+    });
 
   }
 

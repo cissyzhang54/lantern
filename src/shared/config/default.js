@@ -17,7 +17,17 @@ let config = {
     'article:modifier' : true,
     'article:modifier:comparator' : true,
     'article:modifier:filters' : true,
-    'article:modifier:DateRange' : true
+    'article:modifier:DateRange' : true,
+    'playground:header' : true,
+    'playground:logo' : true,
+    'playground:search' : true,
+    'playground:singlemetric' : true,
+    'playground:modifier' : true,
+    'playground:modifier:comparator' : true,
+    'playground:modifier:filters' : true,
+    'playground:modifier:DateRange' : true,
+    'playground:linechart' : true,
+    'playground:barchart' : true
   }
 };
 
