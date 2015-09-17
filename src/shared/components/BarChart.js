@@ -18,7 +18,7 @@ export default class BarChart extends React.Component {
   drawChart() {
     let node = React.findDOMNode(this.refs.chartContainer);
     let json = this.props.data;
-    
+
     this.chart = c3.generate({
       bindto: node,
       transition: {
@@ -36,7 +36,7 @@ export default class BarChart extends React.Component {
         }
       },
       axis: {
-        rotated: true,
+        rotated: (this.props.reverseAxis === false) ? false : true,
         x: {
           label: this.props.xLabel,
           type: 'category'

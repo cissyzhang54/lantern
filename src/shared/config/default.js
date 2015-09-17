@@ -29,7 +29,8 @@ let config = {
     'playground:modifier:DateRange' : true,
     'playground:piechart' : true,
     'playground:linechart' : true,
-    'playground:barchart' : true
+    'playground:barchart' : true,
+    'playground:columnchart' : true
   }
 };
 
