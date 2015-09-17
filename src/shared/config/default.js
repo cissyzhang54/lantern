@@ -14,6 +14,7 @@ let config = {
     'article:pageViews' : true,
     'article:socialReaders' : true,
     'article:readTimes' : true,
+    'article:devices' : true,
     'article:modifier' : true,
     'article:modifier:comparator' : true,
     'article:modifier:filters' : true,
@@ -26,6 +27,7 @@ let config = {
     'playground:modifier:comparator' : true,
     'playground:modifier:filters' : true,
     'playground:modifier:DateRange' : true,
+    'playground:piechart' : true,
     'playground:linechart' : true,
     'playground:barchart' : true
   }
