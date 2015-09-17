@@ -20,9 +20,9 @@ export default class Comparator extends React.Component {
   }
 
   render() {
-
     let tags = this.props.tags.map((t, i) => {
-      return (<Tag name={t} key={i} onClick={this.props.onChange}/>);
+      var selected = this.props.currentComparator === t ? true : false;
+      return (<Tag uuid={this.props.uuid} selected={selected} name={t} key={i} onClick={this.props.onChange}/>);
     });
 
     return (<Row style={wrapperStyle}>
