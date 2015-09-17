@@ -15,7 +15,8 @@ export default (
     <Route path="playground" handler={Playground}>
       <Route path=":componentName" handler={PlaygroundLoader}/>
     </Route>
-    <Route path="articles/:id" handler={Article} />
+    <Route path="articles/:uuid" handler={Article} />
+    <Route path="articles/:uuid/:comparator" handler={Article} />
     <NotFoundRoute name='404' handler={Error404}   />
   </Route>
 );

@@ -13,6 +13,8 @@ import Logo from "../components/Logo";
 import SingleMetric from "../components/SingleMetric";
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
+import ComparatorStore from '../stores/ComparatorStore';
+import ComparatorActions from '../actions/ComparatorActions';
 import QueryStore from '../stores/QueryStore';
 import QueryActions from '../actions/QueryActions';
 import Error404 from '../handlers/404';
@@ -24,17 +26,21 @@ class ArticleView extends React.Component {
   }
 
   static getStores() {
-    return [ArticleStore, QueryStore];
+    return [ArticleStore, ComparatorStore, QueryStore];
   }
 
   static getPropsFromStores() {
+    let comparatorState = ComparatorStore.getState();
     let articleState = ArticleStore.getState();
     let queryState = QueryStore.getState();
     return {
       query : queryState.query,
       data : articleState.data,
       loading : articleState.loading,
-      errorMessage : articleState.errorMessage
+      errorMessage : articleState.errorMessage,
+      comparatorData : comparatorState.data,
+      comparatorLoading : comparatorState.loading,
+      comparatorErrorMessage : comparatorState.errorMessage,
     };
   }
 
@@ -47,17 +53,23 @@ class ArticleView extends React.Component {
       return;
     }
 
-    QueryActions.selectUUID(this.props.params.id);
-
+    QueryActions.selectUUID(this.props.params.uuid);
+    if (this.props.params.comparator){
+      QueryActions.selectComparator(this.props.params.comparator);
+    }
   }
 
   componentWillUnmount() {
     ArticleActions.destroy();
+    ComparatorActions.destroy();
     QueryStore.unlisten(this._boundQueryHandlerRef);
   }
 
   _handleQueryChange() {
     ArticleStore.loadArticleData(this.props.query);
+    if (this.props.query.comparator){
+      ComparatorStore.loadComparatorData(this.props.query);
+    }
   }
 
   componentDidMount() {
@@ -67,14 +79,15 @@ class ArticleView extends React.Component {
   }
 
   render() {
-
     if (this.props.errorMessage) {
       return (<div><Error404/></div>);
     }
 
     let data = this.props.data;
+    let hasComparator = this.props.params.comparator !== undefined ? true : false;
+    let comparatorData = this.props.comparatorData;
 
-    if (!data || this.props.loading) {
+    if (!data || this.props.loading || comparatorData == null && this.props.params.comparator !== undefined) {
 
       const loadingStyle = {
         display: 'flex',
@@ -148,6 +161,7 @@ class ArticleView extends React.Component {
                 <SingleMetric
                   identifier='article:pageViews'
                   metric={data.article.pageViews}
+                  comparatorMetric={hasComparator ? comparatorData.article.category_average_view_count : ''}
                   metricType='integer'
                   label='Page Views'
                   size='large'

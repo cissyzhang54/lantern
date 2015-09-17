@@ -45,7 +45,10 @@ export default class Filters extends React.Component {
     var filters = fakeData.filters.map((f, i) => {
       return (
         <Col sm={2} xs={6} key={i}>
-        <Filter name={f.name} options={f.options} />
+        <Filter
+          name={f.name}
+          options={f.options}
+          onChange={this.props.onChange} />
         </Col>
       );
     });
@@ -57,5 +60,13 @@ export default class Filters extends React.Component {
       {filters}
     </Row>);
   }
-
 }
+
+Filters.propTypes = {
+  onChange: React.PropTypes.func
+}
+
+Filters.defaultProps = {
+  onChange: _ => {console.log(_)}
+}
+

@@ -14,10 +14,6 @@ const wrapperStyle = {
 
 export default class Comparator extends React.Component {
 
-  _handleTagClick(tag) {
-    console.log(tag);
-  }
-
   componentWillMount () {
     let renderFeature = FeatureFlag.check(this.props.identifier);
     this.render = renderFeature ? this.render : function () { return false };
@@ -26,10 +22,7 @@ export default class Comparator extends React.Component {
   render() {
 
     let tags = this.props.tags.map((t, i) => {
-      return (<Tag
-        name={t}
-        onClick={this._handleTagClick.bind(this, t)}
-        key={i} />);
+      return (<Tag name={t} key={i} onClick={this.props.onChange}/>);
     });
 
     return (<Row style={wrapperStyle}>
@@ -43,7 +36,11 @@ export default class Comparator extends React.Component {
   }
 }
 
-
 Comparator.propTypes = {
-  tags: React.PropTypes.array.isRequired
+  tags: React.PropTypes.array.isRequired,
+  onChange: React.PropTypes.func
 };
+
+Comparator.defaultProps = {
+  onChange: _ => {console.log(_)}
+}
