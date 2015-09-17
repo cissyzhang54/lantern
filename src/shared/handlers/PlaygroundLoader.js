@@ -7,7 +7,8 @@ const comps = {
   singleMetric: require('../components/SingleMetric'),
   modifier: require('../components/Modifier'),
   lineChart: require('../components/LineChart'),
-  barChart: require('../components/BarChart')
+  barChart: require('../components/BarChart'),
+  columnChart: require('../components/ColumnChart')
 };
 
 export default class PlaygroundLoader extends React.Component {
