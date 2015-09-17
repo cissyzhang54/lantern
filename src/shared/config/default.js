@@ -30,7 +30,8 @@ let config = {
     'playground:piechart' : true,
     'playground:linechart' : true,
     'playground:barchart' : true,
-    'playground:columnchart' : true
+    'playground:columnchart' : true,
+    'playground:map' : true
   }
 };
 
