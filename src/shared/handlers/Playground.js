@@ -44,6 +44,12 @@ export default class Playground extends React.Component {
             <li>
               <Link to="/playground/columnChart">Column Chart</Link>
             </li>
+            <li>
+              <Link to="/playground/pieChart">Pie Chart</Link>
+            </li>
+            <li>
+              <Link to="/playground/map">Map</Link>
+            </li>
           </ul>
         </Col>
         <Col className="stage">
