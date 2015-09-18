@@ -3,7 +3,7 @@ import ArticlesQuery from './queries/Articles';
 import SearchQuery from './queries/Search';
 import assert from 'assert';
 import LoggerFactory from './logger';
-
+import moment from 'moment';
 
 var client = elasticsearch.Client({
   host: [
@@ -50,7 +50,7 @@ function runArticleQuery(queryData) {
   return new Promise((resolve, reject) => {
     let queryObject = ArticlesQuery(queryData);
     client.search({
-      index: process.env.ES_INDEX_ROOT + '*',
+      index: calculateIndices(queryData), 
       body: queryObject
     }, (error, response) => {
       if (error) {
@@ -85,4 +85,19 @@ function runSearchQuery(queryData) {
       return resolve(response.hits.hits);
     });
   });
+}
+
+function calculateIndices(query) {
+  const fmtStr = 'YYYY-MM-DD';
+  let dateFrom = moment(moment(query.dateFrom).format(fmtStr));
+  let dateTo = moment(moment(query.dateTo).format(fmtStr));
+  const indexPrefix = process.env.ES_INDEX_ROOT; 
+  let indices = [];
+  
+  while (dateFrom < dateTo){
+    indices.push(indexPrefix + dateFrom.format(fmtStr));
+    dateFrom.add(1, 'days');
+  }
+
+  return indices;
 }
