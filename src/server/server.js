@@ -66,6 +66,12 @@ var server = app.listen(config.port, function () {
 });
 
 function renderRoute(route, req, res) {
+  res.locals.data = res.locals.data || {};
+  if (req.user){
+    res.locals.data.UserStore = {
+      user: req.user
+    }
+  }
   alt.bootstrap(JSON.stringify(res.locals.data || {}));
   let iso = new Iso();
 
