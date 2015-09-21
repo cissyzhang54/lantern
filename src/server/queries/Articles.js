@@ -1,4 +1,5 @@
 import assert from 'assert';
+import moment from 'moment';
 
 export default function PageViewsQuery(query) {
 
@@ -37,9 +38,26 @@ export default function PageViewsQuery(query) {
       page_views_over_time : {
         date_histogram : {
           field : "view_timestamp",
-          interval : "hour"
+          interval : calculateInterval(query)
         }
       }
     }
   };
+}
+
+function calculateInterval(query) {
+  let from = moment(query.dateFrom);
+  let to = moment(query.dateTo);
+  let span = moment.duration(to - from);
+
+  if (span <= moment.duration(1, 'day')) {
+    return 'hour';
+  } else if (span <= moment.duration(1, 'week')) {
+    return 'day'; 
+  } else if (span <= moment.duration(6, 'month')) {
+    return 'day';
+  } else {
+    return 'week';
+  }
+
 }
