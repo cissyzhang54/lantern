@@ -54,9 +54,9 @@ var componentStyles = {
 
 function getPercentageDifference (x , y) {
   if (x > y) {
-    return ((x - y) / y) * 100 | 0;
+    return (((x - y) / y) * 100) | 0;
   } else {
-    return ((y - x) / x) * 100 | 0;
+    return (((y - x) / x) * 100) | 0;
   }
 }
 
@@ -75,7 +75,7 @@ function checkSignClass (x) {
 
 function convertSecondsToMinutes(seconds) {
   let metricMinutes = Math.floor(seconds / 60);
-  let metricSeconds = seconds - metricMinutes * 60;
+  let metricSeconds = Math.floor(seconds - metricMinutes * 60);
 
   return {minutes: metricMinutes, seconds: metricSeconds};
 }

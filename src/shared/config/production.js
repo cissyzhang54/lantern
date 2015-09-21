@@ -5,7 +5,7 @@ export default {
     'article:wordCount' : false,
     'article:imageCount' : false,
     'article:bodyLinksCount' : false,
-    'article:timeOnPage' : false,
+    'article:timeOnPage' : true,
     'article:pageViews' : true,
     'article:socialReaders' : false,
     'article:readTimes' : true,
