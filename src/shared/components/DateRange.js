@@ -30,6 +30,7 @@ export default class DateRange extends React.Component {
       value: value,
       display: false
     });
+    this.props.onChange(value);
   }
 
   toggleRangePicker() {
@@ -115,3 +116,12 @@ export default class DateRange extends React.Component {
     );
   }
 }
+
+DateRange.propTypes = {
+  identifier: React.PropTypes.string.isRequired,
+  onChange: React.PropTypes.func,
+};
+
+DateRange.defaultProps = {
+  onChange: (value) => {console.log(value);}
+};

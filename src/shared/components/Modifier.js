@@ -5,8 +5,9 @@ import Row from 'react-bootstrap/lib/Row';
 import Comparator from "./Comparator";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
-
+import QueryActions from '../actions/QueryActions.js';
 import FeatureFlag from '../utils/featureFlag';
+
 
 const style = {
   'margin': '10px 0',
@@ -25,12 +26,27 @@ export default class Modifier extends React.Component {
     this.render = renderFeature ? this.render : function () { return false };
   }
 
+  handleDateRangeChange (value) {
+    QueryActions.selectDateRange({
+      from : value.start.toISOString(),
+      to: value.end.toISOString()
+    });
+  }
+
   render() {
     return (
       <div style={style}>
-        <Comparator identifier={this.props.identifier + ':comparator'} tags={this.props.tags} />
-        <Filters identifier={this.props.identifier + ':filters'} />
-        <DateRange identifier={this.props.identifier + ':DateRange'} />
+        <Comparator 
+          identifier={this.props.identifier + ':comparator'} 
+          tags={this.props.tags} 
+        />
+        <Filters 
+          identifier={this.props.identifier + ':filters'}
+        />
+        <DateRange 
+          identifier={this.props.identifier + ':DateRange'}
+          onChange={this.handleDateRangeChange}
+        />
       </div>
     );
   }
