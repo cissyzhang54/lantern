@@ -5,14 +5,10 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import Link from 'react-router/lib/components/Link';
 import Loading from '../components/Loading';
 import Logo from '../components/Logo';
-import connectToStores from 'alt/utils/connectToStores';
 
 import _ from 'underscore';
 
-import SearchStore from '../stores/SearchStore';
-import SearchActions from '../actions/SearchActions';
-
-class Search extends React.Component {
+export default class Search extends React.Component {
 
   constructor(props) {
     super(props);
@@ -22,14 +18,6 @@ class Search extends React.Component {
     };
   }
 
-  static getStores() {
-    return [SearchStore];
-  }
-
-  static getPropsFromStores() {
-    return SearchStore.getState();
-  }
-
   showSearchResults(){
     const val = (this.refs && this.refs.searchinput) ? this.refs.searchinput.getValue() : '';
     return val.length >= 3;
@@ -37,7 +25,7 @@ class Search extends React.Component {
 
   componentDidMount() {
     let el = this.refs.searchinput.getInputDOMNode();
-    let query = SearchStore.getState().query;
+    let query = this.props.query || '';
     el.setAttribute('value', query);
     el.focus();
     if (el.setSelectionRange) {
@@ -50,15 +38,15 @@ class Search extends React.Component {
       query: this.refs.searchinput.getValue()
     });
     if (this.showSearchResults()) {
-      SearchActions.search(this.state.query);
+      this.props.search(this.state.query);
     } else {
-      SearchActions.destroy();
+      this.props.destroy();
     }
   }
 
   render() {
 
-    let results = this.props.results.map((r, i) => {
+    let results = (this.props.results || []).map((r, i) => {
       return (
         <Link to={'/articles/' + r.article_uuid} key={r._id}>
           <ListGroupItem header={r.title}>
@@ -67,8 +55,8 @@ class Search extends React.Component {
         </Link>
       );
     });
-    let additionalInfo = getAdditionalInfo()
-    let isLoading = SearchStore.getState().loading;
+    let additionalInfo = getAdditionalInfo(this.props)
+    let isLoading = this.props.loading;
     return (<div>
       <Loading message={isLoading?'Searching...':''} loading={isLoading}/>
       <Input
@@ -100,15 +88,14 @@ function formatAuthors(authors) {
   return authors.join(", ") + ' and ' + lastAuthor;
 }
 
-function getAdditionalInfo(){
+function getAdditionalInfo(props){
   let additionalClass, additionalMessage;
-  let searchState = SearchStore.getState();
-  if (searchState.errorMessage){
+  let errorMessage = props.errorMessage;
+  if (errorMessage){
     additionalClass = 'warning'
-    additionalMessage = searchState.errorMessage
+    additionalMessage = errorMessage
   } else {
     return '';
   }
   return <ListGroupItem bsStyle={additionalClass} header={additionalMessage} />
 }
-export default connectToStores(Search);
