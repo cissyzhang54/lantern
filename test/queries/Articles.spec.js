@@ -33,4 +33,49 @@ describe('Articles Query', () => {
     };
     expect(() => ArticlesQuery(query)).to.throw();
   });
+  it('should return an interval of an hour for spans of a day', () => {
+    const query = {
+      uuid: '123',
+      dateFrom: '2015-01-01',
+      dateTo: '2015-01-02'
+    };
+    expect(ArticlesQuery(query).aggs.page_views_over_time.date_histogram.interval)
+      .to.equal('hour');
+  });
+  it('should return an interval of a day fror spans of a week or less', () => {
+    const query = {
+      uuid: '123',
+      dateFrom: '2015-01-01',
+      dateTo: '2015-01-07'
+    };
+    expect(ArticlesQuery(query).aggs.page_views_over_time.date_histogram.interval)
+      .to.equal('day');
+  });
+  it('should return an interval of a day for spans of a month or less', () => {
+    const query = {
+      uuid: '123',
+      dateFrom: '2015-01-01',
+      dateTo: '2015-02-01'
+    };
+    expect(ArticlesQuery(query).aggs.page_views_over_time.date_histogram.interval)
+      .to.equal('day');
+  });
+  it('should return an interval of a day for spans of six months or less', () => {
+    const query = {
+      uuid: '123',
+      dateFrom: '2015-01-01',
+      dateTo: '2015-06-01'
+    };
+    expect(ArticlesQuery(query).aggs.page_views_over_time.date_histogram.interval)
+      .to.equal('day');
+  });
+  it('should return an interval of week for spans of more than six months', () => {
+    const query = {
+      uuid: '123',
+      dateFrom: '2015-01-01',
+      dateTo: '2015-11-01'
+    };
+    expect(ArticlesQuery(query).aggs.page_views_over_time.date_histogram.interval)
+      .to.equal('week');
+  })
 });
