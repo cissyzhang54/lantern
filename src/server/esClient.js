@@ -51,6 +51,7 @@ function runArticleQuery(queryData) {
     let queryObject = ArticlesQuery(queryData);
     client.search({
       index: calculateIndices(queryData), 
+      ignore_unavailable: true,
       body: queryObject
     }, (error, response) => {
       if (error) {
