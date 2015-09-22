@@ -49,7 +49,7 @@ var controllerStyles = {
   }
 };
 
-export default class AppController extends React.Component {
+export default class NavBar extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -84,11 +84,16 @@ export default class AppController extends React.Component {
         <div style={styles.alpha}>ALPHA</div>
       </li>
     );
+    rows.push(
+      <li className='pull-right' key={i++} style={styles.navlink} >
+        <div >Hi, {this.props.user.name.givenName}</div>
+      </li>
+    );
 
     return (
-        <nav style={styles.nav} className="clearfix">
-          <ul style={styles.navbar}>
-            <li style={styles.headerItem}>
+        <nav style={styles.nav} className="clearfix navBar">
+          <ul style={styles.navbar} className="navBar--list">
+            <li style={styles.headerItem} key={i++} >
               <Logo />
             </li>
             {rows}

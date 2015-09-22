@@ -9,7 +9,7 @@ const style = {
   lineHeight:'3em',
 }
 
-export default class Comparator extends React.Component {
+export default class Loading extends React.Component {
 
   render() {
     let classNames = ['lantern__circle']
