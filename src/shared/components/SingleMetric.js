@@ -61,59 +61,37 @@ function getPercentageDifference (x , y) {
 }
 
 function checkSignClass (x) {
-  if (x < 0) {
-    componentStyles['default'].comparatorSymbol.color = 'red';
-    componentStyles['default'].comparatorValue.color = 'red';
-    return 'down';
-  }
-  else {
-    componentStyles['default'].comparatorSymbol.color = 'green';
-    componentStyles['default'].comparatorValue.color = 'green';
-    return 'up';
-  }
+  let [color, ret] = (x < 0) ? ['red','down'] : ['green', 'up'];
+  componentStyles['default'].comparatorSymbol.color = color;
+  componentStyles['default'].comparatorValue.color = color;
+  return ret;
 }
 
-function convertSecondsToMinutes(seconds) {
-  let metricMinutes = Math.floor(seconds / 60);
-  let metricSeconds = Math.floor(seconds - metricMinutes * 60);
-
-  return {minutes: metricMinutes, seconds: metricSeconds};
-}
-
-function timeMetricConversions (props) {
-  let returnJSON = {};
-
-  let convertedMetric = convertSecondsToMinutes(props.metric);
-  returnJSON.transformMetric = convertedMetric.minutes + 'm ' + convertedMetric.seconds + 's';
-
-  // If there is no comparator skip
-  if (typeof props.comparatorMetric !== 'undefined') {
-    let difference = props.metric - props.comparatorMetric;
-    difference = Math.abs(difference); // Remove the sign from the difference minute and seconds conversion
-    let compartorDifference = convertSecondsToMinutes(difference);
-    returnJSON.differenceSign = checkSignClass(difference);
-    returnJSON.transfromComparator = compartorDifference.minutes + 'm' + compartorDifference.seconds + 's';
+let convert = {
+  secondsToMinutes: (seconds) => {
+    seconds = Math.abs(seconds)
+    let metricMinutes = Math.floor(seconds / 60);
+    let metricSeconds = Math.floor(seconds - metricMinutes * 60);
+    return {minutes: metricMinutes, seconds: metricSeconds};
+  },
+  percentageDifference: (metric, comparatorMetric) => {
+    if (!comparatorMetric) return [null, null]
+    let comparatorDifference = getPercentageDifference(metric, comparatorMetric);
+    let differenceSign = checkSignClass(metric - comparatorMetric);
+    return [differenceSign, comparatorDifference + '%'];
+  },
+  time: (metric, comparatorMetric)=> {
+    let convertedMetric = convert.secondsToMinutes(metric);
+    let transformMetric = convertedMetric.minutes + 'm ' + convertedMetric.seconds + 's';
+    let [differenceSign, transformComparator] = convert.percentageDifference(metric, comparatorMetric)
+    return [transformMetric, differenceSign, transformComparator];
+  },
+  integer:  (metric, comparatorMetric)=>{
+    let transformMetric = (metric || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") // Add commas to output
+    let [differenceSign, transformComparator] = convert.percentageDifference(metric, comparatorMetric)
+    return [transformMetric, differenceSign, transformComparator];
   }
-
-  return returnJSON;
-}
-
-function integerMetricConversions (props) {
-  let returnJSON = {};
-
-  returnJSON.transformMetric = props.metric.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // Add commas to output
-
-  // If there is no comparator skip
-  if (typeof props.comparatorMetric !== 'undefined') {
-    let difference = props.metric - props.comparatorMetric;
-    returnJSON.differenceSign = checkSignClass(difference);
-
-    let percentageDifference = getPercentageDifference(props.metric, props.comparatorMetric);
-    returnJSON.transfromComparator = percentageDifference + '%';
-  }
-
-  return (returnJSON);
-}
+};
 
 export default class SingleMetric extends React.Component {
   constructor(props) {
@@ -137,30 +115,24 @@ export default class SingleMetric extends React.Component {
   }
 
   render() {
-    let metricValues, comparatorHTML;
+    let comparatorHTML;
     let styles = this.state.responsiveStyles;
-
-    // Do the correct metric conversions
-    if (this.props.metricType === 'integer') {
-      metricValues = integerMetricConversions(this.props);
-    }
-    else if (this.props.metricType === 'time') {
-      metricValues = timeMetricConversions(this.props);
-    }
+    let [transformMetric, differenceSign, transfromComparator] =
+      convert[this.props.metricType](this.props.metric, this.props.comparatorMetric)
 
     //If there is no comparator leave the comparator HTML undefined
-    if (typeof metricValues.transfromComparator !== 'undefined') {
+    if (!!transfromComparator) {
       comparatorHTML = (
         <span style={styles.comparator}>
-          <Glyphicon glyph={'glyphicon glyphicon-chevron-' + metricValues.differenceSign} style={styles.comparatorSymbol} />
-          <span style={styles.comparatorValue}>{metricValues.transfromComparator}</span>
+          <Glyphicon glyph={'glyphicon glyphicon-chevron-' + differenceSign} style={styles.comparatorSymbol} />
+          <span style={styles.comparatorValue}>{transfromComparator}</span>
         </span>
       );
     }
 
     return (
       <div className={'singleMetric'} style={assign(styles[this.props.size], styles.singleMetric)}>
-        <p style={styles.metric}>{metricValues.transformMetric} {comparatorHTML}</p>
+        <p style={styles.metric}>{transformMetric} {comparatorHTML}</p>
         <h3 style={styles.label}>{this.props.label}</h3>
       </div>
     );
@@ -177,8 +149,7 @@ SingleMetric.propTypes = {
 
 // Exclude comparator as this is an optional field
 SingleMetric.defaultProps = {
-  metric: 20000,
+  metric: 0,
   metricType: 'integer',
-  label: 'I am a single metric',
   size: 'large'
 };
