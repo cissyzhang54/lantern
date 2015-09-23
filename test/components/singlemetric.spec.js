@@ -11,7 +11,8 @@ describe ('SingleMetric component', function() {
       metric: 20000,
       comparatorMetric: 10000,
       metricType: 'integer',
-      identifier : 'testIdentifierOn'
+      identifier : 'testIdentifierOn',
+      label: 'I am a single metric'
     });
     singleMetricTime = createComponent(SingleMetric, {
       metric: 340,
@@ -44,6 +45,6 @@ describe ('SingleMetric component', function() {
     const timeCommparator = timeMetric.props.children[2].props.children;
 
     expect(timeMetric.props.children[0]).to.equal('5m 40s');
-    expect(timeCommparator[1].props.children).to.equal('0m20s');
+    expect(timeCommparator[1].props.children).to.equal('5%');
   });
 });

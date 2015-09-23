@@ -4,7 +4,6 @@ import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import Link from 'react-router/lib/components/Link';
 import Loading from '../components/Loading';
-import Logo from '../components/Logo';
 
 import _ from 'underscore';
 
@@ -58,7 +57,7 @@ export default class Search extends React.Component {
     let additionalInfo = getAdditionalInfo(this.props)
     let isLoading = this.props.loading;
     return (<div>
-      <Loading message={isLoading?'Searching...':''} loading={isLoading}/>
+      <Loading message={isLoading?'Searching...':''} loading={isLoading} />
       <Input
         ref="searchinput"
         labelClassName='large'
