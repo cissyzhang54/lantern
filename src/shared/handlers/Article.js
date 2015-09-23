@@ -118,13 +118,13 @@ class ArticleView extends React.Component {
             </Col>
             <Col xs={12} sm={9} >
               <Col xs={12} sm={4} >
-                <SingleMetric identifier='article:timeOnPage' metric={data.article.timeOnPage} comparatorMetric={2} metricType='time' label='Time on Page' size='large' />
+                <SingleMetric identifier='article:timeOnPage' metric={data.article.timeOnPage}  metricType='time' label='Time on Page' size='large' />
               </Col>
               <Col xs={12} sm={4} >
-                <SingleMetric identifier='article:pageViews' metric={data.article.pageViews} comparatorMetric={8092} metricType='integer' label='Page Views' size='large' />
+                <SingleMetric identifier='article:pageViews' metric={data.article.pageViews}  metricType='integer' label='Page Views' size='large' />
               </Col>
               <Col xs={12} sm={4} >
-                <SingleMetric identifier='article:socialReaders' metric={data.article.socialReaders} comparatorMetric={808} metricType='integer' label='Social Readers' size='large' />
+                <SingleMetric identifier='article:socialReaders' metric={data.article.socialReaders}  metricType='integer' label='Social Readers' size='large' />
               </Col>
             </Col>
           </Row>
@@ -146,11 +146,6 @@ class ArticleView extends React.Component {
             title="What devices did readers use?"
             cols={4}
             />
-          <Row>
-            <Col lg={12} >
-              <div>id: {data.article.uuid}</div>
-            </Col>
-          </Row>
         </main>
       </div>
     </DocumentTitle>);

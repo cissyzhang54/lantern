@@ -6,6 +6,7 @@ let config = {
   jsUrl: "//localhost:8081",
   gaTrackingID: 'UA-60698836-4',
   features : {
+    'home:recentArticles' : true,
     'article:title' : true,
     'article:wordCount' : true,
     'article:imageCount' : true,

@@ -1,6 +1,7 @@
 export default {
   jsUrl:   "",
   features : {
+    'home:recentArticles' : false,
     'article:title' : true,
     'article:wordCount' : false,
     'article:imageCount' : false,
