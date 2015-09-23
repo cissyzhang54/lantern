@@ -1,5 +1,12 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+const sassLoaders = [
+  "css-loader?sourceMap",
+  "autoprefixer-loader?browsers=last 2 version",
+  "sass-loader?sourceMap&outputStyle=expanded",
+];
 
 module.exports = {
   devtool: 'inline-source-map',
@@ -9,15 +16,16 @@ module.exports = {
       'webpack-dev-server/client?http://localhost:8081'],
   },
   output: {
-    path: path.join(__dirname, '/public/js/'),
-    filename: '[name].js',
-    publicPath: 'http://localhost:8081/js/',
+    path: path.join(__dirname, '/public/build/'),
+    filename: 'scripts/[name].js',
+    publicPath: 'http://localhost:8081/build/',
   },
   plugins: [
     new webpack.optimize.DedupePlugin(),
     //new webpack.optimize.UglifyJsPlugin({output: {comments: false}, minimize: true, compress: { warnings: false }}),
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
+    new ExtractTextPlugin("styles/[name].css"),
     new webpack.DefinePlugin({
       "process.env": {
         BROWSER: JSON.stringify(true),
@@ -28,11 +36,19 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['', '.js']
+    extensions: ['', '.js', '.scss']
   },
   module: {
     loaders: [
-      { test: /\.jsx?$/, loaders: ['react-hot', 'babel-loader?experimental'], exclude: /node_modules/ }
+      {
+        test: /\.jsx?$/,
+        loaders: ['react-hot', 'babel-loader?experimental'],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract("style-loader", sassLoaders.join("!")),
+      }
     ]
   }
 };

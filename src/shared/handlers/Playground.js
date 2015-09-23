@@ -24,7 +24,7 @@ export default class Playground extends React.Component {
               <Link to="/playground/header">Header</Link>
             </li>
             <li>
-              <Link to="/playground/logo">Logo</Link>
+              <Link to="/playground/logoSVG">LogoSVG</Link>
             </li>
             <li>
               <Link to="/playground/search">Search</Link>

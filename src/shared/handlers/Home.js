@@ -2,7 +2,7 @@ import React from "react";
 import DocumentTitle from 'react-document-title';
 import { Link } from "react-router";
 import Search from "../components/Search";
-import Loading from "../components/Loading";
+import Logo from "../components/Logo";
 
 import SearchStore from '../stores/SearchStore'
 import SearchActions from '../actions/SearchActions';

@@ -1,17 +1,25 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
+
+const sassLoaders = [
+  "css-loader",
+  "autoprefixer-loader?browsers=last 2 version",
+  "sass-loader?outputStyle=compressed",
+];
 
 module.exports = {
   entry: {
-    app: './lib/client/entry',
+    app: path.join(__dirname, './src/client/entry'),
   },
   output: {
-    path: path.join(__dirname, '/public/js/'),
-    filename: '[name].js'
+    path: path.join(__dirname, '/public/build/'),
+    filename: 'scripts/[name].js',
   },
   plugins: [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.UglifyJsPlugin({output: {comments: false}, minimize: true, compress: { warnings: false }}),
+    new ExtractTextPlugin("styles/[name].css"),
     new webpack.DefinePlugin({
       "process.env": {
         BROWSER: JSON.stringify(true),
@@ -23,11 +31,19 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['', '.js']
+    extensions: ['', '.js', '.scss']
   },
   module: {
     loaders: [
-      { test: /\.jsx?$/, loaders: ['babel-loader?experimental'], exclude: /node_modules/ }
+      {
+        test: /\.jsx?$/,
+        loaders: ['babel-loader?experimental'],
+        exclude: /node_modules/
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract("style-loader", sassLoaders.join("!")),
+      }
     ]
   }
 };

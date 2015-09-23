@@ -9,7 +9,7 @@ import Header from "../components/Header";
 import Modifier from "../components/Modifier";
 import LineChart from "../components/LineChart";
 import PieChart from "../components/PieChart";
-import Loading from "../components/Loading";
+import Logo from "../components/Logo";
 import SingleMetric from "../components/SingleMetric";
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
@@ -82,7 +82,7 @@ class ArticleView extends React.Component {
         justifyContent: 'center'
       };
 
-      return (<div style={loadingStyle}><Loading message="Loading Article..." loading/></div>);
+      return (<div style={loadingStyle}><Logo message="Loading Article..." loading /></div>);
     }
 
     let title = (data) ? 'Lantern - ' + data.article.title : '';

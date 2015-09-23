@@ -3,7 +3,7 @@ import Link from 'react-router/lib/components/Link';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 import responsiveStyles from '../utils/responsiveStyles';
-import Logo from '../components/Logo';
+import LogoSVG from '../components/LogoSVG';
 
 var controllerStyles = {
   'default': {
@@ -94,7 +94,7 @@ export default class NavBar extends React.Component {
         <nav style={styles.nav} className="clearfix navBar">
           <ul style={styles.navbar} className="navBar--list">
             <li style={styles.headerItem} key={i++} >
-              <Logo />
+              <LogoSVG />
             </li>
             {rows}
           </ul>
