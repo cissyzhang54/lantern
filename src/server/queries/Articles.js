@@ -45,6 +45,11 @@ export default function PageViewsQuery(query) {
         avg : {
           field: "time_on_page"
         }
+      },
+      channels : {
+        terms: {
+          field: "channel"
+        }
       }
     }
   };

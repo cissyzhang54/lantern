@@ -1108,6 +1108,28 @@ export default [{
     },
     "avg_time_on_page" : {
       "value" : 0
+    },
+    "channels" : {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "ft.com",
+          "doc_count": 79
+        },
+        {
+          "key": "app",
+          "doc_count": 3
+        },
+        {
+          "key": "ft",
+          "doc_count": 3
+        },
+        {
+          "key": "next",
+          "doc_count": 3
+        }
+      ]
     }
   }
 }, {

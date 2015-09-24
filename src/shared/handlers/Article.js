@@ -107,24 +107,60 @@ class ArticleView extends React.Component {
           <Row >
             <Col xs={12} sm={3} >
               <Col xs={4} sm={12} >
-                <SingleMetric identifier='article:wordCount' metric={data.article.wordCount} metricType='integer' label='Article Wordcount' size='small' />
+                <SingleMetric
+                  identifier='article:wordCount'
+                  metric={data.article.wordCount}
+                  metricType='integer'
+                  label='Article Wordcount'
+                  size='small'
+                />
               </Col>
               <Col xs={4} sm={12} >
-                <SingleMetric identifier='article:imageCount' metric={data.article.imageCount} metricType='integer' label='Images' size='small' />
+                <SingleMetric
+                  identifier='article:imageCount'
+                  metric={data.article.imageCount}
+                  metricType='integer'
+                  label='Images'
+                  size='small'
+                />
               </Col>
               <Col xs={4} sm={12} >
-                <SingleMetric identifier='article:bodyLinksCount' metric={data.article.bodyLinksCount} metricType='integer' label='Body Links' size='small' />
+                <SingleMetric
+                  identifier='article:bodyLinksCount'
+                  metric={data.article.bodyLinksCount}
+                  metricType='integer'
+                  label='Body Links'
+                  size='small'
+                />
               </Col>
             </Col>
             <Col xs={12} sm={9} >
               <Col xs={12} sm={4} >
-                <SingleMetric identifier='article:timeOnPage' metric={data.article.timeOnPage}  metricType='time' label='Time on Page' size='large' />
+                <SingleMetric
+                  identifier='article:timeOnPage'
+                  metric={data.article.timeOnPage}
+                  metricType='time'
+                  label='Time on Page'
+                  size='large'
+                />
               </Col>
               <Col xs={12} sm={4} >
-                <SingleMetric identifier='article:pageViews' metric={data.article.pageViews}  metricType='integer' label='Page Views' size='large' />
+                <SingleMetric
+                  identifier='article:pageViews'
+                  metric={data.article.pageViews}
+                  metricType='integer'
+                  label='Page Views'
+                  size='large'
+                />
               </Col>
               <Col xs={12} sm={4} >
-                <SingleMetric identifier='article:socialReaders' metric={data.article.socialReaders}  metricType='integer' label='Social Readers' size='large' />
+                <SingleMetric
+                  identifier='article:socialReaders'
+                  metric={data.article.socialReaders}
+                  metricType='integer'
+                  label='Social Readers'
+                  size='large'
+                />
               </Col>
             </Col>
           </Row>
@@ -135,17 +171,28 @@ class ArticleView extends React.Component {
             title="When did readers access the article?"
             yLabel='Page Views'
             xLabel='Time'
-            />
-          <PieChart
-            identifier='article:devices'
-            data={[
-          ['Mobile', 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.2, 0.1, 0.1, 0.2, 0.4, 0.4, 0.3, 0.3, 0.3, 0.2, 0.4, 0.2, 0.5, 0.2, 0.2, 0.4, 0.2, 0.2, 0.2, 0.2, 0.4, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.2, 0.2, 0.3, 0.3, 0.2, 0.6, 0.4, 0.3, 0.2, 0.2, 0.2, 0.2],
-          ['Desktop', 1.4, 1.5, 1.5, 1.3, 1.5, 1.3, 1.6, 1.0, 1.3, 1.4, 1.0, 1.5, 1.0, 1.4, 1.3, 1.4, 1.5, 1.0, 1.5, 1.1, 1.8, 1.3, 1.5, 1.2, 1.3, 1.4, 1.4, 1.7, 1.5, 1.0, 1.1, 1.0, 1.2, 1.6, 1.5, 1.6, 1.5, 1.3, 1.3, 1.3, 1.2, 1.4, 1.2, 1.0, 1.3, 1.2, 1.3, 1.3, 1.1, 1.3],
-          ['Toaster', 2.5, 1.9, 2.1, 1.8, 2.2, 2.1, 1.7, 1.8, 1.8, 2.5, 2.0, 1.9, 2.1, 2.0, 2.4, 2.3, 1.8, 2.2, 2.3, 1.5, 2.3, 2.0, 2.0, 1.8, 2.1, 1.8, 1.8, 1.8, 2.1, 1.6, 1.9, 2.0, 2.2, 1.5, 1.4, 2.3, 2.4, 1.8, 1.8, 2.1, 2.4, 2.3, 1.9, 2.3, 2.5, 2.3, 1.9, 2.0, 2.3, 1.8],
-        ]}
-            title="What devices did readers use?"
-            cols={4}
-            />
+          />
+          <Row>
+            <Row>
+              <Col xs={12}>
+                <h4>How did readers access the article?</h4>
+              </Col>
+             </Row>
+           <Row>
+             <PieChart
+                identifier='article:devices'
+                title="Devices"
+                cols={6}
+              />
+              <PieChart
+                identifier='article:channels'
+                data={data.article.channels}
+                keys={['views']}
+                title="Channels"
+                cols={6}
+              />
+            </Row>
+          </Row>
         </main>
       </div>
     </DocumentTitle>);
