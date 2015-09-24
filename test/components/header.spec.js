@@ -23,9 +23,10 @@ describe ('Header component', function() {
     const text = props.children.props.children.props.children.props.children;
 
     expect(props.children.type).to.equal('header');
-
     expect(text[0].type).to.equal('h1');
-    expect(text[0].props.children).to.equal('My component state test title');
+
+    expect(text[0].props.children.type).to.equal('a');
+    expect(text[0].props.children.props.children[0]).to.equal('My component state test title');
 
     expect(text[1].type).to.equal('p');
     expect(text[1].props.children).to.equal('By: Chris Evans');

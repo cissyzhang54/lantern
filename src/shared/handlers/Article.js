@@ -94,6 +94,7 @@ class ArticleView extends React.Component {
               title={data.article.title}
               author={'By: ' + data.article.author}
               published={'Published: ' + data.article.published_human}
+              uuid={data.article.uuid}
               />
         </Row>
         <Row>
