@@ -10,6 +10,7 @@ export default {
     'article:pageViews' : true,
     'article:socialReaders' : false,
     'article:readTimes' : true,
+    'article:channels' : true,
     'article:devices' : false,
     'article:modifier' : false,
     'article:modifier:comparator' : true,

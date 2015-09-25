@@ -28,7 +28,14 @@ export default class PieChart extends React.Component {
         right: 20
       },
       color: {
-        pattern: ['rgb(121,158,200)', 'rgb(167,106,173)', 'rgb(255,160,40)', 'rgb(137,201,189)', 'rgb(231,111,95)']
+        pattern: [
+          // rgb colours
+          'rgb(121,158,200)',
+          'rgb(167,106,173)',
+          'rgb(255,160,40)',
+          'rgb(137,201,189)',
+          'rgb(231,111,95)'
+        ]
       },
       data: {
         type: 'pie',
@@ -53,18 +60,12 @@ export default class PieChart extends React.Component {
 
   render() {
     let title = this.props.title ? <h4>{this.props.title}</h4> : {}
-    return (<div>
-      <Row>
-        <Col xs={12}>
-          { title }
-        </Col>
-      </Row>
-      <Row>
+    return (
       <Col xs={this.props.cols}>
+        <h5>{this.props.title + ":"}</h5>
         <div ref='chartContainer' id="chartContainer"></div>
       </Col>
-      </Row>
-    </div>);
+    );
   }
 
 }

@@ -39,7 +39,8 @@ export default function formatData(data) {
           readTimes: formatTimeSeries(articleData),
           genre: metaData.genre,
           sections: metaData.sections,
-          topics: metaData.topics
+          topics: metaData.topics,
+          channels: formatChannels(articleData)
         }
       };
 
@@ -81,5 +82,15 @@ function formatTimeSeries(data) {
       time: d.key_as_string,
       value: d.doc_count
     };
+  });
+}
+
+function formatChannels(data) {
+  let buckets = data.aggregations.channels.buckets;
+  return buckets.map((d, i) => {
+    return [
+      d.key,
+      d.doc_count
+    ];
   });
 }
