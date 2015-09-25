@@ -34,8 +34,8 @@ export default class Picker extends React.Component {
     classNames.push('opens' + this.props.opens);
     // //todo: css to left/right align ranges based on props.opens
     return ( <div className={classNames}>
-      <Calendar className='left' showInput={this.state.showCalendarRight}/>
-      {this.state.showCalendarRight ? <Calendar className='right' /> : null }
+      <Calendar side='left' showInput={this.state.showCalendarRight}/>
+      {this.state.showCalendarRight ? <Calendar side='right' /> : null }
       {this.state.showRanges ? rangeList : null}
     </div> )
   }
