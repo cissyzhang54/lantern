@@ -2,8 +2,8 @@ import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import FeatureFlag from '../utils/featureFlag';
-
 import responsiveStyles from '../utils/responsiveStyles';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
 const componentStyles = {
   'default': {
@@ -23,6 +23,10 @@ const componentStyles = {
       'margin': '10px 0',
       'padding': '10px 0',
       'borderBottom': '1px solid #ccc'
+    },
+    tagStyle : {
+      fontSize: '15px',
+      marginLeft: '8px'
     }
   },
   '(max-width: 500px)': {
@@ -58,13 +62,18 @@ export default class Header extends React.Component {
 
     render() {
         let styles = this.state.responsiveStyles;
-
+        let articleUrl = 'http://www.ft.com/cms/s/0/' + this.props.uuid + '.html';
         return (
             <Row style={styles.container}>
                 <header style={styles.header} className="clearfix"  >
                     <Col xs={12} >
                         <div style={styles.titleContainer} >
-                          <h1 style={styles.title}>{this.props.title}</h1>
+                          <h1 style={styles.title}>
+                            <a href={articleUrl} target='_blank'>
+                              {this.props.title}
+                              <Glyphicon glyph="new-window" style={styles.tagStyle} />
+                            </a>
+                          </h1>
                           <p style={styles.text}>{this.props.author}</p>
                           <p style={styles.text} className="pull-right">{this.props.published}</p>
                         </div>
