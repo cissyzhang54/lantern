@@ -7,26 +7,28 @@ import moment from 'moment';
 import esClient from '../esClient';
 import ErrorHandler from '../apiErrorHandler';
 import ArticleDataFormater from '../formatters/Articles';
+import ComparatorDataFormater from '../formatters/Comparators';
 import SearchDataFormatter from '../formatters/Search';
 
 let router = express.Router();
 router.use(bodyParser.json());
 
-router.get('/:category(articles|topics|authors)/:uuid', category);
-router.post('/:category(articles|topics|authors)/:uuid', category);
+router.post('/:category(articles|topics|authors)/:uuid([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})', getCategoryData);//todo remove comparator prefix
+router.post('/comparators/:category(articles|topics|authors)/:comparator', getComparatorData);
 router.get('/search/:query', search);
 
 router.use(ErrorHandler(router));
 
-function category(req, res, next) {
-  switch (req.params.category) {
+function getCategoryData(req, res, next) {
+  const query = {
+    uuid: req.params.uuid,
+    dateFrom: req.body.dateFrom || moment().add(-1, 'weeks').toISOString(),
+    dateTo: req.body.dateTo || moment().toISOString()
+  };
+  let category =req.params.category
+  switch (category) {
     case 'articles':
-      const query = {
-        uuid: req.params.uuid,
-        dateFrom: req.body.dateFrom || moment().add(-1, 'weeks').toISOString(),
-        dateTo: req.body.dateTo || moment().toISOString()
-      };
-      esClient(req.params.category, query)
+      esClient(category, query)
         .then((response) => {
           return ArticleDataFormater(response);
         })
@@ -45,11 +47,36 @@ function category(req, res, next) {
           next(error);
         });
       break;
-    default:
-      res.json({
-        uuid: req.params.uuid,
-        category: req.params.category
-      });
+  }
+}
+
+function getComparatorData(req, res, next) {
+  const query = {
+    comparator: req.params.comparator,
+    dateFrom: req.body.dateFrom || moment().add(-1, 'weeks').toISOString(),
+    dateTo: req.body.dateTo || moment().toISOString()
+  };
+  let category =req.params.category
+  switch (category) {
+    case 'articles':
+      esClient('comparator', query)
+        .then((response) => {
+          return ComparatorDataFormater(response);
+        })
+        .then((formattedData) => {
+          res.json(formattedData);
+        })
+        .catch((error) => {
+          switch (error.name) {
+            case 'ComparatorNotFoundError':
+              res.status(404);
+              break;
+            default:
+              res.status(500);
+              break;
+          }
+          next(error);
+        });
       break;
   }
 }
@@ -65,7 +92,7 @@ function search(req, res, next) {
       res.json(formattedData);
     })
     .catch((error) => {
-      switch(error.name) {
+      switch (error.name) {
         case 'DataParsingError':
           res.status(500);
           break;

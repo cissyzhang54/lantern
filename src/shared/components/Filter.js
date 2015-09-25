@@ -13,6 +13,7 @@ export default class Filter extends React.Component {
         labelClassName='small'
         bsSize='small'
         type='select'
+        onChange={this.props.onChange}
         >
         <option value='' >{this.props.name}</option>
         <option value='' disabled>──────────</option>
@@ -23,5 +24,6 @@ export default class Filter extends React.Component {
 
 Filter.propTypes = {
   name: React.PropTypes.string.isRequired,
-  options: React.PropTypes.array.isRequired
+  options: React.PropTypes.array.isRequired,
+  onChange: React.PropTypes.func
 };

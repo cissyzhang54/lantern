@@ -1,4 +1,5 @@
 import elasticsearch from 'elasticsearch';
+import ArticleComparatorQuery from './queries/ArticleComparator';
 import ArticlesQuery from './queries/Articles';
 import SearchQuery from './queries/Search';
 import assert from 'assert';
@@ -33,6 +34,8 @@ export default function runQuery(category, queryData) {
   }
 
   switch (category) {
+    case 'comparator':
+      return runComparatorQuery(queryData);
     case 'articles':
       return runArticleQuery(queryData);
     case 'search':
@@ -46,53 +49,12 @@ export default function runQuery(category, queryData) {
 }
 
 function runArticleQuery(queryData) {
-  let proms = [];
-
-  // Get the article pageview data
-  proms.push(new Promise((resolve, reject) => {
-    let queryObject = ArticlesQuery(queryData);
-    client.search({
-      index: calculateIndices(queryData), 
-      ignore_unavailable: true,
-      search_type: 'count',
-      body: queryObject
-    }, (error, response) => {
-      if (error) {
-        return reject(error);
-      }
-
-      return resolve(response);
-    });
-  }));
-
-  // get the article metadata
-  proms.push(new Promise((resolve, reject) => {
-    client.get({
-      index: process.env.ES_SEARCH_INDEX_ROOT,
-      type: 'logs', // XXX this should be articles!
-      id: queryData.uuid
-    }, (error, response) => {
-      if (error) {
-        return reject(error);
-      }
-
-      // handle article not found
-      if (!response.found) {
-        // no need to 'let'/'var' this
-        error = new Error('Article not found');
-        error.name = 'ArticleNotFoundError';
-        error.response = response;
-        return reject(error);
-      }
-
-      return resolve(response._source);
-
-    });
-  }));
-
-  return Promise.all(proms);
+  return Promise.all([retrievePageView(queryData), retrieveMetaData(queryData)]);
 }
 
+function runComparatorQuery(queryData) {
+  return retrievePageView(queryData);
+}
 
 function runSearchQuery(queryData) {
   return new Promise((resolve, reject) => {
@@ -109,13 +71,55 @@ function runSearchQuery(queryData) {
   });
 }
 
+function retrievePageView(queryData){
+  return new Promise((resolve, reject) => {
+    let queryObject = queryData.comparator ?
+      ArticleComparatorQuery(queryData) :
+      ArticlesQuery(queryData);
+    client.search({
+      index: calculateIndices(queryData),
+      ignore_unavailable: true,
+      search_type: 'count',
+      body: queryObject
+    }, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      return resolve(response);
+    });
+  })
+}
+
+function retrieveMetaData(queryData){
+  return new Promise((resolve, reject) => {
+    client.get({
+      index: process.env.ES_SEARCH_INDEX_ROOT,
+      type: 'logs', // XXX this should be articles!
+      id: queryData.uuid
+    }, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      // handle article not found
+      if (!response.found) {
+        // no need to 'let'/'var' this
+        error = new Error('Article not found');
+        error.name = 'ArticleNotFoundError';
+        error.response = response;
+        return reject(error);
+      }
+      return resolve(response._source);
+    });
+  })
+}
+
 function calculateIndices(query) {
   const fmtStr = 'YYYY-MM-DD';
   let dateFrom = moment(moment(query.dateFrom).format(fmtStr));
   let dateTo = moment(moment(query.dateTo).format(fmtStr));
-  const indexPrefix = process.env.ES_INDEX_ROOT; 
+  const indexPrefix = process.env.ES_INDEX_ROOT;
   let indices = [];
-  
+
   while (dateFrom < dateTo){
     indices.push(indexPrefix + dateFrom.format(fmtStr));
     dateFrom.add(1, 'days');

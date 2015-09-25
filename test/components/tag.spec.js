@@ -15,7 +15,6 @@ describe ('Tag component', function() {
   it ('Should render component', function() {
     const props = tag.props;
 
-    expect(tag.type).to.equal('a');
     expect(props.children[0].props.glyph).to.equal('tag');
     expect(props.children[1]).to.equal('Financials');
   });

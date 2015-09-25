@@ -5,7 +5,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Comparator from "./Comparator";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
-import QueryActions from '../actions/QueryActions.js';
+import QueryActions from '../actions/QueryActions';
 import FeatureFlag from '../utils/featureFlag';
 
 
@@ -28,29 +28,38 @@ export default class Modifier extends React.Component {
 
   handleDateRangeChange (value) {
     QueryActions.selectDateRange({
-      from : value.start.toISOString(),
+      from: value.start.toISOString(),
       to: value.end.toISOString()
     });
+  }
+
+  handleComparatorChange (value) {
+    QueryActions.selectComparator(value);
+  }
+
+  handleFilterChange (value) {
+    // TODO connect to filter query action
   }
 
   render() {
     return (
       <div style={style}>
-        <Comparator 
-          identifier={this.props.identifier + ':comparator'} 
-          tags={this.props.tags} 
-        />
-        <Filters 
+        <Comparator
+          identifier={this.props.identifier + ':comparator'}
+          tags={this.props.tags}
+          onChange={this.handleComparatorChange}
+          />
+        <Filters
           identifier={this.props.identifier + ':filters'}
-        />
-        <DateRange 
+          onChange={this.handleFilterChange}
+          />
+        <DateRange
           identifier={this.props.identifier + ':DateRange'}
           onChange={this.handleDateRangeChange}
-        />
+          />
       </div>
     );
   }
-
 }
 
 Modifier.propTypes = {
