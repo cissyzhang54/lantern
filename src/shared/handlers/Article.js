@@ -60,9 +60,10 @@ class ArticleView extends React.Component {
   }
 
   componentWillUnmount() {
+    QueryStore.unlisten(this._boundQueryHandlerRef);
     ArticleActions.destroy();
     ComparatorActions.destroy();
-    QueryStore.unlisten(this._boundQueryHandlerRef);
+    QueryActions.destroy();
   }
 
   _handleQueryChange() {
@@ -115,6 +116,7 @@ class ArticleView extends React.Component {
             identifier='article:modifier'
             tags={data.article.topics.concat(data.article.sections)}
             query={this.props.query}
+            uuid={this.props.params.uuid}
             />
         </Row>
         <main>

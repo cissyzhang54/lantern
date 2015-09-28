@@ -33,8 +33,8 @@ export default class Modifier extends React.Component {
     });
   }
 
-  handleComparatorChange (value) {
-    QueryActions.selectComparator(value);
+  handleComparatorChange (e) {
+    QueryActions.selectComparator(e.target.textContent);
   }
 
   handleFilterChange (value) {
@@ -48,6 +48,8 @@ export default class Modifier extends React.Component {
           identifier={this.props.identifier + ':comparator'}
           tags={this.props.tags}
           onChange={this.handleComparatorChange}
+          currentComparator={this.props.query.comparator}
+          uuid={this.props.uuid}
           />
         <Filters
           identifier={this.props.identifier + ':filters'}

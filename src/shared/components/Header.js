@@ -9,7 +9,8 @@ const componentStyles = {
   'default': {
     title: {
       margin: 0,
-      textAlign: 'center'
+      textAlign: 'center',
+      color: '#333'
     },
     titleContainer: {
       verticalAlign: 'middle'
@@ -27,6 +28,9 @@ const componentStyles = {
     tagStyle : {
       fontSize: '15px',
       marginLeft: '8px'
+    },
+    anchor :{
+      color: '#333'
     }
   },
   '(max-width: 500px)': {
@@ -69,7 +73,7 @@ export default class Header extends React.Component {
                     <Col xs={12} >
                         <div style={styles.titleContainer} >
                           <h1 style={styles.title}>
-                            <a href={articleUrl} target='_blank'>
+                            <a style={styles.anchor} href={articleUrl} target='_blank'>
                               {this.props.title}
                               <Glyphicon glyph="new-window" style={styles.tagStyle} />
                             </a>

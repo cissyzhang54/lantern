@@ -13,7 +13,8 @@ describe ('Modifier component', function() {
 
   beforeEach(function() {
     modifier = createComponent(Modifier, {
-      identifier: 'testIdentifierOn'
+      identifier: 'testIdentifierOn',
+      query: { comparator : 'financial' }
     });
   });
 
