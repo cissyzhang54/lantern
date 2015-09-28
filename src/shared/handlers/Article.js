@@ -44,21 +44,6 @@ class ArticleView extends React.Component {
     };
   }
 
-  componentWillMount() {
-    // XXX consider putting this inside ArticleStore?
-    this._boundQueryHandlerRef = this._handleQueryChange.bind(this);
-    QueryStore.listen(this._boundQueryHandlerRef);
-
-    if (this.props.data) {
-      return;
-    }
-
-    QueryActions.selectUUID(this.props.params.uuid);
-    if (this.props.params.comparator){
-      QueryActions.selectComparator(this.props.params.comparator);
-    }
-  }
-
   componentWillUnmount() {
     QueryStore.unlisten(this._boundQueryHandlerRef);
     ArticleActions.destroy();
@@ -77,18 +62,32 @@ class ArticleView extends React.Component {
     let analytics = require('../utils/analytics');
     analytics.sendGAEvent('pageview');
     analytics.trackScroll();
+
+    // XXX consider putting this inside ArticleStore?
+    this._boundQueryHandlerRef = this._handleQueryChange.bind(this);
+    QueryStore.listen(this._boundQueryHandlerRef);
+
+    if (this.props.data) {
+      return;
+    }
+
+    QueryActions.selectUUID(this.props.params.uuid);
+    if (this.props.params.comparator){
+      QueryActions.selectComparator(this.props.params.comparator);
+    }
+
   }
 
   render() {
-    if (this.props.errorMessage) {
+    if (this.props.errorMessage && !this.props.loading) {
       return (<div><Error404/></div>);
     }
 
     let data = this.props.data;
-    let hasComparator = this.props.params.comparator !== undefined ? true : false;
+    let hasComparator = (this.props.params.comparator !== undefined);
     let comparatorData = this.props.comparatorData;
 
-    if (!data || this.props.loading || comparatorData == null && this.props.params.comparator !== undefined) {
+    if (!data || this.props.loading || comparatorData == null && hasComparator) {
 
       const loadingStyle = {
         display: 'flex',
@@ -96,7 +95,11 @@ class ArticleView extends React.Component {
         justifyContent: 'center'
       };
 
-      return (<div style={loadingStyle}><Logo message="Loading Article..." loading /></div>);
+      return (
+        <div style={loadingStyle}>
+          <Logo message="Loading Article..." loading />
+        </div>
+      );
     }
 
     let title = (data) ? 'Lantern - ' + data.article.title : '';
