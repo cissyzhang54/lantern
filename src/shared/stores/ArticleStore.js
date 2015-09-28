@@ -37,7 +37,6 @@ class ArticleStore {
   handleLoadingFailed(error) {
     this.loading = false;
     this.errorMessage = error.message;
-  
     Raven.captureException(error, {
       extra: error
     });

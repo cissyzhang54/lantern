@@ -11,9 +11,7 @@ class ArticleActions {
   }
 
   loadingData() {
-    setImmediate(()=> {
-      this.dispatch();
-    });
+    setImmediate(_ => this.dispatch());
   }
 
 }
