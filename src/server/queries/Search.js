@@ -9,9 +9,28 @@ export default function SearchQuery(query) {
     "argument 'query' must contain a 'term' property of type string");
 
   return {
-    "query" : {
-      "match" : {
-          "title": query.term
+    query : {
+      bool : {
+        must : {
+          match : {
+            title: query.term
+          }
+        },
+        should : [
+          {
+            match : {
+              title : {
+                query : query.term,
+                operator : "and"
+              }
+            }
+          },
+          {
+            match_phrase : {
+              title: query.term
+            }
+          }
+        ]
       }
     }
   };

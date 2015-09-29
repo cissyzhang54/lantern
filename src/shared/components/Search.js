@@ -7,6 +7,8 @@ import Logo from '../components/Logo';
 
 import _ from 'underscore';
 
+const MIN_SEARCH_LENGTH = 2;
+
 export default class Search extends React.Component {
 
   constructor(props) {
@@ -19,7 +21,7 @@ export default class Search extends React.Component {
 
   showSearchResults(){
     const val = (this.refs && this.refs.searchinput) ? this.refs.searchinput.getValue() : '';
-    return val.length >= 3;
+    return val.length >= MIN_SEARCH_LENGTH;
   }
 
   componentDidMount() {
