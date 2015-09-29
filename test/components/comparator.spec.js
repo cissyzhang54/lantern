@@ -18,10 +18,8 @@ describe ('Comparator component', function() {
 
   it ('Should render component', function() {
     const props = comparator.props;
-    const componentType = props.componentClass;
-    const tags = props.children[1].props.children;
+    const tags = props.children;
 
-    expect(componentType).to.equal('div');
     expect(tags.length).to.equal(2);
     expect(tags[0].props.name).to.equal('Private equity');
     expect(tags[1].props.name).to.equal('Financial Services');

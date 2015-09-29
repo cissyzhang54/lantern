@@ -23,14 +23,14 @@ describe ('Modifier component', function() {
 
   it ('Should render component', function() {
     const props = modifier.props;
+
     const row1 = props.children[0];
     const row2 = props.children[1];
     const row3 = props.children[2];
 
-    const comparator = row1.props.children;
-    const filters = row2.props.children
-    const col2 = row3.props.children[1];
-    const dateRange = col2.props.children;
+    const comparator = row1.props.children[1].props.children;
+    const filters = row2.props.children[1]
+    const dateRange = row3.props.children[1].props.children;
 
     expect(TestUtils.isElementOfType(comparator, Comparator)).to.equal(true);
     expect(TestUtils.isElementOfType(filters, Filters)).to.equal(true);

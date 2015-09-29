@@ -19,7 +19,6 @@ describe ('ColumnChart component', function() {
     const props = columnChart.props;
 
     expect(columnChart.type.name).to.equal('BarChart');
-    expect(props.title).to.equal('The title of the chart');
     expect(props.category).to.equal('thing');
     expect(props.reverseAxis).to.equal(false);
     expect(props.xLabel).to.equal('Thing');
