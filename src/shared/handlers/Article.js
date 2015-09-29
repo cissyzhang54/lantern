@@ -18,6 +18,7 @@ import ComparatorActions from '../actions/ComparatorActions';
 import QueryStore from '../stores/QueryStore';
 import QueryActions from '../actions/QueryActions';
 import Error404 from '../handlers/404';
+import FeatureFlag from '../utils/featureFlag';
 
 class ArticleView extends React.Component {
 
@@ -103,6 +104,18 @@ class ArticleView extends React.Component {
     }
 
     let title = (data) ? 'Lantern - ' + data.article.title : '';
+
+    let renderModifierRow = FeatureFlag.check('article:modifier');
+    let modifierRow = <Row>
+      <Modifier
+        tags={data.article.topics.concat(data.article.sections)}
+        renderDateRange={FeatureFlag.check('article:modifier:DateRange')}
+        renderComparator={FeatureFlag.check('article:modifier:comparator')}
+        renderFilters={FeatureFlag.check('article:modifier:filters')}
+        query={this.props.query}
+        uuid={this.props.params.uuid}
+        />
+    </Row>
     return (<DocumentTitle title={title}>
       <div>
         <Row>
@@ -114,14 +127,7 @@ class ArticleView extends React.Component {
               uuid={data.article.uuid}
               />
         </Row>
-        <Row>
-          <Modifier
-            identifier='article:modifier'
-            tags={data.article.topics.concat(data.article.sections)}
-            query={this.props.query}
-            uuid={this.props.params.uuid}
-            />
-        </Row>
+        {renderModifierRow ? modifierRow : {}}
         <main>
           <Row >
             <Col xs={12} sm={3} >

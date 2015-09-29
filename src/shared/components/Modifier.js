@@ -6,7 +6,6 @@ import Comparator from "./Comparator";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
 import QueryActions from '../actions/QueryActions';
-import FeatureFlag from '../utils/featureFlag';
 
 
 const style = {
@@ -19,11 +18,6 @@ export default class Modifier extends React.Component {
 
   constructor(props) {
     super(props);
-  }
-
-  componentWillMount () {
-    let renderFeature = FeatureFlag.check(this.props.identifier);
-    this.render = renderFeature ? this.render : function () { return false };
   }
 
   handleDateRangeChange (value) {
@@ -42,23 +36,40 @@ export default class Modifier extends React.Component {
   }
 
   render() {
+    let renderDateRange = this.props.renderDateRange;
+    let renderComparator = this.props.renderComparator;
+    let renderFilters = this.props.renderFilters;
+    let dateRangeRow = <Row >
+          <Col sm={2} xs={12}>
+            <strong>Date Range:</strong>
+          </Col>
+          <Col sm={4} xs={6}>
+            <DateRange
+              onChange={this.handleDateRangeChange}
+              />
+          </Col>
+        </Row>
+    let comparatorRow = <Row >
+          <Comparator
+            identifier={'article:modifier:comparator'}
+            tags={this.props.tags}
+            onChange={this.handleComparatorChange}
+            currentComparator={this.props.query.comparator}
+            uuid={this.props.uuid}
+            />
+        </Row>
+    let filtersRow = <Row >
+          <Filters
+            identifier={'article:modifier:filters'}
+            onChange={this.handleFilterChange}
+            />
+        </Row>
+
     return (
       <div style={style}>
-        <Comparator
-          identifier={this.props.identifier + ':comparator'}
-          tags={this.props.tags}
-          onChange={this.handleComparatorChange}
-          currentComparator={this.props.query.comparator}
-          uuid={this.props.uuid}
-          />
-        <Filters
-          identifier={this.props.identifier + ':filters'}
-          onChange={this.handleFilterChange}
-          />
-        <DateRange
-          identifier={this.props.identifier + ':DateRange'}
-          onChange={this.handleDateRangeChange}
-          />
+        {renderComparator ? comparatorRow : {}}
+        {renderFilters ? filtersRow : {}}
+        {renderDateRange ? dateRangeRow : {}}
       </div>
     );
   }
