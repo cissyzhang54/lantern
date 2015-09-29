@@ -79,7 +79,7 @@ let DataAPI = {
       });
     },
 
-    search(query, apiKey) {
+    search(query, from = 0, apiKey = '') {
 
       assert.equal(typeof query, 'string',
         "argument 'query' must be a string");
@@ -87,10 +87,13 @@ let DataAPI = {
       return new Promise((resolve, reject) => {
         let url = config.baseUrl + '/api/v0/search/' + query;
 
-        if (apiKey) {
-          url += "?apiKey" + apiKey;
-        }
+        const params = {
+          from : from,
+          apiKey : apiKey
+        };
+
         request.get(url)
+          .query(params)
           .set('Accept', 'application/json')
           .end((err, res) => {
             if (err) {

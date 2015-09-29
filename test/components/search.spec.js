@@ -14,6 +14,7 @@ describe('Search component', function() {
 
   it('Should render the search field, with an empty results list', function() {
     search = createComponent(Search, {
+      total: 0,
       results:[]
     });
     let searchResults = search.props.children[3];

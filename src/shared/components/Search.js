@@ -2,6 +2,7 @@ import React from "react";
 import Input from 'react-bootstrap/lib/Input';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
+import Button from 'react-bootstrap/lib/Button';
 import Link from 'react-router/lib/components/Link';
 import Logo from '../components/Logo';
 
@@ -58,6 +59,15 @@ export default class Search extends React.Component {
     });
     let additionalInfo = getAdditionalInfo(this.props)
     let isLoading = this.props.loading;
+
+    let showShowMore = results.length < this.props.total;
+
+    let showMore = (
+      <Button onClick={this.props.getMoreResults}>
+        Show more results
+      </Button>
+    );
+
     return (<div>
       <Logo message={isLoading?'Searching...':''} loading={isLoading} search/>
       <Input
@@ -71,7 +81,8 @@ export default class Search extends React.Component {
       </Input>
       { additionalInfo }
       <ListGroup>{results}</ListGroup>
-    </div>);
+      { (showShowMore) ? showMore : null }
+     </div>);
   }
 
 }

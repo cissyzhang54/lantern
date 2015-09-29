@@ -24,23 +24,27 @@ describe('Search Formatter', function () {
     expect(p.then).to.be.a.function
   });
   it('should return a promise when called with an empty array', function (done) {
-    SearchFormat([])
+    SearchFormat({total:0, hits:[]})
       .then((data) => {
-        expect(data).to.be.a.array;
-        expect(data.length).to.equal(0);
+        expect(data.total).to.equal(0);
+        expect(data.results).to.be.a.array;
+        expect(data.results.length).to.equal(0);
         done();
-      });
+      })
+      .catch(done);
   });
   it('should process search results correctly', function (done) {
-    SearchFormat(ESSearchResults.hits.hits)
+    SearchFormat(ESSearchResults.hits)
       .then((data) => {
-        expect(data).to.be.a.array;
-        expect(data.length).to.equal(10);
+        expect(data.total).to.equal(116);
+        expect(data.results).to.be.a.array;
+        expect(data.results.length).to.equal(10);
         done();
-      });
+      })
+      .catch(done);
   });
   it('should reject with an error if parsing fails', function (done) {
-    SearchFormat(['asdfasdf'])
+    SearchFormat({total: 1, hits: ['asdfasdf']})
       .catch((error) => {
         expect(error.name).to.equal('DataParsingError');
         done();

@@ -7,6 +7,7 @@ class SearchActions {
       'search',
       'searchFailed',
       'updateResults',
+      'getMoreResults',
       'destroy'
     );
   }
