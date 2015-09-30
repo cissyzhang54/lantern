@@ -24,7 +24,7 @@ export default class PlaygroundLoader extends React.Component {
     }
 
     return React.createElement(Component, {
-      identifier: 'playground:' + componentName.toLowerCase()
+
     });
 
   }

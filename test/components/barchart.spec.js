@@ -14,15 +14,9 @@ describe ('BarChart component', function() {
 
   it ('Should render component', function() {
     const props = barChart.props;
-    const title = props.children.props.children[0];
-    const chartContainer = props.children.props.children[1];
+    const chartContainer = props.children;
 
-    expect(props.componentClass).to.equal('div');
-    expect(props.children.props.componentClass).to.equal('div');
-
-    expect(title.type).to.equal('h4');
-    expect(title.props.children).to.equal('The title of the chart');
-
+    expect(chartContainer.ref).to.equal('chartContainer');
     expect(chartContainer.type).to.equal('div');
     expect(chartContainer.props.id).to.equal('chartContainer');
   });

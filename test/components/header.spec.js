@@ -20,11 +20,9 @@ describe ('Header component', function() {
 
   it ('Should render component', function() {
     const props = header.props;
-    const text = props.children.props.children.props.children.props.children;
+    const text = props.children.props.children;
 
-    expect(props.children.type).to.equal('header');
     expect(text[0].type).to.equal('h1');
-
     expect(text[0].props.children.type).to.equal('a');
     expect(text[0].props.children.props.children[0]).to.equal('My component state test title');
 

@@ -4,10 +4,11 @@ import { Link } from "react-router";
 import ObjectAssignDeep from '../utils/ObjectAssignDeep';
 
 const style = {
-  padding: "5px 10px",
+  padding: "0px 10px 0 0",
   display: "inline-block",
   cursor: "hand",
-  fontSize: '14px'
+  fontSize: '14px',
+  lineHeight: '2em'
 };
 let selected = {
   color: '#666'

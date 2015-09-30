@@ -1,17 +1,22 @@
 import React from "react";
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-
 import Comparator from "./Comparator";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
 import QueryActions from '../actions/QueryActions';
 
-
-const style = {
-  'margin': '10px 0',
-  'padding': '10px 0',
-  'borderBottom': '1px solid #ccc'
+const styles = {
+  modifierWrapper : {
+    'padding': '15px 0',
+    'borderBottom': '1px solid #ccc'
+  },
+  modiferRow : {
+    marginBottom: "15px"
+  },
+  title : {
+    lineHeight: '2em'
+  }
 };
 
 export default class Modifier extends React.Component {
@@ -39,34 +44,42 @@ export default class Modifier extends React.Component {
     let renderDateRange = this.props.renderDateRange;
     let renderComparator = this.props.renderComparator;
     let renderFilters = this.props.renderFilters;
-    let dateRangeRow = <Row >
-          <Col sm={2} xs={12}>
-            <strong>Date Range:</strong>
-          </Col>
-          <Col sm={4} xs={6}>
-            <DateRange
-              onChange={this.handleDateRangeChange}
-              />
-          </Col>
-        </Row>
-    let comparatorRow = <Row >
-          <Comparator
-            identifier={'article:modifier:comparator'}
-            tags={this.props.tags}
-            onChange={this.handleComparatorChange}
-            currentComparator={this.props.query.comparator}
-            uuid={this.props.uuid}
-            />
-        </Row>
+    let dateRangeRow = <Row>
+      <Col sm={2} xs={12}>
+        <strong style={styles.title}>Date Range:</strong>
+      </Col>
+      <Col sm={4} xs={6}>
+        <DateRange
+          onChange={this.handleDateRangeChange}
+          />
+      </Col>
+    </Row>;
+
+    let comparatorRow = <Row style={styles.modiferRow}>
+      <Col sm={2} xs={12}>
+        <strong style={styles.title}>Comparators:</strong>
+      </Col>
+      <Col sm={10} xs={12}>
+        <Comparator
+          tags={this.props.tags}
+          onChange={this.handleComparatorChange}
+          currentComparator={this.props.query.comparator}
+          uuid={this.props.uuid}
+          />
+      </Col>
+    </Row>;
+
     let filtersRow = <Row >
-          <Filters
-            identifier={'article:modifier:filters'}
-            onChange={this.handleFilterChange}
-            />
-        </Row>
+      <Col sm={2} xs={12}>
+        <strong style={styles.title}>Filters:</strong>
+      </Col>
+      <Filters
+        onChange={this.handleFilterChange}
+        />
+    </Row>;
 
     return (
-      <div style={style}>
+      <div style={styles.modifierWrapper}>
         {renderComparator ? comparatorRow : {}}
         {renderFilters ? filtersRow : {}}
         {renderDateRange ? dateRangeRow : {}}
@@ -80,5 +93,9 @@ Modifier.propTypes = {
 };
 
 Modifier.defaultProps = {
-  tags: ['one', 'two', 'three']
+  tags: ['one', 'two', 'three'],
+  renderDateRange : true,
+  renderComparator : true,
+  renderFilters : true,
+  query : { currentComparator: null }
 };

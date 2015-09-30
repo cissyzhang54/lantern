@@ -15,13 +15,9 @@ describe ('PieChart component', function() {
 
   it ('Should render component', function() {
     const props = pieChart.props;
-    const chartContainer = props.children[1];
-    const title = props.children[0];
+    const chartContainer = props.children;
 
     expect(chartContainer.ref).to.equal('chartContainer');
     expect(chartContainer.type).to.equal('div');
-
-    expect(title.type).to.equal('h5');
-    expect(title.props.children).to.equal('My title:');
   });
 });

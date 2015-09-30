@@ -2,7 +2,6 @@ import React from 'react';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import responsiveStyles from '../utils/responsiveStyles';
 import assign from 'object-assign';
-import FeatureFlag from '../utils/featureFlag';
 
 var componentStyles = {
   'default': {
@@ -99,11 +98,6 @@ export default class SingleMetric extends React.Component {
     this.state = {
       responsiveStyles : componentStyles['default']
     };
-  }
-
-  componentWillMount () {
-    let renderFeature = FeatureFlag.check(this.props.identifier);
-    this.render = renderFeature ? this.render : function () { return false };
   }
 
   componentDidMount() {

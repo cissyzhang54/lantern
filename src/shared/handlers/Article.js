@@ -105,8 +105,21 @@ class ArticleView extends React.Component {
 
     let title = (data) ? 'Lantern - ' + data.article.title : '';
 
+    /* Header Row HTML */
+    let renderHeaderRow = FeatureFlag.check('article:title');
+    let headerRow = <Row className='container-fluid'>
+        <Header
+          identifier='article:title'
+          title={data.article.title}
+          author={'By: ' + data.article.author}
+          published={'Published: ' + data.article.published_human}
+          uuid={data.article.uuid}
+          />
+    </Row>;
+
+    /* Modifier Row HTML */
     let renderModifierRow = FeatureFlag.check('article:modifier');
-    let modifierRow = <Row>
+    let modifierRow = <Row className='container-fluid'>
       <Modifier
         tags={data.article.topics.concat(data.article.sections)}
         renderDateRange={FeatureFlag.check('article:modifier:DateRange')}
@@ -115,108 +128,132 @@ class ArticleView extends React.Component {
         query={this.props.query}
         uuid={this.props.params.uuid}
         />
-    </Row>
+    </Row>;
+
+    /* Single Metric Components */
+    let renderWordCountComponent = FeatureFlag.check('article:wordCount');
+    let wordCountComponent = <SingleMetric
+      metric={data.article.wordCount}
+      metricType='integer'
+      label='Article Wordcount'
+      size='small'
+      />;
+    let renderImageCountComponent = FeatureFlag.check('article:imageCount');
+    let imageCountComponent = <SingleMetric
+      metric={data.article.imageCount}
+      metricType='integer'
+      label='Images'
+      size='small'
+      />;
+    let renderBodyLinksComponent = FeatureFlag.check('article:bodyLinksCount');
+    let bodyLinksComponent =  <SingleMetric
+      identifier='article:bodyLinksCount'
+      metric={data.article.bodyLinksCount}
+      metricType='integer'
+      label='Body Links'
+      size='small'
+      />;
+    let renderTimeOnPageComponent = FeatureFlag.check('article:timeOnPage');
+    let timeOnPageComponent = <SingleMetric
+      metric={data.article.timeOnPage}
+      metricType='time'
+      label='Time on Page'
+      size='large'
+      />;
+    let renderPageViewsComponent = FeatureFlag.check('article:pageViews');
+    let pageViewsComponent = <SingleMetric
+      metric={data.article.pageViews}
+      comparatorMetric={hasComparator ? comparatorData.article.category_average_view_count : ''}
+      metricType='integer'
+      label='Page Views'
+      size='large'
+      />;
+    let renderSocialReadersComponent = FeatureFlag.check('article:socialReaders');
+    let socialReadersComponent = <SingleMetric
+      metric={data.article.socialReaders}
+      metricType='integer'
+      label='Social Readers'
+      size='large'
+      />
+
+    /* Line Charts */
+    let renderReadTimeChartComponent = FeatureFlag.check('article:readTimes');
+    let readTimeChartComponent = <LineChart
+      data={data.article.readTimes}
+      keys={['value']}
+      yLabel='Page Views'
+      xLabel='Time'
+      cols={12}
+      />
+
+    /* Pie Charts */
+    let renderDeviceChartComponent = FeatureFlag.check('article:devices');
+    let deviceChartComponent =  <PieChart />;
+
+    let renderChannelsChartComponent = FeatureFlag.check('article:channels');
+    let channelsChartComponent =  <PieChart
+      data={data.article.channels}
+      keys={['views']}
+      />;
+
     return (<DocumentTitle title={title}>
-      <div>
-        <Row>
-          <Header
-              identifier='article:title'
-              title={data.article.title}
-              author={'By: ' + data.article.author}
-              published={'Published: ' + data.article.published_human}
-              uuid={data.article.uuid}
-              />
-        </Row>
+      <div className='container-fluid'>
+
+        {renderHeaderRow ? headerRow : {}}
         {renderModifierRow ? modifierRow : {}}
-        <main>
+
+        <main className='container-fluid'>
           <Row >
             <Col xs={12} sm={3} >
               <Col xs={4} sm={12} >
-                <SingleMetric
-                  identifier='article:wordCount'
-                  metric={data.article.wordCount}
-                  metricType='integer'
-                  label='Article Wordcount'
-                  size='small'
-                />
+                {renderWordCountComponent ? wordCountComponent : {}}
               </Col>
               <Col xs={4} sm={12} >
-                <SingleMetric
-                  identifier='article:imageCount'
-                  metric={data.article.imageCount}
-                  metricType='integer'
-                  label='Images'
-                  size='small'
-                />
+                {renderImageCountComponent ? imageCountComponent : {}}
               </Col>
               <Col xs={4} sm={12} >
-                <SingleMetric
-                  identifier='article:bodyLinksCount'
-                  metric={data.article.bodyLinksCount}
-                  metricType='integer'
-                  label='Body Links'
-                  size='small'
-                />
+                {renderBodyLinksComponent ? bodyLinksComponent : {}}
               </Col>
             </Col>
             <Col xs={12} sm={9} >
               <Col xs={12} sm={4} >
-                <SingleMetric
-                  identifier='article:timeOnPage'
-                  metric={data.article.timeOnPage}
-                  metricType='time'
-                  label='Time on Page'
-                  size='large'
-                />
+                {renderTimeOnPageComponent ? timeOnPageComponent : {}}
               </Col>
               <Col xs={12} sm={4} >
-                <SingleMetric
-                  identifier='article:pageViews'
-                  metric={data.article.pageViews}
-                  comparatorMetric={hasComparator ? comparatorData.article.category_average_view_count : ''}
-                  metricType='integer'
-                  label='Page Views'
-                  size='large'
-                />
+                {renderPageViewsComponent ? pageViewsComponent : {}}
               </Col>
               <Col xs={12} sm={4} >
-                <SingleMetric
-                  identifier='article:socialReaders'
-                  metric={data.article.socialReaders}
-                  metricType='integer'
-                  label='Social Readers'
-                  size='large'
-                />
+                {renderSocialReadersComponent ? socialReadersComponent : {}}
               </Col>
             </Col>
           </Row>
-          <LineChart
-            identifier='article:readTimes'
-            data={data.article.readTimes}
-            keys={['value']}
-            title="When did readers access the article?"
-            yLabel='Page Views'
-            xLabel='Time'
-          />
+          <Row>
+            <Row>
+              <Col xs={12}>
+                <h4>When did readers access the article?</h4>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                {renderReadTimeChartComponent ? readTimeChartComponent : {}}
+              </Col>
+            </Row>
+          </Row>
           <Row>
             <Row>
               <Col xs={12}>
                 <h4>How did readers access the article?</h4>
               </Col>
-             </Row>
-           <Row>
-             <PieChart
-                identifier='article:devices'
-                title="Devices"
-                cols={6}
-              />
-              <PieChart
-                identifier='article:channels'
-                data={data.article.channels}
-                keys={['views']}
-                title="Channels"
-                cols={6}
-              />
+            </Row>
+            <Row>
+              <Col xs={6}>
+                <h4>Devices:</h4>
+                {renderDeviceChartComponent ? deviceChartComponent : {}}
+              </Col>
+              <Col xs={6}>
+                <h4>Channels:</h4>
+                {renderChannelsChartComponent ? channelsChartComponent : {}}
+              </Col>
             </Row>
           </Row>
         </main>

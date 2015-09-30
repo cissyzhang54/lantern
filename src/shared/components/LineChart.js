@@ -2,7 +2,6 @@ import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
-import FeatureFlag from '../utils/featureFlag';
 
 let c3 = {};
 
@@ -75,20 +74,11 @@ export default class LineChart extends React.Component {
       this.drawChart();
   }
 
-  componentWillMount () {
-    let renderFeature = FeatureFlag.check(this.props.identifier);
-    this.render = renderFeature ? this.render : function () { return false };
-  }
-
   render() {
-
     return (
-      <Row>
-        <Col xs={12}>
-          <h4>{this.props.title}</h4>
-          <div ref='chartContainer' id="chartContainer"></div>
-        </Col>
-      </Row>
+      <div>
+        <div ref='chartContainer' id="chartContainer"></div>
+      </div>
     );
   }
 

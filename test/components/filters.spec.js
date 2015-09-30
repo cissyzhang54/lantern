@@ -18,16 +18,15 @@ describe ('Filters component', function() {
 
   it ('Should render component', function() {
     const props = filters.props;
-    const filterObjects = props.children[1];
-    const deviceFilter = filterObjects[1].props.children.props;
+    const deviceFilter = props.children[1].props.children;
 
-    expect(props.componentClass).to.equal('div');
+    expect(props.children.length).to.equal(4);
 
-    expect(deviceFilter.name).to.equal('Device');
-    expect(deviceFilter.options.length).to.equal(3);
-    expect(deviceFilter.options[0]).to.equal('mobile');
-    expect(deviceFilter.options[2]).to.equal('desktop');
+    expect(deviceFilter.props.name).to.equal('Device');
+    expect(deviceFilter.props.options.length).to.equal(3);
+    expect(deviceFilter.props.options[0]).to.equal('mobile');
+    expect(deviceFilter.props.options[2]).to.equal('desktop');
 
-    expect(TestUtils.isElementOfType(filterObjects[0].props.children, Filter)).to.equal(true);
+    expect(TestUtils.isElementOfType(deviceFilter, Filter)).to.equal(true);
   });
 });
