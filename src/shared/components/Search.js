@@ -5,6 +5,10 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import Button from 'react-bootstrap/lib/Button';
 import Link from 'react-router/lib/components/Link';
 import Logo from '../components/Logo';
+import SearchResult from './SearchResult.js';
+import Row from 'react-bootstrap/lib/Row';
+import Col from 'react-bootstrap/lib/Col';
+
 
 import _ from 'underscore';
 
@@ -50,22 +54,23 @@ export default class Search extends React.Component {
 
     let results = (this.props.results || []).map((r, i) => {
       return (
-        <Link to={'/articles/' + r.article_uuid} key={r._id}>
-          <ListGroupItem header={r.title}>
-          {formatAuthors(r.authors)}
-          </ListGroupItem>
-        </Link>
-      );
-    });
+        <SearchResult
+          result={r}
+          key={i}
+        />
+      )
+          });
     let additionalInfo = getAdditionalInfo(this.props)
     let isLoading = this.props.loading;
 
     let showShowMore = results.length < this.props.total;
 
     let showMore = (
+      <div style={{textAlign: 'center', width: '100%'}}>
       <Button onClick={this.props.getMoreResults}>
         Show more results
       </Button>
+    </div>
     );
 
     return (<div>
@@ -87,18 +92,6 @@ export default class Search extends React.Component {
 
 }
 
-
-function formatAuthors(authors) {
-  if (!authors.length) {
-    return 'Anonymous';
-  }
-
-  var lastAuthor = authors.pop();
-  if (!authors.length) {
-    return lastAuthor;
-  }
-  return authors.join(", ") + ' and ' + lastAuthor;
-}
 
 function getAdditionalInfo(props){
   let additionalClass, additionalMessage;
