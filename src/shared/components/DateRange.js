@@ -6,11 +6,15 @@ import Row from 'react-bootstrap/lib/Row';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
+const EARLIEST_INDEX = '2015-09-07'
+const EARLIEST_INDEX_FORMAT = 'YYYY-MM-DD'
+
 export default class DateRange extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
+      minDate: moment(moment(EARLIEST_INDEX).format(EARLIEST_INDEX_FORMAT)),
       locale:{
         format: 'DD MMM YYYY',
         separator: ' - ',
@@ -33,6 +37,9 @@ export default class DateRange extends React.Component {
       startDate: moment(props.startDate),
       endDate: moment(props.endDate)
     };
+    if (moment(this.state.minDate).isAfter(this.state.startDate, 'day')){
+      this.state.startDate = this.state.minDate;
+    }
   }
 
   handleEvent(event, picker) {

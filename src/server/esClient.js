@@ -6,6 +6,9 @@ import assert from 'assert';
 import LoggerFactory from './logger';
 import moment from 'moment';
 
+const EARLIEST_INDEX = '2015-09-07'
+const EARLIEST_INDEX_FORMAT = 'YYYY-MM-DD'
+
 var client = elasticsearch.Client({
   host: [
     {
@@ -69,11 +72,12 @@ function runComparatorQuery(queryData) {
 function runSearchQuery(queryData) {
   return new Promise((resolve, reject) => {
     let queryObject = SearchQuery(queryData);
-    client.search({
+    let request = {
       index: process.env.ES_SEARCH_INDEX_ROOT + '*',
       body: queryObject,
       from: queryData.from
-    }, (error, response) => {
+    }
+    client.search(request, (error, response) => {
       if (error) {
         return reject(error);
       }
@@ -87,12 +91,15 @@ function retrievePageView(queryData){
     let queryObject = queryData.comparator ?
       ArticleComparatorQuery(queryData) :
       ArticlesQuery(queryData);
-    client.search({
+    let request = {
       index: calculateIndices(queryData),
       ignore_unavailable: true,
       search_type: 'count',
       body: queryObject
-    }, (error, response) => {
+    };
+    //todo: fix request.index when array gets too large
+    //either send smaller array or send as part of body
+    client.search(request, (error, response) => {
       if (error) {
         return reject(error);
       }
@@ -103,11 +110,12 @@ function retrievePageView(queryData){
 
 function retrieveMetaData(queryData){
   return new Promise((resolve, reject) => {
-    client.get({
+    let request = {
       index: process.env.ES_SEARCH_INDEX_ROOT,
       type: 'logs', // XXX this should be articles!
       id: queryData.uuid
-    }, (error, response) => {
+    };
+    client.get(request, (error, response) => {
       if (error) {
         return reject(error);
       }
@@ -124,15 +132,17 @@ function retrieveMetaData(queryData){
   })
 }
 
+
 function calculateIndices(query) {
-  const fmtStr = 'YYYY-MM-DD';
-  let dateFrom = moment(moment(query.dateFrom).format(fmtStr));
-  let dateTo = moment(moment(query.dateTo).format(fmtStr));
+  let dateFrom = moment(moment(query.dateFrom).format(EARLIEST_INDEX_FORMAT));
+  let dateTo = moment(moment(query.dateTo).format(EARLIEST_INDEX_FORMAT));
   const indexPrefix = process.env.ES_INDEX_ROOT;
   let indices = [];
-
+  if (moment(EARLIEST_INDEX).isAfter(dateFrom, 'day')){
+    dateFrom = moment(moment(EARLIEST_INDEX).format(EARLIEST_INDEX_FORMAT));
+  }
   while (dateFrom < dateTo){
-    indices.push(indexPrefix + dateFrom.format(fmtStr));
+    indices.push(indexPrefix + dateFrom.format(EARLIEST_INDEX_FORMAT));
     dateFrom.add(1, 'days');
   }
 
