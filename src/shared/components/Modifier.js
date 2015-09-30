@@ -25,10 +25,10 @@ export default class Modifier extends React.Component {
     super(props);
   }
 
-  handleDateRangeChange (value) {
+  handleDateRangeChange (dates) {
     QueryActions.selectDateRange({
-      from: value.start.toISOString(),
-      to: value.end.toISOString()
+      from: dates.startDate.toISOString(),
+      to: dates.endDate.toISOString()
     });
   }
 
@@ -51,7 +51,8 @@ export default class Modifier extends React.Component {
       <Col sm={4} xs={6}>
         <DateRange
           onChange={this.handleDateRangeChange}
-          />
+          startDate={this.props.query.dateFrom}
+          endDate={this.props.query.dateTo} />
       </Col>
     </Row>;
 
@@ -61,11 +62,11 @@ export default class Modifier extends React.Component {
       </Col>
       <Col sm={10} xs={12}>
         <Comparator
+          identifier={'article:modifier:comparator'}
           tags={this.props.tags}
           onChange={this.handleComparatorChange}
           currentComparator={this.props.query.comparator}
-          uuid={this.props.uuid}
-          />
+          uuid={this.props.uuid} />
       </Col>
     </Row>;
 
@@ -74,8 +75,7 @@ export default class Modifier extends React.Component {
         <strong style={styles.title}>Filters:</strong>
       </Col>
       <Filters
-        onChange={this.handleFilterChange}
-        />
+        onChange={this.handleFilterChange} />
     </Row>;
 
     return (

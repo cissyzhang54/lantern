@@ -4,6 +4,7 @@ import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import connectToStores from 'alt/utils/connectToStores';
+import moment from 'moment';
 
 import Header from "../components/Header";
 import Modifier from "../components/Modifier";
@@ -19,6 +20,19 @@ import QueryStore from '../stores/QueryStore';
 import QueryActions from '../actions/QueryActions';
 import Error404 from '../handlers/404';
 import FeatureFlag from '../utils/featureFlag';
+
+const loadingStyle = {
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center'
+};
+
+function setDates(from, to = moment()){
+  QueryActions.selectDateRange({
+    from: moment(from),
+    to: moment(to)
+  });
+}
 
 class ArticleView extends React.Component {
 
@@ -80,22 +94,25 @@ class ArticleView extends React.Component {
   }
 
   render() {
-    if (this.props.errorMessage && !this.props.loading) {
-      return (<div><Error404/></div>);
-    }
-
     let data = this.props.data;
     let hasComparator = (this.props.params.comparator !== undefined);
     let comparatorData = this.props.comparatorData;
+    let title = (data) ? 'Lantern - ' + data.article.title : '';
+    let renderHeaderRow = FeatureFlag.check('article:title');
+    let renderModifierRow = FeatureFlag.check('article:modifier');
+    let renderWordCountComponent = FeatureFlag.check('article:wordCount');
+    let renderImageCountComponent = FeatureFlag.check('article:imageCount');
+    let renderBodyLinksComponent = FeatureFlag.check('article:bodyLinksCount');
+    let renderTimeOnPageComponent = FeatureFlag.check('article:timeOnPage');
+    let renderPageViewsComponent = FeatureFlag.check('article:pageViews');
+    let renderSocialReadersComponent = FeatureFlag.check('article:socialReaders');
+    let renderReadTimeChartComponent = FeatureFlag.check('article:readTimes');
+    let renderDeviceChartComponent = FeatureFlag.check('article:devices');
+    let renderChannelsChartComponent = FeatureFlag.check('article:channels');
 
-    if (!data || this.props.loading || comparatorData == null && hasComparator) {
-
-      const loadingStyle = {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      };
-
+    if (this.props.errorMessage && !this.props.loading) {
+      return (<div><Error404/></div>);
+    } else if (!data || this.props.loading || comparatorData == null && hasComparator) {
       return (
         <div style={loadingStyle}>
           <Logo message="Loading Article..." loading />
@@ -103,10 +120,12 @@ class ArticleView extends React.Component {
       );
     }
 
-    let title = (data) ? 'Lantern - ' + data.article.title : '';
+    if (!(this.props.query.dateFrom && this.props.query.dateTo)){
+      this.props.query.dateFrom = moment(data.article.published)
+      this.props.query.dateTo = moment()
+    }
 
     /* Header Row HTML */
-    let renderHeaderRow = FeatureFlag.check('article:title');
     let headerRow = <Row className='container-fluid'>
         <Header
           identifier='article:title'
@@ -118,7 +137,6 @@ class ArticleView extends React.Component {
     </Row>;
 
     /* Modifier Row HTML */
-    let renderModifierRow = FeatureFlag.check('article:modifier');
     let modifierRow = <Row className='container-fluid'>
       <Modifier
         tags={data.article.topics.concat(data.article.sections)}
@@ -131,21 +149,18 @@ class ArticleView extends React.Component {
     </Row>;
 
     /* Single Metric Components */
-    let renderWordCountComponent = FeatureFlag.check('article:wordCount');
     let wordCountComponent = <SingleMetric
       metric={data.article.wordCount}
       metricType='integer'
       label='Article Wordcount'
       size='small'
       />;
-    let renderImageCountComponent = FeatureFlag.check('article:imageCount');
     let imageCountComponent = <SingleMetric
       metric={data.article.imageCount}
       metricType='integer'
       label='Images'
       size='small'
       />;
-    let renderBodyLinksComponent = FeatureFlag.check('article:bodyLinksCount');
     let bodyLinksComponent =  <SingleMetric
       identifier='article:bodyLinksCount'
       metric={data.article.bodyLinksCount}
@@ -153,14 +168,12 @@ class ArticleView extends React.Component {
       label='Body Links'
       size='small'
       />;
-    let renderTimeOnPageComponent = FeatureFlag.check('article:timeOnPage');
     let timeOnPageComponent = <SingleMetric
       metric={data.article.timeOnPage}
       metricType='time'
       label='Time on Page'
       size='large'
       />;
-    let renderPageViewsComponent = FeatureFlag.check('article:pageViews');
     let pageViewsComponent = <SingleMetric
       metric={data.article.pageViews}
       comparatorMetric={hasComparator ? comparatorData.article.category_average_view_count : ''}
@@ -168,7 +181,6 @@ class ArticleView extends React.Component {
       label='Page Views'
       size='large'
       />;
-    let renderSocialReadersComponent = FeatureFlag.check('article:socialReaders');
     let socialReadersComponent = <SingleMetric
       metric={data.article.socialReaders}
       metricType='integer'
@@ -177,7 +189,6 @@ class ArticleView extends React.Component {
       />
 
     /* Line Charts */
-    let renderReadTimeChartComponent = FeatureFlag.check('article:readTimes');
     let readTimeChartComponent = <LineChart
       data={data.article.readTimes}
       keys={['value']}
@@ -187,14 +198,14 @@ class ArticleView extends React.Component {
       />
 
     /* Pie Charts */
-    let renderDeviceChartComponent = FeatureFlag.check('article:devices');
-    let deviceChartComponent =  <PieChart />;
-
-    let renderChannelsChartComponent = FeatureFlag.check('article:channels');
-    let channelsChartComponent =  <PieChart
-      data={data.article.channels}
-      keys={['views']}
-      />;
+    let deviceChartComponent =  <Col xs={6}><h4>Devices:</h4><PieChart /></Col>;
+    let channelsChartComponent =  <Col xs={6}>
+      <h4>Channels:</h4>
+      <PieChart
+        data={data.article.channels}
+        keys={['views']}
+        />
+      </Col>
 
     return (<DocumentTitle title={title}>
       <div className='container-fluid'>
@@ -246,14 +257,8 @@ class ArticleView extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col xs={6}>
-                <h4>Devices:</h4>
                 {renderDeviceChartComponent ? deviceChartComponent : {}}
-              </Col>
-              <Col xs={6}>
-                <h4>Channels:</h4>
                 {renderChannelsChartComponent ? channelsChartComponent : {}}
-              </Col>
             </Row>
           </Row>
         </main>
