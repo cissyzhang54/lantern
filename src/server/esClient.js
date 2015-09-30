@@ -49,7 +49,17 @@ export default function runQuery(category, queryData) {
 }
 
 function runArticleQuery(queryData) {
-  return Promise.all([retrievePageView(queryData), retrieveMetaData(queryData)]);
+  let metaData;
+  return retrieveMetaData(queryData).then(function(data){
+    metaData = data;
+    if (!queryData.dateFrom || !queryData.dateTo){
+      queryData.dateFrom = moment(metaData.initial_publish_date).toISOString();
+      queryData.dateTo = moment().toISOString();
+    }
+    return retrievePageView(queryData)
+  }).then(function(pageViewData){
+    return [pageViewData, metaData]
+  });
 }
 
 function runComparatorQuery(queryData) {

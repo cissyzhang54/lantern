@@ -15,7 +15,7 @@ export default {
     'article:modifier' : true,
     'article:modifier:comparator' : true,
     'article:modifier:filters' : false,
-    'article:modifier:DateRange' : false,
+    'article:modifier:DateRange' : true,
     'playground:header' : true,
     'playground:logo' : true,
     'playground:search' : true,

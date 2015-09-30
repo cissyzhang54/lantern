@@ -11,14 +11,16 @@ router.get('/articles/:uuid', (req, res, next) => {
 
   let query = {
     uuid: req.params.uuid,
-    datefrom: moment().add(-7, 'days').toISOString(), // XXX make this a default sensible range
-    dateTo: moment().toISOString(),
+    dateFrom: null,
+    dateTo: null,
     comparator: null,
     filters: []
   };
 
   dataApiUtils.getArticleData(query, apiKey)
     .then((data) => {
+      query.dateFrom = moment(data.article.published).toISOString();
+      query.dateTo = moment().toISOString();
       res.locals.data = {
         "ArticleStore": {
           data: data

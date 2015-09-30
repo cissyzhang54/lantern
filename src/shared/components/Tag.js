@@ -23,7 +23,10 @@ export default class Tag extends React.Component {
     let link = ['','articles', this.props.uuid, this.props.name.replace(' ','%20')].join('/');
     let className = this.props.selected ? 'selected' : '';
     return (
-      <Link style={this.props.selected ? ObjectAssignDeep(selected, style) : style} className={className} to={link} onClick={this.props.onClick}>
+      <Link style={this.props.selected ? ObjectAssignDeep(selected, style) : style}
+            className={className}
+            to={link}
+            onClick={this.props.onClick}>
           <Glyphicon glyph="tag" style={tagStyle} />{this.props.name}
       </Link>
     );

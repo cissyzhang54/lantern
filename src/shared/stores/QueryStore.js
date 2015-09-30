@@ -2,20 +2,21 @@ import alt from '../alt';
 import assign from 'object-assign';
 import _ from 'underscore';
 
-
 import QueryActions from '../actions/QueryActions';
+
+const defaultQuery = {
+  uuid: null,
+  dateFrom: null,
+  dateTo: null,
+  comparator: null,
+  filters: []
+};
 
 class QueryStore {
 
   constructor() {
     this.bindActions(QueryActions);
-    this.query = {
-        uuid: null,
-        datefrom: null, // XXX make this a default sensible range
-        dateTo: null,
-        comparator: null,
-        filters: []
-    };
+    this.query = defaultQuery
   }
 
   _update(param, updates) {
@@ -45,13 +46,7 @@ class QueryStore {
   }
 
   destroy() {
-    this.query = {
-        uuid: null,
-        datefrom: null, // XXX make this a default sensible range
-        dateTo: null,
-        comparator: null,
-        filters: []
-    };
+    this.query = defaultQuery;
   }
 
 }

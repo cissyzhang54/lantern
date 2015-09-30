@@ -2,7 +2,6 @@ import express from "express";
 import bodyParser from "body-parser";
 import uuid from "uuid";
 import assign from "object-assign";
-import moment from 'moment';
 
 import esClient from '../esClient';
 import ErrorHandler from '../apiErrorHandler';
@@ -23,8 +22,8 @@ router.use(ErrorHandler(router));
 function getCategoryData(req, res, next) {
   const query = {
     uuid: req.params.uuid,
-    dateFrom: req.body.dateFrom || moment().add(-1, 'weeks').toISOString(),
-    dateTo: req.body.dateTo || moment().toISOString()
+    dateFrom: req.body.dateFrom,
+    dateTo: req.body.dateTo
   };
   let category =req.params.category
   switch (category) {
@@ -54,8 +53,8 @@ function getCategoryData(req, res, next) {
 function getComparatorData(req, res, next) {
   const query = {
     comparator: req.params.comparator,
-    dateFrom: req.body.dateFrom || moment().add(-1, 'weeks').toISOString(),
-    dateTo: req.body.dateTo || moment().toISOString()
+    dateFrom: req.body.dateFrom,
+    dateTo: req.body.dateTo
   };
   let category =req.params.category
   switch (category) {

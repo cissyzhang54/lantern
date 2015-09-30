@@ -10,6 +10,7 @@
     "watch-js": "babel src -d lib --experimental -w",
     "dev-server": "env $(cat .env) node lib/server/webpack",
     "server": "nodemon lib/server/server",
+    "debug": "env $(cat .env) nodemon --debug lib/server/server",
     "postinstall": "npm run build && env $(cat .env) webpack --config webpack.config.prod.js",
     "start": "npm run watch-js & npm run dev-server & env $(cat .env) npm run server",
     "build": "npm run clean && babel src -d lib --experimental"
