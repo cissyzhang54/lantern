@@ -10,10 +10,11 @@ import ArticleDataFormater from '../formatters/Articles';
 import ComparatorDataFormater from '../formatters/Comparators';
 import SearchDataFormatter from '../formatters/Search';
 
+const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
 let router = express.Router();
 router.use(bodyParser.json());
 
-router.post('/:category(articles|topics|authors)/:uuid([a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})', getCategoryData);//todo remove comparator prefix
+router.post(`/:category(articles|topics|authors)/:uuid(${UUID_REGEX})`, getCategoryData);//todo remove comparator prefix
 router.post('/comparators/:category(articles|topics|authors)/:comparator', getComparatorData);
 router.get('/search/:query', search);
 
@@ -82,9 +83,10 @@ function getComparatorData(req, res, next) {
 }
 
 function search(req, res, next) {
-  var query = req.params.query;
+  const query = req.params.query;
+  const from = 0 || req.query.from;
 
-  esClient('search', {term: query})
+  esClient('search', {term: query, from: from})
     .then((response) => {
       return SearchDataFormatter(response);
     })

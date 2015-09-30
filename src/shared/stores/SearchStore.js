@@ -12,9 +12,12 @@ class SearchStore {
     this.errorMessage = null;
     this.loading = false;
     this.query = '';
+    this.total = 0;
+    this.from = 0;
     this.bindListeners({
       handleUpdateResults: SearchActions.UPDATE_RESULTS,
       handleSearchFailed: SearchActions.SEARCH_FAILED,
+      handleGetMoreResults: SearchActions.GET_MORE_RESULTS,
       handleSearch: SearchActions.SEARCH,
       handleDestroy: SearchActions.DESTROY
     });
@@ -23,10 +26,12 @@ class SearchStore {
 
   }
 
-  handleUpdateResults(results) {
+  handleUpdateResults(data) {
     this.loading = false;
-    this.results = results;
-    this.errorMessage = results.length ? null : 'Zero Results Found';
+    this.results = this.results.concat(data.results);
+    this.total = data.total;
+    this.from += data.results.length;
+    this.errorMessage = data.results.length ? null : 'Zero Results Found';
   }
 
   handleSearchFailed(error) {
@@ -41,13 +46,23 @@ class SearchStore {
   handleSearch(query) {
     this.loading = true;
     this.query = query;
+    this.from = 0;
+    this.results = [];
+    this.total = 0;
     this.getInstance().search(query);
+  }
+
+  handleGetMoreResults() {
+    if (this.results.length < this.total)
+      this.getInstance().search(this.query, this.from);
   }
 
   handleDestroy() {
     this.query = '';
     this.loading = false;
     this.results = [];
+    this.from = 0;
+    this.total = 0;
     this.errorMessage = null;
   }
 

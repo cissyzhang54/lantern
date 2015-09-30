@@ -61,12 +61,13 @@ function runSearchQuery(queryData) {
     let queryObject = SearchQuery(queryData);
     client.search({
       index: process.env.ES_SEARCH_INDEX_ROOT + '*',
-      body: queryObject
+      body: queryObject,
+      from: queryData.from
     }, (error, response) => {
       if (error) {
         return reject(error);
       }
-      return resolve(response.hits.hits);
+      return resolve(response.hits);
     });
   });
 }

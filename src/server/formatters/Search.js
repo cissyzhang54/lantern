@@ -3,7 +3,8 @@ import assert from 'assert';
 export default function formatData(data) {
 
   try {
-    assert.equal(Object.prototype.toString.call(data), '[object Array]',
+
+    assert.equal(Object.prototype.toString.call(data.hits), '[object Array]',
       "argument 'data' should be an array");
   } catch (e) {
     let error = new Error(e);
@@ -15,19 +16,22 @@ export default function formatData(data) {
 
   return new Promise((resolve, reject) => {
     try {
-
-      if (!data.length) {
-        return resolve([]);
+      let results = {
+        results: [],
+        total: data.total
+      }
+      if (!data.hits.length) {
+        return resolve(results);
       }
 
-      let processed = data.map((hit) => {
+      results.results = data.hits.map((hit) => {
         if (!hit.hasOwnProperty('_source')) {
           throw new Error('Unparseable data');
         }
         return hit._source;
       });
 
-      resolve(processed);
+      resolve(results);
 
     } catch (e) {
       let error = new Error(e);

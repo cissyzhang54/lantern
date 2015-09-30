@@ -3,8 +3,8 @@ import SearchActions from '../actions/SearchActions';
 
 let SearchSource = {
   search: {
-    remote(state, query) {
-      return DataAPI.search(query);
+    remote(state, query, from = 0) {
+      return DataAPI.search(query, from);
     },
     local() {
       return null;
