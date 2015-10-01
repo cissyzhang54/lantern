@@ -41,6 +41,26 @@ describe('Article Formatter', function() {
     ArticleFormat(ESArticleResults)
       .then((data) => {
         expect(data.article).to.be.a.object;
+        const props = [
+          'title',
+          'uuid',
+          'author',
+          'published',
+          'published_human',
+          'pageViews',
+          'timeOnPage',
+          'socialReaders',
+          'readTimes',
+          'genre',
+          'sections',
+          'topics',
+          'channels',
+          'referrer_types',
+          'referrer_names'
+        ];
+        for (let i = 0; i < props.length; i++){
+          expect(data.article.hasOwnProperty(props[i])).to.be.truthy;
+        }
         done();
       })
       .catch((error) => {

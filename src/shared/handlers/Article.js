@@ -10,6 +10,8 @@ import Header from "../components/Header";
 import Modifier from "../components/Modifier";
 import LineChart from "../components/LineChart";
 import PieChart from "../components/PieChart";
+import BarChart from "../components/BarChart.js";
+import Table from "../components/Table.js";
 import Logo from "../components/Logo";
 import SingleMetric from "../components/SingleMetric";
 import ArticleStore from '../stores/ArticleStore';
@@ -109,6 +111,7 @@ class ArticleView extends React.Component {
     let renderReadTimeChartComponent = FeatureFlag.check('article:readTimes');
     let renderDeviceChartComponent = FeatureFlag.check('article:devices');
     let renderChannelsChartComponent = FeatureFlag.check('article:channels');
+    let renderExternalReferrersComponent = FeatureFlag.check('article:referrers');
 
     if (this.props.errorMessage && !this.props.loading) {
       return (<div><Error404/></div>);
@@ -198,15 +201,52 @@ class ArticleView extends React.Component {
       />
 
     /* Pie Charts */
-    let deviceChartComponent =  <Col xs={6}><h4>Devices:</h4><PieChart /></Col>;
+    let deviceChartComponent =  <Col xs={6}><h5>Devices:</h5><PieChart /></Col>;
+
+    let chans = data.article.channels.map((d) => {
+      if (!d[0]) d[0] = 'Unknown';
+      return d;
+    });
     let channelsChartComponent =  <Col xs={6}>
-      <h4>Channels:</h4>
+      <h5>Channels:</h5>
       <PieChart
-        data={data.article.channels}
+        data={chans}
         keys={['views']}
         />
       </Col>
 
+    let refs = data.article.referrer_names.map((d)=> {
+      return {
+        referrer: d[0] ? d[0] : 'Unknown',
+        views: d[1]
+      };
+    });
+    let externalReferrersComponent = (
+      <div>
+        <Row>
+          <Col xs={12}>
+            <h5>External Sources</h5>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} sm={6}>
+            <BarChart
+              data={refs}
+              keys={['views']}
+              category={'referrer'}
+              yLabel="Page Views"
+              xLabel="Referrer"
+            />
+          </Col>
+          <Col xs={12} sm={6}>
+            <Table
+              headers={['Referrer', 'Views']}
+              rows={refs}
+            />
+          </Col>
+        </Row>
+      </div>
+    );
     return (<DocumentTitle title={title}>
       <div className='container-fluid'>
 
@@ -260,6 +300,14 @@ class ArticleView extends React.Component {
                 {renderDeviceChartComponent ? deviceChartComponent : {}}
                 {renderChannelsChartComponent ? channelsChartComponent : {}}
             </Row>
+          </Row>
+          <Row>
+            <Row>
+              <Col xs={12}>
+                <h4>Where did the readers come from?</h4>
+              </Col>
+            </Row>
+            {renderExternalReferrersComponent ? externalReferrersComponent : {}}
           </Row>
         </main>
       </div>

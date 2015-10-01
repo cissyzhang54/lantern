@@ -50,6 +50,16 @@ export default function PageViewsQuery(query) {
         terms: {
           field: "channel"
         }
+      },
+      referrer_types : {
+        terms: {
+          field: "referrer_type"
+        }
+      },
+      referrer_names : {
+        terms: {
+          field: "referrer_name"
+        }
       }
     }
   };
@@ -63,7 +73,7 @@ function calculateInterval(query) {
   if (span <= moment.duration(1, 'day')) {
     return 'hour';
   } else if (span <= moment.duration(1, 'week')) {
-    return 'day'; 
+    return 'day';
   } else if (span <= moment.duration(6, 'month')) {
     return 'day';
   } else {
