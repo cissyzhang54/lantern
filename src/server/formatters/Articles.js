@@ -40,7 +40,9 @@ export default function formatData(data) {
           genre: metaData.genre,
           sections: metaData.sections,
           topics: metaData.topics,
-          channels: formatChannels(articleData)
+          channels: formatTermsAggregation('channels', articleData),
+          referrer_types: formatTermsAggregation('referrer_types', articleData),
+          referrer_names: formatTermsAggregation('referrer_names', articleData)
         }
       };
 
@@ -85,8 +87,8 @@ function formatTimeSeries(data) {
   });
 }
 
-function formatChannels(data) {
-  let buckets = data.aggregations.channels.buckets;
+function formatTermsAggregation(name, data) {
+  let buckets = data.aggregations[name].buckets;
   return buckets.map((d, i) => {
     return [
       d.key,

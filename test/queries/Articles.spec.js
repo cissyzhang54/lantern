@@ -77,5 +77,23 @@ describe('Articles Query', () => {
     };
     expect(ArticlesQuery(query).aggs.page_views_over_time.date_histogram.interval)
       .to.equal('week');
-  })
+  });
+  it('should return the correct aggregators', () => {
+    const query = {
+      uuid: '123',
+      dateFrom: '2015-10-01',
+      dateTo: '2015-10-10'
+    };
+    const queryJSON = ArticlesQuery(query);
+    const props = [
+      'page_views_over_time',
+      'avg_time_on_page',
+      'channels',
+      'referrer_names',
+      'referrer_types'
+    ];
+    for (let i = 0; i < props.length; i++) {
+      expect(queryJSON.aggs.hasOwnProperty(props[i])).to.be.truthy;
+    }
+  });
 });

@@ -17,6 +17,7 @@ let config = {
     'article:readTimes' : true,
     'article:devices' : true,
     'article:channels' : true,
+    'article:referrers' : true,
     'article:modifier' : true,
     'article:modifier:comparator' : true,
     'article:modifier:filters' : true,
