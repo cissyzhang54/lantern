@@ -95,8 +95,6 @@ function retrievePageView(queryData){
       search_type: 'count',
       body: queryObject
     };
-    //todo: fix request.index when array gets too large
-    //either send smaller array or send as part of body
     client.search(request, (error, response) => {
       if (error) {
         return reject(error);
