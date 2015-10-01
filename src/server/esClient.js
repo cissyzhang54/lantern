@@ -5,9 +5,7 @@ import SearchQuery from './queries/Search';
 import assert from 'assert';
 import LoggerFactory from './logger';
 import moment from 'moment';
-
-const EARLIEST_INDEX = '2015-09-07'
-const EARLIEST_INDEX_FORMAT = 'YYYY-MM-DD'
+import calculateIndices from './utils/calculateIndices.js';
 
 var client = elasticsearch.Client({
   host: [
@@ -133,18 +131,4 @@ function retrieveMetaData(queryData){
 }
 
 
-function calculateIndices(query) {
-  let dateFrom = moment(moment(query.dateFrom).format(EARLIEST_INDEX_FORMAT));
-  let dateTo = moment(moment(query.dateTo).format(EARLIEST_INDEX_FORMAT));
-  const indexPrefix = process.env.ES_INDEX_ROOT;
-  let indices = [];
-  if (moment(EARLIEST_INDEX).isAfter(dateFrom, 'day')){
-    dateFrom = moment(moment(EARLIEST_INDEX).format(EARLIEST_INDEX_FORMAT));
-  }
-  while (dateFrom < dateTo){
-    indices.push(indexPrefix + dateFrom.format(EARLIEST_INDEX_FORMAT));
-    dateFrom.add(1, 'days');
-  }
 
-  return indices;
-}
