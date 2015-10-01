@@ -3,6 +3,7 @@ import Link from 'react-router/lib/components/Link';
 import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
+import Alert from 'react-bootstrap/lib/Alert';
 import connectToStores from 'alt/utils/connectToStores';
 import moment from 'moment';
 
@@ -28,18 +29,35 @@ const loadingStyle = {
   alignItems: 'center',
   justifyContent: 'center'
 };
+const updatingStyle = {
+  position: 'absolute',
+  top: '2em',
+  left: '40%',
+  width: '20%',
+  textAlign: 'center',
+};
 
-function setDates(from, to = moment()){
-  QueryActions.selectDateRange({
-    from: moment(from),
-    to: moment(to)
-  });
+function getData(uuid, comparator){
+  QueryActions.selectUUID(uuid);
+  if (comparator){
+    QueryActions.selectComparator(comparator);
+  }
+}
+
+const DEFAULT_STATE = {
+  uuid: null,
+  loading: true,
+  updating: false,
+  comparator: null
 }
 
 class ArticleView extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = DEFAULT_STATE
+    this.state.comparator = this.props.params.comparator || null
+    this.state.uuid = this.props.params.uuid || null
   }
 
   static getStores() {
@@ -50,10 +68,16 @@ class ArticleView extends React.Component {
     let comparatorState = ComparatorStore.getState();
     let articleState = ArticleStore.getState();
     let queryState = QueryStore.getState();
+
+    if (articleState.data && !(queryState.query.dateTo && queryState.query)){
+      queryState.query.dateTo = moment(articleState.data.article.published)
+      queryState.query.dateFrom = moment()
+    }
+
     return {
       query : queryState.query,
       data : articleState.data,
-      loading : articleState.loading,
+      articleLoading : articleState.loading,
       errorMessage : articleState.errorMessage,
       comparatorData : comparatorState.data,
       comparatorLoading : comparatorState.loading,
@@ -66,13 +90,18 @@ class ArticleView extends React.Component {
     ArticleActions.destroy();
     ComparatorActions.destroy();
     QueryActions.destroy();
+    this.state = DEFAULT_STATE
   }
 
-  _handleQueryChange() {
-    ArticleStore.loadArticleData(this.props.query);
-    if (this.props.query.comparator){
+  _handleQueryChange(queryStore) {
+    let hasComparatorChanged = this.props.query.comparator !== this.state.comparator
+    if (queryStore.query.uuid && !hasComparatorChanged){
+      ArticleStore.loadArticleData(this.props.query);
+    }
+    if (queryStore.query.comparator && hasComparatorChanged){
       ComparatorStore.loadComparatorData(this.props.query);
     }
+    this.state.comparator = this.props.query.comparator
   }
 
   componentDidMount() {
@@ -81,24 +110,20 @@ class ArticleView extends React.Component {
     analytics.trackScroll();
 
     // XXX consider putting this inside ArticleStore?
-    this._boundQueryHandlerRef = this._handleQueryChange.bind(this);
-    QueryStore.listen(this._boundQueryHandlerRef);
+    QueryStore.listen(this._handleQueryChange.bind(this));
 
-    if (this.props.data) {
-      return;
+    if (!this.props.data) {
+      getData(this.props.params.uuid, this.props.params.comparator)
     }
-
-    QueryActions.selectUUID(this.props.params.uuid);
-    if (this.props.params.comparator){
-      QueryActions.selectComparator(this.props.params.comparator);
-    }
-
   }
 
   render() {
+    this.state.loading = !this.props.data
+    this.state.updating = this.props.articleLoading || this.props.comparatorLoading
+
     let data = this.props.data;
     let hasComparator = (this.props.params.comparator !== undefined);
-    let comparatorData = this.props.comparatorData;
+    let comparatorData = this.props.comparatorData || { article: {}};
     let title = (data) ? 'Lantern - ' + data.article.title : '';
     let renderHeaderRow = FeatureFlag.check('article:title');
     let renderModifierRow = FeatureFlag.check('article:modifier');
@@ -112,20 +137,22 @@ class ArticleView extends React.Component {
     let renderDeviceChartComponent = FeatureFlag.check('article:devices');
     let renderChannelsChartComponent = FeatureFlag.check('article:channels');
     let renderExternalReferrersComponent = FeatureFlag.check('article:referrers');
+    let updating = <div></div>
 
-    if (this.props.errorMessage && !this.props.loading) {
+    if (this.props.errorMessage) {
       return (<div><Error404/></div>);
-    } else if (!data || this.props.loading || comparatorData == null && hasComparator) {
+    } else if (this.state.loading) {
       return (
         <div style={loadingStyle}>
           <Logo message="Loading Article..." loading />
         </div>
       );
-    }
-
-    if (!(this.props.query.dateFrom && this.props.query.dateTo)){
-      this.props.query.dateFrom = moment(data.article.published)
-      this.props.query.dateTo = moment()
+    } else if (this.state.updating) {
+      updating = (
+        <Alert bsStyle="warning" style={updatingStyle}>
+          <strong>Updating Article...</strong>
+        </Alert>
+      );
     }
 
     /* Header Row HTML */
@@ -250,6 +277,7 @@ class ArticleView extends React.Component {
     return (<DocumentTitle title={title}>
       <div className='container-fluid'>
 
+        {updating}
         {renderHeaderRow ? headerRow : {}}
         {renderModifierRow ? modifierRow : {}}
 

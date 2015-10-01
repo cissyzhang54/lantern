@@ -27,7 +27,6 @@ class ComparatorStore {
 
   handleLoadingData() {
     this.loading = true;
-    this.data = null;
   }
 
   handleUpdateData(newData) {

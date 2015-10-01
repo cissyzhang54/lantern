@@ -25,7 +25,6 @@ class ArticleStore {
 
   handleLoadingData() {
     this.loading = true;
-    this.data = null;
   }
 
   handleUpdateData(newData) {

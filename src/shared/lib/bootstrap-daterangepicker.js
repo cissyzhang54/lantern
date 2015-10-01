@@ -8,7 +8,7 @@
 
 (function(root, factory) {
 
-  if (root && typeof define === 'function' && define.amd) {
+  if (typeof define === 'function' && define.amd) {
     define(['moment', 'jquery', 'exports'], function(momentjs, $, exports) {
       root.daterangepicker = factory(root, exports, momentjs, $);
     });
@@ -32,7 +32,7 @@
     root.daterangepicker = factory(root, {}, root.moment || moment, (root.jQuery || root.Zepto || root.ender || root.$));
   }
 
-}(this, function(root, daterangepicker, moment, $) {
+}(this || {}, function(root, daterangepicker, moment, $) {
 
   var DateRangePicker = function(element, options, cb) {
 
