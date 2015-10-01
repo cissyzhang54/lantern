@@ -48,7 +48,7 @@ export default class Modifier extends React.Component {
       <Col sm={2} xs={12}>
         <strong style={styles.title}>Date Range:</strong>
       </Col>
-      <Col sm={4} xs={6}>
+      <Col sm={4} xs={12}>
         <DateRange
           onChange={this.handleDateRangeChange}
           startDate={this.props.query.dateFrom}
