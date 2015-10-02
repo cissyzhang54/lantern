@@ -52,13 +52,51 @@ export default function PageViewsQuery(query) {
         }
       },
       referrer_types : {
-        terms: {
-          field: "referrer_type"
+        filter: {
+          not : {
+            term : {
+              referrer_type: "internal"
+            }
+          }
+        },
+        aggs: {
+          filtered : {
+            terms: {
+              field: "referrer_type"
+            }
+          }
         }
       },
       referrer_names : {
-        terms: {
-          field: "referrer_name"
+        filter: {
+          not : {
+            term : {
+              referrer_type: "internal"
+            }
+          }
+        },
+        aggs: {
+          filtered : {
+            terms: {
+              field: "referrer_name"
+            }
+          }
+        }
+      },
+      referrer_urls : {
+        filter: {
+          not : {
+            term : {
+              referrer_type: "internal"
+            }
+          }
+        },
+        aggs: {
+          filtered : {
+            terms: {
+              field: "referrer"
+            }
+          }
         }
       },
       devices : {

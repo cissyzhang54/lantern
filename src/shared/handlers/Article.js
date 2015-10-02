@@ -234,6 +234,24 @@ class ArticleView extends React.Component {
         views: d[1]
       };
     });
+
+    let refUrls = data.article.referrer_urls.map((d, i) => {
+      const maxLen = 60;
+      const displayString = d[0].length > maxLen ? d[0].substr(0, maxLen)+'…' : d[0];
+      let url = (
+        <a
+          target="_blank"
+          href={d[0]}
+          >
+          {displayString}
+        </a>
+      );
+      return {
+        referrer: d[0] ? url : 'Not available',
+        views: d[1]
+      };
+    });
+
     let externalReferrersComponent = (
       <div>
         <Row>
@@ -254,7 +272,7 @@ class ArticleView extends React.Component {
           <Col xs={12} sm={6}>
             <Table
               headers={['Referrer', 'Views']}
-              rows={refs}
+              rows={refUrls}
             />
           </Col>
         </Row>

@@ -57,6 +57,7 @@ describe('Article Formatter', function() {
           'channels',
           'referrer_types',
           'referrer_names',
+          'referrer_urls',
           'devices'
         ];
         for (let i = 0; i < props.length; i++){
@@ -65,6 +66,7 @@ describe('Article Formatter', function() {
         done();
       })
       .catch((error) => {
+        console.error('error', error);
         done(error);
       });
   });
