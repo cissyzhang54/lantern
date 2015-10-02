@@ -200,8 +200,21 @@ class ArticleView extends React.Component {
       cols={12}
       />
 
-    /* Pie Charts */
-    let deviceChartComponent =  <Col xs={6}><h5>Devices:</h5><PieChart /></Col>;
+      /* Pie Charts */
+
+    let devices = data.article.devices.map((d) => {
+      if (!d[0]) d[0] = 'Unknown';
+      return d;
+    });
+    let deviceChartComponent = (
+      <Col xs={6}>
+        <h5>Devices:</h5>
+        <PieChart
+          data={devices}
+          keys={['views']}
+        />
+      </Col>
+    );
 
     let chans = data.article.channels.map((d) => {
       if (!d[0]) d[0] = 'Unknown';

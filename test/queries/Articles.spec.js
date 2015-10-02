@@ -90,7 +90,8 @@ describe('Articles Query', () => {
       'avg_time_on_page',
       'channels',
       'referrer_names',
-      'referrer_types'
+      'referrer_types',
+      'devices'
     ];
     for (let i = 0; i < props.length; i++) {
       expect(queryJSON.aggs.hasOwnProperty(props[i])).to.be.truthy;

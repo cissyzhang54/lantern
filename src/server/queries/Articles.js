@@ -60,6 +60,11 @@ export default function PageViewsQuery(query) {
         terms: {
           field: "referrer_name"
         }
+      },
+      devices : {
+        terms : {
+          field : "device_type"
+        }
       }
     }
   };

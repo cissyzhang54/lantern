@@ -56,7 +56,8 @@ describe('Article Formatter', function() {
           'topics',
           'channels',
           'referrer_types',
-          'referrer_names'
+          'referrer_names',
+          'devices'
         ];
         for (let i = 0; i < props.length; i++){
           expect(data.article.hasOwnProperty(props[i])).to.be.truthy;
@@ -64,7 +65,7 @@ describe('Article Formatter', function() {
         done();
       })
       .catch((error) => {
-        console.error('error', error);
+        done(error);
       });
   });
 });
