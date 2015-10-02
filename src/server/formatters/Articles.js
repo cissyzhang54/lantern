@@ -41,8 +41,9 @@ export default function formatData(data) {
           sections: metaData.sections,
           topics: metaData.topics,
           channels: formatTermsAggregation('channels', articleData),
-          referrer_types: formatTermsAggregation('referrer_types', articleData),
-          referrer_names: formatTermsAggregation('referrer_names', articleData),
+          referrer_types: formatFilteredTermsAggregation('referrer_types', articleData),
+          referrer_names: formatFilteredTermsAggregation('referrer_names', articleData),
+          referrer_urls: formatFilteredTermsAggregation('referrer_urls', articleData),
           devices : formatTermsAggregation('devices', articleData)
         }
       };
@@ -90,6 +91,16 @@ function formatTimeSeries(data) {
 
 function formatTermsAggregation(name, data) {
   let buckets = data.aggregations[name].buckets;
+  return buckets.map((d, i) => {
+    return [
+      d.key,
+      d.doc_count
+    ];
+  });
+}
+
+function formatFilteredTermsAggregation(name, data) {
+  let buckets = data.aggregations[name].filtered.buckets;
   return buckets.map((d, i) => {
     return [
       d.key,

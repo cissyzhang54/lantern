@@ -91,6 +91,7 @@ describe('Articles Query', () => {
       'channels',
       'referrer_names',
       'referrer_types',
+      'referrer_urls',
       'devices'
     ];
     for (let i = 0; i < props.length; i++) {
