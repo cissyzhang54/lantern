@@ -42,7 +42,8 @@ export default function formatData(data) {
           topics: metaData.topics,
           channels: formatTermsAggregation('channels', articleData),
           referrer_types: formatTermsAggregation('referrer_types', articleData),
-          referrer_names: formatTermsAggregation('referrer_names', articleData)
+          referrer_names: formatTermsAggregation('referrer_names', articleData),
+          devices : formatTermsAggregation('devices', articleData)
         }
       };
 
