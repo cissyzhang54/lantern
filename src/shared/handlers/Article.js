@@ -257,7 +257,7 @@ class ArticleView extends React.Component {
         />
       </Col>
 
-    let refs = data.article.referrer_names.map((d)=> {
+    let refs = data.article.referrer_types.map((d)=> {
       return {
         referrer: d[0] ? d[0] : 'Unknown',
         views: d[1]

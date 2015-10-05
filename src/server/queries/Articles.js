@@ -83,18 +83,54 @@ export default function PageViewsQuery(query) {
           }
         }
       },
-      referrer_urls : {
-        filter: {
-          not : {
-            term : {
-              referrer_type: "internal"
+      referrer_urls: {
+        filter : {
+          not: {
+            filter : {
+              or : [
+                {
+                  term : {
+                    referrer_type : 'search'
+                  }
+                },
+                {
+                  term : {
+                    referrer_type : 'internal'
+                  }
+                },
+                {
+                  term : {
+                    referrer_type : 'social-network'
+                  }
+                },
+                {
+                  prefix : {
+                    referrer : 'http://localhost'
+                  }
+                },
+                {
+                  prefix : {
+                    referrer: 'http://lantern.ft.com'
+                  }
+                },
+                {
+                  prefix : {
+                    referrer: 'https://lantern.ft.com'
+                  }
+                },
+                {
+                  prefix: {
+                    referrer: 'http://ft-editorial-lantern'
+                  }
+                }
+              ]
             }
           }
         },
-        aggs: {
+        aggs : {
           filtered : {
-            terms: {
-              field: "referrer"
+            terms : {
+              field : 'referrer'
             }
           }
         }

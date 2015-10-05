@@ -83,7 +83,8 @@ BarChart.defaultProps = {
   keys: ['value'],
   category: 'thing',
   xLabel: 'Thing',
-  yLabel: 'Value of the Thing'
+  yLabel: 'Value of the Thing',
+  reverseAxis: true
 };
 
 BarChart.propTypes = {
