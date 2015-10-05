@@ -85,7 +85,7 @@ function search(req, res, next) {
   const query = req.params.query;
   const from = 0 || req.query.from;
 
-  esClient.runSearchQuery('search', {term: query, from: from})
+  esClient.runSearchQuery({term: query, from: from})
     .then((response) => {
       return SearchDataFormatter(response);
     })
