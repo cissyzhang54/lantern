@@ -138,6 +138,7 @@ class ArticleView extends React.Component {
     let renderDeviceChartComponent = FeatureFlag.check('article:devices');
     let renderChannelsChartComponent = FeatureFlag.check('article:channels');
     let renderExternalReferrersComponent = FeatureFlag.check('article:referrers');
+    let renderExternalHeader = renderExternalReferrersComponent;
     let updating = <div></div>
 
     if (this.props.errorMessage) {
@@ -306,6 +307,15 @@ class ArticleView extends React.Component {
         </Row>
       </div>
     );
+
+    let externalHeader = (
+      <Row>
+        <Col xs={12}>
+          <h4>Where did the readers come from?</h4>
+        </Col>
+      </Row>
+    );
+
     return (<DocumentTitle title={title}>
       <div className='container-fluid'>
 
@@ -339,36 +349,26 @@ class ArticleView extends React.Component {
             </Col>
           </Row>
           <Row>
-            <Row>
-              <Col xs={12}>
-                <h4>When did readers access the article?</h4>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12}>
-                {renderReadTimeChartComponent ? readTimeChartComponent : {}}
-              </Col>
-            </Row>
+            <Col xs={12}>
+              <h4>When did readers access the article?</h4>
+            </Col>
           </Row>
           <Row>
-            <Row>
-              <Col xs={12}>
-                <h4>How did readers access the article?</h4>
-              </Col>
-            </Row>
-            <Row>
-                {renderDeviceChartComponent ? deviceChartComponent : {}}
-                {renderChannelsChartComponent ? channelsChartComponent : {}}
-            </Row>
+            <Col xs={12}>
+              {renderReadTimeChartComponent ? readTimeChartComponent : {}}
+            </Col>
           </Row>
           <Row>
-            <Row>
-              <Col xs={12}>
-                <h4>Where did the readers come from?</h4>
-              </Col>
-            </Row>
-            {renderExternalReferrersComponent ? externalReferrersComponent : {}}
+            <Col xs={12}>
+              <h4>How did readers access the article?</h4>
+            </Col>
           </Row>
+          <Row>
+              {renderDeviceChartComponent ? deviceChartComponent : {}}
+              {renderChannelsChartComponent ? channelsChartComponent : {}}
+          </Row>
+          {renderExternalHeader ? externalHeader : {}}
+          {renderExternalReferrersComponent ? externalReferrersComponent : {}}
         </main>
       </div>
     </DocumentTitle>);
