@@ -12,6 +12,7 @@ import errorRoutes from "../shared/routers/error";
 import dataPreloader from "./routers/dataPreloader-routes";
 import apiRouter from "./routers/api-routes";
 import authRouter from "./routers/auth-routes";
+import statusRouter from "./routers/status-routes";
 import uuid from 'uuid';
 
 delete process.env.BROWSER;
@@ -35,10 +36,7 @@ app.use(express.static('public'));
 app.use(express.static('src/server/resources'));
 
 // Steady  ...setup the Routes
-app.use('/status', function (req, res) {
-  res.sendStatus(200);
-  res.end();
-});
+app.use('/status', statusRouter);
 app.use('/loginFailed', (req, res) =>{
   let title = `Login Failed`
   let message = `Sorry, you must use a valid FT.com email address`

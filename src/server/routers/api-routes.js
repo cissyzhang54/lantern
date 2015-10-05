@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import uuid from "uuid";
 import assign from "object-assign";
 
-import esClient from '../esClient';
+import * as esClient from '../esClient';
 import ErrorHandler from '../apiErrorHandler';
 import ArticleDataFormater from '../formatters/Articles';
 import ComparatorDataFormater from '../formatters/Comparators';
@@ -28,7 +28,7 @@ function getCategoryData(req, res, next) {
   let category =req.params.category
   switch (category) {
     case 'articles':
-      esClient(category, query)
+      esClient.runArticleQuery(query)
         .then((response) => {
           return ArticleDataFormater(response);
         })
@@ -59,7 +59,7 @@ function getComparatorData(req, res, next) {
   let category =req.params.category
   switch (category) {
     case 'articles':
-      esClient('comparator', query)
+      esClient.runComparatorQuery(query)
         .then((response) => {
           return ComparatorDataFormater(response);
         })
@@ -85,7 +85,7 @@ function search(req, res, next) {
   const query = req.params.query;
   const from = 0 || req.query.from;
 
-  esClient('search', {term: query, from: from})
+  esClient.runSearchQuery('search', {term: query, from: from})
     .then((response) => {
       return SearchDataFormatter(response);
     })
