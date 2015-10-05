@@ -35,7 +35,7 @@ export default class BarChart extends React.Component {
         }
       },
       axis: {
-        rotated: (this.props.reverseAxis === false) ? false : true,
+        rotated: this.props.reverseAxis,
         x: {
           label: this.props.xLabel,
           type: 'category'
@@ -70,7 +70,6 @@ export default class BarChart extends React.Component {
 BarChart.defaultProps = {
   data: (() => {
     let times = 10;
-    let date = new Date().getTime();
     var dataArray = [];
 
     for (var i = 0; i < times; i++) {
@@ -91,6 +90,5 @@ BarChart.propTypes = {
   data: React.PropTypes.array.isRequired,
   category: React.PropTypes.string.isRequired,
   keys: React.PropTypes.array.isRequired,
-  title: React.PropTypes.string.isRequired,
   yLabel: React.PropTypes.string.isRequired
 };
