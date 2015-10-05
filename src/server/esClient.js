@@ -19,37 +19,24 @@ var client = elasticsearch.Client({
   log: LoggerFactory('elasticsearch')
 });
 
-export default function runQuery(category, queryData) {
-  try {
-    assert.equal(typeof category, 'string',
-      'argument "category" must be a string');
-
-    assert.equal(typeof queryData, 'object',
-      'argument "queryData" must be an object');
-  } catch (e) {
-    let error = new Error(e);
-    error.name = 'MalformedQueryArgumentsError';
-    error.query = queryData;
-    error.category = category;
-    return Promise.reject(error);
-  }
-
-  switch (category) {
-    case 'comparator':
-      return runComparatorQuery(queryData);
-    case 'articles':
-      return runArticleQuery(queryData);
-    case 'search':
-      return runSearchQuery(queryData);
-    default:
-      let error = new Error('No Suitable Category');
-      error.name = 'CategoryNotFoundError';
-      error.category = category;
-      return Promise.reject(error);
-  }
+export function getIndicies(h = 'health,index,docs.count,store.size,tm'){
+  return new Promise((resolve, reject) => {
+    client.cat.indices({
+      h: h,
+      index: 'article_page_view*'
+    }, function(e, response){
+      e && reject(e)
+      !e && resolve(response)
+    })
+  });
 }
 
-function runArticleQuery(queryData) {
+
+export function runArticleQuery(queryData) {
+  let queryError;
+  if (queryError = queryDataError('articles', queryData)){
+    return Promise.reject(queryError);
+  }
   let metaData;
   return retrieveMetaData(queryData).then(function(data){
     metaData = data;
@@ -63,11 +50,19 @@ function runArticleQuery(queryData) {
   });
 }
 
-function runComparatorQuery(queryData) {
+export function runComparatorQuery(queryData) {
+  let queryError;
+  if (queryError = queryDataError('comparator', queryData)){
+    return Promise.reject(queryError);
+  }
   return retrievePageView(queryData);
 }
 
-function runSearchQuery(queryData) {
+export function runSearchQuery(queryData) {
+  let queryError;
+  if (queryError = queryDataError('search', queryData)){
+    return Promise.reject(queryError);
+  }
   return new Promise((resolve, reject) => {
     let queryObject = SearchQuery(queryData);
     let request = {
@@ -128,5 +123,16 @@ function retrieveMetaData(queryData){
   })
 }
 
-
-
+function queryDataError(category, queryData){
+  try {
+    assert.equal(typeof queryData, 'object',
+      'argument "queryData" must be an object');
+    return false
+  } catch (e) {
+    let error = new Error(e);
+    error.name = 'MalformedQueryArgumentsError';
+    error.query = queryData;
+    error.category = category;
+    return error;
+  }
+}
