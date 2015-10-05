@@ -2,6 +2,8 @@ import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
+import Input from 'react-bootstrap/lib/Input';
+import moment from 'moment';
 
 let c3 = {};
 
@@ -13,12 +15,15 @@ export default class LineChart extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      localTime : false
+    }
   }
 
   drawChart() {
     let node = React.findDOMNode(this.refs.chartContainer);
     let json = this.props.data.map((d) => {
-      d.time = new Date(d.time);
+      d.time = moment(d.time);
       return d;
     });
 
@@ -26,6 +31,14 @@ export default class LineChart extends React.Component {
     const labelWidth = 80;
     if (window && window.innerWidth < 900){
       labelCount = parseInt(window.innerWidth / labelWidth,10)
+    }
+
+    let xLabel = this.props.xLabel;
+
+    if (this.state.localTime) {
+      xLabel += ' (Local)';
+    } else {
+      xLabel += ' (UTC)';
     }
 
     this.chart = c3.generate({
@@ -48,15 +61,16 @@ export default class LineChart extends React.Component {
       axis: {
         x: {
           type: 'timeseries',
-          label: this.props.xLabel,
+          label: xLabel,
           tick: {
             // XXX make this dynamic - take a cue from
             // the date range
-            fit: false,
+            fit: !this.state.localTime,
             format: '%d %b %H:%M:%S',
             width: labelWidth,
             count: labelCount
-          }
+          },
+          localtime: this.state.localTime
         },
         y: {
           label: this.props.yLabel
@@ -74,10 +88,26 @@ export default class LineChart extends React.Component {
       this.drawChart();
   }
 
+  _handleLocalTimeSwitch(event) {
+    const checked = this.refs.localTimeInput.getChecked();
+    this.setState({localTime: checked});
+  }
+
   render() {
     return (
       <div>
-        <div ref='chartContainer' id="chartContainer"></div>
+        <div
+          ref='chartContainer'
+          id="chartContainer"
+          >
+        </div>
+        <Input
+          type="checkbox"
+          ref="localTimeInput"
+          label="Display dates in Local Time"
+          checked={this.state.localTime}
+          onChange={this._handleLocalTimeSwitch.bind(this)}
+        />
       </div>
     );
   }

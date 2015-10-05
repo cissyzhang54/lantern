@@ -15,6 +15,7 @@
     "start": "npm run watch-js & npm run dev-server & env $(cat .env) npm run server",
     "build": "npm run clean && babel src -d lib --experimental"
   },
+  "pre-commit": "test",
   "author": "Dario Villanueva",
   "license": "MIT",
   "jshintConfig": {
@@ -72,6 +73,7 @@
     "webpack-dev-server": "^1.10.1"
   },
   "devDependencies": {
-    "chai": "^3.2.0"
+    "chai": "^3.2.0",
+    "pre-commit": "^1.1.1"
   }
 }
