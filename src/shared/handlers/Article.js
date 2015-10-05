@@ -37,7 +37,7 @@ const updatingStyle = {
   textAlign: 'center',
 };
 
-function getData(uuid, comparator){
+function updateQuery(uuid, comparator){
   QueryActions.selectUUID(uuid);
   if (comparator){
     QueryActions.selectComparator(comparator);
@@ -110,10 +110,11 @@ class ArticleView extends React.Component {
     analytics.trackScroll();
 
     // XXX consider putting this inside ArticleStore?
-    QueryStore.listen(this._handleQueryChange.bind(this));
+    this._boundQueryHandlerRef = this._handleQueryChange.bind(this)
+    QueryStore.listen(this._boundQueryHandlerRef);
 
-    if (!this.props.data) {
-      getData(this.props.params.uuid, this.props.params.comparator)
+    if (this.props.params.uuid != QueryStore.getState().query.uuid) {
+      updateQuery(this.props.params.uuid, this.props.params.comparator)
     }
   }
 
