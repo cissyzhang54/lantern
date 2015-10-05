@@ -14,7 +14,7 @@ describe ('LineChart component', function() {
 
   it ('Should render component', function() {
     const props = lineChart.props;
-    const chartContainer = props.children;
+    const chartContainer = props.children[0];
 
     expect(chartContainer.type).to.equal('div');
     expect(chartContainer.props.id).to.equal('chartContainer');
