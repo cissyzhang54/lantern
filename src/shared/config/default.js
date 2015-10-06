@@ -3,7 +3,7 @@ let port = (process.env.PORT || '3000');
 let config = {
   port: port,
   baseUrl: 'http://localhost:' + port,
-  jsUrl: "//localhost:8081",
+  jsUrl: "//localhost:8082",
   gaTrackingID: 'UA-60698836-4',
   features : {
     'home:recentArticles' : true,

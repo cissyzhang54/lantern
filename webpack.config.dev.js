@@ -13,12 +13,12 @@ module.exports = {
   entry: {
     app: [path.join(__dirname, './src/client/entry'),
       'webpack/hot/only-dev-server',
-      'webpack-dev-server/client?http://localhost:8081'],
+      'webpack-dev-server/client?http://localhost:8082'],
   },
   output: {
     path: path.join(__dirname, '/public/build/'),
     filename: 'scripts/[name].js',
-    publicPath: 'http://localhost:8081/build/',
+    publicPath: 'http://localhost:8082/build/',
   },
   plugins: [
     new webpack.optimize.DedupePlugin(),
