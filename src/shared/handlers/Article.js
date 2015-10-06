@@ -8,13 +8,15 @@ import connectToStores from 'alt/utils/connectToStores';
 import moment from 'moment';
 
 import Header from "../components/Header";
-import Modifier from "../components/Modifier";
+import SectionModifier from "../components/SectionModifier";
 import LineChart from "../components/LineChart";
 import PieChart from "../components/PieChart";
 import BarChart from "../components/BarChart.js";
 import Table from "../components/Table.js";
 import Logo from "../components/Logo";
-import SingleMetric from "../components/SingleMetric";
+
+import SectionHeadlineStats from "../components/SectionHeadlineStats";
+
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
 import ComparatorStore from '../stores/ComparatorStore';
@@ -24,31 +26,44 @@ import QueryActions from '../actions/QueryActions';
 import Error404 from '../handlers/404';
 import FeatureFlag from '../utils/featureFlag';
 
-const loadingStyle = {
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
+const DEFAULT_STATE = {
+  uuid: null,
+  comparator: null
+}
+const STYLES = {
+  LOADING: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  UPDATING : {
+    position: 'absolute',
+    top: '2em',
+    left: '40%',
+    width: '20%',
+    textAlign: 'center',
+  }
 };
-const updatingStyle = {
-  position: 'absolute',
-  top: '2em',
-  left: '40%',
-  width: '20%',
-  textAlign: 'center',
-};
+const MESSAGES = {
+  PLACEHOLDER : (<div></div>),
+  ERROR_404 : (<div><Error404/></div>),
+  LOADING : (
+    <div style={STYLES.LOADING}>
+      <Logo message="Loading Article..." loading />
+    </div>
+  ),
+  UPDATING : (
+    <Alert bsStyle="warning" style={STYLES.UPDATING}>
+      <strong>Updating Article...</strong>
+    </Alert>
+  )
+}
 
 function updateQuery(uuid, comparator){
   QueryActions.selectUUID(uuid);
   if (comparator){
     QueryActions.selectComparator(comparator);
   }
-}
-
-const DEFAULT_STATE = {
-  uuid: null,
-  loading: true,
-  updating: false,
-  comparator: null
 }
 
 class ArticleView extends React.Component {
@@ -68,7 +83,6 @@ class ArticleView extends React.Component {
     let comparatorState = ComparatorStore.getState();
     let articleState = ArticleStore.getState();
     let queryState = QueryStore.getState();
-
     if (articleState.data && !(queryState.query.dateTo && queryState.query)){
       queryState.query.dateTo = moment(articleState.data.article.published)
       queryState.query.dateFrom = moment()
@@ -119,151 +133,33 @@ class ArticleView extends React.Component {
   }
 
   render() {
-    this.state.loading = !this.props.data
-    this.state.updating = this.props.articleLoading || this.props.comparatorLoading
+    if (this.props.errorMessage) {
+      return MESSAGES.ERROR_404;
+    } else if (!this.props.data) {
+      return MESSAGES.LOADING;
+    }
+    let updating = (this.props.articleLoading || this.props.comparatorLoading)
+      ? MESSAGES.UPDATING
+      : MESSAGES.PLACEHOLDER
 
     let data = this.props.data;
     let hasComparator = (this.props.params.comparator !== undefined);
     let comparatorData = this.props.comparatorData || { article: {}};
     let title = (data) ? 'Lantern - ' + data.article.title : '';
     let renderHeaderRow = FeatureFlag.check('article:title');
-    let renderModifierRow = FeatureFlag.check('article:modifier');
-    let renderWordCountComponent = FeatureFlag.check('article:wordCount');
-    let renderImageCountComponent = FeatureFlag.check('article:imageCount');
-    let renderBodyLinksComponent = FeatureFlag.check('article:bodyLinksCount');
-    let renderTimeOnPageComponent = FeatureFlag.check('article:timeOnPage');
-    let renderPageViewsComponent = FeatureFlag.check('article:pageViews');
-    let renderSocialReadersComponent = FeatureFlag.check('article:socialReaders');
     let renderReadTimeChartComponent = FeatureFlag.check('article:readTimes');
     let renderDeviceChartComponent = FeatureFlag.check('article:devices');
     let renderChannelsChartComponent = FeatureFlag.check('article:channels');
     let renderExternalReferrersComponent = FeatureFlag.check('article:referrers');
     let renderExternalHeader = renderExternalReferrersComponent;
-    let updating = <div></div>
-
-    if (this.props.errorMessage) {
-      return (<div><Error404/></div>);
-    } else if (this.state.loading) {
-      return (
-        <div style={loadingStyle}>
-          <Logo message="Loading Article..." loading />
-        </div>
-      );
-    } else if (this.state.updating) {
-      updating = (
-        <Alert bsStyle="warning" style={updatingStyle}>
-          <strong>Updating Article...</strong>
-        </Alert>
-      );
-    }
-
-    /* Header Row HTML */
-    let headerRow = <Row className='container-fluid'>
-        <Header
-          identifier='article:title'
-          title={data.article.title}
-          author={'By: ' + data.article.author}
-          published={'Published: ' + data.article.published_human}
-          uuid={data.article.uuid}
-          />
-    </Row>;
-
-    /* Modifier Row HTML */
-    let modifierRow = <Row className='container-fluid'>
-      <Modifier
-        tags={data.article.topics.concat(data.article.sections)}
-        renderDateRange={FeatureFlag.check('article:modifier:DateRange')}
-        renderComparator={FeatureFlag.check('article:modifier:comparator')}
-        renderFilters={FeatureFlag.check('article:modifier:filters')}
-        query={this.props.query}
-        uuid={this.props.params.uuid}
-        />
-    </Row>;
-
-    /* Single Metric Components */
-    let wordCountComponent = <SingleMetric
-      metric={data.article.wordCount}
-      metricType='integer'
-      label='Article Wordcount'
-      size='small'
-      />;
-    let imageCountComponent = <SingleMetric
-      metric={data.article.imageCount}
-      metricType='integer'
-      label='Images'
-      size='small'
-      />;
-    let bodyLinksComponent =  <SingleMetric
-      identifier='article:bodyLinksCount'
-      metric={data.article.bodyLinksCount}
-      metricType='integer'
-      label='Body Links'
-      size='small'
-      />;
-    let timeOnPageComponent = <SingleMetric
-      metric={data.article.timeOnPage}
-      metricType='time'
-      label='Time on Page'
-      size='large'
-      />;
-    let pageViewsComponent = <SingleMetric
-      metric={data.article.pageViews}
-      comparatorMetric={hasComparator ? comparatorData.article.category_average_view_count : ''}
-      metricType='integer'
-      label='Page Views'
-      size='large'
-      />;
-    let socialReadersComponent = <SingleMetric
-      metric={data.article.socialReaders}
-      metricType='integer'
-      label='Social Readers'
-      size='large'
-      />
-
-    /* Line Charts */
-    let readTimeChartComponent = <LineChart
-      data={data.article.readTimes}
-      keys={['value']}
-      yLabel='Page Views'
-      xLabel='Time'
-      cols={12}
-      />
-
-      /* Pie Charts */
-
-    let devices = data.article.devices.map((d) => {
-      if (!d[0]) d[0] = 'Unknown';
-      return d;
-    });
-    let deviceChartComponent = (
-      <Col xs={6}>
-        <h5>Devices:</h5>
-        <PieChart
-          data={devices}
-          keys={['views']}
-        />
-      </Col>
-    );
-
-    let chans = data.article.channels.map((d) => {
-      if (!d[0]) d[0] = 'Unknown';
-      return d;
-    });
-    let channelsChartComponent =  <Col xs={6}>
-      <h5>Channels:</h5>
-      <PieChart
-        data={chans}
-        keys={['views']}
-        />
-      </Col>
-
+    let devices = data.article.devices.map((d) => d || 'unknown');
+    let channels = data.article.channels.map((d) => d || 'unknown');
     let refs = data.article.referrer_types.map((d)=> {
       return {
         referrer: d[0] ? d[0] : 'Unknown',
         views: d[1]
       };
     });
-
     let refUrls = data.article.referrer_urls.map((d, i) => {
       const maxLen = 60;
       const displayString = d[0].length > maxLen ? d[0].substr(0, maxLen)+'…' : d[0];
@@ -280,6 +176,44 @@ class ArticleView extends React.Component {
         views: d[1]
       };
     });
+
+    /* Header Row HTML */
+    let headerRow = <Header
+          identifier='article:title'
+          title={data.article.title}
+          author={'By: ' + data.article.author}
+          published={'Published: ' + data.article.published_human}
+          uuid={data.article.uuid}
+          />
+
+    /* Line Charts */
+    let readTimeChartComponent = <LineChart
+      data={data.article.readTimes}
+      keys={['value']}
+      yLabel='Page Views'
+      xLabel='Time'
+      cols={12}
+      />
+
+      /* Pie Charts */
+
+    let deviceChartComponent = (
+      <Col xs={6}>
+        <h5>Devices:</h5>
+        <PieChart
+          data={devices}
+          keys={['views']}
+        />
+      </Col>
+    );
+
+    let channelsChartComponent =  <Col xs={6}>
+      <h5>Channels:</h5>
+      <PieChart
+        data={channels}
+        keys={['views']}
+        />
+      </Col>
 
     let externalReferrersComponent = (
       <div>
@@ -317,37 +251,22 @@ class ArticleView extends React.Component {
     );
 
     return (<DocumentTitle title={title}>
-      <div className='container-fluid'>
+      <Col xs='12'>
 
         {updating}
         {renderHeaderRow ? headerRow : {}}
-        {renderModifierRow ? modifierRow : {}}
 
-        <main className='container-fluid'>
-          <Row >
-            <Col xs={12} sm={3} >
-              <Col xs={4} sm={12} >
-                {renderWordCountComponent ? wordCountComponent : {}}
-              </Col>
-              <Col xs={4} sm={12} >
-                {renderImageCountComponent ? imageCountComponent : {}}
-              </Col>
-              <Col xs={4} sm={12} >
-                {renderBodyLinksComponent ? bodyLinksComponent : {}}
-              </Col>
-            </Col>
-            <Col xs={12} sm={9} >
-              <Col xs={12} sm={4} >
-                {renderTimeOnPageComponent ? timeOnPageComponent : {}}
-              </Col>
-              <Col xs={12} sm={4} >
-                {renderPageViewsComponent ? pageViewsComponent : {}}
-              </Col>
-              <Col xs={12} sm={4} >
-                {renderSocialReadersComponent ? socialReadersComponent : {}}
-              </Col>
-            </Col>
-          </Row>
+        <SectionModifier
+          tags={data.article.topics.concat(data.article.sections)}
+          renderDateRange={FeatureFlag.check('article:modifier:DateRange')}
+          renderComparator={FeatureFlag.check('article:modifier:comparator')}
+          renderFilters={FeatureFlag.check('article:modifier:filters')}
+          query={this.props.query}
+          uuid={this.props.params.uuid}
+          />
+
+        <main >
+          <SectionHeadlineStats data={data.article} comparatorData={comparatorData.article} />
           <Row>
             <Col xs={12}>
               <h4>When did readers access the article?</h4>
@@ -370,7 +289,7 @@ class ArticleView extends React.Component {
           {renderExternalHeader ? externalHeader : {}}
           {renderExternalReferrersComponent ? externalReferrersComponent : {}}
         </main>
-      </div>
+      </Col>
     </DocumentTitle>);
   }
 }

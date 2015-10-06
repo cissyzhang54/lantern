@@ -62,7 +62,6 @@ export default class Modifier extends React.Component {
       </Col>
       <Col sm={10} xs={12}>
         <Comparator
-          identifier={'article:modifier:comparator'}
           tags={this.props.tags}
           onChange={this.handleComparatorChange}
           currentComparator={this.props.query.comparator}
