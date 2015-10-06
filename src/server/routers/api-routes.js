@@ -2,9 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import uuid from "uuid";
 import assign from "object-assign";
-
 import * as esClient from '../esClient';
-import ErrorHandler from '../apiErrorHandler';
+import * as ErrorHandler from '../apiErrorHandler';
 import ArticleDataFormater from '../formatters/Articles';
 import ComparatorDataFormater from '../formatters/Comparators';
 import SearchDataFormatter from '../formatters/Search';
@@ -16,8 +15,7 @@ router.use(bodyParser.json());
 router.post(`/:category(articles|topics|authors)/:uuid(${UUID_REGEX})`, getCategoryData);//todo remove comparator prefix
 router.post('/comparators/:category(articles|topics|authors)/:comparator', getComparatorData);
 router.get('/search/:query', search);
-
-router.use(ErrorHandler(router));
+router.use(ErrorHandler.routes(router));
 
 function getCategoryData(req, res, next) {
   const query = {
@@ -36,14 +34,7 @@ function getCategoryData(req, res, next) {
           res.json(formattedData);
         })
         .catch((error) => {
-          switch (error.name) {
-            case 'ArticleNotFoundError':
-              res.status(404);
-              break;
-            default:
-              res.status(500);
-              break;
-          }
+          res.status(ErrorHandler.statusCode(error.name))
           next(error);
         });
       break;
@@ -56,7 +47,7 @@ function getComparatorData(req, res, next) {
     dateFrom: req.body.dateFrom,
     dateTo: req.body.dateTo
   };
-  let category =req.params.category
+  let category = req.params.category
   switch (category) {
     case 'articles':
       esClient.runComparatorQuery(query)
@@ -67,14 +58,7 @@ function getComparatorData(req, res, next) {
           res.json(formattedData);
         })
         .catch((error) => {
-          switch (error.name) {
-            case 'ComparatorNotFoundError':
-              res.status(404);
-              break;
-            default:
-              res.status(500);
-              break;
-          }
+          res.status(ErrorHandler.statusCode(error.name))
           next(error);
         });
       break;
@@ -93,17 +77,9 @@ function search(req, res, next) {
       res.json(formattedData);
     })
     .catch((error) => {
-      switch (error.name) {
-        case 'DataParsingError':
-          res.status(500);
-          break;
-        default:
-          res.status(500);
-          break;
-      }
+      res.status(ErrorHandler.statusCode(error.name))
       next(error);
     });
-
 }
 
 export default router;
