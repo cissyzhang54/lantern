@@ -16,7 +16,7 @@ export default class LineChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      localTime : false
+      localTime : true
     }
   }
 
@@ -39,6 +39,22 @@ export default class LineChart extends React.Component {
       xLabel += ' (Local)';
     } else {
       xLabel += ' (UTC)';
+    }
+
+    let localTime = this.state.localTime;
+
+    let formatStr = '%d %b %H:%M:%S';
+    if (json.length > 1) {
+      let step = moment.duration(json[1].time - json[0].time);
+      if (step.years()) {
+       formatStr = '%Y';
+      } else if (step.months()) {
+        formatStr = '%b';
+      } else if (step.days()) {
+        formatStr = '%d %b';
+      } else {
+        formatStr = '%d %b %H:%M';
+      }
     }
 
     this.chart = c3.generate({
@@ -65,8 +81,8 @@ export default class LineChart extends React.Component {
           tick: {
             // XXX make this dynamic - take a cue from
             // the date range
-            fit: !this.state.localTime,
-            format: '%d %b %H:%M:%S',
+            //fit: !this.state.localTime,
+            format: formatStr,
             width: labelWidth,
             count: labelCount
           },
@@ -74,6 +90,17 @@ export default class LineChart extends React.Component {
         },
         y: {
           label: this.props.yLabel
+        }
+      },
+      tooltip: {
+        format: {
+          title: function(x) {
+            let fmt = d3.time.format.utc('%c (UTC)');
+            if (localTime) {
+              fmt = d3.time.format('%c');
+            }
+            return fmt(x);
+          }
         }
       }
     });
@@ -90,7 +117,7 @@ export default class LineChart extends React.Component {
 
   _handleLocalTimeSwitch(event) {
     const checked = this.refs.localTimeInput.getChecked();
-    this.setState({localTime: checked});
+    this.setState({localTime: !checked});
   }
 
   render() {
@@ -104,8 +131,8 @@ export default class LineChart extends React.Component {
         <Input
           type="checkbox"
           ref="localTimeInput"
-          label="Display dates in Local Time"
-          checked={this.state.localTime}
+          label="Display dates in UTC"
+          checked={!this.state.localTime}
           onChange={this._handleLocalTimeSwitch.bind(this)}
         />
       </div>
