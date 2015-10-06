@@ -32,7 +32,7 @@ let config = {
   },
   socialReaders: {
     metricType: 'integer',
-    label: 'Social Readers',
+    label: 'Social Users',
     size: 'large'
   }
 }
