@@ -11,9 +11,7 @@ describe ('Filters component', function() {
 
   // Uses the default data from the module
   beforeEach(function() {
-    filters = createComponent(Filters, {
-      identifier: 'testIdentifierOn'
-    });
+    filters = createComponent(Filters, {  });
   });
 
   it ('Should render component', function() {
