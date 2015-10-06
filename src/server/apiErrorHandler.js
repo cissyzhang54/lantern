@@ -2,7 +2,7 @@ import LoggerFactory from './logger';
 let Logger = LoggerFactory('Api');
 let logger = new Logger();
 
-export default function ErrorHandler(app) {
+export function routes(app) {
 
   return function handler (err, req, res, next) {
     res.status(res.statusCode || 500);
@@ -14,4 +14,19 @@ export default function ErrorHandler(app) {
     logger.error(err);
   };
 
+}
+
+export function statusCode(errorName){
+  switch (errorName) {
+    case 'ArticleNotFoundError':
+    case 'ComparatorNotFoundError':
+      return 404;
+      break;
+    case 'DataParsingError':
+      return 500;
+      break;
+    default:
+      return 500;
+      break;
+  }
 }
