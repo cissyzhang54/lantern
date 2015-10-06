@@ -5,7 +5,7 @@ const comps = {
   logoSVG: require('../components/LogoSVG'),
   search: require('../components/Search'),
   singleMetric: require('../components/SingleMetric'),
-  modifier: require('../components/Modifier'),
+  modifier: require('../components/SectionModifier'),
   lineChart: require('../components/LineChart'),
   barChart: require('../components/BarChart'),
   columnChart: require('../components/ColumnChart'),

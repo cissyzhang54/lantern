@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import React from 'react';
 import createComponent from '../createComponent';
-import Modifier from '../../src/shared/components/Modifier';
+import SectionModifier from '../../src/shared/components/SectionModifier';
 import Comparator from '../../src/shared/components/Comparator';
 import Filters from '../../src/shared/components/Filters';
 import DateRange from '../../src/shared/components/DateRange';
@@ -12,7 +12,7 @@ describe ('Modifier component', function() {
   let modifier;
 
   beforeEach(function() {
-    modifier = createComponent(Modifier, {
+    modifier = createComponent(SectionModifier, {
       identifier: 'testIdentifierOn',
       renderDateRange: true,
       renderComparator: true,
