@@ -150,6 +150,11 @@ export default function PageViewsQuery(query) {
         terms : {
           field : 'geo_country'
         }
+      },
+      is_last_page: {
+        terms: {
+          field: 'is_last_page'
+        }
       }
     }
   };
