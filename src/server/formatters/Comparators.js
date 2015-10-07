@@ -17,6 +17,8 @@ export default function formatData(data) {
     try {
       let results = {
         article: {
+          comparator: data.comparator,
+          timeOnPage: data.aggregations.avg_time_on_page.value,
           page_views_over_time : data.aggregations.page_views_over_time,
           category_total_view_count : data.aggregations.page_view_total_count.value,
           category_article_count: data.aggregations.distinct_articles.value,

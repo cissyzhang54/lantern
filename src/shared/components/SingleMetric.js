@@ -113,11 +113,12 @@ export default class SingleMetric extends React.Component {
     let styles = this.state.responsiveStyles;
     let [transformMetric, differenceSign, transfromComparator] =
       convert[this.props.metricType](this.props.metric, this.props.comparatorMetric)
+    let comparatorStatLabel = this.props.comparatorName + ' ' + this.props.label + ' average : ' + Math.round(this.props.comparatorMetric)
 
     //If there is no comparator leave the comparator HTML undefined
     if (!!transfromComparator) {
       comparatorHTML = (
-        <span style={styles.comparator}>
+        <span style={styles.comparator} title={comparatorStatLabel}>
           <Glyphicon glyph={'glyphicon glyphicon-chevron-' + differenceSign} style={styles.comparatorSymbol} />
           <span style={styles.comparatorValue}>{transfromComparator}</span>
         </span>
