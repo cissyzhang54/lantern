@@ -185,7 +185,6 @@ class ArticleView extends React.Component {
           published={'Published: ' + data.article.published_human}
           uuid={data.article.uuid}
           />
-
     /* Line Charts */
     let readTimeChartComponent = <LineChart
       data={data.article.readTimes}
@@ -245,7 +244,7 @@ class ArticleView extends React.Component {
     let externalHeader = (
       <Row>
         <Col xs={12}>
-          <h4>Where did the readers come from?</h4>
+          <h4>Where did the users come from?</h4>
         </Col>
       </Row>
     );
@@ -269,7 +268,7 @@ class ArticleView extends React.Component {
           <SectionHeadlineStats data={data.article} comparatorData={comparatorData.article} />
           <Row>
             <Col xs={12}>
-              <h4>When did readers access the article?</h4>
+              <h4>When did users access the article?</h4>
             </Col>
           </Row>
           <Row>
@@ -279,7 +278,7 @@ class ArticleView extends React.Component {
           </Row>
           <Row>
             <Col xs={12}>
-              <h4>How did readers access the article?</h4>
+              <h4>How did users access the article?</h4>
             </Col>
           </Row>
           <Row>
