@@ -13,6 +13,7 @@ export default {
     'article:channels' : true,
     'article:referrers' : true,
     'article:devices' : true,
+    'article:locations' : true,
     'article:modifier:comparator' : true,
     'article:modifier:filters' : false,
     'article:modifier:DateRange' : true,

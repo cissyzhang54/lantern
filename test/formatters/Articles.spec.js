@@ -58,7 +58,9 @@ describe('Article Formatter', function() {
           'referrer_types',
           'referrer_names',
           'referrer_urls',
-          'devices'
+          'devices',
+          'countries',
+          'regions'
         ];
         for (let i = 0; i < props.length; i++){
           expect(data.article.hasOwnProperty(props[i])).to.be.truthy;

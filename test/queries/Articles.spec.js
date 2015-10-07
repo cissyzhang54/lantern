@@ -92,7 +92,9 @@ describe('Articles Query', () => {
       'referrer_names',
       'referrer_types',
       'referrer_urls',
-      'devices'
+      'devices',
+      'regions',
+      'countries'
     ];
     for (let i = 0; i < props.length; i++) {
       expect(queryJSON.aggs.hasOwnProperty(props[i])).to.be.truthy;

@@ -11,9 +11,10 @@ import Header from "../components/Header";
 import SectionModifier from "../components/SectionModifier";
 import LineChart from "../components/LineChart";
 import PieChart from "../components/PieChart";
-import BarChart from "../components/BarChart.js";
-import Table from "../components/Table.js";
+import BarChart from "../components/BarChart";
+import Table from "../components/Table";
 import Logo from "../components/Logo";
+import Map from "../components/Map";
 
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
 
@@ -151,9 +152,17 @@ class ArticleView extends React.Component {
     let renderDeviceChartComponent = FeatureFlag.check('article:devices');
     let renderChannelsChartComponent = FeatureFlag.check('article:channels');
     let renderExternalReferrersComponent = FeatureFlag.check('article:referrers');
+    let renderGeoUsersComponent = FeatureFlag.check('article:locations');
     let renderExternalHeader = renderExternalReferrersComponent;
     let devices = data.article.devices.map((d) => d || 'unknown');
     let channels = data.article.channels.map((d) => d || 'unknown');
+    let regions = data.article.regions.map((d) => {
+      return {
+        region: d[0] ? d[0] : 'Unknown',
+        views: d[1]
+      };
+    });
+    let countries = data.article.countries;
     let refs = data.article.referrer_types.map((d)=> {
       return {
         referrer: d[0] ? d[0] : 'Unknown',
@@ -213,6 +222,32 @@ class ArticleView extends React.Component {
         keys={['views']}
         />
       </Col>
+
+    let geoUsersComponent = (
+      <div>
+        <Row>
+          <Col xs={12}>
+            <h5>Globally</h5>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} sm={6}>
+            <BarChart
+              data={regions}
+              keys={['views']}
+              category={'region'}
+              yLabel="Page Views"
+              xLabel="Regions"
+            />
+          </Col>
+          <Col xs={12} sm={6}>
+            <Map
+              data={countries}
+            />
+          </Col>
+        </Row>
+      </div>
+    );
 
     let externalReferrersComponent = (
       <div>
@@ -286,6 +321,7 @@ class ArticleView extends React.Component {
               {renderChannelsChartComponent ? channelsChartComponent : {}}
           </Row>
           {renderExternalHeader ? externalHeader : {}}
+          {renderGeoUsersComponent ? geoUsersComponent : {}}
           {renderExternalReferrersComponent ? externalReferrersComponent : {}}
         </main>
       </Col>

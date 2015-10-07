@@ -139,6 +139,16 @@ export default function PageViewsQuery(query) {
         terms : {
           field : "device_type"
         }
+      },
+      regions : {
+        terms : {
+          field : 'geo_region'
+        }
+      },
+      countries: {
+        terms : {
+          field : 'geo_country'
+        }
       }
     }
   };
