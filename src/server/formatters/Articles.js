@@ -100,7 +100,7 @@ function formatTermsAggregation(name, data) {
       d.key || 'Unknown',
       d.doc_count
     ];
-  }).sort();
+  });
 }
 
 function formatFilteredTermsAggregation(name, data, replacement) {
@@ -110,5 +110,5 @@ function formatFilteredTermsAggregation(name, data, replacement) {
       d.key || replacement || 'Unknown',
       d.doc_count
     ];
-  }).sort();
+  });
 }
