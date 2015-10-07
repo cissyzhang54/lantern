@@ -1,4 +1,5 @@
 import assert from 'assert';
+import moment from 'moment';
 
 export default function ComparatorPageViewsQuery(query) {
 
@@ -34,7 +35,8 @@ export default function ComparatorPageViewsQuery(query) {
       "page_views_over_time" : {
         "date_histogram" : {
           "field" : "view_timestamp",
-          "interval" : "day"
+          interval : calculateInterval(query),
+          min_doc_count : 0
         }
       },
       "page_view_total_count" : {
@@ -51,9 +53,18 @@ export default function ComparatorPageViewsQuery(query) {
   }
 }
 
+function calculateInterval(query) {
+  let from = moment(query.dateFrom);
+  let to = moment(query.dateTo);
+  let span = moment.duration(to - from);
 
-
-
-
-
-
+  if (span <= moment.duration(1, 'day')) {
+    return 'hour';
+  } else if (span <= moment.duration(1, 'week')) {
+    return 'day';
+  } else if (span <= moment.duration(6, 'month')) {
+    return 'day';
+  } else {
+    return 'week';
+  }
+}

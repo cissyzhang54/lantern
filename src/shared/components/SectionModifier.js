@@ -27,8 +27,8 @@ export default class Modifier extends React.Component {
 
   handleDateRangeChange (dates) {
     QueryActions.selectDateRange({
-      from: dates.startDate.toISOString(),
-      to: dates.endDate.toISOString()
+      from: dates.startDate.format('YYYY-MM-DD'),
+      to: dates.endDate.format('YYYY-MM-DD')
     });
   }
 

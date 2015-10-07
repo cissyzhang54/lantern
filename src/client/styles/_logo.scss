@@ -289,3 +289,23 @@ body.loading-mounted .magnifying-glass {
     opacity: 1;
   }
 }
+
+/* Prevent the magnifier creating white space on mobile */
+@media (max-width: 500px) {
+  .magnifying-glass {
+    width: 80%;
+    height: 80%;
+    top: 10%;
+    left: 10%;
+  }
+  @keyframes magnifying-glass--load {
+    99%{
+      transform: scale(1.15) rotate(-60deg);
+      opacity: 0;
+    }
+    100%{
+      display:none;
+      opacity: 0;
+    }
+  }
+}

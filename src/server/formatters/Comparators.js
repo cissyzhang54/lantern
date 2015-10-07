@@ -20,7 +20,8 @@ export default function formatData(data) {
           page_views_over_time : data.aggregations.page_views_over_time,
           category_total_view_count : data.aggregations.page_view_total_count.value,
           category_article_count: data.aggregations.distinct_articles.value,
-          category_average_view_count: (data.aggregations.page_view_total_count.value / data.aggregations.distinct_articles.value) | 0
+          category_average_view_count: (data.aggregations.page_view_total_count.value / data.aggregations.distinct_articles.value) | 0,
+          readTimes: formatTimeSeries(data)
         }
       };
 
@@ -32,5 +33,15 @@ export default function formatData(data) {
       error.response = data;
       reject(error);
     }
+  });
+}
+
+function formatTimeSeries(data) {
+  let buckets = data.aggregations.page_views_over_time.buckets;
+  return buckets.map((d, i) => {
+    return {
+      time: d.key_as_string,
+      comparator: (d.doc_count / data.aggregations.distinct_articles.value) | 0
+    };
   });
 }
