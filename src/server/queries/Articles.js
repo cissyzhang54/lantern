@@ -38,7 +38,8 @@ export default function PageViewsQuery(query) {
       page_views_over_time : {
         date_histogram : {
           field : "view_timestamp",
-          interval : calculateInterval(query)
+          interval : calculateInterval(query),
+          min_doc_count : 0
         }
       },
       avg_time_on_page : {

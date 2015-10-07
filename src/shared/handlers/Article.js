@@ -66,6 +66,38 @@ function updateQuery(uuid, comparator){
   }
 }
 
+function getReaderComparator (data, comparatorData) {
+  let compTimeData = comparatorData.article.readTimes;
+  let articleTimeData = data.article.readTimes;
+  let merged = [];
+  let i;
+  let compTime;
+  let articleTime;
+
+  if (compTimeData.length <= 0) return articleTimeData;
+
+  for (i = 0; i<compTimeData.length; ++i) {
+    compTime = moment(compTimeData[i].time);
+    let flag = false;
+    let j = 0;
+    while (flag != true) {
+      articleTime = moment(articleTimeData[j].time);
+      if((compTime - articleTime) === 0) {
+        let t = articleTimeData[j];
+        t.comparator = compTimeData[i].comparator;
+        merged.push(t);
+        flag = true;
+      } else if (j === articleTimeData.length - 1) {
+        merged.push(articleTimeData[j]);
+        flag = true;
+      }
+      j++;
+    }
+  }
+
+  return merged;
+}
+
 class ArticleView extends React.Component {
 
   constructor(props) {
@@ -84,8 +116,8 @@ class ArticleView extends React.Component {
     let articleState = ArticleStore.getState();
     let queryState = QueryStore.getState();
     if (articleState.data && !(queryState.query.dateTo && queryState.query)){
-      queryState.query.dateTo = moment(articleState.data.article.published)
-      queryState.query.dateFrom = moment()
+      queryState.query.dateTo = moment();
+      queryState.query.dateFrom = moment(articleState.data.article.published);
     }
 
     return {
@@ -187,9 +219,17 @@ class ArticleView extends React.Component {
           />
 
     /* Line Charts */
+    let timeData = data.article.readTimes;
+    let lineKeys = ['value'];
+
+    if (hasComparator && comparatorData.article.readTimes) {
+      lineKeys.push('comparator');
+      timeData = getReaderComparator (data, comparatorData);
+    }
+
     let readTimeChartComponent = <LineChart
-      data={data.article.readTimes}
-      keys={['value']}
+      data={timeData}
+      keys={lineKeys}
       yLabel='Page Views'
       xLabel='Time'
       cols={12}
