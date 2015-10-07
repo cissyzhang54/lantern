@@ -9,7 +9,8 @@ describe('Articles Query', () => {
     const query = {
       uuid: '123',
       dateTo: new Date().toISOString(),
-      dateFrom: new Date().toISOString()
+      dateFrom: new Date().toISOString(),
+      filters: {}
     };
     expect(() => ArticlesQuery(query)).not.to.throw();
   });
@@ -22,14 +23,16 @@ describe('Articles Query', () => {
   it('should throw if passed no dateFrom', () => {
     const query = {
       uuid: '123',
-      dateTo: new Date().toISOString()
+      dateTo: new Date().toISOString(),
+      filters: {}
     };
     expect(() => ArticlesQuery(query)).to.throw();
   });
   it('should throw if passed no dateTo', () => {
     const query = {
       uuid: '123',
-      dateFrom: new Date().toISOString()
+      dateFrom: new Date().toISOString(),
+      filters: {}
     };
     expect(() => ArticlesQuery(query)).to.throw();
   });
@@ -37,7 +40,8 @@ describe('Articles Query', () => {
     const query = {
       uuid: '123',
       dateFrom: '2015-01-01',
-      dateTo: '2015-01-02'
+      dateTo: '2015-01-02',
+      filters: {}
     };
     expect(ArticlesQuery(query).aggs.page_views_over_time.date_histogram.interval)
       .to.equal('hour');
@@ -46,7 +50,8 @@ describe('Articles Query', () => {
     const query = {
       uuid: '123',
       dateFrom: '2015-01-01',
-      dateTo: '2015-01-07'
+      dateTo: '2015-01-07',
+      filters: {}
     };
     expect(ArticlesQuery(query).aggs.page_views_over_time.date_histogram.interval)
       .to.equal('day');
@@ -55,7 +60,8 @@ describe('Articles Query', () => {
     const query = {
       uuid: '123',
       dateFrom: '2015-01-01',
-      dateTo: '2015-02-01'
+      dateTo: '2015-02-01',
+      filters: {}
     };
     expect(ArticlesQuery(query).aggs.page_views_over_time.date_histogram.interval)
       .to.equal('day');
@@ -64,7 +70,8 @@ describe('Articles Query', () => {
     const query = {
       uuid: '123',
       dateFrom: '2015-01-01',
-      dateTo: '2015-06-01'
+      dateTo: '2015-06-01',
+      filters: {}
     };
     expect(ArticlesQuery(query).aggs.page_views_over_time.date_histogram.interval)
       .to.equal('day');
@@ -73,7 +80,8 @@ describe('Articles Query', () => {
     const query = {
       uuid: '123',
       dateFrom: '2015-01-01',
-      dateTo: '2015-11-01'
+      dateTo: '2015-11-01',
+      filters: {}
     };
     expect(ArticlesQuery(query).aggs.page_views_over_time.date_histogram.interval)
       .to.equal('week');
@@ -82,7 +90,8 @@ describe('Articles Query', () => {
     const query = {
       uuid: '123',
       dateFrom: '2015-10-01',
-      dateTo: '2015-10-10'
+      dateTo: '2015-10-10',
+      filters: {}
     };
     const queryJSON = ArticlesQuery(query);
     const props = [

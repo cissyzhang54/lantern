@@ -21,7 +21,8 @@ function getCategoryData(req, res, next) {
   const query = {
     uuid: req.params.uuid,
     dateFrom: req.body.dateFrom,
-    dateTo: req.body.dateTo
+    dateTo: req.body.dateTo,
+    filters: req.body.filters,
   };
   let category =req.params.category
   switch (category) {
@@ -45,7 +46,8 @@ function getComparatorData(req, res, next) {
   const query = {
     comparator: req.params.comparator,
     dateFrom: req.body.dateFrom,
-    dateTo: req.body.dateTo
+    dateTo: req.body.dateTo,
+    filters: req.body.filters,
   };
   let category = req.params.category
   switch (category) {

@@ -5,6 +5,7 @@ import moment from 'moment';
 import LineChart from "../components/LineChart";
 import FeatureFlag from '../utils/featureFlag';
 
+//todo: unit test this function
 function getReaderComparator (data, comparatorData) {
   let compTimeData = comparatorData.readTimes;
   let articleTimeData = data.readTimes;
@@ -19,7 +20,7 @@ function getReaderComparator (data, comparatorData) {
     compTime = moment(compTimeData[i].time);
     let flag = false;
     let j = 0;
-    while (flag != true) {
+    while (flag != true && articleTimeData.length) {
       articleTime = moment(articleTimeData[j].time);
       if((compTime - articleTime) === 0) {
         let t = articleTimeData[j];
