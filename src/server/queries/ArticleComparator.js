@@ -6,6 +6,9 @@ export default function ComparatorPageViewsQuery(query) {
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
+  assert.equal(typeof query.comparator, 'string',
+    "argument 'query' must contain a 'comparator' string property");
+
   assert.equal(typeof query.dateFrom, 'string',
     "argument 'query' must contain a 'dateFrom' date string property");
 
@@ -37,6 +40,11 @@ export default function ComparatorPageViewsQuery(query) {
           "field" : "view_timestamp",
           interval : calculateInterval(query),
           min_doc_count : 0
+        }
+      },
+      avg_time_on_page : {
+        avg : {
+          field: "time_on_page"
         }
       },
       "page_view_total_count" : {

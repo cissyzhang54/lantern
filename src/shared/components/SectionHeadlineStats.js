@@ -37,10 +37,11 @@ let config = {
   }
 }
 
-function renderMetric (metricName, metric, comparatorMetric) {
+function renderMetric (metricName, metric, comparatorName, comparatorMetric) {
 
   let componentConfig = config[metricName]
   componentConfig.metric = metric
+  componentConfig.comparatorName = comparatorName || ''
   componentConfig.comparatorMetric = comparatorMetric || ''
 
   let component = FeatureFlag.check(`article:${metricName}`)
@@ -62,8 +63,8 @@ export default class SectionHeadlineStats extends React.Component {
     let wordCount = renderMetric('wordCount', data.wordCount);
     let imageCount = renderMetric('imageCount', data.imageCount)
     let bodyLinksCount = renderMetric('bodyLinksCount', data.bodyLinksCount)
-    let timeOnPage = renderMetric('timeOnPage', data.timeOnPage)
-    let pageViews = renderMetric('pageViews', data.pageViews, comparatorData.category_average_view_count)
+    let timeOnPage = renderMetric('timeOnPage', data.timeOnPage, comparatorData.comparator, comparatorData.timeOnPage)
+    let pageViews = renderMetric('pageViews', data.pageViews, comparatorData.comparator, comparatorData.category_average_view_count)
     let socialUsers = renderMetric('socialUsers', data.socialReaders)
 
     return ( <Row >
