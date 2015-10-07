@@ -27,7 +27,7 @@ function getReferrerUrls (data, i){
   };
 }
 
-export default class SectionUserOrigins extends React.Component {
+export default class SectionWhere extends React.Component {
 
   constructor(props) {
     super(props);
