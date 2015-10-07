@@ -102,14 +102,16 @@ body{
   margin: 0 auto;
   color: #333;
 }
-
+#chartContainer svg {
+  font-family: 'Work Sans', sans-serif;
+}
 a {
   color: #003399;
 }
 img {
   max-width:100%;
 }
-.clearfix:after{
+.clearfix:after {
   content: "";
   display: table;
   clear: both;
