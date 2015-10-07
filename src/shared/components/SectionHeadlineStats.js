@@ -30,7 +30,7 @@ let config = {
     label: 'Page Views',
     size: 'large'
   },
-  socialReaders: {
+  socialUsers: {
     metricType: 'integer',
     label: 'Social Users',
     size: 'large'
@@ -49,7 +49,7 @@ function renderMetric (metricName, metric, comparatorMetric) {
   return component
 }
 
-class SectionHeadlineStats extends React.Component {
+export default class SectionHeadlineStats extends React.Component {
 
   constructor(props) {
     super(props);
@@ -64,7 +64,7 @@ class SectionHeadlineStats extends React.Component {
     let bodyLinksCount = renderMetric('bodyLinksCount', data.bodyLinksCount)
     let timeOnPage = renderMetric('timeOnPage', data.timeOnPage)
     let pageViews = renderMetric('pageViews', data.pageViews, comparatorData.category_average_view_count)
-    let socialReaders = renderMetric('socialReaders', data.socialReaders)
+    let socialUsers = renderMetric('socialUsers', data.socialReaders)
 
     return ( <Row >
       <Col xs={12} sm={3} >
@@ -86,11 +86,9 @@ class SectionHeadlineStats extends React.Component {
           {pageViews}
         </Col>
         <Col xs={12} sm={4} >
-          {socialReaders}
+          {socialUsers}
         </Col>
       </Col>
     </Row>);
   }
 }
-
-export default SectionHeadlineStats

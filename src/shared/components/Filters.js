@@ -53,4 +53,3 @@ Filters.propTypes = {
 Filters.defaultProps = {
   onChange: _ => {console.log(_)}
 }
-

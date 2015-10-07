@@ -8,15 +8,13 @@ import connectToStores from 'alt/utils/connectToStores';
 import moment from 'moment';
 
 import Header from "../components/Header";
-import SectionModifier from "../components/SectionModifier";
 import LineChart from "../components/LineChart";
-import PieChart from "../components/PieChart";
-import BarChart from "../components/BarChart";
-import Table from "../components/Table";
 import Logo from "../components/Logo";
-import Map from "../components/Map";
 
+import SectionModifier from "../components/SectionModifier";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
+import SectionUserOrigins from "../components/SectionUserOrigins";
+import SectionUserAccess from "../components/SectionUserAccess";
 
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
@@ -179,53 +177,8 @@ class ArticleView extends React.Component {
     let hasComparator = (this.props.params.comparator !== undefined);
     let comparatorData = this.props.comparatorData || { article: {}};
     let title = (data) ? 'Lantern - ' + data.article.title : '';
-    let renderHeaderRow = FeatureFlag.check('article:title');
     let renderReadTimeChartComponent = FeatureFlag.check('article:readTimes');
-    let renderDeviceChartComponent = FeatureFlag.check('article:devices');
-    let renderChannelsChartComponent = FeatureFlag.check('article:channels');
-    let renderExternalReferrersComponent = FeatureFlag.check('article:referrers');
-    let renderGeoUsersComponent = FeatureFlag.check('article:locations');
-    let renderExternalHeader = renderExternalReferrersComponent;
-    let devices = data.article.devices.map((d) => d || 'unknown');
-    let channels = data.article.channels.map((d) => d || 'unknown');
-    let regions = data.article.regions.map((d) => {
-      return {
-        region: d[0] ? d[0] : 'Unknown',
-        views: d[1]
-      };
-    });
-    let countries = data.article.countries;
-    let refs = data.article.referrer_types.map((d)=> {
-      return {
-        referrer: d[0] ? d[0] : 'Unknown',
-        views: d[1]
-      };
-    });
-    let refUrls = data.article.referrer_urls.map((d, i) => {
-      const maxLen = 60;
-      const displayString = d[0].length > maxLen ? d[0].substr(0, maxLen)+'…' : d[0];
-      let url = (
-        <a
-          target="_blank"
-          href={d[0]}
-          >
-          {displayString}
-        </a>
-      );
-      return {
-        referrer: d[0] ? url : 'Not available',
-        views: d[1]
-      };
-    });
 
-    /* Header Row HTML */
-    let headerRow = <Header
-          identifier='article:title'
-          title={data.article.title}
-          author={'By: ' + data.article.author}
-          published={'Published: ' + data.article.published_human}
-          uuid={data.article.uuid}
-          />
     /* Line Charts */
     let timeData = data.article.readTimes;
     let lineKeys = ['value'];
@@ -243,94 +196,21 @@ class ArticleView extends React.Component {
       cols={12}
       />
 
-      /* Pie Charts */
-
-    let deviceChartComponent = (
-      <Col xs={6}>
-        <h5>Devices:</h5>
-        <PieChart
-          data={devices}
-          keys={['views']}
-        />
-      </Col>
-    );
-
-    let channelsChartComponent =  <Col xs={6}>
-      <h5>Channels:</h5>
-      <PieChart
-        data={channels}
-        keys={['views']}
-        />
-      </Col>
-
-    let geoUsersComponent = (
-      <div>
-        <Row>
-          <Col xs={12}>
-            <h5>Globally</h5>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12} sm={6}>
-            <BarChart
-              data={regions}
-              keys={['views']}
-              category={'region'}
-              yLabel="Page Views"
-              xLabel="Regions"
-            />
-          </Col>
-          <Col xs={12} sm={6}>
-            <Map
-              data={countries}
-            />
-          </Col>
-        </Row>
-      </div>
-    );
-
-    let externalReferrersComponent = (
-      <div>
-        <Row>
-          <Col xs={12}>
-            <h5>External Sources</h5>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs={12} sm={6}>
-            <BarChart
-              data={refs}
-              keys={['views']}
-              category={'referrer'}
-              yLabel="Page Views"
-              xLabel="Referrer"
-            />
-          </Col>
-          <Col xs={12} sm={6}>
-            <Table
-              headers={['Referrer', 'Views']}
-              rows={refUrls}
-            />
-          </Col>
-        </Row>
-      </div>
-    );
-
-    let externalHeader = (
-      <Row>
-        <Col xs={12}>
-          <h4>Where did the users come from?</h4>
-        </Col>
-      </Row>
-    );
 
     return (<DocumentTitle title={title}>
-      <Col xs='12'>
+      <Col xs={12}>
 
         {updating}
-        {renderHeaderRow ? headerRow : {}}
+
+        <Header
+          title={data.article.title}
+          author={'By: ' + data.article.author}
+          published={'Published: ' + data.article.published_human}
+          uuid={data.article.uuid}
+          />
 
         <SectionModifier
+          data={data.article}
           tags={data.article.topics.concat(data.article.sections)}
           renderDateRange={FeatureFlag.check('article:modifier:DateRange')}
           renderComparator={FeatureFlag.check('article:modifier:comparator')}
@@ -340,7 +220,12 @@ class ArticleView extends React.Component {
           />
 
         <main >
-          <SectionHeadlineStats data={data.article} comparatorData={comparatorData.article} />
+
+          <SectionHeadlineStats
+            data={data.article}
+            comparatorData={comparatorData.article}
+            />
+
           <Row>
             <Col xs={12}>
               <h4>When did users access the article?</h4>
@@ -351,18 +236,17 @@ class ArticleView extends React.Component {
               {renderReadTimeChartComponent ? readTimeChartComponent : {}}
             </Col>
           </Row>
-          <Row>
-            <Col xs={12}>
-              <h4>How did users access the article?</h4>
-            </Col>
-          </Row>
-          <Row>
-              {renderDeviceChartComponent ? deviceChartComponent : {}}
-              {renderChannelsChartComponent ? channelsChartComponent : {}}
-          </Row>
-          {renderExternalHeader ? externalHeader : {}}
-          {renderGeoUsersComponent ? geoUsersComponent : {}}
-          {renderExternalReferrersComponent ? externalReferrersComponent : {}}
+
+          <SectionUserAccess
+            data={data.article}
+            comparatorData={comparatorData.article}
+            />
+
+          <SectionUserOrigins
+            data={data.article}
+            comparatorData={comparatorData.article}
+            />
+
         </main>
       </Col>
     </DocumentTitle>);

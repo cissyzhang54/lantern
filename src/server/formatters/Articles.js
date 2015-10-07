@@ -43,7 +43,7 @@ export default function formatData(data) {
           channels: formatTermsAggregation('channels', articleData),
           referrer_types: formatFilteredTermsAggregation('referrer_types', articleData),
           referrer_names: formatFilteredTermsAggregation('referrer_names', articleData),
-          referrer_urls: formatFilteredTermsAggregation('referrer_urls', articleData),
+          referrer_urls: formatFilteredTermsAggregation('referrer_urls', articleData, 'Not Available'),
           devices : formatTermsAggregation('devices', articleData),
           countries : formatTermsAggregation('countries', articleData),
           regions : formatTermsAggregation('regions', articleData)
@@ -95,18 +95,18 @@ function formatTermsAggregation(name, data) {
   let buckets = data.aggregations[name].buckets;
   return buckets.map((d, i) => {
     return [
-      d.key,
+      d.key || 'Unknown',
       d.doc_count
     ];
-  });
+  }).sort();
 }
 
-function formatFilteredTermsAggregation(name, data) {
+function formatFilteredTermsAggregation(name, data, replacement) {
   let buckets = data.aggregations[name].filtered.buckets;
   return buckets.map((d, i) => {
     return [
-      d.key,
+      d.key || replacement || 'Unknown',
       d.doc_count
     ];
-  });
+  }).sort();
 }

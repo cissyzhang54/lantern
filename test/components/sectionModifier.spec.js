@@ -13,7 +13,7 @@ describe ('Modifier component', function() {
 
   beforeEach(function() {
     modifier = createComponent(SectionModifier, {
-      identifier: 'testIdentifierOn',
+      data:{},
       renderDateRange: true,
       renderComparator: true,
       renderFilters: true,
