@@ -60,7 +60,8 @@ describe('Article Formatter', function() {
           'referrer_urls',
           'devices',
           'countries',
-          'regions'
+          'regions',
+          'is_last_page'
         ];
         for (let i = 0; i < props.length; i++){
           expect(data.article.hasOwnProperty(props[i])).to.be.truthy;

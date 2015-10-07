@@ -24,7 +24,6 @@ export default function formatData(data) {
 
   return new Promise((resolve, reject) => {
     try {
-
       let [articleData, metaData] = data;
       let results = {
         article: {
@@ -46,7 +45,8 @@ export default function formatData(data) {
           referrer_urls: formatFilteredTermsAggregation('referrer_urls', articleData, 'Not Available'),
           devices : formatTermsAggregation('devices', articleData),
           countries : formatTermsAggregation('countries', articleData),
-          regions : formatTermsAggregation('regions', articleData)
+          regions : formatTermsAggregation('regions', articleData),
+          is_last_page : formatTermsAggregation('is_last_page', articleData)
         }
       };
 

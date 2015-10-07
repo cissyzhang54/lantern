@@ -326,6 +326,20 @@ export default [{
           "doc_count": 500
         }
       ]
+    },
+    "is_last_page": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "T",
+          "doc_count": 20
+        },
+        {
+          "key": "F",
+          "doc_count": 30
+        }
+      ]
     }
   }
 }, {
