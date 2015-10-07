@@ -1,5 +1,4 @@
 import React from 'react/addons';
-import Link from 'react-router/lib/components/Link';
 import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
@@ -8,13 +7,12 @@ import connectToStores from 'alt/utils/connectToStores';
 import moment from 'moment';
 
 import Header from "../components/Header";
-import LineChart from "../components/LineChart";
 import Logo from "../components/Logo";
-
 import SectionModifier from "../components/SectionModifier";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
-import SectionUserOrigins from "../components/SectionUserOrigins";
-import SectionUserAccess from "../components/SectionUserAccess";
+import SectionWhere from "../components/SectionWhere";
+import SectionHow from "../components/SectionHow";
+import SectionWhen from "../components/SectionWhen";
 
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
@@ -63,38 +61,6 @@ function updateQuery(uuid, comparator){
   if (comparator){
     QueryActions.selectComparator(comparator);
   }
-}
-
-function getReaderComparator (data, comparatorData) {
-  let compTimeData = comparatorData.article.readTimes;
-  let articleTimeData = data.article.readTimes;
-  let merged = [];
-  let i;
-  let compTime;
-  let articleTime;
-
-  if (compTimeData.length <= 0) return articleTimeData;
-
-  for (i = 0; i<compTimeData.length; ++i) {
-    compTime = moment(compTimeData[i].time);
-    let flag = false;
-    let j = 0;
-    while (flag != true) {
-      articleTime = moment(articleTimeData[j].time);
-      if((compTime - articleTime) === 0) {
-        let t = articleTimeData[j];
-        t.comparator = compTimeData[i].comparator;
-        merged.push(t);
-        flag = true;
-      } else if (j === articleTimeData.length - 1) {
-        merged.push(articleTimeData[j]);
-        flag = true;
-      }
-      j++;
-    }
-  }
-
-  return merged;
 }
 
 class ArticleView extends React.Component {
@@ -174,28 +140,8 @@ class ArticleView extends React.Component {
       : MESSAGES.PLACEHOLDER
 
     let data = this.props.data;
-    let hasComparator = (this.props.params.comparator !== undefined);
     let comparatorData = this.props.comparatorData || { article: {}};
     let title = (data) ? 'Lantern - ' + data.article.title : '';
-    let renderReadTimeChartComponent = FeatureFlag.check('article:readTimes');
-
-    /* Line Charts */
-    let timeData = data.article.readTimes;
-    let lineKeys = ['value'];
-
-    if (hasComparator && comparatorData.article.readTimes) {
-      lineKeys.push('comparator');
-      timeData = getReaderComparator (data, comparatorData);
-    }
-
-    let readTimeChartComponent = <LineChart
-      data={timeData}
-      keys={lineKeys}
-      yLabel='Page Views'
-      xLabel='Time'
-      cols={12}
-      />
-
 
     return (<DocumentTitle title={title}>
       <Col xs={12}>
@@ -226,23 +172,17 @@ class ArticleView extends React.Component {
             comparatorData={comparatorData.article}
             />
 
-          <Row>
-            <Col xs={12}>
-              <h4>When did users access the article?</h4>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              {renderReadTimeChartComponent ? readTimeChartComponent : {}}
-            </Col>
-          </Row>
-
-          <SectionUserAccess
+          <SectionWhen
             data={data.article}
             comparatorData={comparatorData.article}
             />
 
-          <SectionUserOrigins
+          <SectionHow
+            data={data.article}
+            comparatorData={comparatorData.article}
+            />
+
+          <SectionWhere
             data={data.article}
             comparatorData={comparatorData.article}
             />

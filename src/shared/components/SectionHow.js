@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/lib/Row';
 import PieChart from "../components/PieChart";
 import FeatureFlag from '../utils/featureFlag';
 
-export default class SectionUserAccess extends React.Component {
+export default class SectionHow extends React.Component {
 
   constructor(props) {
     super(props);
