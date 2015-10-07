@@ -155,6 +155,16 @@ export default function PageViewsQuery(query) {
         terms: {
           field: 'is_last_page'
         }
+      },
+      user_cohort : {
+        terms : {
+          field : 'user_cohort'
+        }
+      },
+      is_first_visit : {
+        terms : {
+          field : "is_first_visit"
+        }
       }
     }
   };

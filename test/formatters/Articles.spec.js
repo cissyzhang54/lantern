@@ -61,7 +61,9 @@ describe('Article Formatter', function() {
           'devices',
           'countries',
           'regions',
-          'is_last_page'
+          'is_last_page',
+          'user_cohort',
+          'is_first_visit'
         ];
         for (let i = 0; i < props.length; i++){
           expect(data.article.hasOwnProperty(props[i])).to.be.truthy;

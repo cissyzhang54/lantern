@@ -14,6 +14,7 @@ export default {
     'article:devices' : true,
     'article:locations' : true,
     'article:bounceRate' : false,
+    'article:who' : true,
     'article:modifier:comparator' : true,
     'article:modifier:filters' : false,
     'article:modifier:DateRange' : true,

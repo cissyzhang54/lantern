@@ -19,6 +19,7 @@ let config = {
     'article:referrers' : true,
     'article:locations' : true,
     'article:bounceRate' : true,
+    'article:who' : true,
     'article:modifier:comparator' : true,
     'article:modifier:filters' : true,
     'article:modifier:DateRange' : true,
