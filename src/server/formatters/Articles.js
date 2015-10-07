@@ -46,7 +46,9 @@ export default function formatData(data) {
           devices : formatTermsAggregation('devices', articleData),
           countries : formatTermsAggregation('countries', articleData),
           regions : formatTermsAggregation('regions', articleData),
-          is_last_page : formatTermsAggregation('is_last_page', articleData)
+          is_last_page : formatTermsAggregation('is_last_page', articleData),
+          user_cohort : formatTermsAggregation('user_cohort', articleData),
+          is_first_visit : formatTermsAggregation('is_first_visit', articleData)
         }
       };
 

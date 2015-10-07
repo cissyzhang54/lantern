@@ -8,7 +8,7 @@ export default class ColumnChart extends React.Component {
 
   render() {
     return (
-     <BarChart identifier={this.props.identifier} reverseAxis={false} />
+     <BarChart {...this.props} reverseAxis={false}/>
     );
   }
 }

@@ -95,7 +95,9 @@ describe('Articles Query', () => {
       'devices',
       'regions',
       'countries',
-      'is_last_page'
+      'is_last_page',
+      'user_cohort',
+      'is_first_visit'
     ];
     for (let i = 0; i < props.length; i++) {
       expect(queryJSON.aggs.hasOwnProperty(props[i])).to.be.truthy;

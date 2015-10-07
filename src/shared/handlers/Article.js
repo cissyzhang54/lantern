@@ -14,6 +14,7 @@ import SectionWhere from "../components/SectionWhere";
 import SectionHow from "../components/SectionHow";
 import SectionWhen from "../components/SectionWhen";
 import SectionNext from "../components/SectionNext";
+import SectionWho from "../components/SectionWho";
 
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
@@ -187,6 +188,11 @@ class ArticleView extends React.Component {
             data={data.article}
             comparatorData={comparatorData.article}
             />
+
+          <SectionWho
+            data={data.article}
+            comparatorData={comparatorData.article}
+          />
 
           <SectionNext
             data={data.article}
