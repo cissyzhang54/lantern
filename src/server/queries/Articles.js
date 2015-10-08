@@ -15,22 +15,35 @@ export default function PageViewsQuery(query) {
   assert.equal(typeof query.dateTo, 'string',
     "argument 'query' must contain a 'dateTo' date property");
 
+  let match =  {  article_uuid: query.uuid  }
+  let filter = {
+    "and" : [
+      {
+        range : {
+          view_timestamp : {
+            from: query.dateFrom,
+            to: query.dateTo
+          }
+        }
+      }
+    ]
+  }
+
+  for (var o in query.filters){
+    if (query.filters[o]){
+      filter.and.push({
+        "term" : { [o]: query.filters[o] }
+      })
+    }
+  }
+
   return {
     query : {
       filtered : {
         query : {
-          match : {
-            article_uuid: query.uuid
-          }
+          match : match
         },
-        filter : {
-          range : {
-            view_timestamp : {
-              from: query.dateFrom,
-              to: query.dateTo
-            }
-          }
-        }
+        filter : filter
       }
     },
     size: 1,
@@ -150,19 +163,19 @@ export default function PageViewsQuery(query) {
           }
         }
       },
-      devices : {
-        terms : {
-          field : "device_type"
+      "devices" : {
+        "terms" : {
+          "field": "device_type"
         }
       },
-      regions : {
-        terms : {
-          field : 'geo_region'
+      "regions" : {
+        "terms" : {
+          "field" : "geo_region"
         }
       },
-      countries: {
-        terms : {
-          field : 'geo_country'
+      "countries": {
+        "terms" : {
+          "field" : "geo_country"
         }
       },
       is_last_page: {

@@ -9,7 +9,7 @@ const defaultQuery = {
   dateFrom: null,
   dateTo: null,
   comparator: null,
-  filters: []
+  filters: { }
 };
 
 class QueryStore {
@@ -43,6 +43,17 @@ class QueryStore {
 
   selectComparator(comparatorId) {
     this.query.comparator = comparatorId;
+  }
+
+  selectFilter(filter) {
+    let key;
+    switch (filter.key){
+      case 'Device': key = 'device_type'; break;
+      case 'Region': key = 'geo_region'; break;
+      case 'UserCohort': key = 'user_cohort'; break;
+      case 'Referrers': key = 'referrer_type'; break;
+    }
+    this.query.filters[key] = filter.value;
   }
 
   destroy() {

@@ -39,7 +39,7 @@ function getArticleData(req, res){
     dateFrom: null,
     dateTo: null,
     comparator: null,
-    filters: []
+    filters: {}
   };
 
   return dataApiUtils.getArticleData(query, apiKey)
@@ -64,7 +64,7 @@ function getComparatorData(req, res){
     dateFrom: moment(res.locals.data.ArticleStore.data.article.published).toISOString(),
     dateTo:  moment().toISOString(),
     comparator: req.params.comparator,
-    filters: []
+    filters: {}
   };
 
   return dataApiUtils.getComparatorData(query, apiKey)
@@ -72,6 +72,7 @@ function getComparatorData(req, res){
       res.locals.data.ComparatorStore = {
           data: data
       };
+      res.locals.data.QueryStore.query.comparator = query.comparator;
       return res;
     })
 }

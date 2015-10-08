@@ -111,7 +111,7 @@ class ArticleView extends React.Component {
     if (queryStore.query.uuid && !hasComparatorChanged){
       ArticleStore.loadArticleData(this.props.query);
     }
-    if (queryStore.query.comparator && hasComparatorChanged){
+    if (queryStore.query.comparator){
       ComparatorStore.loadComparatorData(this.props.query);
     }
     this.state.comparator = this.props.query.comparator

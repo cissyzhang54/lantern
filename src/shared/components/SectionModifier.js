@@ -5,6 +5,7 @@ import Comparator from "./Comparator";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
 import QueryActions from '../actions/QueryActions';
+import FeatureFlag from '../utils/featureFlag';
 
 const styles = {
   modifierWrapper : {
@@ -36,8 +37,11 @@ export default class Modifier extends React.Component {
     QueryActions.selectComparator(e.target.textContent);
   }
 
-  handleFilterChange (value) {
-    // TODO connect to filter query action
+  handleFilterChange (e) {
+    QueryActions.selectFilter({
+      key: e.target.name,
+      value: e.target.value
+    });
   }
 
   render() {
@@ -74,6 +78,10 @@ export default class Modifier extends React.Component {
         <strong style={styles.title}>Filters:</strong>
       </Col>
       <Filters
+        renderDevice={FeatureFlag.check('article:modifier:filters:Device')}
+        renderRegion={FeatureFlag.check('article:modifier:filters:Region')}
+        renderReferrers={FeatureFlag.check('article:modifier:filters:Referrers')}
+        renderUserCohort={FeatureFlag.check('article:modifier:filters:UserCohort')}
         onChange={this.handleFilterChange} />
     </Row>;
 

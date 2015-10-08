@@ -16,7 +16,11 @@ export default {
     'article:bounceRate' : true,
     'article:who' : true,
     'article:modifier:comparator' : true,
-    'article:modifier:filters' : false,
+    'article:modifier:filters' : true,
+    'article:modifier:filters:UserCohort' : true,
+    'article:modifier:filters:Referrers' : true,
+    'article:modifier:filters:Region' : true,
+    'article:modifier:filters:Device' : true,
     'article:modifier:DateRange' : true,
   }
 };

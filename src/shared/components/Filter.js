@@ -14,8 +14,9 @@ export default class Filter extends React.Component {
         bsSize='small'
         type='select'
         onChange={this.props.onChange}
+        name={this.props.name}
         >
-        <option value='' >{this.props.name}</option>
+        <option value='' >{this.props.label}</option>
         <option value='' disabled>──────────</option>
         {options}
       </Input>);
