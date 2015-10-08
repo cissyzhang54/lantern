@@ -4,25 +4,18 @@ import createComponent from '../createComponent';
 import SingleMetric from '../../src/shared/components/SingleMetric';
 
 describe ('SingleMetric component', function() {
-  let singleMetricInteger, singleMetricTime;
 
   beforeEach(function() {
-    singleMetricInteger = createComponent(SingleMetric, {
+  });
+
+  it ('Should render integer variant', () => {
+    let singleMetricInteger = createComponent(SingleMetric, {
       metric: 20000,
       comparatorMetric: 10000,
       metricType: 'integer',
       identifier : 'testIdentifierOn',
       label: 'I am a single metric'
     });
-    singleMetricTime = createComponent(SingleMetric, {
-      metric: 340,
-      comparatorMetric: 360,
-      metricType: 'time',
-      identifier : 'testIdentifierOn'
-    });
-  });
-
-  it ('Should render integer variant', function() {
     const intProps = singleMetricInteger.props;
     const intMetric = intProps.children[0];
     const intCommparator = intMetric.props.children[2].props.children;
@@ -39,7 +32,13 @@ describe ('SingleMetric component', function() {
     expect(intCommparator[1].props.children).to.equal('100%');
   });
 
-  it ('Should render time variant', function() {
+  it ('Should render time variant', () => {
+    let singleMetricTime = createComponent(SingleMetric, {
+      metric: 340,
+      comparatorMetric: 360,
+      metricType: 'time',
+      identifier : 'testIdentifierOn'
+    });
     const timeProps = singleMetricTime.props;
     const timeMetric = timeProps.children[0];
     const timeCommparator = timeMetric.props.children[2].props.children;
@@ -47,4 +46,21 @@ describe ('SingleMetric component', function() {
     expect(timeMetric.props.children[0]).to.equal('5m 40s');
     expect(timeCommparator[1].props.children).to.equal('5%');
   });
+
+  it ('Should render properly when metric is zero but comparator is greater', () => {
+    let zeroComp = createComponent(SingleMetric, {
+      metric: 0,
+      comparatorMetric: 443,
+      metricType: 'integer',
+      label: 'Page Views'
+    });
+
+    const props = zeroComp.props;
+    const metric = props.children[0];
+    const comparator = metric.props.children[2].props.children;
+
+    expect(metric.props.children[0]).to.equal('0');
+    expect(comparator[1].props.children).to.equal('100%')
+  });
+
 });
