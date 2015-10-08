@@ -51,12 +51,8 @@ var componentStyles = {
   }
 };
 
-function getPercentageDifference (x , y) {
-  if (x > y) {
-    return (((x - y) / y) * 100) | 0;
-  } else {
-    return (((y - x) / x) * 100) | 0;
-  }
+function getPercentageDifference (compared , comparator) {
+  return ((Math.abs(compared-comparator)/ comparator) * 100) | 0;
 }
 
 function checkSignClass (x) {
