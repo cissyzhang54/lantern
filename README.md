@@ -33,6 +33,11 @@ The following keys all need to placed with corresponding values within a `.env` 
 - RAVEN_SECRET
 - RAVEN_APP_ID
 
+#### App Commands
+- 'npm start' Initialises the app
+- 'npm test' Runs unit tests
+- 'npm run cover' Runs Istanbul test coverage
+
 ### Client-Side Logging Information:
 
  * Errors will be emailed to digitalnewsroom.alerts@ft.com
