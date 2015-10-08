@@ -23,9 +23,6 @@ export default class BarChart extends React.Component {
       transition: {
         duration: null,
       },
-      padding: {
-        right: 20 // XXX do we need this?
-      },
       data: {
         type: 'bar',
         json: json,
@@ -43,7 +40,8 @@ export default class BarChart extends React.Component {
         y: {
           label: this.props.yLabel
         }
-      }
+      },
+      title: this.props.title || null
     });
 
   }

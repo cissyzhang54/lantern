@@ -91,6 +91,7 @@ describe('Articles Query', () => {
       'channels',
       'referrer_names',
       'referrer_types',
+      'social_referrers',
       'referrer_urls',
       'devices',
       'regions',
