@@ -58,6 +58,7 @@ describe('Article Formatter', function() {
           'referrer_types',
           'referrer_names',
           'referrer_urls',
+          'social_referrers',
           'devices',
           'countries',
           'regions',

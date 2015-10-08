@@ -42,8 +42,15 @@ export default class SectionWhere extends React.Component {
     let comparatorData = this.props.comparatorData;
 
     let countries = data.countries;
-    let regions = data.regions.map((data) => { return mapTypes('region', data) })
-    let refs = data.referrer_types.map((data) => { return mapTypes('referrer', data) });
+    let regions = data.regions.map((data) => {
+      return mapTypes('region', data);
+    });
+    let refs = data.referrer_types.map((data) => {
+      return mapTypes('referrer', data);
+    });
+    let socialrefs = data.social_referrers.sort().map((data) => {
+      return mapTypes('referrer', data);
+    });
     let refUrls = data.referrer_urls.map(getReferrerUrls);
 
     return (<div>
@@ -80,15 +87,25 @@ export default class SectionWhere extends React.Component {
       </Row>
       <Row>
         <Col xs={12} sm={6}>
+          <h6>Referrer Types</h6>
           <BarChart
             data={refs}
             keys={['views']}
             category={'referrer'}
             yLabel="Page Views"
             xLabel="Referrer"
-            />
+          />
+          <h6>Social Networks</h6>
+          <BarChart
+            data={socialrefs}
+            keys={['views']}
+            category={'referrer'}
+            yLabel="Page Views"
+            xLabel="Social Network"
+          />
         </Col>
         <Col xs={12} sm={6}>
+          <h6>Top URLs</h6>
           <Table
             headers={['Referrer', 'Views']}
             rows={refUrls}

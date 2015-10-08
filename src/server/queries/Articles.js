@@ -53,10 +53,10 @@ export default function PageViewsQuery(query) {
         }
       },
       referrer_types : {
-        filter: {
+        filter : {
           not : {
             term : {
-              referrer_type: "internal"
+              referrer_type : "internal"
             }
           }
         },
@@ -132,6 +132,20 @@ export default function PageViewsQuery(query) {
           filtered : {
             terms : {
               field : 'referrer'
+            }
+          }
+        }
+      },
+      social_referrers : {
+        filter : {
+          term : {
+            referrer_type : 'social-network'
+          }
+        },
+        aggs: {
+          filtered: {
+            terms : {
+              field : 'referrer_name'
             }
           }
         }

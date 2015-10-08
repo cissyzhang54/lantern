@@ -43,6 +43,7 @@ export default function formatData(data) {
           referrer_types: formatFilteredTermsAggregation('referrer_types', articleData),
           referrer_names: formatFilteredTermsAggregation('referrer_names', articleData),
           referrer_urls: formatFilteredTermsAggregation('referrer_urls', articleData, 'Not Available'),
+          social_referrers: formatFilteredTermsAggregation('social_referrers', articleData),
           devices : formatTermsAggregation('devices', articleData),
           countries : formatTermsAggregation('countries', articleData),
           regions : formatTermsAggregation('regions', articleData),
