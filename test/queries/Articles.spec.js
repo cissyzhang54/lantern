@@ -97,6 +97,7 @@ describe('Articles Query', () => {
       'countries',
       'is_last_page',
       'user_cohort',
+      'rfv_cluster',
       'is_first_visit'
     ];
     for (let i = 0; i < props.length; i++) {
