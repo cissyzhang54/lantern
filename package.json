@@ -6,7 +6,7 @@
   "scripts": {
     "test": "env NODE_ENV=test mocha --compilers js:babel/register --recursive test/**/*.spec.js",
     "test-debug": "env NODE_ENV=test mocha --debug-brk --compilers js:babel/register --recursive test/**/*.spec.js",
-    "cover": "env NODE_ENV=test istanbul cover node_modules/.bin/_mocha -- --compilers js:babel/register test/**/*.spec.js",
+    "cover": "env NODE_ENV=test babel-node node_modules/.bin/isparta cover node_modules/.bin/_mocha -- --reporter=dot test/**/*.spec.js ",
     "clean": "rm -rf lib",
     "watch-js": "babel src -d lib --experimental -w",
     "dev-server": "env $(cat .env) node lib/server/webpack",
@@ -77,6 +77,7 @@
   },
   "devDependencies": {
     "chai": "^3.2.0",
+    "isparta": "^3.1.0",
     "pre-commit": "^1.1.1"
   }
 }
