@@ -6,6 +6,7 @@
   "scripts": {
     "test": "env NODE_ENV=test mocha --compilers js:babel/register --recursive test/**/*.spec.js",
     "test-debug": "env NODE_ENV=test mocha --debug-brk --compilers js:babel/register --recursive test/**/*.spec.js",
+    "cover": "env NODE_ENV=test istanbul cover node_modules/.bin/_mocha -- --compilers js:babel/register test/**/*.spec.js",
     "clean": "rm -rf lib",
     "watch-js": "babel src -d lib --experimental -w",
     "dev-server": "env $(cat .env) node lib/server/webpack",
@@ -47,6 +48,7 @@
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",
     "iso": "^4.2.0",
+    "istanbul": "^0.3.22",
     "jquery": "^2.1.4",
     "mocha": "^2.2.5",
     "moment": "^2.10.6",
