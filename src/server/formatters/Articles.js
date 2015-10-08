@@ -48,6 +48,7 @@ export default function formatData(data) {
           regions : formatTermsAggregation('regions', articleData),
           is_last_page : formatTermsAggregation('is_last_page', articleData),
           user_cohort : formatTermsAggregation('user_cohort', articleData),
+          rfv_cluster : formatTermsAggregation('rfv_cluster', articleData),
           is_first_visit : formatTermsAggregation('is_first_visit', articleData)
         }
       };

@@ -161,6 +161,12 @@ export default function PageViewsQuery(query) {
           field : 'user_cohort'
         }
       },
+      rfv_cluster: {
+        terms : {
+          field : "rfv_cluster",
+          min_doc_count : 0
+        }
+      },
       is_first_visit : {
         terms : {
           field : "is_first_visit"

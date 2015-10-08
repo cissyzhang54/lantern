@@ -13,7 +13,7 @@ export default {
     'article:referrers' : true,
     'article:devices' : true,
     'article:locations' : true,
-    'article:bounceRate' : false,
+    'article:bounceRate' : true,
     'article:who' : true,
     'article:modifier:comparator' : true,
     'article:modifier:filters' : false,

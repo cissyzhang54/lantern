@@ -2,7 +2,7 @@ import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import ColumnChart from './ColumnChart';
-import FeatureFlag from '../utils/featureFlag';
+import FeatureFlag from '../utils/featureFlag';import BarChart from "../components/BarChart";
 
 function mapTypes (name, data){
   return {
@@ -39,6 +39,13 @@ export default class SectionWho extends React.Component {
       return mapTypes('user_type', newData);
     });
 
+    let rfv_cluster = data.rfv_cluster.map((data) => {
+      return {
+        'user_type' : data[0].replace(/\d+\./g,''),
+        'views' : data[1]
+      };
+    });
+
     return (
       <div>
         <Row>
@@ -66,6 +73,18 @@ export default class SectionWho extends React.Component {
               yLabel="Page Views"
               xLabel="User Type"
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} sm={12}>
+            <h5>RFV Clusters</h5>
+            <ColumnChart
+              data={rfv_cluster}
+              keys={['views']}
+              category={'user_type'}
+              yLabel="Page Views"
+              xLabel="User Type"
+              />
           </Col>
         </Row>
       </div>

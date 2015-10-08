@@ -407,6 +407,44 @@ export default [{
           "doc_count": 2
         }
       ]
+    },
+    "rfv_cluster": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "",
+          "doc_count": 550
+        },
+        {
+          "key": "1. FT Super Fans",
+          "doc_count": 356
+        },
+        {
+          "key": "4. Borderline Engaged",
+          "doc_count": 73
+        },
+        {
+          "key": "2. FT Fans",
+          "doc_count": 46
+        },
+        {
+          "key": "6. Occasional Skimmers",
+          "doc_count": 23
+        },
+        {
+          "key": "5. Half Engaged",
+          "doc_count": 13
+        },
+        {
+          "key": "3. Engaged, Frequent and Free",
+          "doc_count": 10
+        },
+        {
+          "key": "7. Disengaged Long Tail",
+          "doc_count": 7
+        }
+      ]
     }
   }
 }, {
