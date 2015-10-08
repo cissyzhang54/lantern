@@ -4,7 +4,7 @@ instrumentation:
     extensions:
         - .js
     default-excludes: true
-    excludes: ['*/shared/lib/*']
+    excludes: ['shared/lib/*']
     embed-source: false
     variable: __coverage__
     compact: true
