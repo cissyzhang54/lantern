@@ -12,7 +12,7 @@ const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}
 let router = express.Router();
 router.use(bodyParser.json());
 
-router.post(`/:category(articles|topics|authors)/:uuid(${UUID_REGEX})`, getCategoryData);//todo remove comparator prefix
+router.post(`/:category(articles|topics|authors)/:uuid(${UUID_REGEX})`, getCategoryData);
 router.post('/comparators/:category(articles|topics|authors)/:comparator', getComparatorData);
 router.get('/search/:query', search);
 router.use(ErrorHandler.routes(router));

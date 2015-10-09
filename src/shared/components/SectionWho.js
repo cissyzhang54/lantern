@@ -2,13 +2,29 @@ import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import ColumnChart from './ColumnChart';
-import FeatureFlag from '../utils/featureFlag';import BarChart from "../components/BarChart";
+import BarChart from "../components/BarChart";
 
 function mapTypes (name, data){
   return {
     [name]: data[0],
     views: data[1]
   };
+}
+function removePrefix (data){
+  return {
+    'user_type' : data[0].replace(/\d+\./g,''),
+    'views' : data[1]
+  };
+}
+function renameDataKey (data) {
+  let newData = data.slice();
+  if (newData[0] === 'T') {
+    newData[0] = 'New';
+  }
+  if (newData[0] === 'F') {
+    newData[0] = 'Returning';
+  }
+  return mapTypes('user_type', newData);
 }
 
 export default class SectionWho extends React.Component {
@@ -18,33 +34,15 @@ export default class SectionWho extends React.Component {
   }
 
   render() {
-    if (!FeatureFlag.check('article:who'))
+    if (!this.props.renderWho) {
       return <div></div>
+    }
 
     let data = this.props.data;
     let comparatorData = this.props.comparatorData;
-
-    let cohort = data.user_cohort.map((data) => {
-      return mapTypes('cohort', data);
-    });
-
-    let newVsReturning = data.is_first_visit.map((data) => {
-      let newData = data.slice();
-      if (newData[0] === 'T') {
-        newData[0] = 'New';
-      }
-      if (newData[0] === 'F') {
-        newData[0] = 'Returning';
-      }
-      return mapTypes('user_type', newData);
-    });
-
-    let rfv_cluster = data.rfv_cluster.map((data) => {
-      return {
-        'user_type' : data[0].replace(/\d+\./g,''),
-        'views' : data[1]
-      };
-    });
+    let cohort = data.user_cohort.map((data) => mapTypes('cohort', data) );
+    let newVsReturning = data.is_first_visit.map((data) => renameDataKey);
+    let rfv_cluster = data.rfv_cluster.map((data) => removePrefix);
 
     return (
       <div>

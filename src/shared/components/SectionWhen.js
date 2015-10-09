@@ -3,7 +3,6 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import moment from 'moment';
 import LineChart from "../components/LineChart";
-import FeatureFlag from '../utils/featureFlag';
 
 //todo: unit test this function
 function getReaderComparator (data, comparatorData) {
@@ -44,7 +43,7 @@ export default class SectionWhen extends React.Component {
   }
 
   render() {
-    if (!FeatureFlag.check('article:readTimes')){
+    if (!this.props.renderReadTimes){
       return (<div></div>)
     }
 

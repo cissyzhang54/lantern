@@ -4,7 +4,6 @@ import Row from 'react-bootstrap/lib/Row';
 import BarChart from "../components/BarChart";
 import Table from "../components/Table";
 import Map from "../components/Map";
-import FeatureFlag from '../utils/featureFlag';
 
 function mapTypes (name, data){
   return {
@@ -34,23 +33,16 @@ export default class SectionWhere extends React.Component {
   }
 
   render() {
-    if (!FeatureFlag.check('article:referrers')){
+    if (!this.props.renderReferrers){
       return <div></div>
     }
 
     let data = this.props.data;
     let comparatorData = this.props.comparatorData;
-
     let countries = data.countries;
-    let regions = data.regions.map((data) => {
-      return mapTypes('region', data);
-    });
-    let refs = data.referrer_types.map((data) => {
-      return mapTypes('referrer', data);
-    });
-    let socialrefs = data.social_referrers.sort().map((data) => {
-      return mapTypes('referrer', data);
-    });
+    let regions = data.regions.map((data) => mapTypes('region', data));
+    let refs = data.referrer_types.map((data) => mapTypes('referrer', data));
+    let socialrefs = data.social_referrers.sort().map((data) => mapTypes('referrer', data));
     let refUrls = data.referrer_urls.map(getReferrerUrls);
 
     return (<div>

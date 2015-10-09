@@ -15,8 +15,6 @@ export default {
     'article:locations' : true,
     'article:bounceRate' : true,
     'article:who' : true,
-    'article:modifier:comparator' : true,
-    'article:modifier:filters' : true,
     'article:modifier:filters:UserCohort' : true,
     'article:modifier:filters:Referrers' : true,
     'article:modifier:filters:Region' : true,
