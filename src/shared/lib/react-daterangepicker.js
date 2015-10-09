@@ -48,7 +48,7 @@ export default React.createClass({
   },
   componentDidMount: function () {
     var $this = this;
-    $this.$picker = $(React.findDOMNode(this.refs.picker));
+    $this.$picker = $(this.refs.picker);
     // initialize
     $this.$picker.daterangepicker(this.getOptionsFromProps());
     // attach event listeners

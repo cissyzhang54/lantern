@@ -18,7 +18,7 @@ module.exports = {
   },
   plugins: [
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin({output: {comments: false}, minimize: true, compress: { warnings: false }}),
+    //    new webpack.optimize.UglifyJsPlugin({output: {comments: false}, minimize: true, compress: { warnings: false }}),
     new ExtractTextPlugin("styles/[name].css"),
     new webpack.DefinePlugin({
       "process.env": {

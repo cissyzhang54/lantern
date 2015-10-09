@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import connectToStores from 'alt/utils/connectToStores';
 import ArticleRealtimeStore from '../stores/ArticleRealtimeStore';
 import ArticleRealtimeActions from '../actions/ArticleRealtimeActions';

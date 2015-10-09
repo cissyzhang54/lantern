@@ -58,13 +58,15 @@ export default class Header extends React.Component {
     render() {
         let styles = this.state.responsiveStyles;
         let url = this.props.linkURL;
-        let link = <a style={styles.anchor} href={url} target='_blank'>
-          {this.props.title}
-          <Glyphicon glyph="new-window" style={styles.tagStyle} />
-        </a>
+        let link = (
+          <a style={styles.anchor} href={url} target='_blank'>
+            {this.props.title}
+            <Glyphicon glyph="new-window" style={styles.tagStyle} />
+          </a>
+        );
         let title = url ? link : this.props.title
-        let author = this.props.author ? <p style={styles.text}>{this.props.author}</p> : {};
-        let publishDate = this.props.published ? <p style={styles.text} className="pull-right">{this.props.published}</p> : {};
+        let author = this.props.author ? <p style={styles.text}>{this.props.author}</p> : null;
+        let publishDate = this.props.published ? <p style={styles.text} className="pull-right">{this.props.published}</p> : null;
         return (
           <header style={styles.header} className="clearfix" data-component='header' >
             <div style={styles.titleContainer} >

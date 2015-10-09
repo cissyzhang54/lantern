@@ -29,18 +29,4 @@ describe ('Header component', function() {
     expect(text[2].props.children).to.equal('Date: 25-Aug-2015');
   });
 
-  it ('Should render with only a title (without a link)', function() {
-    let header = createComponent(Header, {
-      title: 'My component state test title'
-    });
-    const props = header.props;
-    const text = props.children.props.children;
-
-    expect(text[0].type).to.equal('h1');
-    expect(text[0].props.children.type).to.equal(undefined);
-    expect(text[0].props.children).to.equal('My component state test title');
-
-    expect(text[1].type).to.be.undefined;
-    expect(text[2].type).to.be.undefined;
-  });
 });

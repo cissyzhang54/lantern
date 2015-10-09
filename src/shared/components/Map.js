@@ -18,7 +18,7 @@ export default class DataMap extends React.Component {
   }
 
   drawMap() {
-    let node = React.findDOMNode(this.refs.mapContainer);
+    let node = this.refs.mapContainer;
     let dataset = {};
 
     const domain = d3.extent(this.props.data, d => d[1]);

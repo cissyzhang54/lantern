@@ -17,7 +17,7 @@ export default class PieChart extends React.Component {
   }
 
   drawChart() {
-    let node = React.findDOMNode(this.refs.chartContainer);
+    let node = this.refs.chartContainer;
 
     if(this.chart) {
       this.chart.load({data: {

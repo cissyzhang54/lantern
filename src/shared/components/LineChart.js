@@ -24,8 +24,8 @@ export default class LineChart extends React.Component {
   }
 
   drawChart() {
-    let node = React.findDOMNode(this.refs.chartContainer);
     let attr = this.props.category
+    let node = this.refs.chartContainer;
     let json = this.props.data.map((d) => {
       if (this.props.type === 'timeseries' && typeof d[attr] === 'string')
         d[attr] = moment(d[attr].replace(':000Z',':00.000Z')).toISOString();//hack for now

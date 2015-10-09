@@ -2,6 +2,7 @@ import 'newrelic';
 let express = require("express");
 let exphbs = require("express-handlebars");
 import React from "react";
+import { renderToString } from "react-dom/server";
 import { match, RoutingContext } from "react-router";
 import DocumentTitle from 'react-document-title';
 import compress from 'compression';
@@ -57,11 +58,11 @@ app.use('/bye', (req, res) =>{
 app.use('/', authRouter);
 app.use('/api/v0', ensureApiAuthenticated, apiRouter);
 app.use('/', ensureAuthenticated, dataPreloader);
-app.use('/', ensureAuthenticated, function appRouter(req, res) {
-  renderRoute(routes, req, res)
+app.use('/', ensureAuthenticated, function appRouter(req, res, next) {
+  renderRoute(routes, req, res, next);
 });
 app.use(function ErrorHandler(err, req, res, next) {
-  renderRoute(errorRoutes, req, res)
+  renderRoute(errorRoutes, req, res, next);
 });
 
 
@@ -88,7 +89,7 @@ function renderRoute(route, req, res) {
   res.locals.data.UserStore = {
     user: user
   }
-  alt.bootstrap(JSON.stringify(res.locals.data || {}));
+  alt.bootstrap(JSON.stringify(res.locals.data));
   let iso = new Iso();
 
   match({routes, location: req.url}, (error, redirectLocation, renderProps) => {
@@ -97,7 +98,7 @@ function renderRoute(route, req, res) {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
-      let content = React.renderToString(<RoutingContext {...renderProps} />);
+      let content = renderToString(<RoutingContext {...renderProps} />);
       iso.add(content, alt.flush());
       const templateProps = {
         content: iso.render(),
@@ -107,19 +108,18 @@ function renderRoute(route, req, res) {
       };
       res.render('index', templateProps);
     }
-
-  });
+  })
 }
 
 
-function ensureAuthenticated(req, res, next) {
+function ensureAuthenticated(req, res) {
   if (req.isAuthenticated()
     || process.env.NODE_ENV === 'test') { return next(); }
   req.session.gotoUrl = req.session.gotoUrl || req.originalUrl;
   res.redirect('/login');
 }
 
-function ensureApiAuthenticated(req, res, next) {
+function ensureApiAuthenticated(req, res) {
   if (req.isAuthenticated()
     || req.query.apiKey == process.env.LANTERN_API_KEY
     || process.env.NODE_ENV === 'test') { return next(); }

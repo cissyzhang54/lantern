@@ -1,23 +1,33 @@
 import React from "react";
 import DocumentTitle from 'react-document-title';
 import UserStore from '../stores/UserStore'
-import AltContainer from 'alt/AltContainer';
 import NavBar from '../components/NavBar';
 import User from '../components/User';
+import connectToStores from 'alt/utils/connectToStores';
 
-export default class AppController extends React.Component {
+class AppController extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
+  static getStores() {
+    return [UserStore];
+  }
+
+  static getPropsFromStores() {
+    return UserStore.getState();
+  }
+
   render() {
     return (<DocumentTitle title='Lantern'>
-      <AltContainer store={UserStore} >
-        <User />
-        <NavBar />
+      <div>
+        <User {...this.props} />
+        <NavBar {...this.props} />
         {this.props.children}
-      </AltContainer>
+      </div>
     </DocumentTitle>);
   }
 }
+
+export default connectToStores(AppController);

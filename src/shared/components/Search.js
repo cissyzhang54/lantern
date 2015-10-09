@@ -6,13 +6,10 @@ import Button from 'react-bootstrap/lib/Button';
 import Link from 'react-router/lib/Link';
 import Logo from '../components/Logo';
 import SearchResult from './SearchResult.js';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
 
 import AnalyticsActions from '../actions/AnalyticsActions';
 
 import _ from 'underscore';
-import moment from 'moment';
 
 const MIN_SEARCH_LENGTH = 2;
 
@@ -36,11 +33,6 @@ export default class Search extends React.Component {
     };
   }
 
-  shouldPerformSearch(){
-    const val = (this.refs && this.refs.searchinput) ? this.refs.searchinput.getValue() : '';
-    return val.length >= MIN_SEARCH_LENGTH;
-  }
-
   componentDidMount() {
     let el = this.refs.searchinput.getInputDOMNode();
     let query = this.props.query || '';
@@ -49,6 +41,11 @@ export default class Search extends React.Component {
     if (el.setSelectionRange) {
       el.setSelectionRange(query.length, query.length);
     }
+  }
+
+  shouldPerformSearch(){
+    const val = (this.refs && this.refs.searchinput) ? this.refs.searchinput.getValue() : '';
+    return val.length >= MIN_SEARCH_LENGTH;
   }
 
   _handleSearchInput() {

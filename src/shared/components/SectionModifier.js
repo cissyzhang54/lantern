@@ -18,7 +18,7 @@ const styles = {
     'padding': '0px 15px 0px 15px'
   },
   title : {
-    lineHeight: '1.5em',
+    lineHeight: '1.5em'
   },
   titleText : {
     'paddingLeft': '0px'
@@ -86,7 +86,7 @@ export default class Modifier extends React.Component {
     this.props.category === 'sections' ? tags.push({label: this.props.query.section, url : `section/${this.props.query.section}`}) : {};
     this.props.category === 'topics' ? tags.push({label: this.props.query.topic, url : `topic/${this.props.query.topic}`}) : {};
 
-    let count = typeof comparatorData.articleCount == 'number' ? comparatorData.articleCount : {}
+    let count = typeof comparatorData.articleCount == 'number' ? comparatorData.articleCount : null
 
     return (
       <div data-component='sectionModifier' style={styles.modifierWrapper}>

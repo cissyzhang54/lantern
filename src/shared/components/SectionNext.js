@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import BarChart from "../components/BarChart";
@@ -15,7 +15,7 @@ const styles = {
     'fontSize' : '15px',
     'color': '#039',
     'top': '0px',
-    'padding-right': '8px',
+    'paddingRight': '8px',
     cursor:'pointer'
   }
 };

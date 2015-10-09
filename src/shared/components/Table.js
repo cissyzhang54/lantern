@@ -33,7 +33,9 @@ export default class DataTable extends React.Component {
     return (
       <Table data-component="table">
         <thead>
-          {heads}
+          <tr>
+            {heads}
+          </tr>
         </thead>
         <tbody>
           {rows}
