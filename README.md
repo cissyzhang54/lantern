@@ -35,6 +35,7 @@ The following keys all need to placed with corresponding values within a `.env` 
 
 ### Client-Side Logging Information:
 
+ * Logging is drained to Splunk - to filter for lantern events use: `index=heroku source="/var/log/apps/heroku/ft-editorial-lantern.log"`
  * Errors will be emailed to digitalnewsroom.alerts@ft.com
  * Stats can be viewed here: https://app.getsentry.com/ft/production/
  * For more logging know how see: https://docs.getsentry.com/hosted/clients/javascript/usage/#raven-js-reporting-errors
