@@ -2,7 +2,6 @@ import React from 'react/addons';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import PieChart from "../components/PieChart";
-import FeatureFlag from '../utils/featureFlag';
 
 export default class SectionHow extends React.Component {
 
@@ -11,8 +10,8 @@ export default class SectionHow extends React.Component {
   }
 
   render() {
-    let renderDevices = FeatureFlag.check('article:devices');
-    let renderChannels = FeatureFlag.check('article:channels');
+    let renderDevices = this.props.renderDevices;
+    let renderChannels = this.props.renderChannels;
     if (!renderDevices && !renderChannels){
       return <div></div>
     }

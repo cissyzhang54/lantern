@@ -5,7 +5,6 @@ import Comparator from "./Comparator";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
 import QueryActions from '../actions/QueryActions';
-import FeatureFlag from '../utils/featureFlag';
 
 const styles = {
   modifierWrapper : {
@@ -45,51 +44,45 @@ export default class Modifier extends React.Component {
   }
 
   render() {
-    let renderDateRange = this.props.renderDateRange;
-    let renderComparator = this.props.renderComparator;
-    let renderFilters = this.props.renderFilters;
-    let dateRangeRow = <Row>
-      <Col sm={2} xs={12}>
-        <strong style={styles.title}>Date Range:</strong>
-      </Col>
-      <Col sm={4} xs={12}>
-        <DateRange
-          onChange={this.handleDateRangeChange}
-          startDate={this.props.query.dateFrom}
-          endDate={this.props.query.dateTo} />
-      </Col>
-    </Row>;
-
-    let comparatorRow = <Row style={styles.modiferRow}>
-      <Col sm={2} xs={12}>
-        <strong style={styles.title}>Comparators:</strong>
-      </Col>
-      <Col sm={10} xs={12}>
-        <Comparator
-          tags={this.props.tags}
-          onChange={this.handleComparatorChange}
-          currentComparator={this.props.query.comparator}
-          uuid={this.props.uuid} />
-      </Col>
-    </Row>;
-
-    let filtersRow = <Row >
-      <Col sm={2} xs={12}>
-        <strong style={styles.title}>Filters:</strong>
-      </Col>
-      <Filters
-        renderDevice={FeatureFlag.check('article:modifier:filters:Device')}
-        renderRegion={FeatureFlag.check('article:modifier:filters:Region')}
-        renderReferrers={FeatureFlag.check('article:modifier:filters:Referrers')}
-        renderUserCohort={FeatureFlag.check('article:modifier:filters:UserCohort')}
-        onChange={this.handleFilterChange} />
-    </Row>;
-
     return (
       <div style={styles.modifierWrapper}>
-        {renderComparator ? comparatorRow : {}}
-        {renderFilters ? filtersRow : {}}
-        {renderDateRange ? dateRangeRow : {}}
+
+        <Row style={styles.modiferRow}>
+          <Col sm={2} xs={12}>
+            <strong style={styles.title}>Comparators:</strong>
+          </Col>
+          <Col sm={10} xs={12}>
+            <Comparator
+              tags={this.props.tags}
+              onChange={this.handleComparatorChange}
+              currentComparator={this.props.query.comparator}
+              uuid={this.props.uuid} />
+          </Col>
+        </Row>
+
+        <Row >
+          <Col sm={2} xs={12}>
+            <strong style={styles.title}>Filters:</strong>
+          </Col>
+          <Filters
+            renderDevice={this.props.renderDevice}
+            renderRegion={this.props.renderRegion}
+            renderReferrers={this.props.renderReferrers}
+            renderUserCohort={this.props.renderUserCohort}
+            onChange={this.handleFilterChange} />
+        </Row>
+
+        <Row>
+          <Col sm={2} xs={12}>
+            <strong style={styles.title}>Date Range:</strong>
+          </Col>
+          <Col sm={4} xs={12}>
+            <DateRange
+              onChange={this.handleDateRangeChange}
+              startDate={this.props.query.dateFrom}
+              endDate={this.props.query.dateTo} />
+          </Col>
+        </Row>
       </div>
     );
   }

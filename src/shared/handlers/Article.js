@@ -160,9 +160,10 @@ class ArticleView extends React.Component {
         <SectionModifier
           data={data.article}
           tags={data.article.topics.concat(data.article.sections)}
-          renderDateRange={FeatureFlag.check('article:modifier:DateRange')}
-          renderComparator={FeatureFlag.check('article:modifier:comparator')}
-          renderFilters={FeatureFlag.check('article:modifier:filters')}
+          renderDevice={FeatureFlag.check('article:modifier:filters:Device')}
+          renderRegion={FeatureFlag.check('article:modifier:filters:Region')}
+          renderReferrers={FeatureFlag.check('article:modifier:filters:Referrers')}
+          renderUserCohort={FeatureFlag.check('article:modifier:filters:UserCohort')}
           query={this.props.query}
           uuid={this.props.params.uuid}
           />
@@ -177,26 +178,32 @@ class ArticleView extends React.Component {
           <SectionWhen
             data={data.article}
             comparatorData={comparatorData.article}
+            renderReadTimes={FeatureFlag.check('article:readTimes')}
             />
 
           <SectionHow
             data={data.article}
             comparatorData={comparatorData.article}
+            renderDevices={FeatureFlag.check('article:devices')}
+            renderChannels={FeatureFlag.check('article:channels')}
             />
 
           <SectionWhere
             data={data.article}
             comparatorData={comparatorData.article}
+            renderReferrers={FeatureFlag.check('article:referrers')}
             />
 
           <SectionWho
             data={data.article}
             comparatorData={comparatorData.article}
+            renderWho={FeatureFlag.check('article:who')}
           />
 
           <SectionNext
             data={data.article}
             comparatorData={comparatorData.article}
+            renderBounceRate={FeatureFlag.check('article:bounceRate')}
             />
 
         </main>
