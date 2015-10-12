@@ -87,10 +87,16 @@ export default function ComparatorPageViewsQuery(query) {
         }
       },
       is_first_visit : {
-        terms : {
-          field : "is_first_visit"
+        terms: {
+          field: "is_first_visit"
         }
       },
+      "regions" : {
+        "terms": {
+          "field": "geo_region"
+
+        }
+      }
     }
   }
 }

@@ -5,11 +5,29 @@ import BarChart from "../components/BarChart";
 import Table from "../components/Table";
 import Map from "../components/Map";
 
+const articleLabel = 'views'
+
 function mapTypes (name, data){
   return {
     [name]: data[0],
     views: data[1]
   };
+}
+
+function mapRegions (name, data){
+  return {
+    [name]: data[0],
+    [articleLabel]: data[1]
+  };
+}
+
+function merge(name, data, comparatorData, comparatorLabel){
+  comparatorData.forEach(function(cData){
+    if (cData[name] === data[name]){
+      data[comparatorLabel] = cData[articleLabel]
+    }
+  })
+  return data;
 }
 
 function getReferrerUrls (data, i){
@@ -44,6 +62,14 @@ export default class SectionWhere extends React.Component {
     let refs = data.referrer_types.map((data) => mapTypes('referrer', data));
     let socialrefs = data.social_referrers.sort().map((data) => mapTypes('referrer', data));
     let refUrls = data.referrer_urls.map(getReferrerUrls);
+    let keys = [articleLabel];
+
+    if (comparatorData.regions){
+      let comparatorRegionLabel = comparatorData.comparator + ' Average';
+      let comparatorRegion = comparatorData.regions.map((data) => mapRegions('region', data))
+      regions = regions.map((d) => merge('region', d, comparatorRegion, comparatorRegionLabel))
+      keys.push(comparatorRegionLabel)
+    }
 
     return (<div>
       <Row>
@@ -60,7 +86,7 @@ export default class SectionWhere extends React.Component {
         <Col xs={12} sm={6}>
           <BarChart
             data={regions}
-            keys={['views']}
+            keys={keys}
             category={'region'}
             yLabel="Page Views"
             xLabel="Regions"
