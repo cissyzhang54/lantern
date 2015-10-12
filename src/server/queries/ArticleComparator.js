@@ -69,7 +69,12 @@ export default function ComparatorPageViewsQuery(query) {
         "cardinality" : {
           "field" : "article_uuid"
         }
-      }
+      },
+      is_last_page: {
+        terms: {
+          field: 'is_last_page'
+        }
+      },
     }
   }
 }
