@@ -4,8 +4,8 @@ import Row from 'react-bootstrap/lib/Row';
 import PieChart from "../components/PieChart";
 
 function renameDataKey(data){
-  let label = d[0] === "T" ? 'Exited FT.com' : 'Stayed on FT.com';
-  return [label, d[1]]
+  let label = data[0] === "T" ? 'Exited FT.com' : 'Stayed on FT.com';
+  return [label, data[1]]
 }
 
 export default class SectionWhere extends React.Component {
@@ -21,7 +21,7 @@ export default class SectionWhere extends React.Component {
 
     let data = this.props.data;
     let comparatorData = this.props.comparatorData;
-    let is_last_page = data.is_last_page.map((d)=> renameDataKey);
+    let is_last_page = data.is_last_page.map(renameDataKey);
 
     return (<div>
       <Row>

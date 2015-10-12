@@ -41,8 +41,8 @@ export default class SectionWho extends React.Component {
     let data = this.props.data;
     let comparatorData = this.props.comparatorData;
     let cohort = data.user_cohort.map((data) => mapTypes('cohort', data) );
-    let newVsReturning = data.is_first_visit.map((data) => renameDataKey);
-    let rfv_cluster = data.rfv_cluster.map((data) => removePrefix);
+    let newVsReturning = data.is_first_visit.map(renameDataKey);
+    let rfv_cluster = data.rfv_cluster.map(removePrefix);
 
     return (
       <div>
