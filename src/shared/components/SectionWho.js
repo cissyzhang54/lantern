@@ -4,27 +4,35 @@ import Row from 'react-bootstrap/lib/Row';
 import ColumnChart from './ColumnChart';
 import BarChart from "../components/BarChart";
 
+const articleLabel = 'Views'
+const COHORT = 'cohort'
+const USER_TYPE = 'user_type'
+
 function mapTypes (name, data){
   return {
     [name]: data[0],
-    views: data[1]
+    [articleLabel]: data[1]
   };
 }
 function removePrefix (data){
   return {
-    'user_type' : data[0].replace(/\d+\./g,''),
-    'views' : data[1]
+    [USER_TYPE] : data[0].replace(/\d+\./g,'').trim(),
+    [articleLabel] : data[1]
   };
 }
-function renameDataKey (data) {
-  let newData = data.slice();
-  if (newData[0] === 'T') {
-    newData[0] = 'New';
-  }
-  if (newData[0] === 'F') {
-    newData[0] = 'Returning';
-  }
-  return mapTypes('user_type', newData);
+
+function merge(name, data, comparatorData, comparatorLabel){
+  comparatorData.forEach(function(cData){
+    if (cData[name] === data[name]){
+      data[comparatorLabel] = cData[articleLabel]
+    }
+  })
+  return data;
+}
+
+function renameDataKey(data){
+  let label = data[0] === "T" ? 'New' : 'Returning';
+  return mapTypes(USER_TYPE, [label, data[1]])
 }
 
 export default class SectionWho extends React.Component {
@@ -40,9 +48,28 @@ export default class SectionWho extends React.Component {
 
     let data = this.props.data;
     let comparatorData = this.props.comparatorData;
-    let cohort = data.user_cohort.map((data) => mapTypes('cohort', data) );
+    let comparatorRFV, comparatorFirstVisit, comparatorCohort, comparatorLabel;
+    comparatorLabel = comparatorData.comparator + ' Average';
+    let keys = [articleLabel];
+    let cohort = data.user_cohort.map((data) => mapTypes(COHORT, data) );
     let newVsReturning = data.is_first_visit.map(renameDataKey);
     let rfv_cluster = data.rfv_cluster.map(removePrefix);
+
+    if (comparatorData.comparator) {
+      keys.push(comparatorLabel)
+    }
+    if (comparatorData.rfv_cluster){
+      comparatorRFV = comparatorData.rfv_cluster.map(removePrefix)
+      rfv_cluster = rfv_cluster.map((d) => merge(USER_TYPE, d, comparatorRFV, comparatorLabel))
+    }
+    if (comparatorData.is_first_visit){
+      comparatorFirstVisit = comparatorData.is_first_visit.map(renameDataKey)
+      newVsReturning = newVsReturning.map((d) => merge(USER_TYPE, d, comparatorFirstVisit, comparatorLabel))
+    }
+    if (comparatorData.user_cohort){
+      comparatorCohort = comparatorData.user_cohort.map((data) => mapTypes(COHORT, data))
+      cohort = cohort.map((d) => merge(COHORT, d, comparatorCohort, comparatorLabel))
+    }
 
     return (
       <div>
@@ -56,8 +83,8 @@ export default class SectionWho extends React.Component {
             <h5>Cohort</h5>
             <ColumnChart
               data={cohort}
-              keys={['views']}
-              category={'cohort'}
+              keys={keys}
+              category={COHORT}
               yLabel="Page Views"
               xLabel="User Type"
             />
@@ -66,8 +93,8 @@ export default class SectionWho extends React.Component {
             <h5>New vs Returning</h5>
             <ColumnChart
               data={newVsReturning}
-              keys={['views']}
-              category={'user_type'}
+              keys={keys}
+              category={USER_TYPE}
               yLabel="Page Views"
               xLabel="User Type"
             />
@@ -78,8 +105,8 @@ export default class SectionWho extends React.Component {
             <h5>RFV Clusters</h5>
             <ColumnChart
               data={rfv_cluster}
-              keys={['views']}
-              category={'user_type'}
+              keys={keys}
+              category={USER_TYPE}
               yLabel="Page Views"
               xLabel="User Type"
               />
