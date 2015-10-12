@@ -39,18 +39,18 @@ export default function formatData(data) {
           genre: metaData.genre,
           sections: metaData.sections,
           topics: metaData.topics,
-          channels: formatTermsAggregation('channels', articleData),
-          referrer_types: formatFilteredTermsAggregation('referrer_types', articleData),
-          referrer_names: formatFilteredTermsAggregation('referrer_names', articleData),
-          referrer_urls: formatFilteredTermsAggregation('referrer_urls', articleData, 'Not Available'),
-          social_referrers: formatFilteredTermsAggregation('social_referrers', articleData),
-          devices : formatTermsAggregation('devices', articleData),
-          countries : formatTermsAggregation('countries', articleData),
-          regions : formatTermsAggregation('regions', articleData),
-          is_last_page : formatTermsAggregation('is_last_page', articleData),
-          user_cohort : formatTermsAggregation('user_cohort', articleData),
-          rfv_cluster : formatTermsAggregation('rfv_cluster', articleData),
-          is_first_visit : formatTermsAggregation('is_first_visit', articleData)
+          channels: formatAggregation('channels', articleData),
+          referrer_types: formatFilteredAggregation('referrer_types', articleData),
+          referrer_names: formatFilteredAggregation('referrer_names', articleData),
+          referrer_urls: formatFilteredAggregation('referrer_urls', articleData, 'Not Available'),
+          social_referrers: formatFilteredAggregation('social_referrers', articleData),
+          devices : formatAggregation('devices', articleData),
+          countries : formatAggregation('countries', articleData),
+          regions : formatAggregation('regions', articleData),
+          is_last_page : formatAggregation('is_last_page', articleData),
+          user_cohort : formatAggregation('user_cohort', articleData),
+          rfv_cluster : formatAggregation('rfv_cluster', articleData),
+          is_first_visit : formatAggregation('is_first_visit', articleData)
         }
       };
 
@@ -81,8 +81,7 @@ function formatAuthors(authors) {
 
 
 function formatPublishDate(date) {
-  let m = moment(date);
-  return m.fromNow();
+  return moment(date).fromNow();
 }
 
 function formatTimeSeries(data) {
@@ -95,19 +94,16 @@ function formatTimeSeries(data) {
   });
 }
 
-function formatTermsAggregation(name, data) {
-  let buckets = data.aggregations[name].buckets;
-  return buckets.map((d, i) => {
-    return [
-      d.key || 'Unknown',
-      d.doc_count
-    ];
-  });
+function formatAggregation(name, data, replacement) {
+  return format(data.aggregations[name], replacement)
 }
 
-function formatFilteredTermsAggregation(name, data, replacement) {
-  let buckets = data.aggregations[name].filtered.buckets;
-  return buckets.map((d, i) => {
+function formatFilteredAggregation(name, data, replacement) {
+  return format(data.aggregations[name].filtered, replacement)
+}
+
+function format(agg, replacement) {
+  return agg.buckets.map((d, i) => {
     return [
       d.key || replacement || 'Unknown',
       d.doc_count

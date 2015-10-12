@@ -24,11 +24,13 @@ export default function formatData(data) {
           category_article_count: data.aggregations.distinct_articles.value,
           category_average_view_count: (data.aggregations.page_view_total_count.value / data.aggregations.distinct_articles.value) | 0,
           readTimes: formatTimeSeries(data),
-          is_last_page : formatTermsAggregation('is_last_page', data),
-          user_cohort : formatTermsAggregation('user_cohort', data),
-          rfv_cluster : formatTermsAggregation('rfv_cluster', data),
-          is_first_visit : formatTermsAggregation('is_first_visit', data),
-          regions : formatTermsAggregation('regions', data)
+          referrer_types: formatFilteredAggregation('referrer_types', data),
+          social_referrers: formatFilteredAggregation('social_referrers', data),
+          regions : formatAggregation('regions', data),
+          is_last_page : formatAggregation('is_last_page', data),
+          user_cohort : formatAggregation('user_cohort', data),
+          rfv_cluster : formatAggregation('rfv_cluster', data),
+          is_first_visit : formatAggregation('is_first_visit', data),
         }
       };
 
@@ -53,11 +55,18 @@ function formatTimeSeries(data) {
   });
 }
 
-function formatTermsAggregation(name, data) {
-  let buckets = data.aggregations[name].buckets;
-  return buckets.map((d, i) => {
+function formatAggregation(name, data, replacement) {
+  return format(data, data.aggregations[name], replacement)
+}
+
+function formatFilteredAggregation(name, data, replacement) {
+  return format(data, data.aggregations[name].filtered, replacement)
+}
+
+function format(data, agg, replacement) {
+  return agg.buckets.map((d, i) => {
     return [
-      d.key || 'Unknown',
+      d.key || replacement || 'Unknown',
       (d.doc_count / data.aggregations.distinct_articles.value) | 0
     ];
   });

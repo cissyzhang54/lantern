@@ -22,12 +22,28 @@ function removePrefix (data){
 }
 
 function merge(name, data, comparatorData, comparatorLabel){
-  comparatorData.forEach(function(cData){
-    if (cData[name] === data[name]){
-      data[comparatorLabel] = cData[articleLabel]
+  let merged = data.map((d) => {
+    let i=0
+    while (comparatorData.length && i < comparatorData.length) {
+      var cData = comparatorData[i]
+      if (cData[name] === d[name]) {
+        d[comparatorLabel] = cData[articleLabel]
+        comparatorData.splice(i, 1);
+        break
+      } else {
+        i++
+      }
     }
+    return d;
+  });
+  comparatorData.forEach(function(cData) {
+    merged.push({
+      [comparatorLabel] : cData[articleLabel],
+      [name]: cData[name],
+      [articleLabel]: 0
+    });
   })
-  return data;
+  return merged
 }
 
 function renameDataKey(data){
@@ -60,15 +76,15 @@ export default class SectionWho extends React.Component {
     }
     if (comparatorData.rfv_cluster){
       comparatorRFV = comparatorData.rfv_cluster.map(removePrefix)
-      rfv_cluster = rfv_cluster.map((d) => merge(USER_TYPE, d, comparatorRFV, comparatorLabel))
+      rfv_cluster = merge(USER_TYPE, rfv_cluster, comparatorRFV, comparatorLabel)
     }
     if (comparatorData.is_first_visit){
       comparatorFirstVisit = comparatorData.is_first_visit.map(renameDataKey)
-      newVsReturning = newVsReturning.map((d) => merge(USER_TYPE, d, comparatorFirstVisit, comparatorLabel))
+      newVsReturning = merge(USER_TYPE, newVsReturning, comparatorFirstVisit, comparatorLabel)
     }
     if (comparatorData.user_cohort){
       comparatorCohort = comparatorData.user_cohort.map((data) => mapTypes(COHORT, data))
-      cohort = cohort.map((d) => merge(COHORT, d, comparatorCohort, comparatorLabel))
+      cohort = merge(COHORT, cohort, comparatorCohort, comparatorLabel)
     }
 
     return (

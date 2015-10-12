@@ -70,6 +70,36 @@ export default function ComparatorPageViewsQuery(query) {
           "field" : "article_uuid"
         }
       },
+      referrer_types : {
+        filter : {
+          not : {
+            term : {
+              referrer_type : "internal"
+            }
+          }
+        },
+        aggs: {
+          filtered : {
+            terms: {
+              field: "referrer_type"
+            }
+          }
+        }
+      },
+      social_referrers : {
+        filter : {
+          term : {
+            referrer_type : 'social-network'
+          }
+        },
+        aggs: {
+          filtered: {
+            terms : {
+              field : 'referrer_name'
+            }
+          }
+        }
+      },
       is_last_page: {
         terms: {
           field: 'is_last_page'

@@ -5,29 +5,46 @@ import BarChart from "../components/BarChart";
 import Table from "../components/Table";
 import Map from "../components/Map";
 
-const articleLabel = 'views'
+const regionLabel = 'Views'
+const regionColumn = 'region'
 
 function mapTypes (name, data){
   return {
     [name]: data[0],
-    views: data[1]
+    [regionLabel]: data[1]
   };
 }
 
-function mapRegions (name, data){
+function mapRegions (name, data) {
   return {
     [name]: data[0],
-    [articleLabel]: data[1]
+    [regionLabel]: data[1]
   };
 }
 
-function merge(name, data, comparatorData, comparatorLabel){
-  comparatorData.forEach(function(cData){
-    if (cData[name] === data[name]){
-      data[comparatorLabel] = cData[articleLabel]
-    }
-  })
-  return data;
+function merge(name, data, comparatorData, comparatorLabel) {
+    let merged = data.map((d) => {
+      let i = 0
+      while (comparatorData.length && i < comparatorData.length) {
+        var cData = comparatorData[i]
+        if (cData[name] === d[name]) {
+          d[comparatorLabel] = cData[regionLabel]
+          comparatorData.splice(i, 1);
+          break
+        } else {
+          i++
+        }
+      }
+      return d;
+    });
+    comparatorData.forEach(function (cData) {
+      merged.push({
+        [comparatorLabel]: cData[regionLabel],
+        [name]: cData[name],
+        [regionLabel]: 0
+      });
+    })
+    return merged
 }
 
 export default class SectionWhere extends React.Component {
@@ -37,21 +54,25 @@ export default class SectionWhere extends React.Component {
   }
 
   render() {
-    if (!this.props.renderWhere){
+    if (!this.props.renderWhere) {
       return <div></div>
     }
 
     let data = this.props.data;
     let comparatorData = this.props.comparatorData;
+    let comparatorLabel = comparatorData.comparator + ' Average';
+    let keys = [regionLabel]
     let countries = data.countries;
-    let regions = data.regions.map((data) => mapTypes('region', data));
-    let keys = [articleLabel];
 
-    if (comparatorData.regions){
-      let comparatorRegionLabel = comparatorData.comparator + ' Average';
-      let comparatorRegion = comparatorData.regions.map((data) => mapRegions('region', data))
-      regions = regions.map((d) => merge('region', d, comparatorRegion, comparatorRegionLabel))
-      keys.push(comparatorRegionLabel)
+    if (comparatorData.comparator) {
+      keys.push(comparatorLabel)
+    }
+
+    let regions = data.regions.map((data) => mapTypes(regionColumn, data));
+
+    if (comparatorData.regions) {
+      let comparatorRegions = comparatorData.regions.map((data) => mapTypes(regionColumn, data));
+      regions = merge(regionColumn, regions, comparatorRegions, comparatorLabel)
     }
 
     return (<div>
@@ -70,7 +91,7 @@ export default class SectionWhere extends React.Component {
           <BarChart
             data={regions}
             keys={keys}
-            category={'region'}
+            category={regionColumn}
             yLabel="Page Views"
             xLabel="Regions"
             />
