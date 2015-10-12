@@ -20,6 +20,7 @@ let config = {
     'article:locations' : true,
     'article:bounceRate' : true,
     'article:who' : true,
+    'article:where' : true,
     'article:modifier:filters:UserCohort' : true,
     'article:modifier:filters:Referrers' : true,
     'article:modifier:filters:Region' : true,

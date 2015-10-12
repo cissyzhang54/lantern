@@ -10,6 +10,7 @@ import Header from "../components/Header";
 import Logo from "../components/Logo";
 import SectionModifier from "../components/SectionModifier";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
+import SectionReferrers from "../components/SectionReferrers.js";
 import SectionWhere from "../components/SectionWhere";
 import SectionHow from "../components/SectionHow";
 import SectionWhen from "../components/SectionWhen";
@@ -166,33 +167,32 @@ class ArticleView extends React.Component {
           renderUserCohort={FeatureFlag.check('article:modifier:filters:UserCohort')}
           query={this.props.query}
           uuid={this.props.params.uuid}
-          />
+        />
 
         <main >
 
           <SectionHeadlineStats
             data={data.article}
             comparatorData={comparatorData.article}
-            />
+          />
 
           <SectionWhen
             data={data.article}
             comparatorData={comparatorData.article}
             renderReadTimes={FeatureFlag.check('article:readTimes')}
-            />
+          />
 
-          <SectionHow
+          <SectionNext
             data={data.article}
             comparatorData={comparatorData.article}
-            renderDevices={FeatureFlag.check('article:devices')}
-            renderChannels={FeatureFlag.check('article:channels')}
-            />
+            renderBounceRate={FeatureFlag.check('article:bounceRate')}
+          />
 
-          <SectionWhere
+          <SectionReferrers
             data={data.article}
             comparatorData={comparatorData.article}
             renderReferrers={FeatureFlag.check('article:referrers')}
-            />
+          />
 
           <SectionWho
             data={data.article}
@@ -200,11 +200,18 @@ class ArticleView extends React.Component {
             renderWho={FeatureFlag.check('article:who')}
           />
 
-          <SectionNext
+          <SectionWhere
             data={data.article}
             comparatorData={comparatorData.article}
-            renderBounceRate={FeatureFlag.check('article:bounceRate')}
-            />
+            renderWhere={FeatureFlag.check('article:where')}
+          />
+
+          <SectionHow
+            data={data.article}
+            comparatorData={comparatorData.article}
+            renderDevices={FeatureFlag.check('article:devices')}
+            renderChannels={FeatureFlag.check('article:channels')}
+          />
 
         </main>
       </Col>
