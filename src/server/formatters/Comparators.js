@@ -28,6 +28,7 @@ export default function formatData(data) {
           user_cohort : formatTermsAggregation('user_cohort', data),
           rfv_cluster : formatTermsAggregation('rfv_cluster', data),
           is_first_visit : formatTermsAggregation('is_first_visit', data),
+          regions : formatTermsAggregation('regions', data)
         }
       };
 
