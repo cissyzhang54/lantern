@@ -42,7 +42,7 @@ function renderMetric (metricName, metric, comparatorName, comparatorMetric) {
   let componentConfig = config[metricName]
   componentConfig.metric = metric
   componentConfig.comparatorName = comparatorName || ''
-  componentConfig.comparatorMetric = comparatorMetric || ''
+  componentConfig.comparatorMetric = comparatorMetric || undefined
 
   let component = FeatureFlag.check(`article:${metricName}`)
     ? <SingleMetric {...componentConfig} />
