@@ -22,8 +22,9 @@ export default class LineChart extends React.Component {
 
   drawChart() {
     let node = React.findDOMNode(this.refs.chartContainer);
+    let attr = this.props.category
     let json = this.props.data.map((d) => {
-      d.time = moment(d.time);
+      d[attr] = moment(d[attr].replace(':000Z',':00.000Z'));//hack for now
       return d;
     });
 
@@ -45,7 +46,7 @@ export default class LineChart extends React.Component {
 
     let formatStr = '%d %b %H:%M:%S';
     if (json.length > 1) {
-      let step = moment.duration(json[1].time - json[0].time);
+      let step = moment.duration(json[1][attr] - json[0][attr]);
       if (step.years()) {
        formatStr = '%Y';
       } else if (step.months()) {
@@ -70,7 +71,7 @@ export default class LineChart extends React.Component {
         xFormat: '%Y-%m-%dT%H:%M:%SZ',
         json: json,
         keys: {
-          x: 'time',
+          x: attr,
           value: this.props.keys
         }
       },

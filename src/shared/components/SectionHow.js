@@ -16,21 +16,17 @@ export default class SectionHow extends React.Component {
       return <div></div>
     }
 
-    let data = this.props.data;
-    let comparatorData = this.props.comparatorData;
-    let devices = data.devices;
-    let channels = data.channels;
     let deviceComponent = renderDevices ? <Col xs={6}>
       <h5>Devices:</h5>
       <PieChart
-        data={devices}
+        data={this.props.data.devices}
         keys={['views']}
         />
     </Col> : {}
     let channelComponent = renderChannels ? <Col xs={6}>
       <h5>Channels:</h5>
       <PieChart
-        data={channels}
+        data={this.props.data.channels}
         keys={['views']}
         />
     </Col> : {}

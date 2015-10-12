@@ -35,7 +35,7 @@ export default function formatData(data) {
           pageViews: articleData.hits.total,
           timeOnPage: articleData.aggregations.avg_time_on_page.value,
           socialReaders: 0,
-          readTimes: formatTimeSeries(articleData),
+          readTimes: formatAggregation('page_views_over_time', articleData),
           genre: metaData.genre,
           sections: metaData.sections,
           topics: metaData.topics,
@@ -86,16 +86,6 @@ function formatPublishDate(date) {
   return moment(date).fromNow();
 }
 
-function formatTimeSeries(data) {
-  let buckets = data.aggregations.page_views_over_time.buckets;
-  return buckets.map((d, i) => {
-    return {
-      time: d.key_as_string,
-      value: d.doc_count
-    };
-  });
-}
-
 function formatAggregation(name, data, replacement) {
   return format(data.aggregations[name], replacement)
 }
@@ -107,7 +97,7 @@ function formatFilteredAggregation(name, data, replacement) {
 function format(agg, replacement) {
   return agg.buckets.map((d, i) => {
     return [
-      d.key || replacement || 'Unknown',
+      d.key_as_string || d.key || replacement || 'Unknown',
       d.doc_count
     ];
   });

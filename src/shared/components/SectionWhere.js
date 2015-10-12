@@ -4,48 +4,7 @@ import Row from 'react-bootstrap/lib/Row';
 import BarChart from "../components/BarChart";
 import Table from "../components/Table";
 import Map from "../components/Map";
-
-const regionLabel = 'Views'
-const regionColumn = 'region'
-
-function mapTypes (name, data){
-  return {
-    [name]: data[0],
-    [regionLabel]: data[1]
-  };
-}
-
-function mapRegions (name, data) {
-  return {
-    [name]: data[0],
-    [regionLabel]: data[1]
-  };
-}
-
-function merge(name, data, comparatorData, comparatorLabel) {
-    let merged = data.map((d) => {
-      let i = 0
-      while (comparatorData.length && i < comparatorData.length) {
-        var cData = comparatorData[i]
-        if (cData[name] === d[name]) {
-          d[comparatorLabel] = cData[regionLabel]
-          comparatorData.splice(i, 1);
-          break
-        } else {
-          i++
-        }
-      }
-      return d;
-    });
-    comparatorData.forEach(function (cData) {
-      merged.push({
-        [comparatorLabel]: cData[regionLabel],
-        [name]: cData[name],
-        [regionLabel]: 0
-      });
-    })
-    return merged
-}
+import FormatData from "../utils/formatData";
 
 export default class SectionWhere extends React.Component {
 
@@ -58,22 +17,8 @@ export default class SectionWhere extends React.Component {
       return <div></div>
     }
 
-    let data = this.props.data;
-    let comparatorData = this.props.comparatorData;
-    let comparatorLabel = comparatorData.comparator + ' Average';
-    let keys = [regionLabel]
-    let countries = data.countries;
-
-    if (comparatorData.comparator) {
-      keys.push(comparatorLabel)
-    }
-
-    let regions = data.regions.map((data) => mapTypes(regionColumn, data));
-
-    if (comparatorData.regions) {
-      let comparatorRegions = comparatorData.regions.map((data) => mapTypes(regionColumn, data));
-      regions = merge(regionColumn, regions, comparatorRegions, comparatorLabel)
-    }
+    let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
+    let [regionData, regionID, regionKeys] = dataFormatter.getMetric('regions', 'Views')
 
     return (<div>
       <Row>
@@ -89,16 +34,16 @@ export default class SectionWhere extends React.Component {
       <Row>
         <Col xs={12} sm={6}>
           <BarChart
-            data={regions}
-            keys={keys}
-            category={regionColumn}
+            data={regionData}
+            keys={regionKeys}
+            category={regionID}
             yLabel="Page Views"
             xLabel="Regions"
             />
         </Col>
         <Col xs={12} sm={6}>
           <Map
-            data={countries}
+            data={this.props.data.countries}
             />
         </Col>
       </Row>
