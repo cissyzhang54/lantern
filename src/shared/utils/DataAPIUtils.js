@@ -22,23 +22,16 @@ let DataAPI = {
             url += "?apiKey=" + apiKey;
         }
         request.post(url)
-            .send(query)
-            .set('Accept', 'application/json')
-            .end((err, res) => {
-                if (err) {
-                  err.queryData = query;
-                  switch(err.response.status) {
-                    case 404:
-                      err.name = 'ArticleNotFoundError';
-                      break;
-                    default:
-                      err.name = 'ArticleFetchError';
-                      break;
-                  }
-                  reject(err);
-                }
-                resolve(res.body);
-            });
+          .send(query)
+          .set('Accept', 'application/json')
+          .end((err, res) => {
+            if (err) {
+              err.queryData = query;
+              err.name = errorName('Article', err)
+              reject(err);
+            }
+            !err && resolve(res.body);
+          });
       });
     },
 
@@ -59,23 +52,16 @@ let DataAPI = {
             url += "?apiKey=" + apiKey;
         }
         request.post(url)
-            .send(query)
-            .set('Accept', 'application/json')
-            .end((err, res) => {
-                if (err) {
-                  err.queryData = query;
-                  switch(err.response.status) {
-                    case 404:
-                      err.name = 'ComparatorNotFoundError';
-                      break;
-                    default:
-                      err.name = 'ComparatorFetchError';
-                      break;
-                  }
-                  reject(err);
-                }
-                resolve(res.body);
-            });
+          .send(query)
+          .set('Accept', 'application/json')
+          .end((err, res) => {
+            if (err) {
+              err.queryData = query;
+              err.name = errorName('Comparator', err)
+              reject(err);
+            }
+            !err && resolve(res.body);
+          });
       });
     },
 
@@ -98,18 +84,24 @@ let DataAPI = {
           .end((err, res) => {
             if (err) {
               err.queryData = query;
-              switch(err.response.status) {
-                default:
-                  err.name = 'SearchError';
-                  break;
-              }
+              err.name = errorName('Search', err)
               reject(err);
             }
-            resolve(res.body);
+            !err && resolve(res.body);
           });
 
       });
     }
 };
+
+function errorName(page, err){
+  if (!err.response) return err.code
+  switch(err.response.status) {
+    case 404:
+      return page + 'NotFoundError';
+    default:
+      return page + 'Error';
+  }
+}
 
 export default DataAPI;

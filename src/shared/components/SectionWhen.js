@@ -4,7 +4,6 @@ import Row from 'react-bootstrap/lib/Row';
 import moment from 'moment';
 import LineChart from "../components/LineChart";
 
-//todo: unit test this function
 function getReaderComparator (data, comparatorData) {
   let compTimeData = comparatorData.readTimes;
   let articleTimeData = data.readTimes;
@@ -19,7 +18,7 @@ function getReaderComparator (data, comparatorData) {
     compTime = moment(compTimeData[i].time);
     let flag = false;
     let j = 0;
-    while (flag != true && articleTimeData.length) {
+    while (!flag && articleTimeData.length) {
       articleTime = moment(articleTimeData[j].time);
       if((compTime - articleTime) === 0) {
         let t = articleTimeData[j];
