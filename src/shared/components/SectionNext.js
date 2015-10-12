@@ -14,12 +14,28 @@ function mapTypes(name, data){
 }
 
 function merge(name, data, comparatorData, comparatorLabel){
-  comparatorData.forEach(function(cData){
-    if (cData[name] === data[name]){
-      data[comparatorLabel] = cData[articleLabel]
+  let merged = data.map((d) => {
+    let i=0
+    while (comparatorData.length && i < comparatorData.length) {
+      var cData = comparatorData[i]
+      if (cData[name] === d[name]) {
+        d[comparatorLabel] = cData[articleLabel]
+        comparatorData.splice(i, 1);
+        break
+      } else {
+        i++
+      }
     }
+    return d;
+  });
+  comparatorData.forEach(function(cData) {
+    merged.push({
+      [comparatorLabel] : cData[articleLabel],
+      [name]: cData[name],
+      [articleLabel]: 0
+    });
   })
-  return data;
+  return merged
 }
 
 function renameDataKey(data){
@@ -46,7 +62,7 @@ export default class SectionWhere extends React.Component {
     let bounce = data.is_last_page.map(renameDataKey);
     if (comparatorData.is_last_page){
       comparatorBounce = comparatorData.is_last_page.map(renameDataKey)
-      bounce = bounce.map((d) => merge(articleColumn, d, comparatorBounce, comparatorLabel))
+      bounce = merge(articleColumn, bounce, comparatorBounce, comparatorLabel)
       keys.push(comparatorLabel)
     }
 
