@@ -25,6 +25,9 @@ export default function formatData(data) {
           category_average_view_count: (data.aggregations.page_view_total_count.value / data.aggregations.distinct_articles.value) | 0,
           readTimes: formatTimeSeries(data),
           is_last_page : formatTermsAggregation('is_last_page', data),
+          user_cohort : formatTermsAggregation('user_cohort', data),
+          rfv_cluster : formatTermsAggregation('rfv_cluster', data),
+          is_first_visit : formatTermsAggregation('is_first_visit', data),
         }
       };
 
