@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import React from 'react';
-import createComponent from '../createComponent';
+import {createComponent} from '../createComponent';
 import BarChart from '../../src/shared/components/BarChart';
 
 describe ('BarChart component', function() {

@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import React from 'react';
-import createComponent from '../createComponent';
+import {createComponent} from '../createComponent';
 import DateRange from '../../src/shared/components/DateRange';
 import DateRangePicker from '../../src/shared/lib/react-daterangepicker';
 

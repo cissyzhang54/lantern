@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import React from 'react';
-import createComponent from '../createComponent';
+import {createComponent} from '../createComponent';
 import SectionModifier from '../../src/shared/components/SectionModifier';
 import Comparator from '../../src/shared/components/Comparator';
 import Filters from '../../src/shared/components/Filters';

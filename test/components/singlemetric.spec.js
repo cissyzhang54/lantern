@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import React from 'react';
-import createComponent from '../createComponent';
+import {createComponent} from '../createComponent';
 import SingleMetric from '../../src/shared/components/SingleMetric';
 
 describe ('SingleMetric component', function() {

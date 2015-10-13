@@ -52,6 +52,12 @@ function getArticleData(req, res){
         },
         "QueryStore" : {
           query: query
+        },
+        "FilterStore" : {
+          devices: data.article.devices.map(d => d[0]),
+          regions: data.article.regions.map(d => d[0]),
+          cohort: data.article.user_cohort.map(d => d[0]),
+          referrers: data.article.referrer_types.map(d => d[0])
         }
       };
       return res;

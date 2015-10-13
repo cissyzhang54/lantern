@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import React from 'react';
-import createComponent from '../createComponent';
+import {createComponent} from '../createComponent';
 import LineChart from '../../src/shared/components/LineChart';
 
 describe ('LineChart component', function() {

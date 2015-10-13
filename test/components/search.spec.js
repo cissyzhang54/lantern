@@ -5,7 +5,7 @@ import Logo from '../../src/shared/components/Logo';
 import Input from 'react-bootstrap/lib/Input';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import createComponent from '../createComponent';
+import {createComponent} from '../createComponent';
 
 const TestUtils = React.addons.TestUtils;
 

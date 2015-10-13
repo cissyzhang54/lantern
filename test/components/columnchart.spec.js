@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import React from 'react';
-import createComponent from '../createComponent';
+import {createComponent} from '../createComponent';
 import ColumnChart from '../../src/shared/components/ColumnChart';
 import BarChart from '../../src/shared/components/BarChart'
 
