@@ -1,8 +1,8 @@
 import {expect} from 'chai';
-import ArticleFormat from '../../src/server/formatters/Articles';
-import ESArticleResults from '../fixtures/data/article_results';
+import ArticleFormat from '../../src/server/formatters/Comparators';
+import ESArticleResults from '../fixtures/data/article_comparator_results';
 
-describe('Article Formatter', function() {
+describe('Comparator Formatter', function() {
   it('should be a function', function () {
     expect(ArticleFormat).to.be.a.function;
   });
@@ -30,37 +30,27 @@ describe('Article Formatter', function() {
         done();
       });
   });
-  it('should reject the promise with a MalformedArgumentsError if passed an object', function(done) {
-    ArticleFormat({})
+  it('should reject the promise with a MalformedArgumentsError if passed an array', function(done) {
+    ArticleFormat([])
       .catch((error) => {
         expect(error.name).to.equal('MalformedArgumentsError');
         done();
       });
   });
   it('should parse results correctly', function(done) {
-    ArticleFormat(ESArticleResults)
+    ArticleFormat(ESArticleResults[0])
       .then((data) => {
         expect(data.article).to.be.a.object;
         const props = [
-          'title',
-          'uuid',
-          'author',
-          'published',
-          'published_human',
-          'pageViews',
+          'comparator',
           'timeOnPage',
-          'socialReaders',
+          'page_views_over_time',
+          'category_total_view_count',
+          'category_article_count',
+          'category_average_view_count',
           'readTimes',
-          'genre',
-          'sections',
-          'topics',
-          'channels',
           'referrer_types',
-          'referrer_names',
-          'referrer_urls',
           'social_referrers',
-          'devices',
-          'countries',
           'regions',
           'is_last_page',
           'user_cohort',
