@@ -17,6 +17,7 @@ let config = {
     'article:devices' : true,
     'article:channels' : true,
     'article:referrers' : true,
+    'article:referrers:internalRefTypes' : true,
     'article:locations' : true,
     'article:bounceRate' : true,
     'article:who' : true,

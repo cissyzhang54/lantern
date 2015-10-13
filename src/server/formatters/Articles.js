@@ -50,7 +50,9 @@ export default function formatData(data) {
           is_last_page : formatAggregation('is_last_page', articleData),
           user_cohort : formatAggregation('user_cohort', articleData),
           rfv_cluster : formatAggregation('rfv_cluster', articleData),
-          is_first_visit : formatAggregation('is_first_visit', articleData)
+          is_first_visit : formatAggregation('is_first_visit', articleData),
+          internal_referrer_urls: formatFilteredAggregation('internal_referrer_urls', articleData, 'Not Available'),
+          internal_referrer_types: formatFilteredAggregation('internal_referrer_types', articleData)
         }
       };
 

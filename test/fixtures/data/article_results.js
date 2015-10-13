@@ -469,6 +469,68 @@ export default [{
           "doc_count": 7
         }
       ]
+    },
+    "internal_referrer_urls": {
+      "doc_count": 139,
+      "filtered": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+          {
+            "key": "",
+            "doc_count": 88
+          },
+          {
+            "key": "http://www.ft.com/intl/news-feed",
+            "doc_count": 16
+          },
+          {
+            "key": "http://ig.ft.com/widgets/series-promo-v2/promo.html",
+            "doc_count": 15
+          },
+          {
+            "key": "http://www.ft.com/intl/cms/s/0/7e77292e-6ce6-11e5-aca9-d87542bf8673.html",
+            "doc_count": 8
+          },
+          {
+            "key": "http://www.ft.com/intl/cms/s/0/ff2f22fc-65ba-11e5-a28b-50226830d644.html",
+            "doc_count": 4
+          },
+          {
+            "key": "http://search.ft.com/search?queryText=boundary+dam+CCS",
+            "doc_count": 2
+          },
+          {
+            "key": "http://search.ft.com/search?queryText=ccs+costs",
+            "doc_count": 2
+          },
+          {
+            "key": "http://www.ft.com/cms/s/0/0290c57e-62da-11e5-a28b-50226830d644.html",
+            "doc_count": 2
+          },
+          {
+            "key": "https://next.ft.com/stream/sectionsId/MTE4-U2VjdGlvbnM=",
+            "doc_count": 2
+          }
+        ]
+      }
+    },
+    "internal_referrer_types": {
+      "doc_count": 139,
+      "filtered": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+          {
+            "key": "story",
+            "doc_count": 113
+          },
+          {
+            "key": "",
+            "doc_count": 26
+          }
+        ]
+      }
     }
   }
 }, {

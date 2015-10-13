@@ -192,6 +192,7 @@ class ArticleView extends React.Component {
             data={data.article}
             comparatorData={comparatorData.article}
             renderReferrers={FeatureFlag.check('article:referrers')}
+            renderInternalRefTypes={FeatureFlag.check('article:referrers:internalRefTypes')}
           />
 
           <SectionWho

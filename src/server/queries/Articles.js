@@ -149,6 +149,35 @@ export default function PageViewsQuery(query) {
           }
         }
       },
+      internal_referrer_urls: {
+        filter : {
+          term : {
+            referrer_type : "internal"
+          }
+
+        },
+        aggs : {
+          filtered : {
+            terms : {
+              field : "referrer"
+            }
+          }
+        }
+      },
+      internal_referrer_types: {
+        filter : {
+          term : {
+            referrer_type : "internal"
+          }
+        },
+        aggs : {
+          filtered : {
+            terms : {
+              field : "referrer_name"
+            }
+          }
+        }
+      },
       social_referrers : {
         filter : {
           term : {
