@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import React from 'react';
-import createComponent from '../createComponent';
+import {createComponent} from '../createComponent';
 import SectionWhen from '../../src/shared/components/SectionWhen';
 import LineChart from '../../src/shared/components/LineChart';
 

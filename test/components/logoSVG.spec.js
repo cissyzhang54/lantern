@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import React from 'react';
-import createComponent from '../createComponent';
+import {createComponent} from '../createComponent';
 import LogoSVG from '../../src/shared/components/LogoSVG';
 
 describe ('Logo component', function() {

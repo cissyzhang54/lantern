@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import React from 'react';
-import createComponent from '../createComponent';
+import {createComponent} from '../createComponent';
 import Comparator from '../../src/shared/components/Comparator';
 import Tag from '../../src/shared/components/Tag';
 

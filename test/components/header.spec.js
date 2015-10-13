@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import React from 'react';
 import Header from '../../src/shared/components/Header';
-import createComponent from '../createComponent';
+import {createComponent} from '../createComponent';
 
 const TestUtils = React.addons.TestUtils;
 

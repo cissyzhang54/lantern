@@ -3,33 +3,79 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import FeatureFlag from '../utils/featureFlag';
 import Filter from './Filter';
+import connectToStores from 'alt/utils/connectToStores';
 
-const filters = [
-  {
-    name: 'Region',
-    label: 'Region',
-    options: ['UK', 'US', 'EUROPE', 'ASIA', 'MIDDLEEAST', 'INDIA'].sort()
-  },
-  {
-    name: 'Device',
-    label: 'Device',
-    options: ['Mobile Phone', 'Tablet', 'Desktop', 'Media Player', 'TV', 'Games Console', 'Set Top Box','eReader', 'Camera'].sort()
-  },
-  {
-    name: 'UserCohort',
-    label: 'User Cohort',
-    options: ['subscriber', 'anonymous', 'registered'].sort()
-  },
-  {
-    name: 'Referrers',
-    label: 'Referrers',
-    options: ['search', 'partner', 'social-network'].sort()
+import FilterStore from '../stores/FilterStore.js';
+
+const DEFAULT_STATE = {
+
+  filters : [
+    {
+      name: 'Region',
+      label: 'Region',
+      options: []
+    },
+    {
+      name: 'Device',
+      label: 'Device',
+      options: []
+    },
+    {
+      name: 'UserCohort',
+      label: 'User Cohort',
+      options: []
+    },
+    {
+      name: 'Referrers',
+      label: 'Referrers',
+      options: []
+    }
+  ]
+};
+
+class Filters extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.state = DEFAULT_STATE;
   }
-]
 
-export default class Filters extends React.Component {
+  static getStores() {
+    return [FilterStore];
+  }
+
+  static getPropsFromStores() {
+    let filterState = FilterStore.getState();
+
+    return {
+      filters : [
+        {
+          name: 'Region',
+          label: 'Region',
+          options: filterState.regions
+        },
+        {
+          name: 'Device',
+          label: 'Device',
+          options: filterState.devices
+        },
+        {
+          name: 'UserCohort',
+          label: 'User Cohort',
+          options: filterState.cohort
+        },
+        {
+          name: 'Referrers',
+          label: 'Referrers',
+          options: filterState.referrers
+        }
+      ]
+    };
+
+  }
+
   render() {
-    var filterDropDowns = filters.map((f, i) => {
+    let filterDropDowns = this.props.filters.map((f, i) => {
 
       if (!this.props['render' + f.name]){
         return {}
@@ -62,3 +108,5 @@ Filters.defaultProps = {
   onChange: _ => {console.log(_)}
 }
 
+
+export default connectToStores(Filters);

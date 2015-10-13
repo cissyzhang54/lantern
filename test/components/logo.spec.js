@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import React from 'react';
-import createComponent from '../createComponent';
+import {createComponent} from '../createComponent';
 import Logo from '../../src/shared/components/Logo';
 
 describe ('Loading component', function() {

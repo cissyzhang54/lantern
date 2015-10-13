@@ -1,6 +1,6 @@
 import {expect} from 'chai';
 import React from 'react';
-import createComponent from '../createComponent';
+import {createComponent} from '../createComponent';
 import Tag from '../../src/shared/components/Tag';
 
 describe ('Tag component', function() {
