@@ -35,7 +35,6 @@ export default function formatData(data) {
       };
 
       resolve(results);
-
     } catch (e) {
       let error = new Error(e);
       error.name = 'DataParsingError';
