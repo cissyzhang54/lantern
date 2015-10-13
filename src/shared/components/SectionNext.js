@@ -2,46 +2,7 @@ import React from 'react/addons';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import BarChart from "../components/BarChart";
-
-const articleLabel = 'Users'
-const articleColumn = 'bounce'
-
-function mapTypes(name, data){
-  return {
-    [name]: data[0],
-    [articleLabel]: data[1],
-  };
-}
-
-function merge(name, data, comparatorData, comparatorLabel){
-  let merged = data.map((d) => {
-    let i=0
-    while (comparatorData.length && i < comparatorData.length) {
-      var cData = comparatorData[i]
-      if (cData[name] === d[name]) {
-        d[comparatorLabel] = cData[articleLabel]
-        comparatorData.splice(i, 1);
-        break
-      } else {
-        i++
-      }
-    }
-    return d;
-  });
-  comparatorData.forEach(function(cData) {
-    merged.push({
-      [comparatorLabel] : cData[articleLabel],
-      [name]: cData[name],
-      [articleLabel]: 0
-    });
-  })
-  return merged
-}
-
-function renameDataKey(data){
-  let label = data[0] === "T" ? 'Exited FT.com' : 'Stayed on FT.com';
-  return mapTypes(articleColumn, [label, data[1]])
-}
+import FormatData from "../utils/formatData";
 
 export default class SectionWhere extends React.Component {
 
@@ -53,18 +14,8 @@ export default class SectionWhere extends React.Component {
     if (!this.props.renderBounceRate){
       return <div></div>
     }
-
-    let data = this.props.data;
-    let comparatorData = this.props.comparatorData;
-    let comparatorBounce, comparatorLabel;
-    comparatorLabel = comparatorData.comparator + ' Average';
-    let keys = [articleLabel]
-    let bounce = data.is_last_page.map(renameDataKey);
-    if (comparatorData.is_last_page){
-      comparatorBounce = comparatorData.is_last_page.map(renameDataKey)
-      bounce = merge(articleColumn, bounce, comparatorBounce, comparatorLabel)
-      keys.push(comparatorLabel)
-    }
+    let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
+    let [metricData, id, keys] = dataFormatter.getMetric('is_last_page', 'Views', 'Exited FT.com', 'Stayed on FT.com')
 
     return (<div>
       <Row>
@@ -76,9 +27,9 @@ export default class SectionWhere extends React.Component {
         <Col xs={12} sm={6}>
           <h5>What was the Bounce-Rate?</h5>
           <BarChart
-            data={bounce}
+            data={metricData}
             keys={keys}
-            category={articleColumn}
+            category={id}
             yLabel="Users"
             xLabel=""
             />

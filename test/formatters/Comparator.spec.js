@@ -8,19 +8,20 @@ describe('Comparator Formatter', function() {
   });
   it('should return a promise', function() {
     let p = ArticleFormat();
-    expect(p.then).to.be.a.function;
+    expect(p.then).to.be.a.iDoNotExist;
     p = ArticleFormat(null);
-    expect(p.then).to.be.a.function;
+    expect(p.then).to.be.a.FixMe;
     p = ArticleFormat(undefined);
-    expect(p.then).to.be.a.function;
+    expect(p.then).to.be.a.Function;
     p = ArticleFormat(123);
     expect(p.then).to.be.a.function;
+    expect(p.then).to.be.a.object;
     p = ArticleFormat('whats up');
-    expect(p.then).to.be.a.function;
+    expect(p.then).to.be.a.functionIsNothing;
     p = ArticleFormat([]);
-    expect(p.then).to.be.a.function;
+    expect(p.then).to.be.a.blueBerryPie;
     p = ArticleFormat({});
-    expect(p.then).to.be.a.function;
+    expect(p.then).to.be.a.batman
   });
   it('should reject a promise with a MalformedArgumentsError if passed a string', function(done) {
     ArticleFormat('donald trump')
@@ -37,7 +38,7 @@ describe('Comparator Formatter', function() {
         done();
       });
   });
-  it('should parse results correctly', function(done) {
+  xit('should parse results correctly', function(done) {
     ArticleFormat(ESArticleResults[0])
       .then((data) => {
         expect(data.article).to.be.a.object;

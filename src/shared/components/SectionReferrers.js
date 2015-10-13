@@ -3,41 +3,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import BarChart from '../components/BarChart.js';
 import Table from '../components/Table';
-
-const referrerLabel = 'Views'
-const referrerColumn = 'referrer'
-
-function mapTypes (name, data){
-  return {
-    [name]: data[0],
-    [referrerLabel]: data[1]
-  };
-}
-
-function merge(name, data, comparatorData, comparatorLabel) {
-  let merged = data.map((d) => {
-    let i = 0
-    while (comparatorData.length && i < comparatorData.length) {
-      var cData = comparatorData[i]
-      if (cData[name] === d[name]) {
-        d[comparatorLabel] = cData[referrerLabel]
-        comparatorData.splice(i, 1);
-        break
-      } else {
-        i++
-      }
-    }
-    return d;
-  });
-  comparatorData.forEach(function (cData) {
-    merged.push({
-      [comparatorLabel]: cData[referrerLabel],
-      [name]: cData[name],
-      [referrerLabel]: 0
-    });
-  })
-  return merged
-}
+import FormatData from "../utils/formatData";
 
 function getReferrerUrls(data, i) {
   const maxLen = 60;
@@ -47,7 +13,10 @@ function getReferrerUrls(data, i) {
       {displayString}
     </a>
   );
-  return mapTypes(referrerColumn, [url, data[1]])
+  return {
+    'referrer': url,
+    'Views': data[1]
+  }
 }
 
 export default class SectionReferrers extends React.Component {
@@ -61,41 +30,19 @@ export default class SectionReferrers extends React.Component {
       return <div></div>
     }
 
-    let data = this.props.data;
-    let comparatorData = this.props.comparatorData;
-    let comparatorLabel = comparatorData.comparator + ' Average';
-    let keys = [referrerLabel]
-    if (comparatorData.comparator) {
-      keys.push(comparatorLabel)
-    }
+    let refUrls = this.props.data.referrer_urls.map(getReferrerUrls);
+    let internalRefUrls = this.props.data.internal_referrer_urls.map(getReferrerUrls);
+    let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
+    let [refData, refID, refKeys] = dataFormatter.getMetric('referrer_types', 'Views')
+    let [socialData, socialID, socialKeys] = dataFormatter.getMetric('social_referrers', 'Views')
+    let [internalData, internalID, internalKeys] = dataFormatter.getMetric('internal_referrer_types', 'Views')
 
-    let refUrls = data.referrer_urls.map(getReferrerUrls);
-
-    let refs = data.referrer_types.map((data) => mapTypes(referrerColumn, data));
-    if (comparatorData.referrer_types) {
-      let comparatorRefTypes = comparatorData.referrer_types.map((data) => mapTypes(referrerColumn, data));
-      refs = merge(referrerColumn, refs, comparatorRefTypes, comparatorLabel)
-    }
-
-    let socialRefs = data.social_referrers.sort().map((data) => mapTypes(referrerColumn, data));
-    if (comparatorData.social_referrers) {
-      let comparatorSocial = comparatorData.social_referrers.map((data) => mapTypes(referrerColumn, data));
-      socialRefs = merge(referrerColumn, socialRefs, comparatorSocial, comparatorLabel)
-    }
-
-    let internalRefUrls = data.internal_referrer_urls.map(getReferrerUrls);
-
-    let internalRefTypes = data.internal_referrer_types.map((data) => mapTypes('referrer', data));
-    if (comparatorData.internal_referrer_types) {
-      let comparatorRefTypes = comparatorData.internal_referrer_types.map((data) => mapTypes(referrerColumn, data));
-      internalRefTypes = merge(referrerColumn, internalRefTypes, comparatorRefTypes, comparatorLabel)
-    }
     let internalRefTypeChart = this.props.renderInternalRefTypes ? <Col xs={12} sm={6}>
       <h6> Internal Referrer Types</h6>
       <BarChart
-        data={internalRefTypes}
-        keys={keys}
-        category={'referrer'}
+        data={internalData}
+        keys={internalKeys}
+        category={internalID}
         yLabel="Page Views"
         xLabel="Referrer" />
       </Col> : {};
@@ -117,17 +64,17 @@ export default class SectionReferrers extends React.Component {
         <Col xs={12} sm={6}>
           <h6>Referrer Types</h6>
           <BarChart
-            data={refs}
-            keys={keys}
-            category={referrerColumn}
+            data={refData}
+            keys={refKeys}
+            category={refID}
             yLabel="Page Views"
             xLabel="Referrer"
             />
           <h6>Social Networks</h6>
           <BarChart
-            data={socialRefs}
-            keys={keys}
-            category={referrerColumn}
+            data={socialData}
+            keys={socialKeys}
+            category={socialID}
             yLabel="Page Views"
             xLabel="Social Network"
             />
