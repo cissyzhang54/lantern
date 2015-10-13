@@ -40,10 +40,10 @@ export default function formatData(data) {
           sections: metaData.sections,
           topics: metaData.topics,
           channels: formatAggregation('channels', articleData),
-          referrer_types: formatFilteredAggregation('referrer_types', articleData),
+          referrer_types: filterOutTerms(formatFilteredAggregation('referrer_types', articleData), ['search', 'unknown', 'partner', 'social-network', 'email']),
           referrer_names: formatFilteredAggregation('referrer_names', articleData),
           referrer_urls: formatFilteredAggregation('referrer_urls', articleData, 'Not Available'),
-          social_referrers: formatFilteredAggregation('social_referrers', articleData),
+          social_referrers: filterOutTerms(formatFilteredAggregation('social_referrers', articleData), ['Facebook', 'Twitter', 'Linked-In']),
           devices : formatAggregation('devices', articleData),
           countries : formatAggregation('countries', articleData),
           regions : formatAggregation('regions', articleData),
@@ -65,7 +65,6 @@ export default function formatData(data) {
       reject(error);
     }
   });
-}
 
 function formatPublishDate(date) {
   return moment(date).fromNow();
@@ -87,3 +86,15 @@ function format(agg, replacement) {
     ];
   });
 }
+
+// In place of min doc count in ES for specific fields
+// filter the specific always required fields required here
+function filterOutTerms (data, terms) {
+  let buckets = [];
+  data.forEach(function(value){
+    if(terms.indexOf(value[0]) >= 0 || value[1] > 0){
+      buckets.push(value)
+    }
+  });
+  return buckets;
+}}

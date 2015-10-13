@@ -37,11 +37,12 @@ const STYLES = {
     justifyContent: 'center'
   },
   UPDATING : {
-    position: 'absolute',
+    position: 'fixed',
     top: '2em',
     left: '40%',
     width: '20%',
     textAlign: 'center',
+    zIndex: 2,
   }
 };
 const MESSAGES = {

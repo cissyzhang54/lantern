@@ -20,7 +20,7 @@ export default class SectionWhere extends React.Component {
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
     let [regionData, regionID, regionKeys] = dataFormatter.getMetric('regions', 'Views')
 
-    return (<div>
+    return (<div className='sectionWhere'>
       <Row>
         <Col xs={12}>
           <h4>Where in the world was the article read?</h4>

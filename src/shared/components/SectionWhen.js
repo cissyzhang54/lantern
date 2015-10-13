@@ -19,7 +19,7 @@ export default class SectionWhen extends React.Component {
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
     let [timeData, timeID, timeKeys] = dataFormatter.getMetric('readTimes', 'Value')
 
-    return (<div>
+    return (<div className='sectionWhen'>
       <Row>
         <Col xs={12}>
           <h4>When did users access the article?</h4>

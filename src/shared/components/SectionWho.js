@@ -22,7 +22,7 @@ export default class SectionWho extends React.Component {
     let [cohortData, cohortID, cohortKeys] = dataFormatter.getMetric('user_cohort', 'Views')
 
     return (
-      <div>
+      <div className='sectionWho'>
         <Row>
           <Col xs={12}>
             <h4>Who are the users?</h4>

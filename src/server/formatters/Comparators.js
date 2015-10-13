@@ -24,8 +24,8 @@ export default function formatData(data) {
           category_article_count: data.aggregations.distinct_articles.value,
           category_average_view_count: (data.aggregations.page_view_total_count.value / data.aggregations.distinct_articles.value) | 0,
           readTimes: formatAggregation('page_views_over_time', data),
-          referrer_types: formatFilteredAggregation('referrer_types', data),
-          social_referrers: formatFilteredAggregation('social_referrers', data),
+          referrer_types: filterOutTerms(formatFilteredAggregation('referrer_types', data), ['search', 'unknown', 'partner', 'social-network', 'email']),
+          social_referrers: filterOutTerms(formatFilteredAggregation('social_referrers', data), ['Facebook', 'Twitter', 'Linked-In']),
           regions : formatAggregation('regions', data),
           is_last_page : formatAggregation('is_last_page', data),
           user_cohort : formatAggregation('user_cohort', data),
@@ -60,4 +60,16 @@ function format(data, agg, replacement) {
       (d.doc_count / data.aggregations.distinct_articles.value) | 0
     ];
   });
+}
+
+// In place of min doc count in ES for specific fields
+// filter the specific always required fields required here
+function filterOutTerms (data, terms) {
+  let buckets = [];
+  data.forEach(function(value){
+    if(terms.indexOf(value[0]) >= 0 || value[1] > 0){
+      buckets.push(value)
+    }
+  });
+  return buckets;
 }

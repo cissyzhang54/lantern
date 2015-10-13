@@ -31,7 +31,7 @@ export default class SectionHow extends React.Component {
         />
     </Col> : {}
 
-    return (<div>
+    return (<div className='sectionHow'>
       <Row>
         <Col xs={12}>
           <h4>How did users access the article?</h4>

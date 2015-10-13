@@ -123,7 +123,7 @@ export default class LineChart extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className='lineChart'>
         <div
           ref='chartContainer'
           id="chartContainer"

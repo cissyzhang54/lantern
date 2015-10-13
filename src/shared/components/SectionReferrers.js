@@ -47,7 +47,7 @@ export default class SectionReferrers extends React.Component {
         xLabel="Referrer" />
       </Col> : {};
 
-    return (<div>
+    return (<div className='sectionReferrers'>
 
       <Row>
         <Col xs={12}>
