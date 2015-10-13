@@ -31,6 +31,7 @@ export default function formatData(data) {
           user_cohort : formatAggregation('user_cohort', data),
           rfv_cluster : formatAggregation('rfv_cluster', data),
           is_first_visit : formatAggregation('is_first_visit', data),
+          internal_referrer_types: formatFilteredAggregation('internal_referrer_types', data)
         }
       };
 

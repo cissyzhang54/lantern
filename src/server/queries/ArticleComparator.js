@@ -124,7 +124,20 @@ export default function ComparatorPageViewsQuery(query) {
       "regions" : {
         "terms": {
           "field": "geo_region"
-
+        }
+      },
+      internal_referrer_types: {
+        filter : {
+          term : {
+            referrer_type : "internal"
+          }
+        },
+        aggs : {
+          filtered : {
+            terms : {
+              field : "referrer_name"
+            }
+          }
         }
       }
     }

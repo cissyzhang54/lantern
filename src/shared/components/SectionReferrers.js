@@ -83,6 +83,23 @@ export default class SectionReferrers extends React.Component {
       socialRefs = merge(referrerColumn, socialRefs, comparatorSocial, comparatorLabel)
     }
 
+    let internalRefUrls = data.internal_referrer_urls.map(getReferrerUrls);
+
+    let internalRefTypes = data.internal_referrer_types.map((data) => mapTypes('referrer', data));
+    if (comparatorData.internal_referrer_types) {
+      let comparatorRefTypes = comparatorData.internal_referrer_types.map((data) => mapTypes(referrerColumn, data));
+      internalRefTypes = merge(referrerColumn, internalRefTypes, comparatorRefTypes, comparatorLabel)
+    }
+    let internalRefTypeChart = this.props.renderInternalRefTypes ? <Col xs={12} sm={6}>
+      <h6> Internal Referrer Types</h6>
+      <BarChart
+        data={internalRefTypes}
+        keys={keys}
+        category={'referrer'}
+        yLabel="Page Views"
+        xLabel="Referrer" />
+      </Col> : {};
+
     return (<div>
 
       <Row>
@@ -123,7 +140,23 @@ export default class SectionReferrers extends React.Component {
             />
         </Col>
       </Row>
-    </div>);
 
+      <Row>
+        <Col xs={12}>
+          <h5>Internal Sources</h5>
+        </Col>
+      </Row>
+
+      <Row>
+        {internalRefTypeChart}
+        <Col xs={12} sm={6}>
+          <h6>Top Internal URLs</h6>
+          <Table
+            headers={['Referrer', 'Views']}
+            rows={internalRefUrls}
+            />
+        </Col>
+      </Row>
+    </div>);
   }
 }

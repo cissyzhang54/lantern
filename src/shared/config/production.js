@@ -11,6 +11,7 @@ export default {
     'article:readTimes' : true,
     'article:channels' : true,
     'article:referrers' : true,
+    'article:referrers:internalRefTypes' : false,
     'article:devices' : true,
     'article:locations' : true,
     'article:bounceRate' : true,
