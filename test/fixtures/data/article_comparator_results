@@ -139,6 +139,19 @@ export default [{
     "avg_time_on_page": {
       "value": 95.13953488372093
     },
+    "internal_referrer_types": {
+      "doc_count": 1144,
+      "filtered": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+          {
+            "key": "",
+            "doc_count": 1144
+          }
+        ]
+      }
+    },
     "is_first_visit": {
       "doc_count_error_upper_bound": 0,
       "sum_other_doc_count": 0,

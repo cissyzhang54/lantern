@@ -55,7 +55,8 @@ describe('Comparator Formatter', function() {
           'is_last_page',
           'user_cohort',
           'rfv_cluster',
-          'is_first_visit'
+          'is_first_visit',
+          'internal_referrer_types'
         ];
         for (let i = 0; i < props.length; i++){
           expect(data.article.hasOwnProperty(props[i])).to.be.truthy;
