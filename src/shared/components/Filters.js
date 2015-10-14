@@ -93,7 +93,7 @@ class Filters extends React.Component {
     });
 
     return (
-      <div>
+      <div className='filters'>
         {filterDropDowns}
       </div>
     );

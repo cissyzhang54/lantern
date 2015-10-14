@@ -98,9 +98,12 @@ input, select {
 /*App Wide CSS*/
 body{
   font-family: 'Work Sans', sans-serif;
-  max-width: 1024px;
+  max-width: 970px;
   margin: 0 auto;
   color: #333;
+}
+#chartContainer {
+  min-height: 320px;
 }
 #chartContainer svg {
   font-family: 'Work Sans', sans-serif;
@@ -119,6 +122,12 @@ img {
 #react-app {
   margin: 10px 1.575%;
 }
+.form-group {
+  margin-bottom: 6px;
+}
+.comparatorTag {
+  margin-right: 15px;
+}
 
 @media (max-width: 500px) {
   body{
@@ -133,7 +142,7 @@ img {
 }
 
 
-/*#  nav stuff  */
+/* nav stuff  */
 nav .active{
   color: #555;
   background-color: #e7e7e7;

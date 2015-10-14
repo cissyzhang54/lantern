@@ -8,11 +8,8 @@ import QueryActions from '../actions/QueryActions';
 
 const styles = {
   modifierWrapper : {
-    'padding': '15px 0',
+    'padding': '10px 0 15px 0',
     'borderBottom': '1px solid #ccc'
-  },
-  modiferRow : {
-    marginBottom: "15px"
   },
   title : {
     lineHeight: '2em'
@@ -45,11 +42,10 @@ export default class Modifier extends React.Component {
 
   render() {
     return (
-      <div style={styles.modifierWrapper}>
-
-        <Row style={styles.modiferRow}>
+      <div className='sectionModifier' style={styles.modifierWrapper}>
+        <Row>
           <Col sm={2} xs={12}>
-            <strong style={styles.title}>Comparators:</strong>
+            <span style={styles.title}>Comparators:</span>
           </Col>
           <Col sm={10} xs={12}>
             <Comparator
@@ -62,7 +58,7 @@ export default class Modifier extends React.Component {
 
         <Row >
           <Col sm={2} xs={12}>
-            <strong style={styles.title}>Filters:</strong>
+            <span style={styles.title}>Filters:</span>
           </Col>
           <Filters
             renderDevice={this.props.renderDevice}
@@ -74,7 +70,7 @@ export default class Modifier extends React.Component {
 
         <Row>
           <Col sm={2} xs={12}>
-            <strong style={styles.title}>Date Range:</strong>
+            <span style={styles.title}>Date Range:</span>
           </Col>
           <Col sm={4} xs={12}>
             <DateRange

@@ -81,7 +81,8 @@ export default function ComparatorPageViewsQuery(query) {
         aggs: {
           filtered : {
             terms: {
-              field: "referrer_type"
+              field: "referrer_type",
+              min_doc_count : 0
             }
           }
         }
@@ -95,19 +96,23 @@ export default function ComparatorPageViewsQuery(query) {
         aggs: {
           filtered: {
             terms : {
-              field : 'referrer_name'
+              field : 'referrer_name',
+              min_doc_count : 0,
+              size: 200000000
             }
           }
         }
       },
       is_last_page: {
         terms: {
-          field: 'is_last_page'
+          field: 'is_last_page',
+          min_doc_count : 0
         }
       },
       user_cohort : {
         terms : {
-          field : 'user_cohort'
+          field : 'user_cohort',
+          min_doc_count : 0
         }
       },
       rfv_cluster: {
@@ -118,7 +123,8 @@ export default function ComparatorPageViewsQuery(query) {
       },
       is_first_visit : {
         terms: {
-          field: "is_first_visit"
+          field: "is_first_visit",
+          min_doc_count : 0
         }
       },
       "regions" : {

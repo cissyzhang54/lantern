@@ -17,7 +17,7 @@ export default class SectionWhere extends React.Component {
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
     let [metricData, id, keys] = dataFormatter.getMetric('is_last_page', 'Views', 'Exited FT.com', 'Stayed on FT.com')
 
-    return (<div>
+    return (<div className='sectionNext'>
       <Row>
         <Col xs={12}>
           <h4>Where did they go next?</h4>

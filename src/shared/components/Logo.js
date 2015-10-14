@@ -32,7 +32,7 @@ export default class Logo extends React.Component {
     let message = messages.map(function(str){
       return <div style={style}>{str}</div>
     });
-    return (<div>
+    return (<div className='logo'>
       <div className="logo-container">
         <div className={classNames.join(' ')}>
           <div className="lantern__circle">

@@ -4,7 +4,6 @@ import { Link } from "react-router";
 import ObjectAssignDeep from '../utils/ObjectAssignDeep';
 
 const style = {
-  padding: "0px 10px 0 0",
   display: "inline-block",
   cursor: "hand",
   fontSize: '14px',
@@ -24,7 +23,7 @@ export default class Tag extends React.Component {
     let className = this.props.selected ? 'selected' : '';
     return (
       <Link style={this.props.selected ? ObjectAssignDeep(selected, style) : style}
-            className={className}
+            className={className + ' ' + this.props.className}
             to={link}
             onClick={this.props.onClick}>
           <Glyphicon glyph="tag" style={tagStyle} />{this.props.name}

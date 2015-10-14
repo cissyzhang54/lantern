@@ -67,7 +67,7 @@ export default class SectionHeadlineStats extends React.Component {
     let pageViews = renderMetric('pageViews', data.pageViews, comparatorData.comparator, comparatorData.category_average_view_count)
     let socialUsers = renderMetric('socialUsers', data.socialReaders)
 
-    return ( <Row >
+    return ( <Row className='sectionHeadlineStats' >
       <Col xs={12} sm={3} >
         <Col xs={4} sm={12} >
           {wordCount}
