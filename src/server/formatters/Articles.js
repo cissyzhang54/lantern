@@ -1,5 +1,6 @@
 import assert from 'assert';
 import moment from 'moment';
+import formatAuthors from '../../shared/utils/formatAuthors';
 
 export default function formatData(data) {
   try {
@@ -20,7 +21,6 @@ export default function formatData(data) {
     error.data = data;
     return Promise.reject(error);
   }
-
 
   return new Promise((resolve, reject) => {
     try {
@@ -65,22 +65,7 @@ export default function formatData(data) {
       reject(error);
     }
   });
-
 }
-
-
-function formatAuthors(authors) {
-  if (authors.length) {
-    return 'Anonymous';
-  }
-
-  let lastAuthor = authors.pop();
-  if (!authors.length) {
-    return lastAuthor;
-  }
-  return authors.join(", ") + ' and ' + lastAuthor;
-}
-
 
 function formatPublishDate(date) {
   return moment(date).fromNow();
