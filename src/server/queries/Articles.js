@@ -195,19 +195,20 @@ export default function PageViewsQuery(query) {
           }
         }
       },
-      "devices" : {
-        "terms" : {
-          "field": "device_type"
+      devices : {
+        terms : {
+          field: "device_type"
         }
       },
-      "regions" : {
-        "terms" : {
-          "field" : "geo_region"
+      regions : {
+        terms : {
+          field : "geo_region"
         }
       },
-      "countries": {
-        "terms" : {
-          "field" : "geo_country"
+      countries: {
+        terms : {
+          field : "geo_country",
+          size: 200000000
         }
       },
       is_last_page: {
