@@ -45,13 +45,12 @@ export default class formatData {
   }
 
   getMetric(metricName, metricLabel, tLabel, fLabel){
-    let self = this
     this.metricLabel = metricLabel
-    let metricData = this.DATA[metricName].map(d => self.mapTypes(d, tLabel, fLabel))
+    let metricData = this.DATA[metricName].map(d => this.mapTypes(d, tLabel, fLabel))
     let keys = [metricLabel]
     if (this.COMPATATORDATA && this.COMPATATORDATA[metricName]){
       let comparatorLabel = `'${this.COMPATATORDATA.comparator}' Average ${metricLabel}`;
-      let comparatorData = this.COMPATATORDATA[metricName].map(d => self.mapTypes(d, tLabel, fLabel))
+      let comparatorData = this.COMPATATORDATA[metricName].map(d => this.mapTypes(d, tLabel, fLabel))
       metricData = this.merge(metricData, comparatorData, comparatorLabel)
       keys.push(comparatorLabel)
     }
