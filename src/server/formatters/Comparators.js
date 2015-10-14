@@ -29,7 +29,7 @@ export default function formatData(data) {
           regions : formatAggregation('regions', data),
           is_last_page : formatAggregation('is_last_page', data),
           user_cohort : formatAggregation('user_cohort', data),
-          rfv_cluster : formatAggregation('rfv_cluster', data),
+          rfv_cluster : formatAggregation('rfv_cluster', data).sort(rfvSortingFunction),
           is_first_visit : formatAggregation('is_first_visit', data),
           internal_referrer_types: formatFilteredAggregation('internal_referrer_types', data)
         }
@@ -60,4 +60,10 @@ function format(data, agg, replacement) {
       (d.doc_count / data.aggregations.distinct_articles.value) | 0
     ];
   });
+}
+
+function rfvSortingFunction(a, b) {
+  a = a[0].split('.')[0];
+  b = b[0].split('.')[1];
+  return a - b;
 }
