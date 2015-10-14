@@ -46,7 +46,6 @@ const STYLES = {
 };
 const MESSAGES = {
   PLACEHOLDER : (<div></div>),
-  ERROR_404 : (<div><Error404/></div>),
   LOADING : (
     <div style={STYLES.LOADING}>
       <Logo message="Loading Article..." loading />
@@ -134,7 +133,21 @@ class ArticleView extends React.Component {
 
   render() {
     if (this.props.errorMessage) {
-      return MESSAGES.ERROR_404;
+      return (<div>
+          <Error404
+            title="Lantern - Article Not Found"
+            message={[
+              'Ooops!',
+              'We could not find the aricle you requested',
+              'Perhaps the article was published less than 24 hours ago?'
+              ]}
+            extra={
+              <pre>
+                {this.props.errorMessage}
+              </pre>
+            }
+          />
+        </div>);
     } else if (!this.props.data) {
       return MESSAGES.LOADING;
     }

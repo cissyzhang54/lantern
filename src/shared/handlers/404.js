@@ -17,20 +17,40 @@ class Error404View extends React.Component {
   }
 
   render() {
-    let title = 'Lantern - Page Not Found'
-    let message =["Ooops!","We could not find the article."," Perhaps the article was published less than 24 hours ago?"]
+    let title = this.props.title;
+    let message = this.props.message;
+    let extraMessage = this.props.extra;
+
     return (<DocumentTitle title={title}>
       <div>
         <main>
           <Row>
             <Col xs={12}  >
               <Logo message={message} error />
-              </Col>
+            </Col>
+          </Row>
+          <Row
+            style={{
+              fontSize: '0.75em',
+              marginTop: '40px'
+            }}>
+            <Col xs={12} >
+              { extraMessage }
+            </Col>
           </Row>
         </main>
       </div>
     </DocumentTitle>);
   }
 }
+
+Error404View.defaultProps = {
+   title : 'Lantern - Page Not Found',
+   message : [
+     "Ooops!",
+     "We could not find the page you requested."
+   ],
+   extra: ''
+};
 
 export default Error404View;
