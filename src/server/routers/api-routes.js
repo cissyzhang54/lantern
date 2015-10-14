@@ -28,12 +28,8 @@ function getCategoryData(req, res, next) {
   switch (category) {
     case 'articles':
       esClient.runArticleQuery(query)
-        .then((response) => {
-          return ArticleDataFormater(response);
-        })
-        .then((formattedData) => {
-          res.json(formattedData);
-        })
+        .then((response) => ArticleDataFormater(response))
+        .then((formattedData) => res.json(formattedData))
         .catch((error) => {
           res.status(ErrorHandler.statusCode(error.name))
           next(error);

@@ -4,6 +4,7 @@ import Link from 'react-router/lib/components/Link';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import moment from 'moment';
+import formatAuthors from '../utils/formatAuthors';
 
 export default class SearchItem extends React.Component {
 
@@ -45,20 +46,6 @@ export default class SearchItem extends React.Component {
       </Link>
     );
   }
-}
-
-function formatAuthors(authors) {
-  if (!authors.length) {
-    return 'Unknown author';
-  }
-  // copy the array so we don't mess
-  // with the original
-  authors = authors.slice();
-  let lastAuthor = authors.pop();
-  if (!authors.length) {
-    return lastAuthor;
-  }
-  return authors.join(", ") + ' and ' + lastAuthor;
 }
 
 function formatDate(date) {
