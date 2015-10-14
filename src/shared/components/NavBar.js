@@ -13,7 +13,7 @@ var controllerStyles = {
       borderColor: '#e7e7e7',
       borderRadius: '4px',
       position: 'relative',
-      marginBottom: '20px'
+      marginBottom: '0px'
     },
     navbar: {
       paddingLeft:0,

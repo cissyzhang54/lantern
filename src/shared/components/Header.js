@@ -20,8 +20,7 @@ const componentStyles = {
       margin: 0
     },
     header : {
-      'padding': '10px 0',
-      'borderBottom': '1px solid #ccc'
+      'padding': '15px 0',
     },
     tagStyle : {
       fontSize: '15px',
