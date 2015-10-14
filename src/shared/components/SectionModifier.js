@@ -8,7 +8,7 @@ import QueryActions from '../actions/QueryActions';
 
 const styles = {
   modifierWrapper : {
-    'padding': '10px 0 15px 0',
+    'padding': '10px 15px 15px 15px',
     'borderBottom': '1px solid #ccc'
   },
   title : {

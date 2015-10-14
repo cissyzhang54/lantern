@@ -161,16 +161,7 @@ class ArticleView extends React.Component {
     let title = (data) ? 'Lantern - ' + data.article.title : '';
 
     return (<DocumentTitle title={title}>
-      <Col xs={12}>
-
-        {updating}
-
-        <Header
-          title={data.article.title}
-          author={'By: ' + data.article.author}
-          published={'Published: ' + data.article.published_human}
-          uuid={data.article.uuid}
-          />
+      <div>
 
         <SectionModifier
           data={data.article}
@@ -181,55 +172,67 @@ class ArticleView extends React.Component {
           renderUserCohort={FeatureFlag.check('article:modifier:filters:UserCohort')}
           query={this.props.query}
           uuid={this.props.params.uuid}
-        />
-
-        <main >
-
-          <SectionHeadlineStats
-            data={data.article}
-            comparatorData={comparatorData.article}
           />
 
-          <SectionWhen
-            data={data.article}
-            comparatorData={comparatorData.article}
-            renderReadTimes={FeatureFlag.check('article:readTimes')}
-          />
+        <Col xs={12}>
 
-          <SectionNext
-            data={data.article}
-            comparatorData={comparatorData.article}
-            renderBounceRate={FeatureFlag.check('article:bounceRate')}
-          />
+          {updating}
 
-          <SectionReferrers
-            data={data.article}
-            comparatorData={comparatorData.article}
-            renderReferrers={FeatureFlag.check('article:referrers')}
-            renderInternalRefTypes={FeatureFlag.check('article:referrers:internalRefTypes')}
-          />
+          <Header
+            title={data.article.title}
+            author={'By: ' + data.article.author}
+            published={'Published: ' + data.article.published_human}
+            uuid={data.article.uuid}
+            />
 
-          <SectionWho
-            data={data.article}
-            comparatorData={comparatorData.article}
-            renderWho={FeatureFlag.check('article:who')}
-          />
+          <main >
 
-          <SectionWhere
-            data={data.article}
-            comparatorData={comparatorData.article}
-            renderWhere={FeatureFlag.check('article:where')}
-          />
+            <SectionHeadlineStats
+              data={data.article}
+              comparatorData={comparatorData.article}
+              />
 
-          <SectionHow
-            data={data.article}
-            comparatorData={comparatorData.article}
-            renderDevices={FeatureFlag.check('article:devices')}
-            renderChannels={FeatureFlag.check('article:channels')}
-          />
+            <SectionWhen
+              data={data.article}
+              comparatorData={comparatorData.article}
+              renderReadTimes={FeatureFlag.check('article:readTimes')}
+              />
 
-        </main>
-      </Col>
+            <SectionNext
+              data={data.article}
+              comparatorData={comparatorData.article}
+              renderBounceRate={FeatureFlag.check('article:bounceRate')}
+              />
+
+            <SectionReferrers
+              data={data.article}
+              comparatorData={comparatorData.article}
+              renderReferrers={FeatureFlag.check('article:referrers')}
+              renderInternalRefTypes={FeatureFlag.check('article:referrers:internalRefTypes')}
+              />
+
+            <SectionWho
+              data={data.article}
+              comparatorData={comparatorData.article}
+              renderWho={FeatureFlag.check('article:who')}
+              />
+
+            <SectionWhere
+              data={data.article}
+              comparatorData={comparatorData.article}
+              renderWhere={FeatureFlag.check('article:where')}
+              />
+
+            <SectionHow
+              data={data.article}
+              comparatorData={comparatorData.article}
+              renderDevices={FeatureFlag.check('article:devices')}
+              renderChannels={FeatureFlag.check('article:channels')}
+              />
+
+          </main>
+        </Col>
+      </div>
     </DocumentTitle>);
   }
 }
