@@ -29,8 +29,9 @@ var componentStyles = {
     metric: {
       padding: 0,
       margin: '0 0 2px 0',
-      fontSize: '1.5em'
-    },
+      fontSize: '1.5em',
+      transform: 'translateZ(0)'
+},
     comparator: {
       display: 'block',
       fontSize: '0.6em'

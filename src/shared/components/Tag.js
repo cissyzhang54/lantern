@@ -19,8 +19,13 @@ const tagStyle = {
 
 export default class Tag extends React.Component {
   render() {
-    let link = ['','articles', this.props.uuid, this.props.name.replace(' ','%20')].join('/');
+    let link = ['','articles', this.props.uuid].join('/');
     let className = this.props.selected ? 'selected' : '';
+
+    if(!this.props.selected){
+      link += '/' + this.props.name.replace(' ','%20');
+    }
+
     return (
       <Link style={this.props.selected ? ObjectAssignDeep(selected, style) : style}
             className={className + ' ' + this.props.className}
