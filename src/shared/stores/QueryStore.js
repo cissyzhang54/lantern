@@ -42,8 +42,9 @@ class QueryStore {
     this.query.uuid = uuid;
   }
 
-  selectComparator(comparatorId) {
-    this.query.comparator = comparatorId;
+  selectComparator(comparator) {
+    this.query.comparatorType = comparator.comparatorType;
+    this.query.comparator = comparator.comparator;
   }
 
   removeComparator() {

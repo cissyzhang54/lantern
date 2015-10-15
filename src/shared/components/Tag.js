@@ -19,25 +19,20 @@ const tagStyle = {
 
 export default class Tag extends React.Component {
   render() {
-    let link = ['','articles', this.props.uuid].join('/');
     let className = this.props.selected ? 'selected' : '';
-
-    if(!this.props.selected){
-      link += '/' + this.props.name.replace(' ','%20');
-    }
-
     return (
       <Link style={this.props.selected ? ObjectAssignDeep(selected, style) : style}
-            className={className + ' ' + this.props.className}
-            to={link}
+            className={`${className} ${this.props.className}`}
+            to={this.props.url}
             onClick={this.props.onClick}>
-          <Glyphicon glyph="tag" style={tagStyle} />{this.props.name}
+          <Glyphicon glyph="tag" style={tagStyle} />{this.props.label}
       </Link>
     );
   }
 }
 
 Tag.propTypes = {
-  name: React.PropTypes.string.isRequired,
+  label: React.PropTypes.string.isRequired,
+  url: React.PropTypes.string.isRequired,
   onClick: React.PropTypes.func
 };

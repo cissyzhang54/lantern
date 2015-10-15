@@ -9,11 +9,13 @@ import ComparatorDataFormater from '../formatters/Comparators';
 import SearchDataFormatter from '../formatters/Search';
 
 const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
+const CATEGORY_REGEX= 'articles|topics|authors';
+const COMPTYPE_REGEX  = 'topic|section|author|genre|global';
 let router = express.Router();
 router.use(bodyParser.json());
 
-router.post(`/:category(articles|topics|authors)/:uuid(${UUID_REGEX})`, getCategoryData);
-router.post('/comparators/:category(articles|topics|authors)/:comparator', getComparatorData);
+router.post(`/:category(${CATEGORY_REGEX})/:uuid(${UUID_REGEX})`, getCategoryData);
+router.post(`/comparators/:category(${CATEGORY_REGEX})/:comparatorType(${COMPTYPE_REGEX})/:comparator`, getComparatorData);
 router.get('/search/:query', search);
 router.use(ErrorHandler.routes(router));
 
@@ -41,6 +43,7 @@ function getCategoryData(req, res, next) {
 function getComparatorData(req, res, next) {
   const query = {
     comparator: req.params.comparator,
+    comparatorType: req.params.comparatorType,
     dateFrom: req.body.dateFrom,
     dateTo: req.body.dateTo,
     filters: req.body.filters,
@@ -49,12 +52,8 @@ function getComparatorData(req, res, next) {
   switch (category) {
     case 'articles':
       esClient.runComparatorQuery(query)
-        .then((response) => {
-          return ComparatorDataFormater(response);
-        })
-        .then((formattedData) => {
-          res.json(formattedData);
-        })
+        .then((response) => ComparatorDataFormater(response) )
+        .then((formattedData) => res.json(formattedData) )
         .catch((error) => {
           res.status(ErrorHandler.statusCode(error.name))
           next(error);
@@ -68,12 +67,8 @@ function search(req, res, next) {
   const from = 0 || req.query.from;
 
   esClient.runSearchQuery({term: query, from: from})
-    .then((response) => {
-      return SearchDataFormatter(response);
-    })
-    .then((formattedData) => {
-      res.json(formattedData);
-    })
+    .then((response) => SearchDataFormatter(response) )
+    .then((formattedData) => res.json(formattedData) )
     .catch((error) => {
       res.status(ErrorHandler.statusCode(error.name))
       next(error);

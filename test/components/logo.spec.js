@@ -3,7 +3,7 @@ import React from 'react';
 import {createComponent} from '../createComponent';
 import Logo from '../../src/shared/components/Logo';
 
-describe ('Loading component', function() {
+describe ('LOGO component', function() {
   let logo;
 
   it ('Should render', function() {

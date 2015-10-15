@@ -6,7 +6,6 @@ import assert from "assert";
 let DataAPI = {
 
     getArticleData(query, apiKey) {
-
       assert.equal(typeof query, 'object',
         "argument 'query' must be an object");
 
@@ -47,7 +46,7 @@ let DataAPI = {
         "property 'query.comparator' of argument 'query' must be a string");
 
       return new Promise(function handlePromise(resolve, reject) {
-        let url = config.baseUrl + '/api/v0/comparators/articles/' + query.comparator;
+        let url = `${config.baseUrl}/api/v0/comparators/articles/${query.comparatorType}/${query.comparator}`;
         if (apiKey) {
             url += "?apiKey=" + apiKey;
         }

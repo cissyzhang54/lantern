@@ -8,7 +8,7 @@ describe ('Tag component', function() {
 
   beforeEach(function() {
     tag = createComponent(Tag, {
-      name: 'Financials'
+      label: 'Financials', url:'topic/Financials'
     });
   });
 
