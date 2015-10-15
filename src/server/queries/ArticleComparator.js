@@ -15,7 +15,9 @@ export default function ComparatorPageViewsQuery(query) {
   assert.equal(typeof query.dateTo, 'string',
     "argument 'query' must contain a 'dateTo' date property");
 
-  let match =  {  sections: query.comparator  }
+  let match = {
+      "match" : {  sections: query.comparator  }
+  }
   let filter = {
     "and" : [
       {
@@ -28,7 +30,6 @@ export default function ComparatorPageViewsQuery(query) {
       }
     ]
   }
-
   for (var o in query.filters){
     if (query.filters[o]){
       filter.and.push({
@@ -36,15 +37,17 @@ export default function ComparatorPageViewsQuery(query) {
       })
     }
   }
+  let filtered = {
+    "query" : match,
+    "filter" : filter
+  }
+  if (query.comparator === 'FT'){
+    delete filtered.query
+  }
 
   return {
     "query" : {
-      "filtered" : {
-        "query" : {
-          "match" : match
-        },
-        "filter" : filter
-      }
+      "filtered" : filtered
     },
     "size": 1,
     "aggs" : {
