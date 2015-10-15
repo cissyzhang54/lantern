@@ -165,7 +165,7 @@ class ArticleView extends React.Component {
 
         <SectionModifier
           data={data.article}
-          tags={data.article.topics.concat(data.article.sections)}
+          tags={['FT'].concat(data.article.topics).concat(data.article.sections)}
           renderDevice={FeatureFlag.check('article:modifier:filters:Device')}
           renderRegion={FeatureFlag.check('article:modifier:filters:Region')}
           renderReferrers={FeatureFlag.check('article:modifier:filters:Referrers')}
