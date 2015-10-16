@@ -531,6 +531,52 @@ export default [{
           }
         ]
       }
+    },
+    "next_internal_url": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 10,
+      "buckets": [
+        {
+          "key": "",
+          "doc_count": 73
+        },
+        {
+          "key": "http://www.ft.com/cms/s/0/0049a468-4be5-11e5-b558-8a9722977189.html",
+          "doc_count": 4
+        },
+        {
+          "key": "http://www.ft.com/cms/s/0049a468-4be5-11e5-b558-8a9722977189,Authorised=false.html?siteedition=uk&_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F0049a468-4be5-11e5-b558-8a9722977189.html%3Fsiteedition%3Duk&_i_referer=http%3A%2F%2Fwww.google.co.uk%2Furl%3Fsa%3Dt%26rct%3Dj%26q%3D%26esrc%3Ds%26frm%3D1%26source%3Dweb%26cd%3D4%26ved%3D0CDkQFjADahUKEwitxcmxiLDIAhWJqx4KHcJmByA%26url%3Dhttp%253A%252F%252Fwww.ft.com%252Fcms%252Fs%252F0%252F0049a468-4be5-11e5-b558-8a9722977189.html%26usg%3DAFQjCNG31f1iiplUDLMQ8LxTuqbNA4aKow%26bvm%3Dbv.104615367%2Cd.dmo&classification=conditional_standard&iab=barrier-app#axzz3nsDhmdf7",
+          "doc_count": 2
+        },
+        {
+          "key": "http://www.ft.com/intl/cms/s/6da817bc-6d12-11e5-8171-ba1968cf791a,Authorised=false.html?ftcamp=published_links%2Frss%2Fcompanies%2Ffeed%2F%2Fproduct&_i_location=http%3A%2F%2Fwww.ft.com%2Fintl%2Fcms%2Fs%2F0%2F6da817bc-6d12-11e5-8171-ba1968cf791a.html%3Fftcamp%3Dpublished_links%252Frss%252Fcompanies%252Ffeed%252F%252Fproduct&_i_referer=&classification=conditional_standard&iab=barrier-app",
+          "doc_count": 2
+        },
+        {
+          "key": "https://next.ft.com/content/f7cd3f4c-6472-11e5-9846-de406ccb37f2",
+          "doc_count": 2
+        },
+        {
+          "key": "http://app.ft.com/cms/s/170fa5f2-708a-11e5-9b9e-690fdae72044.html?sectionid=companies",
+          "doc_count": 1
+        },
+        {
+          "key": "http://app.ft.com/cms/s/c9545f9e-e522-11e4-bb4b-00144feab7de",
+          "doc_count": 1
+        },
+        {
+          "key": "http://www.ft.com/cms/s/0/22d8cf50-6129-11e5-a28b-50226830d644.html",
+          "doc_count": 1
+        },
+        {
+          "key": "http://www.ft.com/cms/s/0/72c34344-592b-11e4-a722-00144feab7de.html",
+          "doc_count": 1
+        },
+        {
+          "key": "http://www.ft.com/cms/s/0/a4ef85fa-5540-11e5-b029-b9d50a74fd14.html",
+          "doc_count": 1
+        }
+      ]
     }
   }
 }, {
