@@ -110,7 +110,8 @@ describe('Articles Query', () => {
       'rfv_cluster',
       'is_first_visit',
       'internal_referrer_urls',
-      'internal_referrer_types'
+      'internal_referrer_types',
+      'next_internal_url'
     ];
     for (let i = 0; i < props.length; i++) {
       expect(queryJSON.aggs.hasOwnProperty(props[i])).to.be.truthy;

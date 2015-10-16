@@ -155,7 +155,6 @@ export default function PageViewsQuery(query) {
           term : {
             referrer_type : "internal"
           }
-
         },
         aggs : {
           filtered : {
@@ -234,6 +233,11 @@ export default function PageViewsQuery(query) {
         terms : {
           field : "is_first_visit",
           min_doc_count : 0
+        }
+      },
+      next_internal_url : {
+        terms : {
+          field : "next_internal_url"
         }
       }
     }
