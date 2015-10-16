@@ -28,6 +28,7 @@ class QueryStore {
   addFilter(filter) {
     this._update('filters', _.union(query.filters, [filter]));
   }
+
   removeFilter(filter) {
     this._update('filters', _.without(query.filters, [filter]));
   }
@@ -43,6 +44,10 @@ class QueryStore {
 
   selectComparator(comparatorId) {
     this.query.comparator = comparatorId;
+  }
+
+  removeComparator() {
+    this.query.comparator = null;
   }
 
   selectFilter(filter) {

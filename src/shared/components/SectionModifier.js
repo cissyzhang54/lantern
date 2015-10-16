@@ -30,7 +30,11 @@ export default class Modifier extends React.Component {
   }
 
   handleComparatorChange (e) {
-    QueryActions.selectComparator(e.target.textContent);
+    if(this.className.indexOf('selected') === -1) {
+      QueryActions.selectComparator(e.target.textContent);
+    } else {
+      QueryActions.removeComparator();
+    }
   }
 
   handleFilterChange (e) {

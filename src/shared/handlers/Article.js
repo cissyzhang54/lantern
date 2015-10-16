@@ -31,6 +31,16 @@ const DEFAULT_STATE = {
   comparator: null
 }
 const STYLES = {
+  MASK: {
+    width: '100%',
+    height: '100%',
+    position: 'fixed',
+    top: '0',
+    left: '0',
+    zIndex: 2,
+    cursor:'wait',
+    background: 'rgba(255, 255, 255, 0.4)'
+  },
   LOADING: {
     display: 'flex',
     alignItems: 'center',
@@ -42,7 +52,7 @@ const STYLES = {
     left: '40%',
     width: '20%',
     textAlign: 'center',
-    zIndex: 2,
+    zIndex: 2
   }
 };
 const MESSAGES = {
@@ -53,9 +63,11 @@ const MESSAGES = {
     </div>
   ),
   UPDATING : (
-    <Alert bsStyle="warning" style={STYLES.UPDATING}>
-      <strong>Updating Article...</strong>
-    </Alert>
+    <div style={STYLES.MASK}>
+      <Alert bsStyle="warning" style={STYLES.UPDATING}>
+        <strong>Updating Article...</strong>
+      </Alert>
+    </div>
   )
 }
 
@@ -114,6 +126,11 @@ class ArticleView extends React.Component {
     }
     if (queryStore.query.comparator){
       ComparatorStore.loadComparatorData(this.props.query);
+    }
+    if (queryStore.query.comparator === null && hasComparatorChanged){
+       setImmediate(()=> {
+         ComparatorActions.destroy();
+       });
     }
     this.state.comparator = this.props.query.comparator
   }

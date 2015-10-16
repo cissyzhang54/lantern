@@ -6,6 +6,7 @@ class QueryActions {
         'addFilter',
         'removeFilter',
         'selectComparator',
+        'removeComparator',
         'selectFilter',
         'selectDateRange',
         'selectUUID',
