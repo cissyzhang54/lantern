@@ -47,10 +47,13 @@ export default class LineChart extends React.Component {
     let formatStr = '%d %b %H:%M:%S';
     if (json.length > 1) {
       let step = moment.duration(json[1][attr] - json[0][attr]);
+      let span = moment.duration(json[json.length - 1][attr] - json[0][attr]);
       if (step.years()) {
-       formatStr = '%Y';
+        formatStr = '%Y';
       } else if (step.months()) {
         formatStr = '%b';
+      } else if (step.weeks()) {
+        formatStr = 'Week %W'
       } else if (step.days()) {
         formatStr = '%d %b';
       } else {
@@ -80,9 +83,6 @@ export default class LineChart extends React.Component {
           type: 'timeseries',
           label: xLabel,
           tick: {
-            // XXX make this dynamic - take a cue from
-            // the date range
-            //fit: !this.state.localTime,
             format: formatStr,
             width: labelWidth,
             count: labelCount
@@ -90,7 +90,10 @@ export default class LineChart extends React.Component {
           localtime: this.state.localTime
         },
         y: {
-          label: this.props.yLabel
+          label: this.props.yLabel,
+          padding: {
+            bottom: 0
+          }
         }
       },
       tooltip: {
