@@ -54,6 +54,7 @@ export default function formatData(data) {
           internal_referrer_urls: formatFilteredAggregation('internal_referrer_urls', articleData, 'Not Available'),
           internal_referrer_types: formatFilteredAggregation('internal_referrer_types', articleData),
           next_internal_url : formatAggregation('next_internal_url', articleData),
+          is_subscription : formatAggregation('is_subscription', articleData)
         }
       };
 

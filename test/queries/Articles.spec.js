@@ -111,7 +111,8 @@ describe('Articles Query', () => {
       'is_first_visit',
       'internal_referrer_urls',
       'internal_referrer_types',
-      'next_internal_url'
+      'next_internal_url',
+      'is_subscription'
     ];
     for (let i = 0; i < props.length; i++) {
       expect(queryJSON.aggs.hasOwnProperty(props[i])).to.be.truthy;

@@ -48,50 +48,50 @@ export default function PageViewsQuery(query) {
     },
     size: 1,
     aggs : {
-      page_views_over_time : {
-        date_histogram : {
-          field : "view_timestamp",
-          interval : calculateInterval(query),
-          min_doc_count : 0
+      page_views_over_time: {
+        date_histogram: {
+          field: "view_timestamp",
+          interval: calculateInterval(query),
+          min_doc_count: 0
         }
       },
-      avg_time_on_page : {
-        avg : {
+      avg_time_on_page: {
+        avg: {
           field: "time_on_page"
         }
       },
-      channels : {
+      channels: {
         terms: {
           field: "channel"
         }
       },
-      referrer_types : {
-        filter : {
-          not : {
-            term : {
-              referrer_type : "internal"
-            }
-          }
-        },
-        aggs: {
-          filtered : {
-            terms: {
-              field: "referrer_type",
-              min_doc_count : 0
-            }
-          }
-        }
-      },
-      referrer_names : {
+      referrer_types: {
         filter: {
-          not : {
-            term : {
+          not: {
+            term: {
               referrer_type: "internal"
             }
           }
         },
         aggs: {
-          filtered : {
+          filtered: {
+            terms: {
+              field: "referrer_type",
+              min_doc_count: 0
+            }
+          }
+        }
+      },
+      referrer_names: {
+        filter: {
+          not: {
+            term: {
+              referrer_type: "internal"
+            }
+          }
+        },
+        aggs: {
+          filtered: {
             terms: {
               field: "referrer_name"
             }
@@ -99,37 +99,37 @@ export default function PageViewsQuery(query) {
         }
       },
       referrer_urls: {
-        filter : {
+        filter: {
           not: {
-            filter : {
-              or : [
+            filter: {
+              or: [
                 {
-                  term : {
-                    referrer_type : 'search'
+                  term: {
+                    referrer_type: 'search'
                   }
                 },
                 {
-                  term : {
-                    referrer_type : 'internal'
+                  term: {
+                    referrer_type: 'internal'
                   }
                 },
                 {
-                  term : {
-                    referrer_type : 'social-network'
+                  term: {
+                    referrer_type: 'social-network'
                   }
                 },
                 {
-                  prefix : {
-                    referrer : 'http://localhost'
+                  prefix: {
+                    referrer: 'http://localhost'
                   }
                 },
                 {
-                  prefix : {
+                  prefix: {
                     referrer: 'http://lantern.ft.com'
                   }
                 },
                 {
-                  prefix : {
+                  prefix: {
                     referrer: 'https://lantern.ft.com'
                   }
                 },
@@ -142,102 +142,108 @@ export default function PageViewsQuery(query) {
             }
           }
         },
-        aggs : {
-          filtered : {
-            terms : {
-              field : 'referrer'
+        aggs: {
+          filtered: {
+            terms: {
+              field: 'referrer'
             }
           }
         }
       },
       internal_referrer_urls: {
-        filter : {
-          term : {
-            referrer_type : "internal"
+        filter: {
+          term: {
+            referrer_type: "internal"
           }
         },
-        aggs : {
-          filtered : {
-            terms : {
-              field : "referrer"
+        aggs: {
+          filtered: {
+            terms: {
+              field: "referrer"
             }
           }
         }
       },
       internal_referrer_types: {
-        filter : {
-          term : {
-            referrer_type : "internal"
-          }
-        },
-        aggs : {
-          filtered : {
-            terms : {
-              field : "referrer_name"
-            }
-          }
-        }
-      },
-      social_referrers : {
-        filter : {
-          term : {
-            referrer_type : 'social-network'
+        filter: {
+          term: {
+            referrer_type: "internal"
           }
         },
         aggs: {
           filtered: {
-            terms : {
-              field : "referrer_name",
-              min_doc_count : 0,
+            terms: {
+              field: "referrer_name"
+            }
+          }
+        }
+      },
+      social_referrers: {
+        filter: {
+          term: {
+            referrer_type: 'social-network'
+          }
+        },
+        aggs: {
+          filtered: {
+            terms: {
+              field: "referrer_name",
+              min_doc_count: 0,
               size: 200000000
             }
           }
         }
       },
-      devices : {
-        terms : {
+      devices: {
+        terms: {
           field: "device_type"
         }
       },
-      regions : {
-        terms : {
-          field : "geo_region"
+      regions: {
+        terms: {
+          field: "geo_region"
         }
       },
       countries: {
-        terms : {
-          field : "geo_country",
+        terms: {
+          field: "geo_country",
           size: 200000000
         }
       },
       is_last_page: {
         terms: {
           field: 'is_last_page',
-          min_doc_count : 0
+          min_doc_count: 0
         }
       },
-      user_cohort : {
-        terms : {
-          field : 'user_cohort',
-          min_doc_count : 0
+      user_cohort: {
+        terms: {
+          field: 'user_cohort',
+          min_doc_count: 0
         }
       },
       rfv_cluster: {
-        terms : {
-          field : "rfv_cluster",
-          min_doc_count : 0,
-          order : { "_term" : "asc" }
+        terms: {
+          field: "rfv_cluster",
+          min_doc_count: 0,
+          order: {"_term": "asc"}
         }
       },
-      is_first_visit : {
-        terms : {
-          field : "is_first_visit",
-          min_doc_count : 0
+      is_first_visit: {
+        terms: {
+          field: "is_first_visit",
+          min_doc_count: 0
         }
       },
-      next_internal_url : {
-        terms : {
-          field : "next_internal_url"
+      next_internal_url: {
+        terms: {
+          field: "next_internal_url"
+        }
+      },
+      is_subscription: {
+        terms: {
+          field: "is_subscription"
+
         }
       }
     }
