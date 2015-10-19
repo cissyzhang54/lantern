@@ -93,7 +93,8 @@ export default class LineChart extends React.Component {
           label: this.props.yLabel,
           padding: {
             bottom: 0
-          }
+          },
+          min: 0
         }
       },
       tooltip: {
