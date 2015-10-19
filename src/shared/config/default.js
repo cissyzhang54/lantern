@@ -22,6 +22,8 @@ let config = {
     'article:bounceRate' : true,
     'article:who' : true,
     'article:where' : true,
+    'article:interact' : false,
+    'article:is_subscription' : true,
     'article:modifier:filters:UserCohort' : true,
     'article:modifier:filters:Referrers' : true,
     'article:modifier:filters:Region' : true,

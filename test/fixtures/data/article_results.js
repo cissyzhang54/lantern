@@ -577,6 +577,12 @@ export default [{
           "doc_count": 1
         }
       ]
+    },
+    "is_subscription": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": []
+
     }
   }
 }, {

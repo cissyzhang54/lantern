@@ -16,6 +16,7 @@ import SectionHow from "../components/SectionHow";
 import SectionWhen from "../components/SectionWhen";
 import SectionNext from "../components/SectionNext";
 import SectionWho from "../components/SectionWho";
+import SectionInteract from "../components/SectionInteract";
 
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
@@ -232,6 +233,12 @@ class ArticleView extends React.Component {
               data={data.article}
               comparatorData={comparatorData.article}
               renderWho={FeatureFlag.check('article:who')}
+              />
+
+            <SectionInteract
+              data={data.article}
+              comparatorData={comparatorData.article}
+              renderWho={FeatureFlag.check('article:interact')}
               />
 
             <SectionWhere
