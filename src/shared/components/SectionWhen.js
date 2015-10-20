@@ -13,11 +13,14 @@ export default class SectionWhen extends React.Component {
 
   render() {
     if (!this.props.renderReadTimes){
-      return (<div></div>)
+      return (<div></div>);
     }
 
-    let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
-    let [timeData, timeID, timeKeys] = dataFormatter.getMetric('readTimes', 'Value')
+    let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
+    let [timeData, timeID, timeKeys] = dataFormatter.getMetric('readTimes', 'Value');
+
+    let temporaryDataFormater = new FormatData(this.props.data, this.props.comparatorData);
+    let [pubTimeData, pubTimeID, pubTimeKeys] = dataFormatter.getMetric('readTimesSincePublish', 'Value');
 
     return (<div className='sectionWhen'>
       <Row>
@@ -33,6 +36,19 @@ export default class SectionWhen extends React.Component {
             category={timeID}
             yLabel='Page Views'
             xLabel='Time'
+            cols={12}
+            />
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12}>
+          <LineChart
+            data={pubTimeData}
+            keys={pubTimeKeys}
+            category={pubTimeID}
+            type='indexed'
+            yLabel='Page Views Since Publish date'
+            xLabel='Time since Published'
             cols={12}
             />
         </Col>

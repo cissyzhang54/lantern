@@ -55,6 +55,330 @@ export default [{
     ]
   },
   "aggregations": {
+    "page_views_since_publish": {
+      "buckets": [
+        {
+          "key": 27180,
+          "doc_count": 3
+        },
+        {
+          "key": 27240,
+          "doc_count": 3
+        },
+        {
+          "key": 27300,
+          "doc_count": 1
+        },
+        {
+          "key": 27360,
+          "doc_count": 2
+        },
+        {
+          "key": 27420,
+          "doc_count": 2
+        },
+        {
+          "key": 27480,
+          "doc_count": 1
+        },
+        {
+          "key": 27540,
+          "doc_count": 7
+        },
+        {
+          "key": 27660,
+          "doc_count": 1
+        },
+        {
+          "key": 27720,
+          "doc_count": 6
+        },
+        {
+          "key": 27780,
+          "doc_count": 2
+        },
+        {
+          "key": 27840,
+          "doc_count": 9
+        },
+        {
+          "key": 27900,
+          "doc_count": 7
+        },
+        {
+          "key": 27960,
+          "doc_count": 1
+        },
+        {
+          "key": 28020,
+          "doc_count": 3
+        },
+        {
+          "key": 28080,
+          "doc_count": 4
+        },
+        {
+          "key": 28200,
+          "doc_count": 5
+        },
+        {
+          "key": 28260,
+          "doc_count": 12
+        },
+        {
+          "key": 28320,
+          "doc_count": 3
+        },
+        {
+          "key": 28380,
+          "doc_count": 4
+        },
+        {
+          "key": 28440,
+          "doc_count": 1
+        },
+        {
+          "key": 28500,
+          "doc_count": 1
+        },
+        {
+          "key": 28620,
+          "doc_count": 1
+        },
+        {
+          "key": 28740,
+          "doc_count": 1
+        },
+        {
+          "key": 28860,
+          "doc_count": 1
+        },
+        {
+          "key": 28920,
+          "doc_count": 5
+        },
+        {
+          "key": 28980,
+          "doc_count": 3
+        },
+        {
+          "key": 29100,
+          "doc_count": 1
+        },
+        {
+          "key": 29160,
+          "doc_count": 1
+        },
+        {
+          "key": 29220,
+          "doc_count": 4
+        },
+        {
+          "key": 29280,
+          "doc_count": 3
+        },
+        {
+          "key": 29340,
+          "doc_count": 2
+        },
+        {
+          "key": 29400,
+          "doc_count": 3
+        },
+        {
+          "key": 29580,
+          "doc_count": 2
+        },
+        {
+          "key": 29640,
+          "doc_count": 2
+        },
+        {
+          "key": 29700,
+          "doc_count": 1
+        },
+        {
+          "key": 29760,
+          "doc_count": 4
+        },
+        {
+          "key": 29820,
+          "doc_count": 1
+        },
+        {
+          "key": 29880,
+          "doc_count": 3
+        },
+        {
+          "key": 29940,
+          "doc_count": 4
+        },
+        {
+          "key": 30000,
+          "doc_count": 7
+        },
+        {
+          "key": 30060,
+          "doc_count": 1
+        },
+        {
+          "key": 30120,
+          "doc_count": 9
+        },
+        {
+          "key": 30240,
+          "doc_count": 6
+        },
+        {
+          "key": 30300,
+          "doc_count": 3
+        },
+        {
+          "key": 30480,
+          "doc_count": 2
+        },
+        {
+          "key": 30600,
+          "doc_count": 7
+        },
+        {
+          "key": 30660,
+          "doc_count": 2
+        },
+        {
+          "key": 30720,
+          "doc_count": 2
+        },
+        {
+          "key": 30780,
+          "doc_count": 2
+        },
+        {
+          "key": 30840,
+          "doc_count": 2
+        },
+        {
+          "key": 30900,
+          "doc_count": 6
+        },
+        {
+          "key": 30960,
+          "doc_count": 1
+        },
+        {
+          "key": 31020,
+          "doc_count": 2
+        },
+        {
+          "key": 31080,
+          "doc_count": 1
+        },
+        {
+          "key": 31140,
+          "doc_count": 4
+        },
+        {
+          "key": 31200,
+          "doc_count": 5
+        },
+        {
+          "key": 31260,
+          "doc_count": 3
+        },
+        {
+          "key": 31380,
+          "doc_count": 3
+        },
+        {
+          "key": 31620,
+          "doc_count": 1
+        },
+        {
+          "key": 31680,
+          "doc_count": 2
+        },
+        {
+          "key": 31740,
+          "doc_count": 2
+        },
+        {
+          "key": 31800,
+          "doc_count": 2
+        },
+        {
+          "key": 31860,
+          "doc_count": 5
+        },
+        {
+          "key": 31920,
+          "doc_count": 4
+        },
+        {
+          "key": 31980,
+          "doc_count": 1
+        },
+        {
+          "key": 32040,
+          "doc_count": 9
+        },
+        {
+          "key": 32100,
+          "doc_count": 4
+        },
+        {
+          "key": 32160,
+          "doc_count": 3
+        },
+        {
+          "key": 32220,
+          "doc_count": 3
+        },
+        {
+          "key": 32280,
+          "doc_count": 7
+        },
+        {
+          "key": 32340,
+          "doc_count": 4
+        },
+        {
+          "key": 32400,
+          "doc_count": 7
+        },
+        {
+          "key": 32460,
+          "doc_count": 14
+        },
+        {
+          "key": 32520,
+          "doc_count": 7
+        },
+        {
+          "key": 32580,
+          "doc_count": 5
+        },
+        {
+          "key": 32640,
+          "doc_count": 2
+        },
+        {
+          "key": 32700,
+          "doc_count": 4
+        },
+        {
+          "key": 32760,
+          "doc_count": 1
+        },
+        {
+          "key": 32820,
+          "doc_count": 7
+        },
+        {
+          "key": 32880,
+          "doc_count": 2
+        }
+      ]
+    },
     "page_views_over_time": {
       "buckets": [
         {

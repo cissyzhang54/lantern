@@ -4,7 +4,8 @@ import {createComponent} from '../createComponent';
 import SectionWhen from '../../src/shared/components/SectionWhen';
 import LineChart from '../../src/shared/components/LineChart';
 
-import fixtureData from "../fixtures/data/readTimes"
+import fixtureData from "../fixtures/data/readTimes";
+import fixtureDataSincePublished from '../fixtures/data/readTimesSincePublish';
 import fixtureComparator from "../fixtures/data/readTimesComparator"
 
 const TestUtils = React.addons.TestUtils;
@@ -16,7 +17,10 @@ describe ('sectionWhen component', function() {
     it ('data', function() {
       let section = createComponent(SectionWhen, {
         renderReadTimes:true,
-        data:{readTimes:fixtureData}
+        data: {
+          readTimes: fixtureData,
+          readTimesSincePublish: fixtureDataSincePublished
+        }
       });
       const rows = section.props.children;
       const col = rows[1].props.children
@@ -35,10 +39,14 @@ describe ('sectionWhen component', function() {
     it ('comparator data', function() {
       let section = createComponent(SectionWhen, {
         renderReadTimes:true,
-        data:{readTimes:fixtureData},
+        data: {
+          readTimes: fixtureData,
+          readTimesSincePublish: fixtureDataSincePublished
+        },
         comparatorData: {
-          comparator:'testComp',
-          readTimes:fixtureComparator}
+          comparator: 'testComp',
+          readTimes: fixtureComparator
+        }
       });
       const rows = section.props.children;
       const col = rows[1].props.children
@@ -65,8 +73,11 @@ describe ('sectionWhen component', function() {
 
     it('when there is no data', function(){
       let section = createComponent(SectionWhen, {
-        renderReadTimes:true,
-        data:{readTimes:[]},
+        renderReadTimes : true,
+        data: {
+          readTimes : [],
+          readTimesSincePublish : []
+        },
         comparatorData: {
           comparator:'testComp',
           readTimes:fixtureComparator}
@@ -85,7 +96,10 @@ describe ('sectionWhen component', function() {
     it('when there is no comparator data', function(){
       let section = createComponent(SectionWhen, {
         renderReadTimes:true,
-        data:{readTimes:fixtureData},
+        data: {
+          readTimes: fixtureData,
+          readTimesSincePublish: fixtureDataSincePublished
+        },
         comparatorData: {}
       });
 

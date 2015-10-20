@@ -95,6 +95,7 @@ describe('Articles Query', () => {
     };
     const queryJSON = ArticlesQuery(query);
     const props = [
+      'page_views_since_publish',
       'page_views_over_time',
       'avg_time_on_page',
       'channels',

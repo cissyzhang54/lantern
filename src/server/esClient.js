@@ -38,14 +38,14 @@ export function runArticleQuery(queryData) {
     return Promise.reject(queryError);
   }
   let metaData;
-  return retrieveMetaData(queryData).then(function(data){
+  return retrieveMetaData(queryData).then((data) => {
     metaData = data;
-    if (!queryData.dateFrom || !queryData.dateTo){
+    if (!queryData.dateFrom || !queryData.dateTo) {
       queryData.dateFrom = moment(metaData.initial_publish_date).toISOString();
       queryData.dateTo = moment().toISOString();
     }
     return retrievePageView(queryData)
-  }).then(function(pageViewData){
+  }).then((pageViewData) => {
     return [pageViewData, metaData]
   });
 }

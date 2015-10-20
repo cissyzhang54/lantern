@@ -11,8 +11,11 @@ export default class formatData {
     if (tLabel && fLabel){
       label = label == "T" ? tLabel : fLabel;
     }
+    if (typeof label !== 'number') {
+      label = label.replace(/\d+\./g,'').trim()
+    }
     return {
-      [this.id]: label.replace(/\d+\./g,'').trim(),
+      [this.id]: label,
       [this.metricLabel]: dataItem[1],
     };
   }
