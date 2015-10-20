@@ -3,11 +3,17 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import SingleMetric from "./SingleMetric";
 import FeatureFlag from '../utils/featureFlag';
+import Table from '../components/Table';
 
 let config = {
-  is_subscription: {
+  subscription: {
     metricType: 'integer',
     label: 'Subscriptions',
+    size: 'small'
+  },
+  social_shares: {
+    metricType: 'integer',
+    label: 'Social Shares',
     size: 'small'
   }
 }
@@ -37,7 +43,9 @@ export default class SectionHeadlineStats extends React.Component {
     let comparatorData = this.props.comparatorData ;
 
     let subscriptions = data.is_subscription.length <= 1 ? 0 : data.is_subscription[1][1] ;
-    let is_subscription = renderMetric('is_subscription', subscriptions);
+    let subscription = renderMetric('subscription', subscriptions);
+
+    let social_shares_total = renderMetric('social_shares', data.social_shares_total);
 
     return ( <div className='sectionInteractiveStats' >
       <Row>
@@ -48,7 +56,7 @@ export default class SectionHeadlineStats extends React.Component {
 
         </Col>
         <Col xs={12} sm={4} >
-
+          {social_shares_total}
         </Col>
       </Row>
       <Row>
@@ -59,7 +67,21 @@ export default class SectionHeadlineStats extends React.Component {
 
         </Col>
         <Col xs={12} sm={4} >
-          {is_subscription}
+          {subscription}
+        </Col>
+      </Row>
+      <Row>
+        <Col xs={12} sm={4} >
+
+        </Col>
+        <Col xs={12} sm={4} >
+
+        </Col>
+        <Col xs={12} sm={4} >
+          <Table
+            headers={['Social Network', 'Shares']}
+            rows={data.social_shares_types}
+            />
         </Col>
       </Row>
     </div>);

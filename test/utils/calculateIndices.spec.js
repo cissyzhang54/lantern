@@ -22,7 +22,7 @@ describe('#calculateIndices', () => {
     };
     const expected = ES_INDEX + '2015-10-0*';
 
-    expect(calculateIndices(query)).to.equal(expected);
+    expect(calculateIndices(query, ES_INDEX)).to.equal(expected);
 
   });
 
@@ -40,7 +40,7 @@ describe('#calculateIndices', () => {
     const expected = ES_INDEX + '2015-10-*';
 
     for (let i = 0; i < queries.length; i++) {
-      expect(calculateIndices(queries[i])).to.equal(expected);
+      expect(calculateIndices(queries[i], ES_INDEX)).to.equal(expected);
     }
   })
 

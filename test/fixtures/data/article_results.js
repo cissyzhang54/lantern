@@ -933,4 +933,71 @@ export default [{
   "topics": [
     "Private equity"
   ]
-}];
+}, {
+    "took": 1,
+    "timed_out": false,
+    "_shards": {
+      "total": 2,
+      "successful": 2,
+      "failed": 0
+    },
+    "hits": {
+      "total": 1,
+      "max_score": 0.30685282,
+      "hits": [
+        {
+          "_index": "article_page_event-2015-10-14",
+          "_type": "logs",
+          "_id": "660790e6-71e5-11e5-ad6d-f4ed76f0900a",
+          "_score": 0.30685282,
+          "_source": {
+            "@version": "1",
+            "@timestamp": "2015-10-15T15:42:11.291Z",
+            "tags": [
+              "EVENT"
+            ],
+            "article_uuid": "660790e6-71e5-11e5-ad6d-f4ed76f0900a",
+            "timestamp": "2015-10-14 18:22:02",
+            "event_date": "2015-10-14",
+            "is_social_share": "1",
+            "social_share": "twitter",
+            "user_cohort": "anonymous",
+            "geo_country": "IRL",
+            "channel": "FT app",
+            "referrer_type": "",
+            "referrer_name": "",
+            "authors": [],
+            "genre": [
+              "News"
+            ],
+            "sections": [
+              "US Society",
+              "US Economy",
+              "American Insight",
+              "US & Canada",
+              "US Politics & Policy",
+              "World",
+              "Global Economy"
+            ],
+            "topics": [
+              "Central Banks",
+              "US Interest Rates",
+              "Central bank intervention"
+            ]
+          }
+        }
+      ]
+    },
+    "aggregations": {
+      "social_shares": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+          {
+            "key": "twitter",
+            "doc_count": 1
+          }
+        ]
+      }
+    }
+  }];

@@ -6,14 +6,18 @@ export default function formatData(data) {
     assert.equal(Object.prototype.toString.call(data), '[object Array]',
       "argument 'data' should be an array");
 
-    assert.equal(data.length, 2,
-      "argument 'data' should be an array of length 2");
+    assert.equal(data.length, 3,
+      "argument 'data' should be an array of length 3");
 
     assert.equal(typeof data[0], 'object',
       "the first element of 'data' should be an object");
 
     assert.equal(typeof data[1], 'object',
       "the second element of 'data' should be an object");
+
+    assert.equal(typeof data[2], 'object',
+      "the third element of 'data' should be an object");
+
   } catch (e) {
     let error = new Error(e);
     error.name = 'MalformedArgumentsError';
@@ -23,7 +27,7 @@ export default function formatData(data) {
 
   return new Promise((resolve, reject) => {
     try {
-      let [articleData, metaData] = data;
+      let [articleData, metaData, eventsData] = data;
       let results = {
         article: {
           title: metaData.title,
@@ -54,7 +58,9 @@ export default function formatData(data) {
           internal_referrer_urls: formatFilteredAggregation('internal_referrer_urls', articleData, 'Not Available'),
           internal_referrer_types: formatFilteredAggregation('internal_referrer_types', articleData),
           next_internal_url : formatAggregation('next_internal_url', articleData),
-          is_subscription : formatAggregation('is_subscription', articleData)
+          is_subscription : formatAggregation('is_subscription', articleData),
+          social_shares_total: eventsData.hits.total,
+          social_shares_types : formatAggregation('social_shares', eventsData)
         }
       };
 

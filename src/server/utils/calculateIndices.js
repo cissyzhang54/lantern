@@ -2,7 +2,7 @@ import moment from 'moment';
 
 const INDEX_FORMAT = 'YYYY-MM-DD';
 
-export default function calculateIndices(query) {
+export default function calculateIndices(query, ES_INDEX) {
   let dateFrom = moment(moment(query.dateFrom)).format(INDEX_FORMAT);
   let dateTo = moment(moment(query.dateTo)).format(INDEX_FORMAT);
 
@@ -23,5 +23,5 @@ export default function calculateIndices(query) {
     i++;
   }
 
-  return process.env.ES_INDEX_ROOT + indexStr;
+  return ES_INDEX + indexStr;
 }
