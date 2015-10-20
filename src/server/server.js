@@ -67,12 +67,19 @@ var server = app.listen(config.port, function () {
 });
 
 function renderRoute(route, req, res) {
+  let user = req.user
+  if ( process.env.NODE_ENV === 'test'){
+    user = {
+      email: 'test@ft.com',
+      name: {
+        givenName:'test'
+      }
+    }
+  }
   res.set('Link', prefetch.join(','));
   res.locals.data = res.locals.data || {};
-  if (req.user){
-    res.locals.data.UserStore = {
-      user: req.user
-    }
+  res.locals.data.UserStore = {
+    user: user
   }
   alt.bootstrap(JSON.stringify(res.locals.data || {}));
   let iso = new Iso();
@@ -95,12 +102,15 @@ function renderRoute(route, req, res) {
 }
 
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) { return next(); }
+  if (req.isAuthenticated()
+    || process.env.NODE_ENV === 'test') { return next(); }
   req.session.gotoUrl = req.session.gotoUrl || req.originalUrl;
   res.redirect('/login');
 }
 
 function ensureApiAuthenticated(req, res, next) {
-  if (req.isAuthenticated() || req.query.apiKey == process.env.LANTERN_API_KEY) { return next(); }
+  if (req.isAuthenticated()
+    || req.query.apiKey == process.env.LANTERN_API_KEY
+    || process.env.NODE_ENV === 'test') { return next(); }
   res.sendStatus(401);
 }
