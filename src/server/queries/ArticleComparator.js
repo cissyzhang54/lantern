@@ -15,8 +15,17 @@ export default function ComparatorPageViewsQuery(query) {
   assert.equal(typeof query.dateTo, 'string',
     "argument 'query' must contain a 'dateTo' date property");
 
+  assert.equal(typeof query.comparatorType, 'string',
+    "argument 'query' must contain a 'comparatorType' string property");
+
+  let comparatorTypes = {
+    genre : {  genre: query.comparator  },
+    section : {  sections: query.comparator  },
+    topic : {  topics: query.comparator  },
+    author : {  authors: query.comparator  }
+  }
   let match = {
-      "match" : {  sections: query.comparator  }
+      "match" : comparatorTypes[query.comparatorType]
   }
   let filter = {
     "and" : [

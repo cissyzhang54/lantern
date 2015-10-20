@@ -26,10 +26,12 @@ import QueryStore from '../stores/QueryStore';
 import QueryActions from '../actions/QueryActions';
 import Error404 from '../handlers/404';
 import FeatureFlag from '../utils/featureFlag';
+import formatAuthors from '../utils/formatAuthors';
 
 const DEFAULT_STATE = {
   uuid: null,
-  comparator: null
+  comparator: null,
+  comparatorType: null
 }
 const STYLES = {
   MASK: {
@@ -72,10 +74,10 @@ const MESSAGES = {
   )
 }
 
-function updateQuery(uuid, comparator){
+function updateQuery(uuid, comparatorType, comparator){
   QueryActions.selectUUID(uuid);
   if (comparator){
-    QueryActions.selectComparator(comparator);
+    QueryActions.selectComparator( { comparatorType:comparatorType, comparator:comparator});
   }
 }
 
@@ -85,6 +87,7 @@ class ArticleView extends React.Component {
     super(props);
     this.state = DEFAULT_STATE
     this.state.comparator = this.props.params.comparator || null
+    this.state.comparatorType = this.props.params.comparatorType || null
     this.state.uuid = this.props.params.uuid || null
   }
 
@@ -125,7 +128,7 @@ class ArticleView extends React.Component {
     if (queryStore.query.uuid && !hasComparatorChanged){
       ArticleStore.loadArticleData(this.props.query);
     }
-    if (queryStore.query.comparator){
+    if (queryStore.query.comparator && queryStore.query.comparatorType){ //debounce? should fire once both have changed
       ComparatorStore.loadComparatorData(this.props.query);
     }
     if (queryStore.query.comparator === null && hasComparatorChanged){
@@ -183,7 +186,6 @@ class ArticleView extends React.Component {
 
         <SectionModifier
           data={data.article}
-          tags={['FT'].concat(data.article.topics).concat(data.article.sections)}
           renderDevice={FeatureFlag.check('article:modifier:filters:Device')}
           renderRegion={FeatureFlag.check('article:modifier:filters:Region')}
           renderReferrers={FeatureFlag.check('article:modifier:filters:Referrers')}
@@ -198,7 +200,7 @@ class ArticleView extends React.Component {
 
           <Header
             title={data.article.title}
-            author={'By: ' + data.article.author}
+            author={'By: ' + formatAuthors(data.article.author)}
             published={'Published: ' + data.article.published_human}
             uuid={data.article.uuid}
             />

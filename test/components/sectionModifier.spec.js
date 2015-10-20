@@ -13,7 +13,7 @@ describe ('Modifier component', function() {
 
   beforeEach(function() {
     modifier = createComponent(SectionModifier, {
-      data:{},
+      data:{ topics: [], sections:[], genre:[], author:[]},
       renderDateRange: true,
       renderComparator: true,
       renderFilters: true,
@@ -36,4 +36,5 @@ describe ('Modifier component', function() {
     expect(TestUtils.isElementOfType(filters, Filters)).to.equal(true);
     expect(TestUtils.isElementOfType(dateRange, DateRange)).to.equal(true);
   });
+
 });

@@ -95,6 +95,7 @@ function retrievePageView(queryData){
         return reject(error);
       }
       response.comparator = queryData.comparator;
+      response.comparatorType = queryData.comparatorType;
       return resolve(response);
     });
   })

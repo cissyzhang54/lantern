@@ -7,25 +7,20 @@ import dataApiUtils from '../../shared/utils/DataAPIUtils';
 let router = express.Router();
 let apiKey = process.env.LANTERN_API_KEY;
 const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
+const COMPTYPE_REGEX = 'topic|section|author|genre|global';
 
 router.get(`/articles/:uuid(${UUID_REGEX})`, (req, res, next) => {
   return getArticleData(req, res)
-    .then(function(){
-      next();
-    })
+    .then(() => next())
     .catch((err) => {
       if (err.status) res.status(err.status);
       next(err);
     });
 });
 
-router.get(`/articles/:uuid(${UUID_REGEX})/:comparator`, (req, res, next) => {
-  return getArticleData(req, res).then(function(){
-      return getComparatorData(req, res)
-    })
-    .then(function(){
-      next();
-    })
+router.get(`/articles/:uuid(${UUID_REGEX})/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
+  return getArticleData(req, res).then(() => getComparatorData(req, res))
+    .then(() => next())
     .catch((err) => {
       if (err.status) res.status(err.status);
       next(err);
@@ -39,6 +34,7 @@ function getArticleData(req, res){
     dateFrom: null,
     dateTo: null,
     comparator: null,
+    comparatorType: null,
     filters: {}
   };
 
@@ -70,6 +66,7 @@ function getComparatorData(req, res){
     dateFrom: moment(res.locals.data.ArticleStore.data.article.published).toISOString(),
     dateTo:  moment().toISOString(),
     comparator: req.params.comparator,
+    comparatorType: req.params.comparatorType,
     filters: {}
   };
 
@@ -79,6 +76,7 @@ function getComparatorData(req, res){
           data: data
       };
       res.locals.data.QueryStore.query.comparator = query.comparator;
+      res.locals.data.QueryStore.query.comparatorType = query.comparatorType;
       return res;
     })
 }

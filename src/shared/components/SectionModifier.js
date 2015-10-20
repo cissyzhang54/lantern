@@ -30,8 +30,12 @@ export default class Modifier extends React.Component {
   }
 
   handleComparatorChange (e) {
+    let link = e.currentTarget.href.split('/')
     if(this.className.indexOf('selected') === -1) {
-      QueryActions.selectComparator(e.target.textContent);
+      QueryActions.selectComparator({
+        comparator:link.pop(),
+        comparatorType:link.pop()
+      });
     } else {
       QueryActions.removeComparator();
     }
@@ -45,6 +49,21 @@ export default class Modifier extends React.Component {
   }
 
   render() {
+
+    let data = this.props.data
+    let arrAuthors = data.author;
+    if (!Array.isArray(arrAuthors)) arrAuthors = [arrAuthors]
+    let tags = [{label:'FT',url:`global/FT`}]
+      .concat(
+      data.topics.map(d => {return {label:d, url:`topic/${d}`}})
+    ).concat(
+      data.sections.map(d => {return {label:d, url:`section/${d}`}})
+    ).concat(
+      data.genre.map(d => {return {label:d, url:`genre/${d}`}})
+    ).concat(
+      arrAuthors.map(d => {return {label:d, url:`author/${d}`}})
+    )
+
     return (
       <div className='sectionModifier' style={styles.modifierWrapper}>
         <Row>
@@ -53,7 +72,7 @@ export default class Modifier extends React.Component {
           </Col>
           <Col sm={10} xs={12}>
             <Comparator
-              tags={this.props.tags}
+              tags={tags}
               onChange={this.handleComparatorChange}
               currentComparator={this.props.query.comparator}
               uuid={this.props.uuid} />
@@ -89,11 +108,10 @@ export default class Modifier extends React.Component {
 }
 
 Modifier.propTypes = {
-  tags: React.PropTypes.array.isRequired
+  data: React.PropTypes.object.isRequired
 };
 
 Modifier.defaultProps = {
-  tags: ['one', 'two', 'three'],
   renderDateRange : true,
   renderComparator : true,
   renderFilters : true,

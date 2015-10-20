@@ -1,6 +1,5 @@
 import assert from 'assert';
 import moment from 'moment';
-import formatAuthors from '../../shared/utils/formatAuthors';
 
 export default function formatData(data) {
   try {
@@ -29,7 +28,7 @@ export default function formatData(data) {
         article: {
           title: metaData.title,
           uuid: metaData.article_uuid,
-          author: formatAuthors(metaData.authors),
+          author: metaData.authors,
           published: metaData.initial_publish_date,//formatPublishDate(articleData.initial_publish_date),
           published_human: formatPublishDate(metaData.initial_publish_date),
           pageViews: articleData.hits.total,
