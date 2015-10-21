@@ -216,6 +216,7 @@ class ArticleView extends React.Component {
               data={data.article}
               comparatorData={comparatorData.article}
               renderReadTimes={FeatureFlag.check('article:readTimes')}
+              renderTimeSincePublished={FeatureFlag.check('article:timeSincePublished')}
               />
 
             <SectionNext
