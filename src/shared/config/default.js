@@ -14,6 +14,7 @@ let config = {
     'article:pageViews' : true,
     'article:socialUsers' : true,
     'article:readTimes' : true,
+    'article:timeSincePublished' : true,
     'article:devices' : true,
     'article:channels' : true,
     'article:referrers' : true,

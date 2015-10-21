@@ -9,6 +9,7 @@ export default {
     'article:pageViews' : true,
     'article:socialUsers' : false,
     'article:readTimes' : true,
+    'article:timeSincePublished' : false,
     'article:channels' : true,
     'article:referrers' : true,
     'article:referrers:internalRefTypes' : false,
