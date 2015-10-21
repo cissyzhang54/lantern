@@ -19,11 +19,10 @@ let config = {
 }
 
 function renderMetric (metricName, metric, comparatorName, comparatorMetric) {
-
   let componentConfig = config[metricName];
   componentConfig.metric = metric;
   componentConfig.comparatorName = comparatorName || '';
-  componentConfig.comparatorMetric = comparatorMetric || undefined;
+  componentConfig.comparatorMetric = comparatorMetric >= 0 ? comparatorMetric : undefined;
 
   let component = FeatureFlag.check(`article:${metricName}`)
     ? <SingleMetric {...componentConfig} />
@@ -45,7 +44,7 @@ export default class SectionHeadlineStats extends React.Component {
     let subscriptions = data.is_subscription.length <= 1 ? 0 : data.is_subscription[1][1] ;
     let subscription = renderMetric('subscription', subscriptions);
 
-    let social_shares_total = renderMetric('social_shares', data.social_shares_total);
+    let social_shares_total = renderMetric('social_shares', data.social_shares_total, comparatorData.comparator, comparatorData.social_shares_total);
 
     return ( <div className='sectionInteractiveStats' >
       <Row>

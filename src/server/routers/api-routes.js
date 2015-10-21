@@ -53,6 +53,7 @@ function getComparatorData(req, res, next) {
     dateTo: req.body.dateTo,
     filters: req.body.filters,
   };
+
   let category = req.params.category
   switch (category) {
     case 'articles':

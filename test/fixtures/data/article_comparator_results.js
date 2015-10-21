@@ -257,4 +257,73 @@ export default [{
     }
   },
   comparator: 'Regulation & Governance'
+}, {
+  "took": 35,
+  "timed_out": false,
+  "_shards": {
+    "total": 20,
+    "successful": 20,
+    "failed": 0
+  },
+  "hits": {
+    "total": 2,
+    "max_score": 9.025189,
+    "hits": [
+      {
+        "_index": "article_page_event-2015-10-14",
+        "_type": "logs",
+        "_id": "563e396c-518d-11e5-b029-b9d50a74fd14",
+        "_score": 9.025189,
+        "_source": {
+          "@version": "1",
+          "@timestamp": "2015-10-26T15:14:57.740Z",
+          "tags": [
+            "EVENT"
+          ],
+          "article_uuid": "563e396c-518d-11e5-b029-b9d50a74fd14",
+          "timestamp": "2015-10-14 19:55:58.179",
+          "event_date": "2015-10-14",
+          "time_since_publish": 60529,
+          "user_cohort": "subscriber",
+          "geo_country": "GBR",
+          "channel": "next",
+          "referrer_type": "search",
+          "referrer_name": "Google",
+          "authors": [
+            "Andy Bounds",
+            "Chris Tighe",
+            "John McDermott"
+          ],
+          "genre": [
+            "News"
+          ],
+          "sections": [
+            "UK Politics & Policy"
+          ],
+          "topics": [
+            "English devolution",
+            "UK elections"
+          ],
+          "event_type": "scroll",
+          "event_category": "depth",
+          "event_value": 100
+        }
+      }
+    ]
+  },
+  "aggregations": {
+    "social_shares": {
+      "doc_count": 1,
+      "filtered": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+          {
+            "key": "twitter",
+            "doc_count": 1
+          }
+        ]
+      }
+    }
+  }
 }];
