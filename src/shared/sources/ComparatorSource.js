@@ -3,8 +3,8 @@ import ComparatorActions from '../actions/ComparatorActions';
 
 let ComparatorSource = {
   loadComparatorData: {
-    remote(state, query) {
-      return DataAPI.getComparatorData(query);
+    remote(state, comparatorQuery) {
+      return DataAPI.getComparatorData(comparatorQuery);
     },
     local() {
       return null;
@@ -13,7 +13,7 @@ let ComparatorSource = {
     error: ComparatorActions.loadingFailed,
     loading: ComparatorActions.loadingData,
 
-    shouldFetch(query) {
+    shouldFetch(comparatorQuery) {
       return true;
     }
   }

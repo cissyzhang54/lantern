@@ -58,9 +58,10 @@ function addListeners (component, responsiveStyles){
 }
 
 function removeListeners (component){
-    component.state.listeners.forEach(function(listener){
-        listener.removeListener(mediaQueryChanged);
-    });
+  if (!component.state.listeners) return;
+  component.state.listeners.forEach(function(listener){
+    listener.removeListener(mediaQueryChanged);
+  });
 }
 
 function mediaQueryChanged(defaultStyle, style, e) {

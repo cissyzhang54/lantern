@@ -4,16 +4,17 @@ class ComparatorActions {
 
   constructor() {
     this.generateActions(
+      'loadData',
+      'loadingData',
       'updateData',
       'loadingFailed',
-      'destroy'
+      'destroy',
+      'listenToQuery'
     );
   }
 
   loadingData() {
-    setImmediate(()=> {
-      this.dispatch();
-    });
+    setImmediate(_ => this.dispatch());
   }
 
 }

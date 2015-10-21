@@ -11,11 +11,11 @@ class UserStore {
     this.bindActions(UserActions);
   }
 
-  handleUpdateUser(user) {
+  updateUser(user) {
     this.user = user;
   }
 
-  handleDestroy() {
+  destroy() {
     this.user = null;
   }
 

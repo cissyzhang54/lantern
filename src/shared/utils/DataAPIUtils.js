@@ -35,20 +35,22 @@ let DataAPI = {
     },
 
     getComparatorData(query, apiKey) {
-
       assert.equal(typeof query, 'object',
         "argument 'query' must be an object");
 
       assert.ok(query.hasOwnProperty('comparator'),
-        "argument 'query' must contain a query.comparator property");
+        "argument 'query' must contain a comparator property");
 
       assert.equal(typeof query.comparator, 'string',
-        "property 'query.comparator' of argument 'query' must be a string");
+        "property 'comparator' of argument 'query' must be a string");
+
+      assert.equal(typeof query.publishDate, 'string',
+        "property 'publishDate' of argument 'query' must be a string");
 
       return new Promise(function handlePromise(resolve, reject) {
-        let url = `${config.baseUrl}/api/v0/comparators/articles/${query.comparatorType}/${query.comparator}`;
+        let url = `${config.baseUrl}/api/v0/comparators/articles/${query.comparatorType}/${query.comparator}?publishDate=${query.publishDate}`;
         if (apiKey) {
-            url += "?apiKey=" + apiKey;
+            url += "&apiKey=" + apiKey;
         }
         request.post(url)
           .send(query)

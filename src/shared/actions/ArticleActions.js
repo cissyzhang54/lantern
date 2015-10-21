@@ -4,9 +4,11 @@ class ArticleActions {
 
   constructor() {
     this.generateActions(
+      'loadData',
       'updateData',
       'loadingFailed',
-      'destroy'
+      'destroy',
+      'listenToQuery'
     );
   }
 

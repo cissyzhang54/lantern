@@ -24,6 +24,7 @@ export default function formatData(data) {
           category_article_count: data.aggregations.distinct_articles.value,
           category_average_view_count: (data.aggregations.page_view_total_count.value / data.aggregations.distinct_articles.value) | 0,
           readTimes: formatAggregation('page_views_over_time', data),
+          readTimesSincePublish: formatAggregation('page_views_since_publish', data),
           referrer_types: filterOutTerms(formatFilteredAggregation('referrer_types', data), ['search', 'unknown', 'partner', 'social-network', 'email']),
           social_referrers: filterOutTerms(formatFilteredAggregation('social_referrers', data), ['Facebook', 'Twitter', 'Linked-In']),
           regions : formatAggregation('regions', data),
@@ -55,7 +56,7 @@ function formatFilteredAggregation(name, data, replacement) {
 
 function format(data, agg, replacement) {
   return agg.buckets.map((d, i) => {
-    let key = replacement || 'eUnknown';
+    let key = replacement || 'Unknown';
     if (typeof d.key_as_string !== "undefined"){
       key = d.key_as_string
     } else if (typeof d.key !== "undefined"){

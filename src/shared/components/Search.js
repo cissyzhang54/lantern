@@ -9,8 +9,12 @@ import SearchResult from './SearchResult.js';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
+import ArticleActions from '../actions/ArticleActions';
+import ArticleQueryActions from '../actions/ArticleQueryActions';
+import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 
 import _ from 'underscore';
+import moment from 'moment';
 
 const MIN_SEARCH_LENGTH = 2;
 
@@ -37,6 +41,7 @@ export default class Search extends React.Component {
     if (el.setSelectionRange) {
       el.setSelectionRange(query.length, query.length);
     }
+    ArticleActions.listenToQuery();
   }
 
   _handleSearchInput() {
@@ -50,19 +55,25 @@ export default class Search extends React.Component {
     }
   }
 
+  _handleClick(){
+    ArticleQueryActions.selectUUID(this.uuid)
+    ArticleQueryActions.selectDateRange({from:this.publishDate,to:moment()})
+    ComparatorQueryActions.setPublishDate(this.publishDate)
+  }
+
   render() {
 
     let results = (this.props.results || []).map((r, i) => {
       return (
         <SearchResult
+          handleClick={this._handleClick}
           result={r}
           key={i}
         />
       )
-          });
+    });
     let additionalInfo = getAdditionalInfo(this.props)
     let isLoading = this.props.loading;
-
     let showShowMore = results.length < this.props.total;
 
     let showMore = (

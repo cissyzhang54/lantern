@@ -14,19 +14,11 @@ class SearchStore {
     this.query = '';
     this.total = 0;
     this.from = 0;
-    this.bindListeners({
-      handleUpdateResults: SearchActions.UPDATE_RESULTS,
-      handleSearchFailed: SearchActions.SEARCH_FAILED,
-      handleGetMoreResults: SearchActions.GET_MORE_RESULTS,
-      handleSearch: SearchActions.SEARCH,
-      handleDestroy: SearchActions.DESTROY
-    });
-
+    this.bindActions(SearchActions);
     this.exportAsync(SearchSource);
-
   }
 
-  handleUpdateResults(data) {
+  updateResults(data) {
     this.loading = false;
     this.results = this.results.concat(data.results);
     this.total = data.total;
@@ -34,7 +26,7 @@ class SearchStore {
     this.errorMessage = data.results.length ? null : 'Zero Results Found';
   }
 
-  handleSearchFailed(error) {
+  searchFailed(error) {
     this.loading = false;
     this.errorMessage = error.message;
 
@@ -43,7 +35,7 @@ class SearchStore {
     });
   }
 
-  handleSearch(query) {
+  search(query) {
     this.loading = true;
     this.query = query;
     this.from = 0;
@@ -52,12 +44,12 @@ class SearchStore {
     this.getInstance().search(query);
   }
 
-  handleGetMoreResults() {
+  getMoreResults() {
     if (this.results.length < this.total)
       this.getInstance().search(this.query, this.from);
   }
 
-  handleDestroy() {
+  destroy() {
     this.query = '';
     this.loading = false;
     this.results = [];

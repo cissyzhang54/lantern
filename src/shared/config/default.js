@@ -13,7 +13,7 @@ let config = {
     'article:timeOnPage' : true,
     'article:pageViews' : true,
     'article:socialUsers' : true,
-    'article:readTimes' : true,
+    'article:readTimes' : false,
     'article:timeSincePublished' : true,
     'article:devices' : true,
     'article:channels' : true,

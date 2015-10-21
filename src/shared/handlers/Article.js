@@ -22,17 +22,14 @@ import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
 import ComparatorStore from '../stores/ComparatorStore';
 import ComparatorActions from '../actions/ComparatorActions';
-import QueryStore from '../stores/QueryStore';
-import QueryActions from '../actions/QueryActions';
+import ArticleQueryStore from '../stores/ArticleQueryStore';
+import ArticleQueryActions from '../actions/ArticleQueryActions';
+import ComparatorQueryStore from '../stores/ComparatorQueryStore';
+import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 import Error404 from '../handlers/404';
 import FeatureFlag from '../utils/featureFlag';
 import formatAuthors from '../utils/formatAuthors';
 
-const DEFAULT_STATE = {
-  uuid: null,
-  comparator: null,
-  comparatorType: null
-}
 const STYLES = {
   MASK: {
     width: '100%',
@@ -71,41 +68,50 @@ const MESSAGES = {
         <strong>Updating Article...</strong>
       </Alert>
     </div>
-  )
+  ),
+  ERROR: (extra) => { return (<div>
+    <Error404
+      title="Lantern - Article Not Found"
+      message={[
+              'Ooops!',
+              'We could not find the aricle you requested',
+              'Perhaps the article was published less than 24 hours ago?'
+              ]}
+      extra={<pre>
+                {extra}
+              </pre>
+            }
+      />
+  </div>)}
 }
 
-function updateQuery(uuid, comparatorType, comparator){
-  QueryActions.selectUUID(uuid);
-  if (comparator){
-    QueryActions.selectComparator( { comparatorType:comparatorType, comparator:comparator});
-  }
+function decode(uri){
+  return uri ? decodeURI(uri) : null
 }
 
 class ArticleView extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = DEFAULT_STATE
-    this.state.comparator = this.props.params.comparator || null
-    this.state.comparatorType = this.props.params.comparatorType || null
-    this.state.uuid = this.props.params.uuid || null
+    this.state = {}
+    this.state.comparator = decode(this.props.params.comparator)
+    this.state.comparatorType = decode(this.props.params.comparatorType)
+    this.state.uuid = decode(this.props.params.uuid)
   }
 
   static getStores() {
-    return [ArticleStore, ComparatorStore, QueryStore];
+    return [ArticleStore, ComparatorStore, ArticleQueryStore, ComparatorQueryStore];
   }
 
   static getPropsFromStores() {
     let comparatorState = ComparatorStore.getState();
     let articleState = ArticleStore.getState();
-    let queryState = QueryStore.getState();
-    if (articleState.data && !(queryState.query.dateTo && queryState.query)){
-      queryState.query.dateTo = moment();
-      queryState.query.dateFrom = moment(articleState.data.article.published);
-    }
+    let articleQueryState = ArticleQueryStore.getState();
+    let comparatorQueryState = ComparatorQueryStore.getState();
 
     return {
-      query : queryState.query,
+      articleQuery : articleQueryState.query,
+      comparatorQuery : comparatorQueryState.query,
       data : articleState.data,
       articleLoading : articleState.loading,
       errorMessage : articleState.errorMessage,
@@ -115,61 +121,36 @@ class ArticleView extends React.Component {
     };
   }
 
-  componentWillUnmount() {
-    QueryStore.unlisten(this._boundQueryHandlerRef);
-    ArticleActions.destroy();
-    ComparatorActions.destroy();
-    QueryActions.destroy();
-    this.state = DEFAULT_STATE
+  componentWillMount() {
+    let hasArticleChanged = this.state.uuid !== ArticleQueryStore.getState().query.uuid;
+    let hasComparatorChanged = this.state.comparator !== ComparatorQueryStore.getState().query.comparator;
+    if (hasArticleChanged){
+      ArticleQueryActions.selectUUID(this.state.uuid);
+    }
+    if (this.state.comparator && hasComparatorChanged){
+      ComparatorQueryActions.selectComparator(this.state);
+    }
   }
 
-  _handleQueryChange(queryStore) {
-    let hasComparatorChanged = this.props.query.comparator !== this.state.comparator
-    if (queryStore.query.uuid && !hasComparatorChanged){
-      ArticleStore.loadArticleData(this.props.query);
-    }
-    if (queryStore.query.comparator && queryStore.query.comparatorType){ //debounce? should fire once both have changed
-      ComparatorStore.loadComparatorData(this.props.query);
-    }
-    if (queryStore.query.comparator === null && hasComparatorChanged){
-       setImmediate(()=> {
-         ComparatorActions.destroy();
-       });
-    }
-    this.state.comparator = this.props.query.comparator
+  componentWillUnmount() {
+    ArticleActions.destroy();
+    ComparatorActions.destroy();
+    ArticleQueryActions.destroy();
+    ComparatorQueryActions.destroy();
+    this.state = {};
   }
 
   componentDidMount() {
     let analytics = require('../utils/analytics');
     analytics.sendGAEvent('pageview');
     analytics.trackScroll();
-
-    // XXX consider putting this inside ArticleStore?
-    this._boundQueryHandlerRef = this._handleQueryChange.bind(this)
-    QueryStore.listen(this._boundQueryHandlerRef);
-
-    if (this.props.params.uuid != QueryStore.getState().query.uuid) {
-      updateQuery(this.props.params.uuid, this.props.params.comparator)
-    }
+    ArticleActions.listenToQuery();
+    ComparatorActions.listenToQuery();
   }
 
   render() {
     if (this.props.errorMessage) {
-      return (<div>
-          <Error404
-            title="Lantern - Article Not Found"
-            message={[
-              'Ooops!',
-              'We could not find the aricle you requested',
-              'Perhaps the article was published less than 24 hours ago?'
-              ]}
-            extra={
-              <pre>
-                {this.props.errorMessage}
-              </pre>
-            }
-          />
-        </div>);
+      return (MESSAGES.ERROR(this.props.errorMessage));
     } else if (!this.props.data) {
       return MESSAGES.LOADING;
     }
@@ -190,8 +171,8 @@ class ArticleView extends React.Component {
           renderRegion={FeatureFlag.check('article:modifier:filters:Region')}
           renderReferrers={FeatureFlag.check('article:modifier:filters:Referrers')}
           renderUserCohort={FeatureFlag.check('article:modifier:filters:UserCohort')}
-          query={this.props.query}
-          uuid={this.props.params.uuid}
+          query={this.props.comparatorQuery}
+          uuid={data.article.uuid}
           />
 
         <Col xs={12}>

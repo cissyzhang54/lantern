@@ -12,7 +12,7 @@ export default class SectionWhen extends React.Component {
   }
 
   render() {
-    if (!this.props.renderReadTimes){
+    if (!this.props.renderReadTimes && !this.props.renderTimeSincePublished){
       return (<div></div>);
     }
 
@@ -20,6 +20,16 @@ export default class SectionWhen extends React.Component {
     let [timeData, timeID, timeKeys] = dataFormatter.getMetric('readTimes', 'Value');
     let [pubTimeData, pubTimeID, pubTimeKeys] = dataFormatter.getMetric('readTimesSincePublish', 'Value');
 
+    let readTimesChart = (this.props.renderReadTimes)
+      ? <LineChart
+        data={timeData}
+        keys={timeKeys}
+        category={timeID}
+        yLabel='Page Views'
+        xLabel='Time'
+        cols={12}
+        />
+      : {}
     let timeSincePublishedChart = (this.props.renderTimeSincePublished)
       ? <LineChart
       data={pubTimeData}
@@ -40,14 +50,7 @@ export default class SectionWhen extends React.Component {
       </Row>
       <Row>
         <Col xs={12}>
-          <LineChart
-            data={timeData}
-            keys={timeKeys}
-            category={timeID}
-            yLabel='Page Views'
-            xLabel='Time'
-            cols={12}
-            />
+          {readTimesChart}
         </Col>
       </Row>
       <Row>

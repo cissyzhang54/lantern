@@ -43,8 +43,9 @@ export function runArticleQuery(queryData) {
   let query;
   return retrieveMetaData(queryData).then((data) => {
     metaData = data;
+    queryData.publishDate = moment(metaData.initial_publish_date).toISOString();
     if (!queryData.dateFrom || !queryData.dateTo) {
-      queryData.dateFrom = moment(metaData.initial_publish_date).toISOString();
+      queryData.dateFrom = queryData.publishDate
       queryData.dateTo = moment().toISOString();
     }
     query = queryData;
