@@ -26,7 +26,8 @@ var controllerStyles = {
     },
     headerItem:{
       float: 'left',
-      marginRight: '40px'
+      marginRight: '40px',
+      width: '200px'
     },
     navlink:{
       lineHeight: '3em',
@@ -43,6 +44,9 @@ var controllerStyles = {
     }
   },
   '(max-width: 500px)' : {
+    headerItem:{
+      width: '50px'
+    },
     nav: {
       fontSize: '12px'
     }
