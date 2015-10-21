@@ -88,8 +88,14 @@ function formatFilteredAggregation(name, data, replacement) {
 
 function format(agg, replacement) {
   return agg.buckets.map((d, i) => {
+    let key = replacement || 'eUnknown';
+    if (typeof d.key_as_string !== "undefined"){
+      key = d.key_as_string
+    } else if (typeof d.key !== "undefined"){
+      key = d.key
+    }
     return [
-      d.key_as_string || d.key || replacement || 'Unknown',
+      key,
       d.doc_count
     ];
   });
