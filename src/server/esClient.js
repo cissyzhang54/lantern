@@ -1,6 +1,7 @@
 import elasticsearch from 'elasticsearch';
 import ArticleComparatorQuery from './queries/ArticleComparator';
 import ArticlesQuery from './queries/Articles';
+import ArticleEventsQuery from './queries/ArticleEvents';
 import SearchQuery from './queries/Search';
 import assert from 'assert';
 import LoggerFactory from './logger';
@@ -31,22 +32,28 @@ export function getIndicies(h = 'health,index,docs.count,store.size,tm'){
   });
 }
 
-
 export function runArticleQuery(queryData) {
   let queryError;
   if (queryError = queryDataError('articles', queryData)){
     return Promise.reject(queryError);
   }
+
   let metaData;
+  let pageViews;
+  let query;
   return retrieveMetaData(queryData).then((data) => {
     metaData = data;
     if (!queryData.dateFrom || !queryData.dateTo) {
       queryData.dateFrom = moment(metaData.initial_publish_date).toISOString();
       queryData.dateTo = moment().toISOString();
     }
+    query = queryData;
     return retrievePageView(queryData)
   }).then((pageViewData) => {
-    return [pageViewData, metaData]
+    pageViews = pageViewData;
+    return retrieveEventsData(query);
+  }).then(function(eventsData){
+    return [pageViews, metaData, eventsData]
   });
 }
 
@@ -85,7 +92,7 @@ function retrievePageView(queryData){
       ArticleComparatorQuery(queryData) :
       ArticlesQuery(queryData);
     let request = {
-      index: calculateIndices(queryData),
+      index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
       ignore_unavailable: true,
       search_type: 'count',
       body: queryObject
@@ -121,6 +128,23 @@ function retrieveMetaData(queryData){
         return reject(error);
       }
       return resolve(response._source);
+    });
+  })
+}
+
+function retrieveEventsData(queryData){
+  return new Promise((resolve, reject) => {
+    let queryObject = ArticleEventsQuery(queryData);
+    let request = {
+      index: calculateIndices(queryData, process.env.ES_EVENT_INDEX_ROOT),
+      ignore_unavailable: true,
+      body: queryObject
+    };
+    client.search(request, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      return resolve(response);
     });
   })
 }

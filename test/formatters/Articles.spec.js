@@ -70,7 +70,9 @@ describe('Article Formatter', function() {
           'internal_referrer_urls',
           'internal_referrer_types',
           'next_internal_url',
-          'is_subscription'
+          'is_subscription',
+          'social_shares_total',
+          'social_shares_types'
 
         ];
         for (let i = 0; i < props.length; i++){
