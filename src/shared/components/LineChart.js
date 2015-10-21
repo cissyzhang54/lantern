@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
 import Input from 'react-bootstrap/lib/Input';
 import moment from 'moment';
+require('moment-duration-format');
 
 let c3 = {};
 
@@ -24,7 +25,8 @@ export default class LineChart extends React.Component {
     let node = React.findDOMNode(this.refs.chartContainer);
     let attr = this.props.category
     let json = this.props.data.map((d) => {
-      d[attr] = moment(d[attr].replace(':000Z',':00.000Z'));//hack for now
+      if (this.props.type === 'timeseries' && typeof d[attr] === 'string')
+        d[attr] = moment(d[attr].replace(':000Z',':00.000Z'));//hack for now
       return d;
     });
 
@@ -80,10 +82,10 @@ export default class LineChart extends React.Component {
       },
       axis: {
         x: {
-          type: 'timeseries',
+          type: this.props.type,
           label: xLabel,
           tick: {
-            format: formatStr,
+            format: (this.props.type === 'timeseries') ? formatStr : numericFormat,
             width: labelWidth,
             count: labelCount
           },
@@ -99,16 +101,29 @@ export default class LineChart extends React.Component {
       },
       tooltip: {
         format: {
-          title: function(x) {
-            let fmt = d3.time.format.utc('%c (UTC)');
-            if (localTime) {
-              fmt = d3.time.format('%c');
-            }
-            return fmt(x);
-          }
+          title: (this.props.type === 'timeseries') ? timeSeriesFormat : numericFormat
         }
       }
     });
+
+    function timeSeriesFormat(x) {
+      let fmt = d3.time.format.utc('%c (UTC)');
+      if (localTime) {
+        fmt = d3.time.format('%c');
+      }
+      return fmt(x);
+    }
+
+    function numericFormat(x) {
+      let duration = moment.duration(x, 'minutes');
+      let fmt;
+      if (duration.years()) {
+        fmt = 'j'
+      }
+
+      return duration.format();
+    }
+
   }
 
   componentDidUpdate() {
@@ -126,6 +141,19 @@ export default class LineChart extends React.Component {
   }
 
   render() {
+
+    let input = (
+      <div style={{fontSize: '0.85em'}}>
+         <Input
+          type="checkbox"
+          ref="localTimeInput"
+          label="Display dates in UTC"
+          checked={!this.state.localTime}
+          onChange={this._handleLocalTimeSwitch.bind(this)}
+        />
+      </div>
+    );
+
     return (
       <div className='lineChart'>
         <div
@@ -133,13 +161,7 @@ export default class LineChart extends React.Component {
           id="chartContainer"
           >
         </div>
-        <Input
-          type="checkbox"
-          ref="localTimeInput"
-          label="Display dates in UTC"
-          checked={!this.state.localTime}
-          onChange={this._handleLocalTimeSwitch.bind(this)}
-        />
+        {(this.props.type === 'timeseries') ? input : null}
       </div>
     );
   }
@@ -163,12 +185,14 @@ LineChart.defaultProps = {
   keys: ['value'],
   title: 'The title of the chart',
   xLabel: 'Time',
-  yLabel: 'Y Axis Label'
+  yLabel: 'Y Axis Label',
+  type: 'timeseries'
 };
 
 LineChart.propTypes = {
   data: React.PropTypes.array.isRequired,
   keys: React.PropTypes.array.isRequired,
   title: React.PropTypes.string.isRequired,
-  yLabel: React.PropTypes.string.isRequired
+  yLabel: React.PropTypes.string.isRequired,
+  type: React.PropTypes.string
 };

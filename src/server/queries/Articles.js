@@ -47,7 +47,13 @@ export default function PageViewsQuery(query) {
       }
     },
     size: 1,
-    aggs : {
+    aggs: {
+      page_views_since_publish: {
+        histogram: {
+          field: "time_since_publish",
+          interval: calculateMinuteInterval(query)
+        }
+      },
       page_views_over_time: {
         date_histogram: {
           field: "view_timestamp",
@@ -266,3 +272,22 @@ function calculateInterval(query) {
   }
 
 }
+
+function calculateMinuteInterval(query) {
+  let from = moment(query.dateFrom);
+  let to = moment(query.dateTo);
+  let span = moment.duration(to - from);
+
+  if (span <= moment.duration(1, 'day')) {
+    return 60;
+  } else if (span <= moment.duration(1, 'week')) {
+    return 60;
+  } else if (span <= moment.duration(6, 'month')) {
+    return 60*24;
+  } else {
+    return 60*24*7;
+  }
+
+}
+
+
