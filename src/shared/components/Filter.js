@@ -1,25 +1,43 @@
 import React from "react";
 import Input from 'react-bootstrap/lib/Input';
+import Select from 'react-select';
 
 export default class Filter extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: []
+    }
+
+  }
+  _handleChange(val, values) {
+    this.setState({value: val});
+    const label = this.props.name;
+    const filters = {
+      key: label,
+      value: values.map((v) => v.value)
+    };
+    this.props.onChange(filters);
+  }
+
   render() {
     let options = this.props.options.map((opt, i) => {
-      return (
-        <option value={opt} key={i}>{opt}</option>
-      );
+      return {
+        value: opt,
+        label: (opt) ? opt : 'Unknown'
+      };
     });
 
-    return (<Input
-        labelClassName='small'
-        bsSize='small'
-        type='select'
-        onChange={this.props.onChange}
-        name={this.props.name}
-        >
-        <option value='' >{this.props.label}</option>
-        <option value='' disabled>──────────</option>
-        {options}
-      </Input>);
+    return (
+        <Select
+          name={this.props.name}
+          placeholder={this.props.name}
+          options={options}
+          value={this.state.value}
+          multi={true}
+          onChange={this._handleChange.bind(this)}
+        />
+    );
   }
 }
 

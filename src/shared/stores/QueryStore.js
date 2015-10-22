@@ -59,6 +59,10 @@ class QueryStore {
       case 'UserCohort': key = 'user_cohort'; break;
       case 'Referrers': key = 'referrer_type'; break;
     }
+    if (!filter.value.length) {
+      return delete this.query.filters[key];
+    }
+
     this.query.filters[key] = filter.value;
   }
 

@@ -25,7 +25,7 @@ export default class SearchItem extends React.Component {
         <ListGroupItem header={result.title}>
           <Row>
             <Col
-              xs="6"
+              xs={6}
               style={{
                 color: '#999'
               }}
@@ -33,7 +33,7 @@ export default class SearchItem extends React.Component {
               {authors}
             </Col>
             <Col
-              xs="6"
+              xs={6}
               style={{
                 textAlign: 'right',
                 color: '#999'
