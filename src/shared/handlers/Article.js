@@ -167,6 +167,7 @@ class ArticleView extends React.Component {
 
         <SectionModifier
           data={data.article}
+          comparatorData={comparatorData.article}
           renderDevice={FeatureFlag.check('article:modifier:filters:Device')}
           renderRegion={FeatureFlag.check('article:modifier:filters:Region')}
           renderReferrers={FeatureFlag.check('article:modifier:filters:Referrers')}

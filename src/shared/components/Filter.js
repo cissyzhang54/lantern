@@ -31,7 +31,7 @@ export default class Filter extends React.Component {
     return (
         <Select
           name={this.props.name}
-          placeholder={this.props.name}
+          placeholder={this.props.label}
           options={options}
           value={this.state.value}
           multi={true}

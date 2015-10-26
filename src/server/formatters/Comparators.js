@@ -18,6 +18,7 @@ export default function formatData(data) {
       eventData.aggregations.distinct_articles = articleData.aggregations.distinct_articles;
       let results = {
         article: {
+          distinctArticleCount: articleData.aggregations.distinct_articles.value,
           comparator: articleData.comparator,
           timeOnPage: articleData.aggregations.avg_time_on_page.value,
           page_views_over_time : articleData.aggregations.page_views_over_time,
