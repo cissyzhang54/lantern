@@ -25,30 +25,35 @@ export default function ComparatorPageViewsQuery(query) {
     author : {  authors: query.comparator  }
   }
   let match = {
-      "match" : comparatorTypes[query.comparatorType]
+      match : comparatorTypes[query.comparatorType]
   }
   let filter = {
-    "and" : [
-      {
-        range : {
-          view_timestamp : {
-            from: query.dateFrom,
-            to: query.dateTo
+    bool: {
+      must : [
+        {
+          range : {
+            view_timestamp : {
+              from: query.dateFrom,
+              to: query.dateTo
+            }
           }
         }
-      }
-    ]
+      ],
+      should : []
+    }
   }
   for (var o in query.filters){
     if (query.filters[o]){
-      filter.and.push({
-        "term" : { [o]: query.filters[o] }
+      query.filters[o].map((i) => {
+        filter.bool.should.push({
+          term : { [o]: i }
+        })
       })
     }
   }
   let filtered = {
-    "query" : match,
-    "filter" : filter
+    query : match,
+    filter : filter
   }
   if (query.comparator === 'FT'){
     delete filtered.query

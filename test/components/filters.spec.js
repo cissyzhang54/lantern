@@ -30,10 +30,8 @@ describe ('Filters component', function() {
       renderUserTypes:true
     });
 
-    const props = filters.props;
-    const deviceFilter = props.children[1].props.children;
-
-    expect(props.children.length).to.equal(4);
+    const regionFilter = filters.props.children.props.children[0].props.children;
+    const deviceFilter = filters.props.children.props.children[1].props.children;
 
     expect(deviceFilter.props.name).to.equal('Device');
     expect(deviceFilter.props.options.length).to.equal(3);
@@ -42,7 +40,6 @@ describe ('Filters component', function() {
 
     expect(TestUtils.isElementOfType(deviceFilter, Filter)).to.equal(true);
 
-    const regionFilter = props.children[0].props.children;
     expect(regionFilter.props.name).to.equal('Region');
     expect(regionFilter.props.options[0]).to.equal('uk');
     expect(TestUtils.isElementOfType(regionFilter, Filter)).to.equal(true);

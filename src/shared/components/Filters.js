@@ -81,7 +81,7 @@ class Filters extends React.Component {
         return {}
       }
       return (
-        <Col sm={2} xs={6} key={i}>
+        <Col xs={6} sm={3} key={i}>
           <Filter
             name={f.name}
             label={f.label}
@@ -93,9 +93,11 @@ class Filters extends React.Component {
     });
 
     return (
-      <div className='filters'>
-        {filterDropDowns}
-      </div>
+      <Col sm={10} xs={12} className='filters'>
+        <Row>
+          {filterDropDowns}
+        </Row>
+      </Col>
     );
   }
 }

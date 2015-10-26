@@ -41,11 +41,8 @@ export default class Modifier extends React.Component {
     }
   }
 
-  handleFilterChange (e) {
-    QueryActions.selectFilter({
-      key: e.target.name,
-      value: e.target.value
-    });
+  handleFilterChange (selectedFilters) {
+    QueryActions.selectFilter(selectedFilters);
   }
 
   render() {
