@@ -1,12 +1,10 @@
 import alt from '../alt';
 
-class QueryActions {
+class ArticleQueryActions {
   constructor() {
     this.generateActions(
         'addFilter',
         'removeFilter',
-        'selectComparator',
-        'removeComparator',
         'selectFilter',
         'selectDateRange',
         'selectUUID',
@@ -15,4 +13,4 @@ class QueryActions {
   }
 }
 
-export default alt.createActions(QueryActions);
+export default alt.createActions(ArticleQueryActions);

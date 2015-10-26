@@ -4,7 +4,7 @@ import Raven from 'raven-js';
 
 import ComparatorActions from '../actions/ComparatorActions';
 import ComparatorSource from '../sources/ComparatorSource';
-import QueryStore from '../stores/QueryStore';
+import ComparatorQueryStore from '../stores/ComparatorQueryStore';
 
 class ComparatorStore {
 
@@ -12,30 +12,30 @@ class ComparatorStore {
     this.data = null;
     this.errorMessage = null;
     this.loading = false;
-
-   // this.bindActions(ComparatorActions);
-
-    this.bindListeners({
-      handleUpdateData: ComparatorActions.UPDATE_DATA,
-      handleLoadingData: ComparatorActions.LOADING_DATA,
-      handleLoadingFailed: ComparatorActions.LOADING_FAILED,
-      handleDestroy: ComparatorActions.DESTROY
-    });
-
+    this.bindActions(ComparatorActions);
     this.exportAsync(ComparatorSource);
   }
 
-  handleLoadingData() {
+  listenToQuery() {
+    ComparatorQueryStore.listen(this.loadData.bind(this));
+  }
+
+  loadingData() {
     this.loading = true;
   }
 
-  handleUpdateData(newData) {
+  loadData(store) {
+    if (!store.query.comparator) return //comparatorWasRemoved
+    setImmediate(_ => this.getInstance().loadComparatorData(store.query));
+  }
+
+  updateData(newData) {
     this.loading = false;
     this.data = newData;
     this.errorMessage = null;
   }
 
-  handleLoadingFailed(error) {
+  loadingFailed(error) {
     this.loading = false;
     this.errorMessage = error.message;
 
@@ -44,7 +44,7 @@ class ComparatorStore {
     });
   }
 
-  handleDestroy() {
+  destroy() {
     this.loading = false;
     this.data = null;
     this.errorMessage = null;

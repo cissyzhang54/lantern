@@ -9,10 +9,10 @@ const tagStyle = {
 
 export default class Comparator extends React.Component {
   render() {
-    let currentComparator = (this.props.currentComparator || '').replace(' ','%20')
+    let currentComparator = (this.props.currentComparator || '')
     let tags = this.props.tags.map((tag, i) => {
 
-      let selected = currentComparator === tag.label.replace(' ','%20');
+      let selected = currentComparator === tag.label;
       let link = ['','articles', this.props.uuid, tag.url];
       if(selected){
         link.pop();

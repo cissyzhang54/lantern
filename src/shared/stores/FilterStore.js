@@ -3,8 +3,7 @@ import assign from 'object-assign';
 import Raven from 'raven-js';
 
 import ArticleActions from '../actions/ArticleActions';
-import QueryStore from '../stores/QueryStore.js';
-
+import ArticleQueryStore from '../stores/ArticleQueryStore.js';
 
 class FilterStore {
   constructor() {
@@ -18,9 +17,7 @@ class FilterStore {
     this.bindListeners({
       handleUpdateData : ArticleActions.UPDATE_DATA
     });
-
-    QueryStore.listen(this.handleQueryChange.bind(this));
-
+    ArticleQueryStore.listen(this.handleQueryChange.bind(this));
   }
 
   handleUpdateData(newData) {

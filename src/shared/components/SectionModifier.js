@@ -4,7 +4,8 @@ import Row from 'react-bootstrap/lib/Row';
 import Comparator from "./Comparator";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
-import QueryActions from '../actions/QueryActions';
+import ArticleQueryActions from '../actions/ArticleQueryActions';
+import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 
 const styles = {
   modifierWrapper : {
@@ -16,6 +17,10 @@ const styles = {
   }
 };
 
+function decode(uri){
+  return uri ? decodeURI(uri) : url
+}
+
 export default class Modifier extends React.Component {
 
   constructor(props) {
@@ -23,26 +28,29 @@ export default class Modifier extends React.Component {
   }
 
   handleDateRangeChange (dates) {
-    QueryActions.selectDateRange({
+    let updatedDates = {
       from: dates.startDate.format('YYYY-MM-DD'),
       to: dates.endDate.format('YYYY-MM-DD')
-    });
+    }
+    ArticleQueryActions.selectDateRange(updatedDates);
+    ComparatorQueryActions.selectDateRange(updatedDates);
   }
 
   handleComparatorChange (e) {
     let link = e.currentTarget.href.split('/')
     if(this.className.indexOf('selected') === -1) {
-      QueryActions.selectComparator({
-        comparator:link.pop(),
-        comparatorType:link.pop()
+      ComparatorQueryActions.selectComparator({
+        comparator:decode(link.pop()),
+        comparatorType:decode(link.pop())
       });
     } else {
-      QueryActions.removeComparator();
+      ComparatorQueryActions.removeComparator();
     }
   }
 
   handleFilterChange (selectedFilters) {
-    QueryActions.selectFilter(selectedFilters);
+    ArticleQueryActions.selectFilter(selectedFilters);
+    ComparatorQueryActions.selectFilter(selectedFilters);
   }
 
   render() {

@@ -19,9 +19,13 @@ router.post(`/comparators/:category(${CATEGORY_REGEX})/:comparatorType(${COMPTYP
 router.get('/search/:query', search);
 router.use(ErrorHandler.routes(router));
 
+function decode(uri){
+  return uri ? decodeURI(uri) : null
+}
+
 function getCategoryData(req, res, next) {
   const query = {
-    uuid: req.params.uuid,
+    uuid: decode(req.params.uuid),
     dateFrom: req.body.dateFrom,
     dateTo: req.body.dateTo,
     filters: req.body.filters,
@@ -42,6 +46,7 @@ function getCategoryData(req, res, next) {
 
 function getComparatorData(req, res, next) {
   const query = {
+    publishDate: req.query.publishDate,
     comparator: req.params.comparator,
     comparatorType: req.params.comparatorType,
     dateFrom: req.body.dateFrom,

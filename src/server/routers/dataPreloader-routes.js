@@ -9,6 +9,10 @@ let apiKey = process.env.LANTERN_API_KEY;
 const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
 const COMPTYPE_REGEX = 'topic|section|author|genre|global';
 
+function decode(uri){
+  return uri ? decodeURI(uri) : null
+}
+
 router.get(`/articles/:uuid(${UUID_REGEX})`, (req, res, next) => {
   return getArticleData(req, res)
     .then(() => next())
@@ -29,27 +33,34 @@ router.get(`/articles/:uuid(${UUID_REGEX})/:comparatorType(${COMPTYPE_REGEX})/:c
 
 
 function getArticleData(req, res){
-  let query = {
-    uuid: req.params.uuid,
-    dateFrom: null,
-    dateTo: null,
-    comparator: null,
-    comparatorType: null,
-    filters: {}
-  };
-
-  return dataApiUtils.getArticleData(query, apiKey)
+  return dataApiUtils.getArticleData({uuid: decode(req.params.uuid)}, apiKey)
     .then((data) => {
-      query.dateFrom = moment(data.article.published).toISOString();
-      query.dateTo = moment().toISOString();
+      let dateFrom = moment(data.article.published).toISOString();
+      let dateTo = moment().toISOString();
       res.locals.data = {
         "ArticleStore": {
           data: data
         },
-        "QueryStore" : {
-          query: query
+        "ArticleQueryStore" : {
+          query: {
+            uuid: decode(req.params.uuid),
+            dateFrom: dateFrom,
+            dateTo: dateTo,
+            filters: {}
+          }
+        },
+        "ComparatorQueryStore" : {
+          query: {
+            comparator: decode(req.params.comparator),
+            comparatorType: decode(req.params.comparatorType),
+            dateFrom: dateFrom,
+            dateTo: dateTo,
+            publishDate: moment(data.article.published).toISOString(),
+            filters: {}
+          }
         },
         "FilterStore" : {
+          query:{filters:{}},
           devices: data.article.devices.map(d => d[0]),
           regions: data.article.regions.map(d => d[0]),
           cohort: data.article.user_cohort.map(d => d[0]),
@@ -61,22 +72,11 @@ function getArticleData(req, res){
 }
 
 function getComparatorData(req, res){
-  let query = {
-    uuid: null,
-    dateFrom: moment(res.locals.data.ArticleStore.data.article.published).toISOString(),
-    dateTo:  moment().toISOString(),
-    comparator: req.params.comparator,
-    comparatorType: req.params.comparatorType,
-    filters: {}
-  };
-
-  return dataApiUtils.getComparatorData(query, apiKey)
+  return dataApiUtils.getComparatorData(res.locals.data.ComparatorQueryStore.query, apiKey)
     .then((data) => {
       res.locals.data.ComparatorStore = {
           data: data
       };
-      res.locals.data.QueryStore.query.comparator = query.comparator;
-      res.locals.data.QueryStore.query.comparatorType = query.comparatorType;
       return res;
     })
 }

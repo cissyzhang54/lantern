@@ -4,7 +4,8 @@ import Raven from 'raven-js';
 
 import ArticleActions from '../actions/ArticleActions';
 import ArticleSource from '../sources/ArticleSource';
-import QueryStore from '../stores/QueryStore';
+import ArticleQueryStore from '../stores/ArticleQueryStore';
+import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 
 class ArticleStore {
 
@@ -12,28 +13,31 @@ class ArticleStore {
     this.data = null;
     this.errorMessage = null;
     this.loading = false;
-    this.bindListeners({
-      handleUpdateData: ArticleActions.UPDATE_DATA,
-      handleLoadingData: ArticleActions.LOADING_DATA,
-      handleLoadingFailed: ArticleActions.LOADING_FAILED,
-      handleDestroy: ArticleActions.DESTROY
-    });
-
+    this.bindActions(ArticleActions);
     this.exportAsync(ArticleSource);
-
   }
 
-  handleLoadingData() {
+  listenToQuery() {
+    ArticleQueryStore.listen(this.loadData.bind(this));
+  }
+
+  loadData(store) {
+    if (!store.query.uuid) return
+    this.getInstance().loadArticleData(store.query);
+  }
+
+  loadingData() {
     this.loading = true;
   }
 
-  handleUpdateData(newData) {
+  updateData(newData) {
     this.loading = false;
     this.data = newData;
     this.errorMessage = null;
+    setImmediate(_ => ComparatorQueryActions.setPublishDate(newData.article.published))
   }
 
-  handleLoadingFailed(error) {
+  loadingFailed(error) {
     this.loading = false;
     this.errorMessage = error.message;
     Raven.captureException(error, {
@@ -41,7 +45,7 @@ class ArticleStore {
     });
   }
 
-  handleDestroy() {
+  destroy() {
     this.loading = false;
     this.data = null;
     this.errorMessage = null;

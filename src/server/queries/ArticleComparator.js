@@ -1,7 +1,7 @@
 import assert from 'assert';
 import moment from 'moment';
 
-export default function ComparatorPageViewsQuery(query) {
+export default function ArticleComparatorQuery(query) {
 
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
@@ -18,13 +18,20 @@ export default function ComparatorPageViewsQuery(query) {
   assert.equal(typeof query.comparatorType, 'string',
     "argument 'query' must contain a 'comparatorType' string property");
 
+  assert.equal(typeof query.publishDate, 'string',
+    "argument 'query' must contain a 'publishDate' string property");
+
+  let msFrom = moment(query.dateFrom).diff(moment(query.publishDate));
+  let msTo = moment(query.dateTo).diff(moment(query.publishDate));
+  let fromDuration = moment.duration(msFrom).asMinutes();
+  let toDuration = moment.duration(msTo).asMinutes();
   let comparatorTypes = {
     genre : {  genre: query.comparator  },
     section : {  sections: query.comparator  },
     topic : {  topics: query.comparator  },
     author : {  authors: query.comparator  }
   }
-  let match = {
+  let matchComparatorType = {
       match : comparatorTypes[query.comparatorType]
   }
   let filter = {
@@ -32,9 +39,9 @@ export default function ComparatorPageViewsQuery(query) {
       must : [
         {
           range : {
-            view_timestamp : {
-              from: query.dateFrom,
-              to: query.dateTo
+            time_since_publish : {
+              from: fromDuration,
+              to: toDuration
             }
           }
         }
@@ -51,8 +58,21 @@ export default function ComparatorPageViewsQuery(query) {
       })
     }
   }
+  let matchPublishDate = {
+    "range" : {
+      "initial_publish_date" : {
+        from: moment(query.publishDate).subtract(30,'days'),
+        to: query.publishDate
+      }
+    }
+  }
+  let matchAll = {
+    bool: {
+      must: [matchPublishDate, matchComparatorType ]
+    }
+  }
   let filtered = {
-    query : match,
+    query : matchAll,
     filter : filter
   }
   if (query.comparator === 'FT'){
@@ -65,6 +85,12 @@ export default function ComparatorPageViewsQuery(query) {
     },
     "size": 1,
     "aggs" : {
+      page_views_since_publish: {
+        histogram: {
+          field: "time_since_publish",
+          interval: calculateMinuteInterval(query)
+        }
+      },
       "page_views_over_time" : {
         "date_histogram" : {
           "field" : "view_timestamp",
@@ -181,4 +207,21 @@ function calculateInterval(query) {
   } else {
     return 'week';
   }
+}
+
+function calculateMinuteInterval(query) {
+  let from = moment(query.dateFrom);
+  let to = moment(query.dateTo);
+  let span = moment.duration(to - from);
+
+  if (span <= moment.duration(1, 'day')) {
+    return 60;
+  } else if (span <= moment.duration(1, 'week')) {
+    return 60;
+  } else if (span <= moment.duration(6, 'month')) {
+    return 60*24;
+  } else {
+    return 60*24*7;
+  }
+
 }

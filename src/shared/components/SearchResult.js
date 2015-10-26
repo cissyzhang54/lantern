@@ -21,6 +21,9 @@ export default class SearchItem extends React.Component {
       <Link
         to={'/articles/' + result.article_uuid}
         key={result._id}
+        onClick={this.props.handleClick}
+        uuid={result.article_uuid}
+        publishDate={result.initial_publish_date}
         >
         <ListGroupItem header={result.title}>
           <Row>
