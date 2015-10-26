@@ -3,7 +3,7 @@ import ArticlesQuery from '../../src/server/queries/Articles';
 
 describe('Articles Query', () => {
   it('should be a function', () => {
-    expect(ArticlesQuery).to.be.a.function;
+    expect(ArticlesQuery).to.be.a('function')
   });
   it('should not throw if passed a correct query object', () => {
     const query = {

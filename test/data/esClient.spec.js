@@ -4,11 +4,11 @@ import * as esClient from '../../src/server/esClient';
 
 describe('Elasticsearch Client', () => {
   it('should be a function', () => {
-    expect(esClient).to.be.a.object;
-    expect(esClient.getIndicies).to.be.a.function;
-    expect(esClient.runArticleQuery).to.be.a.function;
-    expect(esClient.runComparatorQuery).to.be.a.function;
-    expect(esClient.runSearchQuery).to.be.a.function;
+    expect(esClient).to.be.a('object');
+    expect(esClient.getIndicies).to.be.a('function');
+    expect(esClient.runArticleQuery).to.be.a('function');
+    expect(esClient.runComparatorQuery).to.be.a('function');
+    expect(esClient.runSearchQuery).to.be.a('function');
   });
 
   it('should return a rejected promise if given query to runArticleQuery', (done) => {
@@ -36,11 +36,11 @@ describe('Elasticsearch Client', () => {
 
   it('should always return a promise', () => {
     let p = esClient.runArticleQuery({});
-    expect(p.then).to.be.a.function;
+    expect(p.then).to.be.a('function');
     let q = esClient.runSearchQuery({});
-    expect(q.then).to.be.a.function;
+    expect(q.then).to.be.a('function');
     let r = esClient.runComparatorQuery({});
-    expect(q.then).to.be.a.function;
+    expect(q.then).to.be.a('function');
   });
 
 });
