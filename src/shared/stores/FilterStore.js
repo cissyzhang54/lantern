@@ -43,6 +43,16 @@ class FilterStore {
 
 export default alt.createStore(FilterStore, 'FilterStore');
 
+
+
 function getKeys(data) {
-  return data.map(d => d[0]);
+  let d;
+  let keys = [];
+  for (let i = 0; i < data.length; i++) {
+    d = data[i];
+    if (d[1]) keys.push(d[0])
+  }
+  return keys
 }
+
+export { getKeys as getKeys };
