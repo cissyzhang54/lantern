@@ -1,7 +1,7 @@
 import express from 'express';
 import request from "superagent";
 import moment from 'moment';
-
+import {getKeys} from '../../shared/stores/FilterStore';
 import dataApiUtils from '../../shared/utils/DataAPIUtils';
 
 let router = express.Router();
@@ -60,11 +60,13 @@ function getArticleData(req, res){
           }
         },
         "FilterStore" : {
-          query:{filters:{}},
-          devices: data.article.devices.map(d => d[0]),
-          regions: data.article.regions.map(d => d[0]),
-          cohort: data.article.user_cohort.map(d => d[0]),
-          referrers: data.article.referrer_types.map(d => d[0])
+          query: {
+            filters: {}
+          },
+          devices: getKeys(data.article.devices),
+          regions: getKeys(data.article.regions),
+          cohort: getKeys(data.article.user_cohort),
+          referrers: getKeys(data.article.referrer_types)
         }
       };
       return res;
