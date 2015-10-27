@@ -1,6 +1,8 @@
 import React from "react";
 import Link from 'react-router/lib/components/Link';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Popover from 'react-bootstrap/lib/Popover';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
 import responsiveStyles from '../utils/responsiveStyles';
 import LogoSVG from '../components/LogoSVG';
@@ -40,7 +42,8 @@ var controllerStyles = {
       display: 'block',
       fontWeight: 800,
       backgroundColor: 'rgba(255, 0, 0, 0.15)',
-      color: 'red'
+      color: 'red',
+      cursor: 'pointer'
     }
   },
   '(max-width: 500px)' : {
@@ -80,12 +83,33 @@ export default class NavBar extends React.Component {
     for (i; i < numrows; i++) {
       rows.push(
         <li style={styles.navitem} key={i}>
-          <Link to={navItems[i].link} style={styles.navlink}>{navItems[i].title}</Link>
+          <Link
+            to={navItems[i].link}
+            style={styles.navlink}
+            >
+            {navItems[i].title}
+          </Link>
         </li>);
     }
     rows.push(
       <li className='pull-right' key={i++}>
-        <div style={styles.alpha}>ALPHA</div>
+        <OverlayTrigger
+          trigger="click"
+          placement="bottom"
+          overlay={
+            <Popover title="What is alpha?">
+              Lantern is currently in an alpha state and is not a live system.
+              The data used does not represent the live FT.com.
+              There will be ongoing changes, without warning,
+              to both the data and the interface,
+              as development continues.
+            </Popover>
+            }
+          >
+          <div style={styles.alpha}>
+            ALPHA <Glyphicon glyph="question-sign" />
+          </div>
+        </OverlayTrigger>
       </li>
     );
     rows.push(
