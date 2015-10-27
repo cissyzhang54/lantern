@@ -2,6 +2,9 @@ import {expect} from 'chai';
 import React from 'react';
 import {createComponent} from '../createComponent';
 import Filter from '../../src/shared/components/Filter';
+import Select from 'react-select';
+
+const TestUtils = React.addons.TestUtils;
 
 describe ('Filter component', function() {
   let filter;
@@ -17,10 +20,7 @@ describe ('Filter component', function() {
 
   it ('Should render component', function() {
     const props = filter.props;
-    const componentType = filter.type; // select
-
-    expect(props.type).to.be.a.function;
-
+    expect(TestUtils.isElementOfType(filter, Select)).to.equal(true);
     expect(props.name).to.equal('Countries');
 
     props.options.map((o, i) => {

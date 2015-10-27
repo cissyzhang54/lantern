@@ -3,8 +3,8 @@ import SearchQuery from '../../src/server/queries/Search';
 
 describe('Search Query', () => {
   it('should be a function', () => {
-    expect(SearchQuery).to.be.a.function;
-    expect(() => SearchQuery({term:'test'})).to.be.a.function;
+    expect(SearchQuery).to.be.a('function')
+    expect(() => SearchQuery({term:'test'})).to.be.a('function');
     expect(() => SearchQuery({term:'test'})).not.to.throw();
   });
   it('should throw if passed no query string', () => {

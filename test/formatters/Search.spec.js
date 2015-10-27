@@ -5,29 +5,29 @@ import ESSearchResults from '../fixtures/data/search_results';
 
 describe('Search Formatter', function () {
   it('should be a function', function () {
-    expect(SearchFormat).to.be.a.function;
+    expect(SearchFormat).to.be.a('function');
   });
   it('should return a promise', function () {
     let p = SearchFormat();
-    expect(p.then).to.be.a.function;
+    expect(p.then).to.be.a('function')
     p = SearchFormat(null);
-    expect(p.then).to.be.a.function;
+    expect(p.then).to.be.a('function')
     p = SearchFormat(undefined);
-    expect(p.then).to.be.a.function
+    expect(p.then).to.be.a('function')
     p = SearchFormat(123);
-    expect(p.then).to.be.a.function
+    expect(p.then).to.be.a('function')
     p = SearchFormat('123');
-    expect(p.then).to.be.a.function
+    expect(p.then).to.be.a('function')
     p = SearchFormat([]);
-    expect(p.then).to.be.a.function
+    expect(p.then).to.be.a('function')
     p = SearchFormat({});
-    expect(p.then).to.be.a.function
+    expect(p.then).to.be.a('function')
   });
   it('should return a promise when called with an empty array', function (done) {
     SearchFormat({total:0, hits:[]})
       .then((data) => {
         expect(data.total).to.equal(0);
-        expect(data.results).to.be.a.array;
+        expect(data.results).to.be.a('array')
         expect(data.results.length).to.equal(0);
         done();
       })
@@ -37,7 +37,7 @@ describe('Search Formatter', function () {
     SearchFormat(ESSearchResults.hits)
       .then((data) => {
         expect(data.total).to.equal(116);
-        expect(data.results).to.be.a.array;
+        expect(data.results).to.be.a('array');
         expect(data.results.length).to.equal(10);
         done();
       })
