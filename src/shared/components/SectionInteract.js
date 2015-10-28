@@ -15,6 +15,11 @@ let config = {
     metricType: 'integer',
     label: 'Social Shares',
     size: 'small'
+  },
+  total_links_clicked: {
+    metricType: 'integer',
+    label: 'Total Links Clicked',
+    size: 'small'
   }
 }
 
@@ -45,6 +50,7 @@ export default class SectionHeadlineStats extends React.Component {
     let subscription = renderMetric('subscription', subscriptions);
 
     let social_shares_total = renderMetric('social_shares', data.social_shares_total, comparatorData.comparator, comparatorData.social_shares_total);
+    let links_clicked_total = renderMetric('total_links_clicked', data.total_links_clicked, comparatorData.comparator, comparatorData.total_links_clicked);
 
     return ( <div className='sectionInteractiveStats' >
       <Row>
@@ -52,7 +58,7 @@ export default class SectionHeadlineStats extends React.Component {
 
         </Col>
         <Col xs={12} sm={4} >
-
+          {links_clicked_total}
         </Col>
         <Col xs={12} sm={4} >
           {social_shares_total}

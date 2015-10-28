@@ -26,6 +26,7 @@ let config = {
     'article:interact' : false,
     'article:subscription' : true,
     'article:social_shares' : true,
+    'article:total_links_clicked' : true,
     'article:modifier:filters:UserCohort' : true,
     'article:modifier:filters:Referrers' : true,
     'article:modifier:filters:Region' : true,
