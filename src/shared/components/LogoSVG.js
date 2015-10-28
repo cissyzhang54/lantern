@@ -69,7 +69,7 @@ export default class LogoSVG extends React.Component {
     }
     styles = assign({}, optStyles)
     return (
-      <Link to="/" style={styles.link}>
+      <Link to="/" style={styles.link} title="Lantern Homepage">
       <svg style={logoStyles} viewBox={viewBox}>
       <g id="logo">
         <circle fill="#FFFFFF" stroke="#000000" strokeWidth="7" strokeMiterlimit="10" cx="109.5" cy="109.5" r="106"/>

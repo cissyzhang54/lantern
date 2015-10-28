@@ -8,7 +8,6 @@ describe ('PieChart component', function() {
 
   beforeEach(function() {
     pieChart = createComponent(PieChart, {
-      identifier : 'testIdentifierOn',
       title : 'My title'
     });
   });

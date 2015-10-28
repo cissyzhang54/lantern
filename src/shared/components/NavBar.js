@@ -97,7 +97,7 @@ export default class NavBar extends React.Component {
           trigger="click"
           placement="bottom"
           overlay={
-            <Popover title="What is alpha?">
+            <Popover title="What is alpha?" id="alpha-description">
               Lantern is currently in an alpha state and is not a live system.
               The data used does not represent the live FT.com.
               There will be ongoing changes, without warning,
@@ -106,7 +106,7 @@ export default class NavBar extends React.Component {
             </Popover>
             }
           >
-          <div style={styles.alpha}>
+          <div style={styles.alpha} aria-describedby="alpha-description">
             ALPHA <Glyphicon glyph="question-sign" />
           </div>
         </OverlayTrigger>

@@ -8,7 +8,6 @@ describe ('BarChart component', function() {
 
   beforeEach(function() {
     barChart = createComponent(BarChart, {
-      identifier : 'testIdentifierOn'
     });
   });
 

@@ -11,7 +11,6 @@ describe ('DateRange component', function() {
 
   beforeEach(function() {
     dateRange = createComponent(DateRange, {
-      identifier: 'testIdentifierOn'
     });
   });
 
