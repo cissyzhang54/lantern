@@ -31,7 +31,7 @@ export default function ComparatorPageViewsQuery(query) {
     "and" : [
       {
         range : {
-          view_timestamp : {
+          event_date : {
             from: query.dateFrom,
             to: query.dateTo
           }
@@ -53,7 +53,6 @@ export default function ComparatorPageViewsQuery(query) {
   if (query.comparator === 'FT'){
     delete filtered.query
   }
-
   return {
     "query" : {
       "filtered" : filtered
@@ -70,6 +69,20 @@ export default function ComparatorPageViewsQuery(query) {
           filtered: {
             terms: {
               field: "event_category"
+            }
+          }
+        }
+      },
+      page_clicks : {
+        filter: {
+          term: {
+            "event_type" : "links clicked"
+          }
+        },
+        aggs: {
+          total_links_clicked : {
+            sum: {
+              "field" : "event_value"
             }
           }
         }

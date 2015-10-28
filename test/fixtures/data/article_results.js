@@ -1000,6 +1000,12 @@ export default [{
           }
         ]
       }
+    },
+    "page_clicks": {
+      "doc_count": 4,
+      "total_links_clicked": {
+        "value": 4
+      }
     }
   }
 }];

@@ -36,7 +36,8 @@ export default function formatData(data) {
           is_first_visit : formatAggregation('is_first_visit', articleData),
           internal_referrer_types: formatFilteredAggregation('internal_referrer_types', articleData),
           social_shares_total : eventData.aggregations.social_shares.doc_count,
-          social_shares_types : formatFilteredAggregation("social_shares", eventData)
+          social_shares_types : formatFilteredAggregation("social_shares", eventData),
+          total_links_clicked : eventData.aggregations.page_clicks.total_links_clicked.value
         }
       };
       resolve(results);

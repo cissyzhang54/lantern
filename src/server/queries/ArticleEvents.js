@@ -28,7 +28,6 @@ export default function PageEventsQuery(query) {
       }
     ]
   }
-
   for (var o in query.filters){
     if (query.filters[o]){
       filter.and.push({
@@ -58,6 +57,20 @@ export default function PageEventsQuery(query) {
           filtered: {
             terms: {
               field: "event_category"
+            }
+          }
+        }
+      },
+      page_clicks : {
+        filter: {
+          term: {
+            "event_type" : "links clicked"
+          }
+        },
+        aggs: {
+          total_links_clicked : {
+            sum: {
+              "field" : "event_value"
             }
           }
         }
