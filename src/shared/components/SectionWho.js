@@ -17,9 +17,9 @@ export default class SectionWho extends React.Component {
     }
 
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
-    let [rfvData, rfvID, rfvKeys] = dataFormatter.getMetric('rfv_cluster', 'Views')
-    let [returningData, returningID, returningKeys] = dataFormatter.getMetric('is_first_visit', 'Views', 'New', 'Returning')
-    let [cohortData, cohortID, cohortKeys] = dataFormatter.getMetric('user_cohort', 'Views')
+    let [rfvData, rfvID, rfvKeys] = dataFormatter.getPCTMetric('rfv_cluster', 'Views')
+    let [returningData, returningID, returningKeys] = dataFormatter.getPCTMetric('is_first_visit', 'Views', 'New', 'Returning')
+    let [cohortData, cohortID, cohortKeys] = dataFormatter.getPCTMetric('user_cohort', 'Views')
 
     return (
       <div className='sectionWho'>
@@ -37,6 +37,7 @@ export default class SectionWho extends React.Component {
               category={cohortID}
               yLabel="Page Views"
               xLabel="User Type"
+              usePercentages={true}
             />
           </Col>
           <Col xs={12} sm={6}>
@@ -47,6 +48,7 @@ export default class SectionWho extends React.Component {
               category={returningID}
               yLabel="Page Views"
               xLabel="User Type"
+              usePercentages={true}
             />
           </Col>
         </Row>
@@ -59,6 +61,7 @@ export default class SectionWho extends React.Component {
               category={rfvID}
               yLabel="Page Views"
               xLabel="User Type"
+              usePercentages={true}
               />
           </Col>
         </Row>

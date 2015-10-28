@@ -33,9 +33,9 @@ export default class SectionReferrers extends React.Component {
     let refUrls = this.props.data.referrer_urls.map(getReferrerUrls);
     let internalRefUrls = this.props.data.internal_referrer_urls.map(getReferrerUrls);
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
-    let [refData, refID, refKeys] = dataFormatter.getMetric('referrer_types', 'Views')
-    let [socialData, socialID, socialKeys] = dataFormatter.getMetric('social_referrers', 'Views')
-    let [internalData, internalID, internalKeys] = dataFormatter.getMetric('internal_referrer_types', 'Views')
+    let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrer_types', 'Views')
+    let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('social_referrers', 'Views')
+    let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internal_referrer_types', 'Views')
 
     let internalRefTypeChart = this.props.renderInternalRefTypes ? <Col xs={12} sm={6}>
       <h6> Internal Referrer Types</h6>
@@ -44,7 +44,9 @@ export default class SectionReferrers extends React.Component {
         keys={internalKeys}
         category={internalID}
         yLabel="Page Views"
-        xLabel="Referrer" />
+        xLabel="Referrer"
+        usePercentages={true}
+      />
       </Col> : {};
 
     return (<div className='sectionReferrers'>
@@ -69,6 +71,7 @@ export default class SectionReferrers extends React.Component {
             category={refID}
             yLabel="Page Views"
             xLabel="Referrer"
+            usePercentages={true}
             />
           <h6>Social Networks</h6>
           <BarChart
@@ -77,6 +80,7 @@ export default class SectionReferrers extends React.Component {
             category={socialID}
             yLabel="Page Views"
             xLabel="Social Network"
+            usePercentages={true}
             />
         </Col>
         <Col xs={12} sm={6}>
