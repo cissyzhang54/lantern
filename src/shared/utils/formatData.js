@@ -77,7 +77,7 @@ export default class formatData {
       d = data[i];
       for (let j = 0; j < keys.length; j++) {
         k = keys[j];
-        d[k + ' %'] = Math.floor((d[k] / sums[k]) * 100);
+        d[k + ' %'] = ((d[k] / sums[k]) * 100).toFixed(1);
       }
     }
 
