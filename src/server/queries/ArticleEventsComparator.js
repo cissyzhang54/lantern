@@ -90,14 +90,28 @@ export default function ComparatorPageViewsQuery(query) {
       page_comments : {
         filter: {
           term: {
-            "event_type" : "comment",
-            "event_category" : "posted"
+            "event_type": "comment",
+            "event_category": "posted"
           }
         },
         aggs: {
-          total : {
+          total: {
             sum: {
-              "field" : "event_value"
+              "field": "event_value"
+            }
+          }
+        }
+      },
+      "scroll_depth" : {
+        "filter": {
+          "term": {
+            "event_type" : "scroll"
+          }
+        },
+        "aggs": {
+          "average_scroll" : {
+            "avg":{
+              "field": "event_value"
             }
           }
         }

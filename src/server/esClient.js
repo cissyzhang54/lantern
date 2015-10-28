@@ -50,7 +50,7 @@ export function runArticleQuery(queryData) {
       queryData.dateTo = moment().toISOString();
     }
     query = queryData;
-    return retrievePageView(queryData)
+    return retrieveArticleData(queryData)
   }).then((pageViewData) => {
     pageViews = pageViewData;
     return retrieveEventsData(query);
@@ -67,7 +67,7 @@ export function runComparatorQuery(queryData) {
   }
 
   let comparatorData;
-  return retrievePageView(queryData).then(function(comparator){
+  return retrieveArticleData(queryData).then(function(comparator){
     comparatorData = comparator;
     return retrieveEventsData(queryData);
   }).then(function(eventsComparatorData){
@@ -96,7 +96,7 @@ export function runSearchQuery(queryData) {
   });
 }
 
-function retrievePageView(queryData){
+function retrieveArticleData(queryData){
   return new Promise((resolve, reject) => {
     let queryObject = queryData.comparator ?
       ArticleComparatorQuery(queryData) :

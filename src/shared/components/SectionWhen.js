@@ -8,6 +8,16 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
+const styles = {
+  infoIcon : {
+    'fontSize' : '15px',
+    'color': '#039',
+    'position':'Absolute',
+    'left': '-4px'
+
+  }
+}
+
 export default class SectionWhen extends React.Component {
 
   constructor(props) {
@@ -61,7 +71,7 @@ export default class SectionWhen extends React.Component {
                   }
               >
               <span>
-                <Glyphicon glyph="question-sign" />
+                <Glyphicon glyph="question-sign" style={styles.infoIcon} />
               </span>
             </OverlayTrigger>
             <span >When did users access the article?</span>

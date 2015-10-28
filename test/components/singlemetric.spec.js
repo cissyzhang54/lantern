@@ -45,6 +45,20 @@ describe ('SingleMetric component', function() {
     expect(timeCommparator[1].props.children).to.equal('5%');
   });
 
+  it ('Should render percentage variant', () => {
+    let reactComponent = createComponent(SingleMetric, {
+      metric: 80,
+      comparatorMetric: 100,
+      metricType: 'percentage',
+    });
+    const props = reactComponent.props;
+    const metric = props.children[0];
+    const comparator =  metric.props.children[2].props.children;
+
+    expect(metric.props.children[0]).to.equal('80%');
+    expect(comparator[1].props.children).to.equal('20%');
+  });
+
   it ('Should render properly when metric is zero but comparator is greater', () => {
     let zeroComp = createComponent(SingleMetric, {
       metric: 0,

@@ -7,9 +7,7 @@ let config = {
   gaTrackingID: 'UA-60698836-4',
   features : {
     'home:recentArticles' : true,
-    'article:wordCount' : true,
-    'article:imageCount' : true,
-    'article:bodyLinksCount' : true,
+    'article:scroll_depth' : true,
     'article:timeOnPage' : true,
     'article:pageViews' : true,
     'article:socialUsers' : true,

@@ -27,7 +27,7 @@ export default function formatData(data) {
 
   return new Promise((resolve, reject) => {
     try {
-      let [articleData, metaData, eventsData] = data;
+      let [articleData, metaData, eventData] = data;
       let results = {
         article: {
           title: metaData.title,
@@ -59,10 +59,11 @@ export default function formatData(data) {
           internal_referrer_types: formatFilteredAggregation('internal_referrer_types', articleData),
           next_internal_url : formatAggregation('next_internal_url', articleData),
           is_subscription : formatAggregation('is_subscription', articleData),
-          social_shares_total: eventsData.aggregations.social_shares.doc_count,
-          social_shares_types : formatFilteredAggregation('social_shares', eventsData),
-          total_links_clicked : eventsData.aggregations.page_clicks.total_links_clicked.value,
-          total_comments_posted : eventsData.aggregations.page_comments.total.value
+          total_comments_posted : eventData.aggregations.page_comments.total.value,
+          social_shares_total: eventData.aggregations.social_shares.doc_count,
+          social_shares_types : formatFilteredAggregation('social_shares', eventData),
+          total_links_clicked : eventData.aggregations.page_clicks.total_links_clicked.value,
+          scroll_depth: Math.round(eventData.aggregations.scroll_depth.average_scroll.value)
         }
       };
 

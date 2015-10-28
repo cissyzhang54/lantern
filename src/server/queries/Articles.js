@@ -59,15 +59,15 @@ export default function PageViewsQuery(query) {
           interval: calculateMinuteInterval(query)
         }
       },
-      page_views_over_time: {
-        date_histogram: {
-          field: "view_timestamp",
-          interval: calculateInterval(query),
-          min_doc_count: 0
+      "page_views_over_time" : {
+        "date_histogram" : {
+          "field" : "view_timestamp",
+          interval : calculateInterval(query),
+          min_doc_count : 0
         }
       },
-      avg_time_on_page: {
-        avg: {
+      avg_time_on_page : {
+        avg : {
           field: "time_on_page"
         }
       },
@@ -76,19 +76,19 @@ export default function PageViewsQuery(query) {
           field: "channel"
         }
       },
-      referrer_types: {
-        filter: {
-          not: {
-            term: {
-              referrer_type: "internal"
+      referrer_types : {
+        filter : {
+          not : {
+            term : {
+              referrer_type : "internal"
             }
           }
         },
         aggs: {
-          filtered: {
+          filtered : {
             terms: {
               field: "referrer_type",
-              min_doc_count: 0
+              min_doc_count : 0
             }
           }
         }

@@ -5,21 +5,6 @@ import SingleMetric from "./SingleMetric";
 import FeatureFlag from '../utils/featureFlag';
 
 let config = {
-  wordCount: {
-    metricType: 'integer',
-    label: 'Article Wordcount',
-    size: 'small'
-  },
-  imageCount: {
-    metricType: 'integer',
-    label: 'Article Wordcount',
-    size: 'small'
-  },
-  bodyLinksCount: {
-    metricType: 'integer',
-    label: 'Body Links',
-    size: 'small'
-  },
   timeOnPage: {
     metricType: 'time',
     label: 'Time on Page',
@@ -33,6 +18,11 @@ let config = {
   socialUsers: {
     metricType: 'integer',
     label: 'Social Users',
+    size: 'large'
+  },
+  scroll_depth: {
+    metricType: 'percentage',
+    label: 'Scroll Depth',
     size: 'large'
   }
 }
@@ -60,34 +50,24 @@ export default class SectionHeadlineStats extends React.Component {
 
     let data = this.props.data;
     let comparatorData = this.props.comparatorData ;
-    let wordCount = renderMetric('wordCount', data.wordCount);
-    let imageCount = renderMetric('imageCount', data.imageCount)
-    let bodyLinksCount = renderMetric('bodyLinksCount', data.bodyLinksCount)
     let timeOnPage = renderMetric('timeOnPage', data.timeOnPage, comparatorData.comparator, comparatorData.timeOnPage)
     let pageViews = renderMetric('pageViews', data.pageViews, comparatorData.comparator, comparatorData.category_average_view_count)
     let socialUsers = renderMetric('socialUsers', data.socialReaders)
+    let scrollDepth = renderMetric('scroll_depth', data.scroll_depth, comparatorData.comparator, comparatorData.scroll_depth)
 
     return ( <Row className='sectionHeadlineStats' >
-      <Col xs={12} sm={3} >
-        <Col xs={4} sm={12} >
-          {wordCount}
-        </Col>
-        <Col xs={4} sm={12} >
-          {imageCount}
-        </Col>
-        <Col xs={4} sm={12} >
-          {bodyLinksCount}
-        </Col>
-      </Col>
-      <Col xs={12} sm={9} >
-        <Col xs={12} sm={4} >
+      <Col xs={12} >
+        <Col xs={12} sm={3} >
           {timeOnPage}
         </Col>
-        <Col xs={12} sm={4} >
+        <Col xs={12} sm={3} >
           {pageViews}
         </Col>
-        <Col xs={12} sm={4} >
+        <Col xs={12} sm={3} >
           {socialUsers}
+        </Col>
+        <Col xs={12} sm={3} >
+          {scrollDepth}
         </Col>
       </Col>
     </Row>);

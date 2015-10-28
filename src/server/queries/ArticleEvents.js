@@ -61,16 +61,32 @@ export default function PageEventsQuery(query) {
           }
         }
       },
+
       page_clicks : {
         filter: {
           term: {
-            "event_type" : "links clicked"
+            "event_type": "links clicked"
           }
         },
         aggs: {
-          total_links_clicked : {
+          total_links_clicked: {
             sum: {
-              "field" : "event_value"
+              "field": "event_value"
+            }
+          }
+        }
+      },
+
+      "scroll_depth" : {
+        "filter": {
+          "term": {
+            "event_type" : "scroll"
+          }
+        },
+        "aggs": {
+          "average_scroll" : {
+            "avg":{
+              "field": "event_value"
             }
           }
         }
