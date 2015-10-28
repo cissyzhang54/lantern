@@ -17,7 +17,14 @@ export default class BarChart extends React.Component {
   drawChart() {
     let node = React.findDOMNode(this.refs.chartContainer);
     let json = this.props.data;
-
+    let keys = this.props.keys;
+    let yLabel = this.props.yLabel;
+    if (this.props.usePercentages) {
+      keys = keys.map((k) => {
+        return k + ' %';
+      });
+      yLabel += ' (%)';
+    }
     this.chart = c3.generate({
       bindto: node,
       transition: {
@@ -28,7 +35,7 @@ export default class BarChart extends React.Component {
         json: json,
         keys: {
           x: this.props.category,
-          value: this.props.keys
+          value: keys
         }
       },
       axis: {
@@ -38,7 +45,24 @@ export default class BarChart extends React.Component {
           type: 'category'
         },
         y: {
-          label: this.props.yLabel
+          label: yLabel,
+          max: this.props.usePercentages ? 100 : null,
+          min: this.props.usePercentages ? 0 : null,
+          padding: {
+            top: 0,
+            bottom: 0
+          }
+        }
+      },
+      tooltip : {
+        format : {
+          value: (value, ratio, id, index) => {
+            if (id.indexOf('%') >= 0) {
+              var val = json[index][id.replace(' %', '')];
+              return value + '% (' + val + ')';
+            }
+            return value;
+          }
         }
       },
       title: this.props.title || null
@@ -82,7 +106,8 @@ BarChart.defaultProps = {
   xLabel: 'Thing',
   yLabel: 'Value of the Thing',
   reverseAxis: true,
-  className: 'barChart'
+  className: 'barChart',
+  usePercentages: false
 };
 
 BarChart.propTypes = {

@@ -30,7 +30,7 @@ export default class SectionWhere extends React.Component {
       return <div></div>
     }
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
-    let [metricData, id, keys] = dataFormatter.getMetric('is_last_page', 'Views', 'Exited FT.com', 'Stayed on FT.com')
+    let [metricData, id, keys] = dataFormatter.getPCTMetric('is_last_page', 'Views', 'Exited FT.com', 'Stayed on FT.com')
     let intUrls = this.props.data.next_internal_url.map(getReferrerUrls);
 
     return (<div className='sectionNext'>
@@ -48,6 +48,7 @@ export default class SectionWhere extends React.Component {
             category={id}
             yLabel="Users"
             xLabel=""
+            usePercentages={true}
             />
         </Col>
         <Col xs={12} sm={6}>

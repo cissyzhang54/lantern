@@ -59,4 +59,28 @@ export default class formatData {
     }
     return [metricData, this.id, keys]
   }
+
+  getPCTMetric(metricName, metricLabel, tLabel, fLabel) {
+    let [data, id, keys] = this.getMetric(...arguments);
+    let sums = {};
+    let d, k;
+    for (let i = 0; i < data.length; i++) {
+      d = data[i];
+      for (let j = 0; j < keys.length; j++) {
+        k = keys[j];
+        if (!sums.hasOwnProperty(k)) sums[k] = 0;
+        sums[k] += d[k]
+      }
+    }
+
+    for (let i = 0; i < data.length; i ++) {
+      d = data[i];
+      for (let j = 0; j < keys.length; j++) {
+        k = keys[j];
+        d[k + ' %'] = Math.floor((d[k] / sums[k]) * 100);
+      }
+    }
+
+    return [data, this.id, keys];
+  }
 }

@@ -18,7 +18,7 @@ export default class SectionWhere extends React.Component {
     }
 
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
-    let [regionData, regionID, regionKeys] = dataFormatter.getMetric('regions', 'Views')
+    let [regionData, regionID, regionKeys] = dataFormatter.getPCTMetric('regions', 'Views')
 
     return (<div className='sectionWhere'>
       <Row>
@@ -39,6 +39,7 @@ export default class SectionWhere extends React.Component {
             category={regionID}
             yLabel="Page Views"
             xLabel="Regions"
+            usePercentages={true}
             />
         </Col>
         <Col xs={12} sm={6}>
