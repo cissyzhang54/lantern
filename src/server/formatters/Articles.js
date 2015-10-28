@@ -61,7 +61,8 @@ export default function formatData(data) {
           is_subscription : formatAggregation('is_subscription', articleData),
           social_shares_total: eventsData.aggregations.social_shares.doc_count,
           social_shares_types : formatFilteredAggregation('social_shares', eventsData),
-          total_links_clicked : eventsData.aggregations.page_clicks.total_links_clicked.value
+          total_links_clicked : eventsData.aggregations.page_clicks.total_links_clicked.value,
+          total_comments_posted : eventsData.aggregations.page_comments.total.value
         }
       };
 

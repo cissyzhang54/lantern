@@ -16,7 +16,6 @@ export default function formatData(data) {
     try {
       let [articleData, eventData] = data;
       eventData.aggregations.distinct_articles = articleData.aggregations.distinct_articles;
-
       let results = {
         article: {
           comparator: articleData.comparator,
@@ -35,9 +34,10 @@ export default function formatData(data) {
           rfv_cluster : formatAggregation('rfv_cluster', articleData),
           is_first_visit : formatAggregation('is_first_visit', articleData),
           internal_referrer_types: formatFilteredAggregation('internal_referrer_types', articleData),
-          social_shares_total : eventData.aggregations.social_shares.doc_count,
+          social_shares_total : adujstComparator(eventData, eventData.aggregations.social_shares.doc_count),
           social_shares_types : formatFilteredAggregation("social_shares", eventData),
-          total_links_clicked : eventData.aggregations.page_clicks.total_links_clicked.value
+          total_links_clicked : adujstComparator(eventData, eventData.aggregations.page_clicks.total_links_clicked.value),
+          total_comments_posted : adujstComparator(eventData, eventData.aggregations.page_comments.total.value)
         }
       };
       resolve(results);
@@ -68,9 +68,13 @@ function format(data, agg, replacement) {
     }
     return [
       key,
-      (d.doc_count / data.aggregations.distinct_articles.value) | 0
+      adujstComparator(data, d.doc_count)
     ];
   });
+}
+
+function adujstComparator (data, comparator) {
+  return (comparator / data.aggregations.distinct_articles.value) | 0
 }
 
 // In place of min doc count in ES for specific fields

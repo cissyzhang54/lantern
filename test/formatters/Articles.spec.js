@@ -73,7 +73,8 @@ describe('Article Formatter', function() {
           'is_subscription',
           'social_shares_total',
           'social_shares_types',
-          'total_links_clicked'
+          'total_links_clicked',
+          'total_comments_posted'
         ];
         for (let i = 0; i < props.length; i++){
           expect(data.article.hasOwnProperty(props[i])).to.be.truthy;
