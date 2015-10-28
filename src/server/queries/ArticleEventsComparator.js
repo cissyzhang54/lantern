@@ -1,13 +1,13 @@
 import assert from 'assert';
 import moment from 'moment';
 
-export default function PageEventsQuery(query) {
+export default function ComparatorPageViewsQuery(query) {
 
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  assert.equal(typeof query.uuid, 'string',
-    "argument 'query' must contain a 'uuid' string property");
+  assert.equal(typeof query.comparator, 'string',
+    "argument 'query' must contain a 'comparator' string property");
 
   assert.equal(typeof query.dateFrom, 'string',
     "argument 'query' must contain a 'dateFrom' date string property");
@@ -15,12 +15,23 @@ export default function PageEventsQuery(query) {
   assert.equal(typeof query.dateTo, 'string',
     "argument 'query' must contain a 'dateTo' date property");
 
-  let match =  {  article_uuid: query.uuid  }
+  assert.equal(typeof query.comparatorType, 'string',
+    "argument 'query' must contain a 'comparatorType' string property");
+
+  let comparatorTypes = {
+    genre : {  genre: query.comparator  },
+    section : {  sections: query.comparator  },
+    topic : {  topics: query.comparator  },
+    author : {  authors: query.comparator  }
+  }
+  let match = {
+      "match" : comparatorTypes[query.comparatorType]
+  }
   let filter = {
     "and" : [
       {
         range : {
-          event_date : {
+          view_timestamp : {
             from: query.dateFrom,
             to: query.dateTo
           }
@@ -28,7 +39,6 @@ export default function PageEventsQuery(query) {
       }
     ]
   }
-
   for (var o in query.filters){
     if (query.filters[o]){
       filter.and.push({
@@ -36,15 +46,17 @@ export default function PageEventsQuery(query) {
       })
     }
   }
+  let filtered = {
+    "query" : match,
+    "filter" : filter
+  }
+  if (query.comparator === 'FT'){
+    delete filtered.query
+  }
 
   return {
-    query : {
-      filtered : {
-        query : {
-          match : match
-        },
-        filter : filter
-      }
+    "query" : {
+      "filtered" : filtered
     },
     "size": 1,
     "aggs" : {
@@ -63,5 +75,5 @@ export default function PageEventsQuery(query) {
         }
       }
     }
-  };
+  }
 }

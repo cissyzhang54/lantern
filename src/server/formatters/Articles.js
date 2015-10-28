@@ -59,8 +59,8 @@ export default function formatData(data) {
           internal_referrer_types: formatFilteredAggregation('internal_referrer_types', articleData),
           next_internal_url : formatAggregation('next_internal_url', articleData),
           is_subscription : formatAggregation('is_subscription', articleData),
-          social_shares_total: eventsData.hits.total,
-          social_shares_types : formatAggregation('social_shares', eventsData)
+          social_shares_total: eventsData.aggregations.social_shares.doc_count,
+          social_shares_types : formatFilteredAggregation('social_shares', eventsData)
         }
       };
 

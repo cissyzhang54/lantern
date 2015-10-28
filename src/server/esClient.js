@@ -2,6 +2,7 @@ import elasticsearch from 'elasticsearch';
 import ArticleComparatorQuery from './queries/ArticleComparator';
 import ArticlesQuery from './queries/Articles';
 import ArticleEventsQuery from './queries/ArticleEvents';
+import ArticleEventsComparatorQuery from './queries/ArticleEventsComparator';
 import SearchQuery from './queries/Search';
 import assert from 'assert';
 import LoggerFactory from './logger';
@@ -58,12 +59,20 @@ export function runArticleQuery(queryData) {
   });
 }
 
+
 export function runComparatorQuery(queryData) {
   let queryError;
   if (queryError = queryDataError('comparator', queryData)){
     return Promise.reject(queryError);
   }
-  return retrievePageView(queryData);
+
+  let comparatorData;
+  return retrievePageView(queryData).then(function(comparator){
+    comparatorData = comparator;
+    return retrieveEventsData(queryData);
+  }).then(function(eventsComparatorData){
+    return [comparatorData, eventsComparatorData];
+  });
 }
 
 export function runSearchQuery(queryData) {
@@ -135,7 +144,10 @@ function retrieveMetaData(queryData){
 
 function retrieveEventsData(queryData){
   return new Promise((resolve, reject) => {
-    let queryObject = ArticleEventsQuery(queryData);
+    let queryObject = queryData.comparator ?
+      ArticleEventsComparatorQuery(queryData) :
+      ArticleEventsQuery(queryData);
+
     let request = {
       index: calculateIndices(queryData, process.env.ES_EVENT_INDEX_ROOT),
       ignore_unavailable: true,
@@ -145,6 +157,8 @@ function retrieveEventsData(queryData){
       if (error) {
         return reject(error);
       }
+      response.comparator = queryData.comparator;
+      response.comparatorType = queryData.comparatorType;
       return resolve(response);
     });
   })

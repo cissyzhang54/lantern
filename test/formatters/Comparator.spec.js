@@ -31,15 +31,15 @@ describe('Comparator Formatter', function() {
         done();
       });
   });
-  it('should reject the promise with a MalformedArgumentsError if passed an array', function(done) {
-    ArticleFormat([])
+  it('should reject the promise with a MalformedArgumentsError if passed an object', function(done) {
+    ArticleFormat({})
       .catch((error) => {
         expect(error.name).to.equal('MalformedArgumentsError');
         done();
       });
   });
   xit('should parse results correctly', function(done) {
-    ArticleFormat(ESArticleResults[0])
+    ArticleFormat(ESArticleResults)
       .then((data) => {
         expect(data.article).to.be.a('object');
         const props = [
@@ -57,7 +57,9 @@ describe('Comparator Formatter', function() {
           'user_cohort',
           'rfv_cluster',
           'is_first_visit',
-          'internal_referrer_types'
+          'internal_referrer_types',
+          'social_shares_total',
+          'social_shares_types'
         ];
         for (let i = 0; i < props.length; i++){
           expect(data.article.hasOwnProperty(props[i])).to.be.truthy;

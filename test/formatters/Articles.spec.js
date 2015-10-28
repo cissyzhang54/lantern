@@ -73,7 +73,6 @@ describe('Article Formatter', function() {
           'is_subscription',
           'social_shares_total',
           'social_shares_types'
-
         ];
         for (let i = 0; i < props.length; i++){
           expect(data.article.hasOwnProperty(props[i])).to.be.truthy;

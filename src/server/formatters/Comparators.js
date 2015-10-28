@@ -2,9 +2,8 @@ import assert from 'assert';
 import moment from 'moment';
 
 export default function formatData(data) {
-
   try {
-    assert.equal(Object.prototype.toString.call(data), '[object Object]',
+    assert.equal(Object.prototype.toString.call(data), '[object Array]',
       "argument 'data' should be an object");
   } catch (e) {
     let error = new Error(e);
@@ -15,27 +14,31 @@ export default function formatData(data) {
 
   return new Promise((resolve, reject) => {
     try {
+      let [articleData, eventData] = data;
+      eventData.aggregations.distinct_articles = articleData.aggregations.distinct_articles;
+
       let results = {
         article: {
-          comparator: data.comparator,
-          timeOnPage: data.aggregations.avg_time_on_page.value,
-          page_views_over_time : data.aggregations.page_views_over_time,
-          category_total_view_count : data.aggregations.page_view_total_count.value,
-          category_article_count: data.aggregations.distinct_articles.value,
-          category_average_view_count: (data.aggregations.page_view_total_count.value / data.aggregations.distinct_articles.value) | 0,
-          readTimes: formatAggregation('page_views_over_time', data),
-          readTimesSincePublish: formatAggregation('page_views_since_publish', data),
-          referrer_types: filterOutTerms(formatFilteredAggregation('referrer_types', data), ['search', 'unknown', 'partner', 'social-network', 'email']),
-          social_referrers: filterOutTerms(formatFilteredAggregation('social_referrers', data), ['Facebook', 'Twitter', 'Linked-In']),
-          regions : formatAggregation('regions', data),
-          is_last_page : formatAggregation('is_last_page', data),
-          user_cohort : formatAggregation('user_cohort', data),
-          rfv_cluster : formatAggregation('rfv_cluster', data),
-          is_first_visit : formatAggregation('is_first_visit', data),
-          internal_referrer_types: formatFilteredAggregation('internal_referrer_types', data)
+          comparator: articleData.comparator,
+          timeOnPage: articleData.aggregations.avg_time_on_page.value,
+          page_views_over_time : articleData.aggregations.page_views_over_time,
+          category_total_view_count : articleData.aggregations.page_view_total_count.value,
+          category_article_count: articleData.aggregations.distinct_articles.value,
+          category_average_view_count: (articleData.aggregations.page_view_total_count.value / articleData.aggregations.distinct_articles.value) | 0,
+          readTimes: formatAggregation('page_views_over_time', articleData),
+          readTimesSincePublish: formatAggregation('page_views_since_publish', articleData),
+          referrer_types: filterOutTerms(formatFilteredAggregation('referrer_types', articleData), ['search', 'unknown', 'partner', 'social-network', 'email']),
+          social_referrers: filterOutTerms(formatFilteredAggregation('social_referrers', articleData), ['Facebook', 'Twitter', 'Linked-In']),
+          regions : formatAggregation('regions', articleData),
+          is_last_page : formatAggregation('is_last_page', articleData),
+          user_cohort : formatAggregation('user_cohort', articleData),
+          rfv_cluster : formatAggregation('rfv_cluster', articleData),
+          is_first_visit : formatAggregation('is_first_visit', articleData),
+          internal_referrer_types: formatFilteredAggregation('internal_referrer_types', articleData),
+          social_shares_total : eventData.aggregations.social_shares.doc_count,
+          social_shares_types : formatFilteredAggregation("social_shares", eventData)
         }
       };
-
       resolve(results);
     } catch (e) {
       let error = new Error(e);
