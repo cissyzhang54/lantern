@@ -11,7 +11,6 @@ describe ('ColumnChart component', function() {
 
   beforeEach(function() {
     columnChart = createComponent(ColumnChart, {
-      identifier : 'testIdentifierOn'
     });
   });
 

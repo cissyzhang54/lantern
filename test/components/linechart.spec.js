@@ -8,7 +8,6 @@ describe ('LineChart component', function() {
 
   beforeEach(function() {
     lineChart = createComponent(LineChart, {
-      identifier : 'testIdentifierOn'
     });
   });
 

@@ -10,7 +10,6 @@ describe ('Header component', function() {
 
   beforeEach(function() {
     header = createComponent(Header, {
-      identifier: 'testIdentifierOn',
       title: 'My component state test title',
       author: 'By: Chris Evans',
       published: 'Date: 25-Aug-2015',

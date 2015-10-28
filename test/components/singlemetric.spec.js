@@ -13,7 +13,6 @@ describe ('SingleMetric component', function() {
       metric: 20000,
       comparatorMetric: 10000,
       metricType: 'integer',
-      identifier : 'testIdentifierOn',
       label: 'I am a single metric'
     });
     const intProps = singleMetricInteger.props;
@@ -37,7 +36,6 @@ describe ('SingleMetric component', function() {
       metric: 340,
       comparatorMetric: 360,
       metricType: 'time',
-      identifier : 'testIdentifierOn'
     });
     const timeProps = singleMetricTime.props;
     const timeMetric = timeProps.children[0];
