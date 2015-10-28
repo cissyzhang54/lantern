@@ -74,6 +74,21 @@ export default function PageEventsQuery(query) {
             }
           }
         }
+      },
+      page_comments : {
+        filter: {
+          term: {
+            "event_type" : "comment",
+            "event_category" : "posted"
+          }
+        },
+        aggs: {
+          total : {
+            sum: {
+              "field" : "event_value"
+            }
+          }
+        }
       }
     }
   };

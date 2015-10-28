@@ -1006,6 +1006,12 @@ export default [{
       "total_links_clicked": {
         "value": 4
       }
+    },
+    "page_comments": {
+      "doc_count": 2,
+      "total": {
+        "value": 3
+      }
     }
   }
 }];
