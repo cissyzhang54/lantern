@@ -13,6 +13,7 @@ export default class Tag extends React.Component {
     let className = this.props.selected ? 'comparator-tag__selected' : '';
     return (
       <Link className={`${className} ${this.props.className}`}
+            data-component="tag"
             to={this.props.url}
             onClick={this.props.onClick}>
           <Glyphicon glyph="tag" style={tagStyle} />{this.props.label}

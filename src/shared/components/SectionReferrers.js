@@ -49,7 +49,7 @@ export default class SectionReferrers extends React.Component {
       />
       </Col> : {};
 
-    return (<div className='sectionReferrers'>
+    return (<div data-component='sectionReferrers'>
 
       <Row>
         <Col xs={12}>

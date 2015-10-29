@@ -74,7 +74,7 @@ export default class DataMap extends React.Component {
     const divStyle = {
     };
     return (
-      <div className='map'>
+      <div data-component='map'>
         <div style={divStyle} ref="mapContainer" id="mapContainer"></div>
       </div>
     );

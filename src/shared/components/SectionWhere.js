@@ -20,7 +20,7 @@ export default class SectionWhere extends React.Component {
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
     let [regionData, regionID, regionKeys] = dataFormatter.getPCTMetric('regions', 'Views')
 
-    return (<div className='sectionWhere'>
+    return (<div data-component='sectionWhere'>
       <Row>
         <Col xs={12}>
           <h4>Where in the world was the article read?</h4>

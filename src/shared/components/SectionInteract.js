@@ -67,7 +67,7 @@ export default class SectionHeadlineStats extends React.Component {
       ];
     });
 
-    return ( <div className='sectionInteractiveStats' >
+    return ( <div data-component='sectionInteractiveStats' >
       <Row>
         <Col xs={12} sm={4} >
 

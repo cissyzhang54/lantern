@@ -60,7 +60,7 @@ export default class Header extends React.Component {
         let styles = this.state.responsiveStyles;
         let articleUrl = 'http://www.ft.com/cms/s/0/' + this.props.uuid + '.html';
         return (
-          <header style={styles.header} className="clearfix"  >
+          <header style={styles.header} className="clearfix" data-component='header' >
             <div style={styles.titleContainer} >
               <h1 style={styles.title}>
                 <a style={styles.anchor} href={articleUrl} target='_blank'>

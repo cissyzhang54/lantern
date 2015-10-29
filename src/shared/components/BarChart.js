@@ -81,7 +81,7 @@ export default class BarChart extends React.Component {
 
   render() {
     return (
-      <div className={this.props.className}>
+      <div data-component={this.props.componentName}>
         <div ref='chartContainer' id="chartContainer"></div>
       </div>
     );
@@ -106,7 +106,7 @@ BarChart.defaultProps = {
   xLabel: 'Thing',
   yLabel: 'Value of the Thing',
   reverseAxis: true,
-  className: 'barChart',
+  componentName: 'barChart',
   usePercentages: false
 };
 

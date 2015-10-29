@@ -84,7 +84,7 @@ export default class Search extends React.Component {
     </div>
     );
 
-    return (<div>
+    return (<div data-component='search'>
       <Logo message={isLoading?'Searching...':''} loading={isLoading} search/>
       <Input
         ref="searchinput"

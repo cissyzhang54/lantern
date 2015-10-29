@@ -19,6 +19,7 @@ export default class SearchItem extends React.Component {
     const publishedDate = formatDate(result.initial_publish_date);
     return (
       <Link
+        data-component='searchResult'
         to={'/articles/' + result.article_uuid}
         key={result._id}
         onClick={this.props.handleClick}

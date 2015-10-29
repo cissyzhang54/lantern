@@ -55,7 +55,7 @@ export default class SectionWhen extends React.Component {
       />
       : {}
 
-    return (<div className='sectionWhen'>
+    return (<div data-component='sectionWhen'>
       <Row>
         <Col xs={12}>
           <h4>

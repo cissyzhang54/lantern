@@ -61,7 +61,7 @@ export default class SectionHeadlineStats extends React.Component {
     let scrollDepth = renderMetric('scroll_depth', data.scroll_depth, comparatorData.comparator, comparatorData.scroll_depth)
     let uniqueVisitors = renderMetric('uniqueVisitors', data.unique_visitors, comparatorData.comparator, comparatorData.unique_visitors)
 
-    return ( <Row className='sectionHeadlineStats' >
+    return ( <Row data-component='sectionHeadlineStats' >
       <Col xs={12} >
         <Col xs={12} sm={3} >
           {timeOnPage}

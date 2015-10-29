@@ -119,7 +119,7 @@ export default class NavBar extends React.Component {
     );
 
     return (
-        <nav style={styles.nav} className="clearfix navBar">
+        <nav style={styles.nav} className="clearfix navBar" data-component='navBar'>
           <ul style={styles.navbar} className="navBar--list">
             <li style={styles.headerItem} key={i++} >
               <LogoSVG />
