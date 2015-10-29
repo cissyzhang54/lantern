@@ -326,7 +326,7 @@ export default [{
       }
     },
     "page_clicks": {
-      "doc_count": 4,
+      "doc_count": 1,
       "total_links_clicked": {
         "value": 4
       }

@@ -75,7 +75,8 @@ describe('Article Formatter', function() {
           'social_shares_types',
           'total_links_clicked',
           'total_comments_posted',
-          'scroll_depth'
+          'scroll_depth',
+          'link_click_categories'
         ];
         for (let i = 0; i < props.length; i++){
           expect(data.article.hasOwnProperty(props[i])).to.equal(true);

@@ -73,6 +73,18 @@ export default function PageEventsQuery(query) {
             sum: {
               "field": "event_value"
             }
+          },
+          category_breakdown : {
+            terms: {
+              "field" : "event_category"
+            },
+            aggs : {
+              total_clicks : {
+                sum: {
+                  "field" : "event_value"
+                }
+              }
+            }
           }
         }
       },
