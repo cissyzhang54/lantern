@@ -1,62 +1,17 @@
 import assert from 'assert';
 import moment from 'moment';
 
-export default function ComparatorPageViewsQuery(query) {
+import * as build from './queryBuilder'
+
+export default function ArticleEventsComparatorQuery(query) {
 
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  assert.equal(typeof query.comparator, 'string',
-    "argument 'query' must contain a 'comparator' string property");
+  let comparatorQuery = build.comparatorQuery(query)
 
-  assert.equal(typeof query.dateFrom, 'string',
-    "argument 'query' must contain a 'dateFrom' date string property");
-
-  assert.equal(typeof query.dateTo, 'string',
-    "argument 'query' must contain a 'dateTo' date property");
-
-  assert.equal(typeof query.comparatorType, 'string',
-    "argument 'query' must contain a 'comparatorType' string property");
-
-  let comparatorTypes = {
-    genre : {  genre: query.comparator  },
-    section : {  sections: query.comparator  },
-    topic : {  topics: query.comparator  },
-    author : {  authors: query.comparator  }
-  }
-  let match = {
-      "match" : comparatorTypes[query.comparatorType]
-  }
-  let filter = {
-    "and" : [
-      {
-        range : {
-          event_date : {
-            from: query.dateFrom,
-            to: query.dateTo
-          }
-        }
-      }
-    ]
-  }
-  for (var o in query.filters){
-    if (query.filters[o]){
-      filter.and.push({
-        "term" : { [o]: query.filters[o] }
-      })
-    }
-  }
-  let filtered = {
-    "query" : match,
-    "filter" : filter
-  }
-  if (query.comparator === 'FT'){
-    delete filtered.query
-  }
   return {
-    "query" : {
-      "filtered" : filtered
-    },
+    "query" : comparatorQuery,
     "size": 1,
     "aggs" : {
       social_shares : {

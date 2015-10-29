@@ -1,56 +1,17 @@
 import assert from 'assert';
 import moment from 'moment';
 
+import * as build from './queryBuilder'
+
 export default function PageViewsQuery(query) {
 
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  assert.equal(typeof query.uuid, 'string',
-    "argument 'query' must contain a 'uuid' string property");
-
-  assert.equal(typeof query.dateFrom, 'string',
-    "argument 'query' must contain a 'dateFrom' date string property");
-
-  assert.equal(typeof query.dateTo, 'string',
-    "argument 'query' must contain a 'dateTo' date property");
-
-  let match =  {  article_uuid: query.uuid  }
-  let filter = {
-    bool: {
-      must : [
-        {
-          range : {
-            view_timestamp : {
-              from: query.dateFrom,
-              to: query.dateTo
-            }
-          }
-        }
-      ],
-      should : []
-    }
-  }
-
-  for (var o in query.filters){
-    if (query.filters[o]){
-      query.filters[o].map((i) => {
-        filter.bool.should.push({
-          "term" : { [o]: i }
-        })
-      })
-    }
-  }
+  let articleQuery = build.articleQuery(query)
 
   return {
-    query : {
-      filtered : {
-        query : {
-          match : match
-        },
-        filter : filter
-      }
-    },
+    query : articleQuery,
     size: 1,
     aggs: {
       page_views_since_publish: {
