@@ -4,6 +4,9 @@ import Row from 'react-bootstrap/lib/Row';
 import moment from 'moment';
 import LineChart from "../components/LineChart";
 import FormatData from "../utils/formatData";
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Popover from 'react-bootstrap/lib/Popover';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
 export default class SectionWhen extends React.Component {
 
@@ -45,7 +48,24 @@ export default class SectionWhen extends React.Component {
     return (<div className='sectionWhen'>
       <Row>
         <Col xs={12}>
-          <h4>When did users access the article?</h4>
+          <h4>
+            <OverlayTrigger
+              trigger="hover"
+              placement="bottom"
+              overlay={
+                  <Popover >
+                      <p>This chart show page views over time for this article (blue)
+                      and average page views for the articles in the selected tag (orange).</p>
+                      <p>The time scale (horizontal axis) shows time since publication</p>
+                  </Popover>
+                  }
+              >
+              <span>
+                <Glyphicon glyph="question-sign" />
+              </span>
+            </OverlayTrigger>
+            <span >When did users access the article?</span>
+          </h4>
         </Col>
       </Row>
       <Row>

@@ -1,4 +1,11 @@
-### Hints and Tips for specific IDE setups
+### Hints and Tips
+
+#### Command Line
+
+Debugging
+
+ - `node-inspector`
+ - `npm run test-debug`
 
 #### IntelliJ
 

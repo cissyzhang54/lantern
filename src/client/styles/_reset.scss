@@ -125,10 +125,6 @@ img {
 .form-group {
   margin-bottom: 6px;
 }
-.comparatorTag {
-  margin-right: 15px;
-}
-
 @media (max-width: 500px) {
   body{
     font-size: 12px;
@@ -139,14 +135,4 @@ img {
   h2{
     font-size: 20px;
   }
-}
-
-
-/* nav stuff  */
-nav .active{
-  color: #555;
-  background-color: #e7e7e7;
-}
-.navbar {
-  min-height: initial;
 }

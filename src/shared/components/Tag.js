@@ -3,15 +3,6 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import { Link } from "react-router";
 import ObjectAssignDeep from '../utils/ObjectAssignDeep';
 
-const style = {
-  display: "inline-block",
-  cursor: "hand",
-  fontSize: '14px',
-  lineHeight: '2em'
-};
-let selected = {
-  color: '#666'
-};
 const tagStyle = {
   marginRight: "2px",
   fontSize: '10px'
@@ -19,10 +10,9 @@ const tagStyle = {
 
 export default class Tag extends React.Component {
   render() {
-    let className = this.props.selected ? 'selected' : '';
+    let className = this.props.selected ? 'comparator-tag__selected' : '';
     return (
-      <Link style={this.props.selected ? ObjectAssignDeep(selected, style) : style}
-            className={`${className} ${this.props.className}`}
+      <Link className={`${className} ${this.props.className}`}
             to={this.props.url}
             onClick={this.props.onClick}>
           <Glyphicon glyph="tag" style={tagStyle} />{this.props.label}
