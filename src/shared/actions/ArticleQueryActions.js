@@ -7,7 +7,7 @@ class ArticleQueryActions {
         'removeFilter',
         'selectFilter',
         'selectDateRange',
-        'selectUUID',
+        'setUUID',
         'destroy'
     );
   }

@@ -2,7 +2,7 @@ import {expect} from 'chai';
 import React from 'react';
 import {createComponent} from '../createComponent';
 import SectionModifier from '../../src/shared/components/SectionModifier';
-import Comparator from '../../src/shared/components/Comparator';
+import Tags from '../../src/shared/components/Tags';
 import Filters from '../../src/shared/components/Filters';
 import DateRange from '../../src/shared/components/DateRange';
 import ModifierDescription from '../../src/shared/components/ModifierDescription';
@@ -31,12 +31,12 @@ describe ('Modifier component', function() {
     const row3 = props.children[2];
     const row4 = props.children[3];
 
-    const comparator = row1.props.children[1].props.children;
+    const tags = row1.props.children[1].props.children;
     const filters = row2.props.children[1]
     const dateRange = row3.props.children[1].props.children;
     const modifierDescription = row4.props.children[1].props.children.props.children;
 
-    expect(TestUtils.isElementOfType(comparator, Comparator)).to.equal(true);
+    expect(TestUtils.isElementOfType(tags, Tags)).to.equal(true);
     expect(TestUtils.isElementOfType(filters, Filters)).to.equal(true);
     expect(TestUtils.isElementOfType(dateRange, DateRange)).to.equal(true);
     expect(TestUtils.isElementOfType(modifierDescription, ModifierDescription)).to.equal(true);

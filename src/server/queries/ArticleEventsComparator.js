@@ -1,7 +1,7 @@
 import assert from 'assert';
 import moment from 'moment';
 
-import * as build from './queryBuilder'
+import * as build from '../utils/queryBuilder'
 
 export default function ArticleEventsComparatorQuery(query) {
 

@@ -7,10 +7,10 @@ export function articleQuery(query){
     "argument 'query' must contain a 'uuid' string property");
 
   assert.equal(typeof query.dateFrom, 'string',
-    "argument 'query' must contain a 'dateFrom' date string property");
+    "argument 'query' must contain a 'dateFrom' string property");
 
   assert.equal(typeof query.dateTo, 'string',
-    "argument 'query' must contain a 'dateTo' date property");
+    "argument 'query' must contain a 'dateTo' string property");
 
   let match =  {  article_uuid: query.uuid  }
   let filter = {
@@ -49,22 +49,25 @@ export function articleQuery(query){
   }
 }
 
-export function comparatorQuery(query){
+export function comparatorQuery(query){;
+
+  assert.equal(typeof query.uuid, 'string',
+    "argument 'query' must contain a 'uuid' string property");
+
+  assert.equal(typeof query.dateFrom, 'string',
+    "argument 'query' must contain a 'dateFrom' string property");
+
+  assert.equal(typeof query.dateTo, 'string',
+    "argument 'query' must contain a 'dateTo' string property");
 
   assert.equal(typeof query.comparator, 'string',
     "argument 'query' must contain a 'comparator' string property");
-
-  assert.equal(typeof query.dateFrom, 'string',
-    "argument 'query' must contain a 'dateFrom' date string property");
-
-  assert.equal(typeof query.dateTo, 'string',
-    "argument 'query' must contain a 'dateTo' date property");
 
   assert.equal(typeof query.comparatorType, 'string',
     "argument 'query' must contain a 'comparatorType' string property");
 
   assert.equal(typeof query.publishDate, 'string',
-    "argument 'query' must contain a 'publishDate' string property");
+    "argument 'query' must contain a 'publishDate' string property")
 
   let msFrom = moment(query.dateFrom).diff(moment(query.publishDate));
   let msTo = moment(query.dateTo).diff(moment(query.publishDate));
@@ -119,7 +122,12 @@ export function comparatorQuery(query){
 
   let matchAll = {
     bool: {
-      must: [matchPublishDate, matchComparatorType ]
+      must: [matchPublishDate, matchComparatorType ],
+      "must_not": {
+        "match": {
+          "article_uuid": query.uuid
+        }
+      }
     }
   }
 

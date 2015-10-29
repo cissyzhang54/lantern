@@ -20,7 +20,7 @@ class ArticleQueryStore {
     this.query.dateTo = dates.to;
   }
 
-  selectUUID(uuid) {
+  setUUID(uuid) {
     this.query.uuid = uuid;
   }
 

@@ -1,7 +1,7 @@
 import {expect} from 'chai';
 import React from 'react';
 import {createComponent} from '../createComponent';
-import Comparator from '../../src/shared/components/Comparator';
+import Tags from '../../src/shared/components/Tags';
 import Tag from '../../src/shared/components/Tag';
 
 const TestUtils = React.addons.TestUtils;
@@ -10,7 +10,7 @@ describe ('Comparator component', function() {
   let comparator;
 
   beforeEach(function() {
-    comparator = createComponent(Comparator, {
+    comparator = createComponent(Tags, {
       tags: [
         {label:'Private equity',url:'topic/Private equity'},
         {label:'Financial Services',url:'section/Financial Services'}

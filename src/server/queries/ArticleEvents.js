@@ -1,5 +1,5 @@
 import assert from 'assert';
-import * as build from './queryBuilder'
+import * as build from '../utils/queryBuilder'
 
 export default function ArticleEventsQuery(query) {
 

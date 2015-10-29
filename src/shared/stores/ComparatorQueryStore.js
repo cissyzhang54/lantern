@@ -9,6 +9,7 @@ class ComparatorQueryStore {
   constructor() {
     this.query = {
       publishDate: null,
+      uuid: null,
       dateFrom: null,
       dateTo: moment(),
       comparator: null,
@@ -26,6 +27,10 @@ class ComparatorQueryStore {
   setPublishDate(publishDate) {
     this.query.publishDate = publishDate;
     if (!this.query.dateFrom) this.query.dateFrom = publishDate;
+  }
+
+  setUUID(uuid) {
+    this.query.uuid = uuid;
   }
 
   selectComparator(comparator) {
@@ -57,6 +62,7 @@ class ComparatorQueryStore {
   destroy() {
     this.query = {
       publishDate: null,
+      uuid: null,
       dateFrom: null,
       dateTo: moment(),
       comparator: null,
