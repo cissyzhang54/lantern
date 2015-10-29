@@ -907,6 +907,9 @@ export default [{
       "sum_other_doc_count": 0,
       "buckets": []
 
+    },
+    "unique_visitors": {
+      "value": 6
     }
   }
 }, {

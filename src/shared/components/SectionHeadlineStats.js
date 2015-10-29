@@ -10,6 +10,11 @@ let config = {
     label: 'Time on Page',
     size: 'large'
   },
+  uniqueVisitors: {
+    metricType: 'integer',
+    label: 'Unique Visitors',
+    size: 'large'
+  },
   pageViews: {
     metricType: 'integer',
     label: 'Page Views',
@@ -54,6 +59,7 @@ export default class SectionHeadlineStats extends React.Component {
     let pageViews = renderMetric('pageViews', data.pageViews, comparatorData.comparator, comparatorData.category_average_view_count)
     let socialUsers = renderMetric('socialUsers', data.socialReaders)
     let scrollDepth = renderMetric('scroll_depth', data.scroll_depth, comparatorData.comparator, comparatorData.scroll_depth)
+    let uniqueVisitors = renderMetric('uniqueVisitors', data.unique_visitors, comparatorData.comparator, comparatorData.unique_visitors)
 
     return ( <Row className='sectionHeadlineStats' >
       <Col xs={12} >
@@ -62,6 +68,9 @@ export default class SectionHeadlineStats extends React.Component {
         </Col>
         <Col xs={12} sm={3} >
           {pageViews}
+        </Col>
+        <Col xs={12} sm={3} >
+          {uniqueVisitors}
         </Col>
         <Col xs={12} sm={3} >
           {socialUsers}

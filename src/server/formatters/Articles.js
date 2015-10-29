@@ -64,7 +64,8 @@ export default function formatData(data) {
           social_shares_types : formatFilteredAggregation('social_shares', eventData),
           total_links_clicked : eventData.aggregations.page_clicks.total_links_clicked.value,
           scroll_depth: Math.round(eventData.aggregations.scroll_depth.average_scroll.value),
-          link_click_categories : eventData.aggregations.page_clicks.category_breakdown
+          link_click_categories : eventData.aggregations.page_clicks.category_breakdown,
+          unique_visitors : articleData.aggregations.unique_visitors.value
         }
       };
 

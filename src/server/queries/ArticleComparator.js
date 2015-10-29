@@ -117,6 +117,11 @@ export default function ArticleComparatorQuery(query) {
             }
           }
         }
+      },
+      unique_visitors: {
+        cardinality: {
+          field: 'visitor_id'
+        }
       }
     }
   }
