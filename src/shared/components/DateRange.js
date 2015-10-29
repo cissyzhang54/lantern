@@ -59,7 +59,7 @@ export default class DateRange extends React.Component {
       label = start;
     }
     return (
-      <div className='dateRange' style={{position: 'relative'}}>
+      <div className='dateRange' style={{position: 'relative'}} data-component='dateRange'>
         <DateRangePicker {...this.state} onEvent={this.handleEvent.bind(this)}>
           <Button className="selected-date-range-btn" style={{width:'100%', color:'#555'}} >
             <div className="pull-left"><Glyphicon glyph="calendar" /></div>

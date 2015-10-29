@@ -155,7 +155,7 @@ export default class LineChart extends React.Component {
     );
 
     return (
-      <div className='lineChart'>
+      <div data-component='lineChart'>
         <div
           ref='chartContainer'
           id="chartContainer"

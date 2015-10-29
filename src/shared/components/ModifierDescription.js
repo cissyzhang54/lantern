@@ -14,7 +14,7 @@ export default class ModifierDescription extends React.Component {
     let description = comparator ? text : '';
 
     return (
-        <p >
+        <p data-component='modifierDescription'>
           {description}
         </p>
     );

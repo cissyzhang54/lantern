@@ -14,5 +14,5 @@ export default class ColumnChart extends React.Component {
 }
 
 ColumnChart.defaultProps = {
-  className: 'columnChart'
+  componentName: 'columnChart'
 };

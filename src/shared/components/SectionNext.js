@@ -33,7 +33,7 @@ export default class SectionWhere extends React.Component {
     let [metricData, id, keys] = dataFormatter.getPCTMetric('is_last_page', 'Views', 'Exited FT.com', 'Stayed on FT.com')
     let intUrls = this.props.data.next_internal_url.map(getReferrerUrls);
 
-    return (<div className='sectionNext'>
+    return (<div data-component='sectionNext'>
       <Row>
         <Col xs={12}>
           <h4>Where did they go next?</h4>

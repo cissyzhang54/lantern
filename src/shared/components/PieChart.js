@@ -55,7 +55,7 @@ export default class PieChart extends React.Component {
   render() {
     let title = this.props.title ? <h4>{this.props.title}</h4> : {}
     return (
-      <div className='pieChart'>
+      <div data-component='pieChart'>
         <div ref='chartContainer' id="chartContainer"></div>
       </div>
     );

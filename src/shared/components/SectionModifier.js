@@ -80,7 +80,7 @@ export default class Modifier extends React.Component {
     )
 
     return (
-      <div className='sectionModifier' style={styles.modifierWrapper}>
+      <div data-component='sectionModifier' style={styles.modifierWrapper}>
         <Row>
           <Col sm={2} xs={12}>
             <span style={styles.title}>

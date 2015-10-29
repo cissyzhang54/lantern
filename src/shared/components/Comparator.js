@@ -49,7 +49,7 @@ export default class Comparator extends React.Component {
     });
 
     return (
-      <div className='comparator'>
+      <div data-component='comparator'>
         {tags}
       </div>
     );

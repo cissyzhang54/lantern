@@ -128,7 +128,7 @@ export default class SingleMetric extends React.Component {
     }
 
     return (
-      <div className={'singleMetric'} style={assign(styles[this.props.size], styles.singleMetric)}>
+      <div className={'singleMetric'} style={assign(styles[this.props.size], styles.singleMetric)} data-component={'singleMetric'}>
         <p style={styles.metric}>{transformMetric} {comparatorHTML}</p>
         <h3 style={styles.label}>{this.props.label}</h3>
       </div>
