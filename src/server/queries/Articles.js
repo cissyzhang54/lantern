@@ -215,7 +215,11 @@ export default function PageViewsQuery(query) {
       is_subscription: {
         terms: {
           field: "is_subscription"
-
+        }
+      },
+      unique_visitors: {
+        cardinality: {
+          field: 'visitor_id'
         }
       }
     }

@@ -8,6 +8,7 @@ export default {
     'article:socialUsers' : false,
     'article:readTimes' : false,
     'article:timeSincePublished' : true,
+    'article:uniqueVisitors' : true,
     'article:channels' : true,
     'article:referrers' : true,
     'article:referrers:internalRefTypes' : false,
