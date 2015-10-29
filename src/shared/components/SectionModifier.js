@@ -20,7 +20,7 @@ const styles = {
     lineHeight: '2em',
   },
   titleText : {
-    'paddingLeft': '4px'
+    'paddingLeft': '0px'
   },
   descriptorText : {
     'paddingLeft': '4px',
@@ -34,7 +34,7 @@ const styles = {
     'color': '#039',
     'position': 'absolute',
     'top': '8px',
-    'left': '0px'
+    'left': '-4px'
   }
 };
 
@@ -86,7 +86,7 @@ export default class Modifier extends React.Component {
             <span style={styles.title}>
               <OverlayTrigger
                 trigger="hover"
-                placement="right"
+                placement="bottom"
                 overlay={
                   <Popover >
                       <p>When you select a Tag, Lantern will compare this article against all other articles with the same Tag;
@@ -94,11 +94,9 @@ export default class Modifier extends React.Component {
                   </Popover>
                   }
                 >
-                <div>
-                  <Glyphicon glyph="question-sign" style={styles.infoIcon} />
-                  <span style={styles.titleText}>Tags:</span>
-                </div>
+                <Glyphicon glyph="question-sign" style={styles.infoIcon} />
               </OverlayTrigger>
+              <span style={styles.titleText}>Tags:</span>
             </span>
 
           </Col>

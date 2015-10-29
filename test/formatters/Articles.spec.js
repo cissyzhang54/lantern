@@ -74,11 +74,24 @@ describe('Article Formatter', function() {
           'social_shares_total',
           'social_shares_types',
           'total_links_clicked',
-          'total_comments_posted'
+          'total_comments_posted',
+          'scroll_depth'
         ];
         for (let i = 0; i < props.length; i++){
-          expect(data.article.hasOwnProperty(props[i])).to.be.truthy;
+          expect(data.article.hasOwnProperty(props[i])).to.equal(true);
         }
+        done();
+      })
+      .catch((error) => {
+        console.error('error', error);
+        done(error);
+      });
+  });
+
+  it('round numbers correctly', function(done) {
+    ArticleFormat(ESArticleResults)
+      .then((data) => {
+        expect(data.article.scroll_depth).to.equal(85);
         done();
       })
       .catch((error) => {

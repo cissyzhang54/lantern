@@ -1012,6 +1012,12 @@ export default [{
       "total": {
         "value": 3
       }
+    },
+    "scroll_depth": {
+      "doc_count": 8,
+      "average_scroll": {
+        "value": 84.875
+      }
     }
   }
 }];

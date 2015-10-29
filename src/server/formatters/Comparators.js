@@ -24,7 +24,7 @@ export default function formatData(data) {
           page_views_over_time : articleData.aggregations.page_views_over_time,
           category_total_view_count : articleData.aggregations.page_view_total_count.value,
           category_article_count: articleData.aggregations.distinct_articles.value,
-          category_average_view_count: (articleData.aggregations.page_view_total_count.value / articleData.aggregations.distinct_articles.value) | 0,
+          category_average_view_count: Math.round(articleData.aggregations.page_view_total_count.value / articleData.aggregations.distinct_articles.value),
           readTimes: formatAggregation('page_views_over_time', articleData),
           readTimesSincePublish: formatAggregation('page_views_since_publish', articleData),
           referrer_types: filterOutTerms(formatFilteredAggregation('referrer_types', articleData), ['search', 'unknown', 'partner', 'social-network', 'email']),
@@ -38,7 +38,8 @@ export default function formatData(data) {
           social_shares_total : adujstComparator(eventData, eventData.aggregations.social_shares.doc_count),
           social_shares_types : formatFilteredAggregation("social_shares", eventData),
           total_links_clicked : adujstComparator(eventData, eventData.aggregations.page_clicks.total_links_clicked.value),
-          total_comments_posted : adujstComparator(eventData, eventData.aggregations.page_comments.total.value)
+          total_comments_posted : adujstComparator(eventData, eventData.aggregations.page_comments.total.value),
+          scroll_depth: Math.round(eventData.aggregations.scroll_depth.average_scroll.value)
         }
       };
       resolve(results);
@@ -75,7 +76,7 @@ function format(data, agg, replacement) {
 }
 
 function adujstComparator (data, comparator) {
-  return (comparator / data.aggregations.distinct_articles.value) | 0
+  return Math.round(comparator / data.aggregations.distinct_articles.value)
 }
 
 // In place of min doc count in ES for specific fields

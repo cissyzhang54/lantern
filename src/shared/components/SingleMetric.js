@@ -86,6 +86,11 @@ let convert = {
     let transformMetric = (metric || 0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") // Add commas to output
     let [differenceSign, transformComparator] = convert.percentageDifference(metric, comparatorMetric)
     return [transformMetric, differenceSign, transformComparator];
+  },
+  percentage:  (metric, comparatorMetric)=>{
+    let transformMetric = (metric || 0) +"%";
+    let [differenceSign, transformComparator] = convert.percentageDifference(metric, comparatorMetric)
+    return [transformMetric, differenceSign, transformComparator];
   }
 };
 
