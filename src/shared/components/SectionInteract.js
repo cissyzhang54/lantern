@@ -58,6 +58,15 @@ export default class SectionHeadlineStats extends React.Component {
     let links_clicked_total = renderMetric('total_links_clicked', data.total_links_clicked, comparatorData.comparator, comparatorData.total_links_clicked);
     let comments_posted_total = renderMetric('comments_posted_total', data.total_comments_posted, comparatorData.comparator, comparatorData.total_comments_posted);
 
+    let link_click_categories = data.link_click_categories.buckets.map((d, i) => {
+      let key = d.key;
+      let value = d.total_clicks.value;
+      return [
+        key,
+        value
+      ];
+    });
+
     return ( <div className='sectionInteractiveStats' >
       <Row>
         <Col xs={12} sm={4} >
@@ -83,7 +92,10 @@ export default class SectionHeadlineStats extends React.Component {
       </Row>
       <Row>
         <Col xs={12} sm={4} >
-
+          <Table
+            headers={['Link Category', 'Clicks']}
+            rows={link_click_categories}
+            />
         </Col>
         <Col xs={12} sm={4} >
 

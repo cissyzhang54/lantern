@@ -1002,9 +1002,22 @@ export default [{
       }
     },
     "page_clicks": {
-      "doc_count": 4,
+      "doc_count": 1,
       "total_links_clicked": {
         "value": 4
+      },
+      "category_breakdown": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+          {
+            "key": "More on",
+            "doc_count": 1,
+            "total_clicks": {
+              "value": 4
+            }
+          }
+        ]
       }
     },
     "page_comments": {
