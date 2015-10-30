@@ -1,5 +1,5 @@
 import React from "react";
-import Link from 'react-router/lib/components/Link';
+import Link from 'react-router/lib/Link';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';

@@ -1,5 +1,5 @@
 import React from 'react';
-import Link from 'react-router/lib/components/Link';
+import Link from 'react-router/lib/Link';
 import responsiveStyles from '../utils/responsiveStyles';
 import assign from '../utils/ObjectAssignDeep';
 

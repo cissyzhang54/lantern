@@ -1,6 +1,6 @@
 import React from 'react';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
-import Link from 'react-router/lib/components/Link';
+import Link from 'react-router/lib/Link';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import moment from 'moment';

@@ -1,5 +1,5 @@
 import React from "react";
-import Link from 'react-router/lib/components/Link';
+import Link from 'react-router/lib/Link';
 import FeatureFlag from '../utils/featureFlag';
 
 export default class RecentArticles extends React.Component {

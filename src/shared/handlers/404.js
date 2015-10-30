@@ -1,5 +1,5 @@
 import React from 'react/addons';
-import Link from 'react-router/lib/components/Link';
+import Link from 'react-router/lib/Link';
 import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';

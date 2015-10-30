@@ -1,6 +1,5 @@
 import React from "react";
 import DocumentTitle from 'react-document-title';
-import RouteHandler from 'react-router/lib/components/RouteHandler';
 import UserStore from '../stores/UserStore'
 import AltContainer from 'alt/AltContainer';
 import NavBar from '../components/NavBar';
@@ -17,7 +16,7 @@ export default class AppController extends React.Component {
       <AltContainer store={UserStore} >
         <User />
         <NavBar />
-        <RouteHandler />
+        {this.props.children}
       </AltContainer>
     </DocumentTitle>);
   }
