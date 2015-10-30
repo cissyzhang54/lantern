@@ -3,7 +3,7 @@ import Input from 'react-bootstrap/lib/Input';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import Button from 'react-bootstrap/lib/Button';
-import Link from 'react-router/lib/components/Link';
+import Link from 'react-router/lib/Link';
 import Logo from '../components/Logo';
 import SearchResult from './SearchResult.js';
 import Row from 'react-bootstrap/lib/Row';

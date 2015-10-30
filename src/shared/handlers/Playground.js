@@ -1,7 +1,6 @@
 import React from "react";
 import DocumentTitle from 'react-document-title';
-import RouteHandler from 'react-router/lib/components/RouteHandler';
-import Link from 'react-router/lib/components/Link';
+import Link from 'react-router/lib/Link';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
@@ -53,7 +52,7 @@ export default class Playground extends React.Component {
           </ul>
         </Col>
         <Col className="stage">
-          <RouteHandler/>
+          {this.props.children}
         </Col>
       </div>
     </DocumentTitle>);

@@ -1,7 +1,8 @@
 import express from "express";
 import exphbs from "express-handlebars";
 import React from "react";
-import Router from "react-router";
+//import Router from "react-router";
+import { match, RoutingContext } from "react-router";
 import DocumentTitle from 'react-document-title';
 import compress from 'compression';
 import Iso from "iso";
@@ -84,22 +85,26 @@ function renderRoute(route, req, res) {
   alt.bootstrap(JSON.stringify(res.locals.data || {}));
   let iso = new Iso();
 
-  Router.run(route, req.url, (Handler, state) => {
-    let notfound = state.routes.filter(route => route.name === '404').length > 0;
-    if ( notfound ) {
-      res.status(404);
-    }
-    let content = React.renderToString(<Handler />);
-    iso.add(content, alt.flush());
-    res.render('index',
-      { content: iso.render(),
+  match({routes, location: req.url}, (error, redirectLocation, renderProps) => {
+    if (error) {
+      throw new Error(error);
+    } else if (redirectLocation) {
+      res.redirect(302, redirectLocation.pathName + redirectLocation.search);
+    } else if (renderProps) {
+      let content = React.renderToString(<RoutingContext {...renderProps} />);
+      iso.add(content, alt.flush());
+      const templateProps = {
+        content: iso.render(),
         jsUrl: config.jsUrl,
         version: '?v=' + cacheBustId,
         title: DocumentTitle.rewind()
-      });
+      };
+      res.render('index', templateProps);
+    }
 
   });
 }
+
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()

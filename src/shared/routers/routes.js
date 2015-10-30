@@ -1,4 +1,4 @@
-import { Route, DefaultRoute, NotFoundRoute } from "react-router";
+import { Route, Redirect } from "react-router";
 import React from "react";
 
 import AppController from "../controllers/AppController";
@@ -10,13 +10,15 @@ import PlaygroundLoader from '../handlers/PlaygroundLoader';
 
 
 export default (
-  <Route handler={ AppController } path="/" >
-    <DefaultRoute handler={Search} />
-    <Route path="playground" handler={Playground}>
-      <Route path=":componentName" handler={PlaygroundLoader}/>
+  <Route component={ AppController } >
+    <Route
+      path="/"
+      component={Search} />
+    <Route path="playground" component={Playground}>
+      <Route path=":componentName" component={PlaygroundLoader}/>
     </Route>
-    <Route path="articles/:uuid" handler={ArticleView} />
-    <Route path="articles/:uuid/:comparatorType/:comparator" handler={ArticleView} />
-    <NotFoundRoute name='404' handler={Error404}   />
+    <Route path="articles/:uuid/:comparatorType/:comparator" component={ArticleView} />
+    <Redirect from="articles/:uuid" to="articles/:uuid/global/FT" />
+    <Route path="*" name='404' component={Error404}   />
   </Route>
 );
