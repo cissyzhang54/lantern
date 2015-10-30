@@ -61,7 +61,8 @@ describe('Comparator Formatter', function() {
           'social_shares_total',
           'social_shares_types',
           'total_links_clicked',
-          'total_comments_posted'
+          'total_comments_posted',
+          'total_comments_viewed'
         ];
         for (let i = 0; i < props.length; i++){
           expect(data.article.hasOwnProperty(props[i])).to.be.truthy;

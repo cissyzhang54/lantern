@@ -38,7 +38,8 @@ export default function formatData(data) {
           social_shares_total : adujstComparator(eventData, eventData.aggregations.social_shares.doc_count),
           social_shares_types : formatFilteredAggregation("social_shares", eventData),
           total_links_clicked : adujstComparator(eventData, eventData.aggregations.page_clicks.total_links_clicked.value),
-          total_comments_posted : adujstComparator(eventData, eventData.aggregations.page_comments.total.value),
+          total_comments_posted : adujstComparator(eventData, eventData.aggregations.page_comments.posts.total.value),
+          total_comments_viewed : adujstComparator(eventData, eventData.aggregations.page_comments.views.doc_count),
           scroll_depth: Math.round(eventData.aggregations.scroll_depth.average_scroll.value),
           unique_visitors : articleData.aggregations.unique_visitors.value
         }

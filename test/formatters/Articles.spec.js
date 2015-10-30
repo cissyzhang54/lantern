@@ -75,6 +75,7 @@ describe('Article Formatter', function() {
           'social_shares_types',
           'total_links_clicked',
           'total_comments_posted',
+          'total_comments_viewed',
           'scroll_depth',
           'link_click_categories',
           'unique_visitors'

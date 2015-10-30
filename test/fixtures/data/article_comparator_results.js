@@ -332,9 +332,15 @@ export default [{
       }
     },
     "page_comments": {
-      "doc_count": 2,
-      "total": {
-        "value": 3
+      "doc_count": 3,
+      "posts": {
+        "doc_count": 2,
+        "total": {
+          "value": 3
+        }
+      },
+      "views": {
+        "doc_count": 1
       }
     }
   }

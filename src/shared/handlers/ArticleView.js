@@ -209,6 +209,12 @@ class ArticleView extends React.Component {
                 renderBounceRate={FeatureFlag.check('article:bounceRate')}
                 />
 
+              <SectionInteract
+                data={data.article}
+                comparatorData={comparatorData.article}
+                renderWho={FeatureFlag.check('article:interact')}
+                />
+
               <SectionReferrers
                 data={data.article}
                 comparatorData={comparatorData.article}
@@ -220,12 +226,6 @@ class ArticleView extends React.Component {
                 data={data.article}
                 comparatorData={comparatorData.article}
                 renderWho={FeatureFlag.check('article:who')}
-                />
-
-              <SectionInteract
-                data={data.article}
-                comparatorData={comparatorData.article}
-                renderWho={FeatureFlag.check('article:interact')}
                 />
 
               <SectionWhere

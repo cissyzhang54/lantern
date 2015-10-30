@@ -25,6 +25,11 @@ let config = {
     metricType: 'integer',
     label: 'Comments Posted',
     size: 'small'
+  },
+  comments_viewed_total: {
+    metricType: 'integer',
+    label: 'Comments Viewed',
+    size: 'small'
   }
 }
 
@@ -57,6 +62,7 @@ export default class SectionHeadlineStats extends React.Component {
     let social_shares_total = renderMetric('social_shares', data.social_shares_total, comparatorData.comparator, comparatorData.social_shares_total);
     let links_clicked_total = renderMetric('total_links_clicked', data.total_links_clicked, comparatorData.comparator, comparatorData.total_links_clicked);
     let comments_posted_total = renderMetric('comments_posted_total', data.total_comments_posted, comparatorData.comparator, comparatorData.total_comments_posted);
+    let comments_viewed_total = renderMetric('comments_viewed_total', data.total_comments_viewed, comparatorData.comparator, comparatorData.total_comments_viewed);
 
     let link_click_categories = data.link_click_categories.buckets.map((d, i) => {
       let key = d.key;
@@ -69,19 +75,21 @@ export default class SectionHeadlineStats extends React.Component {
 
     return ( <div data-component='sectionInteractiveStats' >
       <Row>
-        <Col xs={12} sm={4} >
-
+        <Col xs={12}>
+          <h4>How did the reader interact?</h4>
         </Col>
-        <Col xs={12} sm={4} >
+      </Row>
+      <Row>
+        <Col xs={12} sm={6} >
           {links_clicked_total}
         </Col>
-        <Col xs={12} sm={4} >
+        <Col xs={12} sm={6} >
           {social_shares_total}
         </Col>
       </Row>
       <Row>
         <Col xs={12} sm={4} >
-
+          {comments_viewed_total}
         </Col>
         <Col xs={12} sm={4} >
           {comments_posted_total}
