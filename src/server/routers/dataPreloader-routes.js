@@ -51,6 +51,7 @@ function getArticleData(req, res){
         },
         "ComparatorQueryStore" : {
           query: {
+            uuid: decode(req.params.uuid),
             comparator: decode(req.params.comparator),
             comparatorType: decode(req.params.comparatorType),
             dateFrom: dateFrom,
