@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-import Comparator from "./Comparator";
+import Tags from "./Tags";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
 import ModifierDescription from "./ModifierDescription";
@@ -88,7 +88,7 @@ export default class Modifier extends React.Component {
                 trigger="hover"
                 placement="bottom"
                 overlay={
-                  <Popover >
+                  <Popover id="tag-description">
                       <p>When you select a Tag, Lantern will compare this article against all other articles with the same Tag;
                        only those articles published in the 30 days before this article's publication date are included</p>
                   </Popover>
@@ -96,12 +96,12 @@ export default class Modifier extends React.Component {
                 >
                 <Glyphicon glyph="question-sign" style={styles.infoIcon} />
               </OverlayTrigger>
-              <span style={styles.titleText}>Tags:</span>
+              <span style={styles.titleText} aria-dscribedby="tag-description">Tags:</span>
             </span>
 
           </Col>
           <Col sm={10} xs={12}>
-            <Comparator
+            <Tags
               tags={tags}
               currentComparator={this.props.query.comparator}
               uuid={this.props.uuid} />

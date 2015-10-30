@@ -56,7 +56,8 @@ export default class Search extends React.Component {
   }
 
   _handleClick(){
-    ArticleQueryActions.selectUUID(this.uuid)
+    ArticleQueryActions.setUUID(this.uuid)
+    ComparatorQueryActions.setUUID(this.uuid)
     ArticleQueryActions.selectDateRange({from:this.publishDate,to:moment()})
     ComparatorQueryActions.setPublishDate(this.publishDate)
   }

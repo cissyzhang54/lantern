@@ -63,7 +63,7 @@ export default class SectionWhen extends React.Component {
               trigger="hover"
               placement="bottom"
               overlay={
-                  <Popover >
+                  <Popover id="chart-description">
                       <p>This chart show page views over time for this article (blue)
                       and average page views for the articles in the selected tag (orange).</p>
                       <p>The time scale (horizontal axis) shows time since publication</p>
@@ -71,7 +71,7 @@ export default class SectionWhen extends React.Component {
                   }
               >
               <span>
-                <Glyphicon glyph="question-sign" style={styles.infoIcon} />
+                <Glyphicon glyph="question-sign" style={styles.infoIcon} aria-describedby="chart-description" />
               </span>
             </OverlayTrigger>
             <span >When did users access the article?</span>

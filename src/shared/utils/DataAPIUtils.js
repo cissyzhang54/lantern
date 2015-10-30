@@ -47,11 +47,17 @@ let DataAPI = {
       assert.equal(typeof query.publishDate, 'string',
         "property 'publishDate' of argument 'query' must be a string");
 
+      assert.equal(typeof query.uuid, 'string',
+        "property 'uuid' of argument 'query' must be a string");
+
       return new Promise(function handlePromise(resolve, reject) {
-        let url = `${config.baseUrl}/api/v0/comparators/articles/${query.comparatorType}/${query.comparator}?publishDate=${query.publishDate}`;
+        let baseUrl = `${config.baseUrl}/api/v0/comparators`;
+        let reqParams = `articles/${query.comparatorType}/${query.comparator}`;
+        let reqQuery = `publishDate=${query.publishDate}&uuid=${query.uuid}`;
         if (apiKey) {
-            url += "&apiKey=" + apiKey;
+          reqQuery += "&apiKey=" + apiKey;
         }
+        let url = `${baseUrl}/${reqParams}?${reqQuery}`;
         request.post(url)
           .send(query)
           .set('Accept', 'application/json')

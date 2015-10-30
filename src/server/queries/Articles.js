@@ -1,7 +1,7 @@
 import assert from 'assert';
 import moment from 'moment';
 
-import * as build from './queryBuilder'
+import * as build from '../utils/queryBuilder'
 
 export default function PageViewsQuery(query) {
 
@@ -17,7 +17,8 @@ export default function PageViewsQuery(query) {
       page_views_since_publish: {
         histogram: {
           field: "time_since_publish",
-          interval: calculateMinuteInterval(query)
+          interval: calculateMinuteInterval(query),
+          min_doc_count : 0
         }
       },
       "page_views_over_time" : {

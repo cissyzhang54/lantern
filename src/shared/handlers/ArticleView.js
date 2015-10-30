@@ -74,7 +74,7 @@ const MESSAGES = {
       title="Lantern - Article Not Found"
       message={[
               'Ooops!',
-              'We could not find the aricle you requested',
+              'We could not find the article you requested',
               'Perhaps the article was published less than 24 hours ago?'
               ]}
       extra={<pre>
@@ -126,6 +126,7 @@ class ArticleView extends React.Component {
     let hasComparatorChanged = this.state.comparator !== ComparatorQueryStore.getState().query.comparator;
     if (hasArticleChanged){
       ArticleQueryActions.selectUUID(this.state.uuid);
+      ComparatorQueryActions.selectUUID(this.state.uuid);
     }
     if (this.state.comparator && hasComparatorChanged){
       ComparatorQueryActions.selectComparator(this.state);

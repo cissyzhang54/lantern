@@ -138,7 +138,7 @@ export default class SingleMetric extends React.Component {
 
 SingleMetric.propTypes = {
   metric: React.PropTypes.number.isRequired,
-  metricType: React.PropTypes.oneOf(['integer', 'time']).isRequired,
+  metricType: React.PropTypes.oneOf(['integer', 'time', 'percentage']).isRequired,
   comparatorMetric: React.PropTypes.number,
   label: React.PropTypes.string.isRequired,
   size: React.PropTypes.oneOf(['small', 'medium', 'large']).isRequired

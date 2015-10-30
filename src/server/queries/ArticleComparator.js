@@ -1,7 +1,7 @@
 import assert from 'assert';
 import moment from 'moment';
 
-import * as build from './queryBuilder'
+import * as build from '../utils/queryBuilder'
 
 export default function ArticleComparatorQuery(query) {
 
@@ -9,15 +9,15 @@ export default function ArticleComparatorQuery(query) {
     "argument 'query' should be an object");
 
   let comparatorQuery = build.comparatorQuery(query)
-
-  return {
+  let esQuery = {
     "query" : comparatorQuery,
     "size": 1,
     "aggs" : {
       page_views_since_publish: {
         histogram: {
           field: "time_since_publish",
-          interval: calculateMinuteInterval(query)
+          interval: calculateMinuteInterval(query),
+          min_doc_count : 0
         }
       },
       "page_views_over_time" : {
@@ -125,6 +125,7 @@ export default function ArticleComparatorQuery(query) {
       }
     }
   }
+  return esQuery
 }
 
 function calculateInterval(query) {

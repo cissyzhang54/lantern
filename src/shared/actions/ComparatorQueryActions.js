@@ -6,6 +6,7 @@ class ComparatorQueryActions {
         'addFilter',
         'removeFilter',
         'setPublishDate',
+        'setUUID',
         'selectComparator',
         'removeComparator',
         'selectFilter',

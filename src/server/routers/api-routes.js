@@ -46,6 +46,7 @@ function getCategoryData(req, res, next) {
 
 function getComparatorData(req, res, next) {
   const query = {
+    uuid: decode(req.query.uuid),
     publishDate: req.query.publishDate,
     comparator: req.params.comparator,
     comparatorType: req.params.comparatorType,
