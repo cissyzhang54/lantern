@@ -45,14 +45,29 @@ export default function ArticleEventsComparatorQuery(query) {
       page_comments : {
         filter: {
           term: {
-            "event_type": "comment",
-            "event_category": "posted"
+            "event_type" : "comment"
           }
         },
-        aggs: {
-          total: {
-            sum: {
-              "field": "event_value"
+        aggs : {
+          views : {
+            filter: {
+              term: {
+                "event_category" : "view"
+              }
+            }
+          },
+          posts : {
+            filter: {
+              term: {
+                "event_category" : "posted"
+              }
+            },
+            aggs: {
+              total : {
+                sum: {
+                  "field" : "event_value"
+                }
+              }
             }
           }
         }

@@ -27,6 +27,7 @@ let config = {
     'article:social_shares' : true,
     'article:total_links_clicked' : true,
     'article:comments_posted_total' : true,
+    'article:comments_viewed_total' : true,
     'article:modifier:filters:UserCohort' : true,
     'article:modifier:filters:Referrers' : true,
     'article:modifier:filters:Region' : true,
