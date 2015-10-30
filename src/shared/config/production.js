@@ -11,7 +11,7 @@ export default {
     'article:uniqueVisitors' : true,
     'article:channels' : true,
     'article:referrers' : true,
-    'article:referrers:internalRefTypes' : false,
+    'article:referrers:internalRefTypes' : true,
     'article:devices' : true,
     'article:locations' : true,
     'article:bounceRate' : true,
