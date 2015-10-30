@@ -184,6 +184,7 @@ class ArticleView extends React.Component {
 
             <Header
               title={data.article.title}
+              linkURL={'http://www.ft.com/cms/s/0/' + data.article.uuid + '.html'}
               author={'By: ' + formatAuthors(data.article.author)}
               published={'Published: ' + data.article.published_human}
               uuid={data.article.uuid}

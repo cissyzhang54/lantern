@@ -144,3 +144,73 @@ export function comparatorQuery(query){;
     "filtered" : filtered
   };
 }
+
+export function overviewQuery(query){;
+
+  assert.equal(typeof query.dateFrom, 'string',
+    "argument 'query' must contain a 'dateFrom' string property");
+
+  assert.equal(typeof query.dateTo, 'string',
+    "argument 'query' must contain a 'dateTo' string property");
+
+  assert.equal(typeof query.overviewName, 'string',
+    "argument 'query' must contain a 'overviewName' string property");
+
+  assert.equal(typeof query.category, 'string',
+    "argument 'query' must contain a 'category' string property");
+
+  let categories = {
+    genre : {  genre: query.overviewName  },
+    section : {  sections: query.overviewName  },
+    topic : {  topics: query.overviewName  },
+    author : {  authors: query.overviewName  }
+  }
+
+  let matchCategory = {
+    match : categories[query.category]
+  }
+
+  let filter = {
+    bool: {
+      should : []
+    }
+  }
+
+  for (var o in query.filters){
+    if (query.filters[o]){
+      query.filters[o].map((i) => {
+        filter.bool.should.push({
+          term : { [o]: i }
+        })
+      })
+    }
+  }
+
+  let matchDates = {
+    "range" : {
+      "initial_publish_date" : {
+        from: query.dateFrom,
+        to: query.dateTo
+      }
+    }
+  }
+
+  let matchAll = {
+    bool: {
+      must: [matchDates, matchCategory ]
+    }
+  }
+
+  let filtered = {
+    query : matchAll,
+    filter : filter
+  }
+
+  if (query.comparator === 'FT'){
+    delete filtered.query
+  }
+
+  return {
+    "filtered" : filtered
+  };
+}

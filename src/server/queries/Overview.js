@@ -3,39 +3,22 @@ import moment from 'moment';
 
 import * as build from '../utils/queryBuilder'
 
-export default function ArticlesQuery(query) {
+export default function OverviewQuery(query) {
 
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  let articleQuery = build.articleQuery(query)
+  let overviewQuery = build.overviewQuery(query)
 
   return {
-    query : articleQuery,
+    query : overviewQuery,
     size: 1,
     aggs: {
-      page_views_since_publish: {
-        histogram: {
-          field: "time_since_publish",
-          interval: calculateMinuteInterval(query),
-          min_doc_count : 0
-        }
-      },
       "page_views_over_time" : {
         "date_histogram" : {
           "field" : "view_timestamp",
           interval : calculateInterval(query),
           min_doc_count : 0
-        }
-      },
-      avg_time_on_page : {
-        avg : {
-          field: "time_on_page"
-        }
-      },
-      channels: {
-        terms: {
-          field: "channel"
         }
       },
       referrer_types : {
@@ -71,72 +54,6 @@ export default function ArticlesQuery(query) {
           }
         }
       },
-      referrer_urls: {
-        filter: {
-          not: {
-            filter: {
-              or: [
-                {
-                  term: {
-                    referrer_type: 'search'
-                  }
-                },
-                {
-                  term: {
-                    referrer_type: 'internal'
-                  }
-                },
-                {
-                  term: {
-                    referrer_type: 'social-network'
-                  }
-                },
-                {
-                  prefix: {
-                    referrer: 'http://localhost'
-                  }
-                },
-                {
-                  prefix: {
-                    referrer: 'http://lantern.ft.com'
-                  }
-                },
-                {
-                  prefix: {
-                    referrer: 'https://lantern.ft.com'
-                  }
-                },
-                {
-                  prefix: {
-                    referrer: 'http://ft-editorial-lantern'
-                  }
-                }
-              ]
-            }
-          }
-        },
-        aggs: {
-          filtered: {
-            terms: {
-              field: 'referrer'
-            }
-          }
-        }
-      },
-      internal_referrer_urls: {
-        filter: {
-          term: {
-            referrer_type: "internal"
-          }
-        },
-        aggs: {
-          filtered: {
-            terms: {
-              field: "referrer"
-            }
-          }
-        }
-      },
       internal_referrer_types: {
         filter: {
           term: {
@@ -167,11 +84,6 @@ export default function ArticlesQuery(query) {
           }
         }
       },
-      devices: {
-        terms: {
-          field: "device_type"
-        }
-      },
       regions: {
         terms: {
           field: "geo_region"
@@ -181,12 +93,6 @@ export default function ArticlesQuery(query) {
         terms: {
           field: "geo_country",
           size: 200000000
-        }
-      },
-      is_last_page: {
-        terms: {
-          field: 'is_last_page',
-          min_doc_count: 0
         }
       },
       user_cohort: {
@@ -206,11 +112,6 @@ export default function ArticlesQuery(query) {
         terms: {
           field: "is_first_visit",
           min_doc_count: 0
-        }
-      },
-      next_internal_url: {
-        terms: {
-          field: "next_internal_url"
         }
       },
       is_subscription: {
@@ -241,24 +142,4 @@ function calculateInterval(query) {
   } else {
     return 'week';
   }
-
 }
-
-function calculateMinuteInterval(query) {
-  let from = moment(query.dateFrom);
-  let to = moment(query.dateTo);
-  let span = moment.duration(to - from);
-
-  if (span <= moment.duration(1, 'day')) {
-    return 60;
-  } else if (span <= moment.duration(1, 'week')) {
-    return 60;
-  } else if (span <= moment.duration(6, 'month')) {
-    return 60*24;
-  } else {
-    return 60*24*7;
-  }
-
-}
-
-
