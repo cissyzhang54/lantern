@@ -5,15 +5,11 @@ import Row from 'react-bootstrap/lib/Row';
 
 import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 
-const tagStyle = {
-  padding: "0px 15px 0 0",
-};
-
 function decode(uri){
   return uri ? decodeURI(uri) : null
 }
 
-export default class Comparator extends React.Component {
+export default class Tags extends React.Component {
 
   handleChange (e) {
     let link = e.currentTarget.href.split('/')
@@ -28,18 +24,17 @@ export default class Comparator extends React.Component {
   }
 
   render() {
-    let currentComparator = (this.props.currentComparator || '')
+    let currentTag = (this.props.currentTag || '')
     let tags = this.props.tags.map((tag, i) => {
 
-      let selected = currentComparator === tag.label;
-      let link = ['','articles', this.props.uuid, tag.url];
+      let selected = currentTag === tag.label;
+      let link = ['',this.props.category, this.props.uuid, tag.url];
       if(selected){
         link.pop();
       }
 
       return (
         <Tag className='comparator-tag'
-          uuid={this.props.uuid}
           selected={selected}
           label={tag.label}
           url={link.join('/')}
@@ -49,18 +44,19 @@ export default class Comparator extends React.Component {
     });
 
     return (
-      <div data-component='comparator'>
+      <div data-component='tags'>
         {tags}
       </div>
     );
   }
 }
 
-Comparator.propTypes = {
+Tags.propTypes = {
   tags: React.PropTypes.array.isRequired,
   onChange: React.PropTypes.func
 };
 
-Comparator.defaultProps = {
+Tags.defaultProps = {
+  category: 'articles',
   onChange: _ => {console.log(_)}
 }

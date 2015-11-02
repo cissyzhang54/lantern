@@ -31,6 +31,23 @@ router.get(`/articles/:uuid(${UUID_REGEX})/:comparatorType(${COMPTYPE_REGEX})/:c
     });
 });
 
+router.get(`/sections/:section`, (req, res, next) => {
+  return getSectionData(req, res)
+    .then(() => next())
+    .catch((err) => {
+      if (err.status) res.status(err.status);
+      next(err);
+    });
+});
+
+router.get(`/sections/:section/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
+  return getSectionData(req, res) //todo: then(() => getSectionComparatorData(req, res))
+    .then(() => next())
+    .catch((err) => {
+      if (err.status) res.status(err.status);
+      next(err);
+    });
+});
 
 function getArticleData(req, res){
   return dataApiUtils.getArticleData({uuid: decode(req.params.uuid)}, apiKey)
@@ -83,5 +100,37 @@ function getComparatorData(req, res){
       return res;
     })
 }
+
+function getSectionData(req, res){
+  return dataApiUtils.getSectionData({section: decode(req.params.section)}, apiKey)
+    .then((data) => {
+      let dateFrom = moment().subtract(29,'days').toISOString();
+      let dateTo = moment().toISOString();
+      res.locals.data = {
+        "SectionStore": {
+          data: data
+        },
+        "SectionQueryStore" : {
+          query: {
+            section: decode(req.params.section),
+            dateFrom: dateFrom,
+            dateTo: dateTo,
+            filters: {}
+          }
+        },
+        "FilterStore" : {
+          query: {
+            filters: {}
+          },
+          devices: getKeys(data.devices),
+          regions: getKeys(data.regions),
+          cohort: getKeys(data.user_cohort),
+          referrers: getKeys(data.referrer_types)
+        }
+      };
+      return res;
+    })
+}
+
 
 export default router;

@@ -141,11 +141,11 @@ describe('#queryBuilder', () => {
   });
 
 
-  describe('errors when trying to build an overview query', () => {
+  describe('errors when trying to build an section query', () => {
 
     it('without a dateFrom', (done) => {
       try{
-        build.overviewQuery({})
+        build.sectionQuery({})
       } catch(error) {
         expect(error.name).to.equal(`AssertionError`);
         expect(error.message).to.equal(`argument 'query' must contain a 'dateFrom' string property`);
@@ -155,7 +155,7 @@ describe('#queryBuilder', () => {
 
     it('without a dateTo', (done) => {
       try{
-        build.overviewQuery({dateFrom:'11-mar-2015'})
+        build.sectionQuery({dateFrom:'11-mar-2015'})
       } catch(error) {
         expect(error.name).to.equal(`AssertionError`);
         expect(error.message).to.equal(`argument 'query' must contain a 'dateTo' string property`);
@@ -163,27 +163,16 @@ describe('#queryBuilder', () => {
       }
     });
 
-    it('without a overviewName', (done) => {
+    it('without a section', (done) => {
       try{
-        build.overviewQuery({ dateFrom:'11-mar-2015', dateTo:'11-mar-2015'})
+        build.sectionQuery({ dateFrom:'11-mar-2015', dateTo:'11-mar-2015'})
       } catch(error) {
         expect(error.name).to.equal(`AssertionError`);
-        expect(error.message).to.equal(`argument 'query' must contain a 'overviewName' string property`);
+        expect(error.message).to.equal(`argument 'query' must contain a 'section' string property`);
         done();
       }
     });
 
-    it('without a category', (done) => {
-      try{
-        build.overviewQuery({
-          dateFrom:'11-mar-2015', dateTo:'11-mar-2015', overviewName:'overviewName'
-        })
-      } catch(error) {
-        expect(error.name).to.equal(`AssertionError`);
-        expect(error.message).to.equal(`argument 'query' must contain a 'category' string property`);
-        done();
-      }
-    });
   });
 
   describe('builds and article query', () => {
@@ -456,12 +445,12 @@ describe('#queryBuilder', () => {
   })
 
 
-  describe('builds an overview query', () => {
+  describe('builds an section query', () => {
 
     it('with the mandatory fields', () => {
-      let comparatorQuery = build.overviewQuery({
+      let comparatorQuery = build.sectionQuery({
           dateFrom:'2015-09-16T19:58:26.000Z', dateTo:'2015-10-16T19:58:26.000Z',
-          overviewName:'overviewName', category:'section',
+          section:'sectionName',
           publishDate: '2015-09-16T19:58:26.000Z'
         })
       expect(comparatorQuery).to.deep.equal({
@@ -484,7 +473,7 @@ describe('#queryBuilder', () => {
                 },
                 {
                   match: {
-                    sections: 'overviewName'
+                    sections: 'sectionName'
                   }
                 }
               ]
