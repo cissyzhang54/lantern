@@ -91,7 +91,8 @@ describe('Articles Query', () => {
       uuid: '123',
       dateFrom: '2015-10-01',
       dateTo: '2015-10-10',
-      filters: {}
+      filters: {},
+      type: 'view'
     };
     const queryJSON = ArticlesQuery(query);
     const props = [

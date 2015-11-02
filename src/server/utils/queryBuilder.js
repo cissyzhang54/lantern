@@ -2,7 +2,6 @@ import assert from 'assert';
 import moment from 'moment';
 
 export function articleQuery(query){
-
   assert.equal(typeof query.uuid, 'string',
     "argument 'query' must contain a 'uuid' string property");
 
@@ -13,20 +12,40 @@ export function articleQuery(query){
     "argument 'query' must contain a 'dateTo' string property");
 
   let match =  {  article_uuid: query.uuid  }
-  let filter = {
-    bool: {
-      must : [
-        {
-          range : {
-            view_timestamp : {
-              from: query.dateFrom,
-              to: query.dateTo
+  let filter;
+
+  if (query.type === "event") {
+    filter = {
+      bool: {
+        must: [
+          {
+            range: {
+              event_date: {
+                from: query.dateFrom,
+                to: query.dateTo
+              }
             }
           }
-        }
-      ],
-      should : []
-    }
+        ],
+        should: []
+      }
+    };
+  } else {
+    filter = {
+      bool: {
+        must: [
+          {
+            range: {
+              view_timestamp: {
+                from: query.dateFrom,
+                to: query.dateTo
+              }
+            }
+          }
+        ],
+        should: []
+      }
+    };
   }
 
   for (var o in query.filters){
