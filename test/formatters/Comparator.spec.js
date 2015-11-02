@@ -41,7 +41,7 @@ describe('Comparator Formatter', function() {
   xit('should parse results correctly', function(done) {
     ArticleFormat(ESArticleResults)
       .then((data) => {
-        expect(data.article).to.be.a('object');
+        expect(data).to.be.a('object');
         const props = [
           'comparator',
           'timeOnPage',
@@ -65,7 +65,7 @@ describe('Comparator Formatter', function() {
           'total_comments_viewed'
         ];
         for (let i = 0; i < props.length; i++){
-          expect(data.article.hasOwnProperty(props[i])).to.be.truthy;
+          expect(data.hasOwnProperty(props[i])).to.be.truthy;
         }
         done();
       })

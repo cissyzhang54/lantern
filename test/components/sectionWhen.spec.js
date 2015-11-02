@@ -55,7 +55,6 @@ describe ('sectionWhen component', function() {
       const comparatorLabel = '\'testComp\' Average Value'
 
       expect(lineChart.data.length).to.equal(31)
-      console.log(lineChart.data[0])
       expect(lineChart.data[0][metricLabel]).to.equal(38)
       expect(lineChart.data[0][comparatorLabel]).to.equal(7)
       expect(lineChart.data[0].category).to.equal('2015-09-07T00:00:000Z')

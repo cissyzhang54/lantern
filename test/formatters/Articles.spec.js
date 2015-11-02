@@ -40,7 +40,7 @@ describe('Article Formatter', function() {
   it('should parse results correctly', function(done) {
     ArticleFormat(ESArticleResults)
       .then((data) => {
-        expect(data.article).to.be.a('object');
+        expect(data).to.be.a('object');
         const props = [
           'title',
           'uuid',
@@ -81,7 +81,7 @@ describe('Article Formatter', function() {
           'unique_visitors'
         ];
         for (let i = 0; i < props.length; i++){
-          expect(data.article.hasOwnProperty(props[i])).to.equal(true);
+          expect(data.hasOwnProperty(props[i])).to.equal(true);
         }
         done();
       })
@@ -94,7 +94,7 @@ describe('Article Formatter', function() {
   it('round numbers correctly', function(done) {
     ArticleFormat(ESArticleResults)
       .then((data) => {
-        expect(data.article.scroll_depth).to.equal(85);
+        expect(data.scroll_depth).to.equal(85);
         done();
       })
       .catch((error) => {

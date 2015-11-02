@@ -17,32 +17,30 @@ export default function formatData(data) {
       let [articleData, eventData] = data;
       eventData.aggregations.distinct_articles = articleData.aggregations.distinct_articles;
       let results = {
-        article: {
-          distinctArticleCount: articleData.aggregations.distinct_articles.value,
-          comparator: articleData.comparator,
-          timeOnPage: articleData.aggregations.avg_time_on_page.value,
-          page_views_over_time : articleData.aggregations.page_views_over_time,
-          category_total_view_count : articleData.aggregations.page_view_total_count.value,
-          category_article_count: articleData.aggregations.distinct_articles.value,
-          category_average_view_count: Math.round(articleData.aggregations.page_view_total_count.value / articleData.aggregations.distinct_articles.value),
-          readTimes: formatAggregation('page_views_over_time', articleData),
-          readTimesSincePublish: formatAggregation('page_views_since_publish', articleData),
-          referrer_types: filterOutTerms(formatFilteredAggregation('referrer_types', articleData), ['search', 'unknown', 'partner', 'social-network', 'email']),
-          social_referrers: filterOutTerms(formatFilteredAggregation('social_referrers', articleData), ['Facebook', 'Twitter', 'Linked-In']),
-          regions : formatAggregation('regions', articleData),
-          is_last_page : formatAggregation('is_last_page', articleData),
-          user_cohort : formatAggregation('user_cohort', articleData),
-          rfv_cluster : formatAggregation('rfv_cluster', articleData),
-          is_first_visit : formatAggregation('is_first_visit', articleData),
-          internal_referrer_types: formatFilteredAggregation('internal_referrer_types', articleData),
-          social_shares_total : adujstComparator(eventData, eventData.aggregations.social_shares.doc_count),
-          social_shares_types : formatFilteredAggregation("social_shares", eventData),
-          total_links_clicked : adujstComparator(eventData, eventData.aggregations.page_clicks.total_links_clicked.value),
-          total_comments_posted : adujstComparator(eventData, eventData.aggregations.page_comments.posts.total.value),
-          total_comments_viewed : adujstComparator(eventData, eventData.aggregations.page_comments.views.doc_count),
-          scroll_depth: Math.round(eventData.aggregations.scroll_depth.average_scroll.value),
-          unique_visitors : articleData.aggregations.unique_visitors.value
-        }
+        distinctArticleCount: articleData.aggregations.distinct_articles.value,
+        comparator: articleData.comparator,
+        timeOnPage: articleData.aggregations.avg_time_on_page.value,
+        page_views_over_time : articleData.aggregations.page_views_over_time,
+        category_total_view_count : articleData.aggregations.page_view_total_count.value,
+        category_article_count: articleData.aggregations.distinct_articles.value,
+        category_average_view_count: Math.round(articleData.aggregations.page_view_total_count.value / articleData.aggregations.distinct_articles.value),
+        readTimes: formatAggregation('page_views_over_time', articleData),
+        readTimesSincePublish: formatAggregation('page_views_since_publish', articleData),
+        referrer_types: filterOutTerms(formatFilteredAggregation('referrer_types', articleData), ['search', 'unknown', 'partner', 'social-network', 'email']),
+        social_referrers: filterOutTerms(formatFilteredAggregation('social_referrers', articleData), ['Facebook', 'Twitter', 'Linked-In']),
+        regions : formatAggregation('regions', articleData),
+        is_last_page : formatAggregation('is_last_page', articleData),
+        user_cohort : formatAggregation('user_cohort', articleData),
+        rfv_cluster : formatAggregation('rfv_cluster', articleData),
+        is_first_visit : formatAggregation('is_first_visit', articleData),
+        internal_referrer_types: formatFilteredAggregation('internal_referrer_types', articleData),
+        social_shares_total : adujstComparator(eventData, eventData.aggregations.social_shares.doc_count),
+        social_shares_types : formatFilteredAggregation("social_shares", eventData),
+        total_links_clicked : adujstComparator(eventData, eventData.aggregations.page_clicks.total_links_clicked.value),
+        total_comments_posted : adujstComparator(eventData, eventData.aggregations.page_comments.posts.total.value),
+        total_comments_viewed : adujstComparator(eventData, eventData.aggregations.page_comments.views.doc_count),
+        scroll_depth: Math.round(eventData.aggregations.scroll_depth.average_scroll.value),
+        unique_visitors : articleData.aggregations.unique_visitors.value
       };
       resolve(results);
     } catch (e) {

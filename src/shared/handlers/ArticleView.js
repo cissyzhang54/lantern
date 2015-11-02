@@ -28,7 +28,7 @@ import ComparatorQueryStore from '../stores/ComparatorQueryStore';
 import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 import Error404 from '../handlers/404';
 import FeatureFlag from '../utils/featureFlag';
-import formatAuthors from '../utils/formatAuthors';
+import * as formatAuthors from '../utils/formatAuthors';
 
 const STYLES = {
   MASK: {
@@ -161,21 +161,21 @@ class ArticleView extends React.Component {
 
     let data = this.props.data;
     let comparatorData = this.props.comparatorData || { article: {}};
-    let title = (data) ? 'Lantern - ' + data.article.title : '';
+    let title = (data) ? 'Lantern - ' + data.title : '';
 
     return (<DocumentTitle title={title}>
       <div>
         <Col xs={12}>
 
         <SectionModifier
-          data={data.article}
-          comparatorData={comparatorData.article}
+          data={data}
+          comparatorData={comparatorData}
           renderDevice={FeatureFlag.check('article:modifier:filters:Device')}
           renderRegion={FeatureFlag.check('article:modifier:filters:Region')}
           renderReferrers={FeatureFlag.check('article:modifier:filters:Referrers')}
           renderUserCohort={FeatureFlag.check('article:modifier:filters:UserCohort')}
           query={this.props.comparatorQuery}
-          uuid={data.article.uuid}
+          uuid={data.uuid}
           />
 
           <Col xs={12}>
@@ -183,61 +183,61 @@ class ArticleView extends React.Component {
             {updating}
 
             <Header
-              title={data.article.title}
-              linkURL={'http://www.ft.com/cms/s/0/' + data.article.uuid + '.html'}
-              author={'By: ' + formatAuthors(data.article.author)}
-              published={'Published: ' + data.article.published_human}
-              uuid={data.article.uuid}
+              title={data.title}
+              linkURL={'http://www.ft.com/cms/s/0/' + data.uuid + '.html'}
+              author={'By: ' + formatAuthors.join(data.author)}
+              published={'Published: ' + data.published_human}
+              uuid={data.uuid}
               />
 
             <main >
 
               <SectionHeadlineStats
-                data={data.article}
-                comparatorData={comparatorData.article}
+                data={data}
+                comparatorData={comparatorData}
                 />
 
               <SectionWhen
-                data={data.article}
-                comparatorData={comparatorData.article}
+                data={data}
+                comparatorData={comparatorData}
                 renderReadTimes={FeatureFlag.check('article:readTimes')}
                 renderTimeSincePublished={FeatureFlag.check('article:timeSincePublished')}
                 />
 
               <SectionNext
-                data={data.article}
-                comparatorData={comparatorData.article}
+                data={data}
+                comparatorData={comparatorData}
                 renderBounceRate={FeatureFlag.check('article:bounceRate')}
                 />
 
               <SectionInteract
-                data={data.article}
-                comparatorData={comparatorData.article}
+                data={data}
+                comparatorData={comparatorData}
                 renderWho={FeatureFlag.check('article:interact')}
                 />
 
               <SectionReferrers
-                data={data.article}
-                comparatorData={comparatorData.article}
+                data={data}
+                comparatorData={comparatorData}
                 renderReferrers={FeatureFlag.check('article:referrers')}
                 renderInternalRefTypes={FeatureFlag.check('article:referrers:internalRefTypes')}
                 />
 
               <SectionWho
-                data={data.article}
-                comparatorData={comparatorData.article}
+                data={data}
+                comparatorData={comparatorData}
                 renderWho={FeatureFlag.check('article:who')}
                 />
 
               <SectionWhere
-                data={data.article}
-                comparatorData={comparatorData.article}
+                data={data}
+                comparatorData={comparatorData}
                 renderWhere={FeatureFlag.check('article:where')}
                 />
 
               <SectionHow
-                data={data.article}
-                comparatorData={comparatorData.article}
+                data={data}
+                comparatorData={comparatorData}
                 renderDevices={FeatureFlag.check('article:devices')}
                 renderChannels={FeatureFlag.check('article:channels')}
                 />

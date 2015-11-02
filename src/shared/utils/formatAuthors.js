@@ -1,4 +1,4 @@
-export default function formatAuthors(authors) {
+export function join(authors) {
   if (!authors.length) {
     return 'Unknown author';
   }

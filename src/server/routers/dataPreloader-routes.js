@@ -35,7 +35,7 @@ router.get(`/articles/:uuid(${UUID_REGEX})/:comparatorType(${COMPTYPE_REGEX})/:c
 function getArticleData(req, res){
   return dataApiUtils.getArticleData({uuid: decode(req.params.uuid)}, apiKey)
     .then((data) => {
-      let dateFrom = moment(data.article.published).toISOString();
+      let dateFrom = moment(data.published).toISOString();
       let dateTo = moment().toISOString();
       res.locals.data = {
         "ArticleStore": {
@@ -56,7 +56,7 @@ function getArticleData(req, res){
             comparatorType: decode(req.params.comparatorType),
             dateFrom: dateFrom,
             dateTo: dateTo,
-            publishDate: moment(data.article.published).toISOString(),
+            publishDate: moment(data.published).toISOString(),
             filters: {}
           }
         },
@@ -64,10 +64,10 @@ function getArticleData(req, res){
           query: {
             filters: {}
           },
-          devices: getKeys(data.article.devices),
-          regions: getKeys(data.article.regions),
-          cohort: getKeys(data.article.user_cohort),
-          referrers: getKeys(data.article.referrer_types)
+          devices: getKeys(data.devices),
+          regions: getKeys(data.regions),
+          cohort: getKeys(data.user_cohort),
+          referrers: getKeys(data.referrer_types)
         }
       };
       return res;
