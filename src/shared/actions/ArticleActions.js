@@ -8,7 +8,8 @@ class ArticleActions {
       'updateData',
       'loadingFailed',
       'destroy',
-      'listenToQuery'
+      'listenToQuery',
+      'unlistenToQuery'
     );
   }
 

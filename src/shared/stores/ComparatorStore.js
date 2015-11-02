@@ -14,10 +14,19 @@ class ComparatorStore {
     this.loading = false;
     this.bindActions(ComparatorActions);
     this.exportAsync(ComparatorSource);
+    this._queryHandlerRef = null;
   }
 
   listenToQuery() {
-    ComparatorQueryStore.listen(this.loadData.bind(this));
+    if (this._queryHandlerRef) return;
+    this._queryHandlerRef = this.loadData.bind(this)
+    ComparatorQueryStore.listen(this._queryHandlerRef);
+  }
+
+  unlistenToQuery() {
+    if (!this._queryHandlerRef) return;
+    ComparatorQueryStore.unlisten(this._queryHandlerRef);
+    this._queryHandlerRef = null;
   }
 
   loadingData() {
