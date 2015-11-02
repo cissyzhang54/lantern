@@ -125,8 +125,8 @@ class ArticleView extends React.Component {
     let hasArticleChanged = this.state.uuid !== ArticleQueryStore.getState().query.uuid;
     let hasComparatorChanged = this.state.comparator !== ComparatorQueryStore.getState().query.comparator;
     if (hasArticleChanged){
-      ArticleQueryActions.selectUUID(this.state.uuid);
-      ComparatorQueryActions.selectUUID(this.state.uuid);
+      ArticleQueryActions.setUUID(this.state.uuid);
+      ComparatorQueryActions.setUUID(this.state.uuid);
     }
     if (this.state.comparator && hasComparatorChanged){
       ComparatorQueryActions.selectComparator(this.state);
