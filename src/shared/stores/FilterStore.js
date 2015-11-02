@@ -26,13 +26,10 @@ class FilterStore {
       return;
     }
 
-    let article = newData.article;
-
-    this.devices = getKeys(article.devices);
-    this.regions = getKeys(article.regions);
-    this.cohort = getKeys(article.user_cohort);
-    this.referrers = getKeys(article.referrer_types);
-
+    this.devices = getKeys(newData.devices);
+    this.regions = getKeys(newData.regions);
+    this.cohort = getKeys(newData.user_cohort);
+    this.referrers = getKeys(newData.referrer_types);
   }
 
   handleQueryChange(query) {

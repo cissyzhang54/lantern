@@ -4,7 +4,7 @@ import Link from 'react-router/lib/Link';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import moment from 'moment';
-import formatAuthors from '../utils/formatAuthors';
+import * as formatAuthors from '../utils/formatAuthors';
 
 export default class SearchItem extends React.Component {
 
@@ -15,9 +15,9 @@ export default class SearchItem extends React.Component {
 
   render() {
     const result = this.props.result;
-    const authors = formatAuthors(result.authors);
+    const authors = formatAuthors.join(result.authors);
     const publishedDate = formatDate(result.initial_publish_date);
-    return (
+    return (<div>
       <Link
         data-component='searchResult'
         to={'/articles/' + result.article_uuid}
@@ -48,7 +48,7 @@ export default class SearchItem extends React.Component {
           </Row>
           </ListGroupItem>
       </Link>
-    );
+    </div>);
   }
 }
 
