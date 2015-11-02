@@ -89,7 +89,7 @@ function renderRoute(route, req, res) {
     if (error) {
       throw new Error(error);
     } else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathName + redirectLocation.search);
+      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
       let content = React.renderToString(<RoutingContext {...renderProps} />);
       iso.add(content, alt.flush());
