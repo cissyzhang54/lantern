@@ -97,6 +97,8 @@ export function runSearchQuery(queryData) {
 }
 
 function retrieveArticleData(queryData){
+  queryData.type = "view";
+
   return new Promise((resolve, reject) => {
     let queryObject = queryData.comparator ?
       ArticleComparatorQuery(queryData) :
@@ -119,6 +121,8 @@ function retrieveArticleData(queryData){
 }
 
 function retrieveMetaData(queryData){
+  queryData.type = "view";
+
   return new Promise((resolve, reject) => {
     let request = {
       index: process.env.ES_SEARCH_INDEX_ROOT,
@@ -143,6 +147,8 @@ function retrieveMetaData(queryData){
 }
 
 function retrieveEventsData(queryData){
+  queryData.type = "event";
+
   return new Promise((resolve, reject) => {
     let queryObject = queryData.comparator ?
       ArticleEventsComparatorQuery(queryData) :
