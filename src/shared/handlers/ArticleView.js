@@ -134,6 +134,8 @@ class ArticleView extends React.Component {
   }
 
   componentWillUnmount() {
+    ArticleActions.unlistenToQuery();
+    ComparatorActions.unlistenToQuery();
     ArticleActions.destroy();
     ComparatorActions.destroy();
     ArticleQueryActions.destroy();

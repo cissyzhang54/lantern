@@ -9,7 +9,8 @@ class ComparatorActions {
       'updateData',
       'loadingFailed',
       'destroy',
-      'listenToQuery'
+      'listenToQuery',
+      'unlistenToQuery'
     );
   }
 

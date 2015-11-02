@@ -15,10 +15,19 @@ class ArticleStore {
     this.loading = false;
     this.bindActions(ArticleActions);
     this.exportAsync(ArticleSource);
+    this._queryHandlerRef = null;
   }
 
   listenToQuery() {
-    ArticleQueryStore.listen(this.loadData.bind(this));
+    if (this._queryHandlerRef) return;
+    this._queryHandlerRef = this.loadData.bind(this);
+    ArticleQueryStore.listen(this._queryHandlerRef);
+  }
+
+  unlistenToQuery() {
+    if (!this._queryHandlerRef) return;
+    ArticleQueryStore.unlisten(this._queryHandlerRef);
+    this._queryHandlerRef = null;
   }
 
   loadData(store) {
