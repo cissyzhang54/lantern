@@ -6,7 +6,7 @@ export default function ArticleEventsQuery(query) {
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  let articleQuery = build.articleQuery(query)
+  let articleQuery = build.eventQuery(query)
 
   return {
     query : articleQuery,

@@ -1,92 +1,90 @@
 import assert from 'assert';
 import moment from 'moment';
 
-export function articleQuery(query){
-  assert.equal(typeof query.uuid, 'string',
-    "argument 'query' must contain a 'uuid' string property");
+function checkString(query, prop){
+  assert.equal(typeof query[prop], 'string',
+    `argument 'query' must contain a '${prop}' string property`);
+}
 
-  assert.equal(typeof query.dateFrom, 'string',
-    "argument 'query' must contain a 'dateFrom' string property");
-
-  assert.equal(typeof query.dateTo, 'string',
-    "argument 'query' must contain a 'dateTo' string property");
-
-  let match =  {  article_uuid: query.uuid  }
-  let filter;
-
-  if (query.type === "event") {
-    filter = {
-      bool: {
-        must: [
-          {
-            range: {
-              event_date: {
-                from: query.dateFrom,
-                to: query.dateTo
-              }
-            }
-          }
-        ],
-        should: []
-      }
-    };
-  } else {
-    filter = {
-      bool: {
-        must: [
-          {
-            range: {
-              view_timestamp: {
-                from: query.dateFrom,
-                to: query.dateTo
-              }
-            }
-          }
-        ],
-        should: []
-      }
-    };
-  }
-
-  for (var o in query.filters){
-    if (query.filters[o]){
+function mapFilters(query){
+  let filter = []
+  for (var o in query.filters) {
+    if (query.filters[o]) {
       query.filters[o].map((i) => {
-        filter.bool.should.push({
-          "term" : { [o]: i }
+        filter.push({
+          "term": {[o]: i}
         })
       })
     }
   }
+  return filter;
+}
+
+export function articleQuery(query){
+  checkString(query,'uuid');
+  checkString(query,'dateFrom');
+  checkString(query,'dateTo');
 
   return {
     filtered : {
       query : {
-        match : match
+        match : {  article_uuid: query.uuid  }
       },
-      filter : filter
+      filter : {
+        bool: {
+          must: [
+            {
+              range: {
+                view_timestamp: {
+                  from: query.dateFrom,
+                  to: query.dateTo
+                }
+              }
+            }
+          ],
+          should: mapFilters(query)
+        }
+      }
     }
   }
 }
 
-export function comparatorQuery(query){;
+export function eventQuery(query){
+  checkString(query,'uuid');
+  checkString(query,'dateFrom');
+  checkString(query,'dateTo');
 
-  assert.equal(typeof query.uuid, 'string',
-    "argument 'query' must contain a 'uuid' string property");
+  return {
+    filtered : {
+      query : {
+        match : {  article_uuid: query.uuid  }
+      },
+      filter : {
+        bool: {
+          must: [
+            {
+              range: {
+                event_date: {
+                  from: query.dateFrom,
+                  to: query.dateTo
+                }
+              }
+            }
+          ],
+          should:  mapFilters(query)
+        }
+      }
+    }
+  }
+}
 
-  assert.equal(typeof query.dateFrom, 'string',
-    "argument 'query' must contain a 'dateFrom' string property");
-
-  assert.equal(typeof query.dateTo, 'string',
-    "argument 'query' must contain a 'dateTo' string property");
-
-  assert.equal(typeof query.comparator, 'string',
-    "argument 'query' must contain a 'comparator' string property");
-
-  assert.equal(typeof query.comparatorType, 'string',
-    "argument 'query' must contain a 'comparatorType' string property");
-
-  assert.equal(typeof query.publishDate, 'string',
-    "argument 'query' must contain a 'publishDate' string property")
+export function comparatorQuery(query){
+  checkString(query,'uuid');
+  checkString(query,'dateFrom');
+  checkString(query,'dateTo');
+  checkString(query,'comparator');
+  checkString(query,'comparatorType');
+  checkString(query,'publishDate');
 
   let msFrom = moment(query.dateFrom).diff(moment(query.publishDate));
   let msTo = moment(query.dateTo).diff(moment(query.publishDate));
@@ -116,17 +114,7 @@ export function comparatorQuery(query){;
           }
         }
       ],
-      should : []
-    }
-  }
-
-  for (var o in query.filters){
-    if (query.filters[o]){
-      query.filters[o].map((i) => {
-        filter.bool.should.push({
-          term : { [o]: i }
-        })
-      })
+      should :  mapFilters(query)
     }
   }
 
@@ -165,18 +153,10 @@ export function comparatorQuery(query){;
 }
 
 export function overviewQuery(query){;
-
-  assert.equal(typeof query.dateFrom, 'string',
-    "argument 'query' must contain a 'dateFrom' string property");
-
-  assert.equal(typeof query.dateTo, 'string',
-    "argument 'query' must contain a 'dateTo' string property");
-
-  assert.equal(typeof query.overviewName, 'string',
-    "argument 'query' must contain a 'overviewName' string property");
-
-  assert.equal(typeof query.category, 'string',
-    "argument 'query' must contain a 'category' string property");
+  checkString(query,'dateFrom');
+  checkString(query,'dateTo');
+  checkString(query,'overviewName');
+  checkString(query,'category');
 
   let categories = {
     genre : {  genre: query.overviewName  },
@@ -191,17 +171,7 @@ export function overviewQuery(query){;
 
   let filter = {
     bool: {
-      should : []
-    }
-  }
-
-  for (var o in query.filters){
-    if (query.filters[o]){
-      query.filters[o].map((i) => {
-        filter.bool.should.push({
-          term : { [o]: i }
-        })
-      })
+      should : mapFilters(query)
     }
   }
 
