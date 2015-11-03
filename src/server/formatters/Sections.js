@@ -1,13 +1,16 @@
 import assert from 'assert';
 import moment from 'moment';
 
-export default function formatData(data) {
+export default function SectionDataFormatter(data) {
   try {
-    assert.equal(Object.prototype.toString.call(data), '[object Object]',
-      "argument 'data' should be an object");
+    assert.equal(Object.prototype.toString.call(data), '[object Array]',
+      "argument 'data' should be an array");
 
-    assert.equal(typeof data, 'object',
+    assert.equal(typeof data[0], 'object',
       "the first element of 'data' should be an object");
+
+    assert.equal(typeof data[1], 'object',
+      "the second element of 'data' should be an object");
 
   } catch (e) {
     let error = new Error(e);
@@ -18,25 +21,27 @@ export default function formatData(data) {
 
   return new Promise((resolve, reject) => {
     try {
+      let [metaData, sectionData] = data;
       let results = {
-        pageViews: data.hits.total,
+        topicsCovered: metaData.aggregations.topics_covered.value,
+        pageViews: sectionData.hits.total,
         socialReaders: 0,
-        readTimes: formatAggregation('page_views_over_time', data),
+        readTimes: formatAggregation('page_views_over_time', sectionData),
         genre: [], //metaData.genre,
         sections: [],//metaData.sections,
         topics: [],//metaData.topics,
-        referrer_types: filterOutTerms(formatFilteredAggregation('referrer_types', data), ['search', 'unknown', 'partner', 'social-network', 'email']),
-        referrer_names: formatFilteredAggregation('referrer_names', data),
-        social_referrers: filterOutTerms(formatFilteredAggregation('social_referrers', data), ['Facebook', 'Twitter', 'Linked-In']),
-        devices : formatAggregation('devices', data),
-        countries : formatAggregation('countries', data),
-        regions : formatAggregation('regions', data),
-        user_cohort : formatAggregation('user_cohort', data),
-        rfv_cluster : formatAggregation('rfv_cluster', data),
-        is_first_visit : formatAggregation('is_first_visit', data),
-        internal_referrer_types: formatFilteredAggregation('internal_referrer_types', data),
-        is_subscription : formatAggregation('is_subscription', data),
-        unique_visitors : data.aggregations.unique_visitors.value
+        referrer_types: filterOutTerms(formatFilteredAggregation('referrer_types', sectionData), ['search', 'unknown', 'partner', 'social-network', 'email']),
+        referrer_names: formatFilteredAggregation('referrer_names', sectionData),
+        social_referrers: filterOutTerms(formatFilteredAggregation('social_referrers', sectionData), ['Facebook', 'Twitter', 'Linked-In']),
+        devices : formatAggregation('devices', sectionData),
+        countries : formatAggregation('countries', sectionData),
+        regions : formatAggregation('regions', sectionData),
+        user_cohort : formatAggregation('user_cohort', sectionData),
+        rfv_cluster : formatAggregation('rfv_cluster', sectionData),
+        is_first_visit : formatAggregation('is_first_visit', sectionData),
+        internal_referrer_types: formatFilteredAggregation('internal_referrer_types', sectionData),
+        is_subscription : formatAggregation('is_subscription', sectionData),
+        unique_visitors : sectionData.aggregations.unique_visitors.value
       };
 
       resolve(results);
@@ -59,7 +64,7 @@ function formatFilteredAggregation(name, data, replacement) {
 
 function format(agg, replacement) {
   return agg.buckets.map((d, i) => {
-    let key = replacement || 'eUnknown';
+    let key = replacement || 'Unknown';
     if (typeof d.key_as_string !== "undefined"){
       key = d.key_as_string
     } else if (typeof d.key !== "undefined"){

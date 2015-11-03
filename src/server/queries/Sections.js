@@ -10,7 +10,7 @@ export default function SectionQuery(query) {
 
   let sectionQuery = build.sectionQuery(query)
 
-  return {
+  let esQuery = {
     query : sectionQuery,
     size: 1,
     aggs: {
@@ -131,6 +131,7 @@ export default function SectionQuery(query) {
       }
     }
   };
+  return esQuery
 }
 
 function calculateInterval(query) {
