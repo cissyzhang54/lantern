@@ -3,15 +3,15 @@ import moment from 'moment';
 
 import * as build from '../utils/queryBuilder'
 
-export default function OverviewQuery(query) {
+export default function SectionQuery(query) {
 
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  let overviewQuery = build.overviewQuery(query)
+  let sectionQuery = build.sectionQuery(query)
 
   return {
-    query : overviewQuery,
+    query : sectionQuery,
     size: 1,
     aggs: {
       "page_views_over_time" : {
@@ -93,6 +93,11 @@ export default function OverviewQuery(query) {
         terms: {
           field: "geo_country",
           size: 200000000
+        }
+      },
+      devices: {
+        terms: {
+          field: "device_type"
         }
       },
       user_cohort: {

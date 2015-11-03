@@ -3,7 +3,9 @@ import assign from 'object-assign';
 import Raven from 'raven-js';
 
 import ArticleActions from '../actions/ArticleActions';
+import SectionActions from '../actions/SectionActions';
 import ArticleQueryStore from '../stores/ArticleQueryStore.js';
+import SectionQueryStore from '../stores/SectionQueryStore.js';
 
 class FilterStore {
   constructor() {
@@ -15,9 +17,14 @@ class FilterStore {
       filters : {}
     }
     this.bindListeners({
+      handleOverviewUpdateData : SectionActions.UPDATE_DATA,
       handleUpdateData : ArticleActions.UPDATE_DATA
     });
     ArticleQueryStore.listen(this.handleQueryChange.bind(this));
+  }
+
+  handleOverviewUpdateData(newData) {
+    return handleUpdateData(newData)
   }
 
   handleUpdateData(newData) {

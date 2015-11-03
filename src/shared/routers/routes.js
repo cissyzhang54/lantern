@@ -21,6 +21,7 @@ export default (
     <Route path="articles/:uuid/:comparatorType/:comparator" component={ArticleView} />
     <Redirect from="articles/:uuid" to="articles/:uuid/global/FT" />
     <Route path="sections/:section" component={SectionView} />
+    <Route path="sections/:section/:comparatorType/:comparator" component={SectionView} />
     <Route path="*" name='404' component={Error404}   />
   </Route>
 );

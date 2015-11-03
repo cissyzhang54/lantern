@@ -68,6 +68,7 @@ export default class Modifier extends React.Component {
     let comparatorData = this.props.comparatorData
     let arrAuthors = data.author;
     if (!Array.isArray(arrAuthors)) arrAuthors = [arrAuthors]
+    if (!arrAuthors[0]) arrAuthors=[]
     let tags = [{label:'FT',url:`global/FT`}]
       .concat(
       data.topics.map(d => {return {label:d, url:`topic/${d}`}})
@@ -103,8 +104,10 @@ export default class Modifier extends React.Component {
           <Col sm={10} xs={12}>
             <Tags
               tags={tags}
-              currentComparator={this.props.query.comparator}
-              uuid={this.props.uuid} />
+              currentTag={this.props.query.comparator}
+              uuid={this.props.uuid}
+              category={this.props.category}
+            />
           </Col>
         </Row>
 
@@ -155,6 +158,7 @@ Modifier.propTypes = {
 };
 
 Modifier.defaultProps = {
+  category : 'articles',
   renderDateRange : true,
   renderComparator : true,
   renderFilters : true,

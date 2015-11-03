@@ -152,21 +152,13 @@ export function comparatorQuery(query){
   };
 }
 
-export function overviewQuery(query){;
+export function sectionQuery(query){
   checkString(query,'dateFrom');
   checkString(query,'dateTo');
-  checkString(query,'overviewName');
-  checkString(query,'category');
-
-  let categories = {
-    genre : {  genre: query.overviewName  },
-    section : {  sections: query.overviewName  },
-    topic : {  topics: query.overviewName  },
-    author : {  authors: query.overviewName  }
-  }
+  checkString(query,'section');
 
   let matchCategory = {
-    match : categories[query.category]
+    match : {  sections: query.section  }
   }
 
   let filter = {
