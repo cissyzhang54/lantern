@@ -8,7 +8,9 @@ import Tags from "./Tags";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
 import ModifierDescription from "./ModifierDescription";
+
 import ArticleQueryActions from '../actions/ArticleQueryActions';
+import SectionQueryActions from '../actions/SectionQueryActions';
 import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 
 const styles = {
@@ -38,10 +40,6 @@ const styles = {
   }
 };
 
-function decode(uri){
-  return uri ? decodeURI(uri) : null
-}
-
 export default class Modifier extends React.Component {
 
   constructor(props) {
@@ -53,11 +51,13 @@ export default class Modifier extends React.Component {
       from: dates.startDate.format('YYYY-MM-DD'),
       to: dates.endDate.format('YYYY-MM-DD')
     }
+    SectionQueryActions.selectDateRange(updatedDates);
     ArticleQueryActions.selectDateRange(updatedDates);
     ComparatorQueryActions.selectDateRange(updatedDates);
   }
 
   handleFilterChange (selectedFilters) {
+    SectionQueryActions.selectFilter(selectedFilters);
     ArticleQueryActions.selectFilter(selectedFilters);
     ComparatorQueryActions.selectFilter(selectedFilters);
   }

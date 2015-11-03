@@ -34,7 +34,7 @@ class ComparatorStore {
   }
 
   loadData(store) {
-    if (!store.query.comparator) return //comparatorWasRemoved
+    if (!store.query.comparator) return
     setImmediate(_ => this.getInstance().loadComparatorData(store.query));
   }
 

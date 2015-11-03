@@ -77,7 +77,7 @@ describe('#queryBuilder', () => {
 
     it('without a uuid', (done) => {
       try{
-        build.comparatorQuery({})
+        build.articleComparatorQuery({})
       } catch(error) {
         expect(error.name).to.equal(`AssertionError`);
         expect(error.message).to.equal(`argument 'query' must contain a 'uuid' string property`);
@@ -87,7 +87,7 @@ describe('#queryBuilder', () => {
 
     it('without a dateFrom', (done) => {
       try{
-        build.comparatorQuery({uuid:'uuid'})
+        build.articleComparatorQuery({uuid:'uuid'})
       } catch(error) {
         expect(error.name).to.equal(`AssertionError`);
         expect(error.message).to.equal(`argument 'query' must contain a 'dateFrom' string property`);
@@ -97,7 +97,7 @@ describe('#queryBuilder', () => {
 
     it('without a dateTo', (done) => {
       try{
-        build.comparatorQuery({uuid:'uuid', dateFrom:'11-mar-2015'})
+        build.articleComparatorQuery({uuid:'uuid', dateFrom:'11-mar-2015'})
       } catch(error) {
         expect(error.name).to.equal(`AssertionError`);
         expect(error.message).to.equal(`argument 'query' must contain a 'dateTo' string property`);
@@ -107,7 +107,7 @@ describe('#queryBuilder', () => {
 
     it('without a comparator', (done) => {
       try{
-        build.comparatorQuery({uuid:'uuid', dateFrom:'11-mar-2015', dateTo:'11-mar-2015'})
+        build.articleComparatorQuery({uuid:'uuid', dateFrom:'11-mar-2015', dateTo:'11-mar-2015'})
       } catch(error) {
         expect(error.name).to.equal(`AssertionError`);
         expect(error.message).to.equal(`argument 'query' must contain a 'comparator' string property`);
@@ -117,7 +117,7 @@ describe('#queryBuilder', () => {
 
     it('without a comparatorType', (done) => {
       try{
-        build.comparatorQuery({
+        build.articleComparatorQuery({
           uuid:'uuid', dateFrom:'11-mar-2015', dateTo:'11-mar-2015', comparator:'comparator'
         })
       } catch(error) {
@@ -129,7 +129,7 @@ describe('#queryBuilder', () => {
 
     it('without a publishDate', (done) => {
       try{
-        build.comparatorQuery({
+        build.articleComparatorQuery({
           uuid:'uuid', dateFrom:'11-mar-2015', dateTo:'11-mar-2015', comparator:'comparator', comparatorType:'type'
         })
       } catch(error) {
@@ -327,7 +327,7 @@ describe('#queryBuilder', () => {
   describe('builds and comparator query', () => {
 
     it('with the mandatory fields', () => {
-      let comparatorQuery = build.comparatorQuery({
+      let comparatorQuery = build.articleComparatorQuery({
           uuid:'uuid', dateFrom:'2015-09-16T19:58:26.000Z', dateTo:'2015-10-16T19:58:26.000Z',
           comparator:'comparator', comparatorType:'section',
           publishDate: '2015-09-16T19:58:26.000Z'
@@ -378,7 +378,7 @@ describe('#queryBuilder', () => {
     });
 
     it('with filters', () => {
-      let comparatorQuery = build.comparatorQuery({
+      let comparatorQuery = build.articleComparatorQuery({
         uuid:'uuid', dateFrom:'2015-09-16T19:58:26.000Z', dateTo:'2015-10-16T19:58:26.000Z',
         comparator:'comparator', comparatorType:'section',
         publishDate: '2015-09-16T19:58:26.000Z',
@@ -484,7 +484,7 @@ describe('#queryBuilder', () => {
     });
 
     it('with filters', () => {
-      let comparatorQuery = build.comparatorQuery({
+      let comparatorQuery = build.articleComparatorQuery({
         uuid:'uuid', dateFrom:'2015-09-16T19:58:26.000Z', dateTo:'2015-10-16T19:58:26.000Z',
         comparator:'comparator', comparatorType:'section',
         publishDate: '2015-09-16T19:58:26.000Z',

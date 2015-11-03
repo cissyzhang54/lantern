@@ -3,15 +3,15 @@ import moment from 'moment';
 
 import * as build from '../utils/queryBuilder'
 
-export default function SectionsMetadataQuery(query) {
+export default function SectionMetadataComparatorQuery(query) {
 
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  let sectionQuery = build.sectionQuery(query)
+  let sectionComparatorQuery = build.sectionComparatorQuery(query)
 
   let esQuery = {
-    query: sectionQuery,
+    query: sectionComparatorQuery,
     size: 1,
     aggs: {
       "topics_covered": {

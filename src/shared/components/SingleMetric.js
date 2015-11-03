@@ -162,6 +162,7 @@ SingleMetric.propTypes = {
   metric: React.PropTypes.number.isRequired,
   metricType: React.PropTypes.oneOf(['integer', 'time', 'percentage']).isRequired,
   comparatorMetric: React.PropTypes.number,
+  comparatorName: React.PropTypes.string,
   label: React.PropTypes.string.isRequired,
   size: React.PropTypes.oneOf(['small', 'medium', 'large']).isRequired
 };

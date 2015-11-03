@@ -5,8 +5,10 @@ class ComparatorQueryActions {
     this.generateActions(
         'addFilter',
         'removeFilter',
+        'setCategory',
         'setPublishDate',
         'setUUID',
+        'setSection',
         'selectComparator',
         'removeComparator',
         'selectFilter',

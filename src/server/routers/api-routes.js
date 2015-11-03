@@ -60,6 +60,7 @@ function getSectionData(req, res, next) {
 function getComparatorData(req, res, next) {
   const query = {
     uuid: decode(req.query.uuid),
+    section: decode(req.query.section),
     publishDate: req.query.publishDate,
     comparator: req.params.comparator,
     comparatorType: req.params.comparatorType,
@@ -71,8 +72,17 @@ function getComparatorData(req, res, next) {
   let category = req.params.category
   switch (category) {
     case 'articles':
-      esClient.runComparatorQuery(query)
+      esClient.runArticleComparatorQuery(query)
         .then((response) => ComparatorDataFormatter(response) )
+        .then((formattedData) => res.json(formattedData) )
+        .catch((error) => {
+          res.status(ErrorHandler.statusCode(error.name))
+          next(error);
+        });
+      break;
+    case 'sections':
+      esClient.runSectionQuery(query)
+        .then((response) => SectionDataFormatter(response) )
         .then((formattedData) => res.json(formattedData) )
         .catch((error) => {
           res.status(ErrorHandler.statusCode(error.name))

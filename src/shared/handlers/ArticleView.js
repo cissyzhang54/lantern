@@ -122,6 +122,7 @@ class ArticleView extends React.Component {
   }
 
   componentWillMount() {
+    ComparatorQueryActions.setCategory('articles');
     let hasArticleChanged = this.state.uuid !== ArticleQueryStore.getState().query.uuid;
     let hasComparatorChanged = this.state.comparator !== ComparatorQueryStore.getState().query.comparator;
     if (hasArticleChanged){
