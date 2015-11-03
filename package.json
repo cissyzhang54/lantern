@@ -1,10 +1,10 @@
 {
   "name": "lantern",
   "version": "0.0.1",
-  "description": "Lantern - a data analytics platfor for the FT",
+  "description": "Lantern - a data analytics platform for the FT",
   "main": "src/server/server.js",
   "scripts": {
-    "test": "env NODE_ENV=test mocha --compilers js:babel/register --recursive test/**/*.spec.js",
+    "test": "env NODE_ENV=test mocha --compilers js:babel/register --recursive test/**/*.spec.js && npm run functional",
     "test-watch": "env NODE_ENV=test mocha --compilers js:babel/register --recursive test/**/*.spec.js --watch --reporter min",
     "test-debug": "env NODE_ENV=test mocha --debug-brk --compilers js:babel/register --recursive test/**/*.spec.js",
     "cover": "env NODE_ENV=test babel-node node_modules/.bin/isparta cover node_modules/.bin/_mocha -- --reporter=dot test/**/*.spec.js ",
@@ -15,7 +15,9 @@
     "debug": "env $(cat .env) nodemon --debug lib/server/server",
     "postinstall": "npm run build && env $(cat .env) webpack --config webpack.config.prod.js",
     "start": "npm run watch-js & npm run dev-server & env $(cat .env) npm run server",
-    "build": "npm run clean && babel src -d lib --experimental"
+    "build": "npm run clean && babel src -d lib --experimental",
+    "functional" : "npm start & sleep 20 && node nightwatch.js -g test/nightwatch/functional --suiteRetries 3",
+    "f-debug" : "npm start & sleep 20 && node nightwatch.js -g test/nightwatch/functional --suiteRetries 3 && killall npm node"
   },
   "pre-commit": "test",
   "author": "Dario Villanueva",
@@ -57,6 +59,7 @@
     "moment-duration-format": "^1.3.0",
     "moment-range": "^2.0.3",
     "node-sass": "^3.3.3",
+    "nightwatch": "^0.8.6",
     "nodemon": "^1.4.1",
     "object-assign": "^4.0.1",
     "passport": "^0.3.0",
