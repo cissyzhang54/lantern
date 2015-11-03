@@ -1,6 +1,7 @@
 import alt from '../alt';
 import assign from 'object-assign';
 import Raven from 'raven-js';
+import uuid from 'uuid';
 
 import SearchActions from '../actions/SearchActions';
 import SearchSource from '../sources/SearchSource';
@@ -16,9 +17,13 @@ class SearchStore {
     this.from = 0;
     this.bindActions(SearchActions);
     this.exportAsync(SearchSource);
+    this.lastRequest;
   }
 
   updateResults(data) {
+    if (data.requestId !== this.lastRequest) {
+      return;
+    }
     this.loading = false;
     this.results = this.results.concat(data.results);
     this.total = data.total;
@@ -36,17 +41,28 @@ class SearchStore {
   }
 
   search(query) {
+    let requestId = uuid.v4();
+    this.lastRequest = requestId;
     this.loading = true;
     this.query = query;
     this.from = 0;
     this.results = [];
     this.total = 0;
-    this.getInstance().search(query);
+    this.getInstance().search({
+      term: query,
+      requestId: requestId
+    });
   }
 
   getMoreResults() {
-    if (this.results.length < this.total)
-      this.getInstance().search(this.query, this.from);
+    if (this.results.length < this.total) {
+      let requestId = uuid.v4();
+      this.lastRequest = requestId;
+      this.getInstance().search({
+        term: this.query,
+        requestId: requestId}
+        , this.from);
+    }
   }
 
   destroy() {

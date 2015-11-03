@@ -105,26 +105,30 @@ let DataAPI = {
 
     search(query, from = 0, apiKey = '') {
 
-      assert.equal(typeof query, 'string',
-        "argument 'query' must be a string");
+      assert.equal(typeof query, 'object',
+      "argument 'query' must be an object");
+
+      assert.equal(typeof query.term, 'string',
+      "query must contain a property 'term' of type string");
 
       return new Promise((resolve, reject) => {
-        let url = config.baseUrl + '/api/v0/search/' + query;
+        let url = config.baseUrl + '/api/v0/search/' + query.term;
 
         const params = {
           from : from,
           apiKey : apiKey
         };
-
+        let requestId = query.requestId;
         request.get(url)
           .query(params)
           .set('Accept', 'application/json')
           .end((err, res) => {
             if (err) {
-              err.queryData = query;
+              err.queryData = query.term;
               err.name = errorName('Search', err)
               reject(err);
             }
+            res.body.requestId = requestId;
             !err && resolve(res.body);
           });
 
