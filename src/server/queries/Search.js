@@ -8,7 +8,9 @@ export default function SearchQuery(query) {
   assert.equal(typeof query.term, 'string',
     "argument 'query' must contain a 'term' property of type string");
 
-  return {
+  let queryLength = query.term.split(' ').length;
+
+  let queryObject = {
     query : {
       bool : {
         must : {
@@ -32,6 +34,24 @@ export default function SearchQuery(query) {
           }
         ]
       }
-    }
+    },
+    sort : [
+      {
+        _score : {
+          order: 'desc'
+        }
+      },
+      {
+        initial_publish_date: {
+          order: 'desc'
+        }
+      }
+    ]
   };
+
+  if (queryLength === 1) {
+    queryObject.sort.reverse();
+  }
+
+  return queryObject;
 }

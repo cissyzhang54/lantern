@@ -93,7 +93,7 @@ export default class Search extends React.Component {
         bsSize='large'
         type='search'
         addonBefore='Search'
-        onChange={_.debounce(this._handleSearchInput.bind(this), 300)}
+        onChange={_.debounce(this._handleSearchInput.bind(this), 400)}
         >
       </Input>
       { additionalInfo }

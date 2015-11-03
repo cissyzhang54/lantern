@@ -30,14 +30,14 @@ describe("Data Api Utils", () => {
       expect(() => DataAPIUtils.search()).to.throw();
     });
 
-    it('should throw an exception if a non string query is passed', () => {
+    it('should throw an exception if a non object query is passed', () => {
       expect(() => DataAPIUtils.search(123)).to.throw();
-      expect(() => DataAPIUtils.search({})).to.throw();
+      expect(() => DataAPIUtils.search('123')).to.throw();
       expect(() => DataAPIUtils.search(false)).to.throw();
     });
 
-    it('should not throw  if a string query is passed', () => {
-      expect(() => DataAPIUtils.search('123')).not.to.throw();
+    it('should not throw if a query object is passed', () => {
+      expect(() => DataAPIUtils.search({term: '123'})).not.to.throw();
     });
 
   });
