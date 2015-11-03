@@ -423,39 +423,6 @@ export default [{
         }
       ]
     },
-    "referrer_types": {
-      "doc_count": 13923,
-      "filtered": {
-        "doc_count_error_upper_bound": 0,
-        "sum_other_doc_count": 0,
-        "buckets": [
-          {
-            "key": "",
-            "doc_count": 8428
-          },
-          {
-            "key": "social-network",
-            "doc_count": 2756
-          },
-          {
-            "key": "search",
-            "doc_count": 2211
-          },
-          {
-            "key": "partner",
-            "doc_count": 416
-          },
-          {
-            "key": "news-sharing",
-            "doc_count": 79
-          },
-          {
-            "key": "email",
-            "doc_count": 33
-          }
-        ]
-      }
-    },
     "regions": {
       "doc_count_error_upper_bound": 0,
       "sum_other_doc_count": 0,
@@ -561,104 +528,6 @@ export default [{
           "doc_count": 639
         }
       ]
-    },
-    "referrer_names": {
-      "doc_count": 13923,
-      "filtered": {
-        "doc_count_error_upper_bound": 0,
-        "sum_other_doc_count": 17,
-        "buckets": [
-          {
-            "key": "",
-            "doc_count": 8428
-          },
-          {
-            "key": "Google",
-            "doc_count": 2185
-          },
-          {
-            "key": "Facebook",
-            "doc_count": 1965
-          },
-          {
-            "key": "Twitter",
-            "doc_count": 791
-          },
-          {
-            "key": "The Business Insider",
-            "doc_count": 250
-          },
-          {
-            "key": "Linked-In",
-            "doc_count": 153
-          },
-          {
-            "key": "Google News",
-            "doc_count": 79
-          },
-          {
-            "key": "Other email",
-            "doc_count": 27
-          },
-          {
-            "key": "Bing",
-            "doc_count": 19
-          },
-          {
-            "key": "Digg",
-            "doc_count": 9
-          }
-        ]
-      }
-    },
-    "referrer_urls": {
-      "doc_count": 8956,
-      "filtered": {
-        "doc_count_error_upper_bound": 3,
-        "sum_other_doc_count": 1903,
-        "buckets": [
-          {
-            "key": "http://www.bloombergview.com/articles/2015-09-29/ritholtz-s-reads-seven-reasons-vw-may-be-worse-than-enron",
-            "doc_count": 2673
-          },
-          {
-            "key": "http://blogs.elconfidencial.com/mercados/valor-anadido/2015-09-29/volkswagen-puede-desaparecer-su-fraude-es-aun-peor-que-el-de-enron_1040790/",
-            "doc_count": 1565
-          },
-          {
-            "key": "",
-            "doc_count": 900
-          },
-          {
-            "key": "http://www.ritholtz.com/blog/2015/09/10-tuesday-am-reads-179/",
-            "doc_count": 566
-          },
-          {
-            "key": "http://lnkd.in",
-            "doc_count": 347
-          },
-          {
-            "key": "http://www.ritholtz.com/blog/",
-            "doc_count": 338
-          },
-          {
-            "key": "http://www.theautomaticearth.com/2015/09/debt-rattle-september-28-2015/",
-            "doc_count": 200
-          },
-          {
-            "key": "http://www.svd.se/darfor-ar-volkswagen-skandalen-varre-an-enron",
-            "doc_count": 189
-          },
-          {
-            "key": "http://www.infomoney.com.br/minhas-financas/carros/noticia/4311041/com-escandalo-nas-maos-gigante-montadora-volkswagen-pode-acabar",
-            "doc_count": 148
-          },
-          {
-            "key": "https://www.linkedin.com/",
-            "doc_count": 127
-          }
-        ]
-      }
     },
     "channels": {
       "doc_count_error_upper_bound": 0,
@@ -794,68 +663,6 @@ export default [{
         }
       ]
     },
-    "internal_referrer_urls": {
-      "doc_count": 139,
-      "filtered": {
-        "doc_count_error_upper_bound": 0,
-        "sum_other_doc_count": 0,
-        "buckets": [
-          {
-            "key": "",
-            "doc_count": 88
-          },
-          {
-            "key": "http://www.ft.com/intl/news-feed",
-            "doc_count": 16
-          },
-          {
-            "key": "http://ig.ft.com/widgets/series-promo-v2/promo.html",
-            "doc_count": 15
-          },
-          {
-            "key": "http://www.ft.com/intl/cms/s/0/7e77292e-6ce6-11e5-aca9-d87542bf8673.html",
-            "doc_count": 8
-          },
-          {
-            "key": "http://www.ft.com/intl/cms/s/0/ff2f22fc-65ba-11e5-a28b-50226830d644.html",
-            "doc_count": 4
-          },
-          {
-            "key": "http://search.ft.com/search?queryText=boundary+dam+CCS",
-            "doc_count": 2
-          },
-          {
-            "key": "http://search.ft.com/search?queryText=ccs+costs",
-            "doc_count": 2
-          },
-          {
-            "key": "http://www.ft.com/cms/s/0/0290c57e-62da-11e5-a28b-50226830d644.html",
-            "doc_count": 2
-          },
-          {
-            "key": "https://next.ft.com/stream/sectionsId/MTE4-U2VjdGlvbnM=",
-            "doc_count": 2
-          }
-        ]
-      }
-    },
-    "internal_referrer_types": {
-      "doc_count": 139,
-      "filtered": {
-        "doc_count_error_upper_bound": 0,
-        "sum_other_doc_count": 0,
-        "buckets": [
-          {
-            "key": "story",
-            "doc_count": 113
-          },
-          {
-            "key": "",
-            "doc_count": 26
-          }
-        ]
-      }
-    },
     "next_internal_url": {
       "doc_count_error_upper_bound": 0,
       "sum_other_doc_count": 10,
@@ -910,6 +717,241 @@ export default [{
     },
     "unique_visitors": {
       "value": 6
+    },
+    "referrer": {
+      "doc_count": 40111,
+      "types": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+          {
+            "key": "",
+            "doc_count": 17097
+          },
+          {
+            "key": "social-network",
+            "doc_count": 14796
+          },
+          {
+            "key": "search",
+            "doc_count": 6043
+          },
+          {
+            "key": "partner",
+            "doc_count": 1146
+          },
+          {
+            "key": "news-sharing",
+            "doc_count": 982
+          },
+          {
+            "key": "email",
+            "doc_count": 47
+          },
+          {
+            "key": "aggregator",
+            "doc_count": 0
+          },
+          {
+            "key": "internal",
+            "doc_count": 0
+          },
+          {
+            "key": "sister",
+            "doc_count": 0
+          },
+          {
+            "key": "video-sharing",
+            "doc_count": 0
+          }
+        ]
+      },
+      "urls": {
+        "doc_count": 19272,
+        "filtered": {
+          "doc_count_error_upper_bound": 10,
+          "sum_other_doc_count": 6895,
+          "buckets": [
+            {
+              "key": "",
+              "doc_count": 5153
+            },
+            {
+              "key": "http://www.bloombergview.com/articles/2015-09-29/ritholtz-s-reads-seven-reasons-vw-may-be-worse-than-enron",
+              "doc_count": 2674
+            },
+            {
+              "key": "http://blogs.elconfidencial.com/mercados/valor-anadido/2015-09-29/volkswagen-puede-desaparecer-su-fraude-es-aun-peor-que-el-de-enron_1040790/",
+              "doc_count": 1584
+            },
+            {
+              "key": "http://www.ritholtz.com/blog/2015/09/10-tuesday-am-reads-179/",
+              "doc_count": 565
+            },
+            {
+              "key": "http://lnkd.in",
+              "doc_count": 524
+            },
+            {
+              "key": "http://www.ft.com/home/uk",
+              "doc_count": 463
+            },
+            {
+              "key": "http://www.theautomaticearth.com/2015/09/debt-rattle-september-28-2015/",
+              "doc_count": 410
+            },
+            {
+              "key": "http://www.svd.se/darfor-ar-volkswagen-skandalen-varre-an-enron",
+              "doc_count": 375
+            },
+            {
+              "key": "http://www.ritholtz.com/blog/",
+              "doc_count": 338
+            },
+            {
+              "key": "http://www.businessinsider.com/volkswagens-scandal-is-worse-than-enron-and-reports-say-the-company-was-warned-about-cheat-devices-2015-9",
+              "doc_count": 291
+            }
+          ]
+        }
+      },
+      "names": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 75,
+        "buckets": [
+          {
+            "key": "",
+            "doc_count": 17146
+          },
+          {
+            "key": "Facebook",
+            "doc_count": 10104
+          },
+          {
+            "key": "Google",
+            "doc_count": 5832
+          },
+          {
+            "key": "Twitter",
+            "doc_count": 4679
+          },
+          {
+            "key": "Google News",
+            "doc_count": 982
+          },
+          {
+            "key": "The Business Insider",
+            "doc_count": 708
+          },
+          {
+            "key": "Yahoo Finance",
+            "doc_count": 241
+          },
+          {
+            "key": "Linked-In",
+            "doc_count": 177
+          },
+          {
+            "key": "Yahoo",
+            "doc_count": 102
+          },
+          {
+            "key": "Bing",
+            "doc_count": 65
+          }
+        ]
+      }
+    },
+    "internal_referrer": {
+      "doc_count": 52352,
+      "urls": {
+        "doc_count_error_upper_bound": 16,
+        "sum_other_doc_count": 9691,
+        "buckets": [
+          {
+            "key": "",
+            "doc_count": 30399
+          },
+          {
+            "key": "http://www.ft.com/home/uk",
+            "doc_count": 3840
+          },
+          {
+            "key": "http://www.ft.com/home/us",
+            "doc_count": 3574
+          },
+          {
+            "key": "http://www.ft.com/home/europe",
+            "doc_count": 2170
+          },
+          {
+            "key": "http://www.ft.com/home/asia",
+            "doc_count": 1190
+          },
+          {
+            "key": "http://www.ft.com/intl/vw-emissions-scandal",
+            "doc_count": 618
+          },
+          {
+            "key": "http://www.ft.com/vw-emissions-scandal",
+            "doc_count": 292
+          },
+          {
+            "key": "http://www.ft.com/intl/cms/s/0/8f2eb94c-62ac-11e5-a28b-50226830d644.html",
+            "doc_count": 202
+          },
+          {
+            "key": "http://www.ft.com/cms/s/0/8f2eb94c-62ac-11e5-a28b-50226830d644.html",
+            "doc_count": 193
+          },
+          {
+            "key": "http://www.ft.com/cms/s/0/2eea3106-65c2-11e5-9846-de406ccb37f2.html",
+            "doc_count": 183
+          }
+        ]
+      },
+      "types": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+          {
+            "key": "FT",
+            "doc_count": 48493
+          },
+          {
+            "key": "",
+            "doc_count": 2298
+          },
+          {
+            "key": "story",
+            "doc_count": 954
+          },
+          {
+            "key": "front",
+            "doc_count": 290
+          },
+          {
+            "key": "section",
+            "doc_count": 171
+          },
+          {
+            "key": "search",
+            "doc_count": 124
+          },
+          {
+            "key": "page",
+            "doc_count": 17
+          },
+          {
+            "key": "topic",
+            "doc_count": 3
+          },
+          {
+            "key": "video",
+            "doc_count": 2
+          }
+        ]
+      }
     }
   }
 }, {
