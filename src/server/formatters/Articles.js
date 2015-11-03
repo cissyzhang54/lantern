@@ -45,7 +45,7 @@ export default function formatData(data) {
         channels: formatAggregation('channels', articleData),
         referrer_types: filterOutTerms(format(articleData.aggregations.referrer.types), ['search', 'unknown', 'partner', 'social-network', 'email']),
         referrer_names: format(articleData.aggregations.referrer.names),
-        referrer_urls: format(articleData.aggregations.referrer.urls.filtered, 'Not Available'),
+        referrer_urls: format(articleData.aggregations.referrer.urls.filtered),
         social_referrers: filterOutTerms(formatFilteredAggregation('social_referrers', articleData), ['Facebook', 'Twitter', 'Linked-In']),
         devices : formatAggregation('devices', articleData),
         countries : formatAggregation('countries', articleData),
@@ -54,8 +54,8 @@ export default function formatData(data) {
         user_cohort : formatAggregation('user_cohort', articleData),
         rfv_cluster : formatAggregation('rfv_cluster', articleData),
         is_first_visit : formatAggregation('is_first_visit', articleData),
-        internal_referrer_urls: format(articleData.aggregations.internal_referrer.urls, articleData, 'Not Available'),
-          internal_referrer_types: format(articleData.aggregations.internal_referrer.types, articleData),
+        internal_referrer_urls: format(articleData.aggregations.internal_referrer.urls),
+          internal_referrer_types: format(articleData.aggregations.internal_referrer.types),
         next_internal_url : formatAggregation('next_internal_url', articleData),
         is_subscription : formatAggregation('is_subscription', articleData),
         total_comments_posted : eventData.aggregations.page_comments.posts.total.value,
@@ -90,20 +90,20 @@ function formatFilteredAggregation(name, data, replacement) {
   return format(data.aggregations[name].filtered, replacement)
 }
 
-function format(agg, replacement) {
-  return agg.buckets.map((d, i) => {
-    let key = replacement || 'eUnknown';
-    if (typeof d.key_as_string !== "undefined"){
-      key = d.key_as_string
-    } else if (typeof d.key !== "undefined"){
-      key = d.key
-    }
-    return [
-      key,
-      d.doc_count
-    ];
-  });
-}
+  function format(agg, replacement) {
+    return agg.buckets.map((d, i) => {
+      let key = replacement || 'Unknown';
+      if (typeof d.key_as_string !== "undefined"){
+        key = d.key_as_string
+      } else if (typeof d.key !== "undefined"  && d.key !== ''){
+        key = d.key
+      }
+      return [
+        key,
+        d.doc_count
+      ];
+    });
+  }
 
 // In place of min doc count in ES for specific fields
 // filter the specific always required fields required here
