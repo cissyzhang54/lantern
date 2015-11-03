@@ -1,6 +1,7 @@
 import React from 'react/addons';
 import Header from '../components/Header';
 import SectionModifier from '../components/SectionModifier';
+import SingleMetric from '../components/SingleMetric';
 import SectionStore from '../stores/SectionStore';
 import SectionQueryStore from '../stores/SectionQueryStore';
 import SectionQueryActions from '../actions/SectionQueryActions';
@@ -83,6 +84,8 @@ class SectionView extends React.Component {
       <Header
         title={'Section: ' + this.props.params.section}
         />
+
+      <SingleMetric  metric={data.topicsCovered} metricType='integer' label='Topics covered' size="large" />
 
     </div>)
   }

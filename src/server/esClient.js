@@ -1,6 +1,7 @@
 import elasticsearch from 'elasticsearch';
 import ArticleComparatorQuery from './queries/ArticleComparator';
 import SectionsQuery from './queries/Sections';
+import SectionsMetadataQuery from './queries/SectionsMetadata';
 import ArticlesQuery from './queries/Articles';
 import ArticleEventsQuery from './queries/ArticleEvents';
 import ArticleEventsComparatorQuery from './queries/ArticleEventsComparator';
@@ -67,11 +68,19 @@ export function runSectionQuery(queryData) {
     return Promise.reject(queryError);
   }
 
+  let metaData
   if (!queryData.dateFrom || !queryData.dateTo) {
     queryData.dateFrom = moment().subtract(29,'days').toISOString();
     queryData.dateTo = moment().toISOString();
   }
-  return retrieveSectionData(queryData)
+  return retrieveSectionMetaData(queryData)
+    .then((data) => {
+      metaData = data;
+      return retrieveSectionData(queryData)
+    })
+    .then((sectionData) => {
+      return [metaData, sectionData]
+    })
 }
 
 
@@ -134,8 +143,6 @@ function retrieveArticleData(queryData){
 }
 
 function retrieveSectionData(queryData){
-  queryData.type = "view";
-
   return new Promise((resolve, reject) => {
     let queryObject = SectionsQuery(queryData);
     let request = {
@@ -173,6 +180,24 @@ function retrieveMetaData(queryData){
         return reject(error);
       }
       return resolve(response._source);
+    });
+  })
+}
+
+function retrieveSectionMetaData(queryData){
+  return new Promise((resolve, reject) => {
+    let queryObject = SectionsMetadataQuery(queryData);
+    let request = {
+      index: process.env.ES_SEARCH_INDEX_ROOT,
+      ignore_unavailable: true,
+      search_type: 'count',
+      body: queryObject
+    };
+    client.search(request, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      return resolve(response);
     });
   })
 }
