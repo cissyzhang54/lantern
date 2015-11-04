@@ -95,7 +95,7 @@ function formatFilteredAggregation(name, data, replacement) {
       let key = replacement || 'Unknown';
       if (typeof d.key_as_string !== "undefined"){
         key = d.key_as_string
-      } else if (typeof d.key !== "undefined"  && d.key !== ''){
+      } else if (typeof d.key !== "undefined" && d.key !== ''){
         key = d.key
       }
       return [

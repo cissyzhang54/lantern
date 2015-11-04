@@ -30,8 +30,8 @@ export default function SectionDataFormatter(data) {
         genre: [], //metaData.genre,
         sections: [],//metaData.sections,
         topics: [],//metaData.topics,
-        referrer_types: filterOutTerms(formatFilteredAggregation('referrer_types', sectionData), ['search', 'unknown', 'partner', 'social-network', 'email']),
-        referrer_names: formatFilteredAggregation('referrer_names', sectionData),
+        referrer_types: filterOutTerms(format(articleData.aggregations.referrer.types), ['search', 'unknown', 'partner', 'social-network', 'email']),
+        referrer_names: format(articleData.aggregations.referrer.names),
         social_referrers: filterOutTerms(formatFilteredAggregation('social_referrers', sectionData), ['Facebook', 'Twitter', 'Linked-In']),
         devices : formatAggregation('devices', sectionData),
         countries : formatAggregation('countries', sectionData),
@@ -67,7 +67,7 @@ function format(agg, replacement) {
     let key = replacement || 'Unknown';
     if (typeof d.key_as_string !== "undefined"){
       key = d.key_as_string
-    } else if (typeof d.key !== "undefined"){
+    } else if (typeof d.key !== "undefined" && d.key !== ''){
       key = d.key
     }
     return [
