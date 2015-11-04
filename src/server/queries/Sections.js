@@ -21,24 +21,7 @@ export default function SectionQuery(query) {
           min_doc_count : 0
         }
       },
-      referrer_types : {
-        filter : {
-          not : {
-            term : {
-              referrer_type : "internal"
-            }
-          }
-        },
-        aggs: {
-          filtered : {
-            terms: {
-              field: "referrer_type",
-              min_doc_count : 0
-            }
-          }
-        }
-      },
-      referrer_names: {
+      referrer : {
         filter: {
           not: {
             term: {
@@ -47,9 +30,15 @@ export default function SectionQuery(query) {
           }
         },
         aggs: {
-          filtered: {
+          names: {
             terms: {
               field: "referrer_name"
+            }
+          },
+          types: {
+            terms: {
+              field: "referrer_type",
+              min_doc_count: 0
             }
           }
         }

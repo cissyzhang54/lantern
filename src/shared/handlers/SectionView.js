@@ -86,6 +86,7 @@ class SectionView extends React.Component {
         />
 
       <SingleMetric  metric={data.topicsCovered} metricType='integer' label='Topics covered' size="large" />
+      <SingleMetric  metric={data.unique_visitors} metricType='integer' label='Unique Visitors' size="large" />
 
     </div>)
   }
