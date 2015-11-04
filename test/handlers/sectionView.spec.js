@@ -10,7 +10,7 @@ import SectionQueryStore from '../../src/shared/stores/SectionQueryStore';
 
 const TestUtils = React.addons.TestUtils;
 
-describe ('ArticleView Handler', function() {
+describe ('SectionView Handler', function() {
   let SectionStoreStub;
   let SectionQueryStoreStub;
 
@@ -31,8 +31,11 @@ describe ('ArticleView Handler', function() {
       params:{section:'test-section'}
     });
     const props = sectionView.props;
-    const sectionModifier = props.children[0];
-    const header = props.children[1];
+    const divContainer = props.children;
+    const col = divContainer.props.children;
+    const sectionModifier = col.props.children[0];
+    const col2 = col.props.children[1];
+    const header = col2.props.children[1];
 
     expect(header.props.title).to.equal('Section: test-section');
     expect(TestUtils.isElementOfType(header, Header)).to.equal(true);

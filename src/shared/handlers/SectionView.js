@@ -1,7 +1,11 @@
 import React from 'react/addons';
 import connectToStores from 'alt/utils/connectToStores';
+import DocumentTitle from 'react-document-title';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 
 import Header from '../components/Header';
+import Messaging from '../components/Messaging';
 import SectionModifier from '../components/SectionModifier';
 import SingleMetric from '../components/SingleMetric';
 
@@ -42,6 +46,8 @@ class SectionView extends React.Component {
     return {
       data: sectionState.data,
       query: queryState.query,
+      sectionLoading : sectionState.loading,
+      comparatorLoading : comparatorState.loading,
       comparatorQuery: comparatorQueryState.query,
       comparatorData: comparatorState.data || {}
     };
@@ -74,44 +80,64 @@ class SectionView extends React.Component {
   }
 
   render() {
-    if (!this.props.data){
-      return <div>Loading</div>;
+    if (this.props.errorMessage) {
+      return (<Messaging category="Section" type="ERROR" message={this.props.errorMessage} />);
+    } else if (!this.props.data) {
+      return (<Messaging category="Section" type="LOADING" />);
     }
+    let updating = (this.props.sectionLoading || this.props.comparatorLoading)
+      ? <Messaging category="Section" type="UPDATING" />
+      : <Messaging category="Section" type="PLACEHOLDER" />
+
     let data = this.props.data
     let query = this.props.query
     let comparatorData = this.props.comparatorData
     let comparatorQuery = this.props.comparatorQuery
+    let title = (data) ? 'Lantern - ' + this.props.params.section : '';
 
-    return(<div>
+    return(<DocumentTitle title={title}>
+      <div>
+        <Col xs={12}>
 
-      <SectionModifier
-        data={data}
-        comparatorData={comparatorData}
-        renderDevice={true}
-        renderRegion={true}
-        renderReferrers={true}
-        renderUserCohort={true}
-        query={query}
-        category={'sections'}
-        uuid={this.props.params.section}
-        />
+          <SectionModifier
+            data={data}
+            comparatorData={comparatorData}
+            renderDevice={true}
+            renderRegion={true}
+            renderReferrers={true}
+            renderUserCohort={true}
+            query={query}
+            category={'sections'}
+            uuid={this.props.params.section}
+            />
+          <Col xs={12}>
 
-      <Header
-        title={'Section: ' + this.props.params.section}
-        />
+            {updating}
 
-      <SingleMetric
-        metric={data.topicsCovered}
-        metricType='integer'
-        comparatorMetric={comparatorData.topicsCovered}
-        comparatorName={comparatorData.comparator}
-        label='Topics covered'
-        size="large"
-      />
+          <Header
+            title={'Section: ' + this.props.params.section}
+            />
 
-      <SingleMetric  metric={data.unique_visitors} metricType='integer' label='Unique Visitors' size="large" />
+          <SingleMetric
+            metric={data.topicsCovered}
+            metricType='integer'
+            comparatorMetric={comparatorData.topicsCovered}
+            comparatorName={comparatorData.comparator}
+            label='Topics covered'
+            size="large"
+          />
 
-    </div>)
+          <SingleMetric
+            metric={data.unique_visitors}
+            metricType='integer'
+            comparatorMetric={comparatorData.unique_visitors}
+            comparatorName={comparatorData.unique_visitors}
+            label='Unique Visitors'
+            size="large" />
+        </Col>
+      </Col>
+    </div>
+  </DocumentTitle>)
   }
 }
 

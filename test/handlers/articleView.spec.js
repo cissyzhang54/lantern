@@ -1,10 +1,11 @@
 import {expect} from 'chai';
 import React from 'react';
 import sinon from 'sinon';
-import {createAltWrappedComponent} from '../createComponent';
+import {createAltWrappedComponent, createComponent} from '../createComponent';
 import ArticleView from '../../src/shared/handlers/ArticleView';
 import Error404 from '../../src/shared/handlers/404';
 import SectionModifier from '../../src/shared/components/SectionModifier';
+import Messaging from '../../src/shared/components/Messaging';
 import Logo from '../../src/shared/components/Logo';
 import * as formatAuthors from '../../src/shared/utils/formatAuthors';
 import ArticleStore from '../../src/shared/stores/ArticleStore';
@@ -70,11 +71,9 @@ describe ('ArticleView Handler', function() {
     let articleView = createAltWrappedComponent(ArticleView, {
       params:{}
     });
-    const divContainer = articleView.props;
-    const logo = divContainer.children;
-
-    expect(logo.props.message).to.equal('Loading Article...');
-    expect(TestUtils.isElementOfType(logo, Logo)).to.equal(true);
+    const messaging = articleView
+    expect(messaging.props.type).to.equal('LOADING');
+    expect(TestUtils.isElementOfType(messaging, Messaging)).to.equal(true);
 
   });
 
@@ -86,11 +85,10 @@ describe ('ArticleView Handler', function() {
     let articleView = createAltWrappedComponent(ArticleView, {
       params:{}
     });
-    const divContainer = articleView.props;
-    const error404 = divContainer.children;
+    const messaging = articleView
 
-    expect(error404.props.title).to.equal('Lantern - Article Not Found');
-    expect(TestUtils.isElementOfType(error404, Error404)).to.equal(true);
+    expect(messaging.props.type).to.equal('ERROR');
+    expect(TestUtils.isElementOfType(messaging, Messaging)).to.equal(true);
 
   });
 
