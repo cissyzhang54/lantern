@@ -1,5 +1,5 @@
 export default [{
-  "took": 3,
+  "took": 13587,
   "timed_out": false,
   "_shards": {
     "total": 1,
@@ -43,6 +43,9 @@ export default [{
   "aggregations": {
     "topics_covered": {
       "value": 108
+    },
+    "distinct_articles": {
+      "value": 252
     }
   }
 },
