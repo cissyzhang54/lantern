@@ -42,6 +42,7 @@ describe('Article Formatter', function() {
       .then((data) => {
         expect(data).to.be.a('object');
         const props = [
+          'articleCount',
           'topicsCovered',
           'pageViews',
           'genre',
