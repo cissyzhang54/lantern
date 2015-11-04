@@ -2,12 +2,11 @@ import React from 'react/addons';
 import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import Alert from 'react-bootstrap/lib/Alert';
 import connectToStores from 'alt/utils/connectToStores';
 import moment from 'moment';
 
 import Header from "../components/Header";
-import Logo from "../components/Logo";
+import Messaging from '../components/Messaging';
 import SectionModifier from "../components/SectionModifier";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
 import SectionReferrers from "../components/SectionReferrers.js";
@@ -26,64 +25,8 @@ import ArticleQueryStore from '../stores/ArticleQueryStore';
 import ArticleQueryActions from '../actions/ArticleQueryActions';
 import ComparatorQueryStore from '../stores/ComparatorQueryStore';
 import ComparatorQueryActions from '../actions/ComparatorQueryActions';
-import Error404 from '../handlers/404';
 import FeatureFlag from '../utils/featureFlag';
 import * as formatAuthors from '../utils/formatAuthors';
-
-const STYLES = {
-  MASK: {
-    width: '100%',
-    height: '100%',
-    position: 'fixed',
-    top: '0',
-    left: '0',
-    zIndex: 2,
-    cursor:'wait',
-    background: 'rgba(255, 255, 255, 0.4)'
-  },
-  LOADING: {
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center'
-  },
-  UPDATING : {
-    position: 'fixed',
-    top: '2em',
-    left: '40%',
-    width: '20%',
-    textAlign: 'center',
-    zIndex: 2
-  }
-};
-const MESSAGES = {
-  PLACEHOLDER : (<div></div>),
-  LOADING : (
-    <div style={STYLES.LOADING}>
-      <Logo message="Loading Article..." loading />
-    </div>
-  ),
-  UPDATING : (
-    <div style={STYLES.MASK}>
-      <Alert bsStyle="warning" style={STYLES.UPDATING}>
-        <strong>Updating Article...</strong>
-      </Alert>
-    </div>
-  ),
-  ERROR: (extra) => { return (<div>
-    <Error404
-      title="Lantern - Article Not Found"
-      message={[
-              'Ooops!',
-              'We could not find the article you requested',
-              'Perhaps the article was published less than 24 hours ago?'
-              ]}
-      extra={<pre>
-                {extra}
-              </pre>
-            }
-      />
-  </div>)}
-}
 
 function decode(uri){
   return uri ? decodeURI(uri) : null
@@ -154,13 +97,13 @@ class ArticleView extends React.Component {
 
   render() {
     if (this.props.errorMessage) {
-      return (MESSAGES.ERROR(this.props.errorMessage));
+      return (<Messaging category="Article" type="ERROR" message={this.props.errorMessage} />);
     } else if (!this.props.data) {
-      return MESSAGES.LOADING;
+      return (<Messaging category="Article" type="LOADING" />);
     }
-    let updating = (this.props.articleLoading || this.props.comparatorLoading)
-      ? MESSAGES.UPDATING
-      : MESSAGES.PLACEHOLDER
+    let updating = (this.props.sectionLoading || this.props.comparatorLoading)
+      ? <Messaging category="Article" type="UPDATING" />
+      : <Messaging category="Article" type="PLACEHOLDER" />
 
     let data = this.props.data;
     let comparatorData = this.props.comparatorData || { article: {}};
