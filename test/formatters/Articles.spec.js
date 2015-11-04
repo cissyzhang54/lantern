@@ -49,7 +49,6 @@ describe('Article Formatter', function() {
           'published_human',
           'pageViews',
           'timeOnPage',
-          'socialReaders',
           'readTimes',
           'readTimesSincePublish',
           'genre',

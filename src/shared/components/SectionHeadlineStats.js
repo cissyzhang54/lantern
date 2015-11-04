@@ -20,11 +20,6 @@ let config = {
     label: 'Page Views',
     size: 'large'
   },
-  socialUsers: {
-    metricType: 'integer',
-    label: 'Social Users',
-    size: 'large'
-  },
   scroll_depth: {
     metricType: 'percentage',
     label: 'Scroll Depth',
@@ -57,7 +52,6 @@ export default class SectionHeadlineStats extends React.Component {
     let comparatorData = this.props.comparatorData ;
     let timeOnPage = renderMetric('timeOnPage', data.timeOnPage, comparatorData.comparator, comparatorData.timeOnPage)
     let pageViews = renderMetric('pageViews', data.pageViews, comparatorData.comparator, comparatorData.category_average_view_count)
-    let socialUsers = renderMetric('socialUsers', data.socialReaders)
     let scrollDepth = renderMetric('scroll_depth', data.scroll_depth, comparatorData.comparator, comparatorData.scroll_depth)
     let uniqueVisitors = renderMetric('uniqueVisitors', data.unique_visitors, comparatorData.comparator, comparatorData.unique_visitors)
 
@@ -71,9 +65,6 @@ export default class SectionHeadlineStats extends React.Component {
         </Col>
         <Col xs={12} sm={3} >
           {uniqueVisitors}
-        </Col>
-        <Col xs={12} sm={3} >
-          {socialUsers}
         </Col>
         <Col xs={12} sm={3} >
           {scrollDepth}

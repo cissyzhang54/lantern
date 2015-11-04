@@ -36,7 +36,6 @@ export default function formatData(data) {
         published_human: formatPublishDate(metaData.initial_publish_date),
         pageViews: articleData.hits.total,
         timeOnPage: articleData.aggregations.avg_time_on_page.value,
-        socialReaders: 0,
         readTimes: formatAggregation('page_views_over_time', articleData),
         readTimesSincePublish: formatAggregation('page_views_since_publish', articleData),
         genre: metaData.genre,
