@@ -20,7 +20,7 @@ describe ('SearchResult', function() {
     stub.restore();
   });
 
-  it ('Should render search results with author and publish date', function() {
+  it ('Should render search results with author, sections publish date', function() {
 
     stub.returns('abc');
 
@@ -37,8 +37,8 @@ describe ('SearchResult', function() {
     const publishDate = col2.props.children;
 
     expect(TestUtils.isElementOfType(link, Link)).to.equal(true);
-    expect(publishDate.substr(0,10)).to.equal('Published:');
-    expect(authors).to.equal('abc');
+    expect(publishDate.substr(0,10)).to.equal('Sections: ');
+    expect(authors).to.equal('Authors: abc');
 
   });
 });

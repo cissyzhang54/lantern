@@ -4,7 +4,8 @@
   "description": "Lantern - a data analytics platform for the FT",
   "main": "src/server/server.js",
   "scripts": {
-    "test": "env NODE_ENV=test mocha --compilers js:babel/register --recursive test/**/*.spec.js",
+    "test": "npm run unit && npm run functional",
+    "unit": "env NODE_ENV=test mocha --compilers js:babel/register --recursive test/**/*.spec.js",
     "test-watch": "env NODE_ENV=test mocha --compilers js:babel/register --recursive test/**/*.spec.js --watch --reporter min",
     "test-debug": "env NODE_ENV=test mocha --debug-brk --compilers js:babel/register --recursive test/**/*.spec.js",
     "cover": "env NODE_ENV=test babel-node node_modules/.bin/isparta cover node_modules/.bin/_mocha -- --reporter=dot test/**/*.spec.js ",
@@ -19,7 +20,7 @@
     "functional" : "env NODE_ENV=test npm start & sleep 20 && node nightwatch.js -g test/nightwatch/functional --suiteRetries 3",
     "f-debug" : "env NODE_ENV=test npm start & sleep 20 && node nightwatch.js -g test/nightwatch/functional --suiteRetries 3 && killall npm node"
   },
-  "pre-commit": "test",
+  "pre-commit": "unit",
   "author": "Dario Villanueva",
   "license": "MIT",
   "jshintConfig": {

@@ -16,6 +16,7 @@ export default class SearchItem extends React.Component {
   render() {
     const result = this.props.result;
     const authors = formatAuthors.join(result.authors);
+    const sections = formatAuthors.join(result.sections);
     const publishedDate = formatDate(result.initial_publish_date);
     return (<div>
       <Link
@@ -29,15 +30,25 @@ export default class SearchItem extends React.Component {
         <ListGroupItem header={result.title}>
           <Row>
             <Col
-              xs={6}
+              xs={4}
               style={{
-                color: '#999'
+                color: '#999',
+                fontSize: '12px'
               }}
               >
-              {authors}
+              {"Authors: " + authors}
             </Col>
             <Col
-              xs={6}
+              xs={4}
+              style={{
+                color: '#F99',
+                fontSize: '12px'
+              }}
+              >
+              {"Sections: " + sections}
+            </Col>
+            <Col
+              xs={4}
               style={{
                 textAlign: 'right',
                 color: '#999'
