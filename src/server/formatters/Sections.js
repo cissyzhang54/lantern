@@ -1,7 +1,7 @@
 import assert from 'assert';
 import moment from 'moment';
 
-export default function SectionDataFormatter(data) {
+export default function SectionDataFormatter(data, average) {
   try {
     assert.equal(Object.prototype.toString.call(data), '[object Array]',
       "argument 'data' should be an array");
@@ -22,10 +22,12 @@ export default function SectionDataFormatter(data) {
   return new Promise((resolve, reject) => {
     try {
       let [metaData, sectionData] = data;
+      let  divisor = average ? metaData.aggregations.distinct_sections.value : 1;
+      console.log(metaData.aggregations.distinct_sections.value)
       let results = {
-        articleCount: metaData.aggregations.distinct_articles.value,
-        topicsCovered: metaData.aggregations.topics_covered.value,
-        pageViews: sectionData.hits.total,
+        articleCount: metaData.aggregations.distinct_articles.value / divisor,
+        topicsCovered: metaData.aggregations.topics_covered.value / divisor,
+        pageViews: sectionData.hits.total / divisor,
         socialReaders: 0,
         readTimes: formatAggregation('page_views_over_time', sectionData),
         genre: [], //metaData.genre,
@@ -42,7 +44,7 @@ export default function SectionDataFormatter(data) {
         is_first_visit : formatAggregation('is_first_visit', sectionData),
         internal_referrer_types: formatFilteredAggregation('internal_referrer_types', sectionData),
         is_subscription : formatAggregation('is_subscription', sectionData),
-        unique_visitors : sectionData.aggregations.unique_visitors.value
+        unique_visitors : sectionData.aggregations.unique_visitors.value / divisor
       };
 
       resolve(results);

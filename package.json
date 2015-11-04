@@ -19,7 +19,7 @@
     "functional" : "env NODE_ENV=test npm start & sleep 20 && node nightwatch.js -g test/nightwatch/functional --suiteRetries 3",
     "f-debug" : "env NODE_ENV=test npm start & sleep 20 && node nightwatch.js -g test/nightwatch/functional --suiteRetries 3 && killall npm node"
   },
-  "pre-commit": "test",
+//  "pre-commit": "test",
   "author": "Dario Villanueva",
   "license": "MIT",
   "jshintConfig": {

@@ -82,7 +82,7 @@ function getComparatorData(req, res, next) {
       break;
     case 'sections':
       esClient.runSectionQuery(query)
-        .then((response) => SectionDataFormatter(response) )
+        .then((response) => SectionDataFormatter(response, true) )
         .then((formattedData) => res.json(formattedData) )
         .catch((error) => {
           res.status(ErrorHandler.statusCode(error.name))

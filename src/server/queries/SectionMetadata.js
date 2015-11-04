@@ -23,6 +23,11 @@ export default function SectionMetadataQuery(query) {
         "cardinality": {
           "field": "article_uuid"
         }
+      },
+      "distinct_sections": {
+        "cardinality": {
+          "field": "sections"
+        }
       }
     }
   };
