@@ -4,6 +4,9 @@ import Row from 'react-bootstrap/lib/Row';
 import SingleMetric from "./SingleMetric";
 import FeatureFlag from '../utils/featureFlag';
 import Table from '../components/Table';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Popover from 'react-bootstrap/lib/Popover';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
 let config = {
   subscription: {
@@ -29,7 +32,14 @@ let config = {
   comments_viewed_total: {
     metricType: 'integer',
     label: 'Comments Viewed',
-    size: 'small'
+    size: 'small',
+    toolTip : (<p>This shows the number of users who read down to the comment section of the article page</p>)
+  }
+}
+const styles = {
+  infoIcon : {
+    'fontSize' : '15px',
+    'color': '#039',
   }
 }
 

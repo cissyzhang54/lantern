@@ -24,7 +24,7 @@ describe ('SingleMetric component', function() {
     expect(intMetric.type).to.equal('p');
 
     expect(intTitle.type).to.equal('h3');
-    expect(intTitle.props.children).to.equal('I am a single metric');
+    expect(intTitle.props.children[2]).to.equal('I am a single metric');
 
     expect(intMetric.props.children[0]).to.equal('20,000');
     expect(intCommparator[0].props.glyph).to.equal('glyphicon glyphicon-chevron-up');
