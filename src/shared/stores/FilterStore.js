@@ -21,10 +21,11 @@ class FilterStore {
       handleUpdateData : ArticleActions.UPDATE_DATA
     });
     ArticleQueryStore.listen(this.handleQueryChange.bind(this));
+    SectionQueryStore.listen(this.handleQueryChange.bind(this));
   }
 
   handleOverviewUpdateData(newData) {
-    return handleUpdateData(newData)
+    return this.handleUpdateData(newData)
   }
 
   handleUpdateData(newData) {

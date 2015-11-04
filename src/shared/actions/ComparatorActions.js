@@ -5,7 +5,6 @@ class ComparatorActions {
   constructor() {
     this.generateActions(
       'loadData',
-      'loadingData',
       'updateData',
       'loadingFailed',
       'destroy',

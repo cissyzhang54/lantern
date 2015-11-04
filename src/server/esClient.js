@@ -1,7 +1,9 @@
 import elasticsearch from 'elasticsearch';
 import ArticleComparatorQuery from './queries/ArticleComparator';
 import SectionsQuery from './queries/Sections';
-import SectionsMetadataQuery from './queries/SectionsMetadata';
+import SectionComparatorQuery from './queries/SectionComparator';
+import SectionMetadataQuery from './queries/SectionMetadata';
+import SectionMetadataComparatorQuery from './queries/SectionMetadataComparator';
 import ArticlesQuery from './queries/Articles';
 import ArticleEventsQuery from './queries/ArticleEvents';
 import ArticleEventsComparatorQuery from './queries/ArticleEventsComparator';
@@ -61,6 +63,20 @@ export function runArticleQuery(queryData) {
   });
 }
 
+export function runArticleComparatorQuery(queryData) {
+  let queryError;
+  if (queryError = queryDataError('comparator', queryData)){
+    return Promise.reject(queryError);
+  }
+  let comparatorData;
+  return retrieveArticleData(queryData).then(function(comparator){
+    comparatorData = comparator;
+    return retrieveEventsData(queryData);
+  }).then(function(eventsComparatorData){
+    return [comparatorData, eventsComparatorData];
+  });
+}
+
 
 export function runSectionQuery(queryData) {
   let queryError;
@@ -84,20 +100,6 @@ export function runSectionQuery(queryData) {
 }
 
 
-export function runComparatorQuery(queryData) {
-  let queryError;
-  if (queryError = queryDataError('comparator', queryData)){
-    return Promise.reject(queryError);
-  }
-
-  let comparatorData;
-  return retrieveArticleData(queryData).then(function(comparator){
-    comparatorData = comparator;
-    return retrieveEventsData(queryData);
-  }).then(function(eventsComparatorData){
-    return [comparatorData, eventsComparatorData];
-  });
-}
 
 export function runSearchQuery(queryData) {
   let queryError;
@@ -144,7 +146,7 @@ function retrieveArticleData(queryData){
 
 function retrieveSectionData(queryData){
   return new Promise((resolve, reject) => {
-    let queryObject = SectionsQuery(queryData);
+    let queryObject = queryData.comparator ? SectionComparatorQuery(queryData) : SectionsQuery(queryData);
     let request = {
       index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
       ignore_unavailable: true,
@@ -186,7 +188,7 @@ function retrieveMetaData(queryData){
 
 function retrieveSectionMetaData(queryData){
   return new Promise((resolve, reject) => {
-    let queryObject = SectionsMetadataQuery(queryData);
+    let queryObject = queryData.comparator ? SectionMetadataComparatorQuery(queryData) : SectionMetadataQuery(queryData);
     let request = {
       index: process.env.ES_SEARCH_INDEX_ROOT,
       ignore_unavailable: true,

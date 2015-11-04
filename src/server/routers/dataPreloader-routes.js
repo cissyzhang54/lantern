@@ -41,7 +41,8 @@ router.get(`/sections/:section`, (req, res, next) => {
 });
 
 router.get(`/sections/:section/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
-  return getSectionData(req, res) //todo: then(() => getSectionComparatorData(req, res))
+  return getSectionData(req, res)
+    //.then(() => getSectionComparatorData(req, res))
     .then(() => next())
     .catch((err) => {
       if (err.status) res.status(err.status);
@@ -68,6 +69,7 @@ function getArticleData(req, res){
         },
         "ComparatorQueryStore" : {
           query: {
+            category: 'articles',
             uuid: decode(req.params.uuid),
             comparator: decode(req.params.comparator),
             comparatorType: decode(req.params.comparatorType),
@@ -113,6 +115,17 @@ function getSectionData(req, res){
         "SectionQueryStore" : {
           query: {
             section: decode(req.params.section),
+            dateFrom: dateFrom,
+            dateTo: dateTo,
+            filters: {}
+          }
+        },
+        "ComparatorQueryStore" : {
+          query: {
+            category: 'sections',
+            section: decode(req.params.section),
+            comparator: decode(req.params.comparator),
+            comparatorType: decode(req.params.comparatorType),
             dateFrom: dateFrom,
             dateTo: dateTo,
             filters: {}

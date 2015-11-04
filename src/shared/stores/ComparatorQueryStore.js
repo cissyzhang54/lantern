@@ -8,6 +8,8 @@ class ComparatorQueryStore {
 
   constructor() {
     this.query = {
+      category: null,
+      section: null,
       publishDate: null,
       uuid: null,
       dateFrom: null,
@@ -22,6 +24,14 @@ class ComparatorQueryStore {
   selectDateRange(dates) {
     this.query.dateFrom = dates.from;
     this.query.dateTo = dates.to;
+  }
+
+  setCategory(category) {
+    this.query.category = category;
+  }
+
+  setSection(section) {
+    this.query.section = section;
   }
 
   setPublishDate(publishDate) {
@@ -61,6 +71,8 @@ class ComparatorQueryStore {
 
   destroy() {
     this.query = {
+      category: null,
+      section: null,
       publishDate: null,
       uuid: null,
       dateFrom: null,

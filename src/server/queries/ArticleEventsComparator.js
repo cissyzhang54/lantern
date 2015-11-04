@@ -8,7 +8,7 @@ export default function ArticleEventsComparatorQuery(query) {
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  let comparatorQuery = build.comparatorQuery(query)
+  let comparatorQuery = build.articleComparatorQuery(query)
 
   return {
     "query" : comparatorQuery,

@@ -78,7 +78,7 @@ export function eventQuery(query){
   }
 }
 
-export function comparatorQuery(query){
+export function articleComparatorQuery(query){
   checkString(query,'uuid');
   checkString(query,'dateFrom');
   checkString(query,'dateTo');
@@ -145,6 +145,47 @@ export function comparatorQuery(query){
 
   if (query.comparator === 'FT'){
     delete filtered.query
+  }
+
+  return {
+    "filtered" : filtered
+  };
+}
+export function sectionComparatorQuery(query){
+  //This is always compared against the whole of the FT
+  checkString(query,'section');
+  checkString(query,'dateFrom');
+  checkString(query,'dateTo');
+
+  let filter = {
+    bool: {
+      must : [
+        {
+          range : {
+            "initial_publish_date" : {
+              from: query.dateFrom,
+              to: query.dateTo
+            }
+          }
+        }
+      ],
+      should :  mapFilters(query)
+    }
+  }
+
+  let matchAll = {
+    bool: {
+      "must_not": {
+        "match": {
+          "sections": query.section
+        }
+      }
+    }
+  }
+
+  let filtered = {
+    query : matchAll,
+    filter : filter
   }
 
   return {

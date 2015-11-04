@@ -7,7 +7,7 @@ describe('Elasticsearch Client', () => {
     expect(esClient).to.be.a('object');
     expect(esClient.getIndicies).to.be.a('function');
     expect(esClient.runArticleQuery).to.be.a('function');
-    expect(esClient.runComparatorQuery).to.be.a('function');
+    expect(esClient.runArticleComparatorQuery).to.be.a('function');
     expect(esClient.runSearchQuery).to.be.a('function');
   });
 
@@ -19,7 +19,7 @@ describe('Elasticsearch Client', () => {
       })
   });
   it('should return a rejected promise if given query to runComparatorQuery', (done) => {
-    esClient.runComparatorQuery()
+    esClient.runArticleComparatorQuery()
       .catch((error) => {
         expect(error.name).to.equal('MalformedQueryArgumentsError');
         done();
@@ -39,7 +39,7 @@ describe('Elasticsearch Client', () => {
     expect(p.then).to.be.a('function');
     let q = esClient.runSearchQuery({});
     expect(q.then).to.be.a('function');
-    let r = esClient.runComparatorQuery({});
+    let r = esClient.runArticleComparatorQuery({});
     expect(q.then).to.be.a('function');
   });
 
