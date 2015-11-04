@@ -23,6 +23,7 @@ export default function SectionDataFormatter(data) {
     try {
       let [metaData, sectionData] = data;
       let results = {
+        articleCount: metaData.aggregations.distinct_articles.value,
         topicsCovered: metaData.aggregations.topics_covered.value,
         pageViews: sectionData.hits.total,
         socialReaders: 0,
