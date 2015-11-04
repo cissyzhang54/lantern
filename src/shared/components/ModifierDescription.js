@@ -9,7 +9,7 @@ export default class ModifierDescription extends React.Component {
   render() {
     let articleCount = this.props.articleCount;
     let comparator = this.props.comparator;
-    let formattedArticleCount = articleCount ? articleCount.toLocaleString('en-gb') : '';
+    let formattedArticleCount = articleCount ? articleCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '';
     let text = `The comparison includes ${formattedArticleCount} '${comparator}' articles`
     let description = comparator ? text : '';
 

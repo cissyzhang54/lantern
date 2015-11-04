@@ -134,10 +134,17 @@ class SectionView extends React.Component {
             comparatorName={comparatorData.unique_visitors}
             label='Unique Visitors'
             size="large" />
+
+          <SingleMetric
+            metric={data.articleCount}
+            metricType='integer'
+            label='Articles published'
+            size="large" />
         </Col>
       </Col>
     </div>
   </DocumentTitle>)
+
   }
 }
 
