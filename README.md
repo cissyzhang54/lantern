@@ -45,3 +45,11 @@ The following keys all need to placed with corresponding values within a `.env` 
  * Errors will be emailed to digitalnewsroom.alerts@ft.com
  * Stats can be viewed here: https://app.getsentry.com/ft/production/
  * For more logging know how see: https://docs.getsentry.com/hosted/clients/javascript/usage/#raven-js-reporting-errors
+
+### Automation Testing
+
+- You require the correct `NODE_ENV` variable in your `.env` file
+- Get the latest version of Java : `http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html`
+- Use the correct version of Selenium server : put `http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar` into `test/bin` of the project
+- Ensure you have chromedriver installed with : `brew install chromedriver`
+- If you have trouble, look at `circle.yml` to find out how to get the selenium-server-standalone downloaded
