@@ -83,18 +83,10 @@ module.exports = {
         heading: ' > h3'
       }
     },
-    socialUsers: {
-      name: 'Social Users',
-      selectors: {
-        container: 'div[data-component="sectionHeadlineStats"] div:nth-child(4) > div[class="singleMetric"]',
-        dataComponent: ' > p',
-        heading: ' > h3'
-      }
-    },
     scrollDepth: {
       name: 'Scroll Depth',
       selectors: {
-        container: 'div[data-component="sectionHeadlineStats"] div:nth-child(5) > div[class="singleMetric"]',
+        container: 'div[data-component="sectionHeadlineStats"] div:nth-child(4) > div[class="singleMetric"]',
         dataComponent: ' > p',
         heading: ' > h3'
       }
