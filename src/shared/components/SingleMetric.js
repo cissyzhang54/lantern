@@ -2,6 +2,8 @@ import React from 'react';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import responsiveStyles from '../utils/responsiveStyles';
 import assign from 'object-assign';
+import Popover from 'react-bootstrap/lib/Popover';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
 var componentStyles = {
   'default': {
@@ -127,10 +129,30 @@ export default class SingleMetric extends React.Component {
       );
     }
 
+    let toolTip;
+    if (this.props.toolTip) {
+      let toolTipTitle = this.props.label.replace(/\s+/g, '-').toLowerCase() + "-description";
+      toolTip = (
+        <OverlayTrigger
+          trigger="hover"
+          placement="bottom"
+          overlay={
+              <Popover id={toolTipTitle}>
+                {this.props.toolTip}
+              </Popover>
+            }
+          >
+          <span>
+            <Glyphicon glyph="question-sign" style={styles.infoIcon} aria-describedby={toolTipTitle} />
+          </span>
+        </OverlayTrigger>
+      );
+    }
+
     return (
       <div className={'singleMetric'} style={assign(styles[this.props.size], styles.singleMetric)} data-component={'singleMetric'}>
         <p style={styles.metric}>{transformMetric} {comparatorHTML}</p>
-        <h3 style={styles.label}>{this.props.label}</h3>
+        <h3 style={styles.label}>{toolTip} {this.props.label}</h3>
       </div>
     );
   }
