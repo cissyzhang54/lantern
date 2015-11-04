@@ -42,7 +42,7 @@ router.get(`/sections/:section`, (req, res, next) => {
 
 router.get(`/sections/:section/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
   return getSectionData(req, res)
-    //.then(() => getSectionComparatorData(req, res))
+    .then(() => getComparatorData(req, res))
     .then(() => next())
     .catch((err) => {
       if (err.status) res.status(err.status);
