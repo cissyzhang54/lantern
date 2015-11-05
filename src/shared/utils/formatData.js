@@ -1,8 +1,8 @@
 export default class formatData {
 
-  constructor(DATA, COMPATATORDATA) {
+  constructor(DATA, COMPARATORDATA) {
     this.DATA = DATA
-    this.COMPATATORDATA = COMPATATORDATA
+    this.COMPARATORDATA = COMPARATORDATA
     this.id = 'category'
   }
 
@@ -49,11 +49,12 @@ export default class formatData {
 
   getMetric(metricName, metricLabel, tLabel, fLabel){
     this.metricLabel = metricLabel
+    console.log(this.metricLabel);
     let metricData = this.DATA[metricName].map(d => this.mapTypes(d, tLabel, fLabel))
     let keys = [metricLabel]
-    if (this.COMPATATORDATA && this.COMPATATORDATA[metricName]){
-      let comparatorLabel = `'${this.COMPATATORDATA.comparator}' Average ${metricLabel}`;
-      let comparatorData = this.COMPATATORDATA[metricName].map(d => this.mapTypes(d, tLabel, fLabel))
+    if (this.COMPARATORDATA && this.COMPARATORDATA[metricName]){
+      let comparatorLabel = `'${this.COMPARATORDATA.comparator}' Average ${metricLabel}`;
+      let comparatorData = this.COMPARATORDATA[metricName].map(d => this.mapTypes(d, tLabel, fLabel))
       metricData = this.merge(metricData, comparatorData, comparatorLabel)
       keys.push(comparatorLabel)
     }
