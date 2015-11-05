@@ -13,6 +13,7 @@ export function createAltWrappedComponent() {
   const renderer = TestUtils.createRenderer();
   let wrapped = createComponent(...arguments);
   renderer.render(wrapped);
-  return renderer.getRenderOutput();
+  let output = renderer.getRenderOutput();
+  return output;
 }
 
