@@ -21,6 +21,10 @@ import ComparatorQueryStore from '../stores/ComparatorQueryStore';
 
 import moment from 'moment'
 
+import LineChart from "../components/LineChart";
+import FormatData from "../utils/formatData";
+
+
 function decode(uri){
   return uri ? decodeURI(uri) : null
 }
@@ -95,6 +99,9 @@ class SectionView extends React.Component {
     let comparatorQuery = this.props.comparatorQuery
     let title = (data) ? 'Lantern - ' + this.props.params.section : '';
 
+    let dataFormatter = new FormatData(data);
+    let [viewData, viewID, viewKeys] =  dataFormatter.getMetric('readTimes', 'Articles read');
+
     return(<DocumentTitle title={title}>
       <div>
         <Col xs={12}>
@@ -142,6 +149,15 @@ class SectionView extends React.Component {
             comparatorName={comparatorData.comparator}
             label='Articles published'
             size="large" />
+
+
+          <LineChart
+            data={viewData}
+            keys={viewKeys}
+            category={viewID}
+            yLabel='Number of articles'
+            xLabel='Time'
+            cols={12} />
         </Col>
       </Col>
     </div>
