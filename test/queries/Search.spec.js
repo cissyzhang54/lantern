@@ -18,4 +18,38 @@ describe('Search Query', () => {
     expect(() => SearchQuery(null)).to.throw();
     expect(() => SearchQuery(undefined)).to.throw();
   });
+  describe('Advanced queries', () => {
+    it('should handle title-only queries', () => {
+      let query = SearchQuery({term:'title:"my tailor is rich"'});
+      expect(query.query.bool.should.length).to.equal(2);
+      expect(query.query.bool.should[0]).to.deep.equal({
+        match : {
+          title: "my tailor is rich"
+        }
+      });
+      expect(query.query.bool.should[1]).to.deep.equal({
+        match_phrase: {
+          title: "my tailor is rich"
+        }
+      });
+    });
+    it('should handle author-only queries', () => {
+      let query = SearchQuery({term: 'author:"Oneotrix Point Never"'});
+      expect(query.query.bool.should.length).to.equal(1);
+      expect(query.query.bool.should[0]).to.deep.equal({
+        match_phrase: {
+          authors: "Oneotrix Point Never"
+        }
+      });
+    });
+    it('should handle section-only queries', () => {
+      let query = SearchQuery({term: 'section:"Companies and Technology"'});
+      expect(query.query.bool.should.length).to.equal(1);
+      expect(query.query.bool.should[0]).to.deep.equal({
+        match_phrase: {
+          sections: "Companies and Technology"
+        }
+      });
+    });
+  });
 });
