@@ -28,6 +28,7 @@ export default {
     'article:modifier:filters:Region' : true,
     'article:modifier:filters:Device' : true,
     'article:modifier:DateRange' : true,
-    'section:who' : true
+    'section:who' : true,
+    'section:where' : true
   }
 };
