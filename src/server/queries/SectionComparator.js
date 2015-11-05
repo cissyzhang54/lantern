@@ -59,14 +59,19 @@ export default function SectionComparatorQuery(query) {
           }
         }
       },
-      internal_referrer_types: {
+      internal_referrer: {
         filter: {
           term: {
             referrer_type: "internal"
           }
         },
         aggs: {
-          filtered: {
+          urls : {
+            terms: {
+              field: "referrer"
+            }
+          },
+          types : {
             terms: {
               field: "referrer_name"
             }

@@ -22,6 +22,7 @@ export default function SectionDataFormatter(data) {
   return new Promise((resolve, reject) => {
     try {
       let [metaData, sectionData] = data;
+
       let results = {genre:[],sections:[], topics:[]}
       let metaFields = ['articleCount', 'topicsCovered','topic_count']
       let sectionFields = ['readTimes', 'pageViews', 'referrer_types',

@@ -43,20 +43,6 @@ export default function SectionQuery(query) {
           }
         }
       },
-      internal_referrer_types: {
-        filter: {
-          term: {
-            referrer_type: "internal"
-          }
-        },
-        aggs: {
-          filtered: {
-            terms: {
-              field: "referrer_name"
-            }
-          }
-        }
-      },
       social_referrers: {
         filter: {
           term: {
@@ -69,6 +55,25 @@ export default function SectionQuery(query) {
               field: "referrer_name",
               min_doc_count: 0,
               size: 200000000
+            }
+          }
+        }
+      },
+      internal_referrer: {
+        filter: {
+          term: {
+            referrer_type: "internal"
+          }
+        },
+        aggs: {
+          urls : {
+            terms: {
+              field: "referrer"
+            }
+          },
+          types : {
+            terms: {
+              field: "referrer_name"
             }
           }
         }

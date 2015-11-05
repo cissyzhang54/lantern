@@ -32,8 +32,8 @@ const fields = {
   published_human: {name:'initial_publish_date', formatter: formatPublishDate},
   pageViews: 'hits.total',
   timeOnPage: 'aggregations.avg_time_on_page.value',
-  topic_count: 'aggregations.topic_count',
-  topic_views: 'aggregations.topic_views',
+  topic_count: {name: 'aggregations.topic_count', formatter: format},
+  topic_views: {name: 'aggregations.topic_views', formatter: format},
   topicsCovered: 'aggregations.topics_covered.value',
   articleCount: 'aggregations.distinct_articles.value', //duplicate!
   category_article_count: 'aggregations.distinct_articles.value', //duplicate!
