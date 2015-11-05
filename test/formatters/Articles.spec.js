@@ -80,8 +80,23 @@ describe('Article Formatter', function() {
           'unique_visitors'
         ];
         for (let i = 0; i < props.length; i++){
-          expect(data.hasOwnProperty(props[i])).to.equal(true);
+          try{
+            expect(data.hasOwnProperty(props[i])).to.equal(true);
+            expect(data[props[i]]).not.to.equal(undefined);
+          } catch(e){
+            expect(props[i] + ' Should exist in the formatted output').to.equal(true);
+          }
         }
+        expect(Array.isArray(data.link_click_categories.buckets)).to.equal(true)
+        //did not remove search
+        //did remove news-sharing
+        expect(data.referrer_types).to.deep.equal([
+          [ 'Unknown', 17097 ],
+          [ 'social-network', 14796 ],
+          [ 'search', 0 ],
+          [ 'partner', 1146 ],
+          [ 'email', 47 ]
+        ])
         done();
       })
       .catch((error) => {

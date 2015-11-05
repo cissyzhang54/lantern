@@ -1,8 +1,8 @@
 import {expect} from 'chai';
-import ArticleFormat from '../../src/server/formatters/Comparators';
+import ArticleFormat from '../../src/server/formatters/ArticleComparators';
 import ESArticleResults from '../fixtures/data/article_comparator_results';
 
-describe('Comparator Formatter', function() {
+describe('ArticleComparator Formatter', function() {
   it('should be a function', function () {
     expect(ArticleFormat).to.be.a('function');
   });
@@ -38,7 +38,7 @@ describe('Comparator Formatter', function() {
         done();
       });
   });
-  xit('should parse results correctly', function(done) {
+  it('should parse results correctly', function(done) {
     ArticleFormat(ESArticleResults)
       .then((data) => {
         expect(data).to.be.a('object');
@@ -65,7 +65,12 @@ describe('Comparator Formatter', function() {
           'total_comments_viewed'
         ];
         for (let i = 0; i < props.length; i++){
-          expect(data.hasOwnProperty(props[i])).to.be.truthy;
+          try{
+            expect(data.hasOwnProperty(props[i])).to.equal(true);
+            expect(data[props[i]]).not.to.equal(undefined);
+          } catch(e){
+            expect(props[i] + ' Should exist in the formatted output').to.equal(true);
+          }
         }
         done();
       })

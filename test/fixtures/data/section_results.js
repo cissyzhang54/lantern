@@ -928,51 +928,93 @@ export default [{
       "unique_visitors": {
         "value": 252750
       },
-      "internal_referrer_types": {
-        "doc_count": 466021,
-        "filtered": {
+      "internal_referrer": {
+        "doc_count": 52352,
+        "urls": {
+          "doc_count_error_upper_bound": 16,
+          "sum_other_doc_count": 9691,
+          "buckets": [
+            {
+              "key": "",
+              "doc_count": 30399
+            },
+            {
+              "key": "http://www.ft.com/home/uk",
+              "doc_count": 3840
+            },
+            {
+              "key": "http://www.ft.com/home/us",
+              "doc_count": 3574
+            },
+            {
+              "key": "http://www.ft.com/home/europe",
+              "doc_count": 2170
+            },
+            {
+              "key": "http://www.ft.com/home/asia",
+              "doc_count": 1190
+            },
+            {
+              "key": "http://www.ft.com/intl/vw-emissions-scandal",
+              "doc_count": 618
+            },
+            {
+              "key": "http://www.ft.com/vw-emissions-scandal",
+              "doc_count": 292
+            },
+            {
+              "key": "http://www.ft.com/intl/cms/s/0/8f2eb94c-62ac-11e5-a28b-50226830d644.html",
+              "doc_count": 202
+            },
+            {
+              "key": "http://www.ft.com/cms/s/0/8f2eb94c-62ac-11e5-a28b-50226830d644.html",
+              "doc_count": 193
+            },
+            {
+              "key": "http://www.ft.com/cms/s/0/2eea3106-65c2-11e5-9846-de406ccb37f2.html",
+              "doc_count": 183
+            }
+          ]
+        },
+        "types": {
           "doc_count_error_upper_bound": 0,
           "sum_other_doc_count": 0,
           "buckets": [
             {
+              "key": "FT",
+              "doc_count": 48493
+            },
+            {
               "key": "",
-              "doc_count": 336317
+              "doc_count": 2298
             },
             {
               "key": "story",
-              "doc_count": 60435
-            },
-            {
-              "key": "section",
-              "doc_count": 30762
+              "doc_count": 954
             },
             {
               "key": "front",
-              "doc_count": 23335
+              "doc_count": 290
+            },
+            {
+              "key": "section",
+              "doc_count": 171
             },
             {
               "key": "search",
-              "doc_count": 10222
+              "doc_count": 124
             },
             {
               "key": "page",
-              "doc_count": 2829
-            },
-            {
-              "key": "report",
-              "doc_count": 1159
+              "doc_count": 17
             },
             {
               "key": "topic",
-              "doc_count": 713
+              "doc_count": 3
             },
             {
               "key": "video",
-              "doc_count": 206
-            },
-            {
-              "key": "blog",
-              "doc_count": 43
+              "doc_count": 2
             }
           ]
         }
