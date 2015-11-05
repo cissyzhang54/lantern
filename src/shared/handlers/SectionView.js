@@ -13,6 +13,7 @@ import SingleMetric from '../components/SingleMetric';
 import BarChart from '../components/BarChart.js';
 import LineChart from "../components/LineChart";
 import SectionWho from "../components/SectionWho";
+import SectionWhere from "../components/SectionWhere";
 
 import SectionActions from '../actions/SectionActions';
 import SectionStore from '../stores/SectionStore';
@@ -205,6 +206,12 @@ class SectionView extends React.Component {
               data={data}
               comparatorData={comparatorData}
               renderWho={FeatureFlag.check('section:who')}
+              />
+
+            <SectionWhere
+              data={data}
+              comparatorData={comparatorData}
+              renderWhere={FeatureFlag.check('article:where')}
               />
 
           </Col>
