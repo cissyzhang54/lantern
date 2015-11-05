@@ -47,6 +47,52 @@ export default [{
     "topics_covered": {
       "value": 108
     },
+    "topic_count": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 1461,
+      "buckets": [
+        {
+          "key": "uk",
+          "doc_count": 288
+        },
+        {
+          "key": "banks",
+          "doc_count": 84
+        },
+        {
+          "key": "acquisitions",
+          "doc_count": 67
+        },
+        {
+          "key": "mergers",
+          "doc_count": 67
+        },
+        {
+          "key": "in",
+          "doc_count": 52
+        },
+        {
+          "key": "europe",
+          "doc_count": 48
+        },
+        {
+          "key": "britain",
+          "doc_count": 46
+        },
+        {
+          "key": "government",
+          "doc_count": 38
+        },
+        {
+          "key": "tax",
+          "doc_count": 35
+        },
+        {
+          "key": "european",
+          "doc_count": 34
+        }
+      ]
+    }
   }
 },
   {
@@ -2377,6 +2423,52 @@ export default [{
           {
             "key": "",
             "doc_count": 0
+          }
+        ]
+      },
+      "topic_views": {
+        "doc_count_error_upper_bound": 9378,
+        "sum_other_doc_count": 13053545,
+        "buckets": [
+          {
+            "key": "uk",
+            "doc_count": 2502147
+          },
+          {
+            "key": "banks",
+            "doc_count": 854507
+          },
+          {
+            "key": "acquisitions",
+            "doc_count": 773343
+          },
+          {
+            "key": "mergers",
+            "doc_count": 773343
+          },
+          {
+            "key": "in",
+            "doc_count": 568755
+          },
+          {
+            "key": "europe",
+            "doc_count": 566829
+          },
+          {
+            "key": "britain",
+            "doc_count": 525605
+          },
+          {
+            "key": "investment",
+            "doc_count": 416051
+          },
+          {
+            "key": "china",
+            "doc_count": 405636
+          },
+          {
+            "key": "politics",
+            "doc_count": 393188
           }
         ]
       }

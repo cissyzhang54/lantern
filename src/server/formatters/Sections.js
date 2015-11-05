@@ -42,7 +42,9 @@ export default function SectionDataFormatter(data) {
         is_first_visit : formatAggregation('is_first_visit', sectionData),
         internal_referrer_types: formatFilteredAggregation('internal_referrer_types', sectionData),
         is_subscription : formatAggregation('is_subscription', sectionData),
-        unique_visitors : sectionData.aggregations.unique_visitors.value
+        unique_visitors : sectionData.aggregations.unique_visitors.value,
+        topic_count : formatAggregation('topic_count', metaData),
+        topic_views : formatAggregation('topic_views', sectionData),
       };
 
       resolve(results);

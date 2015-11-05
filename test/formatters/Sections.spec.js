@@ -59,7 +59,9 @@ describe('Article Formatter', function() {
           'is_first_visit',
           'internal_referrer_types',
           'is_subscription',
-          'unique_visitors'
+          'unique_visitors',
+          'topic_count',
+          'topic_views'
         ];
         for (let i = 0; i < props.length; i++){
           try{
