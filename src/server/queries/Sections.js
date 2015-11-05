@@ -117,6 +117,12 @@ export default function SectionQuery(query) {
         cardinality: {
           field: 'visitor_id'
         }
+      },
+      "topic_views": {
+        "terms": {
+          "field": "topics",
+          size: 10
+        }
       }
     }
   };
