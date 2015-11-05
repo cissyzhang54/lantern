@@ -5,7 +5,7 @@ import assign from "object-assign";
 import * as esClient from '../esClient';
 import * as ErrorHandler from '../apiErrorHandler';
 import ArticleDataFormatter from '../formatters/Articles';
-import ComparatorDataFormatter from '../formatters/Comparators';
+import ArticleComparatorDataFormatter from '../formatters/ArticleComparators';
 import SearchDataFormatter from '../formatters/Search';
 import SectionDataFormatter from '../formatters/Sections';
 
@@ -73,7 +73,7 @@ function getComparatorData(req, res, next) {
   switch (category) {
     case 'articles':
       esClient.runArticleComparatorQuery(query)
-        .then((response) => ComparatorDataFormatter(response) )
+        .then((response) => ArticleComparatorDataFormatter(response) )
         .then((formattedData) => res.json(formattedData) )
         .catch((error) => {
           res.status(ErrorHandler.statusCode(error.name))

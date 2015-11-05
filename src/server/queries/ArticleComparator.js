@@ -42,19 +42,71 @@ export default function ArticleComparatorQuery(query) {
           "field" : "article_uuid"
         }
       },
-      referrer_types : {
-        filter : {
-          not : {
-            term : {
-              referrer_type : "internal"
+      referrer : {
+        filter: {
+          not: {
+            term: {
+              referrer_type: "internal"
             }
           }
         },
         aggs: {
-          filtered : {
+          names: {
+            terms: {
+              field: "referrer_name"
+            }
+          },
+          types: {
             terms: {
               field: "referrer_type",
-              min_doc_count : 0
+              min_doc_count: 0
+            }
+          },
+          urls: {
+            filter: {
+              not: {
+                filter: {
+                  or: [
+                    {
+                      term: {
+                        referrer_type: "search"
+                      }
+                    },
+                    {
+                      term: {
+                        referrer_type: "social-network"
+                      }
+                    },
+                    {
+                      prefix: {
+                        referrer: "http://localhost"
+                      }
+                    },
+                    {
+                      prefix: {
+                        referrer: "http://lantern.ft.com"
+                      }
+                    },
+                    {
+                      prefix: {
+                        referrer: "https://lantern.ft.com"
+                      }
+                    },
+                    {
+                      prefix: {
+                        referrer: "http://ft-editorial-lantern"
+                      }
+                    }
+                  ]
+                }
+              }
+            },
+            aggs: {
+              filtered: {
+                terms: {
+                  field: 'referrer'
+                }
+              }
             }
           }
         }

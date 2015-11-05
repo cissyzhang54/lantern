@@ -734,7 +734,7 @@ export default [{
           },
           {
             "key": "search",
-            "doc_count": 6043
+            "doc_count": 0
           },
           {
             "key": "partner",
@@ -742,7 +742,7 @@ export default [{
           },
           {
             "key": "news-sharing",
-            "doc_count": 982
+            "doc_count": 0
           },
           {
             "key": "email",

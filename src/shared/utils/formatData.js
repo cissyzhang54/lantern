@@ -49,7 +49,6 @@ export default class formatData {
 
   getMetric(metricName, metricLabel, tLabel, fLabel){
     this.metricLabel = metricLabel
-    console.log(this.metricLabel);
     let metricData = this.DATA[metricName].map(d => this.mapTypes(d, tLabel, fLabel))
     let keys = [metricLabel]
     if (this.COMPARATORDATA && this.COMPARATORDATA[metricName]){

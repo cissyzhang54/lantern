@@ -66,6 +66,7 @@ describe('Article Formatter', function() {
         for (let i = 0; i < props.length; i++){
           try{
             expect(data.hasOwnProperty(props[i])).to.equal(true);
+            expect(data[props[i]]).not.to.equal(undefined);
           } catch(e){
             expect(props[i] + ' Should exist in the formatted output').to.equal(true);
           }
