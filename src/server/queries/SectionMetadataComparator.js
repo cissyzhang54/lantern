@@ -18,6 +18,11 @@ export default function SectionMetadataComparatorQuery(query) {
         "cardinality": {
           "field": "topics"
         }
+      },
+      "distinct_articles": {
+        "cardinality": {
+          "field": "article_uuid"
+        }
       }
     }
   };

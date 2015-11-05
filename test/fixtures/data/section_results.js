@@ -41,12 +41,12 @@ export default [{
     ]
   },
   "aggregations": {
+    "distinct_articles": {
+      "value": 252
+    },
     "topics_covered": {
       "value": 108
     },
-    "distinct_articles": {
-      "value": 252
-    }
   }
 },
   {
