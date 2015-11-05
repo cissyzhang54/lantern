@@ -4,6 +4,7 @@ import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import FormatData from "../utils/formatData";
+import FeatureFlag from '../utils/featureFlag';
 
 import Header from '../components/Header';
 import Messaging from '../components/Messaging';
@@ -11,6 +12,7 @@ import SectionModifier from '../components/SectionModifier';
 import SingleMetric from '../components/SingleMetric';
 import BarChart from '../components/BarChart.js';
 import LineChart from "../components/LineChart";
+import SectionWho from "../components/SectionWho";
 
 import SectionActions from '../actions/SectionActions';
 import SectionStore from '../stores/SectionStore';
@@ -198,6 +200,13 @@ class SectionView extends React.Component {
                 />
               </Col>
             </Row>
+
+            <SectionWho
+              data={data}
+              comparatorData={comparatorData}
+              renderWho={FeatureFlag.check('section:who')}
+              />
+
           </Col>
         </Col>
       </div>
