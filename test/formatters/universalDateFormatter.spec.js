@@ -36,12 +36,7 @@ describe('universalDataFormatter', function() {
   });
 
   describe('should parse sectionData correctly', function() {
-    //[ 'devices', 'countries',
-    //  'regions', 'user_cohort',
-    //  'rfv_cluster', 'is_first_visit', 'internal_referrer_types',
-    //  'is_subscription', 'unique_visitors',
-    //  'topic_views'
-    //]
+
     it('formats readTimes', function(){
       expect(getField(sectionData, 'readTimes')).to.be.a('array')
       expect(getField(sectionData, 'readTimes')).to.deep.equal([
@@ -101,11 +96,116 @@ describe('universalDataFormatter', function() {
       ])
     })
 
+    it('formats devices', function(){
+      expect(getField(sectionData, 'devices')).to.be.a('array')
+      expect(getField(sectionData, 'devices')).to.deep.equal([
+        ["Desktop",538479],
+        ["Mobile Phone", 197464],
+        ["Tablet", 154005],
+        ["Unknown", 22673],
+        ["Media Player", 352]
+      ])
+    })
+
+    it('formats countries', function(){
+      expect(getField(sectionData, 'countries')).to.be.a('array')
+      expect(getField(sectionData, 'countries')).to.deep.equal([
+        ["USA", 231212],
+        ["IRL", 174590],
+        ["GBR", 171114]
+      ])
+    })
+
+    it('formats regions', function(){
+      expect(getField(sectionData, 'regions')).to.be.a('array')
+      expect(getField(sectionData, 'regions')).to.deep.equal([
+        ["EUROPE", 333723],
+        ["US", 281885],
+        ["UK", 171114],
+        ["ASIA", 69966],
+        ["MIDDLEEAST", 23542],
+        ["Unknown", 16477],
+        ["INDIA", 16407]
+      ])
+    })
+
+    it('formats user_cohort', function(){
+      expect(getField(sectionData, 'user_cohort')).to.be.a('array')
+      expect(getField(sectionData, 'user_cohort')).to.deep.equal([
+        ["anonymous", 679358],
+        ["subscriber", 203256],
+        ["registered", 30417],
+        ["weekend", 83],
+        ["Unknown", 0]
+      ])
+    })
+
+    it('formats rfv_cluster', function(){
+      expect(getField(sectionData, 'rfv_cluster')).to.be.a('array')
+      expect(getField(sectionData, 'rfv_cluster')).to.deep.equal([
+        ["Unknown", 515729],
+        ["1. FT Super Fans", 276448],
+        ["2. FT Fans", 37786],
+        ["3. Engaged, Frequent and Free", 8019],
+        ["4. Borderline Engaged", 42670],
+        ["5. Half Engaged", 10117],
+        ["6. Occasional Skimmers", 17361],
+        ["7. Disengaged Long Tail", 4984]
+      ])
+    })
+
+    it('formats is_first_visit', function(){
+      expect(getField(sectionData, 'is_first_visit')).to.be.a('array')
+      expect(getField(sectionData, 'is_first_visit')).to.deep.equal([
+        ["F", 737979],
+        ["T", 175135]
+      ])
+    })
+
+    it('formats is_first_visit', function(){
+      expect(getField(sectionData, 'is_first_visit')).to.be.a('array')
+      expect(getField(sectionData, 'is_first_visit')).to.deep.equal([
+        ["F", 737979],
+        ["T", 175135]
+      ])
+    })
+
+    it('formats internal_referrer_types', function(){
+      expect(getField(sectionData, 'internal_referrer_types')).to.be.a('array')
+      expect(getField(sectionData, 'internal_referrer_types')).to.deep.equal( [
+        ["FT", 48493],
+        ["Unknown", 2298],
+        ["story", 954],
+        ["front", 290]
+      ])
+    })
+
+    it('formats is_subscription', function(){
+      expect(getField(sectionData, 'is_subscription')).to.be.a('array')
+      expect(getField(sectionData, 'is_subscription')).to.deep.equal( [
+        ["F", 913114]
+      ])
+    })
+
+    it('formats unique_visitors', function(){
+      expect(getField(sectionData, 'unique_visitors')).to.be.a('number')
+      expect(getField(sectionData, 'unique_visitors')).to.deep.equal(252750)
+    })
+
+    it('formats topic_views', function(){
+      expect(getField(sectionData, 'topic_views')).to.be.a('array')
+      expect(getField(sectionData, 'topic_views')).to.deep.equal([
+        ["uk",2502147],
+        ["banks", 854507],
+        ["acquisitions", 773343]
+      ])
+    })
+
   });
 
 
 
-  describe('reformats referrer_types correctly', function(){
+  describe('re-formats referrer_types correctly', function(){
 
     it('by renaming blank to unknown ', function(){
       expect(getField({aggregations:{
@@ -117,6 +217,7 @@ describe('universalDataFormatter', function() {
           }
         }}}, 'referrer_types')).to.deep.equal([["Unknown", 289392]])
     })
+
     it('by removing results with zeros', function(){
       expect(getField({aggregations:{
         "referrer": {
@@ -129,6 +230,7 @@ describe('universalDataFormatter', function() {
           }
         }}}, 'referrer_types')).to.deep.equal([])
     })
+
     it('by keeping specific results with zeros', function(){
       expect(getField({aggregations:{
         "referrer": {
@@ -154,7 +256,7 @@ describe('universalDataFormatter', function() {
 
 
 
-  describe('reformats social_referrers correctly', function(){
+  describe('re-formats social_referrers correctly', function(){
 
     it('by renaming blank to unknown ', function(){
       expect(getField({aggregations:{
@@ -166,6 +268,7 @@ describe('universalDataFormatter', function() {
           }
         }}}, 'social_referrers')).to.deep.equal([["Unknown", 289392]])
     })
+
     it('by removing results with zeros', function(){
       expect(getField({aggregations:{
         "social_referrers": {
@@ -178,6 +281,7 @@ describe('universalDataFormatter', function() {
           }
         }}}, 'social_referrers')).to.deep.equal([])
     })
+
     it('by keeping specific results with zeros', function(){
       expect(getField({aggregations:{
         "social_referrers": {
