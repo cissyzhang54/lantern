@@ -3,7 +3,7 @@ import moment from 'moment';
 function getField(d, f, divisor){
   let field = fields[f]
   if (!field){
-    throw new Error(`formatterError: ${f} does not have a formatter set in the 'fields' object`)
+    return new Error(`formatterError: ${f} does not have a formatter set in the 'fields' object`)
   }
   let objs = (field.name || field).split('.')
   let parent = d;
@@ -47,7 +47,7 @@ const fields = {
   referrer_types: {name: 'aggregations.referrer.types', formatter: formatAndFilter, terms: ['search', 'unknown', 'partner', 'social-network', 'email']},
   referrer_names: {name: 'aggregations.referrer.names', formatter: format},
   referrer_urls: {name: 'aggregations.referrer.urls.filtered', formatter: format},
-  social_referrers: {name: 'aggregations.social_referrers.filtered', formatter: format, terms: ['Facebook', 'Twitter', 'Linked-In']},
+  social_referrers: {name: 'aggregations.social_referrers.filtered', formatter: formatAndFilter, terms: ['Facebook', 'Twitter', 'Linked-In']},
   devices: {name: 'aggregations.devices', formatter: format},
   countries: {name: 'aggregations.countries', formatter: format},
   regions: {name: 'aggregations.regions', formatter: format},
@@ -82,7 +82,7 @@ function formatPublishDate(date, fieldObj, divisor) {
 
 function format(agg, fieldObj, divisor=1) {
   if (!agg){
-    throw new Error(`formatterError: ${fieldObj && fieldObj.name ? fieldObj.name : fieldObj} does not exist in the data`)
+    return new Error(`formatterError: ${fieldObj && fieldObj.name ? fieldObj.name : fieldObj} does not exist in the data`)
   }
   return agg.buckets.map((d, i) => {
     let key = 'Unknown';
