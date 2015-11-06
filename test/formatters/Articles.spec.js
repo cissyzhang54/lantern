@@ -55,29 +55,29 @@ describe('Article Formatter', function() {
           'sections',
           'topics',
           'channels',
-          'referrer_types',
-          'referrer_names',
-          'referrer_urls',
-          'social_referrers',
+          'referrerTypes',
+          'referrerNames',
+          'referrerUrls',
+          'socialReferrers',
           'devices',
           'countries',
           'regions',
-          'is_last_page',
-          'user_cohort',
-          'rfv_cluster',
-          'is_first_visit',
-          'internal_referrer_urls',
-          'internal_referrer_types',
-          'next_internal_url',
-          'is_subscription',
-          'social_shares_total',
-          'social_shares_types',
-          'total_links_clicked',
-          'total_comments_posted',
-          'total_comments_viewed',
-          'scroll_depth',
-          'link_click_categories',
-          'unique_visitors'
+          'isLastPage',
+          'userCohort',
+          'rfvCluster',
+          'isFirstVisit',
+          'internalReferrerUrls',
+          'internalReferrerTypes',
+          'nextInternalUrl',
+          'isSubscription',
+          'socialSharesTotal',
+          'socialSharesTypes',
+          'totalLinksClicked',
+          'totalCommentsPosted',
+          'totalCommentsViewed',
+          'scrollDepth',
+          'linkClickCategories',
+          'uniqueVisitors'
         ];
         for (let i = 0; i < props.length; i++){
           try{
@@ -87,10 +87,10 @@ describe('Article Formatter', function() {
             expect(props[i] + ' Should exist in the formatted output').to.equal(true);
           }
         }
-        expect(Array.isArray(data.link_click_categories.buckets)).to.equal(true)
+        expect(Array.isArray(data.linkClickCategories.buckets)).to.equal(true)
         //did not remove search
         //did remove news-sharing
-        expect(data.referrer_types).to.deep.equal([
+        expect(data.referrerTypes).to.deep.equal([
           [ 'Unknown', 17097 ],
           [ 'social-network', 14796 ],
           [ 'search', 0 ],
@@ -108,7 +108,7 @@ describe('Article Formatter', function() {
   it('round numbers correctly', function(done) {
     ArticleFormat(ESArticleResults)
       .then((data) => {
-        expect(data.scroll_depth).to.equal(85);
+        expect(data.scrollDepth).to.equal(85);
         done();
       })
       .catch((error) => {

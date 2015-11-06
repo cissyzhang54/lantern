@@ -66,15 +66,15 @@ export default class SectionHeadlineStats extends React.Component {
     let data = this.props.data;
     let comparatorData = this.props.comparatorData ;
 
-    let subscriptions = data.is_subscription.length <= 1 ? 0 : data.is_subscription[1][1] ;
+    let subscriptions = data.isSubscription.length <= 1 ? 0 : data.isSubscription[1][1] ;
     let subscription = renderMetric('subscription', subscriptions);
 
-    let social_shares_total = renderMetric('social_shares', data.social_shares_total, comparatorData.comparator, comparatorData.social_shares_total);
-    let links_clicked_total = renderMetric('total_links_clicked', data.total_links_clicked, comparatorData.comparator, comparatorData.total_links_clicked);
-    let comments_posted_total = renderMetric('comments_posted_total', data.total_comments_posted, comparatorData.comparator, comparatorData.total_comments_posted);
-    let comments_viewed_total = renderMetric('comments_viewed_total', data.total_comments_viewed, comparatorData.comparator, comparatorData.total_comments_viewed);
+    let social_shares_total = renderMetric('social_shares', data.socialSharesTotal, comparatorData.comparator, comparatorData.socialSharesTotal);
+    let links_clicked_total = renderMetric('total_links_clicked', data.totalLinksClicked, comparatorData.comparator, comparatorData.totalLinksClicked);
+    let comments_posted_total = renderMetric('comments_posted_total', data.totalCommentsPosted, comparatorData.comparator, comparatorData.totalCommentsPosted);
+    let comments_viewed_total = renderMetric('comments_viewed_total', data.totalCommentsViewed, comparatorData.comparator, comparatorData.totalCommentsViewed);
 
-    let link_click_categories = data.link_click_categories.buckets.map((d, i) => {
+    let link_click_categories = data.linkClickCategories.buckets.map((d, i) => {
       let key = d.key;
       let value = d.total_clicks.value;
       return [
@@ -121,7 +121,7 @@ export default class SectionHeadlineStats extends React.Component {
         <Col xs={12} sm={4} >
           <Table
             headers={['Social Network', 'Shares']}
-            rows={data.social_shares_types}
+            rows={data.socialSharesTypes}
             />
         </Col>
       </Row>

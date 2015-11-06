@@ -12,18 +12,18 @@ export default function formatData(data) {
     return Promise.reject(error);
   }
   let [articleData, eventData] = data;
-  let divisor = getField(articleData, 'category_article_count')
+  let divisor = getField(articleData, 'articleCount')
   let articleFields = [
-    'comparator', 'timeOnPage', 'page_views_over_time', 'category_total_view_count',
-    'category_article_count', 'category_average_view_count', 'unique_visitors'
+    'comparator', 'timeOnPage', 'categoryTotalViewCount',
+    'articleCount', 'categoryAverageViewCount', 'uniqueVisitors'
   ]
   let articleAverages = [
-    'readTimes', 'readTimesSincePublish', 'referrer_types', 'social_referrers', 'regions',
-    'is_last_page', 'user_cohort', 'rfv_cluster', 'is_first_visit', 'internal_referrer_types',
+    'readTimes', 'readTimesSincePublish', 'referrerTypes', 'socialReferrers', 'regions',
+    'isLastPage', 'userCohort', 'rfvCluster', 'isFirstVisit', 'internalReferrerTypes',
   ]
-  let eventFields = ['scroll_depth']
+  let eventFields = ['scrollDepth']
   let eventAverages = [
-    'social_shares_total', 'social_shares_types', 'total_links_clicked', 'total_comments_posted', 'total_comments_viewed'
+    'socialSharesTotal', 'socialSharesTypes', 'totalLinksClicked', 'totalCommentsPosted', 'totalCommentsViewed'
   ]
   return new Promise((resolve, reject) => {
     try {

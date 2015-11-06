@@ -48,20 +48,20 @@ describe('Article Formatter', function() {
           'genre',
           'sections',
           'topics',
-          'referrer_types',
-          'referrer_names',
-          'social_referrers',
+          'referrerTypes',
+          'referrerNames',
+          'socialReferrers',
           'devices',
           'countries',
           'regions',
-          'user_cohort',
-          'rfv_cluster',
-          'is_first_visit',
-          'internal_referrer_types',
-          'is_subscription',
-          'unique_visitors',
-          'topic_count',
-          'topic_views'
+          'userCohort',
+          'rfvCluster',
+          'isFirstVisit',
+          'internalReferrerTypes',
+          'isSubscription',
+          'uniqueVisitors',
+          'topicCount',
+          'topicViews'
         ];
         for (let i = 0; i < props.length; i++){
           try{

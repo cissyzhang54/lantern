@@ -85,8 +85,8 @@ function getArticleData(req, res){
           },
           devices: getKeys(data.devices),
           regions: getKeys(data.regions),
-          cohort: getKeys(data.user_cohort),
-          referrers: getKeys(data.referrer_types)
+          cohort: getKeys(data.userCohort),
+          referrers: getKeys(data.referrerTypes)
         }
       };
       return res;
@@ -137,8 +137,8 @@ function getSectionData(req, res){
           },
           devices: getKeys(data.devices),
           regions: getKeys(data.regions),
-          cohort: getKeys(data.user_cohort),
-          referrers: getKeys(data.referrer_types)
+          cohort: getKeys(data.userCohort),
+          referrers: getKeys(data.referrerTypes)
         }
       };
       return res;

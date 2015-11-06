@@ -17,9 +17,9 @@ export default class SectionWho extends React.Component {
     }
 
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
-    let [rfvData, rfvID, rfvKeys] = dataFormatter.getPCTMetric('rfv_cluster', 'Views')
-    let [returningData, returningID, returningKeys] = dataFormatter.getPCTMetric('is_first_visit', 'Views', 'New', 'Returning')
-    let [cohortData, cohortID, cohortKeys] = dataFormatter.getPCTMetric('user_cohort', 'Views')
+    let [rfvData, rfvID, rfvKeys] = dataFormatter.getPCTMetric('rfvCluster', 'Views')
+    let [returningData, returningID, returningKeys] = dataFormatter.getPCTMetric('isFirstVisit', 'Views', 'New', 'Returning')
+    let [cohortData, cohortID, cohortKeys] = dataFormatter.getPCTMetric('userCohort', 'Views')
 
     return (
       <div data-component='sectionWho'>
