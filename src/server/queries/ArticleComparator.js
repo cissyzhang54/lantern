@@ -156,16 +156,21 @@ export default function ArticleComparatorQuery(query) {
           "field": "geo_region"
         }
       },
-      internal_referrer_types: {
-        filter : {
-          term : {
-            referrer_type : "internal"
+      internal_referrer: {
+        filter: {
+          term: {
+            referrer_type: "internal"
           }
         },
-        aggs : {
-          filtered : {
-            terms : {
-              field : "referrer_name"
+        aggs: {
+          urls : {
+            terms: {
+              field: "referrer"
+            }
+          },
+          types : {
+            terms: {
+              field: "referrer_name"
             }
           }
         }
