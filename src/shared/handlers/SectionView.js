@@ -101,13 +101,14 @@ class SectionView extends React.Component {
     let comparatorQuery = this.props.comparatorQuery
     let title = (data) ? 'Lantern - ' + this.props.params.section : '';
 
-
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
     let [viewData, viewID, viewKeys] =  dataFormatter.getMetric('readTimes', 'Articles read');
     let [topicViewData, topicViewId, topicViewKeys] = dataFormatter.getPCTMetric('topic_views', 'Views');
-    let [topicCountData, topicCountId, topicCountKeys] = dataFormatter.getPCTMetric('topic_count', 'Count');
+    let [topicCountData, topicCountId, topicCountKeys] = dataFormatter.getPCTMetric('topic_count', 'Count' );
 
-
+    let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrer_types', 'Views');
+    let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('social_referrers', 'Views');
+    let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internal_referrer_types', 'Views');
 
     return(<DocumentTitle title={title}>
       <div>
@@ -178,7 +179,7 @@ class SectionView extends React.Component {
             </Row>
             <Row>
               <Col xs={6}>
-                <h6>Total number or articles per topic</h6>
+                <h6>Total number of articles per topic</h6>
                 <BarChart
                   data={topicCountData}
                   keys={topicCountKeys}
@@ -207,6 +208,45 @@ class SectionView extends React.Component {
               renderWho={FeatureFlag.check('section:who')}
               />
 
+            <Row>
+              <Col xs={12}>
+                <h5>Where do the users come from?</h5>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} sm={4}>
+                <h6>External Sources</h6>
+                <BarChart
+                  data={refData}
+                  keys={refKeys}
+                  category={refID}
+                  yLabel="Page Views"
+                  xLabel="Referrer"
+                  usePercentages={true} />
+              </Col>
+
+              <Col xs={12} sm={4}>
+                <h6>Social Network Breakdown</h6>
+                <BarChart
+                  data={socialData}
+                  keys={socialKeys}
+                  category={socialID}
+                  yLabel="Page Views"
+                  xLabel="Social Network"
+                  usePercentages={true}  />
+              </Col>
+
+              <Col xs={12} sm={4}>
+                <h6>Internal Referrer Types</h6>
+                <BarChart
+                  data={internalData}
+                  keys={internalKeys}
+                  category={internalID}
+                  yLabel="Page Views"
+                  xLabel="Referrer"
+                  usePercentages={true} />
+              </Col>
+            </Row>
           </Col>
         </Col>
       </div>
