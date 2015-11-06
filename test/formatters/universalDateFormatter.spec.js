@@ -15,8 +15,8 @@ describe('universalDataFormatter', function() {
     expect(getField(sectionMetaData, 'topicsCovered')).to.be.a('number')
     expect(getField(sectionMetaData, 'topicsCovered')).to.deep.equal(108)
 
-    expect(getField(sectionMetaData, 'topic_count')).to.be.a('array')
-    expect(getField(sectionMetaData, 'topic_count')).to.deep.equal([
+    expect(getField(sectionMetaData, 'topicCount')).to.be.a('array')
+    expect(getField(sectionMetaData, 'topicCount')).to.deep.equal([
       ["uk", 288],
       ["banks", 84],
       ["acquisitions", 67],
@@ -55,8 +55,8 @@ describe('universalDataFormatter', function() {
     })
 
     it('formats referrer_types', function(){
-      expect(getField(sectionData, 'referrer_types')).to.be.a('array')
-      expect(getField(sectionData, 'referrer_types')).to.deep.equal([
+      expect(getField(sectionData, 'referrerTypes')).to.be.a('array')
+      expect(getField(sectionData, 'referrerTypes')).to.deep.equal([
         ["Unknown", 289392],
         ["search", 83155],
         ["social-network", 59516],
@@ -70,8 +70,8 @@ describe('universalDataFormatter', function() {
     })
 
     it('formats referrer_names', function(){
-      expect(getField(sectionData, 'referrer_names')).to.be.a('array')
-      expect(getField(sectionData, 'referrer_names')).to.deep.equal([
+      expect(getField(sectionData, 'referrerNames')).to.be.a('array')
+      expect(getField(sectionData, 'referrerNames')).to.deep.equal([
         ["Unknown", 339143],
         ["Google", 37030],
         ["Facebook", 26329],
@@ -86,8 +86,8 @@ describe('universalDataFormatter', function() {
     })
 
     it('formats social_referrers', function(){
-      expect(getField(sectionData, 'social_referrers')).to.be.a('array')
-      expect(getField(sectionData, 'social_referrers')).to.deep.equal([
+      expect(getField(sectionData, 'socialReferrers')).to.be.a('array')
+      expect(getField(sectionData, 'socialReferrers')).to.deep.equal([
         ["Facebook", 26329],
         ["Twitter", 25398],
         ["Unknown", 7770],
@@ -130,8 +130,8 @@ describe('universalDataFormatter', function() {
     })
 
     it('formats user_cohort', function(){
-      expect(getField(sectionData, 'user_cohort')).to.be.a('array')
-      expect(getField(sectionData, 'user_cohort')).to.deep.equal([
+      expect(getField(sectionData, 'userCohort')).to.be.a('array')
+      expect(getField(sectionData, 'userCohort')).to.deep.equal([
         ["anonymous", 679358],
         ["subscriber", 203256],
         ["registered", 30417],
@@ -141,8 +141,8 @@ describe('universalDataFormatter', function() {
     })
 
     it('formats rfv_cluster', function(){
-      expect(getField(sectionData, 'rfv_cluster')).to.be.a('array')
-      expect(getField(sectionData, 'rfv_cluster')).to.deep.equal([
+      expect(getField(sectionData, 'rfvCluster')).to.be.a('array')
+      expect(getField(sectionData, 'rfvCluster')).to.deep.equal([
         ["Unknown", 515729],
         ["1. FT Super Fans", 276448],
         ["2. FT Fans", 37786],
@@ -155,24 +155,24 @@ describe('universalDataFormatter', function() {
     })
 
     it('formats is_first_visit', function(){
-      expect(getField(sectionData, 'is_first_visit')).to.be.a('array')
-      expect(getField(sectionData, 'is_first_visit')).to.deep.equal([
+      expect(getField(sectionData, 'isFirstVisit')).to.be.a('array')
+      expect(getField(sectionData, 'isFirstVisit')).to.deep.equal([
         ["F", 737979],
         ["T", 175135]
       ])
     })
 
     it('formats is_first_visit', function(){
-      expect(getField(sectionData, 'is_first_visit')).to.be.a('array')
-      expect(getField(sectionData, 'is_first_visit')).to.deep.equal([
+      expect(getField(sectionData, 'isFirstVisit')).to.be.a('array')
+      expect(getField(sectionData, 'isFirstVisit')).to.deep.equal([
         ["F", 737979],
         ["T", 175135]
       ])
     })
 
     it('formats internal_referrer_types', function(){
-      expect(getField(sectionData, 'internal_referrer_types')).to.be.a('array')
-      expect(getField(sectionData, 'internal_referrer_types')).to.deep.equal( [
+      expect(getField(sectionData, 'internalReferrerTypes')).to.be.a('array')
+      expect(getField(sectionData, 'internalReferrerTypes')).to.deep.equal( [
         ["FT", 48493],
         ["Unknown", 2298],
         ["story", 954],
@@ -181,20 +181,20 @@ describe('universalDataFormatter', function() {
     })
 
     it('formats is_subscription', function(){
-      expect(getField(sectionData, 'is_subscription')).to.be.a('array')
-      expect(getField(sectionData, 'is_subscription')).to.deep.equal( [
+      expect(getField(sectionData, 'isSubscription')).to.be.a('array')
+      expect(getField(sectionData, 'isSubscription')).to.deep.equal( [
         ["F", 913114]
       ])
     })
 
     it('formats unique_visitors', function(){
-      expect(getField(sectionData, 'unique_visitors')).to.be.a('number')
-      expect(getField(sectionData, 'unique_visitors')).to.deep.equal(252750)
+      expect(getField(sectionData, 'uniqueVisitors')).to.be.a('number')
+      expect(getField(sectionData, 'uniqueVisitors')).to.deep.equal(252750)
     })
 
     it('formats topic_views', function(){
-      expect(getField(sectionData, 'topic_views')).to.be.a('array')
-      expect(getField(sectionData, 'topic_views')).to.deep.equal([
+      expect(getField(sectionData, 'topicViews')).to.be.a('array')
+      expect(getField(sectionData, 'topicViews')).to.deep.equal([
         ["uk",2502147],
         ["banks", 854507],
         ["acquisitions", 773343]
@@ -205,7 +205,7 @@ describe('universalDataFormatter', function() {
 
 
 
-  describe('re-formats referrer_types correctly', function(){
+  describe('re-formats referrerTypes correctly', function(){
 
     it('by renaming blank to unknown ', function(){
       expect(getField({aggregations:{
@@ -215,7 +215,7 @@ describe('universalDataFormatter', function() {
               {"key": "","doc_count": 289392}
             ]
           }
-        }}}, 'referrer_types')).to.deep.equal([["Unknown", 289392]])
+        }}}, 'referrerTypes')).to.deep.equal([["Unknown", 289392]])
     })
 
     it('by removing results with zeros', function(){
@@ -228,7 +228,7 @@ describe('universalDataFormatter', function() {
               {"key": "billy-bob","doc_count": 0}
             ]
           }
-        }}}, 'referrer_types')).to.deep.equal([])
+        }}}, 'referrerTypes')).to.deep.equal([])
     })
 
     it('by keeping specific results with zeros', function(){
@@ -243,7 +243,7 @@ describe('universalDataFormatter', function() {
               {"key": "email","doc_count": 0}
             ]
           }
-        }}}, 'referrer_types')).to.deep.equal([
+        }}}, 'referrerTypes')).to.deep.equal([
           ["search", 0],
           ["unknown",0],
           ["partner", 0],
@@ -266,7 +266,7 @@ describe('universalDataFormatter', function() {
               {"key": "","doc_count": 289392}
             ]
           }
-        }}}, 'social_referrers')).to.deep.equal([["Unknown", 289392]])
+        }}}, 'socialReferrers')).to.deep.equal([["Unknown", 289392]])
     })
 
     it('by removing results with zeros', function(){
@@ -279,7 +279,7 @@ describe('universalDataFormatter', function() {
               {"key": "billy-bob","doc_count": 0}
             ]
           }
-        }}}, 'social_referrers')).to.deep.equal([])
+        }}}, 'socialReferrers')).to.deep.equal([])
     })
 
     it('by keeping specific results with zeros', function(){
@@ -292,7 +292,7 @@ describe('universalDataFormatter', function() {
               {"key": "Linked-In","doc_count": 0},
             ]
           }
-        }}}, 'social_referrers')).to.deep.equal([
+        }}}, 'socialReferrers')).to.deep.equal([
           ["Facebook", 0],
           ["Twitter",0],
           ["Linked-In", 0],

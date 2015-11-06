@@ -142,7 +142,7 @@ export default class Modifier extends React.Component {
           <Col sm={10} xs={12}>
             <div style={styles.descriptorText}>
               <ModifierDescription
-                articleCount={comparatorData.distinctArticleCount}
+                articleCount={comparatorData.articleCount}
                 comparator={this.props.query.comparator}
                 />
             </div>

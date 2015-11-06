@@ -36,8 +36,8 @@ class FilterStore {
 
     this.devices = getKeys(newData.devices);
     this.regions = getKeys(newData.regions);
-    this.cohort = getKeys(newData.user_cohort);
-    this.referrers = getKeys(newData.referrer_types);
+    this.cohort = getKeys(newData.userCohort);
+    this.referrers = getKeys(newData.referrerTypes);
   }
 
   handleQueryChange(query) {

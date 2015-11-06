@@ -28,14 +28,14 @@ export default function formatData(data) {
   let [articleData, metaData, eventData] = data;
   let metaFields = ['title', 'uuid', 'author', 'published', 'published_human', 'genre', 'sections', 'topics']
   let articleFields = [
-    'pageViews', 'timeOnPage', 'readTimes', 'readTimesSincePublish', 'channels', 'unique_visitors',
-    'is_subscription', 'next_internal_url', 'internal_referrer_types', 'internal_referrer_urls', 'is_first_visit',
-    'rfv_cluster', 'user_cohort', 'is_last_page', 'regions', 'countries', 'devices', 'social_referrers',
-    'referrer_urls', 'referrer_names', 'referrer_types'
+    'pageViews', 'timeOnPage', 'readTimes', 'readTimesSincePublish', 'channels', 'uniqueVisitors',
+    'isSubscription', 'nextInternalUrl', 'internalReferrerTypes', 'internalReferrerUrls', 'isFirstVisit',
+    'rfvCluster', 'userCohort', 'isLastPage', 'regions', 'countries', 'devices', 'socialReferrers',
+    'referrerUrls', 'referrerNames', 'referrerTypes'
   ]
   let eventFields = [
-    'total_comments_posted', 'total_comments_viewed', 'social_shares_total', 'social_shares_types',
-    'total_links_clicked', 'scroll_depth', 'link_click_categories'
+    'totalCommentsPosted', 'totalCommentsViewed', 'socialSharesTotal', 'socialSharesTypes',
+    'totalLinksClicked', 'scrollDepth', 'linkClickCategories'
   ]
   let results = {}
   return new Promise((resolve, reject) => {

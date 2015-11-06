@@ -45,24 +45,22 @@ describe('ArticleComparator Formatter', function() {
         const props = [
           'comparator',
           'timeOnPage',
-          'page_views_over_time',
-          'category_total_view_count',
-          'category_article_count',
-          'category_average_view_count',
+          'categoryTotalViewCount',
+          'categoryAverageViewCount',
           'readTimes',
-          'referrer_types',
-          'social_referrers',
+          'referrerTypes',
+          'socialReferrers',
           'regions',
-          'is_last_page',
-          'user_cohort',
-          'rfv_cluster',
-          'is_first_visit',
-          'internal_referrer_types',
-          'social_shares_total',
-          'social_shares_types',
-          'total_links_clicked',
-          'total_comments_posted',
-          'total_comments_viewed'
+          'isLastPage',
+          'userCohort',
+          'rfvCluster',
+          'isFirstVisit',
+          'internalReferrerTypes',
+          'socialSharesTotal',
+          'socialSharesTypes',
+          'totalLinksClicked',
+          'totalCommentsPosted',
+          'totalCommentsViewed'
         ];
         for (let i = 0; i < props.length; i++){
           try{

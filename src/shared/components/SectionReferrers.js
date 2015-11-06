@@ -30,12 +30,12 @@ export default class SectionReferrers extends React.Component {
       return <div></div>
     }
 
-    let refUrls = this.props.data.referrer_urls.map(getReferrerUrls);
-    let internalRefUrls = this.props.data.internal_referrer_urls.map(getReferrerUrls);
+    let refUrls = this.props.data.referrerUrls.map(getReferrerUrls);
+    let internalRefUrls = this.props.data.internalReferrerUrls.map(getReferrerUrls);
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
-    let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrer_types', 'Views')
-    let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('social_referrers', 'Views')
-    let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internal_referrer_types', 'Views')
+    let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrerTypes', 'Views')
+    let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views')
+    let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views')
 
     let internalRefTypeChart = this.props.renderInternalRefTypes ? <Col xs={12} sm={6}>
       <h6> Internal Referrer Types</h6>

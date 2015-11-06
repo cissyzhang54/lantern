@@ -24,11 +24,11 @@ export default function SectionDataFormatter(data) {
       let [metaData, sectionData] = data;
 
       let results = {genre:[],sections:[], topics:[]}
-      let metaFields = ['articleCount', 'topicsCovered','topic_count']
-      let sectionFields = ['readTimes', 'pageViews', 'referrer_types',
-        'referrer_names', 'social_referrers', 'devices', 'countries', 'regions', 'user_cohort',
-        'rfv_cluster', 'is_first_visit', 'internal_referrer_types', 'is_subscription', 'unique_visitors',
-        'topic_views'
+      let metaFields = ['articleCount', 'topicsCovered','topicCount']
+      let sectionFields = ['readTimes', 'pageViews', 'referrerTypes',
+        'referrerNames', 'socialReferrers', 'devices', 'countries', 'regions', 'userCohort',
+        'rfvCluster', 'isFirstVisit', 'internalReferrerTypes', 'isSubscription', 'uniqueVisitors',
+        'topicViews'
       ]
       metaFields.forEach(f => { results[f] = getField(metaData, f)})
       sectionFields.forEach(f => { results[f] = getField(sectionData, f)})

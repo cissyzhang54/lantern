@@ -103,12 +103,13 @@ class SectionView extends React.Component {
 
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
     let [viewData, viewID, viewKeys] =  dataFormatter.getMetric('readTimes', 'Articles read');
-    let [topicViewData, topicViewId, topicViewKeys] = dataFormatter.getPCTMetric('topic_views', 'Views');
-    let [topicCountData, topicCountId, topicCountKeys] = dataFormatter.getPCTMetric('topic_count', 'Count' );
 
-    let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrer_types', 'Views');
-    let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('social_referrers', 'Views');
-    let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internal_referrer_types', 'Views');
+    let [topicViewData, topicViewId, topicViewKeys] = dataFormatter.getPCTMetric('topicViews', 'Views');
+    let [topicCountData, topicCountId, topicCountKeys] = dataFormatter.getPCTMetric('topicCount', 'Count');
+
+    let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrerTypes', 'Views');
+    let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views');
+    let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views');
 
     return(<DocumentTitle title={title}>
       <div>
@@ -143,10 +144,10 @@ class SectionView extends React.Component {
               </Col>
               <Col xs={4}>
                 <SingleMetric
-                  metric={data.unique_visitors}
+                  metric={data.uniqueVisitors}
                   metricType='integer'
-                  comparatorMetric={comparatorData.unique_visitors}
-                  comparatorName={comparatorData.unique_visitors}
+                  comparatorMetric={comparatorData.uniqueVisitors}
+                  comparatorName={comparatorData.comparator}
                   label='Unique Visitors'
                   size="large" />
               </Col>
