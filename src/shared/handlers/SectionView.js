@@ -11,7 +11,7 @@ import Messaging from '../components/Messaging';
 import SectionModifier from '../components/SectionModifier';
 import SingleMetric from '../components/SingleMetric';
 import BarChart from '../components/BarChart.js';
-import LineChart from "../components/LineChart";
+import DualScaleLineChart from "../components/DualScaleLineChart";
 import SectionWho from "../components/SectionWho";
 import SectionWhere from "../components/SectionWhere";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
@@ -108,7 +108,8 @@ class SectionView extends React.Component {
     let title = (data) ? 'Lantern - ' + this.props.params.section : '';
 
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
-    let [viewData, viewID, viewKeys] =  dataFormatter.getMetric('readTimes', 'Articles read');
+    let [publishData, publishID, publishKeys] =  dataFormatter.getMetric('publishTimes', 'Articles published');
+    let [readData, readID, readKeys] =  dataFormatter.getMetric('readTimes', 'Articles read');
 
     let [topicViewData, topicViewId, topicViewKeys] = dataFormatter.getPCTMetric('topicViews', 'Views');
     let [topicCountData, topicCountId, topicCountKeys] = dataFormatter.getPCTMetric('topicCount', 'Count');
@@ -167,11 +168,18 @@ class SectionView extends React.Component {
 
             <Row>
               <Col xs={12}>
-                <LineChart
-                  data={viewData}
-                  keys={viewKeys}
-                  category={viewID}
-                  yLabel='Number of articles'
+                <h4>Articles Published vs Articles Read</h4>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                <DualScaleLineChart
+                  leftData={publishData}
+                  rightData={readData}
+                  keys={publishKeys.concat(readKeys)}
+                  categories={[publishID, readID]}
+                  yLabel='Articles published'
+                  y2Label='Articles read'
                   xLabel='Time' />
               </Col>
             </Row>
