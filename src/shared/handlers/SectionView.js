@@ -13,6 +13,7 @@ import SingleMetric from '../components/SingleMetric';
 import BarChart from '../components/BarChart.js';
 import LineChart from "../components/LineChart";
 import SectionWho from "../components/SectionWho";
+import SectionWhere from "../components/SectionWhere";
 
 import SectionActions from '../actions/SectionActions';
 import SectionStore from '../stores/SectionStore';
@@ -208,7 +209,7 @@ class SectionView extends React.Component {
               comparatorData={comparatorData}
               renderWho={FeatureFlag.check('section:who')}
               />
-
+            
             <Row>
               <Col xs={12}>
                 <h5>Where do the users come from?</h5>
@@ -248,6 +249,13 @@ class SectionView extends React.Component {
                   usePercentages={true} />
               </Col>
             </Row>
+
+            <SectionWhere
+              data={data}
+              comparatorData={comparatorData}
+              renderWhere={FeatureFlag.check('article:where')}
+              />
+
           </Col>
         </Col>
       </div>
