@@ -29,7 +29,7 @@ class ArticleQueryStore {
     switch (filter.key){
       case 'Device': key = 'device_type'; break;
       case 'Region': key = 'geo_region'; break;
-      case 'UserCohort': key = 'userCohort'; break;
+      case 'UserCohort': key = 'user_cohort'; break;
       case 'Referrers': key = 'referrer_type'; break;
     }
     if (!filter.value.length) {
