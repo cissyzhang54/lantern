@@ -7,6 +7,7 @@ import article_comparator_results from '../fixtures/data/article_comparator_resu
 describe('universalDataFormatter', function() {
 
   let [sectionMetaData, sectionData] = section_results
+  let [articleComparatorData, eventData]  = article_comparator_results
 
   it('should parse sectionMetaData correctly', function() {
     expect(getField(sectionMetaData, 'articleCount')).to.be.a('number')
@@ -30,9 +31,33 @@ describe('universalDataFormatter', function() {
     ])
   });
 
+  it('should parse format function with a divisor', function() {
+
+    expect(getField(sectionMetaData, 'topic_count')).to.be.a('array')
+    expect(getField(sectionMetaData, 'topic_count', 2)).to.deep.equal([
+      ["uk", 144],
+      ["banks", 42],
+      ["acquisitions", 34],
+      ["mergers", 34],
+      ["in", 26],
+      ["europe", 24],
+      ["britain", 23],
+      ["government", 19],
+      ["tax", 18],
+      ["european", 17]
+    ])
+  });
+
+  it('should parse divide function with a divisor', function() {
+    expect(getField(articleComparatorData, 'category_average_view_count')).to.be.a('number')
+    expect(getField(articleComparatorData, 'category_average_view_count')).to.deep.equal(172)
+    expect(getField(articleComparatorData, 'category_average_view_count', 2)).to.be.a('number')
+    expect(getField(articleComparatorData, 'category_average_view_count', 2)).to.deep.equal(86)
+  });
+
   xit('should error when data can not be found', function(){
-    expect(getField(sectionMetaData, 'readTimes')).to.be.a('function')
-    expect(getField(sectionMetaData, 'readTimes')).to.be.a('function')
+    expect(getField(sectionMetaData, 'readTimes')).to.throw()
+    expect(getField(sectionMetaData, 'readTimes')).to.throw()
   });
 
   describe('should parse sectionData correctly', function() {

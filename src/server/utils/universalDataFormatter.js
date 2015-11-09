@@ -15,6 +15,7 @@ function getField(d, f, divisor){
       let error = new Error(e);
       error.name = 'DataParsingError';
       error.data = d;
+      //todo: throw + catch properly then test it
     }
   }
   return field.formatter ? field.formatter(parent, field, divisor) : parent
@@ -79,6 +80,7 @@ function formatPublishDate(date, fieldObj, divisor) {
 
 function format(agg, fieldObj, divisor=1) {
   if (!agg){
+    //todo: throw + catch properly then test it
     return new Error(`formatterError: ${fieldObj && fieldObj.name ? fieldObj.name : fieldObj} does not exist in the data`)
   }
   return agg.buckets.map((d, i) => {
