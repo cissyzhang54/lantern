@@ -4,6 +4,7 @@ import sinon from 'sinon';
 import {createComponent} from '../createComponent';
 import SearchResult from '../../src/shared/components/SearchResult';
 import Link from 'react-router/lib/Link';
+import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import moment from 'moment';
 import * as formatAuthors from '../../src/shared/utils/formatAuthors';
 
@@ -25,20 +26,20 @@ describe ('SearchResult', function() {
     stub.returns('abc');
 
     let searchResult = createComponent(SearchResult, {
-      result:{article_uuid: '1234', _id: '5678', authors: ['abc'], initial_publish_date: moment('2015-09-16T19:58:26.000Z')}
+      result: {
+        article_uuid: '1234',
+        _id: '5678',
+        authors: ['abc'],
+        initial_publish_date: moment('2015-09-16T19:58:26.000Z'),
+        sections: ['house', 'home']
+      }
     });
 
-    const link = searchResult.props.children;
-    const listGroupItem = link.props.children;
-    const row = listGroupItem.props.children;
-    const col = row.props.children[0];
-    const col2 = row.props.children[1];
-    const authors = col.props.children;
-    const publishDate = col2.props.children;
 
+    expect(TestUtils.isElementOfType(searchResult, ListGroupItem)).to.equal(true);
+
+    let link = searchResult.props.header;
     expect(TestUtils.isElementOfType(link, Link)).to.equal(true);
-    expect(publishDate.substr(0,10)).to.equal('Sections: ');
-    expect(authors).to.equal('Authors: abc');
 
   });
 });
