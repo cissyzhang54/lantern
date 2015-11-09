@@ -209,7 +209,7 @@ class SectionView extends React.Component {
               comparatorData={comparatorData}
               renderWho={FeatureFlag.check('section:who')}
               />
-
+            
             <Row>
               <Col xs={12}>
                 <h5>Where do the users come from?</h5>
