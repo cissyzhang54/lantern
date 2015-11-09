@@ -9,57 +9,56 @@ describe('universalDataFormatter', function() {
   let [sectionMetaData, sectionData] = section_results
   let [articleComparatorData, eventData]  = article_comparator_results
 
-  it('should parse sectionMetaData correctly', function() {
-    expect(getField(sectionMetaData, 'articleCount')).to.be.a('number')
-    expect(getField(sectionMetaData, 'articleCount')).to.deep.equal(252)
+  /* Section MetaData Tests Start */
+  describe('should parse sectionData correctly', function() {
 
-    expect(getField(sectionMetaData, 'topicsCovered')).to.be.a('number')
-    expect(getField(sectionMetaData, 'topicsCovered')).to.deep.equal(108)
+    it('should parse sectionMetaData correctly', function() {
+      expect(getField(sectionMetaData, 'articleCount')).to.be.a('number')
+      expect(getField(sectionMetaData, 'articleCount')).to.deep.equal(252)
 
-    expect(getField(sectionMetaData, 'topicCount')).to.be.a('array')
-    expect(getField(sectionMetaData, 'topicCount')).to.deep.equal([
-      ["uk", 288],
-      ["banks", 84],
-      ["acquisitions", 67],
-      ["mergers", 67],
-      ["in", 52],
-      ["europe", 48],
-      ["britain", 46],
-      ["government", 38],
-      ["tax", 35],
-      ["european", 34]
-    ])
+      expect(getField(sectionMetaData, 'topicsCovered')).to.be.a('number')
+      expect(getField(sectionMetaData, 'topicsCovered')).to.deep.equal(108)
+
+      expect(getField(sectionMetaData, 'topicCount')).to.be.a('array')
+      expect(getField(sectionMetaData, 'topicCount')).to.deep.equal([
+        ["uk", 288],
+        ["banks", 84],
+        ["acquisitions", 67],
+        ["mergers", 67],
+        ["in", 52],
+        ["europe", 48],
+        ["britain", 46],
+        ["government", 38],
+        ["tax", 35],
+        ["european", 34]
+      ])
+    });
+
+    it('should parse format function with a divisor', function() {
+
+      expect(getField(sectionMetaData, 'topicCount')).to.be.a('array')
+      expect(getField(sectionMetaData, 'topicCount', 2)).to.deep.equal([
+        ["uk", 144],
+        ["banks", 42],
+        ["acquisitions", 34],
+        ["mergers", 34],
+        ["in", 26],
+        ["europe", 24],
+        ["britain", 23],
+        ["government", 19],
+        ["tax", 18],
+        ["european", 17]
+      ])
+    });
+
+    xit('should error when data can not be found', function(){
+      expect(getField(sectionMetaData, 'readTimes')).to.throw()
+      expect(getField(sectionMetaData, 'readTimes')).to.throw()
+    });
   });
+  /* Section MetaData Tests End */
 
-  it('should parse format function with a divisor', function() {
-
-    expect(getField(sectionMetaData, 'topic_count')).to.be.a('array')
-    expect(getField(sectionMetaData, 'topic_count', 2)).to.deep.equal([
-      ["uk", 144],
-      ["banks", 42],
-      ["acquisitions", 34],
-      ["mergers", 34],
-      ["in", 26],
-      ["europe", 24],
-      ["britain", 23],
-      ["government", 19],
-      ["tax", 18],
-      ["european", 17]
-    ])
-  });
-
-  it('should parse divide function with a divisor', function() {
-    expect(getField(articleComparatorData, 'category_average_view_count')).to.be.a('number')
-    expect(getField(articleComparatorData, 'category_average_view_count')).to.deep.equal(172)
-    expect(getField(articleComparatorData, 'category_average_view_count', 2)).to.be.a('number')
-    expect(getField(articleComparatorData, 'category_average_view_count', 2)).to.deep.equal(86)
-  });
-
-  xit('should error when data can not be found', function(){
-    expect(getField(sectionMetaData, 'readTimes')).to.throw()
-    expect(getField(sectionMetaData, 'readTimes')).to.throw()
-  });
-
+  /* Section Data Tests Start */
   describe('should parse sectionData correctly', function() {
 
     it('formats readTimes', function(){
@@ -72,7 +71,6 @@ describe('universalDataFormatter', function() {
         ["2015-10-05T00:00:00.000Z", 270]
       ])
     })
-
 
     it('formats pageViews', function(){
       expect(getField(sectionData, 'pageViews')).to.be.a('number')
@@ -225,13 +223,18 @@ describe('universalDataFormatter', function() {
         ["acquisitions", 773343]
       ])
     })
+  });
+  /* Section Data Tests End */
 
+  it('should parse divide function with a divisor', function() {
+    expect(getField(articleComparatorData, 'categoryAverageViewCount')).to.be.a('number')
+    expect(getField(articleComparatorData, 'categoryAverageViewCount')).to.deep.equal(172)
+    expect(getField(articleComparatorData, 'categoryAverageViewCount', 2)).to.be.a('number')
+    expect(getField(articleComparatorData, 'categoryAverageViewCount', 2)).to.deep.equal(86)
   });
 
 
-
   describe('re-formats referrerTypes correctly', function(){
-
     it('by renaming blank to unknown ', function(){
       expect(getField({aggregations:{
         "referrer": {
@@ -276,10 +279,7 @@ describe('universalDataFormatter', function() {
           ["email", 0]
       ]);
     })
-
-  })
-
-
+  });
 
   describe('re-formats social_referrers correctly', function(){
 
@@ -292,7 +292,7 @@ describe('universalDataFormatter', function() {
             ]
           }
         }}}, 'socialReferrers')).to.deep.equal([["Unknown", 289392]])
-    })
+    });
 
     it('by removing results with zeros', function(){
       expect(getField({aggregations:{
@@ -305,7 +305,7 @@ describe('universalDataFormatter', function() {
             ]
           }
         }}}, 'socialReferrers')).to.deep.equal([])
-    })
+    });
 
     it('by keeping specific results with zeros', function(){
       expect(getField({aggregations:{
@@ -323,8 +323,8 @@ describe('universalDataFormatter', function() {
           ["Linked-In", 0],
       ]);
     })
+  });
 
-  })
 
 
 });
