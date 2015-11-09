@@ -38,7 +38,9 @@ class Analytics {
 
     // Send scroll event to GA
     if (!this.attached) {
-      document.querySelector('#react-app').addEventListener('scrollDepth', function (e) {
+      let el = document.querySelector('#react-app');
+      if (!el) return;
+      el.addEventListener('scrollDepth', function (e) {
         this.sendGAEvent({
           'hitType': 'event',
           'eventCategory': 'Page Scrolling',

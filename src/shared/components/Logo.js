@@ -18,7 +18,9 @@ const searchHTML = <div className="magnifying-glass logo">
 export default class Logo extends React.Component {
 
   componentDidMount(){
-    document.querySelector('body').classList.add('loading-mounted');
+    let body = document.querySelector('body')
+    if (!body.classList) return;
+    body.classList.add('loading-mounted');
   }
 
   render() {

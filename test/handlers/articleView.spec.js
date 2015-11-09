@@ -1,5 +1,7 @@
+
 import {expect} from 'chai';
 import React from 'react';
+
 import sinon from 'sinon';
 import {createAltWrappedComponent, createComponent} from '../createComponent';
 import ArticleView from '../../src/shared/handlers/ArticleView';
@@ -13,8 +15,9 @@ import ComparatorQueryStore from '../../src/shared/stores/ComparatorQueryStore';
 import ArticleQueryStore from '../../src/shared/stores/ArticleQueryStore';
 import ArticleQueryActions from '../../src/shared/actions/ArticleQueryActions';
 import ComparatorQueryActions from '../../src/shared/actions/ComparatorQueryActions';
-
+import ArticleActions from '../../src/shared/actions/ArticleActions.js';
 const TestUtils = React.addons.TestUtils;
+import FeatureFlag from '../../src/shared/utils/featureFlag.js';
 
 describe ('ArticleView Handler', function() {
   let stub;
@@ -24,6 +27,9 @@ describe ('ArticleView Handler', function() {
   let compActionStub;
   let compQueryStub;
   let compActionSelectStub;
+  let listenSpy;
+  let unlistenSpy;
+  let featureStub;
 
   beforeEach(function () {
     stub = sinon.stub(ArticleStore, 'getState');
@@ -33,6 +39,9 @@ describe ('ArticleView Handler', function() {
     compActionStub = sinon.spy(ComparatorQueryActions, 'setUUID');
     compActionSelectStub = sinon.spy(ComparatorQueryActions, 'selectComparator');
     compQueryStub = sinon.stub(ComparatorQueryStore, 'getState');
+    listenSpy = sinon.spy(ArticleActions, 'listenToQuery');
+    unlistenSpy = sinon.spy(ArticleActions, 'unlistenToQuery');
+    featureStub = sinon.stub(FeatureFlag, 'check');
   });
 
   afterEach(function () {
@@ -43,6 +52,9 @@ describe ('ArticleView Handler', function() {
     compActionStub.restore();
     compQueryStub.restore();
     compActionSelectStub.restore();
+    listenSpy.restore();
+    unlistenSpy.restore();
+    featureStub.restore();
   });
 
   it ('Should render component', function() {
@@ -143,6 +155,40 @@ describe ('ArticleView Handler', function() {
     });
 
     expect(compActionSelectStub.calledOnce).to.equal(true);
+
+  });
+
+  it ('Should set up listeners', () => {
+    formatStub.returns('');
+    featureStub.returns(false);
+    stub.returns({ data:{ } });
+    compQueryStub.returns({ query:{ comparator: 'test-comp' } });
+    queryStub.returns({ query:{ } });
+    let props = {
+      params:{
+        uuid: "0049a468-4be5-11e5-b558-8a9722977189",
+        comparator:'ive-not-changed'}
+    };
+    TestUtils.renderIntoDocument(React.createElement(ArticleView, props))
+    expect(listenSpy.calledOnce).to.equal(true);
+
+  });
+
+  it ('should remove listeners', () => {
+    formatStub.returns('');
+    featureStub.returns(false);
+    stub.returns({ data:{ } });
+    compQueryStub.returns({ query:{ comparator: 'test-comp' } });
+    queryStub.returns({ query:{ } });
+    let props = {
+      params:{
+        uuid: "0049a468-4be5-11e5-b558-8a9722977189",
+        comparator:'ive-not-changed'}
+    };
+    let container = document.createElement('div');
+    React.render(React.createElement(ArticleView, props), container);
+    React.unmountComponentAtNode(container);
+    expect(unlistenSpy.calledOnce).to.equal(true);
 
   });
 });

@@ -49,6 +49,7 @@ export default class SectionHeadlineStats extends React.Component {
   render() {
 
     let data = this.props.data;
+    if (!Object.keys(data).length) return (<div></div>);
     let comparatorData = this.props.comparatorData ;
     let timeOnPage = renderMetric('timeOnPage', data.timeOnPage, comparatorData.comparator, comparatorData.timeOnPage)
     let pageViews = renderMetric('pageViews', data.pageViews, comparatorData.comparator, comparatorData.categoryAverageViewCount)
