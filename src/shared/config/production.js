@@ -2,7 +2,7 @@ export default {
   jsUrl:   "",
   features : {
     'home:recentArticles' : false,
-    'article:scroll_depth' : true,
+    'article:scrollDepth' : true,
     'article:timeOnPage' : true,
     'article:pageViews' : true,
     'article:socialUsers' : false,

@@ -109,6 +109,33 @@ class ArticleView extends React.Component {
     let comparatorData = this.props.comparatorData || { article: {}};
     let title = (data) ? 'Lantern - ' + data.title : '';
 
+    let headlineStats = {
+      timeOnPage: {
+        metricType: 'time',
+        label: 'Time on Page',
+        size: 'large',
+        comparatorFormatName: 'timeOnPage'
+      },
+      pageViews: {
+        metricType: 'integer',
+        label: 'Page Views',
+        size: 'large',
+        comparatorFormatName: 'categoryAverageViewCount'
+      },
+      uniqueVisitors: {
+        metricType: 'integer',
+        label: 'Unique Visitors',
+        size: 'large',
+        comparatorFormatName: 'categoryAverageUniqueVisitors'
+      },
+      scrollDepth: {
+        metricType: 'percentage',
+        label: 'Scroll Depth',
+        size: 'large',
+        comparatorFormatName: 'scrollDepth'
+      }
+    }
+
     return (<DocumentTitle title={title}>
       <div>
         <Col xs={12}>
@@ -137,10 +164,10 @@ class ArticleView extends React.Component {
               />
 
             <main >
-
               <SectionHeadlineStats
                 data={data}
                 comparatorData={comparatorData}
+                config={headlineStats}
                 />
 
               <SectionWhen
