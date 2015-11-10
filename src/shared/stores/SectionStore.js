@@ -26,7 +26,7 @@ class SectionStore {
 
   unlistenToQuery() {
     if (!this._queryHandlerRef) return;
-    SectionQueryStore.listen(this._queryHandlerRef);
+    SectionQueryStore.unlisten(this._queryHandlerRef);
     this._queryHandlerRef = null;
   }
 
