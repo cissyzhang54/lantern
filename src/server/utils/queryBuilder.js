@@ -144,7 +144,7 @@ export function articleComparatorQuery(query){
   }
 
   if (query.comparator === 'FT'){
-    delete filtered.query
+    filtered.query.bool.must = [matchPublishDate];
   }
 
   return {
@@ -229,7 +229,7 @@ export function sectionQuery(query){
   }
 
   if (query.comparator === 'FT'){
-    delete filtered.query
+   filtered.query.bool.must = [matchDates];
   }
 
   return {
