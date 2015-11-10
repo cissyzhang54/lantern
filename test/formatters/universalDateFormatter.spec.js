@@ -370,14 +370,14 @@ describe('universalDataFormatter', function() {
       ])
     });
 
-    it('should parsepublished_human', function () {
+    it('should parse published', function () {
       expect(getField(metaData, 'published')).to.be.a('string')
       expect(getField(metaData, 'published')).to.equal("2015-08-26T17:32:01.000Z")
     });
 
     it('should parse published_human date', function () {
       expect(getField(metaData, 'published_human')).to.be.a('string')
-      expect(getField(metaData, 'published_human')).to.equal("2 months ago")
+      expect(getField(metaData, 'published_human')).to.equal("August 26, 2015 6:32 pm")
     });
   });
   /* Article Meta Data Tests End */
