@@ -75,7 +75,7 @@ function formatAndFilter(agg, fieldObj, divisor){
 }
 
 function formatPublishDate(date, fieldObj, divisor) {
-  return moment(date).fromNow();
+  return moment(date).format('MMMM D, YYYY h:mm a');
 }
 
 function format(agg, fieldObj, divisor=1) {
