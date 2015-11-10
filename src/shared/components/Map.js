@@ -52,18 +52,26 @@ export default class DataMap extends React.Component {
       }
     });
     this.map.legend();
+
+    this.setupHandler();
   }
 
-  componentDidMount() {
-    this.drawMap();
+  setupHandler() {
     this.resizeHandler = () => {
       this.map.resize();
     };
     window.addEventListener('resize', this.resizeHandler);
   }
 
+  componentDidMount() {
+    this.drawMap();
+  }
+
   componentDidUpdate() {
-    this.map.draw();
+    let node = React.findDOMNode(this.refs.mapContainer);
+    node.innerHTML = '';
+    window.removeEventListener('resize', this.resizeHandler);
+    this.drawMap();
   }
 
   componentWillUnmount() {
