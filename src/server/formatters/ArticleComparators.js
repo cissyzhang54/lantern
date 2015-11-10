@@ -15,11 +15,12 @@ export default function formatData(data) {
   let divisor = getField(articleData, 'articleCount')
   let articleFields = [
     'comparator', 'timeOnPage', 'categoryTotalViewCount',
-    'articleCount', 'categoryAverageViewCount', 'uniqueVisitors'
+    'articleCount', 'uniqueVisitors'
   ]
   let articleAverages = [
     'readTimes', 'readTimesSincePublish', 'referrerTypes', 'socialReferrers', 'regions',
     'isLastPage', 'userCohort', 'rfvCluster', 'isFirstVisit', 'internalReferrerTypes',
+    'categoryAverageViewCount'
   ]
   let eventFields = ['scrollDepth']
   let eventAverages = [
