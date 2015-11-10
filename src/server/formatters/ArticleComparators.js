@@ -20,7 +20,7 @@ export default function formatData(data) {
   let articleAverages = [
     'readTimes', 'readTimesSincePublish', 'referrerTypes', 'socialReferrers', 'regions',
     'isLastPage', 'userCohort', 'rfvCluster', 'isFirstVisit', 'internalReferrerTypes',
-    'categoryAverageViewCount'
+    'categoryAverageViewCount', 'categoryAverageUniqueVisitors'
   ]
   let eventFields = ['scrollDepth']
   let eventAverages = [

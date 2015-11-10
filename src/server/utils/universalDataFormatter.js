@@ -39,6 +39,7 @@ const fields = {
   articleCount: 'aggregations.distinct_articles.value',
   categoryTotalViewCount: 'aggregations.page_view_total_count.value',
   categoryAverageViewCount: {name: 'aggregations.page_view_total_count.value', formatter: divide},
+  categoryAverageUniqueVisitors: {name: 'aggregations.unique_visitors.value', formatter: divide},
   readTimes: {name: 'aggregations.page_views_over_time', formatter: format},
   readTimesSincePublish: {name: 'aggregations.page_views_since_publish', formatter: format},
   channels: {name: 'aggregations.channels', formatter: format},

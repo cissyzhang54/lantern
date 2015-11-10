@@ -54,7 +54,7 @@ export default class SectionHeadlineStats extends React.Component {
     let timeOnPage = renderMetric('timeOnPage', data.timeOnPage, comparatorData.comparator, comparatorData.timeOnPage)
     let pageViews = renderMetric('pageViews', data.pageViews, comparatorData.comparator, comparatorData.categoryAverageViewCount)
     let scrollDepth = renderMetric('scroll_depth', data.scrollDepth, comparatorData.comparator, comparatorData.scrollDepth)
-    let uniqueVisitors = renderMetric('uniqueVisitors', data.uniqueVisitors, comparatorData.comparator, comparatorData.uniqueVisitors)
+    let uniqueVisitors = renderMetric('uniqueVisitors', data.uniqueVisitors, comparatorData.comparator, comparatorData.categoryAverageUniqueVisitors)
 
     return ( <Row data-component='sectionHeadlineStats' >
       <Col xs={12} >
