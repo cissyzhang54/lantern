@@ -7,13 +7,13 @@ import article_comparator_results from '../fixtures/data/article_comparator_resu
 describe('universalDataFormatter', function() {
 
   let [sectionMetaData, sectionData] = section_results
-  let [articleData, eventData]  = article_results
+  let [articleData, metaData, eventData]  = article_results
   let [articleComparatorData, comparatorEventData]  = article_comparator_results
 
   /* Section MetaData Tests Start */
-  describe('should parse sectionData correctly', function() {
+  describe('should parse sectionData correctly', function () {
 
-    it('should parse sectionMetaData correctly', function() {
+    it('should parse sectionMetaData correctly', function () {
       expect(getField(sectionMetaData, 'articleCount')).to.be.a('number')
       expect(getField(sectionMetaData, 'articleCount')).to.deep.equal(252)
 
@@ -35,7 +35,7 @@ describe('universalDataFormatter', function() {
       ])
     });
 
-    it('should parse format function with a divisor', function() {
+    it('should parse format function with a divisor', function () {
 
       expect(getField(sectionMetaData, 'topicCount')).to.be.a('array')
       expect(getField(sectionMetaData, 'topicCount', 2)).to.deep.equal([
@@ -52,7 +52,7 @@ describe('universalDataFormatter', function() {
       ])
     });
 
-    xit('should error when data can not be found', function(){
+    xit('should error when data can not be found', function () {
       expect(getField(sectionMetaData, 'readTimes')).to.throw()
       expect(getField(sectionMetaData, 'readTimes')).to.throw()
     });
@@ -60,9 +60,9 @@ describe('universalDataFormatter', function() {
   /* Section MetaData Tests End */
 
   /* Section Data Tests Start */
-  describe('should parse sectionData correctly', function() {
+  describe('should parse sectionData correctly', function () {
 
-    it('formats readTimes', function(){
+    it('formats readTimes', function () {
       expect(getField(sectionData, 'readTimes')).to.be.a('array')
       expect(getField(sectionData, 'readTimes')).to.deep.equal([
         ["2015-10-01T00:00:00.000Z", 5],
@@ -73,12 +73,12 @@ describe('universalDataFormatter', function() {
       ])
     })
 
-    it('formats pageViews', function(){
+    it('formats pageViews', function () {
       expect(getField(sectionData, 'pageViews')).to.be.a('number')
       expect(getField(sectionData, 'pageViews')).to.deep.equal(913114)
     })
 
-    it('formats referrer_types', function(){
+    it('formats referrer_types', function () {
       expect(getField(sectionData, 'referrerTypes')).to.be.a('array')
       expect(getField(sectionData, 'referrerTypes')).to.deep.equal([
         ["Unknown", 289392],
@@ -88,12 +88,12 @@ describe('universalDataFormatter', function() {
         ["news-sharing", 6171],
         ["email", 324],
         ["sister", 32],
-        ["aggregator",4],
+        ["aggregator", 4],
         ["video-sharing", 1]
       ])
     })
 
-    it('formats referrer_names', function(){
+    it('formats referrer_names', function () {
       expect(getField(sectionData, 'referrerNames')).to.be.a('array')
       expect(getField(sectionData, 'referrerNames')).to.deep.equal([
         ["Unknown", 339143],
@@ -102,14 +102,14 @@ describe('universalDataFormatter', function() {
         ["Twitter", 25399],
         ["Yahoo", 5424],
         ["Yahoo Finance", 5180],
-        ["Google News",3486],
+        ["Google News", 3486],
         ["Reddit", 1537],
-        ["Linked-In",1214],
+        ["Linked-In", 1214],
         ["Bing", 635]
       ])
     })
 
-    it('formats social_referrers', function(){
+    it('formats social_referrers', function () {
       expect(getField(sectionData, 'socialReferrers')).to.be.a('array')
       expect(getField(sectionData, 'socialReferrers')).to.deep.equal([
         ["Facebook", 26329],
@@ -120,10 +120,10 @@ describe('universalDataFormatter', function() {
       ])
     })
 
-    it('formats devices', function(){
+    it('formats devices', function () {
       expect(getField(sectionData, 'devices')).to.be.a('array')
       expect(getField(sectionData, 'devices')).to.deep.equal([
-        ["Desktop",538479],
+        ["Desktop", 538479],
         ["Mobile Phone", 197464],
         ["Tablet", 154005],
         ["Unknown", 22673],
@@ -131,7 +131,7 @@ describe('universalDataFormatter', function() {
       ])
     })
 
-    it('formats countries', function(){
+    it('formats countries', function () {
       expect(getField(sectionData, 'countries')).to.be.a('array')
       expect(getField(sectionData, 'countries')).to.deep.equal([
         ["USA", 231212],
@@ -140,7 +140,7 @@ describe('universalDataFormatter', function() {
       ])
     })
 
-    it('formats regions', function(){
+    it('formats regions', function () {
       expect(getField(sectionData, 'regions')).to.be.a('array')
       expect(getField(sectionData, 'regions')).to.deep.equal([
         ["EUROPE", 333723],
@@ -153,7 +153,7 @@ describe('universalDataFormatter', function() {
       ])
     })
 
-    it('formats user_cohort', function(){
+    it('formats user_cohort', function () {
       expect(getField(sectionData, 'userCohort')).to.be.a('array')
       expect(getField(sectionData, 'userCohort')).to.deep.equal([
         ["anonymous", 679358],
@@ -164,7 +164,7 @@ describe('universalDataFormatter', function() {
       ])
     })
 
-    it('formats rfv_cluster', function(){
+    it('formats rfv_cluster', function () {
       expect(getField(sectionData, 'rfvCluster')).to.be.a('array')
       expect(getField(sectionData, 'rfvCluster')).to.deep.equal([
         ["Unknown", 515729],
@@ -178,7 +178,7 @@ describe('universalDataFormatter', function() {
       ])
     })
 
-    it('formats is_first_visit', function(){
+    it('formats is_first_visit', function () {
       expect(getField(sectionData, 'isFirstVisit')).to.be.a('array')
       expect(getField(sectionData, 'isFirstVisit')).to.deep.equal([
         ["F", 737979],
@@ -186,7 +186,7 @@ describe('universalDataFormatter', function() {
       ])
     })
 
-    it('formats is_first_visit', function(){
+    it('formats is_first_visit', function () {
       expect(getField(sectionData, 'isFirstVisit')).to.be.a('array')
       expect(getField(sectionData, 'isFirstVisit')).to.deep.equal([
         ["F", 737979],
@@ -194,9 +194,9 @@ describe('universalDataFormatter', function() {
       ])
     })
 
-    it('formats internal_referrer_types', function(){
+    it('formats internal_referrer_types', function () {
       expect(getField(sectionData, 'internalReferrerTypes')).to.be.a('array')
-      expect(getField(sectionData, 'internalReferrerTypes')).to.deep.equal( [
+      expect(getField(sectionData, 'internalReferrerTypes')).to.deep.equal([
         ["FT", 48493],
         ["Unknown", 2298],
         ["story", 954],
@@ -204,22 +204,22 @@ describe('universalDataFormatter', function() {
       ])
     })
 
-    it('formats is_subscription', function(){
+    it('formats is_subscription', function () {
       expect(getField(sectionData, 'isSubscription')).to.be.a('array')
-      expect(getField(sectionData, 'isSubscription')).to.deep.equal( [
+      expect(getField(sectionData, 'isSubscription')).to.deep.equal([
         ["F", 913114]
       ])
     })
 
-    it('formats unique_visitors', function(){
+    it('formats unique_visitors', function () {
       expect(getField(sectionData, 'uniqueVisitors')).to.be.a('number')
       expect(getField(sectionData, 'uniqueVisitors')).to.deep.equal(252750)
     })
 
-    it('formats topic_views', function(){
+    it('formats topic_views', function () {
       expect(getField(sectionData, 'topicViews')).to.be.a('array')
       expect(getField(sectionData, 'topicViews')).to.deep.equal([
-        ["uk",2502147],
+        ["uk", 2502147],
         ["banks", 854507],
         ["acquisitions", 773343]
       ])
@@ -228,36 +228,36 @@ describe('universalDataFormatter', function() {
   /* Section Data Tests End */
 
   /* Article Data Tests Start */
-  describe('should parse articleData correctly', function() {
+  describe('should parse articleData correctly', function () {
 
-    it('should parse timeOnPage', function() {
+    it('should parse timeOnPage', function () {
       expect(getField(articleData, 'timeOnPage')).to.be.a('number')
       expect(getField(articleData, 'timeOnPage')).to.equal(52.87718548805419)
     });
 
-    it('should parse readTimesSincePublish correctly', function() {
+    it('should parse readTimesSincePublish correctly', function () {
       expect(getField(articleData, 'readTimesSincePublish')).to.be.a('array');
       expect(getField(articleData, 'readTimesSincePublish')).to.deep.equal([
-        [ 27180, 3 ], [ 27240, 3 ], [ 27300, 1 ], [ 27360, 2 ], [ 27420, 2 ],
-        [ 27480, 1 ], [ 27540, 7 ], [ 27660, 1 ], [ 27720, 6 ], [ 27780, 2 ],
-        [ 27840, 9 ], [ 27900, 7 ], [ 27960, 1 ], [ 28020, 3 ], [ 28080, 4 ],
-        [ 28200, 5 ], [ 28260, 12 ], [ 28320, 3 ], [ 28380, 4 ], [ 28440, 1 ],
-        [ 28500, 1 ], [ 28620, 1 ], [ 28740, 1 ], [ 28860, 1 ], [ 28920, 5 ],
-        [ 28980, 3 ], [ 29100, 1 ], [ 29160, 1 ], [ 29220, 4 ], [ 29280, 3 ],
-        [ 29340, 2 ], [ 29400, 3 ], [ 29580, 2 ], [ 29640, 2 ], [ 29700, 1 ],
-        [ 29760, 4 ], [ 29820, 1 ], [ 29880, 3 ], [ 29940, 4 ], [ 30000, 7 ],
-        [ 30060, 1 ], [ 30120, 9 ], [ 30240, 6 ], [ 30300, 3 ], [ 30480, 2 ],
-        [ 30600, 7 ], [ 30660, 2 ], [ 30720, 2 ], [ 30780, 2 ], [ 30840, 2 ],
-        [ 30900, 6 ], [ 30960, 1 ], [ 31020, 2 ], [ 31080, 1 ], [ 31140, 4 ],
-        [ 31200, 5 ], [ 31260, 3 ], [ 31380, 3 ], [ 31620, 1 ], [ 31680, 2 ],
-        [ 31740, 2 ], [ 31800, 2 ], [ 31860, 5 ], [ 31920, 4 ], [ 31980, 1 ],
-        [ 32040, 9 ], [ 32100, 4 ], [ 32160, 3 ], [ 32220, 3 ], [ 32280, 7 ],
-        [ 32340, 4 ], [ 32400, 7 ], [ 32460, 14 ], [ 32520, 7 ], [ 32580, 5 ],
-        [ 32640, 2 ], [ 32700, 4 ], [ 32760, 1 ], [ 32820, 7 ], [ 32880, 2 ]
+        [27180, 3], [27240, 3], [27300, 1], [27360, 2], [27420, 2],
+        [27480, 1], [27540, 7], [27660, 1], [27720, 6], [27780, 2],
+        [27840, 9], [27900, 7], [27960, 1], [28020, 3], [28080, 4],
+        [28200, 5], [28260, 12], [28320, 3], [28380, 4], [28440, 1],
+        [28500, 1], [28620, 1], [28740, 1], [28860, 1], [28920, 5],
+        [28980, 3], [29100, 1], [29160, 1], [29220, 4], [29280, 3],
+        [29340, 2], [29400, 3], [29580, 2], [29640, 2], [29700, 1],
+        [29760, 4], [29820, 1], [29880, 3], [29940, 4], [30000, 7],
+        [30060, 1], [30120, 9], [30240, 6], [30300, 3], [30480, 2],
+        [30600, 7], [30660, 2], [30720, 2], [30780, 2], [30840, 2],
+        [30900, 6], [30960, 1], [31020, 2], [31080, 1], [31140, 4],
+        [31200, 5], [31260, 3], [31380, 3], [31620, 1], [31680, 2],
+        [31740, 2], [31800, 2], [31860, 5], [31920, 4], [31980, 1],
+        [32040, 9], [32100, 4], [32160, 3], [32220, 3], [32280, 7],
+        [32340, 4], [32400, 7], [32460, 14], [32520, 7], [32580, 5],
+        [32640, 2], [32700, 4], [32760, 1], [32820, 7], [32880, 2]
       ]);
     });
 
-    it('should parse channels correctly', function() {
+    it('should parse channels correctly', function () {
       expect(getField(articleData, 'channels')).to.be.a('array');
       expect(getField(articleData, 'channels')).to.deep.equal([
         ['ft.com', 26205],
@@ -268,7 +268,7 @@ describe('universalDataFormatter', function() {
       ]);
     });
 
-    it('should parse referrerUrls correctly', function() {
+    it('should parse referrerUrls correctly', function () {
       expect(getField(articleData, 'referrerUrls')).to.be.a('array');
       expect(getField(articleData, 'referrerUrls')).to.deep.equal([
         ['Unknown', 5153],
@@ -284,7 +284,7 @@ describe('universalDataFormatter', function() {
       ]);
     });
 
-    it('should parse nextInternalUrl correctly', function() {
+    it('should parse nextInternalUrl correctly', function () {
       expect(getField(articleData, 'nextInternalUrl')).to.be.a('array');
       expect(getField(articleData, 'nextInternalUrl')).to.deep.equal([
         ['Unknown', 73],
@@ -300,7 +300,7 @@ describe('universalDataFormatter', function() {
       ]);
     });
 
-    it('should parse internalReferrerUrls correctly', function() {
+    it('should parse internalReferrerUrls correctly', function () {
       expect(getField(articleData, 'internalReferrerUrls')).to.be.a('array');
       expect(getField(articleData, 'internalReferrerUrls')).to.deep.equal([
         ['Unknown', 30399],
@@ -309,24 +309,104 @@ describe('universalDataFormatter', function() {
         ['http://www.ft.com/home/europe', 2170],
         ['http://www.ft.com/home/asia', 1190],
         ['http://www.ft.com/intl/vw-emissions-scandal', 618],
-        ['http://www.ft.com/vw-emissions-scandal', 292 ],
+        ['http://www.ft.com/vw-emissions-scandal', 292],
         ['http://www.ft.com/intl/cms/s/0/8f2eb94c-62ac-11e5-a28b-50226830d644.html', 202],
         ['http://www.ft.com/cms/s/0/8f2eb94c-62ac-11e5-a28b-50226830d644.html', 193],
         ['http://www.ft.com/cms/s/0/2eea3106-65c2-11e5-9846-de406ccb37f2.html', 183]
       ]);
     });
 
-    it('should parse isLastPage correctly', function() {
+    it('should parse isLastPage correctly', function () {
       expect(getField(articleData, 'isLastPage')).to.be.a('array');
       expect(getField(articleData, 'isLastPage')).to.deep.equal([
-        [ 'T', 3158 ],
-        [ 'F', 2568 ]
+        ['T', 3158],
+        ['F', 2568]
       ]);
     });
   });
   /* Article Data Tests End */
 
-  /* Article Event Data Tests Start */
+  /* Article Meta Data Tests Start */
+  describe('should parse articleMetaData correctly', function() {
+    it('should parse title', function () {
+      expect(getField(metaData, 'title')).to.be.a('string')
+      expect(getField(metaData, 'title')).to.equal('Private equity secondaries evolve with Palamon deal')
+    });
+
+    it('should parse uuid', function () {
+      expect(getField(metaData, 'uuid')).to.be.a('string')
+      expect(getField(metaData, 'uuid')).to.equal('0049a468-4be5-11e5-b558-8a9722977189')
+    });
+
+    it('should parse authors', function () {
+      expect(getField(metaData, 'author')).to.be.a('array')
+      expect(getField(metaData, 'author')).to.deep.equal([
+        "Joseph Cotterill"
+      ])
+    });
+
+    it('should parse genre', function () {
+      expect(getField(metaData, 'genre')).to.be.a('array')
+      expect(getField(metaData, 'genre')).to.deep.equal([
+        "News"
+      ])
+    });
+
+    it('should parse sections', function () {
+      expect(getField(metaData, 'sections')).to.be.a('array')
+      expect(getField(metaData, 'sections')).to.deep.equal([
+        "Financials",
+        "Investment Strategy",
+        "Financial Services",
+        "Companies",
+        "UK Companies"
+      ])
+    });
+
+    it('should parse topics', function () {
+      expect(getField(metaData, 'topics')).to.be.a('array')
+      expect(getField(metaData, 'topics')).to.deep.equal([
+        "Private equity"
+      ])
+    });
+
+    it('should parsepublished_human', function () {
+      expect(getField(metaData, 'published')).to.be.a('string')
+      expect(getField(metaData, 'published')).to.equal("2015-08-26T17:32:01.000Z")
+    });
+
+    it('should parse published_human date', function () {
+      expect(getField(metaData, 'published_human')).to.be.a('string')
+      expect(getField(metaData, 'published_human')).to.equal("2 months ago")
+    });
+  });
+  /* Article Meta Data Tests End */
+
+  /* Article Comparator Data Tests Start */
+  describe('should parse articleComparatorData correctly', function() {
+    it('should parse comparator correctly', function() {
+      expect(getField(articleComparatorData, 'comparator')).to.be.a('string')
+      expect(getField(articleComparatorData, 'comparator')).to.equal('Regulation & Governance')
+    });
+
+    it('should parse totalCommentsViewed', function () {
+      expect(getField(articleComparatorData, 'categoryAverageViewCount')).to.be.a('number')
+      expect(getField(articleComparatorData, 'categoryAverageViewCount')).to.deep.equal(172)
+    });
+
+    it('should parse totalCommentsViewed and divide by 2', function () {
+      expect(getField(articleComparatorData, 'categoryAverageViewCount', 2)).to.be.a('number')
+      expect(getField(articleComparatorData, 'categoryAverageViewCount', 2)).to.deep.equal(86)
+    });
+
+    it('should parse totalCommentsViewed', function () {
+      expect(getField(articleComparatorData, 'categoryTotalViewCount')).to.be.a('number');
+      expect(getField(articleComparatorData, 'categoryTotalViewCount')).to.deep.equal(172);
+    });
+  });
+  /* Article Comparator Data Tests End */
+
+  /* Article Comparator Event Data Tests Start */
   describe('should parse articleComparatorEventData correctly', function() {
     it('should parse scrollDepth correctly', function() {
       expect(getField(comparatorEventData, 'scrollDepth')).to.be.a('number')
@@ -358,21 +438,16 @@ describe('universalDataFormatter', function() {
       expect(getField(comparatorEventData, 'totalCommentsViewed')).to.be.a('number')
       expect(getField(comparatorEventData, 'totalCommentsViewed')).to.equal(1)
     });
-
   });
-  /* Article Event Data Tests End */
+  /* Article Comparator Event Data Tests End */
 
-  /* Article Comparator Data Tests Start */
-  describe('should parse articleComparatorData correctly', function() {
-    it('should parse divide function with a divisor', function () {
-      expect(getField(articleComparatorData, 'categoryAverageViewCount')).to.be.a('number')
-      expect(getField(articleComparatorData, 'categoryAverageViewCount')).to.deep.equal(172)
-      expect(getField(articleComparatorData, 'categoryAverageViewCount', 2)).to.be.a('number')
-      expect(getField(articleComparatorData, 'categoryAverageViewCount', 2)).to.deep.equal(86)
+  /* Article Event Data Tests Start */
+  describe('should parse articleEventData correctly', function() {
+    it('should parse linkClickCategories', function() {
+      expect(getField(eventData, 'linkClickCategories')).to.be.a('object');
     });
   });
-  /* Article Comparator Data Tests End */
-
+  /* Article Event Data Tests Start */
 
   describe('re-formats referrerTypes correctly', function(){
     it('by renaming blank to unknown ', function(){
