@@ -41,17 +41,23 @@ export default class BarChart extends React.Component {
       axis: {
         rotated: this.props.reverseAxis,
         x: {
-          label: this.props.xLabel,
-          type: 'category'
+          label: {
+            text: this.props.xLabel,
+            position: 'outer-right'
+          },
+          type: 'category',
         },
         y: {
-          label: yLabel,
+          label: {
+            text: yLabel,
+            position: 'outer-top'
+          },
           max: this.props.usePercentages ? 100 : null,
           min: this.props.usePercentages ? 0 : null,
           padding: {
             top: 0,
             bottom: 0
-          }
+          },
         }
       },
       tooltip : {
