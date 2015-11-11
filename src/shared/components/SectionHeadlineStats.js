@@ -4,40 +4,31 @@ import Row from 'react-bootstrap/lib/Row';
 import SingleMetric from "./SingleMetric";
 import FeatureFlag from '../utils/featureFlag';
 
-let config = {
-  timeOnPage: {
-    metricType: 'time',
-    label: 'Time on Page',
-    size: 'large'
-  },
-  uniqueVisitors: {
-    metricType: 'integer',
-    label: 'Unique Visitors',
-    size: 'large'
-  },
-  pageViews: {
-    metricType: 'integer',
-    label: 'Page Views',
-    size: 'large'
-  },
-  scroll_depth: {
-    metricType: 'percentage',
-    label: 'Scroll Depth',
-    size: 'large'
-  }
+function getMetrics (config, data, comparatorData) {
+  let keys = Object.keys(config);
+  let metrics = [];
+  let colWidth = 12 / keys.length;
+
+  keys.forEach(function (value) {
+    let componentConfig = config[value];
+
+    componentConfig.metric = data[value];
+    componentConfig.comparatorMetric = comparatorData[config[value].comparatorFormatName] || undefined;
+    componentConfig.comparatorName = data[value] || '';
+
+    let component = <SingleMetric {...componentConfig} />
+    metrics.push(addComponentToColumn(component, colWidth));
+  });
+
+  return metrics;
 }
 
-function renderMetric (metricName, metric, comparatorName, comparatorMetric) {
-
-  let componentConfig = config[metricName]
-  componentConfig.metric = metric
-  componentConfig.comparatorName = comparatorName || ''
-  componentConfig.comparatorMetric = comparatorMetric || undefined
-
-  let component = FeatureFlag.check(`article:${metricName}`)
-    ? <SingleMetric {...componentConfig} />
-    : {}
-  return component
+function addComponentToColumn (component, colWidth) {
+  return (
+    <Col xs={12} sm={colWidth}>
+      {component}
+    </Col>
+  )
 }
 
 export default class SectionHeadlineStats extends React.Component {
@@ -47,29 +38,15 @@ export default class SectionHeadlineStats extends React.Component {
   }
 
   render() {
-
+    let config = this.props.config;
     let data = this.props.data;
     if (!Object.keys(data).length) return (<div></div>);
-    let comparatorData = this.props.comparatorData ;
-    let timeOnPage = renderMetric('timeOnPage', data.timeOnPage, comparatorData.comparator, comparatorData.timeOnPage)
-    let pageViews = renderMetric('pageViews', data.pageViews, comparatorData.comparator, comparatorData.categoryAverageViewCount)
-    let scrollDepth = renderMetric('scroll_depth', data.scrollDepth, comparatorData.comparator, comparatorData.scrollDepth)
-    let uniqueVisitors = renderMetric('uniqueVisitors', data.uniqueVisitors, comparatorData.comparator, comparatorData.categoryAverageUniqueVisitors)
+    let comparatorData = this.props.comparatorData;
+    let metricsComponents = getMetrics(config, data, comparatorData);
 
     return ( <Row data-component='sectionHeadlineStats' >
       <Col xs={12} >
-        <Col xs={12} sm={3} >
-          {timeOnPage}
-        </Col>
-        <Col xs={12} sm={3} >
-          {pageViews}
-        </Col>
-        <Col xs={12} sm={3} >
-          {uniqueVisitors}
-        </Col>
-        <Col xs={12} sm={3} >
-          {scrollDepth}
-        </Col>
+        {metricsComponents}
       </Col>
     </Row>);
   }

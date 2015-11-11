@@ -15,7 +15,7 @@ export default function formatData(data) {
   let divisor = getField(articleData, 'articleCount')
   let articleFields = [
     'comparator', 'timeOnPage', 'categoryTotalViewCount',
-    'articleCount', 'uniqueVisitors'
+    'articleCount', 'uniqueVisitors' , 'pageViews'
   ]
   let articleAverages = [
     'readTimes', 'readTimesSincePublish', 'referrerTypes', 'socialReferrers', 'regions',

@@ -14,6 +14,7 @@ import BarChart from '../components/BarChart.js';
 import LineChart from "../components/LineChart";
 import SectionWho from "../components/SectionWho";
 import SectionWhere from "../components/SectionWhere";
+import SectionHeadlineStats from "../components/SectionHeadlineStats";
 
 import SectionActions from '../actions/SectionActions';
 import SectionStore from '../stores/SectionStore';
@@ -116,6 +117,27 @@ class SectionView extends React.Component {
     let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views');
     let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views');
 
+    let headlineStats = {
+      topicsCovered: {
+        metricType: 'integer',
+        label: 'Topics covered',
+        size: 'large',
+        comparatorFormatName: 'topicsCovered'
+      },
+      uniqueVisitors: {
+        metricType: 'integer',
+        label: 'Unique Visitors',
+        size: 'large',
+        comparatorFormatName: 'uniqueVisitors'
+      },
+      articleCount: {
+        metricType: 'integer',
+        label: 'Articles published',
+        size: 'large',
+        comparatorFormatName: 'articleCount'
+      }
+    }
+
     return(<DocumentTitle title={title}>
       <div>
         <Col xs={12}>
@@ -136,36 +158,12 @@ class SectionView extends React.Component {
             <Header
               title={'Section: ' + this.props.params.section}
               />
-            <Row>
-              <Col xs={4}>
-                <SingleMetric
-                  metric={data.topicsCovered}
-                  metricType='integer'
-                  comparatorMetric={comparatorData.topicsCovered}
-                  comparatorName={comparatorData.comparator}
-                  label='Topics covered'
-                  size="large"
-                />
-              </Col>
-              <Col xs={4}>
-                <SingleMetric
-                  metric={data.uniqueVisitors}
-                  metricType='integer'
-                  comparatorMetric={comparatorData.uniqueVisitors}
-                  comparatorName={comparatorData.comparator}
-                  label='Unique Visitors'
-                  size="large" />
-              </Col>
-              <Col xs={4}>
-                <SingleMetric
-                  metric={data.articleCount}
-                  metricType='integer'
-                  comparatorMetric={comparatorData.articleCount}
-                  comparatorName={comparatorData.comparator}
-                  label='Articles published'
-                  size="large" />
-              </Col>
-            </Row>
+
+            <SectionHeadlineStats
+              data={data}
+              comparatorData={comparatorData}
+              config={headlineStats}
+              />
 
             <Row>
               <Col xs={12}>
