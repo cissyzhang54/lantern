@@ -13,7 +13,8 @@ export default class Tags extends React.Component {
 
   handleChange (e) {
     let link = e.currentTarget.href.split('/')
-    if(this.selected) {
+
+    if(this.className.indexOf('comparator-tag__selected') >= 0) {
       ComparatorQueryActions.removeComparator();
     } else {
       ComparatorQueryActions.selectComparator({
@@ -26,9 +27,9 @@ export default class Tags extends React.Component {
   render() {
     let currentTag = (this.props.currentTag || '')
     let tags = this.props.tags.map((tag, i) => {
-
       let selected = currentTag === tag.label;
       let link = ['',this.props.category, this.props.uuid, tag.url];
+
       if(selected){
         link.pop();
       }
