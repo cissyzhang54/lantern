@@ -10,3 +10,4 @@ test/nightwatch/report
 test/nightwatch/screenshots
 npm-debug.log.*
 npm-debug.log
+newrelic_agent.log
