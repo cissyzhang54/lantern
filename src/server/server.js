@@ -1,4 +1,4 @@
-require('newrelic');
+import 'newrelic';
 import express from "express";
 import exphbs from "express-handlebars";
 import React from "react";
@@ -21,6 +21,7 @@ delete process.env.BROWSER;
 let cacheBustId = uuid();
 const app = express();
 const hbs = exphbs.create({});
+
 
 let prefetch = ['<https://fonts.googleapis.com/css?family=Work+Sans>; rel=prefetch',
   '<https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css>; rel=prefetch'];
