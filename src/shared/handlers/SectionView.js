@@ -50,7 +50,6 @@ class SectionView extends React.Component {
     let queryState = SectionQueryStore.getState();
     let comparatorState = ComparatorStore.getState();
     let comparatorQueryState = ComparatorQueryStore.getState();
-
     return {
       data: sectionState.data,
       query: queryState.query,
