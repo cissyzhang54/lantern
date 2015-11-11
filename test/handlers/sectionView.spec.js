@@ -25,7 +25,7 @@ describe ('SectionView Handler', function() {
   });
 
   it ('Should render component', function() {
-    SectionStoreStub.returns({ data: { title:'test me', readTimes: [], topicCount: [], topicViews : [], referrerTypes: [], socialReferrers: [], internalReferrerTypes: [] } });
+    SectionStoreStub.returns({ data: { title:'test me', readTimes: [], topicCount: [], topicViews : [], referrerTypes: [], socialReferrers: [], internalReferrerTypes: [], publishTimes: [] } });
     SectionQueryStoreStub.returns({ query:{ section: 'Financials' } });
     let sectionView = createAltWrappedComponent(SectionView, {
       params:{section:'test-section'}

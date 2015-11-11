@@ -42,6 +42,7 @@ const fields = {
   categoryAverageUniqueVisitors: {name: 'aggregations.unique_visitors.value', formatter: divide},
   readTimes: {name: 'aggregations.page_views_over_time', formatter: format},
   readTimesSincePublish: {name: 'aggregations.page_views_since_publish', formatter: format},
+  publishTimes: {name: 'aggregations.articles_published_over_time', formatter: format},
   channels: {name: 'aggregations.channels', formatter: format},
   referrerTypes: {name: 'aggregations.referrer.types', formatter: formatAndFilter, terms: ['search', 'unknown', 'partner', 'social-network', 'email']},
   referrerNames: {name: 'aggregations.referrer.names', formatter: format},
