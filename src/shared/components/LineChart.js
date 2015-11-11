@@ -83,7 +83,10 @@ export default class LineChart extends React.Component {
       axis: {
         x: {
           type: this.props.type,
-          label: xLabel,
+          label: {
+            text: xLabel,
+            position: 'outer-right'
+          },
           tick: {
             format: (this.props.type === 'timeseries') ? formatStr : numericFormat,
             width: labelWidth,
@@ -92,7 +95,10 @@ export default class LineChart extends React.Component {
           localtime: this.state.localTime
         },
         y: {
-          label: this.props.yLabel,
+          label: {
+            text: this.props.yLabel,
+            position: 'outer-top'
+          },
           padding: {
             bottom: 0
           },
