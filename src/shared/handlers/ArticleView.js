@@ -132,7 +132,8 @@ class ArticleView extends React.Component {
         metricType: 'percentage',
         label: 'Scroll Depth',
         size: 'large',
-        comparatorFormatName: 'scrollDepth'
+        comparatorFormatName: 'scrollDepth',
+        toolTip: 'Percentage of the article the user has scrolled through. This is based on the height of the article rather then the height of the page, so the comments section is excluded.'
       }
     }
 

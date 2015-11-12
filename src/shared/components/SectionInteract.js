@@ -17,7 +17,8 @@ let config = {
   social_shares: {
     metricType: 'integer',
     label: 'Social Shares',
-    size: 'small'
+    size: 'small',
+    toolTip : (<p>This is the number of times the article has been shared using the share buttons on ft.com</p>)
   },
   total_links_clicked: {
     metricType: 'integer',
