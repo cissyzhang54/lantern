@@ -9,6 +9,14 @@ export default function ArticleEventsComparatorQuery(query) {
     "argument 'query' should be an object");
 
   let comparatorQuery = build.articleComparatorQuery(query)
+  
+  // we don't need the date range here
+  let must = comparatorQuery.filtered.query.bool.must;
+  if (must.length > 1) {
+    must.splice(0,1);
+  } else {
+    delete comparatorQuery.filtered.query.bool.must;
+  }
 
   return {
     "query" : comparatorQuery,
