@@ -97,9 +97,6 @@ export default class DualScaleLineChart extends React.Component {
       transition: {
         duration: null,
       },
-      padding: {
-        right: 45
-      },
       data: {
         type: 'line',
         xFormat: '%Y-%m-%dT%H:%M:%SZ',
@@ -116,7 +113,10 @@ export default class DualScaleLineChart extends React.Component {
       axis: {
         x: {
           type: this.props.type,
-          label: xLabel,
+          label: {
+            text: xLabel,
+            position: 'outer-center'
+          },
           tick: {
             format: (this.props.type === 'timeseries') ? formatStr : numericFormat,
             width: labelWidth,
@@ -125,19 +125,30 @@ export default class DualScaleLineChart extends React.Component {
           localtime: this.state.localTime
         },
         y: {
-          label: this.props.yLabel,
+          label: {
+            text: this.props.yLabel,
+            position: 'outer-top'
+          },
           padding: {
             bottom: 0
           },
           min: 0
         },
         y2: {
-          label: this.props.y2Label,
+          label: {
+            text: this.props.y2Label,
+            position: 'outer-top'
+          },
           show: true,
           padding: {
             bottom: 0
           },
-          min: 0
+          min: 0,
+          tick: {
+            format: function(val) {
+              return val / 1000 + "K";
+            }
+          }
         }
       },
       tooltip: {
