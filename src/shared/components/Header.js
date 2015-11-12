@@ -7,7 +7,8 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 const componentStyles = {
   'default': {
     title: {
-      margin: 0,
+      marginTop: 0,
+      marginBottom: "15px",
       textAlign: 'center',
       color: '#333'
     },

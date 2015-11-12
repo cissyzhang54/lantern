@@ -4,6 +4,8 @@ import Row from 'react-bootstrap/lib/Row';
 import BarChart from '../components/BarChart.js';
 import Table from '../components/Table';
 import FormatData from "../utils/formatData";
+import ChunkWrapper from './ChunkWrapper.js';
+
 
 function getReferrerUrls(data, i) {
   const maxLen = 60;
@@ -33,12 +35,12 @@ export default class SectionReferrers extends React.Component {
     let refUrls = this.props.data.referrerUrls.map(getReferrerUrls);
     let internalRefUrls = this.props.data.internalReferrerUrls.map(getReferrerUrls);
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
-    let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrerTypes', 'Views')
-    let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views')
-    let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views')
+    let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrerTypes', 'Article')
+    let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Article')
+    let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Article')
 
     let internalRefTypeChart = this.props.renderInternalRefTypes ? <Col xs={12} sm={6}>
-      <h6> Internal Referrer Types</h6>
+      <h5>FT Traffic Source</h5>
       <BarChart
         data={internalData}
         keys={internalKeys}
@@ -49,31 +51,33 @@ export default class SectionReferrers extends React.Component {
       />
       </Col> : {};
 
-    return (<div data-component='sectionReferrers'>
+    return (<ChunkWrapper component='sectionReferrers'>
 
       <Row>
         <Col xs={12}>
-          <h4>Where did the users come from?</h4>
+          <h3>Where did the users come from?</h3>
         </Col>
       </Row>
 
-      <Row>
+      <Row style={
+          {marginTop:"10px"}
+        }>
         <Col xs={12}>
-          <h5>External Sources</h5>
+          <h4>External Sources</h4>
         </Col>
       </Row>
       <Row>
         <Col xs={12} sm={6}>
-          <h6>Referrer Types</h6>
+          <h5>Traffic Source</h5>
           <BarChart
             data={refData}
             keys={refKeys}
             category={refID}
             yLabel="Page Views"
-            xLabel="Referrer"
+            xLabel="Traffic Source"
             usePercentages={true}
             />
-          <h6>Social Networks</h6>
+          <h5>Social Networks</h5>
           <BarChart
             data={socialData}
             keys={socialKeys}
@@ -84,30 +88,32 @@ export default class SectionReferrers extends React.Component {
             />
         </Col>
         <Col xs={12} sm={6}>
-          <h6>Top URLs</h6>
+          <h5>Top URLs</h5>
           <Table
-            headers={['Referrer', 'Views']}
+            headers={['Traffic Source', 'Views']}
             rows={refUrls}
             />
         </Col>
       </Row>
 
-      <Row>
+      <Row style={
+          {marginTop:"20px"}
+        }>
         <Col xs={12}>
-          <h5>Internal Sources</h5>
+          <h4>FT Source</h4>
         </Col>
       </Row>
 
       <Row>
         {internalRefTypeChart}
         <Col xs={12} sm={6}>
-          <h6>Top Internal URLs</h6>
+          <h5>Top Internal URLs</h5>
           <Table
-            headers={['Referrer', 'Views']}
+            headers={['FT Source', 'Views']}
             rows={internalRefUrls}
             />
         </Col>
       </Row>
-    </div>);
+    </ChunkWrapper>);
   }
 }

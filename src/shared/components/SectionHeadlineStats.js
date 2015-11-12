@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import SingleMetric from "./SingleMetric";
 import FeatureFlag from '../utils/featureFlag';
+import ChunkWrapper from './ChunkWrapper.js';
 
 function getMetrics (config, data, comparatorData) {
   let keys = Object.keys(config);
@@ -44,10 +45,14 @@ export default class SectionHeadlineStats extends React.Component {
     let comparatorData = this.props.comparatorData;
     let metricsComponents = getMetrics(config, data, comparatorData);
 
-    return ( <Row data-component='sectionHeadlineStats' >
+    return (
+    <ChunkWrapper component='SectionHeadlineStats'>
+     <Row data-component='sectionHeadlineStats' >
       <Col xs={12} >
         {metricsComponents}
       </Col>
-    </Row>);
+    </Row>
+    </ChunkWrapper>
+    );
   }
 }
