@@ -213,6 +213,7 @@ function retrieveEventsData(queryData){
     let request = {
       index: calculateIndices(queryData, process.env.ES_EVENT_INDEX_ROOT),
       ignore_unavailable: true,
+      search_type: 'count',
       body: queryObject
     };
     client.search(request, (error, response) => {
