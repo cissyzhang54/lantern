@@ -136,3 +136,9 @@ img {
     font-size: 20px;
   }
 }
+
+.Select.is-multi {
+  .Select-item {
+    display: flex;
+  }
+}
