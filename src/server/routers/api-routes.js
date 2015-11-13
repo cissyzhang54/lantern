@@ -8,6 +8,7 @@ import ArticleDataFormatter from '../formatters/Articles';
 import ArticleComparatorDataFormatter from '../formatters/ArticleComparators';
 import SearchDataFormatter from '../formatters/Search';
 import SectionDataFormatter from '../formatters/Sections';
+import TopicDataFormatter from '../formatters/Topics';
 
 const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
 const CATEGORY_REGEX= 'articles|sections|topics|authors';
@@ -17,6 +18,7 @@ router.use(bodyParser.json());
 
 router.post(`/articles/:uuid(${UUID_REGEX})`, getCategoryData);
 router.post(`/sections/:section`, getSectionData);
+router.post(`/topics/:topic`, getTopicData);
 router.post(`/comparators/:category(${CATEGORY_REGEX})/:comparatorType(${COMPTYPE_REGEX})/:comparator`, getComparatorData);
 router.get('/search/:query', search);
 router.use(ErrorHandler.routes(router));
@@ -50,6 +52,22 @@ function getSectionData(req, res, next) {
   };
   esClient.runSectionQuery(query)
     .then((response) => SectionDataFormatter(response))
+    .then((formattedData) => res.json(formattedData))
+    .catch((error) => {
+      res.status(ErrorHandler.statusCode(error.name))
+      next(error);
+    });
+}
+
+function getTopicData(req, res, next) {
+  const query = {
+    topic: decode(req.params.topic),
+    dateFrom: req.body.dateFrom,
+    dateTo: req.body.dateTo,
+    filters: req.body.filters,
+  };
+  esClient.runTopicQuery(query)
+    .then((response) => TopicDataFormatter(response))
     .then((formattedData) => res.json(formattedData))
     .catch((error) => {
       res.status(ErrorHandler.statusCode(error.name))

@@ -4,6 +4,8 @@ import SectionsQuery from './queries/Sections';
 import SectionComparatorQuery from './queries/SectionComparator';
 import SectionMetadataQuery from './queries/SectionMetadata';
 import SectionMetadataComparatorQuery from './queries/SectionMetadataComparator';
+import TopicQuery from './queries/Topics';
+import TopicMetadataQuery from './queries/TopicMetadata';
 import ArticlesQuery from './queries/Articles';
 import ArticleEventsQuery from './queries/ArticleEvents';
 import ArticleEventsComparatorQuery from './queries/ArticleEventsComparator';
@@ -77,7 +79,6 @@ export function runArticleComparatorQuery(queryData) {
   });
 }
 
-
 export function runSectionQuery(queryData) {
   let queryError;
   if (queryError = queryDataError('sections', queryData)){
@@ -99,7 +100,27 @@ export function runSectionQuery(queryData) {
     })
 }
 
+export function runTopicQuery(queryData) {
+  let queryError;
+  if (queryError = queryDataError('topics', queryData)){
+    return Promise.reject(queryError);
+  }
 
+  if (!queryData.dateFrom || !queryData.dateTo) {
+    queryData.dateFrom = moment().subtract(29,'days').toISOString();
+    queryData.dateTo = moment().toISOString();
+  }
+
+  let metaData;
+  return retrieveTopicMetaData(queryData)
+    .then((data) => {
+      metaData = data;
+      return retrieveTopicData(queryData)
+    })
+    .then((topicData) => {
+      return [metaData, topicData]
+    })
+}
 
 export function runSearchQuery(queryData) {
   let queryError;
@@ -189,6 +210,42 @@ function retrieveMetaData(queryData){
 function retrieveSectionMetaData(queryData){
   return new Promise((resolve, reject) => {
     let queryObject = queryData.comparator ? SectionMetadataComparatorQuery(queryData) : SectionMetadataQuery(queryData);
+    let request = {
+      index: process.env.ES_SEARCH_INDEX_ROOT,
+      ignore_unavailable: true,
+      search_type: 'count',
+      body: queryObject
+    };
+    client.search(request, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      return resolve(response);
+    });
+  })
+}
+
+function retrieveTopicData(queryData){
+  return new Promise((resolve, reject) => {
+    let queryObject = queryData.comparator ? TopicQuery(queryData) : TopicQuery(queryData); //TODO ADD COMPARATOR
+    let request = {
+      index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
+      ignore_unavailable: true,
+      search_type: 'count',
+      body: queryObject
+    };
+    client.search(request, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      return resolve(response);
+    });
+  })
+}
+
+function retrieveTopicMetaData(queryData){
+  return new Promise((resolve, reject) => {
+    let queryObject = queryData.comparator ? TopicMetadataQuery(queryData) : TopicMetadataQuery(queryData);
     let request = {
       index: process.env.ES_SEARCH_INDEX_ROOT,
       ignore_unavailable: true,

@@ -50,6 +50,15 @@ router.get(`/sections/:section/:comparatorType(${COMPTYPE_REGEX})/:comparator`, 
     });
 });
 
+router.get(`/topics/:topic`, (req, res, next) => {
+  return getTopicData(req, res)
+    .then(() => {next()})
+    .catch((err) => {
+      if (err.status) res.status(err.status);
+      next(err);
+    });
+});
+
 function getArticleData(req, res){
   return dataApiUtils.getArticleData({uuid: decode(req.params.uuid)}, apiKey)
     .then((data) => {
@@ -141,6 +150,50 @@ function getSectionData(req, res){
           referrers: getKeys(data.referrerTypes)
         }
       };
+      return res;
+    })
+}
+
+function getTopicData(req, res){
+  return dataApiUtils.getTopicData({topic: decode(req.params.topic)}, apiKey)
+    .then((data) => {
+      let dateFrom = moment().subtract(29,'days').toISOString();
+      let dateTo = moment().toISOString();
+
+      res.locals.data = {
+        "TopicStore": {
+          data: data
+        },
+        "TopicQueryStore" : {
+          query: {
+            topic: decode(req.params.topic),
+            dateFrom: dateFrom,
+            dateTo: dateTo,
+            filters: {}
+          }
+        },
+        /*"ComparatorQueryStore" : {
+          query: {
+            category: 'topics',
+            topic: decode(req.params.topic),
+            comparator: decode(req.params.comparator),
+            comparatorType: decode(req.params.comparatorType),
+            dateFrom: dateFrom,
+            dateTo: dateTo,
+            filters: {}
+          }
+        },
+        "FilterStore" : {
+          query: {
+            filters: {}
+          },
+          devices: getKeys(data.devices),
+          regions: getKeys(data.regions),
+          cohort: getKeys(data.userCohort),
+          referrers: getKeys(data.referrerTypes)
+        }*/
+      };
+
       return res;
     })
 }
