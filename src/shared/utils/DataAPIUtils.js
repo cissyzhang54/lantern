@@ -147,6 +147,39 @@ let DataAPI = {
     });
   },
 
+  getTopicData(query, apiKey) {
+    assert.equal(typeof query, 'object',
+      "argument 'query' must be an object");
+
+    assert.ok(query.hasOwnProperty('topic'),
+      "argument 'query' must contain a topic property");
+
+    assert.equal(typeof query.topic, 'string',
+      "property 'topic' of argument 'query' must be a string");
+
+    return new Promise(function handlePromise(resolve, reject) {
+      let baseUrl = `${config.baseUrl}/api/v0/topics`;
+      let reqParams = `${query.topic}`;                 // TODO Add comparator
+      let reqQuery = ``;
+      if (apiKey) {
+        reqQuery += "apiKey=" + apiKey;
+      }
+      let url = `${baseUrl}/${reqParams}?${reqQuery}`;
+
+      request.post(url)
+        .send(query)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          if (err) {
+            err.queryData = query;
+            err.name = errorName('Topic', err)
+            reject(err);
+          }
+          !err && resolve(res.body);
+        });
+    })
+  },
+
     search(query, from = 0, apiKey = '') {
 
       assert.equal(typeof query, 'object',

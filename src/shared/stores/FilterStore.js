@@ -4,8 +4,10 @@ import Raven from 'raven-js';
 
 import ArticleActions from '../actions/ArticleActions';
 import SectionActions from '../actions/SectionActions';
+import TopicActions from '../actions/TopicActions';
 import ArticleQueryStore from '../stores/ArticleQueryStore.js';
 import SectionQueryStore from '../stores/SectionQueryStore.js';
+import TopicQueryStore from '../stores/TopicQueryStore.js';
 
 class FilterStore {
   constructor() {

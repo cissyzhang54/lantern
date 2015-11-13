@@ -87,7 +87,7 @@ export default class Modifier extends React.Component {
           <Col sm={2} xs={12}>
             <span style={styles.title}>
               <OverlayTrigger
-                trigger="hover"
+                trigger="click"
                 placement="bottom"
                 overlay={
                   <Popover id="tag-description">
@@ -98,7 +98,7 @@ export default class Modifier extends React.Component {
                 >
                 <Glyphicon glyph="question-sign" style={styles.infoIcon} />
               </OverlayTrigger>
-              <span style={styles.titleText} aria-dscribedby="tag-description">Tags:</span>
+              <span style={styles.titleText} aria-dscribedby="tag-description">Metadata Tags:</span>
             </span>
 
           </Col>

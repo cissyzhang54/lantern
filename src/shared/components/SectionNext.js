@@ -7,6 +7,7 @@ import Table from '../components/Table';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
+import ChunkWrapper from './ChunkWrapper.js';
 
 const styles = {
   infoIcon : {
@@ -43,13 +44,13 @@ export default class SectionWhere extends React.Component {
       return <div></div>
     }
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
-    let [metricData, id, keys] = dataFormatter.getPCTMetric('isLastPage', 'Views', 'Exited FT.com', 'Stayed on FT.com')
+    let [metricData, id, keys] = dataFormatter.getPCTMetric('isLastPage', 'Article', 'Exited FT', 'Stayed on FT')
     let intUrls = this.props.data.nextInternalUrl.map(getReferrerUrls);
 
-    return (<div data-component='sectionNext'>
+    return (<ChunkWrapper component='sectionNext'>
       <Row>
         <Col xs={12}>
-          <h4>Where did they go next?</h4>
+          <h3>Where did they go next?</h3>
         </Col>
       </Row>
       <Row>
@@ -78,13 +79,13 @@ export default class SectionWhere extends React.Component {
             />
         </Col>
         <Col xs={12} sm={6}>
-          <h5>Of those who stayed where did they go?</h5>
+          <h4>Of those who stayed where did they go?</h4>
           <Table
-            headers={['Exit Page', 'Views']}
+            headers={['Next Destination', 'Views']}
             rows={intUrls}
             />
         </Col>
       </Row>
-    </div>);
+    </ChunkWrapper>);
   }
 }

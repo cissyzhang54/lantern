@@ -7,14 +7,12 @@ import FormatData from "../utils/formatData";
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import ChunkWrapper from './ChunkWrapper.js';
 
 const styles = {
   infoIcon : {
     'fontSize' : '15px',
-    'color': '#039',
-    'position':'Absolute',
-    'left': '-4px'
-
+    'color': '#039'
   }
 }
 
@@ -30,8 +28,8 @@ export default class SectionWhen extends React.Component {
     }
 
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
-    let [timeData, timeID, timeKeys] = dataFormatter.getMetric('readTimes', 'Value');
-    let [pubTimeData, pubTimeID, pubTimeKeys] = dataFormatter.getMetric('readTimesSincePublish', 'Value');
+    let [timeData, timeID, timeKeys] = dataFormatter.getMetric('readTimes', 'Article');
+    let [pubTimeData, pubTimeID, pubTimeKeys] = dataFormatter.getMetric('readTimesSincePublish', 'Article');
 
     let readTimesChart = (this.props.renderReadTimes)
       ? <LineChart
@@ -55,12 +53,12 @@ export default class SectionWhen extends React.Component {
       />
       : {}
 
-    return (<div data-component='sectionWhen'>
+    return (<ChunkWrapper component='sectionWhen'>
       <Row>
         <Col xs={12}>
-          <h4>
+          <h3>
             <OverlayTrigger
-              trigger="hover"
+              trigger="click"
               placement="bottom"
               overlay={
                   <Popover id="chart-description">
@@ -74,8 +72,8 @@ export default class SectionWhen extends React.Component {
                 <Glyphicon glyph="question-sign" style={styles.infoIcon} aria-describedby="chart-description" />
               </span>
             </OverlayTrigger>
-            <span >When did users access the article?</span>
-          </h4>
+            <span >When did the users view the article?</span>
+          </h3>
         </Col>
       </Row>
       <Row>
@@ -88,6 +86,6 @@ export default class SectionWhen extends React.Component {
           {timeSincePublishedChart}
         </Col>
       </Row>
-    </div>);
+    </ChunkWrapper>);
   }
 }

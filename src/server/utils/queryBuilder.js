@@ -236,3 +236,47 @@ export function sectionQuery(query){
     "filtered" : filtered
   };
 }
+
+export function topicQuery(query){
+  checkString(query,'dateFrom');
+  checkString(query,'dateTo');
+  checkString(query,'topic');
+
+  let matchTopic = {
+    match : {  topics: query.topic  }
+  }
+
+  let filter = {
+    bool: {
+      should : mapFilters(query)
+    }
+  }
+
+  let matchDates = {
+    "range" : {
+      "initial_publish_date" : {
+        from: query.dateFrom,
+        to: query.dateTo
+      }
+    }
+  }
+
+  let matchAll = {
+    bool: {
+      must: [matchDates, matchTopic ]
+    }
+  }
+
+  let filtered = {
+    query : matchAll,
+    filter : filter
+  }
+
+  if (query.comparator === 'FT'){
+    filtered.query.bool.must = [matchDates];
+  }
+
+  return {
+    "filtered" : filtered
+  };
+}

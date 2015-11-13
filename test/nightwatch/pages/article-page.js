@@ -96,23 +96,23 @@ module.exports = {
   // When Section
   sectionWhen: {
     accessTime: {
-      name: 'When did users access the article?',
+      name: 'When did the users view the article?',
       selectors: {
         container: 'div[data-component="sectionWhen"]',
         dataComponent: ' div[data-component="lineChart"]',
-        heading: ' h4 > span:nth-child(2)'
+        heading: ' h3 > span:nth-child(2)'
       }
     }
   },
 
-  // Next Section
+  // Next Sectio
   sectionNext: {
     bounceRate: {
       name: 'Bounce-Rate',
       selectors: {
         container: 'div[data-component="sectionNext"] div[class="col-sm-6 col-xs-12"]:nth-child(1)',
         dataComponent: ' div[data-component="barChart"]',
-        heading: ' h5'
+        heading: ' h4'
       }
     },
     exitPage: {
@@ -120,7 +120,7 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionNext"] div[class="col-sm-6 col-xs-12"]:nth-child(2)',
         dataComponent: ' table[data-component="table"]',
-        heading: ' h5'
+        heading: ' h4'
       }
     }
   },
@@ -189,11 +189,11 @@ module.exports = {
 // Referrers Section
   sectionReferrers: {
     referrerTypes: {
-      name: 'Referrer Types',
+      name: 'Traffic Source',
       selectors: {
         container: 'div[data-component="sectionReferrers"] > div:nth-child(3) > div:nth-child(1)',
         dataComponent: ' > div[data-component="barChart"]:nth-child(2)',
-        heading: ' > h6:nth-child(1)'
+        heading: ' > h5:nth-child(1)'
       }
     },
     socialNetworks: {
@@ -201,7 +201,7 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionReferrers"] > div:nth-child(3) > div:nth-child(1)',
         dataComponent: ' > div[data-component="barChart"]:nth-child(4)',
-        heading: ' > h6:nth-child(3)'
+        heading: ' > h5:nth-child(3)'
       }
     },
     topUrls: {
@@ -209,15 +209,15 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionReferrers"] > div:nth-child(3) > div:nth-child(2)',
         dataComponent: ' table[data-component="table"]',
-        heading: ' > h6'
+        heading: ' > h5'
       }
     },
     internalReferrerTypes: {
-      name: 'Internal Referrer Types',
+      name: 'FT Traffic Source',
       selectors: {
         container: 'div[data-component="sectionReferrers"] > div:nth-child(5) > div:nth-child(1)',
         dataComponent: ' div[data-component="barChart"]',
-        heading: ' > h6'
+        heading: ' > h5'
       }
     },
     topInternalUrls: {
@@ -225,7 +225,7 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionReferrers"] > div:nth-child(5) > div:nth-child(2)',
         dataComponent: ' table[data-component="table"]',
-        heading: ' > h6'
+        heading: ' > h5'
       }
     }
   },
@@ -233,11 +233,11 @@ module.exports = {
 // Who Section
   sectionWho: {
     cohort: {
-      name: 'Cohort',
+      name: 'User Type',
       selectors: {
         container: 'div[data-component="sectionWho"] > div:nth-child(2) > div:nth-child(1)',
         dataComponent: ' div[data-component="columnChart"]',
-        heading: ' > h5'
+        heading: ' > h4'
       }
     },
     newVsReturning: {
@@ -245,15 +245,15 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionWho"] > div:nth-child(2) > div:nth-child(2)',
         dataComponent: ' div[data-component="columnChart"]',
-        heading: ' > h5'
+        heading: ' > h4'
       }
     },
     rfvClusters: {
-      name: 'RFV Clusters',
+      name: 'Engagement Groups',
       selectors: {
-        container: 'div[data-component="sectionWho"] > div:nth-child(3) > div:nth-child(1)',
+        container: 'div[data-component="sectionWho"] > div:nth-child(4) > div:nth-child(1)',
         dataComponent: ' div[data-component="columnChart"]',
-        heading: ' > h5'
+        heading: ' > h4'
       }
     }
   },
@@ -265,7 +265,7 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionWhere"]',
         dataComponent: ' div[data-component="barChart"]',
-        heading: ' > div:nth-child(2) h5'
+        heading: ' > div:nth-child(2) h4'
       }
     },
     globalMap: {
@@ -285,7 +285,7 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionHow"] > div:nth-child(2) > div:nth-child(1)',
         dataComponent: ' div[data-component="pieChart"]',
-        heading: ' > h5'
+        heading: ' > h4'
       }
     },
     channelsPie: {
@@ -293,7 +293,7 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionHow"] > div:nth-child(2) > div:nth-child(2)',
         dataComponent: ' div[data-component="pieChart"]',
-        heading: ' > h5'
+        heading: ' > h4'
       }
     }
   }

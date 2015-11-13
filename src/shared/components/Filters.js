@@ -22,12 +22,12 @@ const DEFAULT_STATE = {
     },
     {
       name: 'UserCohort',
-      label: 'User Cohort',
+      label: 'User Type',
       options: []
     },
     {
       name: 'Referrers',
-      label: 'Referrers',
+      label: 'Traffic Source',
       options: []
     }
   ]
@@ -61,12 +61,12 @@ class Filters extends React.Component {
         },
         {
           name: 'UserCohort',
-          label: 'User Cohort',
+          label: 'User Type',
           options: filterState.cohort
         },
         {
           name: 'Referrers',
-          label: 'Referrers',
+          label: 'Traffic Source',
           options: filterState.referrers
         }
       ]

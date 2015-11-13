@@ -160,7 +160,7 @@ class ArticleView extends React.Component {
               title={data.title}
               linkURL={'http://www.ft.com/cms/s/0/' + data.uuid + '.html'}
               author={'By: ' + formatAuthors.join(data.author)}
-              published={'Published: ' + data.published_human}
+              published={'First Published: ' + data.published_human}
               uuid={data.uuid}
               />
 
