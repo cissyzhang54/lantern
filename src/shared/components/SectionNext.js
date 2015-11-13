@@ -56,7 +56,7 @@ export default class SectionWhere extends React.Component {
         <Col xs={12} sm={6}>
           <h5>
             <OverlayTrigger
-              trigger="hover"
+              trigger="click"
               placement="bottom"
               overlay={
                 <Popover id="tag-description">
