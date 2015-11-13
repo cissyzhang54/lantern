@@ -19,6 +19,11 @@ export default function TopicQuery(query) {
           field: "is_first_visit",
           min_doc_count: 0
         }
+      },
+      unique_visitors: {
+        cardinality: {
+          field: "visitor_id"
+        }
       }
     }
   };

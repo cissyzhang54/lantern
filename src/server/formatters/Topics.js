@@ -24,7 +24,7 @@ export default function TopicDataFormatter(data) {
       let [metaData, topicData] = data;
       let results = {genre:[], sections:[], topics:[]};
       let metaFields = ['articleCount'];
-      let topicFields = ['pageViews', 'isFirstVisit'];
+      let topicFields = ['pageViews', 'isFirstVisit', 'uniqueVisitors'];
 
       metaFields.forEach(f => { results[f] = getField(metaData, f)})
       topicFields.forEach(f => { results[f] = getField(topicData, f)})
