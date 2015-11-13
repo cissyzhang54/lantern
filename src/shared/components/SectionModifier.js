@@ -87,7 +87,7 @@ export default class Modifier extends React.Component {
           <Col sm={2} xs={12}>
             <span style={styles.title}>
               <OverlayTrigger
-                trigger="hover"
+                trigger="click"
                 placement="bottom"
                 overlay={
                   <Popover id="tag-description">

@@ -134,7 +134,7 @@ export default class SingleMetric extends React.Component {
       let toolTipTitle = this.props.label.replace(/\s+/g, '-').toLowerCase() + "-description";
       toolTip = (
         <OverlayTrigger
-          trigger="hover"
+          trigger="click"
           placement="bottom"
           overlay={
               <Popover id={toolTipTitle}>

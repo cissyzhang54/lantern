@@ -11,10 +11,7 @@ import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 const styles = {
   infoIcon : {
     'fontSize' : '15px',
-    'color': '#039',
-    'position':'Absolute',
-    'left': '-4px'
-
+    'color': '#039'
   }
 }
 
@@ -60,7 +57,7 @@ export default class SectionWhen extends React.Component {
         <Col xs={12}>
           <h4>
             <OverlayTrigger
-              trigger="hover"
+              trigger="click"
               placement="bottom"
               overlay={
                   <Popover id="chart-description">
