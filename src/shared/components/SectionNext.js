@@ -55,7 +55,7 @@ export default class SectionWhere extends React.Component {
       </Row>
       <Row>
         <Col xs={12} sm={6}>
-          <h5>
+          <h4>
             <OverlayTrigger
               trigger="click"
               placement="bottom"
@@ -68,7 +68,7 @@ export default class SectionWhere extends React.Component {
               <Glyphicon glyph="question-sign" style={styles.infoIcon} />
             </OverlayTrigger>
             What was the Bounce-Rate?
-          </h5>
+          </h4>
           <BarChart
             data={metricData}
             keys={keys}
