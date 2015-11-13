@@ -81,6 +81,8 @@ export default class Modifier extends React.Component {
       arrAuthors.map(d => {return {label:d, url:`author/${d}`}})
     )
 
+    let count = comparatorData.articleCount || {}
+
     return (
       <div data-component='sectionModifier' style={styles.modifierWrapper}>
         <Row>
@@ -143,7 +145,7 @@ export default class Modifier extends React.Component {
           <Col sm={10} xs={12}>
             <div style={styles.descriptorText}>
               <ModifierDescription
-                articleCount={comparatorData.articleCount}
+                articleCount={count}
                 comparator={this.props.query.comparator}
                 />
             </div>

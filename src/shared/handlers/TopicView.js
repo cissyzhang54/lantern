@@ -1,4 +1,8 @@
 import React from 'react/addons';
+import DocumentTitle from 'react-document-title';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
+
 import Header from '../components/Header';
 import SectionModifier from '../components/SectionModifier';
 import SectionHeadlineStats from '../components/SectionHeadlineStats';
@@ -10,8 +14,6 @@ import TopicActions from '../actions/TopicActions';
 
 import connectToStores from 'alt/utils/connectToStores';
 import Messaging from '../components/Messaging';
-
-import moment from 'moment'
 
 function decode(uri){
   return uri ? decodeURI(uri) : null
@@ -74,8 +76,6 @@ class TopicView extends React.Component {
       : <Messaging category="Topic" type="PLACEHOLDER" />
 
     let data = this.props.data;
-    // let comparatorData = [this.props.comparatorData];
-    let comparatorData = [];
 
     let headlineStats = {
       uniqueVisitors: {
@@ -92,19 +92,41 @@ class TopicView extends React.Component {
       }
     }
 
-    return(<div>
+    let query = this.props.query
+    let comparatorData = this.props.comparatorData || {}
+    let title = (data) ? 'Lantern - ' + this.props.params.topic : '';
 
-      <Header
-        title={'Topic: ' + this.props.params.topic}
-        />
+    return(<DocumentTitle title={title}>
 
-        <SectionHeadlineStats
-          data={data}
-          comparatorData={comparatorData}
-          config={headlineStats}
-          />
+      <div>
+        <Col xs={12}>
+          <SectionModifier
+            data={data}
+            comparatorData={comparatorData}
+            renderDevice={true}
+            renderRegion={true}
+            renderReferrers={true}
+            renderUserCohort={true}
+            query={query}
+            category={'sections'}
+            uuid={this.props.params.section}
+            />
+          <Col xs={12}>
+            {updating}
+            <Header
+              title={'Topic: ' + this.props.params.topic}
+              />
 
-    </div>)
+            <SectionHeadlineStats
+              data={data}
+              comparatorData={comparatorData}
+              config={headlineStats}
+              />
+          </Col>
+        </Col>
+      </div>
+
+    </DocumentTitle>)
   }
 }
 
