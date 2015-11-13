@@ -46,6 +46,7 @@ export default class BarChart extends React.Component {
             position: 'outer-right'
           },
           type: 'category',
+          height: 50
         },
         y: {
           label: {
