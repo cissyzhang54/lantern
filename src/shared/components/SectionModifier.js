@@ -98,7 +98,7 @@ export default class Modifier extends React.Component {
                 >
                 <Glyphicon glyph="question-sign" style={styles.infoIcon} />
               </OverlayTrigger>
-              <span style={styles.titleText} aria-dscribedby="tag-description">Tags:</span>
+              <span style={styles.titleText} aria-dscribedby="tag-description">Metadata Tags:</span>
             </span>
 
           </Col>

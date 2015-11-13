@@ -7,6 +7,7 @@ import Table from '../components/Table';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import ChunkWrapper from './ChunkWrapper.js';
 
 let config = {
   subscription: {
@@ -84,10 +85,10 @@ export default class SectionHeadlineStats extends React.Component {
       ];
     });
 
-    return ( <div data-component='sectionInteractiveStats' >
+    return ( <ChunkWrapper component='sectionInteractiveStats' >
       <Row>
         <Col xs={12}>
-          <h4>How did the reader interact?</h4>
+          <h3>How did the user interact?</h3>
         </Col>
       </Row>
       <Row>
@@ -109,7 +110,7 @@ export default class SectionHeadlineStats extends React.Component {
           {subscription}
         </Col>
       </Row>
-      <Row>
+      <Row style={{marginTop: '20px'}}>
         <Col xs={12} sm={4} >
           <Table
             headers={['Link Category', 'Clicks']}
@@ -126,6 +127,6 @@ export default class SectionHeadlineStats extends React.Component {
             />
         </Col>
       </Row>
-    </div>);
+    </ChunkWrapper>);
   }
 }

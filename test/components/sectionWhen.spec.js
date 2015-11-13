@@ -25,8 +25,8 @@ describe ('sectionWhen component', function() {
       const rows = section.props.children;
       const col = rows[1].props.children
       const lineChart = col.props.children.props
-      const metricLabel = 'Value'
-      const comparatorLabel = '\'testComp\' Average Value'
+      const metricLabel = 'Article'
+      const comparatorLabel = '\'testComp\' Average Article'
 
       expect(lineChart.data.length).to.equal(31)
       expect(lineChart.data[0][metricLabel]).to.equal(38)
@@ -51,8 +51,8 @@ describe ('sectionWhen component', function() {
       const rows = section.props.children;
       const col = rows[1].props.children
       const lineChart = col.props.children.props
-      const metricLabel = 'Value'
-      const comparatorLabel = '\'testComp\' Average Value'
+      const metricLabel = 'Article'
+      const comparatorLabel = '\'testComp\' Average Article'
 
       expect(lineChart.data.length).to.equal(31)
       expect(lineChart.data[0][metricLabel]).to.equal(38)
@@ -88,8 +88,8 @@ describe ('sectionWhen component', function() {
 
       expect(lineChart.data.length).to.equal(31)
       expect(lineChart.keys.length).to.equal(2)
-      expect(lineChart.keys[0]).to.equal('Value')
-      expect(lineChart.keys[1]).to.equal('\'testComp\' Average Value')
+      expect(lineChart.keys[0]).to.equal('Article')
+      expect(lineChart.keys[1]).to.equal('\'testComp\' Average Article')
     })
 
     it('when there is no comparator data', function(){
@@ -108,7 +108,7 @@ describe ('sectionWhen component', function() {
 
       expect(lineChart.data.length).to.equal(31)
       expect(lineChart.keys.length).to.equal(1)
-      expect(lineChart.keys[0]).to.equal('Value')
+      expect(lineChart.keys[0]).to.equal('Article')
     })
 
 

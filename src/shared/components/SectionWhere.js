@@ -5,6 +5,7 @@ import BarChart from "../components/BarChart";
 import Table from "../components/Table";
 import Map from "../components/Map";
 import FormatData from "../utils/formatData";
+import ChunkWrapper from "./ChunkWrapper.js";
 
 export default class SectionWhere extends React.Component {
 
@@ -18,17 +19,17 @@ export default class SectionWhere extends React.Component {
     }
 
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
-    let [regionData, regionID, regionKeys] = dataFormatter.getPCTMetric('regions', 'Views')
+    let [regionData, regionID, regionKeys] = dataFormatter.getPCTMetric('regions', 'Article')
 
-    return (<div data-component='sectionWhere'>
+    return (<ChunkWrapper component='sectionWhere'>
       <Row>
         <Col xs={12}>
-          <h4>Where in the world was the article read?</h4>
+          <h3>Where in the world was the article read?</h3>
         </Col>
       </Row>
       <Row>
         <Col xs={12}>
-          <h5>Globally</h5>
+          <h4>Globally</h4>
         </Col>
       </Row>
       <Row>
@@ -48,6 +49,6 @@ export default class SectionWhere extends React.Component {
             />
         </Col>
       </Row>
-    </div>);
+    </ChunkWrapper>);
   }
 }

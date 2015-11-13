@@ -25,6 +25,7 @@ import ComparatorActions from '../actions/ComparatorActions';
 import ComparatorStore from '../stores/ComparatorStore';
 import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 import ComparatorQueryStore from '../stores/ComparatorQueryStore';
+import ChunkWrapper from "../components/ChunkWrapper";
 
 import moment from 'moment'
 
@@ -79,9 +80,9 @@ class SectionView extends React.Component {
   }
 
   componentDidMount() {
-    //let analytics = require('../utils/analytics');
-    //analytics.sendGAEvent('pageview');
-    //analytics.trackScroll();
+    let analytics = require('../utils/analytics');
+    analytics.sendGAEvent('pageview');
+    analytics.trackScroll();
     SectionActions.listenToQuery();
     ComparatorActions.listenToQuery();
     if (!this.props.data) {
@@ -165,53 +166,57 @@ class SectionView extends React.Component {
               config={headlineStats}
               />
 
-            <Row>
-              <Col xs={12}>
-                <h4>Articles Published vs Articles Read</h4>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12}>
-                <DualScaleLineChart
-                  leftData={publishData}
-                  rightData={readData}
-                  keys={publishKeys.concat(readKeys)}
-                  categories={[publishID, readID]}
-                  yLabel='Articles published'
-                  y2Label='Articles read'
-                  xLabel='Time' />
-              </Col>
-            </Row>
+            <ChunkWrapper component="ArticlesPublished">
+              <Row>
+                <Col xs={12}>
+                  <h3>Articles Published vs Articles Read for this topic</h3>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  <DualScaleLineChart
+                    leftData={publishData}
+                    rightData={readData}
+                    keys={publishKeys.concat(readKeys)}
+                    categories={[publishID, readID]}
+                    yLabel='Articles published'
+                    y2Label='Articles read'
+                    xLabel='Time' />
+                </Col>
+              </Row>
+            </ChunkWrapper>
 
-            <Row>
-              <Col xs={12}>
-                <h5>Topics Published vs Topics Read</h5>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={6}>
-                <h6>Total number of articles per topic</h6>
-                <BarChart
-                  data={topicCountData}
-                  keys={topicCountKeys}
-                  category={topicCountId}
-                  yLabel="Users"
-                  xLabel=""
-                  usePercentages={true}
+            <ChunkWrapper component="Topics">
+              <Row>
+                <Col xs={12}>
+                  <h3>Topics Published vs Topics Read</h3>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={6}>
+                  <h4>Total number of articles per topic</h4>
+                  <BarChart
+                    data={topicCountData}
+                    keys={topicCountKeys}
+                    category={topicCountId}
+                    yLabel="Users"
+                    xLabel=""
+                    usePercentages={true}
+                    />
+                </Col>
+                <Col xs={6}>
+                  <h4>Total number of views per topic</h4>
+                  <BarChart
+                    data={topicViewData}
+                    keys={topicViewKeys}
+                    category={topicViewId}
+                    yLabel="Users"
+                    xLabel=""
+                    usePercentages={true}
                   />
-              </Col>
-              <Col xs={6}>
-                <h6>Total number of views per topic</h6>
-                <BarChart
-                  data={topicViewData}
-                  keys={topicViewKeys}
-                  category={topicViewId}
-                  yLabel="Users"
-                  xLabel=""
-                  usePercentages={true}
-                />
-              </Col>
-            </Row>
+                </Col>
+              </Row>
+            </ChunkWrapper>
 
             <SectionWho
               data={data}
@@ -219,45 +224,47 @@ class SectionView extends React.Component {
               renderWho={FeatureFlag.check('section:who')}
               />
 
-            <Row>
-              <Col xs={12}>
-                <h5>Where do the users come from?</h5>
-              </Col>
-            </Row>
-            <Row>
-              <Col xs={12} sm={4}>
-                <h6>External Sources</h6>
-                <BarChart
-                  data={refData}
-                  keys={refKeys}
-                  category={refID}
-                  yLabel="Page Views"
-                  xLabel="Referrer"
-                  usePercentages={true} />
-              </Col>
+            <ChunkWrapper component="section-referrers">
+              <Row>
+                <Col xs={12}>
+                  <h3>Where do the users come from?</h3>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12} sm={4}>
+                  <h4>External Sources</h4>
+                  <BarChart
+                    data={refData}
+                    keys={refKeys}
+                    category={refID}
+                    yLabel="Page Views"
+                    xLabel="Referrer"
+                    usePercentages={true} />
+                </Col>
 
-              <Col xs={12} sm={4}>
-                <h6>Social Network Breakdown</h6>
-                <BarChart
-                  data={socialData}
-                  keys={socialKeys}
-                  category={socialID}
-                  yLabel="Page Views"
-                  xLabel="Social Network"
-                  usePercentages={true}  />
-              </Col>
+                <Col xs={12} sm={4}>
+                  <h4>Social Network Breakdown</h4>
+                  <BarChart
+                    data={socialData}
+                    keys={socialKeys}
+                    category={socialID}
+                    yLabel="Page Views"
+                    xLabel="Social Network"
+                    usePercentages={true}  />
+                </Col>
 
-              <Col xs={12} sm={4}>
-                <h6>Internal Referrer Types</h6>
-                <BarChart
-                  data={internalData}
-                  keys={internalKeys}
-                  category={internalID}
-                  yLabel="Page Views"
-                  xLabel="Referrer"
-                  usePercentages={true} />
-              </Col>
-            </Row>
+                <Col xs={12} sm={4}>
+                  <h4>Internal Referrer Types</h4>
+                  <BarChart
+                    data={internalData}
+                    keys={internalKeys}
+                    category={internalID}
+                    yLabel="Page Views"
+                    xLabel="Referrer"
+                    usePercentages={true} />
+                </Col>
+              </Row>
+            </ChunkWrapper>
 
             <SectionWhere
               data={data}
