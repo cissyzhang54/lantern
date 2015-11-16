@@ -23,8 +23,11 @@ export default function TopicDataFormatter(data) {
     try {
       let [metaData, topicData] = data;
       let results = {genre:[], sections:[], topics:[]};
-      let metaFields = ['articleCount'];
-      let topicFields = ['pageViews', 'isFirstVisit', 'uniqueVisitors'];
+      let metaFields = ['articleCount', 'sectionsCovered', 'sectionCount', 'publishTimes'];
+      let topicFields = ['readTimes', 'pageViews', 'referrerTypes',
+        'referrerNames', 'socialReferrers', 'devices', 'countries', 'regions', 'userCohort',
+        'rfvCluster', 'isFirstVisit', 'internalReferrerTypes', 'isSubscription', 'uniqueVisitors',
+        'sectionViews'];
 
       metaFields.forEach(f => { results[f] = getField(metaData, f)})
       topicFields.forEach(f => { results[f] = getField(topicData, f)})
