@@ -121,7 +121,7 @@ class SectionView extends React.Component {
     let headlineStats = {
       topicsCovered: {
         metricType: 'integer',
-        label: 'Topics covered',
+        label: 'Topics Covered',
         size: 'large',
         comparatorFormatName: 'topicsCovered'
       },
@@ -133,7 +133,7 @@ class SectionView extends React.Component {
       },
       articleCount: {
         metricType: 'integer',
-        label: 'Articles published',
+        label: 'Articles Published',
         size: 'large',
         comparatorFormatName: 'articleCount'
       }

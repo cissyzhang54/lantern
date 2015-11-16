@@ -12,7 +12,6 @@ function getMetrics (config, data, comparatorData) {
 
   keys.forEach(function (value) {
     let componentConfig = config[value];
-
     componentConfig.metric = data[value];
     componentConfig.comparatorMetric = comparatorData[config[value].comparatorFormatName] || undefined;
     componentConfig.comparatorName = data[value] || '';

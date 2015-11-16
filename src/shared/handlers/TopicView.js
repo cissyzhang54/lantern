@@ -1,10 +1,13 @@
 import React from 'react/addons';
 import Header from '../components/Header';
 import SectionModifier from '../components/SectionModifier';
+import SectionHeadlineStats from '../components/SectionHeadlineStats';
+
 import TopicStore from '../stores/TopicStore';
 import TopicQueryStore from '../stores/TopicQueryStore';
 import TopicQueryActions from '../actions/TopicQueryActions';
 import TopicActions from '../actions/TopicActions';
+
 import connectToStores from 'alt/utils/connectToStores';
 import Messaging from '../components/Messaging';
 
@@ -71,14 +74,35 @@ class TopicView extends React.Component {
       : <Messaging category="Topic" type="PLACEHOLDER" />
 
     let data = this.props.data;
+    // let comparatorData = [this.props.comparatorData];
+    let comparatorData = [];
 
-    console.log(data)
+    let headlineStats = {
+      uniqueVisitors: {
+        metricType: 'integer',
+        label: 'Unique Visitors',
+        size: 'large',
+        comparatorFormatName: 'uniqueVisitors'
+      },
+      articleCount: {
+        metricType: 'integer',
+        label: 'Articles Published',
+        size: 'large',
+        comparatorFormatName: 'articleCount'
+      }
+    }
 
     return(<div>
 
       <Header
         title={'Topic: ' + this.props.params.topic}
         />
+
+        <SectionHeadlineStats
+          data={data}
+          comparatorData={comparatorData}
+          config={headlineStats}
+          />
 
     </div>)
   }

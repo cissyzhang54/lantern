@@ -18,7 +18,7 @@ export default function TopicMetadataQuery(query) {
         "cardinality": {
           "field": "article_uuid"
         }
-      }
+      }  
     }
   };
   return esQuery
