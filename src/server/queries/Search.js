@@ -10,7 +10,7 @@ const supportedOperators = {
 }
 
 export default function SearchQuery(query) {
-  debugger;
+
   assert.equal(typeof query, 'object',
     "argument 'query' must be an object");
 
