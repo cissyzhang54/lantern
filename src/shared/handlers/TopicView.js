@@ -3,17 +3,16 @@ import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
-import Header from '../components/Header';
-import SectionModifier from '../components/SectionModifier';
-import SectionHeadlineStats from '../components/SectionHeadlineStats';
-
 import TopicStore from '../stores/TopicStore';
 import TopicQueryStore from '../stores/TopicQueryStore';
 import TopicQueryActions from '../actions/TopicQueryActions';
 import TopicActions from '../actions/TopicActions';
-
 import connectToStores from 'alt/utils/connectToStores';
+
+import Header from '../components/Header';
 import Messaging from '../components/Messaging';
+import SectionModifier from '../components/SectionModifier';
+import SectionHeadlineStats from '../components/SectionHeadlineStats';
 
 function decode(uri){
   return uri ? decodeURI(uri) : null
@@ -76,6 +75,9 @@ class TopicView extends React.Component {
       : <Messaging category="Topic" type="PLACEHOLDER" />
 
     let data = this.props.data;
+    let query = this.props.query
+    let comparatorData = this.props.comparatorData || {}
+    let title = (data) ? 'Lantern - ' + this.props.params.topic : '';
 
     let headlineStats = {
       uniqueVisitors: {
@@ -92,12 +94,7 @@ class TopicView extends React.Component {
       }
     }
 
-    let query = this.props.query
-    let comparatorData = this.props.comparatorData || {}
-    let title = (data) ? 'Lantern - ' + this.props.params.topic : '';
-
     return(<DocumentTitle title={title}>
-
       <div>
         <Col xs={12}>
           <SectionModifier
@@ -108,11 +105,12 @@ class TopicView extends React.Component {
             renderReferrers={true}
             renderUserCohort={true}
             query={query}
-            category={'sections'}
-            uuid={this.props.params.section}
+            category={'topics'}
+            uuid={this.props.params.topic}
             />
           <Col xs={12}>
             {updating}
+
             <Header
               title={'Topic: ' + this.props.params.topic}
               />

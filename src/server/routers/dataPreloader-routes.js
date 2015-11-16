@@ -172,17 +172,6 @@ function getTopicData(req, res){
             filters: {}
           }
         },
-        /*"ComparatorQueryStore" : {
-          query: {
-            category: 'topics',
-            topic: decode(req.params.topic),
-            comparator: decode(req.params.comparator),
-            comparatorType: decode(req.params.comparatorType),
-            dateFrom: dateFrom,
-            dateTo: dateTo,
-            filters: {}
-          }
-        },
         "FilterStore" : {
           query: {
             filters: {}
@@ -191,12 +180,10 @@ function getTopicData(req, res){
           regions: getKeys(data.regions),
           cohort: getKeys(data.userCohort),
           referrers: getKeys(data.referrerTypes)
-        }*/
+        }
       };
-
       return res;
     })
-}
+  }
 
-
-export default router;
+  export default router;

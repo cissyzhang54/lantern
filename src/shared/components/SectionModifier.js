@@ -12,6 +12,7 @@ import ModifierDescription from "./ModifierDescription";
 import ArticleQueryActions from '../actions/ArticleQueryActions';
 import SectionQueryActions from '../actions/SectionQueryActions';
 import ComparatorQueryActions from '../actions/ComparatorQueryActions';
+import TopicQueryActions from '../actions/TopicQueryActions';
 
 const styles = {
   modifierWrapper : {
@@ -51,12 +52,14 @@ export default class Modifier extends React.Component {
       from: dates.startDate.format('YYYY-MM-DD'),
       to: dates.endDate.format('YYYY-MM-DD')
     }
+    TopicQueryActions.selectDateRange(updatedDates);
     SectionQueryActions.selectDateRange(updatedDates);
     ArticleQueryActions.selectDateRange(updatedDates);
     ComparatorQueryActions.selectDateRange(updatedDates);
   }
 
   handleFilterChange (selectedFilters) {
+    TopicQueryActions.selectFilter(selectedFilters);
     SectionQueryActions.selectFilter(selectedFilters);
     ArticleQueryActions.selectFilter(selectedFilters);
     ComparatorQueryActions.selectFilter(selectedFilters);
