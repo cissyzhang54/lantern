@@ -19,14 +19,20 @@ class FilterStore {
       filters : {}
     }
     this.bindListeners({
+      handleTopicUpdateData : TopicActions.UPDATE_DATA,
       handleOverviewUpdateData : SectionActions.UPDATE_DATA,
       handleUpdateData : ArticleActions.UPDATE_DATA
     });
     ArticleQueryStore.listen(this.handleQueryChange.bind(this));
     SectionQueryStore.listen(this.handleQueryChange.bind(this));
+    TopicQueryStore.listen(this.handleQueryChange.bind(this));
   }
 
   handleOverviewUpdateData(newData) {
+    return this.handleUpdateData(newData)
+  }
+
+  handleTopicUpdateData(newData) {
     return this.handleUpdateData(newData)
   }
 
