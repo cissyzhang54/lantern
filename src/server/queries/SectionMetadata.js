@@ -9,31 +9,29 @@ export default function SectionMetadataQuery(query) {
     "argument 'query' should be an object");
 
   let sectionQuery = build.sectionQuery(query)
-
   let esQuery = {
     query: sectionQuery,
-    size: 1,
     aggs: {
-      "articles_published_over_time": {
-        "date_histogram": {
-          "field": "initial_publish_date",
-            "interval": calculateInterval(query),
-              "min_doc_count": 0
+      articles_published_over_time: {
+        date_histogram: {
+          field: "initial_publish_date",
+            interval: calculateInterval(query),
+              min_doc_count: 0
         }
       },
-      "topics_covered": {
-        "cardinality": {
-          "field": "topics"
+      topics_covered: {
+        cardinality: {
+          field: "topics"
         }
       },
-      "distinct_articles": {
-        "cardinality": {
-          "field": "article_uuid"
+      distinct_articles: {
+        cardinality: {
+          field: "article_uuid"
         }
       },
-      "topic_count": {
-        "terms": {
-          "field": "topics",
+      topic_count: {
+        terms: {
+          field: "topics",
           size : 10
         }
       }

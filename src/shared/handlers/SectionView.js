@@ -110,7 +110,6 @@ class SectionView extends React.Component {
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
     let [publishData, publishID, publishKeys] =  dataFormatter.getMetric('publishTimes', 'Articles published');
     let [readData, readID, readKeys] =  dataFormatter.getMetric('readTimes', 'Articles read');
-
     let [topicViewData, topicViewId, topicViewKeys] = dataFormatter.getPCTMetric('topicViews', 'Views');
     let [topicCountData, topicCountId, topicCountKeys] = dataFormatter.getPCTMetric('topicCount', 'Count');
 
