@@ -1,8 +1,8 @@
 import {expect} from 'chai';
-import SectionFormat from '../../src/server/formatters/Sections';
-import results from '../fixtures/data/section_results';
+import SectionFormat from '../../src/server/formatters/Topics';
+import results from '../fixtures/data/topic_results';
 
-describe('Section Formatter', function() {
+describe('Topic Formatter', function() {
   it('should be a function', function () {
     expect(SectionFormat).to.be.a('function');
   });
@@ -42,8 +42,6 @@ describe('Section Formatter', function() {
       .then((data) => {
         expect(data).to.be.a('object');
         const props = [
-          'articleCount',
-          'topicsCovered',
           'pageViews',
           'genre',
           'sections',
@@ -60,8 +58,8 @@ describe('Section Formatter', function() {
           'internalReferrerTypes',
           'isSubscription',
           'uniqueVisitors',
-          'topicCount',
-          'topicViews'
+          'sectionCount',
+          'sectionViews'
         ];
         for (let i = 0; i < props.length; i++){
           try{
