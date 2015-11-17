@@ -23,7 +23,7 @@ module.exports = {
 
   'Find Article' : function (browser) {
     browser
-      .setValue(searchPage.searchBar, "Google’s removal of BBC article raises censorship fears")
+      .setValue(searchPage.searchBar, "Team VIP wins FT MBA Challenge of 2015")
       .expect.element(searchPage.exampleArticleLink).visible.after(10000);
     browser
       .click(searchPage.exampleArticleLink);
@@ -34,7 +34,7 @@ module.exports = {
       .expect.element(searchPage.exampleExternalArticleLink).visible.after(10000);
 
     browser
-      .assert.title('Lantern - Googles removal of BBC article raises censorship fears')
+      .assert.title('Lantern - Team VIP wins FT MBA Challenge of 2015')
   },
 
   after : function(browser) {

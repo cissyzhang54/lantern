@@ -1,8 +1,8 @@
 var articlePage = require('../pages/article-page.js');
 
-var lanternArticleUrl = 'http://localhost:3000/articles/dd2420be-027d-11e4-91ac-00144feab7de';
-var lanternArticleTitle = 'Lantern - Googles removal of BBC article raises censorship fears';
-var lanternArticleLink = 'http://www.ft.com/cms/s/0/dd2420be-027d-11e4-91ac-00144feab7de.html';
+var lanternArticleUrl = 'http://localhost:3000/articles/4f9b68d0-8713-11e5-9f8c-a8d619fa707c';
+var lanternArticleTitle = 'Lantern - Team VIP wins FT MBA Challenge of 2015';
+var lanternArticleLink = 'http://www.ft.com/cms/s/0/4f9b68d0-8713-11e5-9f8c-a8d619fa707c.html';
 
 module.exports = {
 
