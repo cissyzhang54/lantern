@@ -151,6 +151,7 @@ class SectionView extends React.Component {
             query={query}
             category={'sections'}
             uuid={this.props.params.section}
+            dateRange='historical'
             />
           <Col xs={12}>
             {updating}

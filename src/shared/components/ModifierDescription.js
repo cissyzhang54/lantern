@@ -7,15 +7,18 @@ export default class ModifierDescription extends React.Component {
   }
 
   render() {
-    let articleCount = this.props.articleCount;
-    let comparator = this.props.comparator;
-    let formattedArticleCount = articleCount ? articleCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '';
-    let text = `The comparison includes ${formattedArticleCount} '${comparator}' articles`
-    let description = comparator ? text : '';
+    let articleCount = this.props.articleCount || {};
+    let comparator = this.props.comparator || {};
+    let text = '';
+
+    if(typeof articleCount !== 'object' && comparator) {
+      let formattedArticleCount = articleCount ? articleCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '';
+      text = `The comparison includes ${formattedArticleCount} '${comparator}' articles`
+    }
 
     return (
         <p data-component='modifierDescription'>
-          {description}
+          {text}
         </p>
     );
   }

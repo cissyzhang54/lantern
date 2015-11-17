@@ -8,7 +8,7 @@ class TopicQueryStore {
   constructor() {
     this.query = {
       topic: null,
-      dateFrom: null,
+      dateFrom: moment().subtract(29,'days').toISOString(),
       dateTo: moment(),
       filters: {}
     }

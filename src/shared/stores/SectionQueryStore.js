@@ -8,7 +8,7 @@ class SectionQueryStore {
   constructor() {
     this.query = {
       section: null,
-      dateFrom: null,
+      dateFrom: moment().subtract(29,'days').toISOString(),
       dateTo: moment(),
       filters: {}
     }

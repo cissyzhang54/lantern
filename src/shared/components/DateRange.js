@@ -26,19 +26,29 @@ export default class DateRange extends React.Component {
         monthNames: moment.monthsShort(),
         firstDay: moment.localeData().firstDayOfWeek()
       },
-      ranges: {
+      startDate: moment(props.startDate),
+      endDate: moment(props.endDate)
+    };
+    if (moment(this.state.minDate).isAfter(this.state.startDate, 'day')){
+      this.state.startDate = this.state.minDate;
+    }
+    if (this.props.dateRange === 'published') {
+      this.state.ranges = {
         'Publish Day': [moment(props.startDate), moment(props.startDate)],
         'First 2 days': [moment(props.startDate), moment(props.startDate).add(1, 'days')],
         'First 3 days': [moment(props.startDate), moment(props.startDate).add(2, 'days')],
         'First 7 days': [moment(props.startDate), moment(props.startDate).add(6, 'days')],
         'First 30 days': [moment(props.startDate), moment(props.startDate).add(29, 'days')],
         'Previous 7 Days': [moment().subtract(6, 'days'), moment()]
-      },
-      startDate: moment(props.startDate),
-      endDate: moment(props.endDate)
-    };
-    if (moment(this.state.minDate).isAfter(this.state.startDate, 'day')){
-      this.state.startDate = this.state.minDate;
+      }
+    } else {
+      this.state.ranges = {
+        'Today': [moment().startOf('day'), moment().endOf('day')],
+        'Yesterday': [moment().subtract(1, 'days'), moment()],
+        'Week To Date': [moment().day(0), moment()],
+        'Last 7 days': [moment().subtract(6, 'days'), moment()],
+        'Last 30 days': [moment().subtract(29, 'days'), moment()],
+      }
     }
   }
 

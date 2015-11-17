@@ -8,7 +8,7 @@ class ArticleQueryStore {
   constructor() {
     this.query = {
       uuid: null,
-      dateFrom: null,
+      dateFrom: moment().subtract(29,'days').toISOString(),
       dateTo: moment(),
       filters: {}
     }
