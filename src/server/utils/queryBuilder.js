@@ -167,6 +167,13 @@ export function sectionComparatorQuery(query){
               to: query.dateTo
             }
           }
+        },
+        {
+          range: {
+            time_since_publish : {
+              gte : 0
+            }
+          }
         }
       ],
       should :  mapFilters(query)
@@ -209,8 +216,8 @@ export function sectionQuery(query){
   }
 
   let matchDates = {
-    "range" : {
-      "initial_publish_date" : {
+    range : {
+      initial_publish_date : {
         from: query.dateFrom,
         to: query.dateTo
       }

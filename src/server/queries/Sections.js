@@ -10,9 +10,19 @@ export default function SectionQuery(query) {
 
   let sectionQuery = build.sectionQuery(query)
 
+  let largerThanZeroPublish = {
+    range : {
+      time_since_publish : {
+        gte: 0
+      }
+    }
+  }
+  // this clause ensures no articles with negative publish
+  // date are returned
+  sectionQuery.filtered.query.bool.must.push(largerThanZeroPublish);
+
   let esQuery = {
     query : sectionQuery,
-    size: 1,
     aggs: {
       "page_views_over_time" : {
         "date_histogram" : {

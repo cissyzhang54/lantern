@@ -9,7 +9,6 @@ export default function SectionMetadataComparatorQuery(query) {
     "argument 'query' should be an object");
 
   let sectionComparatorQuery = build.sectionComparatorQuery(query)
-
   let esQuery = {
     query: sectionComparatorQuery,
     size: 1,
