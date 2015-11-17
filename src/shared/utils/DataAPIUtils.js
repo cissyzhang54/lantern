@@ -52,18 +52,22 @@ let DataAPI = {
       } else if (query.category === 'sections'){
         assert.equal(typeof query.section, 'string',
           "property 'publishDate' of argument 'query' must be a string");
+      } else if (query.category === 'topics'){
+        assert.equal(typeof query.topic, 'string',
+          "property 'topic' of argument 'query' must be a string")
       } else {
         assert.ok(false,
-          "property 'category' of argument 'query' must be either 'articles' or 'sections'");
+          "property 'category' of argument 'query' must be either 'articles', 'sections' or 'topics'");
       }
 
       return new Promise(function handlePromise(resolve, reject) {
         let baseUrl = `${config.baseUrl}/api/v0/comparators`;
         let reqParams = `${query.category}/${query.comparatorType}/${query.comparator}`;
-        let reqQuery = []
-        if (query.publishDate) reqQuery.push(`publishDate=${query.publishDate}`)
-        if (query.uuid) reqQuery.push(`uuid=${query.uuid}`)
-        if (query.section) reqQuery.push(`section=${query.section}`)
+        let reqQuery = [];
+        if (query.publishDate) reqQuery.push(`publishDate=${query.publishDate}`);
+        if (query.uuid) reqQuery.push(`uuid=${query.uuid}`);
+        if (query.section) reqQuery.push(`section=${query.section}`);
+        if (query.topic) reqQuery.push(`topic=${query.topic}`);
         if (apiKey) reqQuery.push("apiKey=" + apiKey);
         let url = `${baseUrl}/${reqParams}?${reqQuery.join('&')}`;
         request.post(url)
@@ -178,6 +182,41 @@ let DataAPI = {
           !err && resolve(res.body);
         });
     })
+  },
+
+  getTopicComparatorData(query, apiKey) {
+    assert.equal(typeof query, 'object',
+      "argument 'query' must be an object");
+
+    assert.ok(query.hasOwnProperty('comparator'),
+      "argument 'query' must contain a comparator property");
+
+    assert.equal(typeof query.comparator, 'string',
+      "property 'comparator' of argument 'query' must be a string");
+
+    assert.equal(typeof query.topic, 'string',
+      "property 'topic' of argument 'query' must be a string");
+
+    return new Promise(function handlePromise(resolve, reject) {
+      let baseUrl = `${config.baseUrl}/api/v0/comparators`;
+      let reqParams = `topics/${query.comparatorType}/${query.comparator}`;
+      let reqQuery = `topic=${query.topic}`;
+      if (apiKey) {
+        reqQuery += "&apiKey=" + apiKey;
+      }
+      let url = `${baseUrl}/${reqParams}?${reqQuery}`;
+      request.post(url)
+        .send(query)
+        .set('Accept', 'application/json')
+        .end((err, res) => {
+          if (err) {
+            err.queryData = query;
+            err.name = errorName('Comparator', err)
+            reject(err);
+          }
+          !err && resolve(res.body);
+        });
+    });
   },
 
     search(query, from = 0, apiKey = '') {

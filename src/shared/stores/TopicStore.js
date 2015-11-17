@@ -31,7 +31,7 @@ class TopicStore {
   }
 
   loadData(store) {
-    if (!store.query.topic) return
+    if (!store.query.topic) return;
     this.getInstance().loadTopicData(store.query);
   }
 

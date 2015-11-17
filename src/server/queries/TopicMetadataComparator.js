@@ -3,15 +3,15 @@ import moment from 'moment';
 
 import * as build from '../utils/queryBuilder'
 
-export default function TopicMetadataQuery(query) {
+export default function TopicMetadataComparatorQuery(query) {
 
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  let topicQuery = build.topicQuery(query)
+  let topicComparatorQuery = build.topicComparatorQuery(query)
 
   let esQuery = {
-    query: topicQuery,
+    query: topicComparatorQuery,
     size: 1,
     aggs: {
       "distinct_articles": {

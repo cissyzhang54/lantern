@@ -24,6 +24,7 @@ export default (
     <Route path="sections/:section" component={SectionView} />
     <Route path="topics/:topic" component={TopicView} />
     <Route path="sections/:section/:comparatorType/:comparator" component={SectionView} />
+    <Route path="topics/:topic/:comparatorType/:comparator" component={TopicView} />
     <Route path="*" name='404' component={Error404}   />
   </Route>
 );

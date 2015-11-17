@@ -279,8 +279,46 @@ export function topicQuery(query){
     filter : filter
   }
 
-  if (query.comparator === 'FT'){
-    filtered.query.bool.must = [matchDates];
+  return {
+    "filtered" : filtered
+  };
+}
+
+export function topicComparatorQuery(query){
+  checkString(query,'topic');
+  checkString(query,'dateFrom');
+  checkString(query,'dateTo');
+  checkString(query,'comparator');
+  checkString(query,'comparatorType');
+
+  let matchTopic = {
+    match : {  topics: query.comparator  }
+  }
+
+  let filter = {
+    bool: {
+      should :  mapFilters(query)
+    }
+  }
+
+  let matchDates = {
+    "range" : {
+      "initial_publish_date" : {
+        from: query.dateFrom,
+        to: query.dateTo
+      }
+    }
+  }
+
+  let matchAll = {
+    bool: {
+      must: [matchDates, matchTopic],
+    }
+  }
+
+  let filtered = {
+    query : matchAll,
+    filter : filter
   }
 
   return {

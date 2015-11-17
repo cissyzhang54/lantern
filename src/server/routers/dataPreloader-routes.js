@@ -23,7 +23,8 @@ router.get(`/articles/:uuid(${UUID_REGEX})`, (req, res, next) => {
 });
 
 router.get(`/articles/:uuid(${UUID_REGEX})/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
-  return getArticleData(req, res).then(() => getComparatorData(req, res))
+  return getArticleData(req, res)
+    .then(() => getComparatorData(req, res))
     .then(() => next())
     .catch((err) => {
       if (err.status) res.status(err.status);
@@ -53,6 +54,16 @@ router.get(`/sections/:section/:comparatorType(${COMPTYPE_REGEX})/:comparator`, 
 router.get(`/topics/:topic`, (req, res, next) => {
   return getTopicData(req, res)
     .then(() => {next()})
+    .catch((err) => {
+      if (err.status) res.status(err.status);
+      next(err);
+    });
+});
+
+router.get(`/topics/:topic/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
+  return getTopicData(req, res)
+    .then(() => getComparatorData(req, res))
+    .then(() => next())
     .catch((err) => {
       if (err.status) res.status(err.status);
       next(err);
@@ -167,6 +178,17 @@ function getTopicData(req, res){
         "TopicQueryStore" : {
           query: {
             topic: decode(req.params.topic),
+            dateFrom: dateFrom,
+            dateTo: dateTo,
+            filters: {}
+          }
+        },
+        "ComparatorQueryStore" : {
+          query: {
+            category: 'topics',
+            topic: decode(req.params.topic),
+            comparator: decode(req.params.comparator),
+            comparatorType: decode(req.params.comparatorType),
             dateFrom: dateFrom,
             dateTo: dateTo,
             filters: {}
