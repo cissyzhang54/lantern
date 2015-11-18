@@ -12,7 +12,7 @@ const TestUtils = React.addons.TestUtils;
 describe('Search component', function() {
   let search;
 
-  it('Should render the search field, with an empty results list', function() {
+  it('Should render the search field, with no results', function() {
     search = createComponent(Search, {
       total: 0,
       results:[]
@@ -20,20 +20,20 @@ describe('Search component', function() {
     let searchResults = search.props.children[3];
     expect(TestUtils.isElementOfType(search.props.children[0], Logo)).to.equal(true);
     expect(TestUtils.isElementOfType(search.props.children[1], Input)).to.equal(true);
-    expect(TestUtils.isElementOfType(searchResults, ListGroup)).to.equal(true);
-    expect(searchResults.props.children.length).to.equal(0)
+    expect(TestUtils.isElementOfType(searchResults, ListGroup)).to.equal(false);
   });
 
 
   it('Should render results', function() {
     search = createComponent(Search, {
       results:[
-        {title:'dude',article_uuid:'wheres',authors:['my car?']},
-        {title:'bond',article_uuid:'james',authors:['bond']}
+        {title:'dude',article_uuid:'wheres',authors:['my car?'],sections:['film'], topics:['hangover']},
+        {title:'bond',article_uuid:'james',authors:['bond'],sections:['film'], topics:['nationalism']}
       ],
       query: 'film quotes'
     });
-    let searchResults = search.props.children[3];
+
+    let searchResults = search.props.children[5].props.children[1];
     expect(TestUtils.isElementOfType(searchResults, ListGroup)).to.equal(true);
     expect(searchResults.props.children.length).to.equal(2)
   });
