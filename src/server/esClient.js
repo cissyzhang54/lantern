@@ -1,4 +1,5 @@
 import elasticsearch from 'elasticsearch';
+import awsElasticSearchConnector from 'http-aws-es';
 import ArticleComparatorQuery from './queries/ArticleComparator';
 import SectionsQuery from './queries/Sections';
 import SectionComparatorQuery from './queries/SectionComparator';
@@ -15,15 +16,15 @@ import LoggerFactory from './logger';
 import moment from 'moment';
 import calculateIndices from './utils/calculateIndices.js';
 
+
 var client = elasticsearch.Client({
-  host: [
-    {
-      host: process.env.ES_HOST,
-      port: process.env.ES_PORT,
-      auth: process.env.ES_USER + ':' + process.env.ES_PASS,
-      protocol: 'https'
-    }
-  ],
+  hosts: process.env.ES_AWS_HOST,
+  connectionClass: awsElasticSearchConnector,
+  amazonES: {
+    region: process.env.ES_AWS_REGION,
+    accessKey: process.env.ES_AWS_ACCESS_KEY_ID,
+    secretKey: process.env.ES_AWS_SECRET_ACCESS_KEY
+  },
   log: LoggerFactory('elasticsearch')
 });
 

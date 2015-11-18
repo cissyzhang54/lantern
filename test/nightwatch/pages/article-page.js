@@ -32,7 +32,7 @@ module.exports = {
   // Header Section
   sectionHeader: {
     articleTitle: {
-      name: 'Googles removal of BBC article raises censorship fears',
+      name: 'Team VIP wins FT MBA Challenge of 2015',
       selectors: {
         container: 'header a[href]',
         dataComponent: '',

@@ -21,10 +21,10 @@ The following keys all need to placed with corresponding values within a `.env` 
 - OPENREDIS_URL - URL to Redis DB. Defaults to `redis://:test@localhost:6379` Ignored if USE_MEMORY_STORE set to true.
 
 #### Elastic Search
-- ES_HOST
-- ES_PORT
-- ES_USER
-- ES_PASS
+- ES_AWS_HOST
+- ES_AWS_REGION
+- ES_AWS_ACCESS_KEY_ID
+- ES_AWS_SECRET_ACCESS_KEY
 - ES_INDEX_ROOT
 - ES_SEARCH_INDEX_ROOT
 - ES_EVENT_INDEX_ROOT
