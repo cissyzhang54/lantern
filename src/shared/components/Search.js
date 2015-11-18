@@ -18,6 +18,16 @@ import moment from 'moment';
 
 const MIN_SEARCH_LENGTH = 2;
 
+const homeSections = [
+  'UK',
+  'World',
+  'Companies',
+  'Markets',
+  'Lex',
+  'Comment',
+  'Life & Arts'
+];
+
 export default class Search extends React.Component {
 
   constructor(props) {
@@ -97,6 +107,18 @@ export default class Search extends React.Component {
       textAlign: 'center'
     };
 
+    const homeLinkStyle = {
+      marginRight: '10px',
+      marginLeft: '10px',
+      marginBottom: '5px',
+      marginTop: '5px',
+      padding: '10px',
+      border: '1px solid #ddd',
+      borderRadius: '4px',
+      display: 'inline-block',
+      textAlign: 'center'
+    }
+
     let sections = (this.props.sections || [])
     .map((section, i) => {
       return (
@@ -159,6 +181,30 @@ export default class Search extends React.Component {
       </div>
     );
 
+    let homeSectionsLinks = homeSections.map((section, i) => {
+      return (
+        <Link
+          data-component='homeSectionsLinks'
+          to={'/sections/' + section}
+          key={i}
+          style={homeLinkStyle}
+          >
+          {section}
+        </Link>
+      );
+    });
+
+    let homeSectionsMarkup = (
+      <div style={{
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        marginTop: '20px',
+        marginBottom: '20px'
+        }}>
+        {homeSectionsLinks}
+      </div>
+    )
 
     return (<div data-component='search'>
       <Logo
@@ -176,7 +222,7 @@ export default class Search extends React.Component {
         >
       </Input>
       { additionalInfo }
-      { sections.length ? sectionResults : null}
+      { sections.length ? sectionResults : homeSectionsMarkup}
       { topics.length ? topicResults : null}
       { results.length ? articleResults : null }
      </div>);
