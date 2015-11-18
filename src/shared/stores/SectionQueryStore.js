@@ -3,15 +3,20 @@ import moment from 'moment';
 
 import SectionQueryActions from '../actions/SectionQueryActions';
 
+
+function makeNewQuery() {
+  return {
+    section: null,
+    dateFrom: moment().subtract(29,'days').toISOString(),
+    dateTo: moment(),
+    filters: {}
+  };
+}
+
 class SectionQueryStore {
 
   constructor() {
-    this.query = {
-      section: null,
-      dateFrom: moment().subtract(29,'days').toISOString(),
-      dateTo: moment(),
-      filters: {}
-    }
+    this.query = makeNewQuery();
     this.bindActions(SectionQueryActions);
   }
 
@@ -40,12 +45,7 @@ class SectionQueryStore {
   }
 
   destroy() {
-    this.query = {
-      section: null,
-      dateFrom: null,
-      dateTo: moment(),
-      filters: {}
-    }
+    this.query = makeNewQuery();
   }
 
 }

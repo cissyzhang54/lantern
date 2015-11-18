@@ -3,15 +3,19 @@ import moment from 'moment';
 
 import ArticleQueryActions from '../actions/ArticleQueryActions';
 
+function makeNewQuery() {
+  return {
+    uuid: null,
+    dateFrom: moment().subtract(29,'days').toISOString(),
+    dateTo: moment(),
+    filters: {}
+  }
+}
+
 class ArticleQueryStore {
 
   constructor() {
-    this.query = {
-      uuid: null,
-      dateFrom: moment().subtract(29,'days').toISOString(),
-      dateTo: moment(),
-      filters: {}
-    }
+    this.query = makeNewQuery();
     this.bindActions(ArticleQueryActions);
   }
 
@@ -40,12 +44,7 @@ class ArticleQueryStore {
   }
 
   destroy() {
-    this.query = {
-      uuid: null,
-      dateFrom: null,
-      dateTo: moment(),
-      filters: {}
-    }
+    this.query = makeNewQuery();
   }
 
 }

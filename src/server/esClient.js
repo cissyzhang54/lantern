@@ -70,6 +70,7 @@ export function runArticleQuery(queryData) {
 
 export function runArticleComparatorQuery(queryData) {
   let queryError;
+
   if (queryError = queryDataError('comparator', queryData)){
     return Promise.reject(queryError);
   }

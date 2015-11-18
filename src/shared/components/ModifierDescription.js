@@ -7,11 +7,11 @@ export default class ModifierDescription extends React.Component {
   }
 
   render() {
-    let articleCount = this.props.articleCount || {};
-    let comparator = this.props.comparator || {};
+    let articleCount = typeof this.props.articleCount  == 'number' ? this.props.articleCount  : false;
+    let comparator = typeof this.props.comparator  == 'string' ? this.props.comparator  : false;
     let text = '';
 
-    if(typeof articleCount !== 'object' && comparator) {
+    if(articleCount && comparator) {
       let formattedArticleCount = articleCount ? articleCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '';
       text = `The comparison includes ${formattedArticleCount} '${comparator}' articles`
     }

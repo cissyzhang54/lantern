@@ -13,14 +13,16 @@ export default function SectionMetadataComparatorQuery(query) {
     query: sectionComparatorQuery,
     size: 1,
     aggs: {
+      articles_published_over_time: {
+        date_histogram: {
+          field: "initial_publish_date",
+          interval: calculateInterval(query),
+          min_doc_count: 0
+        }
+      },
       "topics_covered": {
         "cardinality": {
           "field": "topics"
-        }
-      },
-      "distinct_articles": {
-        "cardinality": {
-          "field": "article_uuid"
         }
       },
       "topic_count": {
@@ -32,4 +34,20 @@ export default function SectionMetadataComparatorQuery(query) {
     }
   };
   return esQuery
+}
+
+function calculateInterval(query) {
+  let from = moment(query.dateFrom);
+  let to = moment(query.dateTo);
+  let span = moment.duration(to - from);
+
+  if (span <= moment.duration(1, 'day')) {
+    return 'hour';
+  } else if (span <= moment.duration(1, 'week')) {
+    return 'day';
+  } else if (span <= moment.duration(6, 'month')) {
+    return 'day';
+  } else {
+    return 'week';
+  }
 }

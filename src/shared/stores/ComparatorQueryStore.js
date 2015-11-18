@@ -4,21 +4,25 @@ import moment from 'moment';
 import ComparatorActions from '../actions/ComparatorActions';
 import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 
+function makeNewQuery () {
+  return {
+    category: null,
+    section: null,
+    topic: null,
+    publishDate: null,
+    uuid: null,
+    dateFrom: moment().subtract(29,'days').toISOString(),
+    dateTo: moment(),
+    comparator: null,
+    comparatorType: null,
+    filters: { }
+  }
+}
+
 class ComparatorQueryStore {
 
   constructor() {
-    this.query = {
-      category: null,
-      section: null,
-      topic: null,
-      publishDate: null,
-      uuid: null,
-      dateFrom: null,
-      dateTo: moment(),
-      comparator: null,
-      comparatorType: null,
-      filters: { }
-    }
+    this.query = makeNewQuery();
     this.bindActions(ComparatorQueryActions);
   }
 
@@ -75,18 +79,7 @@ class ComparatorQueryStore {
   }
 
   destroy() {
-    this.query = {
-      category: null,
-      section: null,
-      topic: null,
-      publishDate: null,
-      uuid: null,
-      dateFrom: null,
-      dateTo: moment(),
-      comparator: null,
-      comparatorType: null,
-      filters: { }
-    }
+    this.query = makeNewQuery();
   }
 
 }

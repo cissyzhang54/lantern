@@ -61,7 +61,8 @@ describe('Section Formatter', function() {
           'isSubscription',
           'uniqueVisitors',
           'topicCount',
-          'topicViews'
+          'topicViews',
+          'articleCount'
         ];
         for (let i = 0; i < props.length; i++){
           try{

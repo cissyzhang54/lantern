@@ -16,7 +16,7 @@ describe ('Header component', function() {
       logoSrc:'http://pinsoftstudios.com/wp-content/uploads/2012/10/pie-chart-fi.jpg'
     });
     const props = header.props;
-    const text = props.children.props.children;
+    const text = props.children.props.children.props.children;
 
     expect(text[0].type).to.equal('h1');
     expect(text[0].props.children.type).to.equal('a');
@@ -34,16 +34,13 @@ describe ('Header component', function() {
       title: 'My component state test title'
     });
     const props = header.props;
-    const text = props.children.props.children;
+    const text = props.children.props.children.props.children;
 
     expect(text[0].type).to.equal('h1');
     expect(text[0].props.children.type).to.equal(undefined);
     expect(text[0].props.children).to.equal('My component state test title');
 
-    expect(text[1].type).to.equal('p');
-    expect(text[1].props.children).to.equal('');
-
-    expect(text[2].type).to.equal('p');
-    expect(text[2].props.children).to.equal('');
+    expect(text[1].type).to.be.undefined;
+    expect(text[2].type).to.be.undefined;
   });
 });

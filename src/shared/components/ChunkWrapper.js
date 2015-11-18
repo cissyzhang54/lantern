@@ -6,9 +6,9 @@ export default class ChunkWrapper extends React.Component {
   render() {
 
     const style = {
-      marginTop: '40px',
-      paddingTop: '10px',
-      borderTop: '1px solid #ccc'
+      paddingTop: '20px',
+      paddingBottom: '20px',
+      borderBottom: '1px solid #ccc'
     };
 
     return (

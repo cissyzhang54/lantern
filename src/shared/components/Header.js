@@ -3,12 +3,13 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import responsiveStyles from '../utils/responsiveStyles';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import ChunkWrapper from './ChunkWrapper.js';
 
 const componentStyles = {
   'default': {
     title: {
       marginTop: 0,
-      marginBottom: "15px",
+      marginBottom: '0',
       textAlign: 'center',
       color: '#333'
     },
@@ -18,10 +19,7 @@ const componentStyles = {
     text: {
       color: '#666',
       display: 'inline-block',
-      margin: 0
-    },
-    header : {
-      'padding': '15px 0',
+      margin: '10px 0 0 0'
     },
     tagStyle : {
       fontSize: '15px',
@@ -65,16 +63,19 @@ export default class Header extends React.Component {
           <Glyphicon glyph="new-window" style={styles.tagStyle} />
         </a>
         let title = url ? link : this.props.title
-        return (
+        let author = this.props.author ? <p style={styles.text}>{this.props.author}</p> : {};
+        let publishDate = this.props.published ? <p style={styles.text} className="pull-right">{this.props.published}</p> : {};
+        return (<ChunkWrapper component='header'>
           <header style={styles.header} className="clearfix" data-component='header' >
             <div style={styles.titleContainer} >
               <h1 style={styles.title}>
                 {title}
               </h1>
-              <p style={styles.text}>{this.props.author}</p>
-              <p style={styles.text} className="pull-right">{this.props.published}</p>
+              {author}
+              {publishDate}
             </div>
           </header>
+          </ChunkWrapper>
         );
     }
 }
