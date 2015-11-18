@@ -137,7 +137,8 @@ export default class Modifier extends React.Component {
             <DateRange
               onChange={this.handleDateRangeChange}
               startDate={this.props.query.dateFrom}
-              endDate={this.props.query.dateTo} />
+              endDate={this.props.query.dateTo}
+              dateRange={this.props.dateRange} />
           </Col>
         </Row>
 

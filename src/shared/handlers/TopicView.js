@@ -107,6 +107,7 @@ class TopicView extends React.Component {
             query={query}
             category={'topics'}
             uuid={this.props.params.topic}
+            dateRange='historical'
             />
           <Col xs={12}>
             {updating}

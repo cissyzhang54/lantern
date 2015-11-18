@@ -150,6 +150,7 @@ class ArticleView extends React.Component {
           renderUserCohort={FeatureFlag.check('article:modifier:filters:UserCohort')}
           query={this.props.comparatorQuery}
           uuid={data.uuid}
+          dateRange='published'
           />
 
           <Col xs={12}>
