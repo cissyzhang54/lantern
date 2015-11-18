@@ -17,9 +17,9 @@
     "postinstall": "npm run build && env $(cat .env) webpack --config webpack.config.prod.js",
     "start": "npm run watch-js & npm run dev-server & env $(cat .env) npm run server",
     "start-debug" : "npm run watch-js & npm run dev-server & npm run server-debug",
+    "start-test" : "env NODE_ENV=test npm start",
     "build": "npm run clean && babel src -d lib --experimental",
-    "functional": "env NODE_ENV=test npm start & sleep 20 && node nightwatch.js -g test/nightwatch/functional --suiteRetries 3",
-    "f-debug": "env NODE_ENV=test npm start & sleep 20 && node nightwatch.js -g test/nightwatch/functional --suiteRetries 3 && killall npm node"
+    "functional": "node nightwatch.js -g test/nightwatch/functional --suiteRetries 3"
   },
   "pre-commit": "unit",
   "author": "Dario Villanueva",
