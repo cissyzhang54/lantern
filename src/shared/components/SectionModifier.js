@@ -83,7 +83,7 @@ export default class Modifier extends React.Component {
     ).concat(
       arrAuthors.map(d => {return {label:d, url:`author/${d}`}})
     )
-
+    
     let count = comparatorData.articleCount || {}
 
     return (

@@ -6,7 +6,9 @@ import SectionComparatorQuery from './queries/SectionComparator';
 import SectionMetadataQuery from './queries/SectionMetadata';
 import SectionMetadataComparatorQuery from './queries/SectionMetadataComparator';
 import TopicQuery from './queries/Topics';
+import TopicComparatorQuery from './queries/TopicComparator';
 import TopicMetadataQuery from './queries/TopicMetadata';
+import TopicMetadataComparatorQuery from './queries/TopicMetadataComparator';
 import ArticlesQuery from './queries/Articles';
 import ArticleEventsQuery from './queries/ArticleEvents';
 import ArticleEventsComparatorQuery from './queries/ArticleEventsComparator';
@@ -228,7 +230,7 @@ function retrieveSectionMetaData(queryData){
 
 function retrieveTopicData(queryData){
   return new Promise((resolve, reject) => {
-    let queryObject = queryData.comparator ? TopicQuery(queryData) : TopicQuery(queryData); //TODO ADD COMPARATOR
+    let queryObject = queryData.comparator ? TopicComparatorQuery(queryData) : TopicQuery(queryData);
     let request = {
       index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
       ignore_unavailable: true,
@@ -246,7 +248,7 @@ function retrieveTopicData(queryData){
 
 function retrieveTopicMetaData(queryData){
   return new Promise((resolve, reject) => {
-    let queryObject = queryData.comparator ? TopicMetadataQuery(queryData) : TopicMetadataQuery(queryData);
+    let queryObject = queryData.comparator ? TopicMetadataComparatorQuery(queryData) : TopicMetadataQuery(queryData);
     let request = {
       index: process.env.ES_SEARCH_INDEX_ROOT,
       ignore_unavailable: true,

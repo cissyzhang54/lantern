@@ -10,6 +10,7 @@ class ComparatorQueryStore {
     this.query = {
       category: null,
       section: null,
+      topic: null,
       publishDate: null,
       uuid: null,
       dateFrom: null,
@@ -32,6 +33,10 @@ class ComparatorQueryStore {
 
   setSection(section) {
     this.query.section = section;
+  }
+
+  setTopic(topic) {
+    this.query.topic = topic;
   }
 
   setPublishDate(publishDate) {
@@ -73,6 +78,7 @@ class ComparatorQueryStore {
     this.query = {
       category: null,
       section: null,
+      topic: null,
       publishDate: null,
       uuid: null,
       dateFrom: null,

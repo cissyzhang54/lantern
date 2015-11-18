@@ -9,6 +9,7 @@ class ComparatorQueryActions {
         'setPublishDate',
         'setUUID',
         'setSection',
+        'setTopic',
         'selectComparator',
         'removeComparator',
         'selectFilter',
