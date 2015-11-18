@@ -28,7 +28,7 @@ export default class Search extends React.Component {
     };
   }
 
-  showSearchResults(){
+  shouldPerformSearch(){
     const val = (this.refs && this.refs.searchinput) ? this.refs.searchinput.getValue() : '';
     return val.length >= MIN_SEARCH_LENGTH;
   }
@@ -48,7 +48,7 @@ export default class Search extends React.Component {
     this.setState({
       query: this.refs.searchinput.getValue()
     });
-    if (this.showSearchResults()) {
+    if (this.shouldPerformSearch()) {
       this.props.search(this.state.query);
     } else {
       this.props.destroy();
@@ -85,8 +85,87 @@ export default class Search extends React.Component {
     </div>
     );
 
+    const blockLinkStyle = {
+      marginRight: '5px',
+      marginBottom: '5px',
+      padding: '10px',
+      border: '1px solid #ddd',
+      borderRadius: '4px',
+      display: 'inline-block',
+      flexGrow: 1,
+      minWidth: '15%',
+      textAlign: 'center'
+    };
+
+    let sections = (this.props.sections || [])
+    .map((section, i) => {
+      return (
+        <Link
+          data-component='sectionResult'
+          to={'/sections/' + section}
+          key={i}
+          style={blockLinkStyle}
+          >
+          {section}
+        </Link>
+      );
+    })
+
+    let topics = (this.props.topics || [])
+    .map((topic, i) => {
+      return (
+        <Link
+          data-component='topicResult'
+          to={'/topics/' + topic}
+          key={i}
+          style={blockLinkStyle}
+          >
+          {topic}
+        </Link>
+      )
+    });
+
+    let sectionResults = (
+      <div>
+        <h2><small>Sections</small></h2>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap'
+          }}>
+          {sections}
+        </div>
+      </div>
+    );
+
+    let topicResults = (
+      <div>
+        <h2><small>Topics</small></h2>
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap'
+          }}>
+          {topics}
+        </div>
+      </div>
+    );
+
+    let articleResults = (
+      <div>
+        <h2><small>Articles</small></h2>
+        <ListGroup>{results}</ListGroup>
+        { (showShowMore) ? showMore : null }
+      </div>
+    );
+
+
     return (<div data-component='search'>
-      <Logo message={isLoading?'Searching...':''} loading={isLoading} search/>
+      <Logo
+        message={isLoading ? 'Searching...' : ''}
+        loading={isLoading}
+        displayLogo={(!(results.length) && !(isLoading))}
+        search/>
       <Input
         ref="searchinput"
         labelClassName='large'
@@ -97,8 +176,9 @@ export default class Search extends React.Component {
         >
       </Input>
       { additionalInfo }
-      <ListGroup>{results}</ListGroup>
-      { (showShowMore) ? showMore : null }
+      { sections.length ? sectionResults : null}
+      { topics.length ? topicResults : null}
+      { results.length ? articleResults : null }
      </div>);
   }
 
@@ -116,3 +196,5 @@ function getAdditionalInfo(props){
   }
   return <ListGroupItem bsStyle={additionalClass} header={additionalMessage} />
 }
+
+

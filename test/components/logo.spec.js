@@ -9,8 +9,8 @@ describe ('LOGO component', function() {
   it ('Should render', function() {
     logo = createComponent(Logo, { });
     const logoContainer = logo.props.children[0]
-    const lantern = logoContainer.props.children[0]
-    const glass = logoContainer.props.children[1]
+    const lantern = logoContainer.props.children
+    const glass = lantern.props.children[1]
     const messages = logo.props.children[1]
 
     expect(lantern.props.className).to.include('lantern');
@@ -22,8 +22,8 @@ describe ('LOGO component', function() {
   it ('Should render with a message ', function() {
     logo = createComponent(Logo, { message: 'i am a test' });
     const logoContainer = logo.props.children[0]
-    const lantern = logoContainer.props.children[0]
-    const glass = logoContainer.props.children[1]
+    const lantern = logoContainer.props.children
+    const glass = lantern.props.children[1]
     const messages = logo.props.children[1]
 
     expect(lantern.props.className).to.include('lantern');
@@ -36,7 +36,7 @@ describe ('LOGO component', function() {
   it ('Should render loading messages', function() {
     logo = createComponent(Logo, { loading: true, message: ['i am a test','and i am loading'] });
     const logoContainer = logo.props.children[0]
-    const lantern = logoContainer.props.children[0]
+    const lantern = logoContainer.props.children
     const glass = logoContainer.props.children[1]
     const messages = logo.props.children[1]
 

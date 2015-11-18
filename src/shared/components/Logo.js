@@ -9,13 +9,19 @@ const style = {
   lineHeight:'3em',
 }
 
-const searchHTML = <div className="magnifying-glass logo">
-  <div className="magnifying-glass__glass"></div>
-  <div className="magnifying-glass__join"></div>
-  <div className="magnifying-glass__rod"></div>
-</div>
+const searchHTML = (
+  <div className="magnifying-glass logo">
+    <div className="magnifying-glass__glass"></div>
+    <div className="magnifying-glass__join"></div>
+    <div className="magnifying-glass__rod"></div>
+  </div>
+);
 
 export default class Logo extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
 
   componentDidMount(){
     let body = document.querySelector('body')
@@ -34,7 +40,7 @@ export default class Logo extends React.Component {
     let message = messages.map(function(str){
       return <div style={style}>{str}</div>
     });
-    return (<div className='logo' data-component='logo'>
+    let logo = (
       <div className="logo-container">
         <div className={classNames.join(' ')}>
           <div className="lantern__circle">
@@ -49,10 +55,24 @@ export default class Logo extends React.Component {
             <div className="lantern__base lantern__base--lupper"></div>
             <div className="lantern__base lantern__base--lower"></div>
           </div>
+          {additionalHTML}
         </div>
-        {additionalHTML}
       </div>
-      {message}
-    </div>);
+    );
+    return (
+      <div
+        className='logo'
+        data-component='logo'>
+        {this.props.displayLogo ? logo : null}
+        {message}
+      </div>);
   }
 }
+
+Logo.propTypes = {
+  displayLogo: React.PropTypes.bool
+};
+
+Logo.defaultProps = {
+  displayLogo : true
+};
