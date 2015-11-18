@@ -60,7 +60,8 @@ router.get('/auth/google/callback',
   });
 
 router.use((err, req, res, next) => {
-  res.redirect('/loginFailed?gotoUrl=' + req.session.gotoUrl);
+  let url = 'https://accounts.google.com/AccountChooser?continue=http%3A%2F%2F' + escape(req.headers.host) + escape(req.session.gotoUrl);
+  res.redirect('/loginFailed?gotoUrl=' + url);
 });
 
 export default router;
