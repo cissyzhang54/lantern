@@ -1,30 +1,38 @@
 var articlePage = require('../pages/article-page.js');
-
-var lanternArticleUrl = 'http://localhost:3000/articles/4f9b68d0-8713-11e5-9f8c-a8d619fa707c';
-var lanternArticleTitle = 'Lantern - Team VIP wins FT MBA Challenge of 2015';
-var lanternArticleLink = 'http://www.ft.com/cms/s/0/4f9b68d0-8713-11e5-9f8c-a8d619fa707c.html';
+var nConcat = require ('../utils/nightwatch-concat.js');
 
 module.exports = {
 
   'Initiate Test': function (browser) {
     console.log("===================================\n" +
-      ">> Starting article-view-comparison.js\n" +
+      ">> Starting article-element-confirm.js\n" +
       "===================================");
 
     browser
-      .url(lanternArticleUrl)
-      .assert.title(lanternArticleTitle)
+      .url(articlePage.exampleArticleUrl)
+      .assert.title(articlePage.exampleArticleTitle)
   },
+
+  // TODO: Assert info tags on each element
 
   'Assert elements in Modifiers Section' : function (browser) {
     assertElementsInSection(browser, 'sectionModifier');
   },
 
   'Assert elements in Header Section' : function (browser) {
-    var sectionHeaderTitle = articlePage.sectionHeader.articleTitle.selectors;
     assertElementsInSection(browser, 'sectionHeader');
-    browser.assert.attributeContains(sectionHeaderTitle.container, 'href', lanternArticleLink,
+
+    currentSection = articlePage.sectionHeader;
+
+    browser
+      .assert.attributeContains(nConcat.dataComponent(articlePage.sectionHeader.articleTitle), 'href', articlePage.exampleArticleLink,
       'href for article title is correct')
+      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articleTitle), 'First general strike since Syriza win brings Greece to standstill',
+      'Article title is "First general strike since Syriza win brings Greece to standstill"')
+      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articleAuthor), 'Kerin Hope',
+      'Article author is "Kerin Hope"')
+      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articlePublished), 'November 12, 2015 1:39 pm',
+      'Article was published "November 12, 2015 1:39 pm"')
   },
 
   'Assert elements in Headline Stats Section' : function (browser) {
@@ -61,19 +69,10 @@ module.exports = {
     assertElementsInSection(browser, 'sectionHow');
   },
 
-
-  'Set Date Range to known quantity' : function (browser) {
-    browser
-  },
-
-  'Compare Time on Page and Page Views to known quantities' : function (browser) {
-    browser
-  },
-
-  after : function(browser) {
+  after : function (browser) {
     browser.end();
     console.log("===================================\n" +
-      ">> Ending article-view-comparison.js\n" +
+      ">> Ending article-element-confirm.js\n" +
       "===================================")
   }
 
@@ -86,9 +85,9 @@ function assertElementsInSection (browser, sectionHeading) {
     if(section.hasOwnProperty(key)) {
       var value = section[key];
       browser
-        .assert.elementPresent(value.selectors.container.concat(value.selectors.dataComponent),
-        '"' + value.name + '" element located')
-        .assert.containsText(value.selectors.container.concat(value.selectors.heading), value.name,
+        .assert.elementPresent(nConcat.dataComponent(value),
+          '"' + value.name + '" element located')
+        .assert.containsText(nConcat.heading(value), value.name,
         '"' + value.name + '" title found')
     }
   }

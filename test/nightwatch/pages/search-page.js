@@ -1,6 +1,10 @@
 
 module.exports = {
 
+  // Links
+  lanternUrl : 'http://localhost:3000',
+  lanternTitle: 'Lantern - Search',
+
   lanternHome: 'ul a svg',
   searchBar: '[type="search"]',
   recentArticles: 'h2 span',
