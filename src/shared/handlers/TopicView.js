@@ -5,6 +5,7 @@ import Row from 'react-bootstrap/lib/Row';
 import connectToStores from 'alt/utils/connectToStores';
 import FeatureFlag from '../utils/featureFlag';
 
+import FormatData from "../utils/formatData";
 import TopicStore from '../stores/TopicStore';
 import TopicQueryStore from '../stores/TopicQueryStore';
 import TopicQueryActions from '../actions/TopicQueryActions';
@@ -20,6 +21,8 @@ import Messaging from '../components/Messaging';
 import SectionModifier from '../components/SectionModifier';
 import SectionHeadlineStats from '../components/SectionHeadlineStats';
 import SectionWho from '../components/SectionWho';
+import DualScaleLineChart from "../components/DualScaleLineChart";
+import ChunkWrapper from "../components/ChunkWrapper";
 
 import moment from 'moment';
 
@@ -100,6 +103,10 @@ class TopicView extends React.Component {
     let comparatorQuery = this.props.comparatorQuery
     let title = (data) ? 'Lantern - ' + this.props.params.topic : '';
 
+    let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
+    let [publishData, publishID, publishKeys] =  dataFormatter.getMetric('publishTimes', 'Articles published');
+    let [readData, readID, readKeys] =  dataFormatter.getMetric('readTimes', 'Articles read');
+
     let headlineStats = {
       uniqueVisitors: {
         metricType: 'integer',
@@ -142,6 +149,26 @@ class TopicView extends React.Component {
               comparatorData={comparatorData}
               config={headlineStats}
               />
+
+            <ChunkWrapper component="ArticlesPublished">
+              <Row>
+                <Col xs={12}>
+                  <h3>Articles Published vs Articles Read for this topic</h3>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12}>
+                  <DualScaleLineChart
+                    leftData={publishData}
+                    rightData={readData}
+                    keys={publishKeys.concat(readKeys)}
+                    categories={[publishID, readID]}
+                    yLabel='Articles published'
+                    y2Label='Articles read'
+                    xLabel='Time' />
+                </Col>
+              </Row>
+            </ChunkWrapper>
           </Col>
 
           <Col xs={12}>

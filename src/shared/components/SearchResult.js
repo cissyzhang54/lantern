@@ -46,7 +46,9 @@ export default class SearchItem extends React.Component {
           {result.title}
         </Link>)}
         >
-        <Row>
+        <Row style={{
+            marginTop: '5px'
+          }}>
           <Col
             xs={4}
             style={{
