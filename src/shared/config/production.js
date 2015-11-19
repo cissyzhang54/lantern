@@ -30,6 +30,7 @@ export default {
     'article:modifier:DateRange' : true,
     'section:who' : true,
     'section:where' : true,
-    'topic:who' : true
+    'topic:who' : true,
+    'topic:where' : true
   }
 };
