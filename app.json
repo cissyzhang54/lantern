@@ -56,7 +56,20 @@
     },
     "NEW_RELIC_LICENSE_KEY": {
       "required":true
+    },
+    "ES_AWS_ACCESS_KEY_ID": {
+      "required":true
+    },
+    "ES_AWS_HOST": {
+      "required":true
+    },
+    "ES_AWS_REGION": {
+      "required":true
+    },
+    "ES_AWS_SECRET_ACCESS_KEY": {
+      "required":true
     }
+
   },
   "addons":[]
 }
