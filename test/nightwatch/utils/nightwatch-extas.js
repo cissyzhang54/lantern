@@ -1,4 +1,4 @@
-var articlePage = require('../pages/article-page.js');
+var nConcat = require('./nightwatch-concat.js');
 
 module.exports = {
 
