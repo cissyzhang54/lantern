@@ -1,24 +1,23 @@
 var searchPage = require('../pages/search-page.js');
 
-var lanternUrl = 'http://localhost:3000';
-var lanternTitle = 'Lantern - Search';
-
 module.exports = {
+
+  // TODO: include new relic stuff
 
   'Initiate Test': function (browser) {
     console.log("===================================\n" +
-      ">> Starting article-load.js\n" +
+      ">> Starting article-find.js\n" +
       "===================================");
 
     browser
-      .url(lanternUrl)
-      .assert.title(lanternTitle)
+      .url(searchPage.lanternUrl)
+      .assert.title(searchPage.lanternTitle)
   },
 
   'Check Elements - home link & search bar' : function (browser) {
     browser
-      .assert.visible(searchPage.lanternHome)
-      .assert.visible(searchPage.searchBar)
+      .assert.visible(searchPage.lanternHome, 'Lantern icon visible')
+      .assert.visible(searchPage.searchBar, 'Lantern search bar visible')
   },
 
   'Find Article' : function (browser) {
@@ -37,10 +36,10 @@ module.exports = {
       .assert.title('Lantern - Team VIP wins FT MBA Challenge of 2015')
   },
 
-  after : function(browser) {
+  after : function (browser) {
     browser.end();
     console.log("===================================\n" +
-      ">> Ending article-load.js\n" +
+      ">> Ending article-find.js\n" +
       "===================================")
   }
 

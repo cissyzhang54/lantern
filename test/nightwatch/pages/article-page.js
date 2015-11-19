@@ -1,6 +1,11 @@
 
 module.exports = {
 
+  // Links
+  exampleArticleUrl : 'http://localhost:3000/articles/69feb35e-893d-11e5-90de-f44762bf9896',
+  exampleArticleTitle: 'Lantern - First general strike since Syriza win brings Greece to standstill',
+  exampleArticleLink: 'http://www.ft.com/cms/s/0/69feb35e-893d-11e5-90de-f44762bf9896.html',
+
   // Modifier Section
   sectionModifier: {
     tags: {
@@ -32,7 +37,7 @@ module.exports = {
   // Header Section
   sectionHeader: {
     articleTitle: {
-      name: 'Team VIP wins FT MBA Challenge of 2015',
+      name: '',
       selectors: {
         container: 'header a[href]',
         dataComponent: '',
@@ -64,7 +69,9 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionHeadlineStats"] div:nth-child(1) > div[class="singleMetric"]',
         dataComponent: ' > p',
-        heading: ' > h3'
+        heading: ' > h3',
+        chevron: ' span[style]:nth-child(1)',
+        percentile: ' span[style]:nth-child(2)'
       }
     },
     pageViews: {
@@ -72,7 +79,9 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionHeadlineStats"] div:nth-child(2) > div[class="singleMetric"]',
         dataComponent: ' > p',
-        heading: ' > h3'
+        heading: ' > h3',
+        chevron: ' span[style]:nth-child(1)',
+        percentile: ' span[style]:nth-child(2)'
       }
     },
     uniqueVisitors: {
@@ -80,7 +89,9 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionHeadlineStats"] div:nth-child(3) > div[class="singleMetric"]',
         dataComponent: ' > p',
-        heading: ' > h3'
+        heading: ' > h3',
+        chevron: ' span[style]:nth-child(1)',
+        percentile: ' span[style]:nth-child(2)'
       }
     },
     scrollDepth: {
@@ -88,7 +99,9 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionHeadlineStats"] div:nth-child(4) > div[class="singleMetric"]',
         dataComponent: ' > p',
-        heading: ' > h3'
+        heading: ' > h3',
+        chevron: ' span[style]:nth-child(1)',
+        percentile: ' span[style]:nth-child(2)'
       }
     }
   },
@@ -105,7 +118,7 @@ module.exports = {
     }
   },
 
-  // Next Sectio
+  // Next Section
   sectionNext: {
     bounceRate: {
       name: 'Bounce-Rate',
@@ -133,7 +146,9 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionInteractiveStats"] div:nth-child(2) > div:nth-child(1) > div[class="singleMetric"]',
         dataComponent: ' span:nth-child(1)',
-        heading: ' h3'
+        heading: ' h3',
+        chevron: ' span[style]:nth-child(1)',
+        percentile: ' span[style]:nth-child(2)'
       }
     },
     socialShares: {
@@ -141,7 +156,9 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionInteractiveStats"] div:nth-child(2) > div:nth-child(2) > div[class="singleMetric"]',
         dataComponent: ' span:nth-child(1)',
-        heading: ' h3'
+        heading: ' h3',
+        chevron: ' span[style]:nth-child(1)',
+        percentile: ' span[style]:nth-child(2)'
       }
     },
     commentsViewed: {
@@ -149,7 +166,9 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionInteractiveStats"] div:nth-child(3) > div:nth-child(1) > div[class="singleMetric"]',
         dataComponent: ' span:nth-child(1)',
-        heading: ' h3'
+        heading: ' h3',
+        chevron: ' span[style]:nth-child(1)',
+        percentile: ' span[style]:nth-child(2)'
       }
     },
     commentsPosted: {
@@ -157,7 +176,9 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionInteractiveStats"] div:nth-child(3) > div:nth-child(2) > div[class="singleMetric"]',
         dataComponent: ' span:nth-child(1)',
-        heading: ' h3'
+        heading: ' h3',
+        chevron: ' span[style]:nth-child(1)',
+        percentile: ' span[style]:nth-child(2)'
       }
     },
     subscriptions: {
@@ -165,7 +186,9 @@ module.exports = {
       selectors: {
         container: 'div[data-component="sectionInteractiveStats"] div:nth-child(3) > div:nth-child(3) > div[class="singleMetric"]',
         dataComponent: ' span:nth-child(1)',
-        heading: ' h3'
+        heading: ' h3',
+        chevron: ' span[style]:nth-child(1)',
+        percentile: ' span[style]:nth-child(2)'
       }
     },
     linkCategory: {
