@@ -23,6 +23,7 @@ import SectionHeadlineStats from '../components/SectionHeadlineStats';
 import SectionWho from '../components/SectionWho';
 import DualScaleLineChart from "../components/DualScaleLineChart";
 import ChunkWrapper from "../components/ChunkWrapper";
+import SectionWhere from '../components/SectionWhere';
 
 import moment from 'moment';
 
@@ -176,6 +177,13 @@ class TopicView extends React.Component {
               data={data}
               comparatorData={comparatorData}
               renderWho={FeatureFlag.check('topic:who')}
+              />
+          </Col>
+          <Col xs={12}>
+            <SectionWhere
+              data={data}
+              comparatorData={comparatorData}
+              renderWhere={FeatureFlag.check('topic:where')}
               />
           </Col>
         </Col>
