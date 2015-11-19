@@ -29,6 +29,7 @@ export default {
     'article:modifier:filters:Device' : true,
     'article:modifier:DateRange' : true,
     'section:who' : true,
-    'section:where' : true
+    'section:where' : true,
+    'topic:who' : true
   }
 };
