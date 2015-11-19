@@ -3,6 +3,7 @@ import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import connectToStores from 'alt/utils/connectToStores';
+import FeatureFlag from '../utils/featureFlag';
 
 import TopicStore from '../stores/TopicStore';
 import TopicQueryStore from '../stores/TopicQueryStore';
@@ -18,8 +19,9 @@ import Header from '../components/Header';
 import Messaging from '../components/Messaging';
 import SectionModifier from '../components/SectionModifier';
 import SectionHeadlineStats from '../components/SectionHeadlineStats';
+import SectionWho from '../components/SectionWho';
 
-import moment from 'moment'
+import moment from 'moment';
 
 function decode(uri){
   return uri ? decodeURI(uri) : null
@@ -139,6 +141,14 @@ class TopicView extends React.Component {
               data={data}
               comparatorData={comparatorData}
               config={headlineStats}
+              />
+          </Col>
+
+          <Col xs={12}>
+            <SectionWho
+              data={data}
+              comparatorData={comparatorData}
+              renderWho={FeatureFlag.check('topic:who')}
               />
           </Col>
         </Col>
