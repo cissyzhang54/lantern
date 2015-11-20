@@ -24,6 +24,7 @@ import SectionWho from '../components/SectionWho';
 import DualScaleLineChart from "../components/DualScaleLineChart";
 import ChunkWrapper from "../components/ChunkWrapper";
 import SectionWhere from '../components/SectionWhere';
+import BarChart from '../components/BarChart.js';
 
 import moment from 'moment';
 
@@ -108,6 +109,10 @@ class TopicView extends React.Component {
     let [publishData, publishID, publishKeys] =  dataFormatter.getMetric('publishTimes', 'Articles published');
     let [readData, readID, readKeys] =  dataFormatter.getMetric('readTimes', 'Articles read');
 
+    let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrerTypes', 'Views');
+    let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views');
+    let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views');
+
     let headlineStats = {
       uniqueVisitors: {
         metricType: 'integer',
@@ -170,14 +175,54 @@ class TopicView extends React.Component {
                 </Col>
               </Row>
             </ChunkWrapper>
-          </Col>
 
-          <Col xs={12}>
             <SectionWho
               data={data}
               comparatorData={comparatorData}
               renderWho={FeatureFlag.check('topic:who')}
               />
+
+            <ChunkWrapper component="section-referrers">
+              <Row>
+                <Col xs={12}>
+                  <h3>Where do the users come from?</h3>
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={12} sm={4}>
+                  <h4>External Sources</h4>
+                  <BarChart
+                    data={refData}
+                    keys={refKeys}
+                    category={refID}
+                    yLabel="Page Views"
+                    xLabel="Referrer"
+                    usePercentages={true} />
+                </Col>
+
+                <Col xs={12} sm={4}>
+                  <h4>Social Network Breakdown</h4>
+                  <BarChart
+                    data={socialData}
+                    keys={socialKeys}
+                    category={socialID}
+                    yLabel="Page Views"
+                    xLabel="Social Network"
+                    usePercentages={true}  />
+                </Col>
+
+                <Col xs={12} sm={4}>
+                  <h4>Internal Referrer Types</h4>
+                  <BarChart
+                    data={internalData}
+                    keys={internalKeys}
+                    category={internalID}
+                    yLabel="Page Views"
+                    xLabel="Referrer"
+                    usePercentages={true} />
+                </Col>
+              </Row>
+            </ChunkWrapper>
           </Col>
           <Col xs={12}>
             <SectionWhere
