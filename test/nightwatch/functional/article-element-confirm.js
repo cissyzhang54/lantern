@@ -1,5 +1,6 @@
 var articlePage = require('../pages/article-page.js');
 var nConcat = require ('../utils/nightwatch-concat.js');
+var nExtras = require ('../utils/nightwatch-extas.js');
 
 module.exports = {
 
@@ -16,11 +17,11 @@ module.exports = {
   // TODO: Assert info tags on each element
 
   'Assert elements in Modifiers Section' : function (browser) {
-    assertElementsInSection(browser, 'sectionModifier');
+    nExtras.assertElementsInSection(browser, articlePage.sectionModifier);
   },
 
   'Assert elements in Header Section' : function (browser) {
-    assertElementsInSection(browser, 'sectionHeader');
+    nExtras.assertElementsInSection(browser, articlePage.sectionHeader);
 
     currentSection = articlePage.sectionHeader;
 
@@ -37,36 +38,36 @@ module.exports = {
 
   'Assert elements in Headline Stats Section' : function (browser) {
     // TODO: word count needs to be finished by data team
-    assertElementsInSection(browser, 'sectionHeadline');
+    nExtras.assertElementsInSection(browser, articlePage.sectionHeadline);
   },
 
   'Assert elements in When Section' : function (browser) {
-    assertElementsInSection(browser, 'sectionWhen');
+    nExtras.assertElementsInSection(browser, articlePage.sectionWhen);
   },
 
   'Assert elements in Next Section' : function (browser) {
-    assertElementsInSection(browser, 'sectionNext');
+    nExtras.assertElementsInSection(browser, articlePage.sectionNext);
   },
 
   'Assert elements in Interactive Stats Section' : function (browser) {
     // TODO:  link category and social network in interactive stats section needs to be finished by data team
-    assertElementsInSection(browser, 'sectionInteractive');
+    nExtras.assertElementsInSection(browser, articlePage.sectionInteractive);
   },
 
   'Assert elements in Referrers Section' : function (browser) {
-    assertElementsInSection(browser, 'sectionReferrers');
+    nExtras.assertElementsInSection(browser, articlePage.sectionReferrers);
   },
 
   'Assert elements in Who Section' : function (browser) {
-    assertElementsInSection(browser, 'sectionWho');
+    nExtras.assertElementsInSection(browser, articlePage.sectionWho);
   },
 
   'Assert elements in Where Section' : function (browser) {
-    assertElementsInSection(browser, 'sectionWhere');
+    nExtras.assertElementsInSection(browser, articlePage.sectionWhere);
   },
 
   'Assert elements in How Section' : function (browser) {
-    assertElementsInSection(browser, 'sectionHow');
+    nExtras.assertElementsInSection(browser, articlePage.sectionHow);
   },
 
   after : function (browser) {
@@ -77,18 +78,3 @@ module.exports = {
   }
 
 };
-
-function assertElementsInSection (browser, sectionHeading) {
-  var section = articlePage[sectionHeading];
-
-  for (var key in section){
-    if(section.hasOwnProperty(key)) {
-      var value = section[key];
-      browser
-        .assert.elementPresent(nConcat.dataComponent(value),
-          '"' + value.name + '" element located')
-        .assert.containsText(nConcat.heading(value), value.name,
-        '"' + value.name + '" title found')
-    }
-  }
-}

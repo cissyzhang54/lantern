@@ -7,8 +7,10 @@ var cookiesToFind= 16;
 var funcs = [];
 
 module.exports = {
+
   writeCookies : writeCookies,
   loadGoogleCookies : loadGoogleCookies
+
 };
 
 function writeCookies (browser, numberOfTries) {
