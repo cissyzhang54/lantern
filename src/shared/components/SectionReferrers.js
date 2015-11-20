@@ -5,11 +5,17 @@ import BarChart from '../components/BarChart.js';
 import Table from '../components/Table';
 import FormatData from "../utils/formatData";
 import ChunkWrapper from './ChunkWrapper.js';
-
+import Url from 'url';
 
 function getReferrerUrls(data, i) {
   const maxLen = 60;
-  const displayString = data[0].length > maxLen ? data[0].substr(0, maxLen) + '…' : data[0];
+
+  var parsed = Url.parse(data[0]);
+  let displayString = data[0].length > maxLen ? data[0].substr(0, maxLen) + '…' : data[0];
+
+  if (!/ft.com/.test(parsed.hostname)) {
+    displayString = displayString.split('?')[0];
+  }
   let url = displayString.indexOf('http') < 0 ? displayString : (
     <a target="_blank" href={data[0]}>
       {displayString}
