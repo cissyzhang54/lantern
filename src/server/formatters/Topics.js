@@ -21,7 +21,6 @@ export default function TopicDataFormatter(data) {
 
   return new Promise((resolve, reject) => {
     try {
-      debugger;
       let [metaData, topicData] = data;
       let results = {genre:[], sections:[], topics:[]};
       let metaFields = ['articleCount', 'sectionsCovered', 'sectionCount', 'publishTimes'];
