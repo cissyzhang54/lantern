@@ -8,6 +8,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
 import ChunkWrapper from './ChunkWrapper.js';
+import explanations from '../strings/explanations.js';
 
 const styles = {
   infoIcon : {
@@ -61,7 +62,7 @@ export default class SectionWhere extends React.Component {
               placement="bottom"
               overlay={
                 <Popover id="tag-description">
-                    <p>Bounce rate is the number of users that exited the FT after only reading this article</p>
+                    <p>{explanations.sections.bounceRate}</p>
                 </Popover>
                 }
               >
