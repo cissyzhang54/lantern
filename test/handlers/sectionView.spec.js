@@ -27,12 +27,14 @@ describe ('SectionView Handler', function() {
   it ('Should render section view handler', function() {
     SectionStoreStub.returns({ data: { title:'test me', readTimes: [], topicCount: [], topicViews : [], referrerTypes: [], socialReferrers: [], internalReferrerTypes: [], publishTimes: [] } });
     SectionQueryStoreStub.returns({ query:{ section: 'Financials' } });
+
     let sectionView = createAltWrappedComponent(SectionView, {
       params:{section:'test-section'}
     });
+
     const props = sectionView.props;
     const divContainer = props.children;
-    const sectionModifier = divContainer.props.children[0];
+    const sectionModifier = divContainer.props.children[0].props.children;
     const col2 = divContainer.props.children[1];
     const header = col2.props.children[1];
 

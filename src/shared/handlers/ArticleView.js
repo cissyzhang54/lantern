@@ -155,18 +155,20 @@ class ArticleView extends React.Component {
     return (<DocumentTitle title={title}>
       <div>
 
-        <SectionModifier
-          data={data}
-          comparatorData={comparatorData}
-          comparatorQuery={this.props.comparatorQuery}
-          renderDevice={FeatureFlag.check('article:modifier:filters:Device')}
-          renderRegion={FeatureFlag.check('article:modifier:filters:Region')}
-          renderReferrers={FeatureFlag.check('article:modifier:filters:Referrers')}
-          renderUserCohort={FeatureFlag.check('article:modifier:filters:UserCohort')}
-          query={this.props.comparatorQuery}
-          uuid={data.uuid}
-          dateRange='published'
-          />
+        <ChunkWrapper component="modifier">
+          <SectionModifier
+            data={data}
+            comparatorData={comparatorData}
+            comparatorQuery={this.props.comparatorQuery}
+            renderDevice={FeatureFlag.check('article:modifier:filters:Device')}
+            renderRegion={FeatureFlag.check('article:modifier:filters:Region')}
+            renderReferrers={FeatureFlag.check('article:modifier:filters:Referrers')}
+            renderUserCohort={FeatureFlag.check('article:modifier:filters:UserCohort')}
+            query={this.props.comparatorQuery}
+            uuid={data.uuid}
+            dateRange='published'
+            />
+        </ChunkWrapper>
 
         <ChunkWrapper component="header">
 

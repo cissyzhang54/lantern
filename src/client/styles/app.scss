@@ -1,11 +1,8 @@
 @import "reset";
+@import "global";
 @import "c3-charts";
 @import "logo";
 @import "nav";
 @import "comparators";
 @import "../../shared/lib/daterangepicker.css";
 @import "../../shared/lib/react-select.css";
-
-html, body {
-  overflow-x : hidden;
-}

@@ -160,7 +160,8 @@ class TopicView extends React.Component {
 
     return(<DocumentTitle title={title}>
       <div>
-          <SectionModifier
+          <ChunkWrapper component="modifier">
+            <SectionModifier
             data={data}
             comparatorData={comparatorData}
             comparatorQuery={this.props.comparatorQuery}
@@ -173,6 +174,7 @@ class TopicView extends React.Component {
             uuid={this.props.params.topic}
             dateRange='historical'
             />
+          </ChunkWrapper>
           <ChunkWrapper component="header">
             {updating}
 

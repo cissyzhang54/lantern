@@ -34,7 +34,7 @@ describe ('TopicView Handler', function() {
 
     const props = topicView.props;
     const divContainer = props.children;
-    const sectionModifier = divContainer.props.children[0];
+    const sectionModifier = divContainer.props.children[0].props.children;
     const col2 = divContainer.props.children[1];
     const header = col2.props.children[1];
 

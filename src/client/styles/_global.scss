@@ -1,0 +1,46 @@
+body{
+  font-family: 'Work Sans', sans-serif;
+  max-width: 1000px;
+  margin: 0 auto;
+  color: #333;
+}
+#chartContainer {
+  min-height: 320px;
+}
+#chartContainer svg {
+  font-family: 'Work Sans', sans-serif;
+}
+a {
+  color: #003399;
+}
+img {
+  max-width:100%;
+}
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+#react-app {
+  margin: 10px 1.575%;
+}
+.form-group {
+  margin-bottom: 6px;
+}
+@media (max-width: 500px) {
+  body{
+    font-size: 12px;
+  }
+  h1{
+    font-size: 24px;
+  }
+  h2{
+    font-size: 20px;
+  }
+}
+
+.Select.is-multi {
+  .Select-item {
+    display: flex;
+  }
+}
