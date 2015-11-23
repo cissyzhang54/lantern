@@ -8,7 +8,9 @@ import ArticleDataFormatter from '../formatters/Articles';
 import ArticleComparatorDataFormatter from '../formatters/ArticleComparators';
 import SearchDataFormatter from '../formatters/Search';
 import SectionDataFormatter from '../formatters/Sections';
+import SectionComparatorDataFormatter from '../formatters/SectionComparators';
 import TopicDataFormatter from '../formatters/Topics';
+import TopicComparatorDataFormatter from '../formatters/TopicComparators';
 
 const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
 const CATEGORY_REGEX= 'articles|sections|topics|authors';
@@ -101,7 +103,7 @@ function getComparatorData(req, res, next) {
       break;
     case 'sections':
       esClient.runSectionQuery(query)
-        .then((response) => SectionDataFormatter(response) )
+        .then((response) => SectionComparatorDataFormatter(response) )
         .then((formattedData) => res.json(formattedData) )
         .catch((error) => {
           res.status(ErrorHandler.statusCode(error.name))
@@ -110,7 +112,7 @@ function getComparatorData(req, res, next) {
       break;
     case 'topics':
       esClient.runTopicQuery(query)
-        .then((response) => TopicDataFormatter(response) )
+        .then((response) => TopicComparatorDataFormatter(response) )
         .then((formattedData) => res.json(formattedData) )
         .catch((error) => {
           res.status(ErrorHandler.statusCode(error.name))
