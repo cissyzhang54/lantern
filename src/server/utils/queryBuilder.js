@@ -156,37 +156,31 @@ export function sectionComparatorQuery(query){
   checkString(query,'section');
   checkString(query,'dateFrom');
   checkString(query,'dateTo');
+  checkString(query,'comparator');
+  checkString(query,'comparatorType');
+
+  let matchSection = {
+    match : {  sections: query.comparator  }
+  }
 
   let filter = {
     bool: {
-      must : [
-        {
-          range : {
-            "initial_publish_date" : {
-              from: query.dateFrom,
-              to: query.dateTo
-            }
-          }
-        },
-        {
-          range: {
-            time_since_publish : {
-              gte : 0
-            }
-          }
-        }
-      ],
       should :  mapFilters(query)
+    }
+  }
+
+  let matchDates = {
+    "range" : {
+      "initial_publish_date" : {
+        from: query.dateFrom,
+        to: query.dateTo
+      }
     }
   }
 
   let matchAll = {
     bool: {
-      "must_not": {
-        "match": {
-          "sections": query.section
-        }
-      }
+      must: [matchDates, matchSection],
     }
   }
 

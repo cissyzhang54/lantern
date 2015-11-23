@@ -46,6 +46,9 @@ export default class Modifier extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {};
+    this.state.isSectionOrTopic = ['sections', 'topics'].indexOf(this.props.category) >= 0;
+    this.state.isGlobalFTComparator = this.props.comparatorQuery.comparatorType === 'global';
   }
 
   handleDateRangeChange (dates) {
@@ -53,10 +56,24 @@ export default class Modifier extends React.Component {
       from: dates.startDate.format('YYYY-MM-DD'),
       to: dates.endDate.format('YYYY-MM-DD')
     }
+
     TopicQueryActions.selectDateRange(updatedDates);
     SectionQueryActions.selectDateRange(updatedDates);
     ArticleQueryActions.selectDateRange(updatedDates);
-    ComparatorQueryActions.selectDateRange(updatedDates);
+
+    if (this.state.isSectionOrTopic && !this.state.isGlobalFTComparator) {
+      // Topics and sections
+      let span = dates.endDate - dates.startDate;
+
+      let topicAndSectionUpdatedDates = {
+        from: dates.startDate.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD'),
+        to: dates.endDate.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD')
+      }
+      ComparatorQueryActions.selectDateRange(topicAndSectionUpdatedDates);
+    } else {
+      ComparatorQueryActions.selectDateRange(updatedDates);
+    }
+
   }
 
   handleFilterChange (selectedFilters) {
@@ -67,7 +84,6 @@ export default class Modifier extends React.Component {
   }
 
   render() {
-
     let data = this.props.data
     if (!Object.keys(data).length) return (<div></div>);
     let comparatorData = this.props.comparatorData
@@ -85,7 +101,11 @@ export default class Modifier extends React.Component {
       arrAuthors.map(d => {return {label:d, url:`author/${d}`}})
     )
 
-    let count = comparatorData.articleCount || {}
+    this.props.category === 'sections' ? tags.push({label: this.props.query.section, url : `section/${this.props.query.section}`}) : {};
+    this.props.category === 'topics' ? tags.push({label: this.props.query.topic, url : `topic/${this.props.query.topic}`}) : {};
+
+    let count = typeof comparatorData.articleCount == 'number' ? comparatorData.articleCount : {}
+
 
     return (
       <div data-component='sectionModifier' style={styles.modifierWrapper}>
@@ -110,9 +130,11 @@ export default class Modifier extends React.Component {
           <Col sm={10} xs={12}>
             <Tags
               tags={tags}
-              currentTag={this.props.query.comparator}
+              currentTag={this.props.comparatorQuery.comparator}
               uuid={this.props.uuid}
               category={this.props.category}
+              comparatorQuery={this.props.comparatorQuery}
+              query={this.props.query}
             />
           </Col>
         </Row>
@@ -136,7 +158,7 @@ export default class Modifier extends React.Component {
           </Col>
           <Col sm={4} xs={12}>
             <DateRange
-              onChange={this.handleDateRangeChange}
+              onChange={this.handleDateRangeChange.bind(this)}
               startDate={this.props.query.dateFrom}
               endDate={this.props.query.dateTo}
               dateRange={this.props.dateRange}
@@ -152,7 +174,7 @@ export default class Modifier extends React.Component {
             <div style={styles.descriptorText}>
               <ModifierDescription
                 articleCount={count}
-                comparator={this.props.query.comparator}
+                comparator={this.props.comparatorQuery.comparator}
                 />
             </div>
           </Col>

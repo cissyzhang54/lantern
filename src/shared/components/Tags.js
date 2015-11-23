@@ -2,6 +2,7 @@ import React from "react";
 import Tag from './Tag';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
+import moment from 'moment'
 
 import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 
@@ -14,8 +15,29 @@ export default class Tags extends React.Component {
   handleChange (e) {
     let link = e.currentTarget.href.split('/')
 
-    if(this.className.indexOf('comparator-tag__selected') >= 0) {
+    if(typeof link[6] == 'undefined') {
       ComparatorQueryActions.removeComparator();
+    } else if (link[4] == link[6]) {
+
+        ComparatorQueryActions.selectComparator({
+          comparator:decode(link.pop()),
+          comparatorType:decode(link.pop())
+        });
+
+        // Update the comparator query dates
+        let fromDate = moment(this.props.query.dateFrom);
+        let toDate = moment(this.props.query.dateTo);
+        let span = toDate - fromDate;
+
+        fromDate.subtract(span, 'milliseconds');
+        toDate.subtract(span, 'milliseconds');
+        let comparatorDateRange = {
+          from: fromDate.format('YYYY-MM-DD'),
+          to: toDate.format('YYYY-MM-DD')
+        };
+
+        ComparatorQueryActions.selectDateRange(comparatorDateRange);
+
     } else {
       ComparatorQueryActions.selectComparator({
         comparator:decode(link.pop()),
@@ -40,7 +62,7 @@ export default class Tags extends React.Component {
           label={tag.label}
           url={link.join('/')}
           key={i}
-          onClick={this.handleChange}
+          onClick={this.handleChange.bind(this)}
         />);
     });
 

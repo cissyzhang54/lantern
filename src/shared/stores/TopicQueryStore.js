@@ -3,15 +3,20 @@ import moment from 'moment';
 
 import TopicQueryActions from '../actions/TopicQueryActions';
 
+function makeNewQuery () {
+  return {
+    topic: null,
+    dateFrom: moment().subtract(29,'days').toISOString(),
+    dateTo: moment(),
+    filters: {}
+  }
+}
+
 class TopicQueryStore {
 
   constructor() {
-    this.query = {
-      topic: null,
-      dateFrom: moment().subtract(29,'days').toISOString(),
-      dateTo: moment(),
-      filters: {}
-    }
+    this.query = makeNewQuery();
+
     this.bindActions(TopicQueryActions);
   }
 
@@ -40,12 +45,7 @@ class TopicQueryStore {
   }
 
   destroy() {
-    this.query = {
-      topic: null,
-      dateFrom: null,
-      dateTo: moment(),
-      filters: {}
-    }
+    this.query = makeNewQuery();
   }
 
 }

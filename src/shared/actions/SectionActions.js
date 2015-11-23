@@ -14,7 +14,7 @@ class SectionActions {
   }
 
   loadingData() {
-    setImmediate(_ => this.dispatch());
+    //setImmediate(_ => this.dispatch());
   }
 
 }

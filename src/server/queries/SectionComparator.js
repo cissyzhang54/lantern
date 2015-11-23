@@ -144,6 +144,11 @@ export default function SectionComparatorQuery(query) {
           "field": "topics",
           size: 10
         }
+      },
+      distinct_articles: {
+        cardinality: {
+          field: "article_uuid"
+        }
       }
     }
   };

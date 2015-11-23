@@ -19,7 +19,8 @@ describe ('Modifier component', function() {
       renderDateRange: true,
       renderComparator: true,
       renderFilters: true,
-      query: { comparator : 'financial' }
+      query: { comparator : 'financial' },
+      comparatorQuery: { comparator : 'financial' }
     });
   });
 

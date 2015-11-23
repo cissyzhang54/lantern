@@ -24,11 +24,6 @@ export default function SectionMetadataQuery(query) {
           field: "topics"
         }
       },
-      distinct_articles: {
-        cardinality: {
-          field: "article_uuid"
-        }
-      },
       topic_count: {
         terms: {
           field: "topics",

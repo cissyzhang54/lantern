@@ -145,6 +145,7 @@ class ArticleView extends React.Component {
         <SectionModifier
           data={data}
           comparatorData={comparatorData}
+          comparatorQuery={this.props.comparatorQuery}
           renderDevice={FeatureFlag.check('article:modifier:filters:Device')}
           renderRegion={FeatureFlag.check('article:modifier:filters:Region')}
           renderReferrers={FeatureFlag.check('article:modifier:filters:Referrers')}
@@ -157,14 +158,13 @@ class ArticleView extends React.Component {
           <Col xs={12}>
 
             {updating}
-
-            <Header
-              title={data.title}
-              linkURL={'http://www.ft.com/cms/s/0/' + data.uuid + '.html'}
-              author={'By: ' + formatAuthors.join(data.author)}
-              published={'First Published: ' + data.published_human}
-              uuid={data.uuid}
-              />
+              <Header
+                title={data.title}
+                linkURL={'http://www.ft.com/cms/s/0/' + data.uuid + '.html'}
+                author={'By: ' + formatAuthors.join(data.author)}
+                published={'First Published: ' + data.published_human}
+                uuid={data.uuid}
+                />
 
             <main >
               <SectionHeadlineStats

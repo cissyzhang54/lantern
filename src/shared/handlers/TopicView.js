@@ -61,10 +61,16 @@ class TopicView extends React.Component {
   }
 
   componentWillMount() {
+    ComparatorQueryActions.setCategory('topics');
+
     let hasTopicChanged = this.state.topic !== TopicQueryStore.getState().query.topic;
+    let hasComparatorChanged = this.state.comparator !== ComparatorQueryStore.getState().query.comparator;
     if (hasTopicChanged){
       TopicQueryActions.setTopic(this.state.topic);
       ComparatorQueryActions.setTopic(this.state.topic);
+    }
+    if (this.state.comparator && hasComparatorChanged){
+      ComparatorQueryActions.selectComparator(this.state);
     }
   }
 
@@ -81,8 +87,32 @@ class TopicView extends React.Component {
     //let analytics = require('../utils/analytics');
     //analytics.sendGAEvent('pageview');
     //analytics.trackScroll();
+
     TopicActions.listenToQuery();
     ComparatorActions.listenToQuery();
+
+    var comparatorDateRange = {
+      from: this.props.query.dateFrom,
+      to: this.props.query.dateTo
+    }
+
+    const isGlobalFTComparator = this.props.comparatorQuery.comparatorType === 'global';
+
+    if (!isGlobalFTComparator) {
+      // Update the comparator query dates
+      let fromDate = moment(this.props.query.dateFrom);
+      let toDate = moment(this.props.query.dateTo);
+      let span = toDate - fromDate;
+      fromDate.subtract(span, 'milliseconds');
+      toDate.subtract(span, 'milliseconds');
+      comparatorDateRange = {
+        from: fromDate.format('YYYY-MM-DD'),
+        to: toDate.format('YYYY-MM-DD')
+      };
+    }
+
+    ComparatorQueryActions.selectDateRange(comparatorDateRange);
+
     if (!this.props.data) {
       TopicActions.loadData(this.props);
       ComparatorActions.loadData(this.props);
@@ -134,6 +164,7 @@ class TopicView extends React.Component {
           <SectionModifier
             data={data}
             comparatorData={comparatorData}
+            comparatorQuery={this.props.comparatorQuery}
             renderDevice={true}
             renderRegion={true}
             renderReferrers={true}

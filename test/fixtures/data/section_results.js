@@ -988,6 +988,9 @@ export default [{
             "doc_count": 773343
           }
         ]
+      },
+      "distinct_articles": {
+        "value": 657
       }
     }
   }];
