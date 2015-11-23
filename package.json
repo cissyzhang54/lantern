@@ -8,7 +8,7 @@
     "unit": "env NODE_ENV=test mocha --compilers js:babel/register --require test/setupDom.js --recursive test/**/*.spec.js",
     "test-watch": "env NODE_ENV=test mocha --compilers js:babel/register --recursive test/**/*.spec.js --watch --reporter min",
     "test-debug": "env NODE_ENV=test mocha --debug-brk --compilers js:babel/register --recursive test/**/*.spec.js",
-    "cover": "env NODE_ENV=test babel-node node_modules/.bin/isparta cover node_modules/.bin/_mocha -- --reporter=dot test/**/*.spec.js ",
+    "cover": "env NODE_ENV=test babel-node node_modules/.bin/isparta cover node_modules/.bin/_mocha -- --require test/setupDom.js --reporter=dot test/**/*.spec.js ",
     "clean": "rm -rf lib",
     "watch-js": "babel src -d lib --experimental -w",
     "dev-server": "env $(cat .env) node lib/server/webpack",
