@@ -54,7 +54,7 @@ const MESSAGES = {
       title={title}
       message={[
               'Ooops!',
-              'We could not find the section you requested'
+              `We could not find the ${category} you requested`
               ]}
       extra={<pre>
                 {extra}

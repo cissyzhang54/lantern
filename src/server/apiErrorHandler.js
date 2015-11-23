@@ -19,6 +19,8 @@ export function routes(app) {
 export function statusCode(errorName){
   switch (errorName) {
     case 'ArticleNotFoundError':
+      return 404;
+      break;
     case 'ComparatorNotFoundError':
       return 404;
       break;

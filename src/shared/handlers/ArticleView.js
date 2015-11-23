@@ -54,7 +54,6 @@ class ArticleView extends React.Component {
     let articleState = ArticleStore.getState();
     let articleQueryState = ArticleQueryStore.getState();
     let comparatorQueryState = ComparatorQueryStore.getState();
-
     return {
       articleQuery : articleQueryState.query,
       comparatorQuery : comparatorQueryState.query,
@@ -100,9 +99,22 @@ class ArticleView extends React.Component {
 
   render() {
     if (this.props.errorMessage) {
-      return (<Messaging category="Article" type="ERROR" message={this.props.errorMessage} />);
+      return (<Messaging
+        category="Article"
+        type="ERROR"
+        message={this.props.errorMessage}
+      />);
+    } else if (this.props.comparatorErrorMessage) {
+      return (<Messaging
+        category="Comparator"
+        type="ERROR"
+        message={this.props.comparatorErrorMessage}
+      />);
     } else if (!this.props.data) {
-      return (<Messaging category="Article" type="LOADING" />);
+      return (<Messaging
+        category="Article"
+        type="LOADING"
+      />);
     }
     let updating = (this.props.sectionLoading || this.props.comparatorLoading)
       ? <Messaging category="Article" type="UPDATING" />
