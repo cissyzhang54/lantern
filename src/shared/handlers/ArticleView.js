@@ -29,6 +29,8 @@ import FeatureFlag from '../utils/featureFlag';
 import * as formatAuthors from '../utils/formatAuthors';
 import explanations from '../strings/explanations';
 
+import ChunkWrapper from '../components/ChunkWrapper';
+
 function decode(uri){
   return uri ? decodeURI(uri) : null
 }
@@ -140,7 +142,6 @@ class ArticleView extends React.Component {
 
     return (<DocumentTitle title={title}>
       <div>
-        <Col xs={12}>
 
         <SectionModifier
           data={data}
@@ -155,72 +156,69 @@ class ArticleView extends React.Component {
           dateRange='published'
           />
 
-          <Col xs={12}>
+        <ChunkWrapper component="header">
 
-            {updating}
-              <Header
-                title={data.title}
-                linkURL={'http://www.ft.com/cms/s/0/' + data.uuid + '.html'}
-                author={'By: ' + formatAuthors.join(data.author)}
-                published={'First Published: ' + data.published_human}
-                uuid={data.uuid}
-                />
+          {updating}
 
-            <main >
-              <SectionHeadlineStats
-                data={data}
-                comparatorData={comparatorData}
-                config={headlineStats}
-                />
+          <Header
+            title={data.title}
+            linkURL={'http://www.ft.com/cms/s/0/' + data.uuid + '.html'}
+            author={'By: ' + formatAuthors.join(data.author)}
+            published={'First Published: ' + data.published_human}
+            uuid={data.uuid}
+            />
+        </ChunkWrapper>
+        <SectionHeadlineStats
+          data={data}
+          comparatorData={comparatorData}
+          config={headlineStats}
+          />
 
-              <SectionWhen
-                data={data}
-                comparatorData={comparatorData}
-                renderReadTimes={FeatureFlag.check('article:readTimes')}
-                renderTimeSincePublished={FeatureFlag.check('article:timeSincePublished')}
-                />
+        <SectionWhen
+          data={data}
+          comparatorData={comparatorData}
+          renderReadTimes={FeatureFlag.check('article:readTimes')}
+          renderTimeSincePublished={FeatureFlag.check('article:timeSincePublished')}
+          />
 
-              <SectionNext
-                data={data}
-                comparatorData={comparatorData}
-                renderBounceRate={FeatureFlag.check('article:bounceRate')}
-                />
+        <SectionNext
+          data={data}
+          comparatorData={comparatorData}
+          renderBounceRate={FeatureFlag.check('article:bounceRate')}
+          />
 
-              <SectionInteract
-                data={data}
-                comparatorData={comparatorData}
-                renderWho={FeatureFlag.check('article:interact')}
-                />
+        <SectionInteract
+          data={data}
+          comparatorData={comparatorData}
+          renderWho={FeatureFlag.check('article:interact')}
+          />
 
-              <SectionReferrers
-                data={data}
-                comparatorData={comparatorData}
-                renderReferrers={FeatureFlag.check('article:referrers')}
-                renderInternalRefTypes={FeatureFlag.check('article:referrers:internalRefTypes')}
-                />
+        <SectionReferrers
+          data={data}
+          comparatorData={comparatorData}
+          renderReferrers={FeatureFlag.check('article:referrers')}
+          renderInternalRefTypes={FeatureFlag.check('article:referrers:internalRefTypes')}
+          />
 
-              <SectionWho
-                data={data}
-                comparatorData={comparatorData}
-                renderWho={FeatureFlag.check('article:who')}
-                />
+        <SectionWho
+          data={data}
+          comparatorData={comparatorData}
+          renderWho={FeatureFlag.check('article:who')}
+          />
 
-              <SectionWhere
-                data={data}
-                comparatorData={comparatorData}
-                renderWhere={FeatureFlag.check('article:where')}
-                />
+        <SectionWhere
+          data={data}
+          comparatorData={comparatorData}
+          renderWhere={FeatureFlag.check('article:where')}
+          />
 
-              <SectionHow
-                data={data}
-                comparatorData={comparatorData}
-                renderDevices={FeatureFlag.check('article:devices')}
-                renderChannels={FeatureFlag.check('article:channels')}
-                />
+        <SectionHow
+          data={data}
+          comparatorData={comparatorData}
+          renderDevices={FeatureFlag.check('article:devices')}
+          renderChannels={FeatureFlag.check('article:channels')}
+          />
 
-            </main>
-          </Col>
-        </Col>
       </div>
     </DocumentTitle>);
   }

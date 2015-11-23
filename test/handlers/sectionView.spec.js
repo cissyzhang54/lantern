@@ -32,9 +32,8 @@ describe ('SectionView Handler', function() {
     });
     const props = sectionView.props;
     const divContainer = props.children;
-    const col = divContainer.props.children;
-    const sectionModifier = col.props.children[0];
-    const col2 = col.props.children[1];
+    const sectionModifier = divContainer.props.children[0];
+    const col2 = divContainer.props.children[1];
     const header = col2.props.children[1];
 
     expect(header.props.title).to.equal('Section: test-section');

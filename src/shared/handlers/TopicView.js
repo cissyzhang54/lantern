@@ -160,7 +160,6 @@ class TopicView extends React.Component {
 
     return(<DocumentTitle title={title}>
       <div>
-        <Col xs={12}>
           <SectionModifier
             data={data}
             comparatorData={comparatorData}
@@ -174,95 +173,91 @@ class TopicView extends React.Component {
             uuid={this.props.params.topic}
             dateRange='historical'
             />
-          <Col xs={12}>
+          <ChunkWrapper component="header">
             {updating}
 
             <Header
               title={'Topic: ' + this.props.params.topic}
               />
+          </ChunkWrapper>
+          <SectionHeadlineStats
+            data={data}
+            comparatorData={comparatorData}
+            config={headlineStats}
+            />
 
-            <SectionHeadlineStats
-              data={data}
-              comparatorData={comparatorData}
-              config={headlineStats}
-              />
+          <ChunkWrapper component="ArticlesPublished">
+            <Row>
+              <Col xs={12}>
+                <h3>Articles Published vs Articles Read for this topic</h3>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12}>
+                <DualScaleLineChart
+                  leftData={publishData}
+                  rightData={readData}
+                  keys={publishKeys.concat(readKeys)}
+                  categories={[publishID, readID]}
+                  yLabel='Articles published'
+                  y2Label='Articles read'
+                  xLabel='Time' />
+              </Col>
+            </Row>
+          </ChunkWrapper>
 
-            <ChunkWrapper component="ArticlesPublished">
-              <Row>
-                <Col xs={12}>
-                  <h3>Articles Published vs Articles Read for this topic</h3>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12}>
-                  <DualScaleLineChart
-                    leftData={publishData}
-                    rightData={readData}
-                    keys={publishKeys.concat(readKeys)}
-                    categories={[publishID, readID]}
-                    yLabel='Articles published'
-                    y2Label='Articles read'
-                    xLabel='Time' />
-                </Col>
-              </Row>
-            </ChunkWrapper>
+          <SectionWho
+            data={data}
+            comparatorData={comparatorData}
+            renderWho={FeatureFlag.check('topic:who')}
+            />
 
-            <SectionWho
-              data={data}
-              comparatorData={comparatorData}
-              renderWho={FeatureFlag.check('topic:who')}
-              />
+          <ChunkWrapper component="section-referrers">
+            <Row>
+              <Col xs={12}>
+                <h3>Where do the users come from?</h3>
+              </Col>
+            </Row>
+            <Row>
+              <Col xs={12} sm={4}>
+                <h4>External Sources</h4>
+                <BarChart
+                  data={refData}
+                  keys={refKeys}
+                  category={refID}
+                  yLabel="Page Views"
+                  xLabel="Referrer"
+                  usePercentages={true} />
+              </Col>
 
-            <ChunkWrapper component="section-referrers">
-              <Row>
-                <Col xs={12}>
-                  <h3>Where do the users come from?</h3>
-                </Col>
-              </Row>
-              <Row>
-                <Col xs={12} sm={4}>
-                  <h4>External Sources</h4>
-                  <BarChart
-                    data={refData}
-                    keys={refKeys}
-                    category={refID}
-                    yLabel="Page Views"
-                    xLabel="Referrer"
-                    usePercentages={true} />
-                </Col>
+              <Col xs={12} sm={4}>
+                <h4>Social Network Breakdown</h4>
+                <BarChart
+                  data={socialData}
+                  keys={socialKeys}
+                  category={socialID}
+                  yLabel="Page Views"
+                  xLabel="Social Network"
+                  usePercentages={true}  />
+              </Col>
 
-                <Col xs={12} sm={4}>
-                  <h4>Social Network Breakdown</h4>
-                  <BarChart
-                    data={socialData}
-                    keys={socialKeys}
-                    category={socialID}
-                    yLabel="Page Views"
-                    xLabel="Social Network"
-                    usePercentages={true}  />
-                </Col>
-
-                <Col xs={12} sm={4}>
-                  <h4>Internal Referrer Types</h4>
-                  <BarChart
-                    data={internalData}
-                    keys={internalKeys}
-                    category={internalID}
-                    yLabel="Page Views"
-                    xLabel="Referrer"
-                    usePercentages={true} />
-                </Col>
-              </Row>
-            </ChunkWrapper>
-          </Col>
-          <Col xs={12}>
-            <SectionWhere
-              data={data}
-              comparatorData={comparatorData}
-              renderWhere={FeatureFlag.check('topic:where')}
-              />
-          </Col>
-        </Col>
+              <Col xs={12} sm={4}>
+                <h4>Internal Referrer Types</h4>
+                <BarChart
+                  data={internalData}
+                  keys={internalKeys}
+                  category={internalID}
+                  yLabel="Page Views"
+                  xLabel="Referrer"
+                  usePercentages={true} />
+              </Col>
+            </Row>
+          </ChunkWrapper>
+          <SectionWhere
+            data={data}
+            comparatorData={comparatorData}
+            renderWhere={FeatureFlag.check('topic:where')}
+            />
       </div>
 
     </DocumentTitle>)

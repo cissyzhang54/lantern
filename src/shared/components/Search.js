@@ -103,6 +103,7 @@ export default class Search extends React.Component {
       borderRadius: '4px',
       display: 'inline-block',
       flexGrow: 1,
+      WebkitFlexGrow: 1,
       minWidth: '15%',
       textAlign: 'center'
     };
@@ -147,14 +148,18 @@ export default class Search extends React.Component {
       )
     });
 
+    const resultsStyle= {
+      display: '-webkit-flex; display: flex',
+      flexWrap: 'wrap',
+      WebkitFlexWrap: 'wrap'
+    };
+
+
     let sectionResults = (
       <div>
         <h2><small>Sections</small></h2>
         <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap'
-          }}>
+          style={resultsStyle}>
           {sections}
         </div>
       </div>
@@ -164,10 +169,7 @@ export default class Search extends React.Component {
       <div>
         <h2><small>Topics</small></h2>
         <div
-          style={{
-            display: 'flex',
-            flexWrap: 'wrap'
-          }}>
+          style={resultsStyle}>
           {topics}
         </div>
       </div>
@@ -196,9 +198,13 @@ export default class Search extends React.Component {
 
     let homeSectionsMarkup = (
       <div style={{
-        display: 'flex',
+        display: '-webkit-flex; display: flex',
         alignItems: 'center',
-        justifyContent: 'center',
+        WebkitAlignItems: 'center',
+        justifyContent: 'space-around',
+        WebkitJustifyContent: 'space-around',
+        flexFlow: 'row wrap',
+        WebkitFlexFlow: 'row wrap',
         marginTop: '20px',
         marginBottom: '20px'
         }}>
