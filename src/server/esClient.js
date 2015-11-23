@@ -63,8 +63,10 @@ export function runArticleQuery(queryData) {
   }).then((pageViewData) => {
     pageViews = pageViewData;
     return retrieveEventsData(query);
-  }).then(function(eventsData){
+  }).then((eventsData) => {
     return [pageViews, metaData, eventsData]
+  }).catch((error) => {
+    return Promise.reject(error);
   });
 }
 
@@ -79,6 +81,8 @@ export function runArticleComparatorQuery(queryData) {
     return retrieveEventsData(queryData);
   }).then(function(eventsComparatorData){
     return [comparatorData, eventsComparatorData];
+  }).catch((error) => {
+    return Promise.reject(error);
   });
 }
 
@@ -101,6 +105,9 @@ export function runSectionQuery(queryData) {
     .then((sectionData) => {
       return [metaData, sectionData]
     })
+    .catch((error) => {
+      return Promise.reject(error);
+    })
 }
 
 export function runTopicQuery(queryData) {
@@ -122,6 +129,9 @@ export function runTopicQuery(queryData) {
     })
     .then((topicData) => {
       return [metaData, topicData]
+    })
+    .catch((error) => {
+      return Promise.reject(error);
     })
 }
 
@@ -195,6 +205,15 @@ function retrieveMetaData(queryData){
     };
     client.get(request, (error, response) => {
       if (error) {
+        // handle article not found
+        if (error.status === '404') {
+          // no need to 'let'/'var' this
+          let err = new Error('Article not found');
+          err.name = 'ArticleNotFoundError';
+          err.response = response;
+          err.original = error;
+          return reject(err);
+        }
         return reject(error);
       }
       // handle article not found

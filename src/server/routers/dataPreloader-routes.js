@@ -76,10 +76,10 @@ function getArticleData(req, res){
       let dateFrom = moment(data.published).toISOString();
       let dateTo = moment().toISOString();
       res.locals.data = {
-        "ArticleStore": {
-          data: data
+        ArticleStore: {
+          data: data,
         },
-        "ArticleQueryStore" : {
+        ArticleQueryStore : {
           query: {
             uuid: decode(req.params.uuid),
             dateFrom: dateFrom,
@@ -87,7 +87,7 @@ function getArticleData(req, res){
             filters: {}
           }
         },
-        "ComparatorQueryStore" : {
+        ComparatorQueryStore : {
           query: {
             category: 'articles',
             uuid: decode(req.params.uuid),
@@ -99,7 +99,7 @@ function getArticleData(req, res){
             filters: {}
           }
         },
-        "FilterStore" : {
+        FilterStore : {
           query: {
             filters: {}
           },
@@ -110,6 +110,12 @@ function getArticleData(req, res){
         }
       };
       return res;
+    }).catch((error) => {
+      res.locals.data = {
+        ArticleStore : {
+          errorMessage : error.message
+        }
+      }
     })
 }
 
@@ -120,6 +126,10 @@ function getComparatorData(req, res){
           data: data
       };
       return res;
+    }).catch((error) => {
+      res.locals.data.ComparatorStore = {
+        errorMessage : error.message
+      };
     })
 }
 
@@ -162,6 +172,10 @@ function getSectionData(req, res){
         }
       };
       return res;
+    }).catch((error) => {
+      res.locals.data.SectionStore = {
+        errorMessage: error.message
+      }
     })
 }
 
@@ -205,7 +219,12 @@ function getTopicData(req, res){
         }
       };
       return res;
+    }).catch((error) => {
+      res.locals.data.TopicStore = {
+        errorMessage: error.message
+      }
     })
+
   }
 
   export default router;
