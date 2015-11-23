@@ -171,7 +171,9 @@ function retrieveArticleData(queryData){
 
 function retrieveSectionData(queryData){
   return new Promise((resolve, reject) => {
-    let queryObject = queryData.comparator ? SectionComparatorQuery(queryData) : SectionsQuery(queryData);
+    let queryObject = queryData.comparator ?
+      SectionComparatorQuery(queryData) :
+      SectionsQuery(queryData);
     let request = {
       index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
       ignore_unavailable: true,
@@ -182,6 +184,8 @@ function retrieveSectionData(queryData){
       if (error) {
         return reject(error);
       }
+      response.comparator = queryData.comparator;
+      response.comparatorType = queryData.comparatorType;
       return resolve(response);
     });
   })
@@ -213,7 +217,9 @@ function retrieveMetaData(queryData){
 
 function retrieveSectionMetaData(queryData){
   return new Promise((resolve, reject) => {
-    let queryObject = queryData.comparator ? SectionMetadataComparatorQuery(queryData) : SectionMetadataQuery(queryData);
+    let queryObject = queryData.comparator ?
+      SectionMetadataComparatorQuery(queryData) :
+      SectionMetadataQuery(queryData);
     let request = {
       index: process.env.ES_SEARCH_INDEX_ROOT,
       ignore_unavailable: true,
@@ -231,7 +237,9 @@ function retrieveSectionMetaData(queryData){
 
 function retrieveTopicData(queryData){
   return new Promise((resolve, reject) => {
-    let queryObject = queryData.comparator ? TopicComparatorQuery(queryData) : TopicQuery(queryData);
+    let queryObject = queryData.comparator ?
+      TopicComparatorQuery(queryData) :
+      TopicQuery(queryData);
     let request = {
       index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
       ignore_unavailable: true,
@@ -242,6 +250,8 @@ function retrieveTopicData(queryData){
       if (error) {
         return reject(error);
       }
+      response.comparator = queryData.comparator;
+      response.comparatorType = queryData.comparatorType;
       return resolve(response);
     });
   })
@@ -249,7 +259,9 @@ function retrieveTopicData(queryData){
 
 function retrieveTopicMetaData(queryData){
   return new Promise((resolve, reject) => {
-    let queryObject = queryData.comparator ? TopicMetadataComparatorQuery(queryData) : TopicMetadataQuery(queryData);
+    let queryObject = queryData.comparator ?
+      TopicMetadataComparatorQuery(queryData) :
+      TopicMetadataQuery(queryData);
     let request = {
       index: process.env.ES_SEARCH_INDEX_ROOT,
       ignore_unavailable: true,
