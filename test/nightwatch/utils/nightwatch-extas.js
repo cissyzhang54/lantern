@@ -43,8 +43,6 @@ function doComparator(browser, section, figure, percentile){
       section.name + ' percentile is ' + posNeg)
 }
 
-function doComparatorNextSection(browser, section, , url)
-
 function determineChevron(percentile){
   if (percentile >= 0) return 'glyphicon-chevron-up';
   else return 'glyphicon-chevron-down'
