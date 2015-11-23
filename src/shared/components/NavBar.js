@@ -6,6 +6,7 @@ import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
 import responsiveStyles from '../utils/responsiveStyles';
 import LogoSVG from '../components/LogoSVG';
+import explanations from '../strings/explanations';
 
 var controllerStyles = {
   'default': {
@@ -98,11 +99,7 @@ export default class NavBar extends React.Component {
           placement="bottom"
           overlay={
             <Popover title="What is alpha?" id="alpha-description">
-              Lantern is currently in an alpha state and is not a live system.
-              The data used does not represent the live FT.com.
-              There will be ongoing changes, without warning,
-              to both the data and the interface,
-              as development continues.
+              {explanations.alpha}
             </Popover>
             }
           >

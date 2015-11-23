@@ -8,6 +8,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import ChunkWrapper from './ChunkWrapper.js';
+import explanations from '../strings/explanations.js';
 
 const styles = {
   infoIcon : {
@@ -62,9 +63,7 @@ export default class SectionWhen extends React.Component {
               placement="bottom"
               overlay={
                   <Popover id="chart-description">
-                      <p>This chart show page views over time for this article (blue)
-                      and average page views for the articles in the selected tag (orange).</p>
-                      <p>The time scale (horizontal axis) shows time since publication</p>
+                    <p>{explanations.sections.articleViews}</p>
                   </Popover>
                   }
               >

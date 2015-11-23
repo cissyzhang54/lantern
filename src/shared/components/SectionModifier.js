@@ -8,6 +8,7 @@ import Tags from "./Tags";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
 import ModifierDescription from "./ModifierDescription";
+import explanationStrings from "../strings/explanations.js";
 
 import ArticleQueryActions from '../actions/ArticleQueryActions';
 import SectionQueryActions from '../actions/SectionQueryActions';
@@ -83,7 +84,7 @@ export default class Modifier extends React.Component {
     ).concat(
       arrAuthors.map(d => {return {label:d, url:`author/${d}`}})
     )
-    
+
     let count = comparatorData.articleCount || {}
 
     return (
@@ -96,8 +97,7 @@ export default class Modifier extends React.Component {
                 placement="bottom"
                 overlay={
                   <Popover id="tag-description">
-                      <p>When you select a Tag, Lantern will compare this article against all other articles with the same Tag;
-                       only those articles published in the 30 days before this article's publication date are included</p>
+                      <p>{explanationStrings.tags[this.props.category]}</p>
                   </Popover>
                   }
                 >
@@ -126,7 +126,8 @@ export default class Modifier extends React.Component {
             renderRegion={this.props.renderRegion}
             renderReferrers={this.props.renderReferrers}
             renderUserCohort={this.props.renderUserCohort}
-            onChange={this.handleFilterChange} />
+            onChange={this.handleFilterChange}
+          />
         </Row>
 
         <Row>
@@ -138,7 +139,8 @@ export default class Modifier extends React.Component {
               onChange={this.handleDateRangeChange}
               startDate={this.props.query.dateFrom}
               endDate={this.props.query.dateTo}
-              dateRange={this.props.dateRange} />
+              dateRange={this.props.dateRange}
+            />
           </Col>
         </Row>
 

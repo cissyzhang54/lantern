@@ -27,6 +27,7 @@ import ComparatorQueryStore from '../stores/ComparatorQueryStore';
 import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 import FeatureFlag from '../utils/featureFlag';
 import * as formatAuthors from '../utils/formatAuthors';
+import explanations from '../strings/explanations';
 
 function decode(uri){
   return uri ? decodeURI(uri) : null
@@ -133,7 +134,7 @@ class ArticleView extends React.Component {
         label: 'Scroll Depth',
         size: 'large',
         comparatorFormatName: 'scrollDepth',
-        toolTip: 'Percentage of the article the user has scrolled through. This is based on the height of the article rather then the height of the page, so the comments section is excluded.'
+        toolTip: explanations.sections.scrollDepth
       }
     }
 
