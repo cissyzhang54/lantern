@@ -12,6 +12,13 @@ export default {
     sections: "When you select a Tag, Lantern will compare this section against that tag for the selected time period.",
     topics: "When you select a Tag, Lantern will compare this topic against that tag for the selected time period."
   },
+  rfv: `FT Super Fans: read 3.5 articles and visit us twice a day on average.
+FT Fans: read 9 articles and visit us 4 times per week on average.
+Engaged, Frequent & Free: read 2.6 articles and visit us 6 times per week on average.
+Borderline Engaged: mainly B2B and registered users. Read 2 articles and visit us twice a week on average.
+Half Engaged: even split of subscribers and registered users. Read 4 articles and visit us 3 times per month on average.
+Occasional Skimmers: mainly registered or B2B users. Read 2.4 articles and visit us 4 times per 90 days on average.
+Disengaged Long Tail: mainly registered or B2B users. Read 2 articles and visit us 2.6 times per 90 day period on average.`,
   sections: {
     articleViews:`This chart shows page views over time for this article (blue)
       and average page views for the articles in the selected tag (orange).

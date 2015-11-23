@@ -5,6 +5,24 @@ import ColumnChart from './ColumnChart';
 import BarChart from "../components/BarChart";
 import FormatData from "../utils/formatData";
 import ChunkWrapper from './ChunkWrapper.js';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import Popover from 'react-bootstrap/lib/Popover';
+import explanations from '../strings/explanations';
+
+const styles = {
+  infoIcon : {
+    'fontSize' : '15px',
+    'color': '#039',
+    'position': 'absolute',
+    'top': '0px',
+    'left': '-4px'
+  },
+  toolTip : {
+    'white-space': 'pre-wrap'
+  }
+};
+
 export default class SectionWho extends React.Component {
 
   constructor(props) {
@@ -61,7 +79,22 @@ export default class SectionWho extends React.Component {
         </Row>
         <Row>
           <Col xs={12} sm={12}>
-            <h4>Engagement Groups</h4>
+            <h4>
+              <OverlayTrigger
+                trigger="click"
+                placement="bottom"
+                overlay={
+                  <Popover id="rfv-description" >
+                    <div style={styles.toolTip} >
+                      {explanations.rfv}
+                    </div>
+                  </Popover>
+                  }
+                >
+                <Glyphicon glyph="question-sign" style={styles.infoIcon} />
+              </OverlayTrigger>
+              Engagement Groups
+            </h4>
             <ColumnChart
               data={rfvData}
               keys={rfvKeys}
