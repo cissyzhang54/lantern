@@ -23,8 +23,8 @@ export default function TopicDataFormatter(data) {
     try {
       let [metaData, topicData] = data;
       let results = {genre:[], sections:[], topics:[]};
-      let metaFields = ['articleCount', 'sectionsCovered', 'sectionCount', 'publishTimes'];
-      let topicFields = ['comparator', 'readTimes', 'pageViews', 'referrerTypes',
+      let metaFields = ['articleCount', 'sectionsCovered', 'sectionCount'];
+      let topicFields = ['comparator', 'pageViews', 'referrerTypes',
         'referrerNames', 'socialReferrers', 'devices', 'countries', 'regions', 'userCohort',
         'rfvCluster', 'isFirstVisit', 'internalReferrerTypes', 'isSubscription', 'uniqueVisitors',
         'sectionViews'];
