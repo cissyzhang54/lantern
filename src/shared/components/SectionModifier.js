@@ -17,8 +17,7 @@ import TopicQueryActions from '../actions/TopicQueryActions';
 
 const styles = {
   modifierWrapper : {
-    'padding': '10px 15px 15px 15px',
-    'borderBottom': '1px solid #ccc'
+    'padding': '0px 15px 0px 15px'
   },
   title : {
     lineHeight: '2em',
@@ -32,7 +31,9 @@ const styles = {
     'fontSize': '14px',
     'margin': '4px 0'
   },
-
+  row : {
+    marginBottom: '8px'
+  },
   infoIcon : {
     'fontSize' : '15px',
     'color': '#039',
@@ -139,7 +140,7 @@ export default class Modifier extends React.Component {
           </Col>
         </Row>
 
-        <Row >
+        <Row style={styles.row}>
           <Col sm={2} xs={12}>
             <span style={styles.title}><span style={styles.titleText}>Filters:</span></span>
           </Col>
@@ -152,7 +153,7 @@ export default class Modifier extends React.Component {
           />
         </Row>
 
-        <Row>
+        <Row style={styles.row}>
           <Col sm={2} xs={12}>
             <span style={styles.title}><span style={styles.titleText}>Date Range:</span></span>
           </Col>

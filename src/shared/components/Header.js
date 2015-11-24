@@ -65,7 +65,7 @@ export default class Header extends React.Component {
         let title = url ? link : this.props.title
         let author = this.props.author ? <p style={styles.text}>{this.props.author}</p> : {};
         let publishDate = this.props.published ? <p style={styles.text} className="pull-right">{this.props.published}</p> : {};
-        return (<ChunkWrapper component='header'>
+        return (
           <header style={styles.header} className="clearfix" data-component='header' >
             <div style={styles.titleContainer} >
               <h1 style={styles.title}>
@@ -75,7 +75,6 @@ export default class Header extends React.Component {
               {publishDate}
             </div>
           </header>
-          </ChunkWrapper>
         );
     }
 }

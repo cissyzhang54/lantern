@@ -172,6 +172,8 @@ class SectionView extends React.Component {
 
     return(<DocumentTitle title={title}>
       <div>
+
+        <ChunkWrapper component="modifier">
           <SectionModifier
             data={data}
             comparatorData={comparatorData}
@@ -185,6 +187,8 @@ class SectionView extends React.Component {
             uuid={this.props.params.section}
             dateRange='historical'
           />
+        </ChunkWrapper>
+
           <ChunkWrapper component="header">
             {updating}
 

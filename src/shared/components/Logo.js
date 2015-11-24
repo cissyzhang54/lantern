@@ -6,7 +6,10 @@ const style = {
   textAlign:'center',
   margin:0,
   minHeight:'3em',
-  lineHeight:'3em',
+  lineHeight:'3em'
+}
+const container = {
+  marginTop: '30px'
 }
 
 const searchHTML = (
@@ -41,7 +44,7 @@ export default class Logo extends React.Component {
       return <div style={style}>{str}</div>
     });
     let logo = (
-      <div className="logo-container">
+      <div style={container} className="logo-container">
         <div className={classNames.join(' ')}>
           <div className="lantern__circle">
             <div className="lantern__hoop"></div>
