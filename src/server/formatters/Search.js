@@ -3,7 +3,6 @@ import assert from 'assert';
 export default function formatData(data) {
 
   try {
-
     assert.equal(Object.prototype.toString.call(data.hits), '[object Array]',
       "argument 'data' should be an array");
   } catch (e) {
