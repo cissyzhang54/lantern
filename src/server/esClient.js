@@ -65,8 +65,6 @@ export function runArticleQuery(queryData) {
     return retrieveEventsData(query);
   }).then((eventsData) => {
     return [pageViews, metaData, eventsData]
-  }).catch((error) => {
-    return Promise.reject(error);
   });
 }
 
@@ -82,8 +80,6 @@ export function runArticleComparatorQuery(queryData) {
     return retrieveEventsData(queryData);
   }).then(function(eventsComparatorData){
     return [comparatorData, eventsComparatorData];
-  }).catch((error) => {
-    return Promise.reject(error);
   });
 }
 
@@ -105,10 +101,7 @@ export function runSectionQuery(queryData) {
     })
     .then((sectionData) => {
       return [metaData, sectionData]
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    })
+    });
 }
 
 export function runTopicQuery(queryData) {
@@ -130,10 +123,7 @@ export function runTopicQuery(queryData) {
     })
     .then((topicData) => {
       return [metaData, topicData]
-    })
-    .catch((error) => {
-      return Promise.reject(error);
-    })
+    });
 }
 
 export function runSearchQuery(queryData) {
