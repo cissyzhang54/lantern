@@ -1,6 +1,7 @@
 import assert from 'assert';
 import moment from 'moment';
 
+import * as calculateInterval from '../utils/calculateInterval'
 import * as build from '../utils/queryBuilder'
 
 export default function ArticlesQuery(query) {
@@ -17,14 +18,14 @@ export default function ArticlesQuery(query) {
       page_views_since_publish: {
         histogram: {
           field: "time_since_publish",
-          interval: calculateMinuteInterval(query),
+          interval: calculateInterval.minuteInterval(query.dateFrom, query.dateTo),
           min_doc_count : 0
         }
       },
       "page_views_over_time" : {
         "date_histogram" : {
           "field" : "view_timestamp",
-          interval : calculateInterval(query),
+          interval : calculateInterval.interval(query.dateFrom, query.dateTo),
           min_doc_count : 0
         }
       },
@@ -201,39 +202,3 @@ export default function ArticlesQuery(query) {
     }
   };
 }
-
-function calculateInterval(query) {
-  let from = moment(query.dateFrom);
-  let to = moment(query.dateTo);
-  let span = moment.duration(to - from);
-
-  if (span <= moment.duration(1, 'day')) {
-    return 'hour';
-  } else if (span <= moment.duration(1, 'week')) {
-    return 'day';
-  } else if (span <= moment.duration(6, 'month')) {
-    return 'day';
-  } else {
-    return 'week';
-  }
-
-}
-
-function calculateMinuteInterval(query) {
-  let from = moment(query.dateFrom);
-  let to = moment(query.dateTo);
-  let span = moment.duration(to - from);
-
-  if (span <= moment.duration(1, 'day')) {
-    return 60;
-  } else if (span <= moment.duration(1, 'week')) {
-    return 60;
-  } else if (span <= moment.duration(6, 'month')) {
-    return 60*24;
-  } else {
-    return 60*24*7;
-  }
-
-}
-
-

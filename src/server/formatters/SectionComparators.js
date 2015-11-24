@@ -6,6 +6,9 @@ export default function SectionDataFormatter(data) {
     assert.equal(Object.prototype.toString.call(data), '[object Array]',
       "argument 'data' should be an array");
 
+    assert.equal(data.length, 2,
+      "argument 'data' should be an array of length 2");
+
     assert.equal(typeof data[0], 'object',
       "the first element of 'data' should be an object");
 

@@ -15,7 +15,6 @@ describe('ArticleComparator Formatter', function() {
     expect(p.then).to.be.a('function')
     p = ArticleFormat(123);
     expect(p.then).to.be.a('function')
-    expect(p.then).to.be.a('function')
     p = ArticleFormat('whats up');
     expect(p.then).to.be.a('function')
     p = ArticleFormat([]);

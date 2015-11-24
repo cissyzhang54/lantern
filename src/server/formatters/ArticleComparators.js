@@ -5,6 +5,16 @@ export default function formatData(data) {
   try {
     assert.equal(Object.prototype.toString.call(data), '[object Array]',
       "argument 'data' should be an object");
+
+    assert.equal(data.length, 2,
+      "argument 'data' should be an array of length 2");
+
+    assert.equal(typeof data[0], 'object',
+      "the first element of 'data' should be an object");
+
+    assert.equal(typeof data[1], 'object',
+      "the second element of 'data' should be an object");
+
   } catch (e) {
     let error = new Error(e);
     error.name = 'MalformedArgumentsError';
