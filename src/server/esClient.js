@@ -12,12 +12,13 @@ import TopicMetadataComparatorQuery from './queries/TopicMetadataComparator';
 import ArticlesQuery from './queries/Articles';
 import ArticleEventsQuery from './queries/ArticleEvents';
 import ArticleEventsComparatorQuery from './queries/ArticleEventsComparator';
+import ArticleRealtimeQuery from './queries/ArticleRealTime.js';
 import SearchQuery from './queries/Search';
 import assert from 'assert';
 import LoggerFactory from './logger';
 import moment from 'moment';
 import calculateIndices from './utils/calculateIndices.js';
-
+import {calculateRealtimeIndices} from './utils/calculateIndices.js';
 
 var client = elasticsearch.Client({
   hosts: process.env.ES_AWS_HOST,
@@ -134,6 +135,23 @@ export function runTopicQuery(queryData) {
     .catch((error) => {
       return Promise.reject(error);
     })
+}
+
+export function runRealtimeQuery(query) {
+  let queryError;
+  if (queryError = queryDataError('articles', queryData)) {
+    return Promise.reject(queryError);
+  }
+
+  if (!queryData.dateFrom || !queryData.dateTo) {
+    queryData.dateFrom = moment().substract(1, 'hour').toISOString();
+    queryData.dateTo = moment().toISOString();
+  }
+
+  return retrieveRealtimeData(queryData)
+    .then((data) => {
+      return data;
+    });
 }
 
 export function runSearchQuery(queryData) {
@@ -316,6 +334,26 @@ function retrieveEventsData(queryData){
       response.comparatorType = queryData.comparatorType;
       return resolve(response);
     });
+  })
+}
+
+function retrieveRealtimeData(queryData) {
+  return new Promise((resolve, reject) => {
+    let queryObject = ArticleRealtimeQuery(queryData);
+
+    let request = {
+      index: calculateRealtimeIndices(queryData, process.env.ES_REALTIME_INDEX_ROOT),
+      ignore_unavailable: true,
+      search_type: 'count',
+      body: queryObject
+    }
+    client.search(request, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+
+      return resolve(response);
+    })
   })
 }
 
