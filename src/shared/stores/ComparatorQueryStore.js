@@ -43,6 +43,15 @@ class ComparatorQueryStore {
     this.query.topic = topic;
   }
 
+  clickedOnArticle(article) {
+    this.query.publishDate = article.publishDate;
+    this.query.dateFrom = article.publishDate;
+    this.query.uuid = article.uuid;
+    this.query.category = 'articles';
+    this.query.comparator = 'FT';
+    this.query.comparatorType = 'global';
+  }
+
   setPublishDate(publishDate) {
     this.query.publishDate = publishDate;
     if (!this.query.dateFrom) this.query.dateFrom = publishDate;
