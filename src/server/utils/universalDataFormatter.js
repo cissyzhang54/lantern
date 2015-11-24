@@ -32,6 +32,7 @@ const fields = {
   published: 'initial_publish_date',
   published_human: {name:'initial_publish_date', formatter: formatPublishDate},
   pageViews: 'hits.total',
+  realtimePageViews: {name: 'aggregations.page_views.filtered', formatter: format},
   timeOnPage: 'aggregations.avg_time_on_page.value',
   topicCount: {name: 'aggregations.topic_count', formatter: format},
   topicViews: {name: 'aggregations.topic_views', formatter: format},

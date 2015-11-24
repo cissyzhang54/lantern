@@ -137,20 +137,20 @@ export function runTopicQuery(queryData) {
     })
 }
 
-export function runRealtimeQuery(query) {
+export function runArticleRealtimeQuery(queryData) {
   let queryError;
   if (queryError = queryDataError('articles', queryData)) {
     return Promise.reject(queryError);
   }
 
   if (!queryData.dateFrom || !queryData.dateTo) {
-    queryData.dateFrom = moment().substract(1, 'hour').toISOString();
+    queryData.dateFrom = moment().subtract(1, 'hour').toISOString();
     queryData.dateTo = moment().toISOString();
   }
 
   return retrieveRealtimeData(queryData)
     .then((data) => {
-      return data;
+      return [data];
     });
 }
 
