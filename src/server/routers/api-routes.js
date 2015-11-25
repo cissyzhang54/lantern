@@ -5,6 +5,7 @@ import assign from "object-assign";
 import * as esClient from '../esClient';
 import * as ErrorHandler from '../apiErrorHandler';
 import ArticleDataFormatter from '../formatters/Articles';
+import ArticleRealtimeDataFormatter from '../formatters/ArticleRealtimeDataFormatter';
 import ArticleComparatorDataFormatter from '../formatters/ArticleComparators';
 import SearchDataFormatter from '../formatters/Search';
 import SectionDataFormatter from '../formatters/Sections';
@@ -22,6 +23,7 @@ router.post(`/articles/:uuid(${UUID_REGEX})`, getCategoryData);
 router.post(`/sections/:section`, getSectionData);
 router.post(`/topics/:topic`, getTopicData);
 router.post(`/comparators/:category(${CATEGORY_REGEX})/:comparatorType(${COMPTYPE_REGEX})/:comparator`, getComparatorData);
+router.get(`/realtime/articles/:uuid(${UUID_REGEX})`, getRealtimeArticleData);
 router.get('/search/:query', search);
 router.use(ErrorHandler.routes(router));
 
@@ -39,6 +41,22 @@ function getCategoryData(req, res, next) {
   esClient.runArticleQuery(query)
     .then((response) => ArticleDataFormatter(response))
     .then((formattedData) => res.json(formattedData))
+    .catch((error) => {
+      res.status(ErrorHandler.statusCode(error.name))
+      next(error);
+    });
+}
+
+function getRealtimeArticleData(req, res, next) {
+  const query = {
+    uuid: decode(req.params.uuid),
+    dateFrom: req.query.dateFrom,
+    dateTo: req.query.dateTo
+  }
+  // XXX add cache 5 seconds
+  esClient.runArticleRealtimeQuery(query)
+    .then(ArticleRealtimeDataFormatter)
+    .then(results => res.json(results))
     .catch((error) => {
       res.status(ErrorHandler.statusCode(error.name))
       next(error);

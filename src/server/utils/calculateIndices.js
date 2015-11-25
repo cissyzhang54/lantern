@@ -25,3 +25,16 @@ export default function calculateIndices(query, ES_INDEX) {
 
   return ES_INDEX + indexStr;
 }
+
+
+export function calculateRealtimeIndices(query, ES_INDEX) {
+  let dateFrom = moment(query.dateFrom);
+  let dateTo = moment(query.dateTo);
+  return [dateFrom, dateTo].map((d) => {
+    d = moment(d);
+    return `${ES_INDEX}${d.format('YYYY-MM-DD-HH')}`
+  });
+}
+
+
+
