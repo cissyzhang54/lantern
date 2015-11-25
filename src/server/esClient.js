@@ -330,11 +330,9 @@ function retrieveEventsData(queryData){
 function retrieveRealtimeData(queryData) {
   return new Promise((resolve, reject) => {
     let queryObject = ArticleRealtimeQuery(queryData);
-
     let request = {
       index: calculateRealtimeIndices(queryData, process.env.ES_REALTIME_INDEX_ROOT),
       ignore_unavailable: true,
-      search_type: 'count',
       body: queryObject
     }
     client.search(request, (error, response) => {

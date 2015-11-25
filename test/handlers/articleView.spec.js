@@ -66,7 +66,7 @@ describe ('ArticleView Handler', function() {
       params:{}
     });
     const props = articleView.props;
-    const sectionModifier = props.children.props.children[0].props.children;
+    const sectionModifier = props.children.props.children[0].props.children[0];
 
     expect(props.title).to.equal('Lantern - test me');
     expect(TestUtils.isElementOfType(sectionModifier, SectionModifier)).to.equal(true);

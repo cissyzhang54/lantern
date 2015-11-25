@@ -52,8 +52,6 @@ export default class Search extends React.Component {
     if (el.setSelectionRange) {
       el.setSelectionRange(query.length, query.length);
     }
-    ArticleActions.listenToQuery();
-    ComparatorActions.listenToQuery();
   }
 
   _handleSearchInput() {
@@ -68,10 +66,12 @@ export default class Search extends React.Component {
   }
 
   _handleClick(){
+    ArticleActions.listenToQuery();
     ArticleQueryActions.clickedOnArticle({
       uuid: this.uuid,
       publishDate: this.publishDate
     })
+    ComparatorActions.listenToQuery();
     ComparatorQueryActions.clickedOnArticle({
       uuid: this.uuid,
       publishDate: this.publishDate

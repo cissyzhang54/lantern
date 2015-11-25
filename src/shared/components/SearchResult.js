@@ -33,13 +33,22 @@ export default class SearchItem extends React.Component {
       );
     });
     const publishedDate = formatDate(result.initial_publish_date);
+    let linkUrl = '/articles/' + result.article_uuid;
+    const publishedMoment = moment(result.initial_publish_date);
+    const now = moment();
+    const diff = now.diff(publishedMoment, 'hours');
+    let clickHandler = this.props.handleClick;
+    if (diff < 24) {
+      linkUrl = '/realtime' + linkUrl;
+      clickHandler = null;
+    }
     return (
       <ListGroupItem header={(
         <Link
           data-component='searchResult'
-          to={'/articles/' + result.article_uuid}
+          to={linkUrl}
           key={result._id}
-          onClick={this.props.handleClick}
+          onClick={clickHandler}
           uuid={result.article_uuid}
           publishDate={result.initial_publish_date}
           >

@@ -4,6 +4,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import connectToStores from 'alt/utils/connectToStores';
 import moment from 'moment';
+import Link from 'react-router/lib/Link';
 
 import Header from "../components/Header";
 import Messaging from '../components/Messaging';
@@ -157,7 +158,12 @@ class ArticleView extends React.Component {
             query={this.props.comparatorQuery}
             uuid={data.uuid}
             dateRange='published'
-            />
+          />
+          <Link
+            to={'/realtime/articles/' + data.uuid}
+            >
+            Real time view
+          </Link>
         </ChunkWrapper>
 
         <ChunkWrapper component="header">
