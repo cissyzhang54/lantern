@@ -9,6 +9,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
 import explanations from '../strings/explanations';
+import Text from './Text'
 
 const styles = {
   infoIcon : {
@@ -86,7 +87,7 @@ export default class SectionWho extends React.Component {
                 overlay={
                   <Popover id="rfv-description" >
                     <div style={styles.toolTip} >
-                      {explanations.rfv}
+                      <Text type='html' message='explanations.rfv' />
                     </div>
                   </Popover>
                   }
