@@ -6,7 +6,8 @@ import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
 import responsiveStyles from '../utils/responsiveStyles';
 import LogoSVG from '../components/LogoSVG';
-import explanations from '../strings/explanations';
+
+import Text from './Text';
 
 var controllerStyles = {
   'default': {
@@ -45,6 +46,9 @@ var controllerStyles = {
       backgroundColor: 'rgba(255, 0, 0, 0.15)',
       color: 'red',
       cursor: 'pointer'
+    },
+    infoIcon : {
+      cursor:'pointer'
     }
   },
   '(max-width: 500px)' : {
@@ -99,12 +103,12 @@ export default class NavBar extends React.Component {
           placement="bottom"
           overlay={
             <Popover title="What is alpha?" id="alpha-description">
-              {explanations.alpha}
+              <Text message='explanations.navBar.alpha' />
             </Popover>
             }
           >
           <div style={styles.alpha} aria-describedby="alpha-description">
-            ALPHA <Glyphicon glyph="question-sign" />
+            ALPHA <Glyphicon style={styles.infoIcon} glyph="question-sign" />
           </div>
         </OverlayTrigger>
       </li>

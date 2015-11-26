@@ -8,7 +8,7 @@ import Tags from "./Tags";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
 import ModifierDescription from "./ModifierDescription";
-import explanationStrings from "../strings/explanations.js";
+import Text from "./Text";
 
 import ArticleQueryActions from '../actions/ArticleQueryActions';
 import SectionQueryActions from '../actions/SectionQueryActions';
@@ -39,7 +39,8 @@ const styles = {
     'color': '#039',
     'position': 'absolute',
     'top': '8px',
-    'left': '-4px'
+    'left': '-4px',
+    cursor:'pointer'
   }
 };
 
@@ -118,7 +119,9 @@ export default class Modifier extends React.Component {
                 placement="bottom"
                 overlay={
                   <Popover id="tag-description">
-                      <p>{explanationStrings.tags[this.props.category]}</p>
+                      <p>
+                        <Text message={`explanations.sectionModifier.${this.props.category}`}/>
+                      </p>
                   </Popover>
                   }
                 >

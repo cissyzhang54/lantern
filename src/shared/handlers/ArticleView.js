@@ -16,6 +16,7 @@ import SectionWhen from "../components/SectionWhen";
 import SectionNext from "../components/SectionNext";
 import SectionWho from "../components/SectionWho";
 import SectionInteract from "../components/SectionInteract";
+import Text from '../components/Text'
 
 import ArticleStore from '../stores/ArticleStore';
 import ArticleActions from '../actions/ArticleActions';
@@ -27,7 +28,6 @@ import ComparatorQueryStore from '../stores/ComparatorQueryStore';
 import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 import FeatureFlag from '../utils/featureFlag';
 import * as formatAuthors from '../utils/formatAuthors';
-import explanations from '../strings/explanations';
 
 import ChunkWrapper from '../components/ChunkWrapper';
 
@@ -138,7 +138,7 @@ class ArticleView extends React.Component {
         label: 'Scroll Depth',
         size: 'large',
         comparatorFormatName: 'scrollDepth',
-        toolTip: explanations.sections.scrollDepth
+        toolTip: (<Text message='explanations.articleHandler.scrollDepth' />)
       }
     }
 
