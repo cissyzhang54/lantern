@@ -25,13 +25,12 @@ var Text = React.createClass({
 
   getDefaultProps: function() {
     return {
-      type: 'text'
+      messages: intlData.messages,
+      locales: intlData.locales
     };
   },
 
   render: function () {
-    this.props.messages = intlData.messages;
-    this.props.locales = intlData.locales;
     let text;
 
     // Adding a switch for html - FormattedMessage is default as it renders faster
