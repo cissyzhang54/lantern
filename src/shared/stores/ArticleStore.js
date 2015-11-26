@@ -43,7 +43,6 @@ class ArticleStore {
     this.loading = false;
     this.data = newData;
     this.errorMessage = null;
-    setImmediate(_ => ComparatorQueryActions.setPublishDate(newData.published))
   }
 
   loadingFailed(error) {

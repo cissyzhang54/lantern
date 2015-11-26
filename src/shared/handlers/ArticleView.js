@@ -66,19 +66,6 @@ class ArticleView extends React.Component {
     };
   }
 
-  componentWillMount() {
-    ComparatorQueryActions.setCategory('articles');
-    let hasArticleChanged = this.state.uuid !== ArticleQueryStore.getState().query.uuid;
-    let hasComparatorChanged = this.state.comparator !== ComparatorQueryStore.getState().query.comparator;
-    if (hasArticleChanged){
-      ArticleQueryActions.setUUID(this.state.uuid);
-      ComparatorQueryActions.setUUID(this.state.uuid);
-    }
-    if (this.state.comparator && hasComparatorChanged){
-      ComparatorQueryActions.selectComparator(this.state);
-    }
-  }
-
   componentWillUnmount() {
     ArticleActions.unlistenToQuery();
     ComparatorActions.unlistenToQuery();
@@ -89,12 +76,15 @@ class ArticleView extends React.Component {
     this.state = {};
   }
 
+  componentWillMount() {
+    ArticleActions.listenToQuery();
+    ComparatorActions.listenToQuery();
+  }
+
   componentDidMount() {
     let analytics = require('../utils/analytics');
     analytics.sendGAEvent('pageview');
     analytics.trackScroll();
-    ArticleActions.listenToQuery();
-    ComparatorActions.listenToQuery();
   }
 
   render() {

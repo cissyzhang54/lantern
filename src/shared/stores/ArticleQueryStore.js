@@ -28,6 +28,12 @@ class ArticleQueryStore {
     this.query.uuid = uuid;
   }
 
+  clickedOnArticle(article) {
+    this.query.dateFrom = article.publishDate;
+    this.query.dateTo = moment();
+    this.query.uuid = article.uuid;
+  }
+
   selectFilter(filter) {
     let key;
     switch (filter.key){

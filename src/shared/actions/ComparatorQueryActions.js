@@ -14,6 +14,7 @@ class ComparatorQueryActions {
         'removeComparator',
         'selectFilter',
         'selectDateRange',
+        'clickedOnArticle',
         'destroy'
     );
   }

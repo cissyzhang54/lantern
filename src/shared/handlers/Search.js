@@ -23,7 +23,6 @@ export default class Home extends React.Component {
       <AltContainer store={SearchStore} actions={SearchActions}>
         <h2 className="sr-only">Search</h2>
         <Search />
-        <RecentArticles identifier="home:recentArticles"/>
       </AltContainer>
     </DocumentTitle>);
   }

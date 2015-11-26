@@ -8,6 +8,7 @@ class ArticleQueryActions {
         'selectFilter',
         'selectDateRange',
         'setUUID',
+        'clickedOnArticle',
         'destroy'
     );
   }

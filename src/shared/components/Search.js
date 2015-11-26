@@ -10,6 +10,7 @@ import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
 import ArticleActions from '../actions/ArticleActions';
+import ComparatorActions from '../actions/ComparatorActions';
 import ArticleQueryActions from '../actions/ArticleQueryActions';
 import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 
@@ -52,6 +53,7 @@ export default class Search extends React.Component {
       el.setSelectionRange(query.length, query.length);
     }
     ArticleActions.listenToQuery();
+    ComparatorActions.listenToQuery();
   }
 
   _handleSearchInput() {
@@ -66,10 +68,14 @@ export default class Search extends React.Component {
   }
 
   _handleClick(){
-    ArticleQueryActions.setUUID(this.uuid)
-    ComparatorQueryActions.setUUID(this.uuid)
-    ArticleQueryActions.selectDateRange({from:this.publishDate,to:moment()})
-    ComparatorQueryActions.setPublishDate(this.publishDate)
+    ArticleQueryActions.clickedOnArticle({
+      uuid: this.uuid,
+      publishDate: this.publishDate
+    })
+    ComparatorQueryActions.clickedOnArticle({
+      uuid: this.uuid,
+      publishDate: this.publishDate
+    })
   }
 
   render() {
