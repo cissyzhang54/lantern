@@ -30,16 +30,16 @@ module.exports = {
       'Date Range set to "First 3 days"');
     browser.expect.element(components.updatingArticle).not.present.before(10000);
     browser
-      .assert.containsText(components.comparisonIncludes, '1,288 \'FT\' articles',
-      'Comparison element contains "1,288" \'FT\' articles"')
+      .assert.containsText(components.comparisonIncludes, '1,315 \'FT\' articles',
+      'Comparison element contains "1,315" \'FT\' articles"')
   },
 
   'Check Headline Stats Section' : function (browser) {
     currentSection = articlePage.sectionHeadline;
 
     nExtras.doComparator(browser, currentSection.timeOnPage, '0m 9s', '-61');
-    nExtras.doComparator(browser, currentSection.pageViews, '7,210', '41');
-    nExtras.doComparator(browser, currentSection.uniqueVisitors, '944', '68');
+    nExtras.doComparator(browser, currentSection.pageViews, '7,210', '44');
+    nExtras.doComparator(browser, currentSection.uniqueVisitors, '944', '71');
     nExtras.doComparator(browser, currentSection.scrollDepth, '0%', '-100');
   },
 
