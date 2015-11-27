@@ -4,11 +4,11 @@ import Row from 'react-bootstrap/lib/Row';
 import BarChart from "../components/BarChart";
 import FormatData from "../utils/formatData";
 import Table from '../components/Table';
+import Text from '../components/Text';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
 import ChunkWrapper from './ChunkWrapper.js';
-import explanations from '../strings/explanations.js';
 
 const styles = {
   infoIcon : {
@@ -16,7 +16,8 @@ const styles = {
     'color': '#039',
     'position': 'absolute',
     'top': '0px',
-    'left': '-4px'
+    'left': '-4px',
+    cursor:'pointer'
   }
 };
 
@@ -62,7 +63,7 @@ export default class SectionWhere extends React.Component {
               placement="bottom"
               overlay={
                 <Popover id="tag-description">
-                    <p>{explanations.sections.bounceRate}</p>
+                    <p><Text message='explanations.sectionNext.bounceRate' /></p>
                 </Popover>
                 }
               >

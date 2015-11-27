@@ -8,7 +8,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import ChunkWrapper from './ChunkWrapper.js';
-import explanations from '../strings/explanations';
+import Text from './Text';
 
 let config = {
   subscription: {
@@ -20,7 +20,7 @@ let config = {
     metricType: 'integer',
     label: 'Social Shares',
     size: 'small',
-    toolTip : (<p>{explanations.sections.socialShares}</p>)
+    toolTip : (<p><Text message='explanations.sectionInteract.socialShares'/></p>)
   },
   total_links_clicked: {
     metricType: 'integer',
@@ -36,13 +36,14 @@ let config = {
     metricType: 'integer',
     label: 'Comments Viewed',
     size: 'small',
-    toolTip : (<p>{explanations.sections.commentsViewed}</p>)
+    toolTip : (<p><Text message='explanations.sectionInteract.commentsViewed'/></p>)
   }
 }
 const styles = {
   infoIcon : {
     'fontSize' : '15px',
     'color': '#039',
+    cursor:'pointer'
   }
 }
 

@@ -3,17 +3,18 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import moment from 'moment';
 import LineChart from "../components/LineChart";
+import Text from '../components/Text'
 import FormatData from "../utils/formatData";
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import ChunkWrapper from './ChunkWrapper.js';
-import explanations from '../strings/explanations.js';
 
 const styles = {
   infoIcon : {
     'fontSize' : '15px',
-    'color': '#039'
+    'color': '#039',
+    cursor:'pointer'
   }
 }
 
@@ -63,7 +64,7 @@ export default class SectionWhen extends React.Component {
               placement="bottom"
               overlay={
                   <Popover id="chart-description">
-                    <p>{explanations.sections.articleViews}</p>
+                    <p><Text message='explanations.sectionWhen.articleViews' /></p>
                   </Popover>
                   }
               >

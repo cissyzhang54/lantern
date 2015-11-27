@@ -8,7 +8,6 @@ import ChunkWrapper from './ChunkWrapper.js';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
-import explanations from '../strings/explanations';
 import Text from './Text'
 
 const styles = {
@@ -87,7 +86,7 @@ export default class SectionWho extends React.Component {
                 overlay={
                   <Popover id="rfv-description" >
                     <div style={styles.toolTip} >
-                      <Text type='html' message='explanations.rfv' />
+                      <Text type='html' message='explanations.sectionWho.rfv' />
                     </div>
                   </Popover>
                   }

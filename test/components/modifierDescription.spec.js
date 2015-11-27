@@ -2,8 +2,11 @@ import {expect} from 'chai';
 import React from 'react';
 import {createComponent} from '../createComponent';
 import ModifierDescription from '../../src/shared/components/ModifierDescription';
+import Text from '../../src/shared/components/Text';
 
 import moment from 'moment'
+
+const TestUtils = React.addons.TestUtils;
 
 describe ('ModifierDescription component', function() {
 
@@ -19,15 +22,24 @@ describe ('ModifierDescription component', function() {
       articleCount: 130
     });
     const props = modifierDescription.props;
-    expect(props.children).to.equal(`The comparison includes 130 'financials' articles`);
+
+    expect(TestUtils.isElementOfType(modifierDescription.props.children, Text)).to.equal(true);
+    expect(props.children.props.message).to.equal(`components.modifierDescription.text`);
+    expect(props.children.props.formattedArticleCount).to.equal(`130`);
+    expect(props.children.props.comparator).to.equal(`financials`);
+
   });
 
-  xit ('formats article count', function() {
+  it ('formats article count', function() {
     let modifierDescription = createComponent(ModifierDescription, {
       comparator: 'test',
       articleCount: 13004
     });
     const props = modifierDescription.props;
-    expect(props.children).to.equal(`The comparison includes 13,004 'test' articles`);
+
+    expect(TestUtils.isElementOfType(modifierDescription.props.children, Text)).to.equal(true);
+    expect(props.children.props.message).to.equal(`components.modifierDescription.text`);
+    expect(props.children.props.formattedArticleCount).to.equal(`13,004`);
+    expect(props.children.props.comparator).to.equal(`test`);
   });
 });

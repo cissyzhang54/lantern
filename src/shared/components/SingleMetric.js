@@ -45,6 +45,9 @@ var componentStyles = {
     },
     comparatorValue: {
       fontSize: '1.0em'
+    },
+    infoIcon : {
+      cursor:'pointer'
     }
   },
   '(max-width: 500px)': {
