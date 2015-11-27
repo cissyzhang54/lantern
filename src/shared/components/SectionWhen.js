@@ -32,7 +32,7 @@ export default class SectionWhen extends React.Component {
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
     let [timeData, timeID, timeKeys] = dataFormatter.getMetric('readTimes', 'Article');
     let [pubTimeData, pubTimeID, pubTimeKeys] = dataFormatter.getMetric('readTimesSincePublish', 'Article');
-
+    
     let readTimesChart = (this.props.renderReadTimes)
       ? <LineChart
         data={timeData}

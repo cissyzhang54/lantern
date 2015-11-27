@@ -16,6 +16,7 @@ export default {
             }
         }
     },
+    "size" : 1,
     "aggs" : {
         "page_views": {
             "filter" : {
@@ -39,8 +40,12 @@ export default {
                 "filtered" : {
                     "date_histogram" : {
                         "field" : "event_timestamp",
-                        "interval" : "5s",
-                        "min_doc_count" : 0
+                        "interval" : "60s",
+                        "min_doc_count" : 0,
+                        "extended_bounds" : {
+                          "min" : "2015-11-24T10:15:00.000",
+                          "max" : "2015-11-24T11:15:00.000"
+                        }
                     }
                 }
             }

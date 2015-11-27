@@ -9,6 +9,7 @@ import SectionView from "../handlers/SectionView";
 import TopicView from "../handlers/TopicView";
 import Playground from '../handlers/Playground';
 import PlaygroundLoader from '../handlers/PlaygroundLoader';
+import ArticleRealtimeView from '../handlers/ArticleRealtimeView';
 
 
 export default (
@@ -25,6 +26,7 @@ export default (
     <Route path="topics/:topic" component={TopicView} />
     <Route path="sections/:section/:comparatorType/:comparator" component={SectionView} />
     <Route path="topics/:topic/:comparatorType/:comparator" component={TopicView} />
+    <Route path="realtime/articles/:uuid" component={ArticleRealtimeView} />
     <Route path="*" name='404' component={Error404}   />
   </Route>
 );

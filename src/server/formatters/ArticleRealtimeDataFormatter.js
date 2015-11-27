@@ -17,7 +17,19 @@ export default function formatData(data) {
   }
 
   let [realtimeData] = data;
-  let realtimeFields = ['realtimePageViews'];
+  let metaFields = [
+    'title',
+    'uuid',
+    'author',
+    'published',
+    'published_human',
+    'genre',
+    'sections',
+    'topics',
+  ]
+  let realtimeFields = [
+    'realtimePageViews'
+  ];
 
   let results = {}
   return new Promise((resolve, reject) => {
@@ -25,6 +37,11 @@ export default function formatData(data) {
       realtimeFields.forEach(f => {
         results[f] = getField(realtimeData, f)
       });
+      if (realtimeData.hits.hits.length) {
+        metaFields.forEach(f => {
+          results[f] = getField(realtimeData.hits.hits[0]._source, f)
+        });
+      }
       resolve(results);
     } catch (e) {
       let error = new Error(e);

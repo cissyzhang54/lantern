@@ -21,6 +21,28 @@ img {
   display: table;
   clear: both;
 }
+
+.live {
+  color: red;
+  min-height: 1em;
+  text-align: center;
+  font-weight: bold;
+}
+
+.live--pulsate {
+  animation: live-pulsate 2s infinite;
+}
+
+.live--disconnected {
+  color: #777;
+}
+
+@keyframes live-pulsate {
+  0% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0;}
+}
+
 #react-app {
   margin: 10px 1.575%;
 }

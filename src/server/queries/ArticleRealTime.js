@@ -34,6 +34,7 @@ export default function ArticlesRealtimeQuery(query) {
         }
       }
     },
+    size: 1,
     aggs: {
       page_views: {
         filter : {
@@ -56,8 +57,12 @@ export default function ArticlesRealtimeQuery(query) {
           filtered : {
             date_histogram : {
               field: 'event_timestamp',
-              interval: '5s', // XXX this is likely to change
-              min_doc_count: 0
+              interval: '60s', // XXX this is likely to change
+              min_doc_count: 0,
+              extended_bounds: {
+                min: query.dateFrom,
+                max: query.dateTo
+              }
             }
           }
         }

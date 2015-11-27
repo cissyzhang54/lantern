@@ -2,7 +2,6 @@ import 'newrelic';
 let express = require("express");
 let exphbs = require("express-handlebars");
 import React from "react";
-//import Router from "react-router";
 import { match, RoutingContext } from "react-router";
 import DocumentTitle from 'react-document-title';
 import compress from 'compression';
@@ -16,6 +15,9 @@ let apiRouter = require("./routers/api-routes");
 let authRouter = require("./routers/auth-routes");
 let statusRouter = require("./routers/status-routes");
 import uuid from 'uuid';
+
+import RealtimeServer from './realtimeServer';
+
 
 delete process.env.BROWSER;
 let cacheBustId = uuid();
@@ -62,11 +64,13 @@ app.use(function ErrorHandler(err, req, res, next) {
   renderRoute(errorRoutes, req, res)
 });
 
+
 //Go!!!
 var server = app.listen(config.port, function () {
   var host = server.address().address;
   var port = server.address().port;
   console.log('Lantern app listening at http://%s:%s', host, port);
+  var realtimeServer = new RealtimeServer(server);
 });
 
 function renderRoute(route, req, res) {

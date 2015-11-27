@@ -13,8 +13,8 @@ function decode(uri){
   return uri ? decodeURI(uri) : null
 }
 
-router.get(`/articles/:uuid(${UUID_REGEX})`, (req, res, next) => {
-  return getArticleData(req, res)
+router.get(`/realtime/articles/:uuid(${UUID_REGEX})`, (req, res, next) => {
+  return getArticleRealtimeData(req, res)
     .then(() => next())
     .catch((err) => {
       if (err.status) res.status(err.status);
@@ -113,6 +113,31 @@ function getArticleData(req, res){
     }).catch((error) => {
       res.locals.data = {
         ArticleStore : {
+          errorMessage : error.message
+        }
+      }
+    })
+}
+
+function getArticleRealtimeData(req, res) {
+  return dataApiUtils.getArticleRealtimeData({uuid: decode(req.params.uuid)}, apiKey)
+    .then((data) => {
+      res.locals.data = {
+        ArticleRealtimeStore: {
+          author: data.author,
+          genre: data.genre,
+          title: data.title,
+          topics: data.topics,
+          sections: data.sections,
+          published: data.published,
+          published_human: data.published_human,
+          data: data.realtimePageViews
+        }
+      };
+      return res;
+    }).catch((error) => {
+      res.locals.data = {
+        ArticleRealtimeStore: {
           errorMessage : error.message
         }
       }
