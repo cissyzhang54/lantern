@@ -14,9 +14,8 @@ const styles = {
   infoIcon : {
     'fontSize' : '15px',
     'color': '#039',
-    'position': 'absolute',
     'top': '0px',
-    'left': '-4px'
+    'padding-right': '8px',
   },
   toolTip : {
     'white-space': 'pre-wrap'
