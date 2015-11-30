@@ -16,6 +16,7 @@ const styles = {
     'color': '#039',
     'top': '0px',
     'padding-right': '8px',
+    'cursor': 'pointer'
   },
   toolTip : {
     'white-space': 'pre-wrap'
