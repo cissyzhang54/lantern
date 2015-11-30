@@ -31,8 +31,7 @@ var componentStyles = {
     metric: {
       padding: 0,
       margin: '0 0 2px 0',
-      fontSize: '1.5em',
-      transform: 'translateZ(0)'
+      fontSize: '1.5em'
 },
     comparator: {
       display: 'block',
@@ -62,10 +61,7 @@ function getPercentageDifference (compared , comparator) {
 }
 
 function checkSignClass (x) {
-  let [color, ret] = (x < 0) ? ['red','down'] : ['green', 'up'];
-  componentStyles['default'].comparatorSymbol.color = color;
-  componentStyles['default'].comparatorValue.color = color;
-  return ret;
+  return (x < 0) ? 'down' : 'up';
 }
 
 let convert = {
@@ -121,6 +117,9 @@ export default class SingleMetric extends React.Component {
     let [transformMetric, differenceSign, transfromComparator] =
       convert[this.props.metricType](this.props.metric, this.props.comparatorMetric)
     let comparatorStatLabel = this.props.comparatorName + ' ' + this.props.label + ' average : ' + Math.round(this.props.comparatorMetric)
+
+    styles.comparatorSymbol.color = (differenceSign === 'down') ? 'red' : 'green';
+    styles.comparatorValue.color = (differenceSign === 'down') ? 'red' : 'green';
 
     //If there is no comparator leave the comparator HTML undefined
     if (!!transfromComparator) {
