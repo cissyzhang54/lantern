@@ -23,9 +23,11 @@ const styles = {
 function getReferrerUrls(data, i) {
   const maxLen = 60;
   const displayString = data[0].length > maxLen ? data[0].substr(0, maxLen) + '…' : data[0];
+  let title = data[2];
+  if (!title || title === 'unknown') title = displayString;
   let url = displayString.indexOf('http') < 0 ? displayString : (
     <a target="_blank" href={data[0]}>
-      {displayString}
+      {title}
     </a>
   );
   return {

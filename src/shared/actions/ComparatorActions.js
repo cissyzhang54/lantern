@@ -13,9 +13,6 @@ class ComparatorActions {
     );
   }
 
-  loadingData() {
-    setImmediate(_ => this.dispatch());
-  }
 
 }
 

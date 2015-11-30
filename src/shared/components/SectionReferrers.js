@@ -16,9 +16,12 @@ function getReferrerUrls(data, i) {
   if (!/ft.com/.test(parsed.hostname)) {
     displayString = displayString.split('?')[0];
   }
+
+  let title = data[2];
+  if (!title || (title === 'Unknown')) title = displayString;
   let url = displayString.indexOf('http') < 0 ? displayString : (
     <a target="_blank" href={data[0]}>
-      {displayString}
+      {(title !== 'Unknown') ? title : displayString}
     </a>
   );
   return {

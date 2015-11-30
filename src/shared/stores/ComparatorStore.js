@@ -29,13 +29,10 @@ class ComparatorStore {
     this._queryHandlerRef = null;
   }
 
-  loadingData() {
-    this.loading = true;
-  }
-
   loadData(store) {
     if (!store.query.comparator) return
-    setImmediate(_ => this.getInstance().loadComparatorData(store.query));
+    this.loading = true;
+    this.getInstance().loadComparatorData(store.query);
   }
 
   updateData(newData) {
