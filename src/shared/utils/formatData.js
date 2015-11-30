@@ -69,6 +69,7 @@ export default class formatData {
       for (let j = 0; j < keys.length; j++) {
         k = keys[j];
         if (!sums.hasOwnProperty(k) || isNaN(sums[k])) { sums[k] = 0; }
+        if (!d.hasOwnProperty(k) || isNaN(d[k])) { d[k] = 0; }
         sums[k] += d[k]
       }
     }
