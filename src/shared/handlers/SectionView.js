@@ -11,6 +11,7 @@ import Messaging from '../components/Messaging';
 import SectionModifier from '../components/SectionModifier';
 import SingleMetric from '../components/SingleMetric';
 import BarChart from '../components/BarChart.js';
+import Table from '../components/Table.js';
 import DualScaleLineChart from "../components/DualScaleLineChart";
 import SectionWho from "../components/SectionWho";
 import SectionWhere from "../components/SectionWhere";
@@ -89,8 +90,14 @@ class SectionView extends React.Component {
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
     let [publishData, publishID, publishKeys] =  dataFormatter.getMetric('publishTimes', 'Articles published');
     let [readData, readID, readKeys] =  dataFormatter.getMetric('readTimes', 'Articles read');
-    let [topicViewData, topicViewId, topicViewKeys] = dataFormatter.getPCTMetric('topicViews', 'Views');
-    let [topicCountData, topicCountId, topicCountKeys] = dataFormatter.getPCTMetric('topicCount', 'Count');
+
+    let [topicViewData, topicViewId, topicViewKeys] = dataFormatter.getMetric('topicViews', 'Views');
+    let [topicCountData, topicCountId, topicCountKeys] = dataFormatter.getMetric('topicCount', 'Count');
+    let comparatorSelected = Object.keys(comparatorData).length > 0;
+
+    let topicCountHeaders = comparatorSelected ? ['Topic', `Articles tagged in (${this.props.params.section})`, `Articles tagged in (${this.props.params.comparator} comparator)`] : ['Topic', 'Articles tagged in'];
+    let topicViewHeaders = comparatorSelected ? ['Topic', `Views (${this.props.params.section})`, `Views (${this.props.params.comparator} comparator)`] : ['Topic', 'Views'];
+    let variableTableWidth = comparatorSelected ? 12 : 6;
 
     let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrerTypes', 'Views');
     let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views');
@@ -177,27 +184,19 @@ class SectionView extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col xs={12} md={6}>
-                <h4>Total number of articles per topic</h4>
-                <BarChart
-                  data={topicCountData}
-                  keys={topicCountKeys}
-                  category={topicCountId}
-                  yLabel="Users"
-                  xLabel=""
-                  usePercentages={true}
+              <Col xs={12} md={variableTableWidth}>
+                <h4>Topics ranked by most tagged</h4>
+                <Table
+                  headers={topicCountHeaders}
+                  rows={topicCountData}
                   />
               </Col>
-              <Col xs={12} md={6}>
-                <h4>Total number of views per topic</h4>
-                <BarChart
-                  data={topicViewData}
-                  keys={topicViewKeys}
-                  category={topicViewId}
-                  yLabel="Users"
-                  xLabel=""
-                  usePercentages={true}
-                />
+              <Col xs={12} md={variableTableWidth}>
+                <h4>Topics ranked by most viewed</h4>
+                <Table
+                  headers={topicViewHeaders}
+                  rows={topicViewData}
+                  />
               </Col>
             </Row>
           </ChunkWrapper>

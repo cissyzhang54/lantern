@@ -6,6 +6,11 @@ var server = new WebpackDevServer(webpack(config), {
   // webpack-dev-server options
   publicPath: config.output.publicPath,
   hot: true,
+  watch: true,
+  watchOptions: {
+    aggregateTimeout: 300,
+    poll: 1000
+  },
   stats: { colors: true },
 });
 

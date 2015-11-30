@@ -23,7 +23,12 @@ export default class formatData {
   merge(data, comparatorData, comparatorLabel){
     let metricID = this.id;
     let metricLabel = this.metricLabel;
+
     let merged = data.map((d) => {
+      d[comparatorLabel] = null;
+      return d
+    })
+    .map((d) => {
       let i=0
       while (comparatorData.length && i < comparatorData.length) {
         var cData = comparatorData[i]
@@ -41,7 +46,7 @@ export default class formatData {
       merged.push({
         [comparatorLabel] : cData[metricLabel],
         [metricID]: cData[metricID],
-        [metricLabel]: 0
+        [metricLabel]: null
       });
     })
     return merged
