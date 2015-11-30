@@ -31,12 +31,9 @@ class SectionStore {
   }
 
   loadData(store) {
-    if (!store.query.section) return
-    this.getInstance().loadSectionData(store.query);
-  }
-
-  loadingData() {
+    if (!store.query.section) return;
     this.loading = true;
+    this.getInstance().loadSectionData(store.query);
   }
 
   updateData(newData) {

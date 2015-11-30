@@ -13,10 +13,6 @@ class SectionActions {
     );
   }
 
-  loadingData() {
-    //setImmediate(_ => this.dispatch());
-  }
-
 }
 
 export default alt.createActions(SectionActions);

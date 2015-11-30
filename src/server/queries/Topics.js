@@ -132,6 +132,5 @@ export default function TopicQuery(query) {
       }
     }
   };
-
   return esQuery
 }

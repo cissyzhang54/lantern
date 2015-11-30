@@ -13,10 +13,6 @@ class TopicActions {
     );
   }
 
-  loadingData() {
-    setImmediate(_ => this.dispatch());
-  }
-
 }
 
 export default alt.createActions(TopicActions);
