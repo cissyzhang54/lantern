@@ -14,5 +14,6 @@ export default class ColumnChart extends React.Component {
 }
 
 ColumnChart.defaultProps = {
-  componentName: 'columnChart'
-};
+  componentName: 'columnChart',
+  reverseMobileAxis : false
+}; 

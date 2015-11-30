@@ -2,6 +2,7 @@ import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
+import responsiveStyles from '../utils/responsiveStyles';
 
 let c3 = {};
 
@@ -9,9 +10,17 @@ if (isBrowser()) {
   c3 = require('c3');
 }
 
+var controllerStyles = {
+  'default': {},
+  '(max-width: 500px)' : {}
+};
+
 export default class BarChart extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      responsiveStyles : controllerStyles['default']
+    };
   }
 
   drawChart() {
@@ -19,12 +28,19 @@ export default class BarChart extends React.Component {
     let json = this.props.data;
     let keys = this.props.keys;
     let yLabel = this.props.yLabel;
+    let rotated = this.props.reverseAxis;
+
     if (this.props.usePercentages) {
       keys = keys.map((k) => {
         return k + ' %';
       });
       yLabel += ' (%)';
     }
+
+    if (this.state.matches && this.props.reverseMobileAxis) {
+      rotated = true;
+    }
+
     this.chart = c3.generate({
       bindto: node,
       transition: {
@@ -39,7 +55,7 @@ export default class BarChart extends React.Component {
         }
       },
       axis: {
-        rotated: this.props.reverseAxis,
+        rotated: rotated,
         x: {
           label: {
             text: this.props.xLabel,
@@ -82,9 +98,16 @@ export default class BarChart extends React.Component {
   }
 
   componentDidMount() {
+    responsiveStyles.addListeners(this, controllerStyles);
+
     if (this.props.data)
       this.drawChart();
   }
+
+  componentWillUnmount() {
+    responsiveStyles.removeListeners(this);
+  }
+
 
   render() {
     return (
@@ -114,7 +137,8 @@ BarChart.defaultProps = {
   yLabel: 'Value of the Thing',
   reverseAxis: true,
   componentName: 'barChart',
-  usePercentages: false
+  usePercentages: false,
+  reverseMobileAxis: false
 };
 
 BarChart.propTypes = {

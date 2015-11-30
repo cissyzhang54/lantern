@@ -67,6 +67,7 @@ function removeListeners (component){
 function mediaQueryChanged(defaultStyle, style, e) {
     let styles = e.matches ? assign({}, defaultStyle, style) : defaultStyle;
     this.setState({responsiveStyles: styles});
+    this.setState({matches: e.matches});
 }
 
 export default { addListeners, removeListeners, mediaQueryChanged }
