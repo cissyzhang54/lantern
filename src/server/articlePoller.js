@@ -6,6 +6,7 @@ import moment from 'moment';
 
 const FORMAT_START = 'YYYY-MM-DDTHH:mm:00.000[Z]';
 const FORMAT_END = 'YYYY-MM-DDTHH:mm:59.999[Z]';
+
 export default function ArticlePoller(uuid) {
   this.uuid = uuid;
   this.lastPolled = moment();

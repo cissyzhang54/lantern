@@ -28,7 +28,8 @@ export default function formatData(data) {
     'topics',
   ]
   let realtimeFields = [
-    'realtimePageViews'
+    'realtimePageViews',
+    'timeOnPageLastHour'
   ];
 
   let results = {}

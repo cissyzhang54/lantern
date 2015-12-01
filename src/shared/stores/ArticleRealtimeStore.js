@@ -9,7 +9,8 @@ const LIVE_TIMEOUT = 10000;
 class ArticleRealtimeStore {
 
   constructor() {
-    this.data = [];
+    this.pageViews = [];
+    this.timeOnPage = null;
     this.author = [];
     this.genre = [];
     this.title = "";
@@ -64,7 +65,8 @@ class ArticleRealtimeStore {
   subscribeToArticle(uuid) {
     this.uuid = uuid;
     this.socket.on('updatedArticleData', (data) => {
-      this.data = processData(this.data, data.realtimePageViews);
+      this.pageViews = processData(this.pageViews, data.realtimePageViews);
+      this.timeOnPage = data.timeOnPageLastHour;
       this.isLive = true;
       this.emitChange();
       this.setIsLiveTimer();
@@ -83,7 +85,8 @@ class ArticleRealtimeStore {
     this.sections = data.sections;
     this.published = data.published;
     this.published_human = data.published_human;
-    this.data = data.realtimePageViews;
+    this.pageViews = data.realtimePageViews;
+    this.timeOnPage = data.timeOnPageLastHour;
   }
 
   loadingData() {
@@ -105,8 +108,11 @@ function processData(oldData, newData) {
     return oldData;
   }
   let last = oldData[oldData.length - 1];
-  if (last[0] === newData[0][0]) {
-    last[1] = newData[0][1]
+  let newest = newData[0];
+  // last is an array with:
+  // ['DATE STR', number]
+  if (last[0] === newest[0]) {
+    last[1] = newest[1]
     return oldData;
   }
   let data = oldData.concat(newData);

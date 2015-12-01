@@ -18,20 +18,8 @@ export default function ArticlesRealtimeQuery(query) {
 
   return {
     query: {
-      filtered: {
-        query: {
-          match: {
-            article_uuid : query.uuid
-          }
-        },
-        filter: {
-          range: {
-            event_timestamp : {
-              from: query.dateFrom,
-              to: query.dateTo
-            }
-          }
-        }
+      match: {
+        article_uuid : query.uuid
       }
     },
     size: 1,
@@ -49,6 +37,14 @@ export default function ArticlesRealtimeQuery(query) {
                 term : {
                   event_category: 'view'
                 }
+              },
+              {
+                range: {
+                  event_timestamp : {
+                    from: query.dateFrom,
+                    to: query.dateTo
+                  }
+                }
               }
             ]
           }
@@ -63,6 +59,38 @@ export default function ArticlesRealtimeQuery(query) {
                 min: query.dateFrom,
                 max: query.dateTo
               }
+            }
+          }
+        }
+      },
+      time_on_page_last_hour : {
+        filter: {
+          bool: {
+            must: [
+              {
+                term : {
+                  event_type : 'page'
+                }
+              },
+              {
+                term : {
+                  event_category: 'supplement'
+                }
+              },
+              {
+                range: {
+                  event_timestamp: {
+                    gte: "now-1h/m"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        aggs: {
+          filtered: {
+            avg: {
+              field: 'attention_time'
             }
           }
         }
