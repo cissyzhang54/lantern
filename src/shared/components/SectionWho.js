@@ -102,6 +102,7 @@ export default class SectionWho extends React.Component {
               yLabel="Page Views"
               xLabel="User Type"
               usePercentages={true}
+              reverseMobileAxis={true}
               />
           </Col>
         </Row>
