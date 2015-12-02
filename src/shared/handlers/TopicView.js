@@ -125,7 +125,7 @@ class TopicView extends React.Component {
     } else if (!this.props.data) {
       return (<Messaging category="Topic" type="LOADING" />);
     }
-    let updating = (this.props.topicLoading)
+    let updating = (this.props.topicLoading || this.props.comparatorLoading)
       ? <Messaging category="Topic" type="UPDATING" />
       : <Messaging category="Topic" type="PLACEHOLDER" />
 
