@@ -14,7 +14,7 @@ export default class ChunkWrapper extends React.Component {
     return (
       <div
         data-component={this.props.component}
-        style={style}>
+        style={style} className="container-fluid">
         {this.props.children}
       </div>
     );

@@ -3,6 +3,8 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
 import responsiveStyles from '../utils/responsiveStyles';
+import chartHelpers from '../utils/chartHelpers';
+import _ from 'underscore';
 
 let c3 = {};
 
@@ -39,6 +41,22 @@ export default class BarChart extends React.Component {
 
     if (this.state.matches && this.props.reverseMobileAxis) {
       rotated = true;
+    }
+
+    let dataObject = {
+      type: 'bar',
+      json: json,
+      keys: {
+        x: this.props.category,
+        value: keys
+      },
+      colors: chartHelpers.getKeyColourMapping(keys)
+    }
+
+    if(this.chart) {
+      dataObject.unload = true;
+      this.chart.load(dataObject);
+      return;
     }
 
     this.chart = c3.generate({
@@ -91,10 +109,15 @@ export default class BarChart extends React.Component {
       title: this.props.title || null
     });
 
+    node.chart = this.chart;
   }
 
-  componentDidUpdate() {
-    this.drawChart();
+  componentDidUpdate(oldProps, oldState) {
+    if ((this.state.matches !== oldState.matches)) {
+      this.chart.destroy();
+      delete this.chart;
+    }
+    setTimeout(this.drawChart.bind(this), 0);
   }
 
   componentDidMount() {
@@ -106,8 +129,12 @@ export default class BarChart extends React.Component {
 
   componentWillUnmount() {
     responsiveStyles.removeListeners(this);
+    this.chart && this.chart.destroy();
   }
 
+  shouldComponentUpdate(nextProps, nextState) {
+    return !_.isEqual(this.props, nextProps) || !_.isEqual(this.state, nextState);
+  }
 
   render() {
     return (
