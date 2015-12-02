@@ -34,8 +34,6 @@ export default function formatData(data) {
     'livePageViews'
   ];
 
-  console.log(realtimeData.aggregations)
-
   let results = {}
   return new Promise((resolve, reject) => {
     try {
