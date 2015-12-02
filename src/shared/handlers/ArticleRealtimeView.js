@@ -10,6 +10,7 @@ import LineChart from '../components/LineChart';
 import ChunkWrapper from '../components/ChunkWrapper';
 import LiveIndicator from '../components/LiveIndicator';
 import Header from '../components/Header';
+import SectionHeadlineStats from '../components/SectionHeadlineStats';
 import * as formatAuthors from '../utils/formatAuthors';
 import moment from 'moment';
 import Link from 'react-router/lib/Link';
@@ -35,7 +36,7 @@ class ArticleRealtimeView extends React.Component {
     const uuid = this.props.params.uuid;
     const isSameArticle = uuid === this.props.uuid;
     // get the last timestamp to see if the data is old
-    const lastUpdated = this.props.data.length ? this.props.data.slice(-1)[0][0] : null;
+    const lastUpdated = this.props.pageViews.length ? this.props.pageViews.slice(-1)[0][0] : null;
     const timeDiffSinceLastUpdate = moment.utc().diff(moment(lastUpdated));
     const isFresh = timeDiffSinceLastUpdate < 60000;
     if (!isSameArticle || !isFresh) {
@@ -63,12 +64,21 @@ class ArticleRealtimeView extends React.Component {
   }
 
   render() {
-    let data = this.props.data.map(function(d) {
+    let pageViews = this.props.pageViews.map(function(d) {
       return {
         date: d[0],
         views: d[1]
       }
     })
+    let timeOnPage = this.props.timeOnPage;
+    let headlineStats = {
+      timeOnPage: {
+        metricType: 'integer',
+        label: 'Time on Page',
+        size: 'large',
+        comparatorFormatName: 'timeOnPage'
+      },
+    }
     return (
       <div>
         <ChunkWrapper component="link">
@@ -88,11 +98,18 @@ class ArticleRealtimeView extends React.Component {
             uuid={this.props.uuid}
           />
         </ChunkWrapper>
+        <ChunkWrapper component="headlineStats">
+          <SectionHeadlineStats
+            data={this.props}
+            comparatorData={{}}
+            config={headlineStats}
+            />
+        </ChunkWrapper>
         <ChunkWrapper component="realtime-views">
           <h3>Real time views</h3>
           <LiveIndicator isLive={this.props.isLive} />
           <LineChart
-            data={data}
+            data={pageViews}
             keys={['views']}
             category={'date'}
             yLabel='Page Views'
