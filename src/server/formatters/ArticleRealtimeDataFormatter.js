@@ -30,8 +30,11 @@ export default function formatData(data) {
   let realtimeFields = [
     'realtimePageViews',
     'timeOnPageLastHour',
-    'scrollDepthLastHour'
+    'scrollDepthLastHour',
+    'livePageViews'
   ];
+
+  console.log(realtimeData.aggregations)
 
   let results = {}
   return new Promise((resolve, reject) => {

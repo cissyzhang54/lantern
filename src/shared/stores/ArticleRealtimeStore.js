@@ -12,6 +12,7 @@ class ArticleRealtimeStore {
     this.pageViews = [];
     this.timeOnPage = null;
     this.scrollDepth = null;
+    this.livePageViews = null;
     this.author = [];
     this.genre = [];
     this.title = "";
@@ -69,6 +70,7 @@ class ArticleRealtimeStore {
       this.pageViews = processData(this.pageViews, data.realtimePageViews);
       this.timeOnPage = data.timeOnPageLastHour;
       this.scrollDepth = data.scrollDepthLastHour;
+      this.livePageViews = data.livePageViews;
       this.isLive = true;
       this.emitChange();
       this.setIsLiveTimer();
@@ -90,6 +92,7 @@ class ArticleRealtimeStore {
     this.pageViews = data.realtimePageViews;
     this.timeOnPage = data.timeOnPageLastHour;
     this.scrollDepth = data.scrollDepthLastHour;
+    this.livePageViews = data.livePageViews;
   }
 
   loadingData() {

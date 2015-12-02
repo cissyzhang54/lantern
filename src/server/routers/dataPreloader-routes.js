@@ -133,7 +133,8 @@ function getArticleRealtimeData(req, res) {
           published_human: data.published_human,
           pageViews: data.realtimePageViews,
           timeOnPage: data.timeOnPageLastHour,
-          scrollDepth: data.scrollDepthLastHour
+          scrollDepth: data.scrollDepthLastHour,
+          livePageViews: data.livePageViews
         }
       };
       return res;
