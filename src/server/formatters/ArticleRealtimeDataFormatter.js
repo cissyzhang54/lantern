@@ -29,7 +29,8 @@ export default function formatData(data) {
   ]
   let realtimeFields = [
     'realtimePageViews',
-    'timeOnPageLastHour'
+    'timeOnPageLastHour',
+    'scrollDepthLastHour'
   ];
 
   let results = {}

@@ -11,6 +11,7 @@ class ArticleRealtimeStore {
   constructor() {
     this.pageViews = [];
     this.timeOnPage = null;
+    this.scrollDepth = null;
     this.author = [];
     this.genre = [];
     this.title = "";
@@ -67,6 +68,7 @@ class ArticleRealtimeStore {
     this.socket.on('updatedArticleData', (data) => {
       this.pageViews = processData(this.pageViews, data.realtimePageViews);
       this.timeOnPage = data.timeOnPageLastHour;
+      this.scrollDepth = data.scrollDepthLastHour;
       this.isLive = true;
       this.emitChange();
       this.setIsLiveTimer();
@@ -87,6 +89,7 @@ class ArticleRealtimeStore {
     this.published_human = data.published_human;
     this.pageViews = data.realtimePageViews;
     this.timeOnPage = data.timeOnPageLastHour;
+    this.scrollDepth = data.scrollDepthLastHour;
   }
 
   loadingData() {

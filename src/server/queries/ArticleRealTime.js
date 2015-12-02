@@ -94,6 +94,38 @@ export default function ArticlesRealtimeQuery(query) {
             }
           }
         }
+      },
+      scroll_depth_last_hour : {
+        filter: {
+          bool : {
+            must : [
+              {
+                term: {
+                  event_type: 'page'
+                }
+              },
+              {
+                term: {
+                  event_category: 'scroll'
+                }
+              },
+              {
+                range: {
+                  event_timestamp: {
+                    gte: 'now-1h/m'
+                  }
+                }
+              }
+            ]
+          }
+        },
+        aggs: {
+          filtered: {
+            avg: {
+              field: 'scroll_depth'
+            }
+          }
+        }
       }
     }
   }

@@ -70,14 +70,20 @@ class ArticleRealtimeView extends React.Component {
         views: d[1]
       }
     })
-    let timeOnPage = this.props.timeOnPage;
+
     let headlineStats = {
       timeOnPage: {
-        metricType: 'integer',
+        metricType: 'time',
         label: 'Time on Page',
         size: 'large',
         comparatorFormatName: 'timeOnPage'
       },
+      scrollDepth: {
+        metricType: 'percentage',
+        label: 'Scroll Depth',
+        size: 'large',
+        comparatorFormatName: 'scrollDepth'
+      }
     }
     return (
       <div>
