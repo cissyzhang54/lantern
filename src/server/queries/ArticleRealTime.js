@@ -95,6 +95,38 @@ export default function ArticlesRealtimeQuery(query) {
           }
         }
       },
+      live_page_views : {
+        filter: {
+          bool: {
+            must: [
+              {
+                term : {
+                  event_type : 'page'
+                }
+              },
+              {
+                term : {
+                  event_category: 'view'
+                }
+              },
+              {
+                range: {
+                  event_timestamp: {
+                    gte: "now-5m/m"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        aggs : {
+          filtered: {
+            cardinality: {
+              field: 'visitor_id'
+            }
+          }
+        }
+      },
       scroll_depth_last_hour : {
         filter: {
           bool : {

@@ -75,8 +75,12 @@ class ArticleRealtimeView extends React.Component {
       timeOnPage: {
         metricType: 'time',
         label: 'Time on Page',
-        size: 'large',
-        comparatorFormatName: 'timeOnPage'
+        size: 'large'
+      },
+      livePageViews: {
+        metricType: 'integer',
+        label: 'Current Readers',
+        size: 'large'
       },
       scrollDepth: {
         metricType: 'percentage',
