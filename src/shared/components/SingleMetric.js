@@ -46,7 +46,8 @@ var componentStyles = {
       fontSize: '1.0em'
     },
     infoIcon : {
-      cursor:'pointer'
+      cursor:'pointer',
+      color: '#039'
     }
   },
   '(max-width: 500px)': {
