@@ -229,7 +229,7 @@ export default class Search extends React.Component {
         labelClassName='large'
         bsSize='large'
         type='search'
-        addonBefore='Search'
+        placeholder="Search"
         onChange={_.debounce(this._handleSearchInput.bind(this), 400)}
         >
       </Input>
