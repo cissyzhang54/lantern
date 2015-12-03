@@ -28,7 +28,7 @@ export default class LineChart extends React.Component {
     let attr = this.props.category
     let json = this.props.data.map((d) => {
       if (this.props.type === 'timeseries' && typeof d[attr] === 'string')
-        d[attr] = moment(d[attr].replace(':000Z',':00.000Z'));//hack for now
+        d[attr] = moment(d[attr].replace(':000Z',':00.000Z')).toISOString();//hack for now
       return d;
     });
 
@@ -67,7 +67,7 @@ export default class LineChart extends React.Component {
 
     let dataObject = {
       type: 'line',
-      xFormat: '%Y-%m-%dT%H:%M:%SZ',
+      xFormat: '%Y-%m-%dT%H:%M:%S.000Z',
       json: json,
       keys: {
         x: attr,
@@ -77,7 +77,9 @@ export default class LineChart extends React.Component {
     };
 
     if(this.chart) {
-      dataObject.unload = true;
+      if (!this.props.realtime)
+        dataObject.unload = true;
+
       this.chart.load(dataObject);
       return;
     }
@@ -208,7 +210,8 @@ LineChart.defaultProps = {
   title: 'The title of the chart',
   xLabel: 'Time',
   yLabel: 'Y Axis Label',
-  type: 'timeseries'
+  type: 'timeseries',
+  realtime: false
 };
 
 LineChart.propTypes = {

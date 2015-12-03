@@ -130,6 +130,7 @@ class ArticleRealtimeView extends React.Component {
             category={'date'}
             yLabel='Page Views'
             xLabel='Time'
+            realtime={true}
             cols={12}
             />
         </ChunkWrapper>
