@@ -87,6 +87,12 @@ class ArticleRealtimeView extends React.Component {
         label: 'Scroll Depth',
         size: 'large',
         comparatorFormatName: 'scrollDepth'
+      },
+      totalPageViews: {
+        metricType: 'integer',
+        label: 'Total Page Views',
+        size: 'large',
+        comparatorFormatName: 'totalPageViews'
       }
     }
     return (

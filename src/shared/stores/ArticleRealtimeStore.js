@@ -13,6 +13,7 @@ class ArticleRealtimeStore {
     this.timeOnPage = null;
     this.scrollDepth = null;
     this.livePageViews = null;
+    this.totalPageViews = null;
     this.author = [];
     this.genre = [];
     this.title = "";
@@ -68,6 +69,7 @@ class ArticleRealtimeStore {
     this.uuid = uuid;
     this.socket.on('updatedArticleData', (data) => {
       this.pageViews = processData(this.pageViews, data.realtimePageViews);
+      this.totalPageViews = sumAll(this.pageViews);
       this.timeOnPage = data.timeOnPageLastHour;
       this.scrollDepth = data.scrollDepthLastHour;
       this.livePageViews = data.livePageViews;
@@ -93,6 +95,7 @@ class ArticleRealtimeStore {
     this.timeOnPage = data.timeOnPageLastHour;
     this.scrollDepth = data.scrollDepthLastHour;
     this.livePageViews = data.livePageViews;
+    this.totalPageViews = sumAll(this.pageViews);
   }
 
   loadingData() {
@@ -124,6 +127,12 @@ function processData(oldData, newData) {
   let data = oldData.concat(newData);
   const maxLen = (60);
   return data.slice(-maxLen);
+}
+
+function sumAll(data) {
+  let sum = 0;
+  data.forEach((d) => {sum += d[1]});
+  return sum;
 }
 
 export default alt.createStore(ArticleRealtimeStore, 'ArticleRealtimeStore');
