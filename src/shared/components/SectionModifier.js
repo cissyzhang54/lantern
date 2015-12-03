@@ -20,7 +20,7 @@ const styles = {
     'padding': '0px 15px 0px 15px'
   },
   title : {
-    lineHeight: '2em',
+    lineHeight: '1.5em',
   },
   titleText : {
     'paddingLeft': '0px'
@@ -32,13 +32,13 @@ const styles = {
     'margin': '4px 0'
   },
   row : {
-    marginBottom: '8px'
+    marginBottom: '10px'
   },
   infoIcon : {
     'fontSize' : '15px',
     'color': '#039',
     'position': 'absolute',
-    'top': '8px',
+    'top': '4px',
     'left': '-4px',
     cursor:'pointer'
   }
@@ -111,7 +111,7 @@ export default class Modifier extends React.Component {
 
     return (
       <div data-component='sectionModifier' style={styles.modifierWrapper}>
-        <Row>
+        <Row style={styles.row}>
           <Col sm={2} xs={12}>
             <span style={styles.title}>
               <OverlayTrigger
