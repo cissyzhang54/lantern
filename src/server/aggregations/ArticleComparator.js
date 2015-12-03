@@ -1,27 +1,7 @@
-import assert from 'assert';
-import moment from 'moment';
-
 import * as calculateInterval from '../utils/calculateInterval'
-import * as build from '../utils/queryBuilder'
 
-export default function ArticleComparatorQuery(query) {
-
-  assert.equal(typeof query, 'object',
-    "argument 'query' should be an object");
-  let comparatorQuery = build.articleComparatorQuery(query)
-
-  let must = comparatorQuery.filtered.query.bool.must;
-
-  if (must.length <= 1) {
-    delete comparatorQuery.filtered.query.bool.must;
-  } else {
-    comparatorQuery.filtered.query.bool.must.splice(0,1);
-  }
-
-  let esQuery = {
-    "query" : comparatorQuery,
-    "size": 1,
-    "aggs" : {
+export default function ArticleComparatorAggregation(query) {
+  return {
       page_views_since_publish: {
         histogram: {
           field: "time_since_publish",
@@ -189,7 +169,5 @@ export default function ArticleComparatorQuery(query) {
           field: 'visitor_id'
         }
       }
-    }
   }
-  return esQuery
 }

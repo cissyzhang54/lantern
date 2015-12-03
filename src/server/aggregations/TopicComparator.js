@@ -1,30 +1,8 @@
-import assert from 'assert';
-import moment from 'moment';
-
 import * as calculateInterval from '../utils/calculateInterval'
-import * as build from '../utils/queryBuilder'
 
-export default function SectionQuery(query) {
+export default function TopicComparatorAggregation(query) {
 
-  assert.equal(typeof query, 'object',
-    "argument 'query' should be an object");
-
-  let sectionQuery = build.sectionQuery(query)
-
-  let largerThanZeroPublish = {
-    range : {
-      time_since_publish : {
-        gte: 0
-      }
-    }
-  }
-  // this clause ensures no articles with negative publish
-  // date are returned
-  sectionQuery.filtered.query.bool.must.push(largerThanZeroPublish);
-
-  let esQuery = {
-    query : sectionQuery,
-    aggs: {
+  return {
       "page_views_over_time" : {
         "date_histogram" : {
           "field" : "view_timestamp",
@@ -54,18 +32,18 @@ export default function SectionQuery(query) {
           }
         }
       },
-      social_referrers: {
+      referrer_names: {
         filter: {
-          term: {
-            referrer_type: 'social-network'
+          not: {
+            term: {
+              referrer_type: "internal"
+            }
           }
         },
         aggs: {
           filtered: {
             terms: {
-              field: "referrer_name",
-              min_doc_count: 0,
-              size: 200000000
+              field: "referrer_name"
             }
           }
         }
@@ -85,6 +63,22 @@ export default function SectionQuery(query) {
           types : {
             terms: {
               field: "referrer_name"
+            }
+          }
+        }
+      },
+      social_referrers: {
+        filter: {
+          term: {
+            referrer_type: 'social-network'
+          }
+        },
+        aggs: {
+          filtered: {
+            terms: {
+              field: "referrer_name",
+              min_doc_count: 0,
+              size: 200000000
             }
           }
         }
@@ -139,13 +133,6 @@ export default function SectionQuery(query) {
           "field": "topics",
           size: 10
         }
-      },
-      distinct_articles: {
-        cardinality: {
-          field: "article_uuid"
-        }
       }
     }
-  };
-  return esQuery
 }

@@ -1,29 +1,5 @@
-import assert from 'assert';
-import moment from 'moment';
-
-const root = process.env.ES_REALTIME_INDEX_ROOT;
-
-export default function ArticlesRealtimeQuery(query) {
-  assert.equal(typeof query, 'object',
-    "argument 'query' should be an object");
-
-  assert.equal(typeof query.dateFrom, 'string',
-    "argument 'query' should contain a dateFrom string")
-
-  assert.equal(typeof query.dateTo, 'string',
-    "argument 'query' should contain a dateTo string")
-
-  assert.equal(typeof query.uuid, 'string',
-    "argument 'query' should contain a 'uuid' string")
-
+export default function ArticlesRealtimeAggregation(query) {
   return {
-    query: {
-      match: {
-        article_uuid : query.uuid
-      }
-    },
-    size: 1,
-    aggs: {
       page_views: {
         filter : {
           bool : {
@@ -160,5 +136,4 @@ export default function ArticlesRealtimeQuery(query) {
         }
       }
     }
-  }
 }

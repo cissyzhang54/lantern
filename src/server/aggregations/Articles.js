@@ -1,20 +1,7 @@
-import assert from 'assert';
-import moment from 'moment';
-
 import * as calculateInterval from '../utils/calculateInterval'
-import * as build from '../utils/queryBuilder'
 
-export default function ArticlesQuery(query) {
-
-  assert.equal(typeof query, 'object',
-    "argument 'query' should be an object");
-
-  let articleQuery = build.articleQuery(query)
-
+export default function ArticlesAggregation(query) {
   return {
-    query : articleQuery,
-    size: 1,
-    aggs: {
       page_views_since_publish: {
         histogram: {
           field: "time_since_publish",
@@ -200,5 +187,4 @@ export default function ArticlesQuery(query) {
         }
       }
     }
-  };
 }
