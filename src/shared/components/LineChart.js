@@ -4,6 +4,8 @@ import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
 import Input from 'react-bootstrap/lib/Input';
 import moment from 'moment';
+import _ from 'underscore';
+import chartHelpers from '../utils/chartHelpers';
 require('moment-duration-format');
 
 let c3 = {};
@@ -63,23 +65,29 @@ export default class LineChart extends React.Component {
       }
     }
 
+    let dataObject = {
+      type: 'line',
+      xFormat: '%Y-%m-%dT%H:%M:%SZ',
+      json: json,
+      keys: {
+        x: attr,
+        value: this.props.keys
+      },
+      colors: chartHelpers.getKeyColourMapping(this.props.keys)
+    };
+
+    if(this.chart) {
+      dataObject.unload = true;
+      this.chart.load(dataObject);
+      return;
+    }
+
     this.chart = c3.generate({
       bindto: node,
-      transition: {
-        duration: null,
-      },
       padding: {
         right: 20
       },
-      data: {
-        type: 'line',
-        xFormat: '%Y-%m-%dT%H:%M:%SZ',
-        json: json,
-        keys: {
-          x: attr,
-          value: this.props.keys
-        }
-      },
+      data: dataObject,
       axis: {
         x: {
           type: this.props.type,
@@ -139,6 +147,14 @@ export default class LineChart extends React.Component {
   componentDidMount() {
     if (this.props.data)
       this.drawChart();
+  }
+
+  componentWillUnmount() {
+    this.chart && this.chart.destroy();
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return !_.isEqual(this.props, nextProps);
   }
 
   _handleLocalTimeSwitch(event) {

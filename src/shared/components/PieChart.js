@@ -2,6 +2,7 @@ import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
+import _ from 'underscore';
 
 let c3 = {};
 
@@ -17,6 +18,15 @@ export default class PieChart extends React.Component {
 
   drawChart() {
     let node = React.findDOMNode(this.refs.chartContainer);
+
+    if(this.chart) {
+      this.chart.load({data: {
+        type: 'pie',
+        columns: this.props.data
+      }});
+
+      return;
+    }
 
     this.chart = c3.generate({
       bindto: node,
@@ -50,6 +60,14 @@ export default class PieChart extends React.Component {
   componentDidMount() {
     if (this.props.data)
       this.drawChart();
+  }
+
+  componentWillUnmount() {
+    this.chart && this.chart.destroy();
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return !_.isEqual(this.props, nextProps);
   }
 
   render() {

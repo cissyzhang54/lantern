@@ -3,6 +3,7 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
 import d3 from 'd3';
+import _ from 'underscore';
 
 let Datamap = function() {};
 
@@ -57,9 +58,9 @@ export default class DataMap extends React.Component {
   }
 
   setupHandler() {
-    this.resizeHandler = () => {
+    this.resizeHandler = _.debounce(() => {
       this.map.resize();
-    };
+    }, 250);
     window.addEventListener('resize', this.resizeHandler);
   }
 

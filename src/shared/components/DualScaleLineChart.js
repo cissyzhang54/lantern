@@ -2,6 +2,8 @@ import React from 'react';
 import isBrowser from '../utils/isBrowser';
 import Input from 'react-bootstrap/lib/Input';
 import moment from 'moment';
+import _ from 'underscore';
+import chartHelpers from '../utils/chartHelpers';
 require('moment-duration-format');
 
 let c3 = {};
@@ -58,6 +60,9 @@ export default class DualScaleLineChart extends React.Component {
         [attr1] : j2[attr2]
       })
     });
+    // turn all the moments into isoStrings because c3
+    // doesn't know what to do with moments anymore wtf ;_;
+    merged.forEach((d) => d[attr1] = d[attr1].toISOString())
 
     let labelCount = undefined;
     const labelWidth = 80;
@@ -92,24 +97,36 @@ export default class DualScaleLineChart extends React.Component {
       }
     }
 
+    let dataObject = {
+
+      type: 'line',
+      xFormat: '%Y-%m-%dT%H:%M:%S.000Z',
+      json : merged,
+      keys: {
+        x: attr1,
+        value: this.props.keys
+      },
+      axes: {
+        [leftKey] : 'y',
+        [rightKey] : 'y2'
+      },
+      colors: chartHelpers.getKeyColourMapping(this.props.keys)
+    }
+
+
+
+    if (this.chart) {
+      dataObject.unload = true;
+      this.chart.load(dataObject);
+        return;
+    }
+
     this.chart = c3.generate({
       bindto: node,
       transition: {
         duration: null,
       },
-      data: {
-        type: 'line',
-        xFormat: '%Y-%m-%dT%H:%M:%SZ',
-        json : merged,
-        keys: {
-          x: attr1,
-          value: this.props.keys
-        },
-        axes: {
-          [leftKey] : 'y',
-          [rightKey] : 'y2'
-        }
-      },
+      data: dataObject,
       axis: {
         x: {
           type: this.props.type,
@@ -185,6 +202,14 @@ export default class DualScaleLineChart extends React.Component {
   componentDidMount() {
     if (this.props.data)
       this.drawChart();
+  }
+
+  shouldComponentUpdate(nextProps) {
+    return !_.isEqual(this.props, nextProps);
+  }
+
+  componentWillUnmount() {
+    this.chart && this.chart.destroy();
   }
 
   _handleLocalTimeSwitch(event) {
