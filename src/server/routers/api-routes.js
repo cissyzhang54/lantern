@@ -11,6 +11,7 @@ import SearchDataFormatter from '../formatters/Search';
 import SectionDataFormatter from '../formatters/Sections';
 import SectionComparatorDataFormatter from '../formatters/SectionComparators';
 import TopicDataFormatter from '../formatters/Topics';
+import getTitleForUrl from '../utils/getTitleFromUrl';
 import TopicComparatorDataFormatter from '../formatters/TopicComparators';
 
 const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
@@ -40,6 +41,26 @@ function getCategoryData(req, res, next) {
   };
   esClient.runArticleQuery(query)
     .then((response) => ArticleDataFormatter(response))
+    .then((formattedData) => {
+      let proms = formattedData.internalReferrerUrls.map((d) => {
+        return getTitleForUrl(d[0]).then((title) => {
+          d.push(title);
+        }).catch((error) => {
+          d.push('Unknown');
+        });
+      })
+      return Promise.all(proms).then(() => formattedData);
+    })
+    .then((formattedData) => {
+      let proms = formattedData.nextInternalUrl.map((d) => {
+        return getTitleForUrl(d[0]).then((title) => {
+            d.push(title);
+          }).catch((error) => {
+            d.push('Unknown');
+          })
+      })
+      return Promise.all(proms).then(() => formattedData);
+    })
     .then((formattedData) => res.json(formattedData))
     .catch((error) => {
       res.status(ErrorHandler.statusCode(error.name))
