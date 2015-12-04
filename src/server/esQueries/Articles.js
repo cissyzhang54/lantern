@@ -1,5 +1,4 @@
 import assert from 'assert';
-import moment from 'moment';
 import ArticlesAggregation from '../aggregations/Articles'
 import ArticleQuery from '../queries/articleQuery.js'
 

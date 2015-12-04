@@ -6,8 +6,8 @@ import ArticleComparatorQuery from '../queries/articleComparatorQuery'
 export default function ArticleComparatorESQuery(query) {
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
-  let comparatorQuery = ArticleComparatorQuery(query)
 
+  let comparatorQuery = ArticleComparatorQuery(query)
   let must = comparatorQuery.filtered.query.bool.must;
 
   if (must.length <= 1) {

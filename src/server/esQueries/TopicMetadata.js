@@ -1,5 +1,4 @@
 import assert from 'assert';
-import moment from 'moment';
 import TopicMetadataAggregation from '../aggregations/TopicMetadata'
 import TopicQuery from '../queries/topicQuery'
 

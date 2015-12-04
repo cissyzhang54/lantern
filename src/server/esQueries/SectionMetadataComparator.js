@@ -1,5 +1,4 @@
 import assert from 'assert';
-import moment from 'moment';
 import SectionMetadataComparatorAggregation from '../aggregations/SectionMetadataComparator'
 import SectionComparatorQuery from '../queries/sectionComparatorQuery'
 
