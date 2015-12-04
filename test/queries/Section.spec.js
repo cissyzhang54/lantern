@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import SectionsQuery from '../../src/server/queries/Sections';
+import SectionsQuery from '../../src/server/esQueries/Sections';
 
 describe('Sections Query', () => {
   it('should be a function', () => {

@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import ArticlesQuery from '../../src/server/queries/Articles';
+import ArticlesQuery from '../../src/server/esQueries/Articles';
 
 describe('Articles Query', () => {
   it('should be a function', () => {

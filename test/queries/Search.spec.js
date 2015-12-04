@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import SearchQuery from '../../src/server/queries/Search';
+import SearchQuery from '../../src/server/esQueries/Search';
 
 describe('Search Query', () => {
   it('should be a function', () => {
@@ -18,8 +18,8 @@ describe('Search Query', () => {
     expect(() => SearchQuery(null)).to.throw();
     expect(() => SearchQuery(undefined)).to.throw();
   });
-  describe('Advanced queries', () => {
-    it('should handle title-only queries', () => {
+  describe('Advanced esQueries', () => {
+    it('should handle title-only esQueries', () => {
       let query = SearchQuery({term:'title:"my tailor is rich"'});
       expect(query.query.bool.should.length).to.equal(2);
       expect(query.query.bool.should[0]).to.deep.equal({
@@ -33,7 +33,7 @@ describe('Search Query', () => {
         }
       });
     });
-    it('should handle author-only queries', () => {
+    it('should handle author-only esQueries', () => {
       let query = SearchQuery({term: 'author:"Oneotrix Point Never"'});
       expect(query.query.bool.should.length).to.equal(1);
       expect(query.query.bool.should[0]).to.deep.equal({
@@ -42,7 +42,7 @@ describe('Search Query', () => {
         }
       });
     });
-    it('should handle section-only queries', () => {
+    it('should handle section-only esQueries', () => {
       let query = SearchQuery({term: 'section:"Companies and Technology"'});
       expect(query.query.bool.should.length).to.equal(1);
       expect(query.query.bool.should[0]).to.deep.equal({

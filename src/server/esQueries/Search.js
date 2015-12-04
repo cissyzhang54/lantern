@@ -1,6 +1,5 @@
 import assert from 'assert';
 
-
 const supportedOperators = {
   title: [0,1],
   authors: [2],
@@ -9,7 +8,7 @@ const supportedOperators = {
   section: [3]
 }
 
-export default function SearchQuery(query) {
+export default function SearchESQuery(query) {
 
   assert.equal(typeof query, 'object',
     "argument 'query' must be an object");

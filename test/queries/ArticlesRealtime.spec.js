@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import ArticlesRealtimeQuery from '../../src/server/queries/ArticleRealTime';
+import ArticlesRealtimeQuery from '../../src/server/esQueries/ArticleRealTime';
 import moment from 'moment';
 
 import sampleQuery from '../fixtures/realtimeQuery.js';

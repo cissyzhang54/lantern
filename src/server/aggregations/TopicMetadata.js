@@ -1,19 +1,8 @@
-import assert from 'assert';
-import moment from 'moment';
-
 import * as calculateInterval from '../utils/calculateInterval'
-import * as build from '../utils/queryBuilder'
 
-export default function TopicMetadataQuery(query) {
+export default function TopicMetadataAggregation(query) {
 
-  assert.equal(typeof query, 'object',
-    "argument 'query' should be an object");
-
-  let topicQuery = build.topicQuery(query)
-
-  let esQuery = {
-    query: topicQuery,
-    aggs: {
+  return {
       articles_published_over_time: {
         date_histogram: {
           field: "initial_publish_date",
@@ -27,6 +16,4 @@ export default function TopicMetadataQuery(query) {
         }
       }
     }
-  };
-  return esQuery
 }

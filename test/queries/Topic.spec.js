@@ -1,5 +1,5 @@
 import { expect } from 'chai';
-import TopicsQuery from '../../src/server/queries/Topics';
+import TopicsQuery from '../../src/server/esQueries/Topics';
 
 describe('Topics Query', () => {
   it('should be a function', () => {

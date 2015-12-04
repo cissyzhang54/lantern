@@ -1,20 +1,7 @@
-import assert from 'assert';
-import moment from 'moment';
-
 import * as calculateInterval from '../utils/calculateInterval'
-import * as build from '../utils/queryBuilder'
 
-export default function TopicComparatorQuery(query) {
-
-  assert.equal(typeof query, 'object',
-    "argument 'query' should be an object");
-
-  let topicQuery = build.topicComparatorQuery(query)
-
-  let esQuery = {
-    query : topicQuery,
-    size: 1,
-    aggs: {
+export default function TopicAggregation(query) {
+ return {
       "page_views_over_time" : {
         "date_histogram" : {
           "field" : "view_timestamp",
@@ -44,18 +31,18 @@ export default function TopicComparatorQuery(query) {
           }
         }
       },
-      referrer_names: {
+      social_referrers: {
         filter: {
-          not: {
-            term: {
-              referrer_type: "internal"
-            }
+          term: {
+            referrer_type: 'social-network'
           }
         },
         aggs: {
           filtered: {
             terms: {
-              field: "referrer_name"
+              field: "referrer_name",
+              min_doc_count: 0,
+              size: 200000000
             }
           }
         }
@@ -75,22 +62,6 @@ export default function TopicComparatorQuery(query) {
           types : {
             terms: {
               field: "referrer_name"
-            }
-          }
-        }
-      },
-      social_referrers: {
-        filter: {
-          term: {
-            referrer_type: 'social-network'
-          }
-        },
-        aggs: {
-          filtered: {
-            terms: {
-              field: "referrer_name",
-              min_doc_count: 0,
-              size: 200000000
             }
           }
         }
@@ -140,13 +111,11 @@ export default function TopicComparatorQuery(query) {
           field: 'visitor_id'
         }
       },
-      "topic_views": {
+      "section_views": {
         "terms": {
-          "field": "topics",
+          "field": "sections",
           size: 10
         }
       }
     }
-  };
-  return esQuery
 }
