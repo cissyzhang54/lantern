@@ -40,8 +40,8 @@ export default class Logo extends React.Component {
     if (this.props.loading) classNames.push('loading')
     if (this.props.error) classNames.push('error')
     let messages = Array.isArray(this.props.message) ? this.props.message : [this.props.message];
-    let message = messages.map(function(str){
-      return <div style={style}>{str}</div>
+    let message = messages.map(function(str, index){
+      return <div key={index} style={style}>{str}</div>
     });
     let logo = (
       <div style={container} className="logo-container">
