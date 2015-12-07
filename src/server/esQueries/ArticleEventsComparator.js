@@ -1,7 +1,6 @@
 import assert from 'assert';
-import moment from 'moment';
 import ArticleEventsComparatorAggregation from '../aggregations/ArticleEventsComparator'
-import ArticleComparatorQuery from '../queries/articleComparatorQuery.js'
+import ArticleComparatorQuery from '../queries/articleComparatorQuery'
 
 export default function ArticleEventsComparatorESQuery(query) {
 
