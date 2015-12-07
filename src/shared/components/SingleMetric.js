@@ -174,5 +174,6 @@ SingleMetric.propTypes = {
 SingleMetric.defaultProps = {
   metric: 0,
   metricType: 'integer',
-  size: 'large'
+  size: 'large',
+  label: 'Default'
 };

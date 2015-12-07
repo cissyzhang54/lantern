@@ -42,5 +42,6 @@ Tags.propTypes = {
 
 Tags.defaultProps = {
   category: 'articles',
+  tags : [{label: 'Default 1', url : '#'}, {label: 'Default 2', url : '#'}, {label: 'Default 3', url : '#'}],
   onChange: _ => {console.log(_)}
 }

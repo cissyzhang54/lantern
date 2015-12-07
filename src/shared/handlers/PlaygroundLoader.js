@@ -1,16 +1,31 @@
 import React from "react";
 
 const comps = {
-  header: require('../components/Header'),
-  logoSVG: require('../components/LogoSVG'),
-  search: require('../components/Search'),
-  singleMetric: require('../components/SingleMetric'),
-  modifier: require('../components/SectionModifier'),
-  lineChart: require('../components/LineChart'),
   barChart: require('../components/BarChart'),
   columnChart: require('../components/ColumnChart'),
+  dateRange: require('../components/DateRange'),
+  dualScaleLineChart: require('../components/DualScaleLineChart'),
+  filter: require('../components/Filter'),
+  filters: require('../components/Filters'),
+  header: require('../components/Header'),
+  lineChart: require('../components/LineChart'),
+  liveIndicator: require('../components/LiveIndicator'),
+  logo: require('../components/Logo'),
+  logoSVG: require('../components/LogoSVG'),
+  map: require('../components/Map'),
+  messaging: require('../components/Messaging'),
+  modifierDescription: require('../components/ModifierDescription'),
+  navBar: require('../components/NavBar'),
   pieChart: require('../components/PieChart'),
-  map: require('../components/Map')
+  recentArticles: require('../components/RecentArticles'),
+  search: require('../components/Search'),
+  searchResult: require('../components/SearchResult'),
+  singleMetric: require('../components/SingleMetric'),
+  table: require('../components/Table'),
+  tag: require('../components/Tag'),
+  tags: require('../components/Tags'),
+  text: require('../components/Text'),
+  user: require('../components/User')
 };
 
 export default class PlaygroundLoader extends React.Component {
@@ -26,8 +41,5 @@ export default class PlaygroundLoader extends React.Component {
     return React.createElement(Component, {
 
     });
-
   }
-
-
 }

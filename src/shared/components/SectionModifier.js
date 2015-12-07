@@ -127,10 +127,6 @@ export default class Modifier extends React.Component {
             <span style={styles.title}><span style={styles.titleText}>Filters:</span></span>
           </Col>
           <Filters
-            renderDevice={this.props.renderDevice}
-            renderRegion={this.props.renderRegion}
-            renderReferrers={this.props.renderReferrers}
-            renderUserCohort={this.props.renderUserCohort}
             onChange={this.handleFilterChange}
           />
         </Row>

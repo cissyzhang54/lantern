@@ -8,8 +8,7 @@ export default class RecentArticles extends React.Component {
   }
 
   componentWillMount () {
-    let renderFeature = FeatureFlag.check(this.props.identifier);
-    this.render = renderFeature ? this.render : function () { return false };
+
   }
 
   render() {
