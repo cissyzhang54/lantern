@@ -2,7 +2,7 @@
 module.exports = {
 
   // Links
-  exampleArticleUrl : 'http://localhost:3000/articles/69feb35e-893d-11e5-90de-f44762bf9896',
+  exampleArticleUrl : 'http://localhost:3000/articles/69feb35e-893d-11e5-90de-f44762bf9896/global/FT',
   exampleArticleTitle: 'Lantern - First general strike since Syriza win brings Greece to standstill',
   exampleArticleLink: 'http://www.ft.com/cms/s/0/69feb35e-893d-11e5-90de-f44762bf9896.html',
 

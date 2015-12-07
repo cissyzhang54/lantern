@@ -24,23 +24,32 @@ function doComparator(browser, section, figure, percentile){
   var chevron;
   var posNeg;
   var cleanPercentile;
-  if (percentile[0] == '-'){
-    chevron = 'glyphicon-chevron-down';
-    cleanPercentile = percentile.substring(1);
-    posNeg = 'negative'
-  } else {
-    chevron = 'glyphicon-chevron-up';
-    cleanPercentile = percentile;
-    posNeg = 'positive'
-  }
 
-  browser
-    .assert.containsText(nConcat.dataComponent(section), figure,
+  if (percentile == null){
+    browser
+      .assert.containsText(nConcat.dataComponent(section), figure,
       section.name + ' contains ' + figure)
-    .assert.containsText(nConcat.percentile(section), cleanPercentile,
-      section.name + ' is at ' + cleanPercentile, '%')
-    .assert.attributeContains(nConcat.chevron(section), 'class', determineChevron(percentile),
+
+  } else {
+
+    if (percentile[0] == '-') {
+      chevron = 'glyphicon-chevron-down';
+      cleanPercentile = percentile.substring(1);
+      posNeg = 'negative'
+    } else {
+      chevron = 'glyphicon-chevron-up';
+      cleanPercentile = percentile;
+      posNeg = 'positive'
+    }
+
+    browser
+      .assert.containsText(nConcat.dataComponent(section), figure,
+        section.name + ' contains ' + figure)
+      .assert.containsText(nConcat.percentile(section), cleanPercentile,
+        section.name + ' is at ' + cleanPercentile, '%')
+      .assert.attributeContains(nConcat.chevron(section), 'class', determineChevron(percentile),
       section.name + ' percentile is ' + posNeg)
+  }
 }
 
 function determineChevron(percentile){

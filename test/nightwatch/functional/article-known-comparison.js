@@ -28,19 +28,19 @@ module.exports = {
     browser
       .assert.containsText(nConcat.dataComponent(currentSection.dateRange) + ' div:nth-child(2) span:nth-child(1)', '12 Nov 2015 - 14 Nov 2015',
       'Date Range set to "First 3 days"');
-    browser.expect.element(components.updatingArticle).not.present.before(10000);
+    browser.expect.element(components.updatingArticle).not.present.after(10000);
     browser
-      .assert.containsText(components.comparisonIncludes, '1,315 \'FT\' articles',
-      'Comparison element contains "1,315" \'FT\' articles"')
+      .assert.containsText(components.comparisonIncludes, '1,526 "FT" articles',
+      'Comparison element contains "1,526" "FT" articles"')
   },
 
   'Check Headline Stats Section' : function (browser) {
     currentSection = articlePage.sectionHeadline;
 
-    nExtras.doComparator(browser, currentSection.timeOnPage, '0m 9s', '-61');
-    nExtras.doComparator(browser, currentSection.pageViews, '7,210', '44');
-    nExtras.doComparator(browser, currentSection.uniqueVisitors, '944', '71');
-    nExtras.doComparator(browser, currentSection.scrollDepth, '0%', '-100');
+    nExtras.doComparator(browser, currentSection.timeOnPage, '0m 10s', '-66');
+    nExtras.doComparator(browser, currentSection.pageViews, '7,211', '59');
+    nExtras.doComparator(browser, currentSection.uniqueVisitors, '945', '71');
+    nExtras.doComparator(browser, currentSection.scrollDepth, '0%', null);
   },
 
   'Check When Section' : function (browser) {
@@ -55,7 +55,7 @@ module.exports = {
       .assert.containsText(nConcat.dataComponent(currentSection.exitPage) + ' tbody tr:nth-child(1) td:nth-child(1)', 'Unknown',
       'Exit Page: "Unknown"')
       .assert.containsText(nConcat.dataComponent(currentSection.exitPage) + ' tbody tr:nth-child(1) td:nth-child(2)', '6223',
-      'Views is "6223"')
+      'Views is "6224"')
 
       .assert.containsText(nConcat.dataComponent(currentSection.exitPage) + ' tbody tr:nth-child(2) td:nth-child(1)', 'http://app.ft.com/cms/s/57ca9338-889d-11e5-90de-f44762bf9896…',
       'Exit Page: "New Article - Mozambique"')
