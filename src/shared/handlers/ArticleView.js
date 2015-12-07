@@ -5,6 +5,8 @@ import Row from 'react-bootstrap/lib/Row';
 import connectToStores from 'alt/utils/connectToStores';
 import moment from 'moment';
 import Link from 'react-router/lib/Link';
+import assign from 'object-assign';
+import _ from 'underscore';
 
 import Header from "../components/Header";
 import Messaging from '../components/Messaging';
@@ -19,14 +21,9 @@ import SectionWho from "../components/SectionWho";
 import SectionInteract from "../components/SectionInteract";
 import Text from '../components/Text'
 
-import ArticleStore from '../stores/ArticleStore';
-import ArticleActions from '../actions/ArticleActions';
-import ComparatorStore from '../stores/ComparatorStore';
-import ComparatorActions from '../actions/ComparatorActions';
-import ArticleQueryStore from '../stores/ArticleQueryStore';
-import ArticleQueryActions from '../actions/ArticleQueryActions';
-import ComparatorQueryStore from '../stores/ComparatorQueryStore';
-import ComparatorQueryActions from '../actions/ComparatorQueryActions';
+import AnalyticsActions from '../actions/AnalyticsActions';
+import AnalyticsStore from '../stores/AnalyticsStore';
+
 import FeatureFlag from '../utils/featureFlag';
 import * as formatAuthors from '../utils/formatAuthors';
 
@@ -41,45 +38,33 @@ class ArticleView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {}
-    this.state.comparator = decode(this.props.params.comparator)
-    this.state.comparatorType = decode(this.props.params.comparatorType)
-    this.state.uuid = decode(this.props.params.uuid)
   }
 
   static getStores() {
-    return [ArticleStore, ComparatorStore, ArticleQueryStore, ComparatorQueryStore];
+    return [AnalyticsStore];
   }
 
   static getPropsFromStores() {
-    let comparatorState = ComparatorStore.getState();
-    let articleState = ArticleStore.getState();
-    let articleQueryState = ArticleQueryStore.getState();
-    let comparatorQueryState = ComparatorQueryStore.getState();
-    return {
-      articleQuery : articleQueryState.query,
-      comparatorQuery : comparatorQueryState.query,
-      data : articleState.data,
-      articleLoading : articleState.loading,
-      errorMessage : articleState.errorMessage,
-      comparatorData : comparatorState.data,
-      comparatorLoading : comparatorState.loading,
-      comparatorErrorMessage : comparatorState.errorMessage,
-    };
+    return AnalyticsStore.getState();
   }
 
   componentWillUnmount() {
-    ArticleActions.unlistenToQuery();
-    ComparatorActions.unlistenToQuery();
-    ArticleActions.destroy();
-    ComparatorActions.destroy();
-    ArticleQueryActions.destroy();
-    ComparatorQueryActions.destroy();
-    this.state = {};
+    AnalyticsActions.destroy();
   }
 
   componentWillMount() {
-    ArticleActions.listenToQuery();
-    ComparatorActions.listenToQuery();
+    AnalyticsActions.updateQuery({
+      uuid : this.props.params.uuid,
+      type: 'article',
+      comparatorType: this.props.params.comparatorType,
+      comparator: this.props.params.comparator
+    });
+  }
+
+  componentWillUpdate(nextProps) {
+    if (!_.isEqual(nextProps.params, this.props.params)) {
+      AnalyticsActions.updateQuery.defer(nextProps.params);
+    }
   }
 
   componentDidMount() {
@@ -90,24 +75,22 @@ class ArticleView extends React.Component {
 
   render() {
     if (this.props.errorMessage) {
-      return (<Messaging
-        category="Article"
-        type="ERROR"
-        message={this.props.errorMessage}
-      />);
-    } else if (this.props.comparatorErrorMessage) {
-      return (<Messaging
-        category="Comparator"
-        type="ERROR"
-        message={this.props.comparatorErrorMessage}
-      />);
+      return (
+        <Messaging
+          category="Article"
+          type="ERROR"
+          message={this.props.errorMessage}
+        />
+      );
     } else if (!this.props.data) {
-      return (<Messaging
-        category="Article"
-        type="LOADING"
-      />);
+      return (
+        <Messaging
+          category="Article"
+          type="LOADING"
+        />
+      );
     }
-    let updating = (this.props.sectionLoading || this.props.comparatorLoading)
+    let updating = (this.props.loading)
       ? <Messaging category="Article" type="UPDATING" />
       : <Messaging category="Article" type="PLACEHOLDER" />
 
@@ -150,12 +133,12 @@ class ArticleView extends React.Component {
           <SectionModifier
             data={data}
             comparatorData={comparatorData}
-            comparatorQuery={this.props.comparatorQuery}
+            comparatorQuery={this.props.query}
             renderDevice={FeatureFlag.check('article:modifier:filters:Device')}
             renderRegion={FeatureFlag.check('article:modifier:filters:Region')}
             renderReferrers={FeatureFlag.check('article:modifier:filters:Referrers')}
             renderUserCohort={FeatureFlag.check('article:modifier:filters:UserCohort')}
-            query={this.props.comparatorQuery}
+            query={this.props.query}
             uuid={data.uuid}
             dateRange='published'
           />

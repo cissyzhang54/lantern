@@ -1,29 +1,22 @@
 import express from "express";
 import bodyParser from "body-parser";
-import uuid from "uuid";
-import assign from "object-assign";
 import * as esClient from '../esClient';
 import * as ErrorHandler from '../apiErrorHandler';
 import ArticleDataFormatter from '../formatters/Articles';
 import ArticleRealtimeDataFormatter from '../formatters/ArticleRealtimeDataFormatter';
-import ArticleComparatorDataFormatter from '../formatters/ArticleComparators';
 import SearchDataFormatter from '../formatters/Search';
 import SectionDataFormatter from '../formatters/Sections';
-import SectionComparatorDataFormatter from '../formatters/SectionComparators';
 import TopicDataFormatter from '../formatters/Topics';
 import getTitleForUrl from '../utils/getTitleFromUrl';
-import TopicComparatorDataFormatter from '../formatters/TopicComparators';
 
 const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
-const CATEGORY_REGEX= 'articles|sections|topics|authors';
-const COMPTYPE_REGEX  = 'topic|section|author|genre|global';
+
 let router = express.Router();
 router.use(bodyParser.json());
 
 router.post(`/articles/:uuid(${UUID_REGEX})`, getCategoryData);
 router.post(`/sections/:section`, getSectionData);
 router.post(`/topics/:topic`, getTopicData);
-router.post(`/comparators/:category(${CATEGORY_REGEX})/:comparatorType(${COMPTYPE_REGEX})/:comparator`, getComparatorData);
 router.get(`/realtime/articles/:uuid(${UUID_REGEX})`, getRealtimeArticleData);
 router.get('/search/:query', search);
 router.use(ErrorHandler.routes(router));
@@ -38,24 +31,26 @@ function getCategoryData(req, res, next) {
     dateFrom: req.body.dateFrom,
     dateTo: req.body.dateTo,
     filters: req.body.filters,
+    comparator: req.body.comparator,
+    comparatorType: req.body.comparatorType
   };
   esClient.runArticleQuery(query)
     .then((response) => ArticleDataFormatter(response))
     .then((formattedData) => {
-      let proms = formattedData.internalReferrerUrls.map((d) => {
+      let proms = formattedData.data.internalReferrerUrls.map((d) => {
         return getTitleForUrl(d[0]).then((title) => {
           d.push(title);
-        }).catch((error) => {
+        }).catch(() => {
           d.push('Unknown');
         });
       })
       return Promise.all(proms).then(() => formattedData);
     })
     .then((formattedData) => {
-      let proms = formattedData.nextInternalUrl.map((d) => {
+      let proms = formattedData.data.nextInternalUrl.map((d) => {
         return getTitleForUrl(d[0]).then((title) => {
             d.push(title);
-          }).catch((error) => {
+          }).catch(() => {
             d.push('Unknown');
           })
       })
@@ -90,6 +85,8 @@ function getSectionData(req, res, next) {
     dateFrom: req.body.dateFrom,
     dateTo: req.body.dateTo,
     filters: req.body.filters,
+    comparator: req.body.comparator,
+    comparatorType: req.body.comparatorType
   };
   esClient.runSectionQuery(query)
     .then((response) => SectionDataFormatter(response))
@@ -106,6 +103,8 @@ function getTopicData(req, res, next) {
     dateFrom: req.body.dateFrom,
     dateTo: req.body.dateTo,
     filters: req.body.filters,
+    comparator: req.body.comparator,
+    comparatorType: req.body.comparatorType
   };
   esClient.runTopicQuery(query)
     .then((response) => TopicDataFormatter(response))
@@ -114,51 +113,6 @@ function getTopicData(req, res, next) {
       res.status(ErrorHandler.statusCode(error.name))
       next(error);
     });
-}
-
-function getComparatorData(req, res, next) {
-  const query = {
-    uuid: decode(req.query.uuid),
-    section: decode(req.query.section),
-    topic: decode(req.query.topic),
-    publishDate: req.query.publishDate,
-    comparator: req.params.comparator,
-    comparatorType: req.params.comparatorType,
-    dateFrom: req.body.dateFrom,
-    dateTo: req.body.dateTo,
-    filters: req.body.filters,
-  };
-
-  let category = req.params.category
-  switch (category) {
-    case 'articles':
-      esClient.runArticleComparatorQuery(query)
-        .then((response) => ArticleComparatorDataFormatter(response) )
-        .then((formattedData) => res.json(formattedData) )
-        .catch((error) => {
-          res.status(ErrorHandler.statusCode(error.name))
-          next(error);
-        });
-      break;
-    case 'sections':
-      esClient.runSectionQuery(query)
-        .then((response) => SectionComparatorDataFormatter(response) )
-        .then((formattedData) => res.json(formattedData) )
-        .catch((error) => {
-          res.status(ErrorHandler.statusCode(error.name))
-          next(error);
-        });
-      break;
-    case 'topics':
-      esClient.runTopicQuery(query)
-        .then((response) => TopicComparatorDataFormatter(response) )
-        .then((formattedData) => res.json(formattedData) )
-        .catch((error) => {
-          res.status(ErrorHandler.statusCode(error.name))
-          next(error);
-        });
-      break;
-  }
 }
 
 function search(req, res, next) {
