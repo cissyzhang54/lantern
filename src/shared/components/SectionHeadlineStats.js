@@ -25,7 +25,7 @@ function getMetrics (config, data, comparatorData) {
 
 function addComponentToColumn (component, colWidth) {
   return (
-    <Col xs={12} sm={colWidth}>
+    <Col xs={6} sm={colWidth}>
       {component}
     </Col>
   )
