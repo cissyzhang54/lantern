@@ -1,5 +1,3 @@
-//taken from https://www.npmjs.com/package/object-assign-deep
-var objectAssign = require('object-assign');
 var _            = require('underscore');
 
 module.exports = function ME (target, source) {

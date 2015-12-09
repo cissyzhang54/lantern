@@ -1,7 +1,6 @@
 import React from 'react';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import responsiveStyles from '../utils/responsiveStyles';
-import assign from 'object-assign';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
@@ -153,7 +152,7 @@ export default class SingleMetric extends React.Component {
     }
 
     return (
-      <div className={'singleMetric'} style={assign(styles[this.props.size], styles.singleMetric)} data-component={'singleMetric'}>
+      <div className={'singleMetric'} style={Object.assign({}, styles[this.props.size], styles.singleMetric)} data-component={'singleMetric'}>
         <p style={styles.metric}>{transformMetric} {comparatorHTML}</p>
         <h3 style={styles.label}>{toolTip} {this.props.label}</h3>
       </div>

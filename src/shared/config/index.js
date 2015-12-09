@@ -1,5 +1,3 @@
-import assign from 'object-assign';
-
 import configDefault from './default';
 import configTest from './test';
 import configProd from './production';
@@ -10,6 +8,6 @@ let configs = {
     default: configDefault
 };
 
-let config = assign(configDefault, configs[(process.env.NODE_ENV || 'default')]);
+let config = Object.assign({}, configDefault, configs[(process.env.NODE_ENV || 'default')]);
 
 export default config;

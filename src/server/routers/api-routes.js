@@ -1,7 +1,6 @@
 import express from "express";
 import bodyParser from "body-parser";
 import uuid from "uuid";
-import assign from "object-assign";
 import * as esClient from '../esClient';
 import * as ErrorHandler from '../apiErrorHandler';
 import ArticleDataFormatter from '../formatters/Articles';

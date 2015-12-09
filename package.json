@@ -68,7 +68,6 @@
     "nightwatch": "^0.8.6",
     "node-sass": "^3.3.3",
     "nodemon": "^1.4.1",
-    "object-assign": "^4.0.1",
     "passport": "^0.3.0",
     "passport-google-oauth2": "^0.1.6",
     "raven": "^0.8.1",
