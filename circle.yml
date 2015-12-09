@@ -18,4 +18,4 @@ machine:
   timezone:
     Europe/London
   node:
-    version: v0.12.7
+    version: v4.2.3
