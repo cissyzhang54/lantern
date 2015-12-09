@@ -2,6 +2,5 @@
   "name": "lantern",
   "private": true,
   "dependencies": {
-    "o-colors": "~3.3.0"
   }
 }
