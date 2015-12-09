@@ -12,7 +12,10 @@ import TopicMetadataComparatorQuery from './esQueries/TopicMetadataComparator';
 import ArticlesQuery from './esQueries/Articles';
 import ArticleEventsQuery from './esQueries/ArticleEvents';
 import ArticleEventsComparatorQuery from './esQueries/ArticleEventsComparator';
+
 import ArticleRealtimeQuery from './esQueries/ArticleRealTime.js';
+import ArticleRealtimeAllQuery from './esQueries/ArticleRealTimeAll';
+
 import SearchQuery from './esQueries/Search';
 import assert from 'assert';
 import LoggerFactory from './logger';
@@ -105,10 +108,15 @@ export function runArticleRealtimeQuery(queryData) {
     queryData.dateTo = moment().toISOString();
   }
 
-  return retrieveRealtimeData(queryData)
+  let articleData;
+  return retrieveRealtimeArticleData(queryData)
     .then((data) => {
-      return [data];
-    });
+      articleData = data;
+      return retrieveRealtimeAllData(queryData)
+    }).then((data) => {
+      let otherArticles = data;
+      return [articleData, otherArticles]
+    });;
 }
 
 export function runSearchQuery(queryData) {
@@ -306,9 +314,27 @@ function retrieveMetaData(queryData){
 
 
 
-function retrieveRealtimeData(queryData) {
+function retrieveRealtimeArticleData(queryData) {
   return new Promise((resolve, reject) => {
     let queryObject = ArticleRealtimeQuery(queryData);
+    let request = {
+      index: calculateRealtimeIndices(queryData, process.env.ES_REALTIME_INDEX_ROOT),
+      ignore_unavailable: true,
+      body: queryObject
+    }
+    client.search(request, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+
+      return resolve(response);
+    })
+  })
+}
+
+function retrieveRealtimeAllData(queryData) {
+  return new Promise((resolve, reject) => {
+    let queryObject = ArticleRealtimeAllQuery(queryData);
     let request = {
       index: calculateRealtimeIndices(queryData, process.env.ES_REALTIME_INDEX_ROOT),
       ignore_unavailable: true,

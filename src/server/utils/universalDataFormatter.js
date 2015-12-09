@@ -73,7 +73,8 @@ const fields = {
   totalLinksClicked: {name: 'aggregations.page_clicks.total_links_clicked.value', formatter: divide},
   scrollDepth: {name: 'aggregations.scroll_depth.average_scroll.value', formatter: Math.round},
   linkClickCategories: 'aggregations.page_clicks.category_breakdown',
-  uniqueVisitors: 'aggregations.unique_visitors.value'
+  uniqueVisitors: 'aggregations.unique_visitors.value',
+  realtimeNextInternalUrl : 'aggregations.next_internal_url.titles.buckets'
 }
 
 function divide(agg, fieldObj, divisor=1){
