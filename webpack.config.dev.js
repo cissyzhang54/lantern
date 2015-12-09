@@ -36,7 +36,8 @@ module.exports = {
     })
   ],
   resolve: {
-    extensions: ['', '.js', '.scss']
+    extensions: ['', '.js', '.scss'],
+    root: path.resolve(__dirname, 'bower_components')
   },
   module: {
     loaders: [
