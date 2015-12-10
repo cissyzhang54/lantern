@@ -32,7 +32,7 @@ var componentStyles = {
       padding: 0,
       margin: '0 0 2px 0',
       fontSize: '1.5em'
-},
+    },
     comparator: {
       display: 'block',
       fontSize: '0.6em'
@@ -53,6 +53,15 @@ var componentStyles = {
   '(max-width: 500px)': {
     comparator: {
       display: 'inline-block'
+    },
+    large: {
+      margin: '1.2em 0',
+    },
+    medium: {
+      margin: '1.0em 0',
+    },
+    small: {
+      margin: '0.8em 0',
     }
   }
 };
