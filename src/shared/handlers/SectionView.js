@@ -9,7 +9,6 @@ import FeatureFlag from '../utils/featureFlag';
 import Header from '../components/Header';
 import Messaging from '../components/Messaging';
 import SectionModifier from '../components/SectionModifier';
-import SingleMetric from '../components/SingleMetric';
 import BarChart from '../components/BarChart.js';
 import DualScaleLineChart from "../components/DualScaleLineChart";
 import SectionWho from "../components/SectionWho";
@@ -21,7 +20,6 @@ import AnalyticsStore from '../stores/AnalyticsStore';
 
 import ChunkWrapper from "../components/ChunkWrapper";
 
-import moment from 'moment'
 import _ from 'underscore'
 
 function decode(uri){
@@ -32,10 +30,6 @@ class SectionView extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
-    this.state.section = decode(this.props.params.section)
-    this.state.comparator = decode(this.props.params.comparator)
-    this.state.comparatorType = decode(this.props.params.comparatorType)
   }
 
   static getStores() {

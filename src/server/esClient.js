@@ -1,3 +1,4 @@
+/* eslint-env node */
 import elasticsearch from 'elasticsearch';
 import awsElasticSearchConnector from 'http-aws-es';
 import ArticleComparatorQuery from './esQueries/ArticleComparator';
@@ -44,14 +45,12 @@ export function getIndicies(h = 'health,index,docs.count,store.size,tm'){
 }
 
 export function runArticleQuery(queryData) {
-  let queryError;
-  if (queryError = queryDataError('articles', queryData)){
+  let queryError = queryDataError('articles', queryData);
+  if (queryError){
     return Promise.reject(queryError);
   }
 
   let metaData;
-  let pageViews;
-  let query;
   return retrieveMetaData(queryData).then((data) => {
     metaData = data;
     queryData.publishDate = moment(metaData.initial_publish_date).toISOString();
@@ -66,8 +65,8 @@ export function runArticleQuery(queryData) {
 }
 
 export function runSectionQuery(queryData) {
-  let queryError;
-  if (queryError = queryDataError('sections', queryData)){
+  let queryError = queryDataError('sections', queryData);
+  if (queryError){
     return Promise.reject(queryError);
   }
 
@@ -80,8 +79,8 @@ export function runSectionQuery(queryData) {
 }
 
 export function runTopicQuery(queryData) {
-  let queryError;
-  if (queryError = queryDataError('topics', queryData)){
+  let queryError = queryDataError('topics', queryData);
+  if (queryError){
     return Promise.reject(queryError);
   }
 
@@ -95,8 +94,8 @@ export function runTopicQuery(queryData) {
 }
 
 export function runArticleRealtimeQuery(queryData) {
-  let queryError;
-  if (queryError = queryDataError('articles', queryData)) {
+  let queryError = queryDataError('articles', queryData);
+  if (queryError) {
     return Promise.reject(queryError);
   }
 
@@ -112,8 +111,8 @@ export function runArticleRealtimeQuery(queryData) {
 }
 
 export function runSearchQuery(queryData) {
-  let queryError;
-  if (queryError = queryDataError('search', queryData)){
+  let queryError = queryDataError('search', queryData);
+  if (queryError){
     return Promise.reject(queryError);
   }
   return new Promise((resolve, reject) => {
@@ -141,12 +140,12 @@ function retrieveArticleData(queryData){
     const articlesHeader = {
       index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
       ignore_unavailable: true,
-      search_type: 'count',
+      search_type: 'count'
     };
     const eventsHeader = {
       index: calculateIndices(queryData, process.env.ES_EVENT_INDEX_ROOT),
       ignore_unavailable: true,
-      search_type: 'count',
+      search_type: 'count'
     };
 
 
@@ -181,13 +180,13 @@ function retrieveSectionData(queryData){
     let sectionHeader = {
       index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
       ignore_unavailable: true,
-      search_type: 'count',
+      search_type: 'count'
     };
 
     let metadataHeader = {
       index: process.env.ES_SEARCH_INDEX_ROOT,
       ignore_unavailable: true,
-      search_type: 'count',
+      search_type: 'count'
     };
 
     let request = {
@@ -237,7 +236,7 @@ function retrieveTopicData(queryData){
     let topicMetadataHeader = {
       index: process.env.ES_SEARCH_INDEX_ROOT,
       ignore_unavailable: true,
-      search_type: 'count',
+      search_type: 'count'
     };
     let request = {
       body: [

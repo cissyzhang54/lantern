@@ -79,7 +79,7 @@ export default class Messaging extends React.Component {
 }
 
 Messaging.propTypes = {
-  type: React.PropTypes.string.isRequired,
   category: React.PropTypes.string.isRequired,
-  message: React.PropTypes.string
+  message: React.PropTypes.string,
+  type: React.PropTypes.string.isRequired
 };

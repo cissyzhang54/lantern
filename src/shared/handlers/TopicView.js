@@ -21,7 +21,6 @@ import BarChart from '../components/BarChart.js';
 import AnalyticsActions from '../actions/AnalyticsActions';
 import AnalyticsStore from '../stores/AnalyticsStore';
 
-import moment from 'moment';
 import _ from 'underscore';
 
 function decode(uri){
@@ -32,8 +31,6 @@ class TopicView extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {}
-    this.state.topic = decode(this.props.params.topic)
   }
 
   static getStores() {
@@ -71,18 +68,40 @@ class TopicView extends React.Component {
 
   render() {
     if (this.props.errorMessage) {
-      return (<Messaging category="Topic" type="ERROR" message={this.props.errorMessage} />);
+      return (
+        <Messaging
+          category="Topic"
+          message={this.props.errorMessage}
+          type="ERROR"
+        />);
     } else if (!this.props.data) {
-      return (<Messaging category="Topic" type="LOADING" />);
+      return (
+        <Messaging
+          category="Topic"
+          type="LOADING"
+        />);
     }
-    let updating = (this.props.loading)
-      ? <Messaging category="Topic" type="UPDATING" />
-      : <Messaging category="Topic" type="PLACEHOLDER" />
+
+    let updating;
+    if (this.props.loading) {
+      updating = (
+        <Messaging
+          category="Topic"
+          type="UPDATING"
+        />
+      )
+    } else {
+      updating = (
+        <Messaging
+          category="Topic"
+          type="PLACEHOLDER"
+        />
+      )
+    }
 
     let data = this.props.data;
     let query = this.props.query
     let comparatorData = this.props.comparatorData
-    let comparatorQuery = this.props.comparatorQuery
     let title = (data) ? 'Lantern - ' + this.props.params.topic : '';
 
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
@@ -112,17 +131,17 @@ class TopicView extends React.Component {
       <div>
           <ChunkWrapper component="modifier">
             <SectionModifier
-            data={data}
-            comparatorData={comparatorData}
-            comparatorQuery={this.props.query}
-            renderDevice={true}
-            renderRegion={true}
-            renderReferrers={true}
-            renderUserCohort={true}
-            query={query}
-            category={'topics'}
-            uuid={this.props.params.topic}
-            dateRange='historical'
+              category={'topics'}
+              comparatorData={comparatorData}
+              comparatorQuery={this.props.query}
+              data={data}
+              dateRange='historical'
+              query={query}
+              renderDevice
+              renderReferrers
+              renderRegion
+              renderUserCohort
+              uuid={this.props.params.topic}
             />
           </ChunkWrapper>
           <ChunkWrapper component="header">
@@ -130,86 +149,99 @@ class TopicView extends React.Component {
 
             <Header
               title={'Topic: ' + this.props.params.topic}
-              />
+            />
           </ChunkWrapper>
           <SectionHeadlineStats
-            data={data}
             comparatorData={comparatorData}
             config={headlineStats}
-            />
+            data={data}
+          />
 
           <ChunkWrapper component="ArticlesPublished">
             <Row>
               <Col xs={12}>
-                <h3>Articles Published vs Articles Read for this topic</h3>
+                <h3>{'Articles Published vs Articles Read for this topic'}</h3>
               </Col>
             </Row>
             <Row>
               <Col xs={12}>
                 <DualScaleLineChart
+                  categories={[publishID, readID]}
+                  keys={publishKeys.concat(readKeys)}
                   leftData={publishData}
                   rightData={readData}
-                  keys={publishKeys.concat(readKeys)}
-                  categories={[publishID, readID]}
-                  yLabel='Articles published'
+                  xLabel='Time'
                   y2Label='Articles read'
-                  xLabel='Time' />
+                  yLabel='Articles published'
+                />
               </Col>
             </Row>
           </ChunkWrapper>
 
           <SectionWho
-            data={data}
             comparatorData={comparatorData}
+            data={data}
             renderWho={FeatureFlag.check('topic:who')}
-            />
+          />
 
           <ChunkWrapper component="section-referrers">
             <Row>
               <Col xs={12}>
-                <h3>Where do the users come from?</h3>
+                <h3>{'Where do the users come from?'}</h3>
               </Col>
             </Row>
             <Row>
-              <Col xs={12} sm={4}>
-                <h4>External Sources</h4>
+              <Col
+                sm={4}
+                xs={12}
+              >
+                <h4>{'External Sources'}</h4>
                 <BarChart
+                  category={refID}
                   data={refData}
                   keys={refKeys}
-                  category={refID}
-                  yLabel="Page Views"
+                  usePercentages
                   xLabel="Referrer"
-                  usePercentages={true} />
+                  yLabel="Page Views"
+                />
               </Col>
 
-              <Col xs={12} sm={4}>
-                <h4>Social Network Breakdown</h4>
+              <Col
+                sm={4}
+                xs={12}
+              >
+                <h4>{'Social Network Breakdown'}</h4>
                 <BarChart
+                  category={socialID}
                   data={socialData}
                   keys={socialKeys}
-                  category={socialID}
-                  yLabel="Page Views"
+                  usePercentages
                   xLabel="Social Network"
-                  usePercentages={true}  />
+                  yLabel="Page Views"
+                />
               </Col>
 
-              <Col xs={12} sm={4}>
-                <h4>Internal Referrer Types</h4>
+              <Col
+                sm={4}
+                xs={12}
+              >
+                <h4>{'Internal Referrer Types'}</h4>
                 <BarChart
+                  category={internalID}
                   data={internalData}
                   keys={internalKeys}
-                  category={internalID}
-                  yLabel="Page Views"
+                  usePercentages
                   xLabel="Referrer"
-                  usePercentages={true} />
+                  yLabel="Page Views"
+                />
               </Col>
             </Row>
           </ChunkWrapper>
           <SectionWhere
-            data={data}
             comparatorData={comparatorData}
+            data={data}
             renderWhere={FeatureFlag.check('topic:where')}
-            />
+          />
       </div>
 
     </DocumentTitle>)
