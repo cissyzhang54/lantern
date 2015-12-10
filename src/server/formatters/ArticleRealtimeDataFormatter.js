@@ -6,8 +6,8 @@ export default function formatData(data) {
     assert.equal(Array.isArray(data), true,
       "argument 'data' should be an array");
 
-    assert.equal(data.length, 1,
-      "argument 'data' should have length 1")
+    assert.equal(data.length, 2,
+      "argument 'data' should have length 2")
 
     assert.equal(typeof data[0], 'object',
       "the first element of 'data' should be an object");
@@ -19,7 +19,8 @@ export default function formatData(data) {
     return Promise.reject(error);
   }
 
-  let [realtimeData] = data;
+  let [realtimeData, allData] = data;
+
   let metaFields = [
     'title',
     'uuid',
@@ -36,6 +37,9 @@ export default function formatData(data) {
     'scrollDepthLastHour',
     'livePageViews'
   ];
+  let realtimeFieldsAllDataFields = [
+    'realtimeNextInternalUrl'
+  ]
 
   let results = {}
   return new Promise((resolve, reject) => {
@@ -43,11 +47,15 @@ export default function formatData(data) {
       realtimeFields.forEach(f => {
         results[f] = getField(realtimeData, f)
       });
+      realtimeFieldsAllDataFields.forEach(f => {
+        results[f] = getField(allData, f)
+      });
       if (realtimeData.hits.hits.length) {
         metaFields.forEach(f => {
           results[f] = getField(realtimeData.hits.hits[0]._source, f)
         });
       }
+
       resolve(results);
     } catch (e) {
       let error = new Error(e);
