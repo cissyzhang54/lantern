@@ -200,7 +200,7 @@ export default class DualScaleLineChart extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.data)
+    if (this.props.rightData && this.props.leftData)
       this.drawChart();
   }
 
