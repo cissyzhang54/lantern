@@ -35,6 +35,7 @@ class AnalyticsStore {
       data: null,
       comparatorData: null,
       loading: false,
+      errorMessage: null,
       query: {
         type: null,
         topic: null,

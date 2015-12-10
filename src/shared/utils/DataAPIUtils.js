@@ -2,6 +2,8 @@ import request from "superagent";
 import config from "../config";
 import assert from "assert";
 
+
+
 let DataAPI = {
 
     getArticleData(query, apiKey) {
@@ -25,7 +27,10 @@ let DataAPI = {
           .end((err, res) => {
             if (err) {
               err.queryData = query;
-              err.name = errorName('Article', err)
+              err.name = errorName('Article', err);
+              if (res) {
+                err.message = res.body.message;
+              }
               reject(err);
             }
             !err && resolve(res.body);
@@ -54,6 +59,9 @@ let DataAPI = {
               if (err) {
                 err.queryData = query;
                 err.name = errorName('Article', err)
+                if (res) {
+                  err.message = res.body.message;
+                }
                 reject(err);
               }
               !err && resolve(res.body);
@@ -86,6 +94,9 @@ let DataAPI = {
             if (err) {
               err.queryData = query;
               err.name = errorName('Section', err)
+              if (res) {
+                err.message = res.body.message;
+              }
               reject(err);
             }
             !err && resolve(res.body);
@@ -119,6 +130,9 @@ let DataAPI = {
             if (err) {
               err.queryData = query;
               err.name = errorName('Topic', err)
+              if (res) {
+                err.message = res.body.message;
+              }
               reject(err);
             }
             !err && resolve(res.body);
@@ -149,6 +163,9 @@ let DataAPI = {
             if (err) {
               err.queryData = query.term;
               err.name = errorName('Search', err)
+              if (res) {
+                err.message = res.body.message;
+              }
               reject(err);
             }
             res.body.requestId = requestId;
@@ -161,11 +178,21 @@ let DataAPI = {
 
 function errorName(page, err){
   if (!err.response) return err.code
+  if (err.response.body)
+    return page + err.response.body.error.name;
   switch(err.response.status) {
     case 404:
       return page + 'NotFoundError';
     default:
       return page + 'Error';
+  }
+}
+
+function errorHandler(type) {
+  return function(error, query) {
+    error.queryData = query;
+    error.name = errorName(type, error);
+    error.message = error.response.body.message;
   }
 }
 
