@@ -11,12 +11,14 @@ function newState() {
     data: null,
     comparatorData: null,
     loading: false,
+    errorMessage: null,
+    error: null,
     query: {
       type: null,
       topic: null,
       section: null,
       uuid: null,
-      dateFrom: null,
+      dateFrom: moment().subtract(30, 'days').toISOString(),
       dateTo: moment().toISOString(),
       filters: {},
       comparator: 'FT',
@@ -30,25 +32,9 @@ function newState() {
 class AnalyticsStore {
 
   constructor() {
+    const state = newState();
     // props for our views
-    this.state = {
-      data: null,
-      comparatorData: null,
-      loading: false,
-      errorMessage: null,
-      query: {
-        type: null,
-        topic: null,
-        section: null,
-        uuid: null,
-        dateFrom: null,
-        dateTo: moment().toISOString(),
-        filters: {},
-        comparator: 'FT',
-        comparatorType: 'global',
-        publishDate: null
-      }
-    };
+    this.state = state;
     // add the actions
     this.bindActions(AnalyticsActions);
     this.exportAsync(AnalyticsSource);
@@ -63,8 +49,10 @@ class AnalyticsStore {
    */
   updateData(newData) {
     newData.loading = false;
-    let queryProps = assign({}, this.state.query, {dateFrom : newData.data.published})
-    newData.query = queryProps;
+    if (this.state.query.type === 'article') {
+      let queryProps = assign({}, this.state.query, {dateFrom : newData.data.published})
+      newData.query = queryProps;
+    }
     this.setState(newData);
   }
 

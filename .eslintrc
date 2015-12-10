@@ -1,4 +1,7 @@
 {
+    "globals": {
+      "require" : true
+    },
     "parser": "espree",
     "ecmaFeatures": {
       "arrowFunctions": true,

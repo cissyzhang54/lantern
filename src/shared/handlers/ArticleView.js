@@ -1,15 +1,12 @@
 import React from 'react/addons';
 import DocumentTitle from 'react-document-title';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
 import connectToStores from 'alt/utils/connectToStores';
-import moment from 'moment';
 import Link from 'react-router/lib/Link';
-import assign from 'object-assign';
 import _ from 'underscore';
 
 import Header from "../components/Header";
 import Messaging from '../components/Messaging';
+import ErrorHandler from '../components/ErrorHandler';
 import SectionModifier from "../components/SectionModifier";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
 import SectionReferrers from "../components/SectionReferrers.js";
@@ -28,10 +25,6 @@ import FeatureFlag from '../utils/featureFlag';
 import * as formatAuthors from '../utils/formatAuthors';
 
 import ChunkWrapper from '../components/ChunkWrapper';
-
-function decode(uri){
-  return uri ? decodeURI(uri) : null
-}
 
 class ArticleView extends React.Component {
 
@@ -55,6 +48,7 @@ class ArticleView extends React.Component {
   componentWillMount() {
     AnalyticsActions.updateQuery({
       uuid : this.props.params.uuid,
+      dateFrom: null,
       type: 'article',
       comparatorType: this.props.params.comparatorType,
       comparator: this.props.params.comparator
@@ -76,10 +70,11 @@ class ArticleView extends React.Component {
   render() {
     if (this.props.errorMessage) {
       return (
-        <Messaging
+        <ErrorHandler
           category="Article"
           type="ERROR"
           message={this.props.errorMessage}
+          error={this.props.error}
         />
       );
     } else if (!this.props.data) {

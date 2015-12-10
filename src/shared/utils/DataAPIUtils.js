@@ -24,17 +24,7 @@ let DataAPI = {
         request.post(url)
           .send(query)
           .set('Accept', 'application/json')
-          .end((err, res) => {
-            if (err) {
-              err.queryData = query;
-              err.name = errorName('Article', err);
-              if (res) {
-                err.message = res.body.message;
-              }
-              reject(err);
-            }
-            !err && resolve(res.body);
-          });
+          .end(handleResponse('Article', query, reject, resolve));
       });
     },
 
@@ -55,17 +45,7 @@ let DataAPI = {
           }
           request.get(url)
             .set('Accept', 'application/json')
-            .end((err, res) => {
-              if (err) {
-                err.queryData = query;
-                err.name = errorName('Article', err)
-                if (res) {
-                  err.message = res.body.message;
-                }
-                reject(err);
-              }
-              !err && resolve(res.body);
-            });
+            .end(handleResponse('ArticleRealtime', query, reject, resolve));
         });
     },
 
@@ -90,17 +70,7 @@ let DataAPI = {
         request.post(url)
           .send(query)
           .set('Accept', 'application/json')
-          .end((err, res) => {
-            if (err) {
-              err.queryData = query;
-              err.name = errorName('Section', err)
-              if (res) {
-                err.message = res.body.message;
-              }
-              reject(err);
-            }
-            !err && resolve(res.body);
-          });
+          .end(handleResponse('Section', query, reject, resolve));
       });
     },
 
@@ -126,17 +96,7 @@ let DataAPI = {
         request.post(url)
           .send(query)
           .set('Accept', 'application/json')
-          .end((err, res) => {
-            if (err) {
-              err.queryData = query;
-              err.name = errorName('Topic', err)
-              if (res) {
-                err.message = res.body.message;
-              }
-              reject(err);
-            }
-            !err && resolve(res.body);
-          });
+          .end(handleResponse('Topic', query, reject, resolve));
       })
     },
 
@@ -155,23 +115,10 @@ let DataAPI = {
           from : from,
           apiKey : apiKey
         };
-        let requestId = query.requestId;
         request.get(url)
           .query(params)
           .set('Accept', 'application/json')
-          .end((err, res) => {
-            if (err) {
-              err.queryData = query.term;
-              err.name = errorName('Search', err)
-              if (res) {
-                err.message = res.body.message;
-              }
-              reject(err);
-            }
-            res.body.requestId = requestId;
-            !err && resolve(res.body);
-          });
-
+          .end(handleResponse('Search', query, reject, resolve));
       });
     }
 };
@@ -188,11 +135,18 @@ function errorName(page, err){
   }
 }
 
-function errorHandler(type) {
-  return function(error, query) {
-    error.queryData = query;
-    error.name = errorName(type, error);
-    error.message = error.response.body.message;
+function handleResponse(type, query, reject, resolve) {
+  return function(err, res) {
+    if (err) {
+      err.queryData = query;
+      err.name = errorName(type, err);
+      if (res && res.body) {
+        err.message = res.body.message;
+      }
+      reject(err);
+    }
+    res.body.requestId = query.requestId; // used by search
+    !err && resolve(res.body);
   }
 }
 

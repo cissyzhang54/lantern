@@ -108,7 +108,8 @@ function getArticleData(req, res){
     }).catch((error) => {
       res.locals.data = {
         AnalyticsStore : {
-          errorMessage : error.message
+          errorMessage : error.message,
+          error: error
         }
       }
     })
