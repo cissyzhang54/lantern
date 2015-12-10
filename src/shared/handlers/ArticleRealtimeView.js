@@ -14,6 +14,29 @@ import * as formatAuthors from '../utils/formatAuthors';
 import moment from 'moment';
 import Link from 'react-router/lib/Link';
 
+const maxStrLen = 60;
+
+function getReferrerUrls (value, i) {
+  let urlObject = value.top_tag_hits.hits.hits[0]._source;
+  let count = value.doc_count;
+  let title = urlObject.title_not_analyzed;
+  title = title.length > maxStrLen ? title.substr(0, maxStrLen) + '…' : title;
+
+  let uuid = urlObject.article_uuid;
+
+  let link
+  if(urlObject.page_type === 'article'){
+    link = <a href={`http://www.ft.com/cms/s/${uuid}.html`}>{title}</a>;
+  } else {
+    link = <a href={uuid}>{title}</a>;
+  }
+
+  return {
+    link: link,
+    count: count
+  };
+}
+
 class ArticleRealtimeView extends React.Component {
   constructor(props) {
     super(props);
@@ -45,7 +68,6 @@ class ArticleRealtimeView extends React.Component {
     ArticleRealtimeActions.disconnect();
   }
 
-
   render() {
     let pageViews = this.props.pageViews.map(function(d) {
       return {
@@ -54,25 +76,7 @@ class ArticleRealtimeView extends React.Component {
       }
     })
 
-
-    let realtimeNextInternalUrl = this.props.realtimeNextInternalUrl.map((value) => {
-      let urlObject = value.top_tag_hits.hits.hits[0]._source;
-      let count = value.doc_count;
-      let title = urlObject.title_not_analyzed;
-      let uuid = urlObject.article_uuid;
-
-      let link
-      if(urlObject.page_type === 'article'){
-        link = <a href={`http://www.ft.com/cms/s/${uuid}.html`}>{title}</a>;
-      } else {
-        link = <a href={uuid}>{title}</a>;
-      }
-
-      return {
-        link: link,
-        count: count
-      };
-    });
+    let realtimeNextInternalUrl = this.props.realtimeNextInternalUrl.map(getReferrerUrls);
 
     let headlineStats = {
       timeOnPage: {
