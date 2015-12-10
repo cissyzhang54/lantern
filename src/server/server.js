@@ -112,14 +112,14 @@ function renderRoute(route, req, res) {
 }
 
 
-function ensureAuthenticated(req, res) {
+function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()
     || process.env.NODE_ENV === 'test') { return next(); }
   req.session.gotoUrl = req.session.gotoUrl || req.originalUrl;
   res.redirect('/login');
 }
 
-function ensureApiAuthenticated(req, res) {
+function ensureApiAuthenticated(req, res, next) {
   if (req.isAuthenticated()
     || req.query.apiKey == process.env.LANTERN_API_KEY
     || process.env.NODE_ENV === 'test') { return next(); }
