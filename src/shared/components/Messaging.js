@@ -83,3 +83,8 @@ Messaging.propTypes = {
   category: React.PropTypes.string.isRequired,
   message: React.PropTypes.string
 };
+
+Messaging.defaultProps = {
+  type: 'LOADING',
+  category: 'There are 4 message types: Loading, Updating, Error and Placeholder',
+};

@@ -28,3 +28,8 @@ Tag.propTypes = {
   url: React.PropTypes.string.isRequired,
   onClick: React.PropTypes.func
 };
+
+Tag.defaultProps = {
+  label : 'Default',
+  url : '#'
+}

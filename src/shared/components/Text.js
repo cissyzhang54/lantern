@@ -26,7 +26,9 @@ var Text = React.createClass({
   getDefaultProps: function() {
     return {
       messages: intlData.messages,
-      locales: intlData.locales
+      locales: intlData.locales,
+      type : 'text',
+      message : 'explanations.sectionWhen.articleViews'
     };
   },
 

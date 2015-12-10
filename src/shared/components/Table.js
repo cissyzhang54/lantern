@@ -13,7 +13,6 @@ export default class DataTable extends React.Component {
       );
     });
 
-
     let rows = this.props.rows.map((d, i) => {
       let cells = Object.keys(d).map((k, j) => {
         return (
@@ -29,7 +28,6 @@ export default class DataTable extends React.Component {
       );
     });
 
-
     return (
       <Table data-component="table">
         <thead>
@@ -42,5 +40,9 @@ export default class DataTable extends React.Component {
     );
 
   }
-
 }
+
+DataTable.defaultProps = {
+  headers : ['Default 1', 'Default 2'],
+  rows : [[3 , 4], [5 , 6], [7 , 8]],
+};

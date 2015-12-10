@@ -3,7 +3,6 @@ import DocumentTitle from 'react-document-title';
 import { Link } from "react-router";
 import Search from "../components/Search";
 import Logo from "../components/Logo";
-import RecentArticles from "../components/RecentArticles";
 
 import SearchStore from '../stores/SearchStore'
 import SearchActions from '../actions/SearchActions';

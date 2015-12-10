@@ -9,6 +9,9 @@ export default function formatData(data) {
     assert.equal(data.length, 1,
       "argument 'data' should have length 1")
 
+    assert.equal(typeof data[0], 'object',
+      "the first element of 'data' should be an object");
+
   } catch (e) {
     let error = new Error(e);
     error.name = 'MalformedArgumentsError';

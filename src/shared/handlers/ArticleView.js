@@ -134,10 +134,6 @@ class ArticleView extends React.Component {
             data={data}
             comparatorData={comparatorData}
             comparatorQuery={this.props.query}
-            renderDevice={FeatureFlag.check('article:modifier:filters:Device')}
-            renderRegion={FeatureFlag.check('article:modifier:filters:Region')}
-            renderReferrers={FeatureFlag.check('article:modifier:filters:Referrers')}
-            renderUserCohort={FeatureFlag.check('article:modifier:filters:UserCohort')}
             query={this.props.query}
             uuid={data.uuid}
             dateRange='published'
