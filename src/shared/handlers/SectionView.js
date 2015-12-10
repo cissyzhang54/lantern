@@ -16,19 +16,13 @@ import SectionWho from "../components/SectionWho";
 import SectionWhere from "../components/SectionWhere";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
 
-import SectionActions from '../actions/SectionActions';
-import SectionStore from '../stores/SectionStore';
-import SectionQueryActions from '../actions/SectionQueryActions';
-import SectionQueryStore from '../stores/SectionQueryStore';
+import AnalyticsActions from '../actions/AnalyticsActions';
+import AnalyticsStore from '../stores/AnalyticsStore';
 
-import ComparatorActions from '../actions/ComparatorActions';
-import ComparatorStore from '../stores/ComparatorStore';
-import ComparatorQueryActions from '../actions/ComparatorQueryActions';
-import ComparatorQueryStore from '../stores/ComparatorQueryStore';
 import ChunkWrapper from "../components/ChunkWrapper";
 
 import moment from 'moment'
-
+import _ from 'underscore'
 
 function decode(uri){
   return uri ? decodeURI(uri) : null
@@ -45,82 +39,35 @@ class SectionView extends React.Component {
   }
 
   static getStores() {
-    return [SectionStore, SectionQueryStore, ComparatorStore, ComparatorQueryStore];
+    return [AnalyticsStore];
   }
 
   static getPropsFromStores() {
-    let sectionState = SectionStore.getState();
-    let sectionQueryState = SectionQueryStore.getState();
-    let comparatorState = ComparatorStore.getState();
-    let comparatorQueryState = ComparatorQueryStore.getState();
-
-    return {
-      data: sectionState.data,
-      query: sectionQueryState.query,
-      sectionLoading : sectionState.loading,
-      comparatorLoading : comparatorState.loading,
-      comparatorQuery: comparatorQueryState.query,
-      comparatorData: comparatorState.data || {}
-    };
+    return AnalyticsStore.getState();
   }
 
   componentWillMount() {
-    ComparatorQueryActions.setCategory('sections');
-
-    let hasSectionChanged = this.state.section !== SectionQueryStore.getState().query.section;
-    let hasComparatorChanged = this.state.comparator !== ComparatorQueryStore.getState().query.comparator;
-    if (hasSectionChanged){
-      SectionQueryActions.setSection(this.state.section);
-      ComparatorQueryActions.setSection(this.state.section);
-    }
-    if (this.state.comparator && hasComparatorChanged){
-      ComparatorQueryActions.selectComparator(this.state);
-    }
+    AnalyticsActions.updateQuery({
+      section: decode(this.props.params.section),
+      type: 'section',
+      comparator: decode(this.props.params.comparator),
+      comparatorType: decode(this.props.params.comparatorType)
+    });
   }
 
   componentWillUnmount(){
-    SectionActions.unlistenToQuery();
-    SectionActions.destroy();
-    SectionQueryActions.destroy();
-    ComparatorActions.unlistenToQuery();
-    ComparatorActions.destroy();
-    ComparatorQueryActions.destroy();
-    this.state = {};
+    AnalyticsActions.destroy();
   }
 
   componentDidMount() {
-    //let analytics = require('../utils/analytics');
-    //analytics.sendGAEvent('pageview');
-    //analytics.trackScroll();
+    let analytics = require('../utils/analytics');
+    analytics.sendGAEvent('pageview');
+    analytics.trackScroll();
+  }
 
-    SectionActions.listenToQuery();
-    ComparatorActions.listenToQuery();
-
-    var comparatorDateRange = {
-      from: this.props.query.dateFrom,
-      to: this.props.query.dateTo
-    }
-
-    const isGlobalFTComparator = this.props.comparatorQuery.comparatorType === 'global';
-
-    if (!isGlobalFTComparator) {
-      // Update the comparator query dates
-      let fromDate = moment(this.props.query.dateFrom);
-      let toDate = moment(this.props.query.dateTo);
-      let span = toDate - fromDate;
-      fromDate.subtract(span, 'milliseconds');
-      toDate.subtract(span, 'milliseconds');
-      comparatorDateRange = {
-        from: fromDate.format('YYYY-MM-DD'),
-        to: toDate.format('YYYY-MM-DD')
-      };
-    }
-
-    ComparatorQueryActions.selectDateRange(comparatorDateRange);
-
-    if (!this.props.data) {
-      SectionActions.loadData(this.props);
-      ComparatorActions.loadData(this.props);
+  componentWillUpdate(nextProps) {
+    if (!_.isEqual(nextProps.params, this.props.params)) {
+      AnalyticsActions.updateQuery.defer(nextProps.params);
     }
   }
 
@@ -130,7 +77,7 @@ class SectionView extends React.Component {
     } else if (!this.props.data) {
       return (<Messaging category="Section" type="LOADING" />);
     }
-    let updating = (this.props.sectionLoading || this.props.comparatorLoading)
+    let updating = (this.props.loading)
       ? <Messaging category="Section" type="UPDATING" />
       : <Messaging category="Section" type="PLACEHOLDER" />
 
@@ -177,7 +124,7 @@ class SectionView extends React.Component {
           <SectionModifier
             data={data}
             comparatorData={comparatorData}
-            comparatorQuery={this.props.comparatorQuery}
+            comparatorQuery={this.props.query}
             renderDevice={true}
             renderRegion={true}
             renderReferrers={true}

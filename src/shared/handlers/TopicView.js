@@ -6,15 +6,6 @@ import connectToStores from 'alt/utils/connectToStores';
 import FeatureFlag from '../utils/featureFlag';
 
 import FormatData from "../utils/formatData";
-import TopicStore from '../stores/TopicStore';
-import TopicQueryStore from '../stores/TopicQueryStore';
-import TopicQueryActions from '../actions/TopicQueryActions';
-import TopicActions from '../actions/TopicActions';
-
-import ComparatorActions from '../actions/ComparatorActions';
-import ComparatorStore from '../stores/ComparatorStore';
-import ComparatorQueryActions from '../actions/ComparatorQueryActions';
-import ComparatorQueryStore from '../stores/ComparatorQueryStore';
 
 import Header from '../components/Header';
 import Messaging from '../components/Messaging';
@@ -26,7 +17,12 @@ import ChunkWrapper from "../components/ChunkWrapper";
 import SectionWhere from '../components/SectionWhere';
 import BarChart from '../components/BarChart.js';
 
+
+import AnalyticsActions from '../actions/AnalyticsActions';
+import AnalyticsStore from '../stores/AnalyticsStore';
+
 import moment from 'moment';
+import _ from 'underscore';
 
 function decode(uri){
   return uri ? decodeURI(uri) : null
@@ -41,81 +37,35 @@ class TopicView extends React.Component {
   }
 
   static getStores() {
-    return [TopicStore, TopicQueryStore, ComparatorStore, ComparatorQueryStore];
+    return [AnalyticsStore];
   }
 
   static getPropsFromStores() {
-    let topicState = TopicStore.getState();
-    let topicQueryState = TopicQueryStore.getState();
-    let comparatorState = ComparatorStore.getState();
-    let comparatorQueryState = ComparatorQueryStore.getState();
-
-    return {
-      data: topicState.data,
-      query: topicQueryState.query,
-      topicLoading: topicState.loading,
-      comparatorLoading : comparatorState.loading,
-      comparatorQuery: comparatorQueryState.query,
-      comparatorData: comparatorState.data || {}
-    };
+    return AnalyticsStore.getState();
   }
 
   componentWillMount() {
-    ComparatorQueryActions.setCategory('topics');
-
-    let hasTopicChanged = this.state.topic !== TopicQueryStore.getState().query.topic;
-    let hasComparatorChanged = this.state.comparator !== ComparatorQueryStore.getState().query.comparator;
-    if (hasTopicChanged){
-      TopicQueryActions.setTopic(this.state.topic);
-      ComparatorQueryActions.setTopic(this.state.topic);
-    }
-    if (this.state.comparator && hasComparatorChanged){
-      ComparatorQueryActions.selectComparator(this.state);
-    }
+    AnalyticsActions.updateQuery({
+      topic: decode(this.props.params.topic),
+      type: 'topic',
+      comparator: decode(this.props.params.comparator),
+      comparatorType: decode(this.props.params.comparatorType)
+    });
   }
 
   componentWillUnmount(){
-    TopicActions.unlistenToQuery();
-    TopicActions.destroy();
-    TopicQueryActions.destroy();
-    ComparatorActions.unlistenToQuery();
-    ComparatorActions.destroy();
-    ComparatorQueryActions.destroy();
+    AnalyticsActions.destroy();
   }
 
   componentDidMount() {
-    //let analytics = require('../utils/analytics');
-    //analytics.sendGAEvent('pageview');
-    //analytics.trackScroll();
+    let analytics = require('../utils/analytics');
+    analytics.sendGAEvent('pageview');
+    analytics.trackScroll();
+  }
 
-    TopicActions.listenToQuery();
-    ComparatorActions.listenToQuery();
-
-    var comparatorDateRange = {
-      from: this.props.query.dateFrom,
-      to: this.props.query.dateTo
-    }
-
-    const isGlobalFTComparator = this.props.comparatorQuery.comparatorType === 'global';
-
-    if (!isGlobalFTComparator) {
-      // Update the comparator query dates
-      let fromDate = moment(this.props.query.dateFrom);
-      let toDate = moment(this.props.query.dateTo);
-      let span = toDate - fromDate;
-      fromDate.subtract(span, 'milliseconds');
-      toDate.subtract(span, 'milliseconds');
-      comparatorDateRange = {
-        from: fromDate.format('YYYY-MM-DD'),
-        to: toDate.format('YYYY-MM-DD')
-      };
-    }
-
-    ComparatorQueryActions.selectDateRange(comparatorDateRange);
-
-    if (!this.props.data) {
-      TopicActions.loadData(this.props);
-      ComparatorActions.loadData(this.props);
+  componentWillUpdate(nextProps) {
+    if (!_.isEqual(nextProps.params, this.props.params)) {
+      AnalyticsActions.updateQuery.defer(nextProps.params);
     }
   }
 
@@ -125,7 +75,7 @@ class TopicView extends React.Component {
     } else if (!this.props.data) {
       return (<Messaging category="Topic" type="LOADING" />);
     }
-    let updating = (this.props.topicLoading || this.props.comparatorLoading)
+    let updating = (this.props.loading)
       ? <Messaging category="Topic" type="UPDATING" />
       : <Messaging category="Topic" type="PLACEHOLDER" />
 
@@ -164,7 +114,7 @@ class TopicView extends React.Component {
             <SectionModifier
             data={data}
             comparatorData={comparatorData}
-            comparatorQuery={this.props.comparatorQuery}
+            comparatorQuery={this.props.query}
             renderDevice={true}
             renderRegion={true}
             renderReferrers={true}

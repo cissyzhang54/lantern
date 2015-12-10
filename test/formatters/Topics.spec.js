@@ -1,29 +1,29 @@
 import {expect} from 'chai';
-import SectionFormat from '../../src/server/formatters/Topics';
+import TopicFormat from '../../src/server/formatters/Topics';
 import results from '../fixtures/data/topic_results';
 
 describe('Topic Formatter', function() {
   it('should be a function', function () {
-    expect(SectionFormat).to.be.a('function');
+    expect(TopicFormat).to.be.a('function');
   });
   it('should return a promise', function() {
-    let p = SectionFormat();
+    let p = TopicFormat();
     expect(p.then).to.be.a('function');
-    p = SectionFormat(null);
+    p = TopicFormat(null);
     expect(p.then).to.be.a('function');
-    p = SectionFormat(undefined);
+    p = TopicFormat(undefined);
     expect(p.then).to.be.a('function');
-    p = SectionFormat(123);
+    p = TopicFormat(123);
     expect(p.then).to.be.a('function');
-    p = SectionFormat('whats up');
+    p = TopicFormat('whats up');
     expect(p.then).to.be.a('function');
-    p = SectionFormat([]);
+    p = TopicFormat([]);
     expect(p.then).to.be.a('function');
-    p = SectionFormat({});
+    p = TopicFormat({});
     expect(p.then).to.be.a('function');
   });
   it('should reject a promise with a MalformedArgumentsError if passed a string', function(done) {
-    SectionFormat('donald trump')
+    TopicFormat('donald trump')
       .catch((error) => {
         expect(error.name).to.equal('MalformedArgumentsError');
         expect(error.data).to.equal('donald trump');
@@ -31,14 +31,14 @@ describe('Topic Formatter', function() {
       });
   });
   it('should reject the promise with a MalformedArgumentsError if passed an object', function(done) {
-    SectionFormat({})
+    TopicFormat({})
       .catch((error) => {
         expect(error.name).to.equal('MalformedArgumentsError');
         done();
       });
   });
   it('should parse results correctly', function(done) {
-    SectionFormat(results)
+    TopicFormat(results)
       .then((data) => {
         expect(data).to.be.a('object');
         const props = [
@@ -63,8 +63,8 @@ describe('Topic Formatter', function() {
         ];
         for (let i = 0; i < props.length; i++){
           try{
-            expect(data.hasOwnProperty(props[i])).to.equal(true);
-            expect(data[props[i]]).not.to.equal(undefined);
+            expect(data.data.hasOwnProperty(props[i])).to.equal(true);
+            expect(data.data[props[i]]).not.to.equal(undefined);
           } catch(e){
             expect(props[i] + ' Should exist in the formatted output').to.equal(true);
           }

@@ -6,9 +6,6 @@ export default function TopicDataFormatter(data) {
     assert.equal(Object.prototype.toString.call(data), '[object Array]',
       "argument 'data' should be an array");
 
-    assert.equal(data.length, 2,
-      "argument 'data' should be an array of length 2");
-
     assert.equal(typeof data[0], 'object',
       "the first element of 'data' should be an object");
 
@@ -24,7 +21,7 @@ export default function TopicDataFormatter(data) {
 
   return new Promise((resolve, reject) => {
     try {
-      let [metaData, topicData] = data;
+      let [metaData, topicData, compMetaData, compTopicData] = data;
       let results = {genre:[], sections:[], topics:[]};
       let metaFields = ['articleCount', 'sectionsCovered', 'sectionCount', 'publishTimes'];
       let topicFields = ['readTimes', 'pageViews', 'referrerTypes',
@@ -35,7 +32,22 @@ export default function TopicDataFormatter(data) {
       metaFields.forEach(f => { results[f] = getField(metaData, f)})
       topicFields.forEach(f => { results[f] = getField(topicData, f)})
 
-      resolve(results);
+      let comparatorResults = {};
+      if (compMetaData) {
+        let compMetaFields = ['articleCount', 'sectionsCovered', 'sectionCount'];
+        let compTopicFields = ['comparator', 'pageViews', 'referrerTypes',
+          'referrerNames', 'socialReferrers', 'devices', 'countries', 'regions', 'userCohort',
+          'rfvCluster', 'isFirstVisit', 'internalReferrerTypes', 'isSubscription', 'uniqueVisitors',
+          'sectionViews'];
+
+        compMetaFields.forEach(f => { comparatorResults[f] = getField(metaData, f)})
+        compTopicFields.forEach(f => { comparatorResults[f] = getField(topicData, f)})
+      }
+
+      resolve({
+        data: results,
+        comparatorData: comparatorResults
+      });
     } catch (e) {
       let error = new Error(e);
       error.name = 'DataParsingError';
