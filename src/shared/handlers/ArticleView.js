@@ -6,6 +6,7 @@ import _ from 'underscore';
 
 import Header from "../components/Header";
 import Messaging from '../components/Messaging';
+import ErrorHandler from '../components/ErrorHandler';
 import SectionModifier from "../components/SectionModifier";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
 import SectionReferrers from "../components/SectionReferrers.js";
@@ -69,10 +70,11 @@ class ArticleView extends React.Component {
   render() {
     if (this.props.errorMessage) {
       return (
-        <Messaging
+        <ErrorHandler
           category="Article"
           type="ERROR"
           message={this.props.errorMessage}
+          error={this.props.error}
         />
       );
     } else if (!this.props.data) {

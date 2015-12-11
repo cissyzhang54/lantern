@@ -8,6 +8,7 @@ import FeatureFlag from '../utils/featureFlag';
 
 import Header from '../components/Header';
 import Messaging from '../components/Messaging';
+import ErrorHandler from '../components/ErrorHandler';
 import SectionModifier from '../components/SectionModifier';
 import BarChart from '../components/BarChart.js';
 import Table from '../components/Table.js';
@@ -68,13 +69,38 @@ class SectionView extends React.Component {
 
   render() {
     if (this.props.errorMessage) {
-      return (<Messaging category="Section" type="ERROR" message={this.props.errorMessage} />);
+      return (
+        <ErrorHandler
+          category="Section"
+          message={this.props.errorMessage}
+          error={this.props.error}
+          type="ERROR"
+        />
+      );
     } else if (!this.props.data) {
-      return (<Messaging category="Section" type="LOADING" />);
+      return (
+        <Messaging
+          category="Section"
+          type="LOADING"
+        />);
     }
-    let updating = (this.props.loading)
-      ? <Messaging category="Section" type="UPDATING" />
-      : <Messaging category="Section" type="PLACEHOLDER" />
+    let updating
+    if (this.props.loading) {
+      updating = (
+        <Messaging
+          category="Section"
+          type="UPDATING"
+        />
+      );
+    }
+    else {
+      updating = (
+        <Messaging
+          category="Section"
+          type="PLACEHOLDER"
+        />
+      );
+    }
 
     let data = this.props.data
     let query = this.props.query
@@ -85,8 +111,8 @@ class SectionView extends React.Component {
     let [publishData, publishID, publishKeys] =  dataFormatter.getMetric('publishTimes', 'Articles published');
     let [readData, readID, readKeys] =  dataFormatter.getMetric('readTimes', 'Articles read');
 
-    let [topicViewData, topicViewId, topicViewKeys] = dataFormatter.getMetric('topicViews', 'Views');
-    let [topicCountData, topicCountId, topicCountKeys] = dataFormatter.getMetric('topicCount', 'Count');
+    let [topicViewData] = dataFormatter.getMetric('topicViews', 'Views');
+    let [topicCountData] = dataFormatter.getMetric('topicCount', 'Count');
     let comparatorSelected = Object.keys(comparatorData).length > 0;
 
     let topicCountHeaders = comparatorSelected ? ['Topic', `Articles tagged in (${this.props.params.section})`, `Articles tagged in (${this.props.params.comparator} comparator)`] : ['Topic', 'Articles tagged in'];
@@ -126,10 +152,10 @@ class SectionView extends React.Component {
             data={data}
             comparatorData={comparatorData}
             comparatorQuery={this.props.query}
-            renderDevice={true}
-            renderRegion={true}
-            renderReferrers={true}
-            renderUserCohort={true}
+            renderDevice
+            renderRegion
+            renderReferrers
+            renderUserCohort
             query={query}
             category={'sections'}
             uuid={this.props.params.section}
@@ -142,14 +168,14 @@ class SectionView extends React.Component {
 
             <Header
               title={'Section: ' + this.props.params.section}
-              />
+            />
           </ChunkWrapper>
 
           <SectionHeadlineStats
             data={data}
             comparatorData={comparatorData}
             config={headlineStats}
-            />
+          />
 
           <ChunkWrapper component="ArticlesPublished">
             <Row>
@@ -160,13 +186,14 @@ class SectionView extends React.Component {
             <Row>
               <Col xs={12}>
                 <DualScaleLineChart
+                  categories={[publishID, readID]}
                   leftData={publishData}
                   rightData={readData}
                   keys={publishKeys.concat(readKeys)}
-                  categories={[publishID, readID]}
                   yLabel='Articles published'
                   y2Label='Articles read'
-                  xLabel='Time' />
+                  xLabel='Time'
+                />
               </Col>
             </Row>
           </ChunkWrapper>
@@ -178,19 +205,25 @@ class SectionView extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col xs={12} md={variableTableWidth}>
+              <Col
+                md={variableTableWidth}
+                xs={12}
+              >
                 <h4>Topics ranked by most tagged</h4>
                 <Table
                   headers={topicCountHeaders}
                   rows={topicCountData}
-                  />
+                />
               </Col>
-              <Col xs={12} md={variableTableWidth}>
+              <Col
+                md={variableTableWidth}
+                xs={12}
+              >
                 <h4>Topics ranked by most viewed</h4>
                 <Table
                   headers={topicViewHeaders}
                   rows={topicViewData}
-                  />
+                />
               </Col>
             </Row>
           </ChunkWrapper>
@@ -199,7 +232,7 @@ class SectionView extends React.Component {
             data={data}
             comparatorData={comparatorData}
             renderWho={FeatureFlag.check('section:who')}
-            />
+          />
 
           <ChunkWrapper component="section-referrers">
             <Row>
@@ -208,7 +241,10 @@ class SectionView extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col xs={12} sm={4}>
+              <Col
+                xs={12}
+                sm={4}
+              >
                 <h4>External Sources</h4>
                 <BarChart
                   data={refData}
@@ -216,10 +252,14 @@ class SectionView extends React.Component {
                   category={refID}
                   yLabel="Page Views"
                   xLabel="Referrer"
-                  usePercentages={true} />
+                  usePercentages
+                />
               </Col>
 
-              <Col xs={12} sm={4}>
+              <Col
+                xs={12}
+                sm={4}
+              >
                 <h4>Social Network Breakdown</h4>
                 <BarChart
                   data={socialData}
@@ -227,10 +267,14 @@ class SectionView extends React.Component {
                   category={socialID}
                   yLabel="Page Views"
                   xLabel="Social Network"
-                  usePercentages={true}  />
+                  usePercentages
+                />
               </Col>
 
-              <Col xs={12} sm={4}>
+              <Col
+                xs={12}
+                sm={4}
+              >
                 <h4>Internal Referrer Types</h4>
                 <BarChart
                   data={internalData}
@@ -238,7 +282,8 @@ class SectionView extends React.Component {
                   category={internalID}
                   yLabel="Page Views"
                   xLabel="Referrer"
-                  usePercentages={true} />
+                  usePercentages
+                />
               </Col>
             </Row>
           </ChunkWrapper>
@@ -247,7 +292,7 @@ class SectionView extends React.Component {
             data={data}
             comparatorData={comparatorData}
             renderWhere={FeatureFlag.check('article:where')}
-            />
+          />
 
       </div>
   </DocumentTitle>)
