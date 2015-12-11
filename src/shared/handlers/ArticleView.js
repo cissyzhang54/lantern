@@ -1,11 +1,7 @@
 import React from 'react/addons';
 import DocumentTitle from 'react-document-title';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
 import connectToStores from 'alt/utils/connectToStores';
-import moment from 'moment';
 import Link from 'react-router/lib/Link';
-import assign from 'object-assign';
 import _ from 'underscore';
 
 import Header from "../components/Header";
@@ -29,10 +25,6 @@ import * as formatAuthors from '../utils/formatAuthors';
 
 import ChunkWrapper from '../components/ChunkWrapper';
 
-function decode(uri){
-  return uri ? decodeURI(uri) : null
-}
-
 class ArticleView extends React.Component {
 
   constructor(props) {
@@ -55,6 +47,7 @@ class ArticleView extends React.Component {
   componentWillMount() {
     AnalyticsActions.updateQuery({
       uuid : this.props.params.uuid,
+      dateFrom: null,
       type: 'article',
       comparatorType: this.props.params.comparatorType,
       comparator: this.props.params.comparator
