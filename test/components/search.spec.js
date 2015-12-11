@@ -1,13 +1,11 @@
 import { expect } from 'chai';
-import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import Search from '../../src/shared/components/Search';
 import Logo from '../../src/shared/components/Logo';
 import Input from 'react-bootstrap/lib/Input';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import {createComponent} from '../createComponent';
-
-const TestUtils = React.addons.TestUtils;
 
 describe('Search component', function() {
   let search;
@@ -46,7 +44,7 @@ describe('Search component', function() {
     });
     let errors = search.props.children[2];
     expect(TestUtils.isElementOfType(errors, ListGroupItem)).to.equal(true);
-    expect(errors._store.props.header).to.equal(`Couldn't find any`)
+    expect(errors.props.header).to.equal(`Couldn't find any`)
   });
 
 

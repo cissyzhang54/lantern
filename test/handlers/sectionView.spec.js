@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
 import {createAltWrappedComponent} from '../createComponent';
 import SectionView from '../../src/shared/handlers/SectionView';
@@ -7,8 +7,6 @@ import SectionModifier from '../../src/shared/components/SectionModifier';
 import Header from '../../src/shared/components/Header';
 
 import AnalyticsStore from '../../src/shared/stores/AnalyticsStore';
-
-const TestUtils = React.addons.TestUtils;
 
 describe ('SectionView Handler', function() {
   let AnalyticsStoreStub;

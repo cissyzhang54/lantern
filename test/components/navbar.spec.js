@@ -1,9 +1,7 @@
 import {expect} from 'chai';
-import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import {createComponent} from '../createComponent';
 import NavBar from '../../src/shared/components/NavBar';
-
-const TestUtils = React.addons.TestUtils;
 
 describe ('NavBar component', function() {
   let navBar;

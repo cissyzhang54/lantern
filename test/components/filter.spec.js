@@ -1,10 +1,8 @@
 import {expect} from 'chai';
-import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import {createComponent} from '../createComponent';
 import Filter from '../../src/shared/components/Filter';
 import Select from 'react-select';
-
-const TestUtils = React.addons.TestUtils;
 
 describe ('Filter component', function() {
   let filter;

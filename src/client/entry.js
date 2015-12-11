@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import Iso from "iso";
 import alt from "../shared/alt";
 import Router from "react-router";
@@ -11,7 +12,7 @@ let history = createBrowserHistory();
 
 Iso.bootstrap(function (state, meta, container) {
   alt.bootstrap(state);
-  React.render(
+  ReactDOM.render(
     <Router history={history}>{routes}</Router>,
     document.getElementById('react-app')
   );

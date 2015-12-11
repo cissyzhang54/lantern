@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import PieChart from "../components/PieChart";
@@ -23,14 +23,14 @@ export default class SectionHow extends React.Component {
         data={this.props.data.devices}
         keys={['views']}
         />
-    </Col> : {}
+    </Col> : [];
     let channelComponent = renderChannels ? <Col xs={6}>
       <h4>Channels:</h4>
       <PieChart
         data={this.props.data.channels}
         keys={['views']}
         />
-    </Col> : {}
+    </Col> : [];
 
     return (<ChunkWrapper component='sectionHow'>
       <Row>

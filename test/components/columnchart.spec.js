@@ -1,10 +1,9 @@
 import {expect} from 'chai';
 import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import {createComponent} from '../createComponent';
 import ColumnChart from '../../src/shared/components/ColumnChart';
 import BarChart from '../../src/shared/components/BarChart'
-
-const TestUtils = React.addons.TestUtils;
 
 describe ('ColumnChart component', function() {
   let columnChart;
@@ -24,4 +23,3 @@ describe ('ColumnChart component', function() {
     expect(props.yLabel).to.equal('Value of the Thing');
   });
 });
-

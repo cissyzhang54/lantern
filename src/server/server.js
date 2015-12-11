@@ -2,6 +2,7 @@ import 'newrelic';
 let express = require("express");
 let exphbs = require("express-handlebars");
 import React from "react";
+import ReactDOMServer from "react-dom/server";
 import { match, RoutingContext } from "react-router";
 import DocumentTitle from 'react-document-title';
 import compress from 'compression';
@@ -97,7 +98,7 @@ function renderRoute(route, req, res) {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
-      let content = React.renderToString(<RoutingContext {...renderProps} />);
+      let content = ReactDOMServer.renderToString(<RoutingContext {...renderProps} />);
       iso.add(content, alt.flush());
       const templateProps = {
         content: iso.render(),

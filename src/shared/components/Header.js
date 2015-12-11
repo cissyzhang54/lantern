@@ -63,8 +63,8 @@ export default class Header extends React.Component {
           <Glyphicon glyph="new-window" style={styles.tagStyle} />
         </a>
         let title = url ? link : this.props.title
-        let author = this.props.author ? <p style={styles.text}>{this.props.author}</p> : {};
-        let publishDate = this.props.published ? <p style={styles.text} className="pull-right">{this.props.published}</p> : {};
+        let author = this.props.author ? <p style={styles.text}>{this.props.author}</p> : [];
+        let publishDate = this.props.published ? <p style={styles.text} className="pull-right">{this.props.published}</p> : [];
         return (
           <header style={styles.header} className="clearfix" data-component='header' >
             <div style={styles.titleContainer} >

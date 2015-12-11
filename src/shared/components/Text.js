@@ -1,23 +1,19 @@
 import React from 'react'
 import Intl from 'intl'
-import {IntlMixin, FormattedMessage, FormattedHTMLMessage, FormattedRelative} from 'react-intl'
+import assign from 'object-assign'
+import {IntlProvider, FormattedMessage, FormattedHTMLMessage} from 'react-intl'
 import ComponentStrings from '../strings/ComponentStrings'
 import HandlerStrings from '../strings/HandlerStrings'
 import ExplanationStrings from '../strings/ExplanationStrings'
 
 var intlData = {
-  locales : ['en-US'],
-  messages: {
-    components : ComponentStrings,
-    handlers : HandlerStrings,
-    explanations: ExplanationStrings
-  }
+  locales: ['en-US'],
+  messages: assign({}, ComponentStrings, HandlerStrings, ExplanationStrings)
 };
 
 // This older style of class was used to accomadate the React Intl Mixin
 // When React Intl is updated for full ES6 this can be updated
 var Text = React.createClass({
-  mixins: [IntlMixin],
 
   propTypes : {
     type : React.PropTypes.oneOf(['text', 'html'])
@@ -33,23 +29,14 @@ var Text = React.createClass({
   },
 
   render: function () {
-    let text;
-
-    // Adding a switch for html - FormattedMessage is default as it renders faster
-    if (this.props.type === 'html') {
-      text = <FormattedHTMLMessage
-        {...this.props}
-        message={this.getIntlMessage(this.props.message)}
-        />;
-    } else {
-      text = <FormattedMessage
-        {...this.props}
-        message={this.getIntlMessage(this.props.message)}
-        />;
-    }
-
     return (
-      <span>{text}</span>
+      <IntlProvider locale={this.props.locales[0]} messages={this.props.messages}>
+        {
+          this.props.type === 'html'
+            ? <FormattedHTMLMessage id={this.props.message} values={this.props} />
+            : <FormattedMessage id={this.props.message} values={this.props} />
+        }
+      </IntlProvider>
     );
   }
 });
