@@ -24,7 +24,6 @@ router.get(`/realtime/articles/:uuid(${UUID_REGEX})`, (req, res, next) => {
 
 router.get(`/articles/:uuid(${UUID_REGEX})/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
   return getArticleData(req, res)
-    .then(() => getComparatorData(req, res))
     .then(() => next())
     .catch((err) => {
       if (err.status) res.status(err.status);
@@ -71,48 +70,44 @@ router.get(`/topics/:topic/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req
 });
 
 function getArticleData(req, res){
-  return dataApiUtils.getArticleData({uuid: decode(req.params.uuid)}, apiKey)
+  let query = {
+    uuid: decode(req.params.uuid),
+    comparator: decode(req.params.comparator),
+    comparatorType: decode(req.params.comparatorType)
+  }
+  return dataApiUtils.getArticleData(query, apiKey)
     .then((data) => {
-      let dateFrom = moment(data.published).toISOString();
+      let dateFrom = moment(data.data.published).toISOString();
       let dateTo = moment().toISOString();
       res.locals.data = {
-        ArticleStore: {
-          data: data,
-        },
-        ArticleQueryStore : {
+        AnalyticsStore: {
+          comparatorData: data.comparatorData,
+          data: data.data,
           query: {
             uuid: decode(req.params.uuid),
             dateFrom: dateFrom,
+            type: 'article',
             dateTo: dateTo,
-            filters: {}
-          }
-        },
-        ComparatorQueryStore : {
-          query: {
-            category: 'articles',
-            uuid: decode(req.params.uuid),
-            comparator: decode(req.params.comparator),
-            comparatorType: decode(req.params.comparatorType),
-            dateFrom: dateFrom,
-            dateTo: dateTo,
-            publishDate: moment(data.published).toISOString(),
-            filters: {}
+            filters: {},
+            comparator: query.comparator,
+            comparatorType: query.comparatorType,
+            publishDate: dateFrom
           }
         },
         FilterStore : {
           query: {
             filters: {}
           },
-          devices: getKeys(data.devices),
-          regions: getKeys(data.regions),
-          cohort: getKeys(data.userCohort),
-          referrers: getKeys(data.referrerTypes)
+          devices: getKeys(data.data.devices),
+          regions: getKeys(data.data.regions),
+          cohort: getKeys(data.data.userCohort),
+          referrers: getKeys(data.data.referrerTypes)
         }
       };
       return res;
     }).catch((error) => {
       res.locals.data = {
-        ArticleStore : {
+        AnalyticsStore : {
           errorMessage : error.message
         }
       }
@@ -134,7 +129,8 @@ function getArticleRealtimeData(req, res) {
           pageViews: data.realtimePageViews,
           timeOnPage: data.timeOnPageLastHour,
           scrollDepth: data.scrollDepthLastHour,
-          livePageViews: data.livePageViews
+          livePageViews: data.livePageViews,
+          realtimeNextInternalUrl: data.realtimeNextInternalUrl
         }
       };
       return res;
@@ -147,108 +143,74 @@ function getArticleRealtimeData(req, res) {
     })
 }
 
-function getComparatorData(req, res){
-  return dataApiUtils.getComparatorData(res.locals.data.ComparatorQueryStore.query, apiKey)
-    .then((data) => {
-      res.locals.data.ComparatorStore = {
-          data: data
-      };
-      return res;
-    }).catch((error) => {
-      res.locals.data.ComparatorStore = {
-        errorMessage : error.message
-      };
-    })
-}
 
 function getSectionData(req, res){
-  return dataApiUtils.getSectionData({section: decode(req.params.section)}, apiKey)
+  let query = {
+    section: decode(req.params.section),
+    comparator: decode(req.params.comparator),
+    comparatorType: decode(req.params.comparatorType),
+    dateFrom: moment().subtract(29,'days').toISOString(),
+    dateTo: moment().toISOString(),
+    filters: {},
+    type: 'section'
+  }
+  return dataApiUtils.getSectionData(query, apiKey)
     .then((data) => {
-      let dateFrom = moment().subtract(29,'days').toISOString();
-      let dateTo = moment().toISOString();
       res.locals.data = {
-        "SectionStore": {
-          data: data
+        AnalyticsStore: {
+          comparatorData: data.comparatorData,
+          data: data.data,
+          query: query
         },
-        "SectionQueryStore" : {
-          query: {
-            section: decode(req.params.section),
-            dateFrom: dateFrom,
-            dateTo: dateTo,
-            filters: {}
-          }
-        },
-        "ComparatorQueryStore" : {
-          query: {
-            category: 'sections',
-            section: decode(req.params.section),
-            comparator: decode(req.params.comparator),
-            comparatorType: decode(req.params.comparatorType),
-            dateFrom: dateFrom,
-            dateTo: dateTo,
-            filters: {}
-          }
-        },
-        "FilterStore" : {
+        FilterStore : {
           query: {
             filters: {}
           },
-          devices: getKeys(data.devices),
-          regions: getKeys(data.regions),
-          cohort: getKeys(data.userCohort),
-          referrers: getKeys(data.referrerTypes)
+          devices: getKeys(data.data.devices),
+          regions: getKeys(data.data.regions),
+          cohort: getKeys(data.data.userCohort),
+          referrers: getKeys(data.data.referrerTypes)
         }
       };
       return res;
     }).catch((error) => {
-      res.locals.data.SectionStore = {
+      res.locals.data.AnalyticsStore = {
         errorMessage: error.message
       }
     })
 }
 
 function getTopicData(req, res){
-  return dataApiUtils.getTopicData({topic: decode(req.params.topic)}, apiKey)
+  let query = {
+    topic: decode(req.params.topic),
+    comparator: decode(req.params.comparator),
+    comparatorType: decode(req.params.comparatorType),
+    dateFrom: moment().subtract(29,'days').toISOString(),
+    dateTo: moment().toISOString(),
+    filters: {},
+    type: 'topic'
+  }
+  return dataApiUtils.getTopicData(query, apiKey)
     .then((data) => {
-      let dateFrom = moment().subtract(29,'days').toISOString();
-      let dateTo = moment().toISOString();
-
       res.locals.data = {
-        "TopicStore": {
-          data: data
+        AnalyticsStore: {
+          comparatorData: data.comparatorData,
+          data: data.data,
+          query: query
         },
-        "TopicQueryStore" : {
-          query: {
-            topic: decode(req.params.topic),
-            dateFrom: dateFrom,
-            dateTo: dateTo,
-            filters: {}
-          }
-        },
-        "ComparatorQueryStore" : {
-          query: {
-            category: 'topics',
-            topic: decode(req.params.topic),
-            comparator: decode(req.params.comparator),
-            comparatorType: decode(req.params.comparatorType),
-            dateFrom: dateFrom,
-            dateTo: dateTo,
-            filters: {}
-          }
-        },
-        "FilterStore" : {
+        FilterStore : {
           query: {
             filters: {}
           },
-          devices: getKeys(data.devices),
-          regions: getKeys(data.regions),
-          cohort: getKeys(data.userCohort),
-          referrers: getKeys(data.referrerTypes)
+          devices: getKeys(data.data.devices),
+          regions: getKeys(data.data.regions),
+          cohort: getKeys(data.data.userCohort),
+          referrers: getKeys(data.data.referrerTypes)
         }
       };
       return res;
     }).catch((error) => {
-      res.locals.data.TopicStore = {
+      res.locals.data.AnalyticsStore = {
         errorMessage: error.message
       }
     })

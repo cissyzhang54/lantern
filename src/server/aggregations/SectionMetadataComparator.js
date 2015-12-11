@@ -7,7 +7,7 @@ export default function SectionMetadataComparatorAggregation() {
       },
       "topic_count": {
         "terms": {
-          "field": "topics",
+          "field": "topics_not_analyzed",
           size : 10
         }
       }

@@ -1,12 +1,11 @@
 import React from 'react/addons';
+import Col from 'react-bootstrap/lib/Col';
+import Row from 'react-bootstrap/lib/Row';
 import connectToStores from 'alt/utils/connectToStores';
 import ArticleRealtimeStore from '../stores/ArticleRealtimeStore';
 import ArticleRealtimeActions from '../actions/ArticleRealtimeActions';
-import ArticleActions from '../actions/ArticleActions';
-import ArticleQueryActions from '../actions/ArticleQueryActions';
-import ComparatorActions from '../actions/ComparatorActions';
-import ComparatorQueryActions from '../actions/ComparatorQueryActions';
 import LineChart from '../components/LineChart';
+import Table from '../components/Table';
 import ChunkWrapper from '../components/ChunkWrapper';
 import LiveIndicator from '../components/LiveIndicator';
 import Header from '../components/Header';
@@ -15,8 +14,27 @@ import * as formatAuthors from '../utils/formatAuthors';
 import moment from 'moment';
 import Link from 'react-router/lib/Link';
 
-function decode(uri){
-  return uri ? decodeURI(uri) : null
+const maxStrLen = 60;
+
+function getReferrerUrls (value, i) {
+  let urlObject = value.top_tag_hits.hits.hits[0]._source;
+  let count = value.doc_count;
+  let title = urlObject.title_not_analyzed;
+  title = title.length > maxStrLen ? title.substr(0, maxStrLen) + '…' : title;
+
+  let uuid = urlObject.article_uuid;
+
+  let link
+  if(urlObject.page_type === 'article'){
+    link = <a href={`http://www.ft.com/cms/s/${uuid}.html`}>{title}</a>;
+  } else {
+    link = <a href={uuid}>{title}</a>;
+  }
+
+  return {
+    link: link,
+    count: count
+  };
 }
 
 class ArticleRealtimeView extends React.Component {
@@ -50,19 +68,6 @@ class ArticleRealtimeView extends React.Component {
     ArticleRealtimeActions.disconnect();
   }
 
-  handleHistoricalClick() {
-    ArticleActions.listenToQuery();
-    ArticleQueryActions.clickedOnArticle({
-      uuid: this.props.uuid,
-      publishDate: this.props.published
-    })
-    ComparatorActions.listenToQuery();
-    ComparatorQueryActions.clickedOnArticle({
-      uuid: this.props.uuid,
-      publishDate: this.props.published
-    })
-  }
-
   render() {
     let pageViews = this.props.pageViews.map(function(d) {
       return {
@@ -70,6 +75,8 @@ class ArticleRealtimeView extends React.Component {
         views: d[1]
       }
     })
+
+    let realtimeNextInternalUrl = this.props.realtimeNextInternalUrl.map(getReferrerUrls);
 
     let headlineStats = {
       timeOnPage: {
@@ -95,16 +102,20 @@ class ArticleRealtimeView extends React.Component {
         comparatorFormatName: 'totalPageViews'
       }
     }
+
     return (
       <div>
-        <ChunkWrapper component="link">
-          <Link
-            to={'/articles/' + this.props.uuid}
-            onClick={this.handleHistoricalClick.bind(this)}
-            >
-            Historical view
-          </Link>
-        </ChunkWrapper>
+
+        <Row>
+          <ChunkWrapper component="link">
+            <Link
+              to={'/articles/' + this.props.uuid}
+              >
+              Historical view
+            </Link>
+          </ChunkWrapper>
+        </Row>
+
         <ChunkWrapper component="header">
           <Header
             title={this.props.title}
@@ -112,8 +123,9 @@ class ArticleRealtimeView extends React.Component {
             author={'By: ' + formatAuthors.join(this.props.author)}
             published={'First Published: ' + this.props.published_human}
             uuid={this.props.uuid}
-          />
+            />
         </ChunkWrapper>
+
         <ChunkWrapper component="headlineStats">
           <SectionHeadlineStats
             data={this.props}
@@ -121,18 +133,37 @@ class ArticleRealtimeView extends React.Component {
             config={headlineStats}
             />
         </ChunkWrapper>
+
+
         <ChunkWrapper component="realtime-views">
-          <h3>Real time views</h3>
-          <LiveIndicator isLive={this.props.isLive} />
-          <LineChart
-            data={pageViews}
-            keys={['views']}
-            category={'date'}
-            yLabel='Page Views'
-            xLabel='Time'
-            realtime={true}
-            cols={12}
-            />
+          <Row>
+            <Col>
+              <h3>Real time views</h3>
+              <LiveIndicator isLive={this.props.isLive} />
+              <LineChart
+                data={pageViews}
+                keys={['views']}
+                category={'date'}
+                yLabel='Page Views'
+                xLabel='Time'
+                realtime={true}
+                cols={12}
+                />
+            </Col>
+          </Row>
+        </ChunkWrapper>
+
+        <ChunkWrapper component="realtime-views">
+          <Row>
+            <Col xs={12} sm={6}>
+              <h3>Where did users go next?</h3>
+              <Table
+                headers={['FT Source', 'Views']}
+                rows={realtimeNextInternalUrl}
+                />
+            </Col>
+            <Col xs={12} sm={6}></Col>
+          </Row>
         </ChunkWrapper>
       </div>
     );

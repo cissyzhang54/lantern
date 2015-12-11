@@ -39,7 +39,8 @@ describe('Article Formatter', function() {
   });
   it('should parse results correctly', function(done) {
     ArticleFormat(ESArticleResults)
-      .then((data) => {
+      .then((alldata) => {
+        let data = alldata.data;
         expect(data).to.be.a('object');
         const props = [
           'title',
@@ -91,11 +92,12 @@ describe('Article Formatter', function() {
         //did not remove search
         //did remove news-sharing
         expect(data.referrerTypes).to.deep.equal([
-          [ 'Unknown', 17097 ],
-          [ 'social-network', 14796 ],
-          [ 'search', 0 ],
-          [ 'partner', 1146 ],
-          [ 'email', 47 ]
+          [ 'Unknown', 1308 ],
+          [ 'search', 265 ],
+          [ 'social-network', 122 ],
+          [ 'news-sharing', 1 ],
+          [ 'email', 0 ],
+          [ 'partner', 0]
         ])
         done();
       })
@@ -108,7 +110,7 @@ describe('Article Formatter', function() {
   it('round numbers correctly', function(done) {
     ArticleFormat(ESArticleResults)
       .then((data) => {
-        expect(data.scrollDepth).to.equal(85);
+        expect(data.data.scrollDepth).to.equal(83);
         done();
       })
       .catch((error) => {

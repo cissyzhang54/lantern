@@ -4,57 +4,75 @@ import Link from 'react-router/lib/Link';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 
-
 export default class Playground extends React.Component {
   render() {
 
-    const sidebarStyles = {
-      backgroundColor: '#ffa010'
-    };
+    const styles = {
+      sidebarStyles : {
+        backgroundColor: '#f8f8f8',
+        border: '1px solid #e7e7e7',
+        padding: '10px',
+        borderRadius: '3px'
+      },
+      title : {
+        margin: '15px 0'
+      },
+      li : {
+        listStyle: 'none'
+      }
+    }
+
+    const components = [
+      { title : 'Bar Chart', url : '/playground/barChart' },
+      { title : 'Column Chart', url : '/playground/columnChart' },
+      { title : 'Date Range', url : '/playground/dateRange' },
+      { title : 'Dual Scale Chart', url : '/playground/dualScaleLineChart' },
+      { title : 'Filter', url : '/playground/filter' },
+      { title : 'Filters', url : '/playground/filters' },
+      { title : 'Header', url : '/playground/header' },
+      { title : 'Line Chart', url : '/playground/lineChart' },
+      { title : 'Live Indicator', url : '/playground/liveIndicator' },
+      { title : 'Logo SVG', url : '/playground/logoSVG' },
+      { title : 'Logo', url : '/playground/logo' },
+      { title : 'Map', url : '/playground/map' },
+      { title : 'Messaging', url : '/playground/messaging' },
+      { title : 'Modifier Description', url : '/playground/modifierDescription' },
+      { title : 'Pie Chart', url : '/playground/pieChart' },
+      { title : 'Recent Articles', url : '/playground/recentArticles' },
+      { title : 'Search', url : '/playground/search' },
+      { title : 'Single Metric', url : '/playground/singleMetric' },
+      { title : 'Table', url : '/playground/table' },
+      { title : 'Tag', url : '/playground/tag' },
+      { title : 'Tags', url : '/playground/tags' },
+      { title : 'Text', url : '/playground/text' },
+      { title : 'User', url : '/playground/user' }
+    ]
+
+    let navigationLinks = components.map((d, i) => {
+      return <li style={styles.li} ><Link to={d.url}>{d.title}</Link></li>
+    });
 
     let title = 'Lantern -  Playground';
 
-    return (<DocumentTitle title={title}>
-      <div>
-        <h2>Playground</h2>
-        <Col className="sidebar" style={sidebarStyles}>
-          <ul>
-            <li>
-              <Link to="/playground/header">Header</Link>
-            </li>
-            <li>
-              <Link to="/playground/logoSVG">LogoSVG</Link>
-            </li>
-            <li>
-              <Link to="/playground/search">Search</Link>
-            </li>
-            <li>
-              <Link to="/playground/singleMetric">Single Metric</Link>
-            </li>
-            <li>
-              <Link to="/playground/modifier">Modifier</Link>
-            </li>
-            <li>
-              <Link to="/playground/lineChart">Line Chart</Link>
-            </li>
-            <li>
-              <Link to="/playground/barChart">Bar Chart</Link>
-            </li>
-            <li>
-              <Link to="/playground/columnChart">Column Chart</Link>
-            </li>
-            <li>
-              <Link to="/playground/pieChart">Pie Chart</Link>
-            </li>
-            <li>
-              <Link to="/playground/map">Map</Link>
-            </li>
+    return (<DocumentTitle title={title}><div>
+      <Row>
+        <Col xs={12}>
+          <h2 style={styles.title}>Playground</h2>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col xs={12} sm={3}>
+          <h3>Components</h3>
+          <ul style={styles.sidebarStyles}>
+            {navigationLinks}
           </ul>
         </Col>
-        <Col className="stage">
+        <Col  xs={12} sm={9}  className="stage">
           {this.props.children}
         </Col>
-      </div>
-    </DocumentTitle>);
+      </Row>
+
+    </div></DocumentTitle>);
   }
 }

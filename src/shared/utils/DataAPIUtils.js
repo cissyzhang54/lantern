@@ -2,6 +2,8 @@ import request from "superagent";
 import config from "../config";
 import assert from "assert";
 
+
+
 let DataAPI = {
 
     getArticleData(query, apiKey) {
@@ -25,7 +27,10 @@ let DataAPI = {
           .end((err, res) => {
             if (err) {
               err.queryData = query;
-              err.name = errorName('Article', err)
+              err.name = errorName('Article', err);
+              if (res) {
+                err.message = res.body.message;
+              }
               reject(err);
             }
             !err && resolve(res.body);
@@ -54,6 +59,9 @@ let DataAPI = {
               if (err) {
                 err.queryData = query;
                 err.name = errorName('Article', err)
+                if (res) {
+                  err.message = res.body.message;
+                }
                 reject(err);
               }
               !err && resolve(res.body);
@@ -61,50 +69,34 @@ let DataAPI = {
         });
     },
 
-    getComparatorData(query, apiKey) {
+    getSectionData(query, apiKey) {
       assert.equal(typeof query, 'object',
         "argument 'query' must be an object");
 
-      assert.ok(query.hasOwnProperty('comparator'),
-        "argument 'query' must contain a comparator property");
+      assert.ok(query.hasOwnProperty('section'),
+        "argument 'query' must contain a section property");
 
-      assert.equal(typeof query.comparator, 'string',
-        "property 'comparator' of argument 'query' must be a string");
-
-      if (query.category === 'articles'){
-        assert.equal(typeof query.publishDate, 'string',
-          "property 'publishDate' of argument 'query' must be a string");
-
-        assert.equal(typeof query.uuid, 'string',
-          "property 'uuid' of argument 'query' must be a string");
-      } else if (query.category === 'sections'){
-        assert.equal(typeof query.section, 'string',
-          "property 'publishDate' of argument 'query' must be a string");
-      } else if (query.category === 'topics'){
-        assert.equal(typeof query.topic, 'string',
-          "property 'topic' of argument 'query' must be a string")
-      } else {
-        assert.ok(false,
-          "property 'category' of argument 'query' must be either 'articles', 'sections' or 'topics'");
-      }
+      assert.equal(typeof query.section, 'string',
+        "property 'section' of argument 'query' must be a string");
 
       return new Promise(function handlePromise(resolve, reject) {
-        let baseUrl = `${config.baseUrl}/api/v0/comparators`;
-        let reqParams = `${query.category}/${query.comparatorType}/${query.comparator}`;
-        let reqQuery = [];
-        if (query.publishDate) reqQuery.push(`publishDate=${query.publishDate}`);
-        if (query.uuid) reqQuery.push(`uuid=${query.uuid}`);
-        if (query.section) reqQuery.push(`section=${query.section}`);
-        if (query.topic) reqQuery.push(`topic=${query.topic}`);
-        if (apiKey) reqQuery.push("apiKey=" + apiKey);
-        let url = `${baseUrl}/${reqParams}?${reqQuery.join('&')}`;
+        let baseUrl = `${config.baseUrl}/api/v0/sections`;
+        let reqParams = `${query.section}`;
+        let reqQuery = ``;
+        if (apiKey) {
+          reqQuery += "apiKey=" + apiKey;
+        }
+        let url = `${baseUrl}/${reqParams}?${reqQuery}`;
         request.post(url)
           .send(query)
           .set('Accept', 'application/json')
           .end((err, res) => {
             if (err) {
               err.queryData = query;
-              err.name = errorName('Comparator', err)
+              err.name = errorName('Section', err)
+              if (res) {
+                err.message = res.body.message;
+              }
               reject(err);
             }
             !err && resolve(res.body);
@@ -112,140 +104,41 @@ let DataAPI = {
       });
     },
 
-  getSectionData(query, apiKey) {
-    assert.equal(typeof query, 'object',
-      "argument 'query' must be an object");
+    getTopicData(query, apiKey) {
+      assert.equal(typeof query, 'object',
+        "argument 'query' must be an object");
 
-    assert.ok(query.hasOwnProperty('section'),
-      "argument 'query' must contain a section property");
+      assert.ok(query.hasOwnProperty('topic'),
+        "argument 'query' must contain a topic property");
 
-    assert.equal(typeof query.section, 'string',
-      "property 'section' of argument 'query' must be a string");
+      assert.equal(typeof query.topic, 'string',
+        "property 'topic' of argument 'query' must be a string");
 
-    return new Promise(function handlePromise(resolve, reject) {
-      let baseUrl = `${config.baseUrl}/api/v0/sections`;
-      let reqParams = `${query.section}`;
-      let reqQuery = ``;
-      if (apiKey) {
-        reqQuery += "apiKey=" + apiKey;
-      }
-      let url = `${baseUrl}/${reqParams}?${reqQuery}`;
-      request.post(url)
-        .send(query)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          if (err) {
-            err.queryData = query;
-            err.name = errorName('Section', err)
-            reject(err);
-          }
-          !err && resolve(res.body);
-        });
-    });
-  },
+      return new Promise(function handlePromise(resolve, reject) {
+        let baseUrl = `${config.baseUrl}/api/v0/topics`;
+        let reqParams = `${query.topic}`;                 // TODO Add comparator
+        let reqQuery = ``;
+        if (apiKey) {
+          reqQuery += "apiKey=" + apiKey;
+        }
+        let url = `${baseUrl}/${reqParams}?${reqQuery}`;
 
-  getSectionComparatorData(query, apiKey) {
-    assert.equal(typeof query, 'object',
-      "argument 'query' must be an object");
-
-    assert.ok(query.hasOwnProperty('comparator'),
-      "argument 'query' must contain a comparator property");
-
-    assert.equal(typeof query.comparator, 'string',
-      "property 'comparator' of argument 'query' must be a string");
-
-    assert.equal(typeof query.section, 'string',
-      "property 'section' of argument 'query' must be a string");
-
-    return new Promise(function handlePromise(resolve, reject) {
-      let baseUrl = `${config.baseUrl}/api/v0/comparators`;
-      let reqParams = `sections/${query.comparatorType}/${query.comparator}`;
-      let reqQuery = `section=${query.section}`;
-      if (apiKey) {
-        reqQuery += "&apiKey=" + apiKey;
-      }
-      let url = `${baseUrl}/${reqParams}?${reqQuery}`;
-      request.post(url)
-        .send(query)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          if (err) {
-            err.queryData = query;
-            err.name = errorName('Comparator', err)
-            reject(err);
-          }
-          !err && resolve(res.body);
-        });
-    });
-  },
-
-  getTopicData(query, apiKey) {
-    assert.equal(typeof query, 'object',
-      "argument 'query' must be an object");
-
-    assert.ok(query.hasOwnProperty('topic'),
-      "argument 'query' must contain a topic property");
-
-    assert.equal(typeof query.topic, 'string',
-      "property 'topic' of argument 'query' must be a string");
-
-    return new Promise(function handlePromise(resolve, reject) {
-      let baseUrl = `${config.baseUrl}/api/v0/topics`;
-      let reqParams = `${query.topic}`;                 // TODO Add comparator
-      let reqQuery = ``;
-      if (apiKey) {
-        reqQuery += "apiKey=" + apiKey;
-      }
-      let url = `${baseUrl}/${reqParams}?${reqQuery}`;
-
-      request.post(url)
-        .send(query)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          if (err) {
-            err.queryData = query;
-            err.name = errorName('Topic', err)
-            reject(err);
-          }
-          !err && resolve(res.body);
-        });
-    })
-  },
-
-  getTopicComparatorData(query, apiKey) {
-    assert.equal(typeof query, 'object',
-      "argument 'query' must be an object");
-
-    assert.ok(query.hasOwnProperty('comparator'),
-      "argument 'query' must contain a comparator property");
-
-    assert.equal(typeof query.comparator, 'string',
-      "property 'comparator' of argument 'query' must be a string");
-
-    assert.equal(typeof query.topic, 'string',
-      "property 'topic' of argument 'query' must be a string");
-
-    return new Promise(function handlePromise(resolve, reject) {
-      let baseUrl = `${config.baseUrl}/api/v0/comparators`;
-      let reqParams = `topics/${query.comparatorType}/${query.comparator}`;
-      let reqQuery = `topic=${query.topic}`;
-      if (apiKey) {
-        reqQuery += "&apiKey=" + apiKey;
-      }
-      let url = `${baseUrl}/${reqParams}?${reqQuery}`;
-      request.post(url)
-        .send(query)
-        .set('Accept', 'application/json')
-        .end((err, res) => {
-          if (err) {
-            err.queryData = query;
-            err.name = errorName('Comparator', err)
-            reject(err);
-          }
-          !err && resolve(res.body);
-        });
-    });
-  },
+        request.post(url)
+          .send(query)
+          .set('Accept', 'application/json')
+          .end((err, res) => {
+            if (err) {
+              err.queryData = query;
+              err.name = errorName('Topic', err)
+              if (res) {
+                err.message = res.body.message;
+              }
+              reject(err);
+            }
+            !err && resolve(res.body);
+          });
+      })
+    },
 
     search(query, from = 0, apiKey = '') {
 
@@ -270,6 +163,9 @@ let DataAPI = {
             if (err) {
               err.queryData = query.term;
               err.name = errorName('Search', err)
+              if (res) {
+                err.message = res.body.message;
+              }
               reject(err);
             }
             res.body.requestId = requestId;
@@ -282,11 +178,21 @@ let DataAPI = {
 
 function errorName(page, err){
   if (!err.response) return err.code
+  if (err.response.body)
+    return page + err.response.body.error.name;
   switch(err.response.status) {
     case 404:
       return page + 'NotFoundError';
     default:
       return page + 'Error';
+  }
+}
+
+function errorHandler(type) {
+  return function(error, query) {
+    error.queryData = query;
+    error.name = errorName(type, error);
+    error.message = error.response.body.message;
   }
 }
 

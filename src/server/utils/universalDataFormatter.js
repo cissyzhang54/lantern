@@ -73,7 +73,8 @@ const fields = {
   totalLinksClicked: {name: 'aggregations.page_clicks.total_links_clicked.value', formatter: divide},
   scrollDepth: {name: 'aggregations.scroll_depth.average_scroll.value', formatter: Math.round},
   linkClickCategories: 'aggregations.page_clicks.category_breakdown',
-  uniqueVisitors: 'aggregations.unique_visitors.value'
+  uniqueVisitors: 'aggregations.unique_visitors.value',
+  realtimeNextInternalUrl : 'aggregations.next_internal_url.titles.buckets'
 }
 
 function divide(agg, fieldObj, divisor=1){
@@ -106,8 +107,9 @@ function format(agg, fieldObj, divisor=1) {
   });
 }
 
-// In place of min doc count in ES for specific fields
-// filter the specific always required fields required here
+// In place of min doc count in ES for specific fields, use min doc count to return
+// all fields with 0 then filter the specific fields that are always required even when 0
+// and remove the rest of the fields with a 0 value
 function filterOutTerms (data, terms) {
   return data.filter((value) => (terms.indexOf(value[0]) >= 0 || value[1] > 0));
 }

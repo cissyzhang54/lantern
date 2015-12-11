@@ -79,7 +79,12 @@ export default class Messaging extends React.Component {
 }
 
 Messaging.propTypes = {
-  type: React.PropTypes.string.isRequired,
   category: React.PropTypes.string.isRequired,
-  message: React.PropTypes.string
+  message: React.PropTypes.string,
+  type: React.PropTypes.string.isRequired
+};
+
+Messaging.defaultProps = {
+  type: 'LOADING',
+  category: 'There are 4 message types: Loading, Updating, Error and Placeholder',
 };

@@ -200,7 +200,7 @@ export default class DualScaleLineChart extends React.Component {
   }
 
   componentDidMount() {
-    if (this.props.data)
+    if (this.props.rightData && this.props.leftData)
       this.drawChart();
   }
 
@@ -242,11 +242,10 @@ export default class DualScaleLineChart extends React.Component {
       </div>
     );
   }
-
 }
 
 DualScaleLineChart.defaultProps = {
-  data: (() => {
+  leftData: (() => {
     let times = 30;
     let date = new Date().getTime();
     var dataArray = [];
@@ -259,7 +258,20 @@ DualScaleLineChart.defaultProps = {
     }
     return dataArray;
   })(),
-  keys: ['value'],
+  rightData: (() => {
+    let times = 30;
+    let date = new Date().getTime();
+    var dataArray = [];
+
+    for (var i = 0; i < times; i++) {
+      dataArray.push( {
+        time: new Date(date + (i * 1000 * 60)),
+        value: (Math.random() * 1000) | 0
+      });
+    }
+    return dataArray;
+  })(),
+  keys: ['value', 'value'],
   title: 'The title of the chart',
   xLabel: 'Time',
   yLabel: 'Left Y Axis Label',

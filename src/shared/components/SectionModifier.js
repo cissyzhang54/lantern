@@ -10,10 +10,8 @@ import DateRange from "./DateRange";
 import ModifierDescription from "./ModifierDescription";
 import Text from "./Text";
 
-import ArticleQueryActions from '../actions/ArticleQueryActions';
-import SectionQueryActions from '../actions/SectionQueryActions';
-import ComparatorQueryActions from '../actions/ComparatorQueryActions';
-import TopicQueryActions from '../actions/TopicQueryActions';
+import AnalyticsActions from '../actions/AnalyticsActions';
+import FilterActions from '../actions/FilterActions';
 
 const styles = {
   modifierWrapper : {
@@ -55,34 +53,16 @@ export default class Modifier extends React.Component {
 
   handleDateRangeChange (dates) {
     let updatedDates = {
-      from: dates.startDate.format('YYYY-MM-DD'),
-      to: dates.endDate.format('YYYY-MM-DD')
+      dateFrom: dates.startDate.format('YYYY-MM-DD'),
+      dateTo: dates.endDate.format('YYYY-MM-DD')
     }
 
-    TopicQueryActions.selectDateRange(updatedDates);
-    SectionQueryActions.selectDateRange(updatedDates);
-    ArticleQueryActions.selectDateRange(updatedDates);
-
-    if (this.state.isSectionOrTopic && !this.state.isGlobalFTComparator) {
-      // Topics and sections
-      let span = dates.endDate - dates.startDate;
-
-      let topicAndSectionUpdatedDates = {
-        from: dates.startDate.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD'),
-        to: dates.endDate.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD')
-      }
-      ComparatorQueryActions.selectDateRange(topicAndSectionUpdatedDates);
-    } else {
-      ComparatorQueryActions.selectDateRange(updatedDates);
-    }
+    return AnalyticsActions.updateQuery(updatedDates);
 
   }
 
   handleFilterChange (selectedFilters) {
-    TopicQueryActions.selectFilter(selectedFilters);
-    SectionQueryActions.selectFilter(selectedFilters);
-    ArticleQueryActions.selectFilter(selectedFilters);
-    ComparatorQueryActions.selectFilter(selectedFilters);
+    FilterActions.selectFilter(selectedFilters);
   }
 
   render() {
@@ -107,7 +87,6 @@ export default class Modifier extends React.Component {
     this.props.category === 'topics' ? tags.push({label: this.props.query.topic, url : `topic/${this.props.query.topic}`}) : {};
 
     let count = typeof comparatorData.articleCount == 'number' ? comparatorData.articleCount : {}
-
 
     return (
       <div data-component='sectionModifier' style={styles.modifierWrapper}>
@@ -148,10 +127,6 @@ export default class Modifier extends React.Component {
             <span style={styles.title}><span style={styles.titleText}>Filters:</span></span>
           </Col>
           <Filters
-            renderDevice={this.props.renderDevice}
-            renderRegion={this.props.renderRegion}
-            renderReferrers={this.props.renderReferrers}
-            renderUserCohort={this.props.renderUserCohort}
             onChange={this.handleFilterChange}
           />
         </Row>

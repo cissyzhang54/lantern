@@ -90,3 +90,7 @@ export default class DataMap extends React.Component {
   }
 
 }
+
+DataMap.defaultProps = {
+  data : [['GBR', 0]]
+}

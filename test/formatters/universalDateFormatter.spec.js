@@ -7,8 +7,7 @@ import article_comparator_results from '../fixtures/data/article_comparator_resu
 describe('universalDataFormatter', function() {
 
   let [sectionMetaData, sectionData] = section_results
-  let [articleData, metaData, eventData]  = article_results
-  let [articleComparatorData, comparatorEventData]  = article_comparator_results
+  let [metaData, articleData, eventData, articleComparatorData, comparatorEventData] = article_results;
 
   /* Section MetaData Tests Start */
   describe('should parse sectionData correctly', function () {
@@ -232,95 +231,193 @@ describe('universalDataFormatter', function() {
 
     it('should parse timeOnPage', function () {
       expect(getField(articleData, 'timeOnPage')).to.be.a('number')
-      expect(getField(articleData, 'timeOnPage')).to.equal(52.87718548805419)
+      expect(getField(articleData, 'timeOnPage')).to.equal(67.64478311840563)
     });
 
     it('should parse readTimesSincePublish correctly', function () {
-      expect(getField(articleData, 'readTimesSincePublish')).to.be.a('array');
-      expect(getField(articleData, 'readTimesSincePublish')).to.deep.equal([
-        [27180, 3], [27240, 3], [27300, 1], [27360, 2], [27420, 2],
-        [27480, 1], [27540, 7], [27660, 1], [27720, 6], [27780, 2],
-        [27840, 9], [27900, 7], [27960, 1], [28020, 3], [28080, 4],
-        [28200, 5], [28260, 12], [28320, 3], [28380, 4], [28440, 1],
-        [28500, 1], [28620, 1], [28740, 1], [28860, 1], [28920, 5],
-        [28980, 3], [29100, 1], [29160, 1], [29220, 4], [29280, 3],
-        [29340, 2], [29400, 3], [29580, 2], [29640, 2], [29700, 1],
-        [29760, 4], [29820, 1], [29880, 3], [29940, 4], [30000, 7],
-        [30060, 1], [30120, 9], [30240, 6], [30300, 3], [30480, 2],
-        [30600, 7], [30660, 2], [30720, 2], [30780, 2], [30840, 2],
-        [30900, 6], [30960, 1], [31020, 2], [31080, 1], [31140, 4],
-        [31200, 5], [31260, 3], [31380, 3], [31620, 1], [31680, 2],
-        [31740, 2], [31800, 2], [31860, 5], [31920, 4], [31980, 1],
-        [32040, 9], [32100, 4], [32160, 3], [32220, 3], [32280, 7],
-        [32340, 4], [32400, 7], [32460, 14], [32520, 7], [32580, 5],
-        [32640, 2], [32700, 4], [32760, 1], [32820, 7], [32880, 2]
-      ]);
+      const data = getField(articleData, 'readTimesSincePublish');
+      expect(data).to.be.a('array');
+      expect(data).to.deep.equal(
+[[0,2],[60,13],[120,14],[180,6],[240,7],[300,8],[360,15],[420,7],[480,3],[540,0],[600,2],[660,13],[720,10],[780,14],[840,345],[900,313],[960,150],[1020,83],[1080,57],[1140,58],[1200,28],[1260,0],[1320,1],[1380,39],[1440,63],[1500,65],[1560,73],[1620,84],[1680,58],[1740,47],[1800,64],[1860,71],[1920,42],[1980,47],[2040,43],[2100,39],[2160,34],[2220,43],[2280,37],[2340,40],[2400,44],[2460,23],[2520,18],[2580,26],[2640,17],[2700,6],[2760,12],[2820,33],[2880,23],[2940,29],[3000,52],[3060,29],[3120,28],[3180,18],[3240,22],[3300,7],[3360,2],[3420,0],[3480,21],[3540,16],[3600,15],[3660,16],[3720,12],[3780,10],[3840,9],[3900,3],[3960,13],[4020,9],[4080,4],[4140,3],[4200,1]]
+      );
     });
 
     it('should parse channels correctly', function () {
-      expect(getField(articleData, 'channels')).to.be.a('array');
-      expect(getField(articleData, 'channels')).to.deep.equal([
-        ['ft.com', 26205],
-        ['Unknown', 5091],
-        ['FT app', 936],
-        ['next', 540],
-        ['Unknown', 1]
+      const data = getField(articleData, 'channels');
+      expect(data).to.be.a('array');
+      expect(data).to.deep.equal([
+        [
+          "FT app",
+          1306
+        ],
+        [
+          "ft.com",
+          1102
+        ],
+        [
+          "next",
+          149
+        ],
+        [
+          "Membership",
+          2
+        ]
       ]);
     });
 
     it('should parse referrerUrls correctly', function () {
-      expect(getField(articleData, 'referrerUrls')).to.be.a('array');
-      expect(getField(articleData, 'referrerUrls')).to.deep.equal([
-        ['Unknown', 5153],
-        ['http://www.bloombergview.com/articles/2015-09-29/ritholtz-s-reads-seven-reasons-vw-may-be-worse-than-enron', 2674],
-        ['http://blogs.elconfidencial.com/mercados/valor-anadido/2015-09-29/volkswagen-puede-desaparecer-su-fraude-es-aun-peor-que-el-de-enron_1040790/', 1584],
-        ['http://www.ritholtz.com/blog/2015/09/10-tuesday-am-reads-179/', 565],
-        ['http://lnkd.in', 524],
-        ['http://www.ft.com/home/uk', 463],
-        ['http://www.theautomaticearth.com/2015/09/debt-rattle-september-28-2015/', 410],
-        ['http://www.svd.se/darfor-ar-volkswagen-skandalen-varre-an-enron', 375],
-        ['http://www.ritholtz.com/blog/', 338],
-        ['http://www.businessinsider.com/volkswagens-scandal-is-worse-than-enron-and-reports-say-the-company-was-warned-about-cheat-devices-2015-9', 291]
+      const data = getField(articleData, 'referrerUrls');
+      expect(data).to.be.a('array');
+      expect(data).to.deep.equal([
+        [
+          "Unknown",
+          1296
+        ],
+        [
+          "http://www.sasapost.com/translation/britains-bombing-against-isis-5-questions/",
+          3
+        ],
+        [
+          "http://www.financearch.com/",
+          2
+        ],
+        [
+          "http://172.16.109.1/cgi-bin/wms.cgi?fn=rl&sid=46063616364626464646f42636068666f48626969696969696f79696f79696f79696f783528353f7c30383d3021363520322f75292f3f7f49686f44676666616962696768646869676&info=946ff27f766501352990d0ce3b11076d27a036291fc4f2ee5f887bd404b5a11f616989da6ee31910&to=&cc=&bcc=&subject=&body=&version=40400&ajax=true&type=",
+          1
+        ],
+        [
+          "http://news.google.com/",
+          1
+        ],
+        [
+          "http://view.ed4.net/v/EB8122/I901EV/WIETS1/EWD8OQ/?ftcamp=crm/email/2015124/nbe/WorldNews/product",
+          1
+        ],
+        [
+          "http://www.financearch.com/category/stock-market/",
+          1
+        ],
+        [
+          "http://www.financearch.com/investing-in-government-debt-where-others-fear-to-tread/",
+          1
+        ],
+        [
+          "http://www.financearch.com/sitemap/",
+          1
+        ],
+        [
+          "http://www.michelbrouwers.com/rssfeeds/",
+          1
+        ]
       ]);
     });
 
     it('should parse nextInternalUrl correctly', function () {
-      expect(getField(articleData, 'nextInternalUrl')).to.be.a('array');
-      expect(getField(articleData, 'nextInternalUrl')).to.deep.equal([
-        ['Unknown', 73],
-        ['http://www.ft.com/cms/s/0/0049a468-4be5-11e5-b558-8a9722977189.html', 4],
-        ['http://www.ft.com/cms/s/0049a468-4be5-11e5-b558-8a9722977189,Authorised=false.html?siteedition=uk&_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F0049a468-4be5-11e5-b558-8a9722977189.html%3Fsiteedition%3Duk&_i_referer=http%3A%2F%2Fwww.google.co.uk%2Furl%3Fsa%3Dt%26rct%3Dj%26q%3D%26esrc%3Ds%26frm%3D1%26source%3Dweb%26cd%3D4%26ved%3D0CDkQFjADahUKEwitxcmxiLDIAhWJqx4KHcJmByA%26url%3Dhttp%253A%252F%252Fwww.ft.com%252Fcms%252Fs%252F0%252F0049a468-4be5-11e5-b558-8a9722977189.html%26usg%3DAFQjCNG31f1iiplUDLMQ8LxTuqbNA4aKow%26bvm%3Dbv.104615367%2Cd.dmo&classification=conditional_standard&iab=barrier-app#axzz3nsDhmdf7', 2],
-        ['http://www.ft.com/intl/cms/s/6da817bc-6d12-11e5-8171-ba1968cf791a,Authorised=false.html?ftcamp=published_links%2Frss%2Fcompanies%2Ffeed%2F%2Fproduct&_i_location=http%3A%2F%2Fwww.ft.com%2Fintl%2Fcms%2Fs%2F0%2F6da817bc-6d12-11e5-8171-ba1968cf791a.html%3Fftcamp%3Dpublished_links%252Frss%252Fcompanies%252Ffeed%252F%252Fproduct&_i_referer=&classification=conditional_standard&iab=barrier-app', 2],
-        ['https://next.ft.com/content/f7cd3f4c-6472-11e5-9846-de406ccb37f2', 2],
-        ['http://app.ft.com/cms/s/170fa5f2-708a-11e5-9b9e-690fdae72044.html?sectionid=companies', 1],
-        ['http://app.ft.com/cms/s/c9545f9e-e522-11e4-bb4b-00144feab7de', 1],
-        ['http://www.ft.com/cms/s/0/22d8cf50-6129-11e5-a28b-50226830d644.html', 1],
-        ['http://www.ft.com/cms/s/0/72c34344-592b-11e4-a722-00144feab7de.html', 1],
-        ['http://www.ft.com/cms/s/0/a4ef85fa-5540-11e5-b029-b9d50a74fd14.html', 1]
+      const data = getField(articleData, 'nextInternalUrl');
+      expect(data).to.be.a('array');
+      expect(data).to.deep.equal([
+        [
+          "Unknown",
+          924
+        ],
+        [
+          "http://app.ft.com/index_page/home",
+          153
+        ],
+        [
+          "http://www.ft.com/home/us",
+          119
+        ],
+        [
+          "http://www.ft.com/home/uk",
+          80
+        ],
+        [
+          "http://app.ft.com/cms/s/53e21070-9987-11e5-9228-87e603d47bdc.html?sectionid=world",
+          77
+        ],
+        [
+          "http://app.ft.com/#index_page/home",
+          74
+        ],
+        [
+          "http://app.ft.com/index_page/world",
+          60
+        ],
+        [
+          "http://app.ft.com/cms/s/a388cbb4-9a5e-11e5-987b-d6cdef1b205c.html?sectionid=world",
+          44
+        ],
+        [
+          "http://app.ft.com/cms/s/ba6a3142-9a86-11e5-be4f-0abd1978acaa.html?sectionid=home",
+          40
+        ],
+        [
+          "http://app.ft.com/cms/s/6c154e58-99a7-11e5-9228-87e603d47bdc.html?sectionid=home",
+          33
+        ]
       ]);
     });
 
     it('should parse internalReferrerUrls correctly', function () {
-      expect(getField(articleData, 'internalReferrerUrls')).to.be.a('array');
-      expect(getField(articleData, 'internalReferrerUrls')).to.deep.equal([
-        ['Unknown', 30399],
-        ['http://www.ft.com/home/uk', 3840],
-        ['http://www.ft.com/home/us', 3574],
-        ['http://www.ft.com/home/europe', 2170],
-        ['http://www.ft.com/home/asia', 1190],
-        ['http://www.ft.com/intl/vw-emissions-scandal', 618],
-        ['http://www.ft.com/vw-emissions-scandal', 292],
-        ['http://www.ft.com/intl/cms/s/0/8f2eb94c-62ac-11e5-a28b-50226830d644.html', 202],
-        ['http://www.ft.com/cms/s/0/8f2eb94c-62ac-11e5-a28b-50226830d644.html', 193],
-        ['http://www.ft.com/cms/s/0/2eea3106-65c2-11e5-9846-de406ccb37f2.html', 183]
+      const data = getField(articleData, 'internalReferrerUrls');
+      expect(data).to.be.a('array');
+      expect(data).to.deep.equal([
+        [
+          "Unknown",
+          330
+        ],
+        [
+          "http://www.ft.com/home/us",
+          182
+        ],
+        [
+          "http://www.ft.com/home/uk",
+          113
+        ],
+        [
+          "https://next.ft.com/content/6c154e58-99a7-11e5-9228-87e603d47bdc",
+          39
+        ],
+        [
+          "http://www.ft.com/home/europe",
+          31
+        ],
+        [
+          "http://www.ft.com/intl/world/mideast",
+          24
+        ],
+        [
+          "https://next.ft.com/stream/sectionsId/MQ==-U2VjdGlvbnM=",
+          21
+        ],
+        [
+          "http://www.ft.com/home/asia",
+          16
+        ],
+        [
+          "https://next.ft.com/international",
+          7
+        ],
+        [
+          "http://www.ft.com/intl/world",
+          6
+        ]
       ]);
     });
 
     it('should parse isLastPage correctly', function () {
-      expect(getField(articleData, 'isLastPage')).to.be.a('array');
-      expect(getField(articleData, 'isLastPage')).to.deep.equal([
-        ['T', 3158],
-        ['F', 2568]
+      const data = getField(articleData, 'isLastPage');
+      expect(data).to.be.a('array');
+      expect(data).to.deep.equal([
+        [
+          "F",
+          1493
+        ],
+        [
+          "T",
+          1066
+        ]
       ]);
     });
   });
@@ -384,24 +481,23 @@ describe('universalDataFormatter', function() {
 
   /* Article Comparator Data Tests Start */
   describe('should parse articleComparatorData correctly', function() {
-    it('should parse comparator correctly', function() {
-      expect(getField(articleComparatorData, 'comparator')).to.be.a('string')
-      expect(getField(articleComparatorData, 'comparator')).to.equal('Regulation & Governance')
-    });
 
     it('should parse totalCommentsViewed', function () {
-      expect(getField(articleComparatorData, 'categoryAverageViewCount')).to.be.a('number')
-      expect(getField(articleComparatorData, 'categoryAverageViewCount')).to.deep.equal(172)
+      const data = getField(articleComparatorData, 'categoryAverageViewCount');
+      expect(data).to.be.a('number')
+      expect(data).to.deep.equal(4576119)
     });
 
     it('should parse totalCommentsViewed and divide by 2', function () {
-      expect(getField(articleComparatorData, 'categoryAverageViewCount', 2)).to.be.a('number')
-      expect(getField(articleComparatorData, 'categoryAverageViewCount', 2)).to.deep.equal(86)
+      const data = getField(articleComparatorData, 'categoryAverageViewCount', 2);
+      expect(data).to.be.a('number')
+      expect(data).to.deep.equal(2288060)
     });
 
     it('should parse totalCommentsViewed', function () {
-      expect(getField(articleComparatorData, 'categoryTotalViewCount')).to.be.a('number');
-      expect(getField(articleComparatorData, 'categoryTotalViewCount')).to.deep.equal(172);
+      const data = getField(articleComparatorData, 'categoryTotalViewCount');
+      expect(data).to.be.a('number');
+      expect(data).to.deep.equal(4576119);
     });
   });
   /* Article Comparator Data Tests End */
@@ -410,7 +506,7 @@ describe('universalDataFormatter', function() {
   describe('should parse articleComparatorEventData correctly', function() {
     it('should parse scrollDepth correctly', function() {
       expect(getField(comparatorEventData, 'scrollDepth')).to.be.a('number')
-      expect(getField(comparatorEventData, 'scrollDepth') % 1 != 0).to.equal(true)
+      expect(getField(comparatorEventData, 'scrollDepth') % 1 != 0).to.equal(false)
     });
 
     it('should parse totalLinksClicked', function() {
@@ -419,24 +515,26 @@ describe('universalDataFormatter', function() {
 
     it('should parse socialSharesTotal', function() {
       expect(getField(comparatorEventData, 'socialSharesTotal')).to.be.a('number')
-      expect(getField(comparatorEventData, 'socialSharesTotal')).to.equal(1)
+      expect(getField(comparatorEventData, 'socialSharesTotal')).to.equal(3467)
     });
 
     it('should parse socialSharesTypes', function() {
       expect(getField(comparatorEventData, 'socialSharesTypes')).to.be.a('array')
       expect(getField(comparatorEventData, 'socialSharesTypes')).to.deep.equal([
-        ["twitter", 1]
+        ["twitter", 2247],
+        ["facebook", 723],
+        ["linkedin", 497]
       ])
     });
 
     it('should parse totalCommentsPosted', function() {
       expect(getField(comparatorEventData, 'totalCommentsPosted')).to.be.a('number')
-      expect(getField(comparatorEventData, 'totalCommentsPosted')).to.equal(3)
+      expect(getField(comparatorEventData, 'totalCommentsPosted')).to.equal(2235)
     });
 
     it('should parse totalCommentsViewed', function() {
       expect(getField(comparatorEventData, 'totalCommentsViewed')).to.be.a('number')
-      expect(getField(comparatorEventData, 'totalCommentsViewed')).to.equal(1)
+      expect(getField(comparatorEventData, 'totalCommentsViewed')).to.equal(44935)
     });
   });
   /* Article Comparator Event Data Tests End */

@@ -16,7 +16,7 @@ export default function SectionMetadataAggregation(query) {
       },
       topic_count: {
         terms: {
-          field: "topics",
+          field: "topics_not_analyzed",
           size : 10
         }
       }

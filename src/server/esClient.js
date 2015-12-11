@@ -1,3 +1,4 @@
+/* eslint-env node */
 import elasticsearch from 'elasticsearch';
 import awsElasticSearchConnector from 'http-aws-es';
 import ArticleComparatorQuery from './esQueries/ArticleComparator';
@@ -12,7 +13,10 @@ import TopicMetadataComparatorQuery from './esQueries/TopicMetadataComparator';
 import ArticlesQuery from './esQueries/Articles';
 import ArticleEventsQuery from './esQueries/ArticleEvents';
 import ArticleEventsComparatorQuery from './esQueries/ArticleEventsComparator';
+
 import ArticleRealtimeQuery from './esQueries/ArticleRealTime.js';
+import ArticleRealtimeAllQuery from './esQueries/ArticleRealTimeAll';
+
 import SearchQuery from './esQueries/Search';
 import assert from 'assert';
 import LoggerFactory from './logger';
@@ -44,14 +48,12 @@ export function getIndicies(h = 'health,index,docs.count,store.size,tm'){
 }
 
 export function runArticleQuery(queryData) {
-  let queryError;
-  if (queryError = queryDataError('articles', queryData)){
+  let queryError = queryDataError('articles', queryData);
+  if (queryError){
     return Promise.reject(queryError);
   }
 
   let metaData;
-  let pageViews;
-  let query;
   return retrieveMetaData(queryData).then((data) => {
     metaData = data;
     queryData.publishDate = moment(metaData.initial_publish_date).toISOString();
@@ -59,55 +61,29 @@ export function runArticleQuery(queryData) {
       queryData.dateFrom = queryData.publishDate
       queryData.dateTo = moment().toISOString();
     }
-    query = queryData;
     return retrieveArticleData(queryData)
-  }).then((pageViewData) => {
-    pageViews = pageViewData;
-    return retrieveEventsData(query);
-  }).then((eventsData) => {
-    return [pageViews, metaData, eventsData]
-  });
-}
-
-export function runArticleComparatorQuery(queryData) {
-  let queryError;
-
-  if (queryError = queryDataError('comparator', queryData)){
-    return Promise.reject(queryError);
-  }
-  let comparatorData;
-  return retrieveArticleData(queryData).then(function(comparator){
-    comparatorData = comparator;
-    return retrieveEventsData(queryData);
-  }).then(function(eventsComparatorData){
-    return [comparatorData, eventsComparatorData];
+  }).then((articleData) => {
+    return [metaData].concat(articleData);
   });
 }
 
 export function runSectionQuery(queryData) {
-  let queryError;
-  if (queryError = queryDataError('sections', queryData)){
+  let queryError = queryDataError('sections', queryData);
+  if (queryError){
     return Promise.reject(queryError);
   }
 
-  let metaData
   if (!queryData.dateFrom || !queryData.dateTo) {
     queryData.dateFrom = moment().subtract(29,'days').toISOString();
     queryData.dateTo = moment().toISOString();
   }
-  return retrieveSectionMetaData(queryData)
-    .then((data) => {
-      metaData = data;
-      return retrieveSectionData(queryData)
-    })
-    .then((sectionData) => {
-      return [metaData, sectionData]
-    });
+  return retrieveSectionData(queryData)
+    .then((sectionData) => { return sectionData });
 }
 
 export function runTopicQuery(queryData) {
-  let queryError;
-  if (queryError = queryDataError('topics', queryData)){
+  let queryError = queryDataError('topics', queryData);
+  if (queryError){
     return Promise.reject(queryError);
   }
 
@@ -116,20 +92,13 @@ export function runTopicQuery(queryData) {
     queryData.dateTo = moment().toISOString();
   }
 
-  let metaData;
-  return retrieveTopicMetaData(queryData)
-    .then((data) => {
-      metaData = data;
-      return retrieveTopicData(queryData)
-    })
-    .then((topicData) => {
-      return [metaData, topicData]
-    });
+  return retrieveTopicData(queryData)
+    .then((topicData) => { return topicData });
 }
 
 export function runArticleRealtimeQuery(queryData) {
-  let queryError;
-  if (queryError = queryDataError('articles', queryData)) {
+  let queryError = queryDataError('articles', queryData);
+  if (queryError) {
     return Promise.reject(queryError);
   }
 
@@ -138,15 +107,20 @@ export function runArticleRealtimeQuery(queryData) {
     queryData.dateTo = moment().toISOString();
   }
 
-  return retrieveRealtimeData(queryData)
+  let articleData;
+  return retrieveRealtimeArticleData(queryData)
     .then((data) => {
-      return [data];
-    });
+      articleData = data;
+      return retrieveRealtimeAllData(queryData)
+    }).then((data) => {
+      let otherArticles = data;
+      return [articleData, otherArticles]
+    });;
 }
 
 export function runSearchQuery(queryData) {
-  let queryError;
-  if (queryError = queryDataError('search', queryData)){
+  let queryError = queryDataError('search', queryData);
+  if (queryError){
     return Promise.reject(queryError);
   }
   return new Promise((resolve, reject) => {
@@ -167,44 +141,139 @@ export function runSearchQuery(queryData) {
 
 function retrieveArticleData(queryData){
   return new Promise((resolve, reject) => {
-    let queryObject = queryData.comparator ?
-      ArticleComparatorQuery(queryData) :
-      ArticlesQuery(queryData);
-    let request = {
+    const articlesQueryObject = ArticlesQuery(queryData);
+    const eventsQueryObject = ArticleEventsQuery(queryData);
+    const articlesComparatorQueryObject = ArticleComparatorQuery(queryData);
+    const eventsComparatorQueryObject = ArticleEventsComparatorQuery(queryData);
+    const articlesHeader = {
       index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
       ignore_unavailable: true,
-      search_type: 'count',
-      body: queryObject
+      search_type: 'count'
     };
-    client.search(request, (error, response) => {
+    const eventsHeader = {
+      index: calculateIndices(queryData, process.env.ES_EVENT_INDEX_ROOT),
+      ignore_unavailable: true,
+      search_type: 'count'
+    };
+
+
+    let request = {
+      body: [
+        articlesHeader,
+        articlesQueryObject,
+        eventsHeader,
+        eventsQueryObject,
+        articlesHeader,
+        articlesComparatorQueryObject,
+        eventsHeader,
+        eventsComparatorQueryObject
+      ]
+    };
+
+    client.msearch(request, (error, response) => {
       if (error) {
         return reject(error);
       }
-      response.comparator = queryData.comparator;
-      response.comparatorType = queryData.comparatorType;
-      return resolve(response);
+      return resolve(response.responses);
     });
   })
 }
 
+
 function retrieveSectionData(queryData){
   return new Promise((resolve, reject) => {
-    let queryObject = queryData.comparator ?
-      SectionComparatorQuery(queryData) :
-      SectionsQuery(queryData);
-    let request = {
+    let metadataQueryObject = SectionMetadataQuery(queryData);
+    let sectionQuery = SectionsQuery(queryData);
+
+    let sectionHeader = {
       index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
       ignore_unavailable: true,
-      search_type: 'count',
-      body: queryObject
+      search_type: 'count'
     };
-    client.search(request, (error, response) => {
+
+    let metadataHeader = {
+      index: process.env.ES_SEARCH_INDEX_ROOT,
+      ignore_unavailable: true,
+      search_type: 'count'
+    };
+
+    let request = {
+      body : [
+        metadataHeader,
+        metadataQueryObject,
+        sectionHeader,
+        sectionQuery
+      ]
+    }
+
+    if (queryData.comparator) {
+      let metadataComparatorQueryObject = SectionMetadataComparatorQuery(queryData);
+      let comparatorQueryObject = SectionComparatorQuery(queryData);
+
+      request.body = request.body.concat([
+        metadataHeader,
+        metadataComparatorQueryObject,
+        sectionHeader,
+        comparatorQueryObject
+      ]);
+    }
+
+
+    client.msearch(request, (error, response) => {
       if (error) {
         return reject(error);
       }
       response.comparator = queryData.comparator;
       response.comparatorType = queryData.comparatorType;
-      return resolve(response);
+      return resolve(response.responses);
+    });
+  })
+}
+
+function retrieveTopicData(queryData){
+  return new Promise((resolve, reject) => {
+    let topicQueryObject = TopicQuery(queryData);
+    let topicMetadataQueryObject = TopicMetadataQuery(queryData);
+
+    let topicHeader = {
+      index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
+      ignore_unavailable: true,
+      search_type: 'count'
+    };
+
+    let topicMetadataHeader = {
+      index: process.env.ES_SEARCH_INDEX_ROOT,
+      ignore_unavailable: true,
+      search_type: 'count'
+    };
+    let request = {
+      body: [
+        topicMetadataHeader,
+        topicMetadataQueryObject,
+        topicHeader,
+        topicQueryObject
+      ]
+    }
+
+    if (queryData.comparator) {
+      let topicMetadataComparatorQueryObject = TopicMetadataComparatorQuery(queryData);
+      let topicComparatorQueryObject = TopicComparatorQuery(queryData);
+
+      request.body = request.body.concat([
+        topicMetadataHeader,
+        topicMetadataComparatorQueryObject,
+        topicHeader,
+        topicComparatorQueryObject
+      ])
+    }
+
+    client.msearch(request, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      response.comparator = queryData.comparator;
+      response.comparatorType = queryData.comparatorType;
+      return resolve(response.responses);
     });
   })
 }
@@ -242,94 +311,29 @@ function retrieveMetaData(queryData){
   })
 }
 
-function retrieveSectionMetaData(queryData){
-  return new Promise((resolve, reject) => {
-    let queryObject = queryData.comparator ?
-      SectionMetadataComparatorQuery(queryData) :
-      SectionMetadataQuery(queryData);
-    let request = {
-      index: process.env.ES_SEARCH_INDEX_ROOT,
-      ignore_unavailable: true,
-      search_type: 'count',
-      body: queryObject
-    };
-    client.search(request, (error, response) => {
-      if (error) {
-        return reject(error);
-      }
-      return resolve(response);
-    });
-  })
-}
 
-function retrieveTopicData(queryData){
-  return new Promise((resolve, reject) => {
-    let queryObject = queryData.comparator ?
-      TopicComparatorQuery(queryData) :
-      TopicQuery(queryData);
-    let request = {
-      index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
-      ignore_unavailable: true,
-      search_type: 'count',
-      body: queryObject
-    };
-    client.search(request, (error, response) => {
-      if (error) {
-        return reject(error);
-      }
-      response.comparator = queryData.comparator;
-      response.comparatorType = queryData.comparatorType;
-      return resolve(response);
-    });
-  })
-}
 
-function retrieveTopicMetaData(queryData){
-  return new Promise((resolve, reject) => {
-    let queryObject = queryData.comparator ?
-      TopicMetadataComparatorQuery(queryData) :
-      TopicMetadataQuery(queryData);
-    let request = {
-      index: process.env.ES_SEARCH_INDEX_ROOT,
-      ignore_unavailable: true,
-      search_type: 'count',
-      body: queryObject
-    };
-    client.search(request, (error, response) => {
-      if (error) {
-        return reject(error);
-      }
-      return resolve(response);
-    });
-  })
-}
-
-function retrieveEventsData(queryData){
-  return new Promise((resolve, reject) => {
-    let queryObject = queryData.comparator ?
-      ArticleEventsComparatorQuery(queryData) :
-      ArticleEventsQuery(queryData);
-
-    let request = {
-      index: calculateIndices(queryData, process.env.ES_EVENT_INDEX_ROOT),
-      ignore_unavailable: true,
-      search_type: 'count',
-      body: queryObject
-    };
-    client.search(request, (error, response) => {
-      if (error) {
-        return reject(error);
-      }
-      response.comparator = queryData.comparator;
-      response.comparatorType = queryData.comparatorType;
-      return resolve(response);
-    });
-  })
-}
-
-function retrieveRealtimeData(queryData) {
+function retrieveRealtimeArticleData(queryData) {
   return new Promise((resolve, reject) => {
     let queryObject = ArticleRealtimeQuery(queryData);
+    let request = {
+      index: calculateRealtimeIndices(queryData, process.env.ES_REALTIME_INDEX_ROOT),
+      ignore_unavailable: true,
+      body: queryObject
+    }
+    client.search(request, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+
+      return resolve(response);
+    })
+  })
+}
+
+function retrieveRealtimeAllData(queryData) {
+  return new Promise((resolve, reject) => {
+    let queryObject = ArticleRealtimeAllQuery(queryData);
     let request = {
       index: calculateRealtimeIndices(queryData, process.env.ES_REALTIME_INDEX_ROOT),
       ignore_unavailable: true,

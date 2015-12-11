@@ -1,8 +1,6 @@
 import React from 'react';
 import DateRangePicker from '../lib/react-daterangepicker';
 import moment from 'moment';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
 import Button from 'react-bootstrap/lib/Button';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
@@ -47,7 +45,7 @@ export default class DateRange extends React.Component {
         'Yesterday': [moment().subtract(1, 'days'), moment()],
         'Week To Date': [moment().day(0), moment()],
         'Last 7 days': [moment().subtract(6, 'days'), moment()],
-        'Last 30 days': [moment().subtract(29, 'days'), moment()],
+        'Last 30 days': [moment().subtract(29, 'days'), moment()]
       }
     }
   }

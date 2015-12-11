@@ -2,54 +2,67 @@ import alt from '../alt';
 import assign from 'object-assign';
 import Raven from 'raven-js';
 
-import ArticleActions from '../actions/ArticleActions';
-import SectionActions from '../actions/SectionActions';
-import TopicActions from '../actions/TopicActions';
-import ArticleQueryStore from '../stores/ArticleQueryStore.js';
-import SectionQueryStore from '../stores/SectionQueryStore.js';
-import TopicQueryStore from '../stores/TopicQueryStore.js';
+import AnalyticsActions from '../actions/AnalyticsActions';
+import AnalyticsStore from '../stores/AnalyticsStore';
+import FilterActions from '../actions/FilterActions';
 
 class FilterStore {
   constructor() {
-    this.devices = [];
-    this.regions = [];
-    this.cohort = [];
-    this.referrers = [];
-    this.query = {
-      filters : {}
+    this.state = {
+      devices: [],
+      regions: [],
+      cohort: [],
+      referrers: [],
+      query: {
+        filters : {}
+      }
     }
+    this.bindActions(FilterActions);
     this.bindListeners({
-      handleTopicUpdateData : TopicActions.UPDATE_DATA,
-      handleOverviewUpdateData : SectionActions.UPDATE_DATA,
-      handleUpdateData : ArticleActions.UPDATE_DATA
+      handleUpdateData : AnalyticsActions.UPDATE_DATA
     });
-    ArticleQueryStore.listen(this.handleQueryChange.bind(this));
-    SectionQueryStore.listen(this.handleQueryChange.bind(this));
-    TopicQueryStore.listen(this.handleQueryChange.bind(this));
-  }
-
-  handleOverviewUpdateData(newData) {
-    return this.handleUpdateData(newData)
-  }
-
-  handleTopicUpdateData(newData) {
-    return this.handleUpdateData(newData)
   }
 
   handleUpdateData(newData) {
     // do not update if the filter is set
-    if (Object.keys(this.query.filters).length) {
+    if (Object.keys(this.state.query.filters).length) {
       return;
     }
 
-    this.devices = getKeys(newData.devices);
-    this.regions = getKeys(newData.regions);
-    this.cohort = getKeys(newData.userCohort);
-    this.referrers = getKeys(newData.referrerTypes);
+    let data = newData.data;
+
+    let newState = assign({}, this.state, {
+      devices: getKeys(data.devices),
+      regions: getKeys(data.regions),
+      cohort: getKeys(data.userCohort),
+      referrers: getKeys(data.referrerTypes)
+    })
+
+    this.setState(newState);
   }
 
-  handleQueryChange(query) {
-    this.query = query.query;
+  selectFilter(filter) {
+    let query = this.state.query;
+    let key;
+    switch (filter.key){
+      case 'Device': key = 'device_type'; break;
+      case 'Region': key = 'geo_region'; break;
+      case 'UserCohort': key = 'user_cohort'; break;
+      case 'Referrers': key = 'referrer_type'; break;
+    }
+    if (!filter.value.length) {
+      delete query.filters[key];
+    }  else {
+      query.filters[key] = filter.value;
+    }
+
+    this.setState({query : query});
+
+    // XXX altough ugly, we need to do this to
+    // dispatch on the next tick.
+    setTimeout(() => {
+      AnalyticsActions.updateQuery(query);
+    }, 1);
   }
 
 }

@@ -113,7 +113,7 @@ export default function SectionAggregation(query) {
     },
     "topic_views": {
       "terms": {
-        "field": "topics",
+        "field": "topics_not_analyzed",
         size: 10
       }
     },

@@ -9,26 +9,19 @@ import FeatureFlag from '../utils/featureFlag';
 import Header from '../components/Header';
 import Messaging from '../components/Messaging';
 import SectionModifier from '../components/SectionModifier';
-import SingleMetric from '../components/SingleMetric';
 import BarChart from '../components/BarChart.js';
+import Table from '../components/Table.js';
 import DualScaleLineChart from "../components/DualScaleLineChart";
 import SectionWho from "../components/SectionWho";
 import SectionWhere from "../components/SectionWhere";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
 
-import SectionActions from '../actions/SectionActions';
-import SectionStore from '../stores/SectionStore';
-import SectionQueryActions from '../actions/SectionQueryActions';
-import SectionQueryStore from '../stores/SectionQueryStore';
+import AnalyticsActions from '../actions/AnalyticsActions';
+import AnalyticsStore from '../stores/AnalyticsStore';
 
-import ComparatorActions from '../actions/ComparatorActions';
-import ComparatorStore from '../stores/ComparatorStore';
-import ComparatorQueryActions from '../actions/ComparatorQueryActions';
-import ComparatorQueryStore from '../stores/ComparatorQueryStore';
 import ChunkWrapper from "../components/ChunkWrapper";
 
-import moment from 'moment'
-
+import _ from 'underscore'
 
 function decode(uri){
   return uri ? decodeURI(uri) : null
@@ -38,89 +31,38 @@ class SectionView extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
-    this.state.section = decode(this.props.params.section)
-    this.state.comparator = decode(this.props.params.comparator)
-    this.state.comparatorType = decode(this.props.params.comparatorType)
   }
 
   static getStores() {
-    return [SectionStore, SectionQueryStore, ComparatorStore, ComparatorQueryStore];
+    return [AnalyticsStore];
   }
 
   static getPropsFromStores() {
-    let sectionState = SectionStore.getState();
-    let sectionQueryState = SectionQueryStore.getState();
-    let comparatorState = ComparatorStore.getState();
-    let comparatorQueryState = ComparatorQueryStore.getState();
-
-    return {
-      data: sectionState.data,
-      query: sectionQueryState.query,
-      sectionLoading : sectionState.loading,
-      comparatorLoading : comparatorState.loading,
-      comparatorQuery: comparatorQueryState.query,
-      comparatorData: comparatorState.data || {}
-    };
+    return AnalyticsStore.getState();
   }
 
   componentWillMount() {
-    ComparatorQueryActions.setCategory('sections');
-
-    let hasSectionChanged = this.state.section !== SectionQueryStore.getState().query.section;
-    let hasComparatorChanged = this.state.comparator !== ComparatorQueryStore.getState().query.comparator;
-    if (hasSectionChanged){
-      SectionQueryActions.setSection(this.state.section);
-      ComparatorQueryActions.setSection(this.state.section);
-    }
-    if (this.state.comparator && hasComparatorChanged){
-      ComparatorQueryActions.selectComparator(this.state);
-    }
+    AnalyticsActions.updateQuery({
+      section: decode(this.props.params.section),
+      type: 'section',
+      comparator: decode(this.props.params.comparator),
+      comparatorType: decode(this.props.params.comparatorType)
+    });
   }
 
   componentWillUnmount(){
-    SectionActions.unlistenToQuery();
-    SectionActions.destroy();
-    SectionQueryActions.destroy();
-    ComparatorActions.unlistenToQuery();
-    ComparatorActions.destroy();
-    ComparatorQueryActions.destroy();
-    this.state = {};
+    AnalyticsActions.destroy();
   }
 
   componentDidMount() {
-    //let analytics = require('../utils/analytics');
-    //analytics.sendGAEvent('pageview');
-    //analytics.trackScroll();
+    let analytics = require('../utils/analytics');
+    analytics.sendGAEvent('pageview');
+    analytics.trackScroll();
+  }
 
-    SectionActions.listenToQuery();
-    ComparatorActions.listenToQuery();
-
-    var comparatorDateRange = {
-      from: this.props.query.dateFrom,
-      to: this.props.query.dateTo
-    }
-
-    const isGlobalFTComparator = this.props.comparatorQuery.comparatorType === 'global';
-
-    if (!isGlobalFTComparator) {
-      // Update the comparator query dates
-      let fromDate = moment(this.props.query.dateFrom);
-      let toDate = moment(this.props.query.dateTo);
-      let span = toDate - fromDate;
-      fromDate.subtract(span, 'milliseconds');
-      toDate.subtract(span, 'milliseconds');
-      comparatorDateRange = {
-        from: fromDate.format('YYYY-MM-DD'),
-        to: toDate.format('YYYY-MM-DD')
-      };
-    }
-
-    ComparatorQueryActions.selectDateRange(comparatorDateRange);
-
-    if (!this.props.data) {
-      SectionActions.loadData(this.props);
-      ComparatorActions.loadData(this.props);
+  componentWillUpdate(nextProps) {
+    if (!_.isEqual(nextProps.params, this.props.params)) {
+      AnalyticsActions.updateQuery.defer(nextProps.params);
     }
   }
 
@@ -130,7 +72,7 @@ class SectionView extends React.Component {
     } else if (!this.props.data) {
       return (<Messaging category="Section" type="LOADING" />);
     }
-    let updating = (this.props.sectionLoading || this.props.comparatorLoading)
+    let updating = (this.props.loading)
       ? <Messaging category="Section" type="UPDATING" />
       : <Messaging category="Section" type="PLACEHOLDER" />
 
@@ -142,8 +84,14 @@ class SectionView extends React.Component {
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
     let [publishData, publishID, publishKeys] =  dataFormatter.getMetric('publishTimes', 'Articles published');
     let [readData, readID, readKeys] =  dataFormatter.getMetric('readTimes', 'Articles read');
-    let [topicViewData, topicViewId, topicViewKeys] = dataFormatter.getPCTMetric('topicViews', 'Views');
-    let [topicCountData, topicCountId, topicCountKeys] = dataFormatter.getPCTMetric('topicCount', 'Count');
+
+    let [topicViewData, topicViewId, topicViewKeys] = dataFormatter.getMetric('topicViews', 'Views');
+    let [topicCountData, topicCountId, topicCountKeys] = dataFormatter.getMetric('topicCount', 'Count');
+    let comparatorSelected = Object.keys(comparatorData).length > 0;
+
+    let topicCountHeaders = comparatorSelected ? ['Topic', `Articles tagged in (${this.props.params.section})`, `Articles tagged in (${this.props.params.comparator} comparator)`] : ['Topic', 'Articles tagged in'];
+    let topicViewHeaders = comparatorSelected ? ['Topic', `Views (${this.props.params.section})`, `Views (${this.props.params.comparator} comparator)`] : ['Topic', 'Views'];
+    let variableTableWidth = comparatorSelected ? 12 : 6;
 
     let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrerTypes', 'Views');
     let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views');
@@ -177,7 +125,7 @@ class SectionView extends React.Component {
           <SectionModifier
             data={data}
             comparatorData={comparatorData}
-            comparatorQuery={this.props.comparatorQuery}
+            comparatorQuery={this.props.query}
             renderDevice={true}
             renderRegion={true}
             renderReferrers={true}
@@ -230,27 +178,19 @@ class SectionView extends React.Component {
               </Col>
             </Row>
             <Row>
-              <Col xs={12} md={6}>
-                <h4>Total number of articles per topic</h4>
-                <BarChart
-                  data={topicCountData}
-                  keys={topicCountKeys}
-                  category={topicCountId}
-                  yLabel="Users"
-                  xLabel=""
-                  usePercentages={true}
+              <Col xs={12} md={variableTableWidth}>
+                <h4>Topics ranked by most tagged</h4>
+                <Table
+                  headers={topicCountHeaders}
+                  rows={topicCountData}
                   />
               </Col>
-              <Col xs={12} md={6}>
-                <h4>Total number of views per topic</h4>
-                <BarChart
-                  data={topicViewData}
-                  keys={topicViewKeys}
-                  category={topicViewId}
-                  yLabel="Users"
-                  xLabel=""
-                  usePercentages={true}
-                />
+              <Col xs={12} md={variableTableWidth}>
+                <h4>Topics ranked by most viewed</h4>
+                <Table
+                  headers={topicViewHeaders}
+                  rows={topicViewData}
+                  />
               </Col>
             </Row>
           </ChunkWrapper>

@@ -9,10 +9,7 @@ import SearchResult from './SearchResult.js';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 
-import ArticleActions from '../actions/ArticleActions';
-import ComparatorActions from '../actions/ComparatorActions';
-import ArticleQueryActions from '../actions/ArticleQueryActions';
-import ComparatorQueryActions from '../actions/ComparatorQueryActions';
+import AnalyticsActions from '../actions/AnalyticsActions';
 
 import _ from 'underscore';
 import moment from 'moment';
@@ -66,16 +63,6 @@ export default class Search extends React.Component {
   }
 
   _handleClick(){
-    ArticleActions.listenToQuery();
-    ArticleQueryActions.clickedOnArticle({
-      uuid: this.uuid,
-      publishDate: this.publishDate
-    })
-    ComparatorActions.listenToQuery();
-    ComparatorQueryActions.clickedOnArticle({
-      uuid: this.uuid,
-      publishDate: this.publishDate
-    })
   }
 
   render() {

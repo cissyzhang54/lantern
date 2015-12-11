@@ -71,15 +71,10 @@ class Filters extends React.Component {
         }
       ]
     };
-
   }
 
   render() {
     let filterDropDowns = this.props.filters.map((f, i) => {
-
-      if (!this.props['render' + f.name]){
-        return {}
-      }
       return (
         <Col xs={6} sm={3} key={i}>
           <Filter

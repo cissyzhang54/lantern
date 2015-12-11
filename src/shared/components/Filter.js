@@ -47,3 +47,8 @@ Filter.propTypes = {
   options: React.PropTypes.array.isRequired,
   onChange: React.PropTypes.func
 };
+
+Filter.defaultProps = {
+  options : ['Hello?', 'Its Me'],
+  name : 'Place Holder'
+}
