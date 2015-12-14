@@ -58,7 +58,7 @@ export default class SectionReferrers extends React.Component {
         xLabel="Referrer"
         usePercentages={true}
       />
-      </Col> : {};
+      </Col> : [];
 
     return (<ChunkWrapper component='sectionReferrers'>
 

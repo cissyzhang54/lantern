@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
@@ -26,7 +27,7 @@ export default class BarChart extends React.Component {
   }
 
   drawChart() {
-    let node = React.findDOMNode(this.refs.chartContainer);
+    let node = this.refs.chartContainer;
     let json = this.props.data;
     let keys = this.props.keys;
     let yLabel = this.props.yLabel;

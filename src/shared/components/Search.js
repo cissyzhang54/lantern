@@ -94,10 +94,10 @@ export default class Search extends React.Component {
 
     let showMore = (
       <div style={{textAlign: 'center', width: '100%'}}>
-      <Button onClick={this.props.getMoreResults}>
-        Show more results
-      </Button>
-    </div>
+        <Button onClick={this.props.getMoreResults}>
+          Show more results
+        </Button>
+      </div>
     );
 
     const blockLinkStyle = {

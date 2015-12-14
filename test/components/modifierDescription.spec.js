@@ -1,12 +1,10 @@
 import {expect} from 'chai';
-import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import {createComponent} from '../createComponent';
 import ModifierDescription from '../../src/shared/components/ModifierDescription';
 import Text from '../../src/shared/components/Text';
 
 import moment from 'moment'
-
-const TestUtils = React.addons.TestUtils;
 
 describe ('ModifierDescription component', function() {
 

@@ -1,5 +1,3 @@
 export default {
-  article : {
-    text : 'My title'
-  }
+  'handlers.article.text': 'My title'
 }

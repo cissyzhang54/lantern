@@ -1,9 +1,7 @@
 import {expect} from 'chai';
-import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import Header from '../../src/shared/components/Header';
 import {createComponent} from '../createComponent';
-
-const TestUtils = React.addons.TestUtils;
 
 describe ('Header component', function() {
 
@@ -40,7 +38,7 @@ describe ('Header component', function() {
     expect(text[0].props.children.type).to.equal(undefined);
     expect(text[0].props.children).to.equal('My component state test title');
 
-    expect(text[1].type).to.be.undefined;
-    expect(text[2].type).to.be.undefined;
+    expect(text[1]).to.be.an('array');
+    expect(text[2]).to.be.an('array');
   });
 });

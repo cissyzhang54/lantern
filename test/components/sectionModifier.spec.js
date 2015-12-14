@@ -1,13 +1,11 @@
 import {expect} from 'chai';
-import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import {createComponent} from '../createComponent';
 import SectionModifier from '../../src/shared/components/SectionModifier';
 import Tags from '../../src/shared/components/Tags';
 import Filters from '../../src/shared/components/Filters';
 import DateRange from '../../src/shared/components/DateRange';
 import ModifierDescription from '../../src/shared/components/ModifierDescription';
-
-const TestUtils = React.addons.TestUtils;
 
 describe ('Modifier component', function() {
   let modifier;

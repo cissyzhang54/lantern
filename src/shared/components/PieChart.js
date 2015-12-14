@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
@@ -17,7 +18,7 @@ export default class PieChart extends React.Component {
   }
 
   drawChart() {
-    let node = React.findDOMNode(this.refs.chartContainer);
+    let node = this.refs.chartContainer;
 
     if(this.chart) {
       this.chart.load({data: {
@@ -71,7 +72,7 @@ export default class PieChart extends React.Component {
   }
 
   render() {
-    let title = this.props.title ? <h4>{this.props.title}</h4> : {}
+    let title = this.props.title ? <h4>{this.props.title}</h4> : [];
     return (
       <div data-component='pieChart'>
         <div ref='chartContainer' id="chartContainer"></div>

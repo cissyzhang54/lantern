@@ -1,12 +1,10 @@
 import {expect} from 'chai';
-import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
 import {createAltWrappedComponent} from '../createComponent';
 import Filters from '../../src/shared/components/Filters';
 import Filter from '../../src/shared/components/Filter';
 import FilterStore from '../../src/shared/stores/FilterStore';
-
-let TestUtils = React.addons.TestUtils;
 
 describe ('Filters component', function() {
   let stub;

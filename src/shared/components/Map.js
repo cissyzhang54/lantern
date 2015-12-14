@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
@@ -18,7 +19,7 @@ export default class DataMap extends React.Component {
   }
 
   drawMap() {
-    let node = React.findDOMNode(this.refs.mapContainer);
+    let node = this.refs.mapContainer;
     let dataset = {};
 
     const domain = d3.extent(this.props.data, d => d[1]);
@@ -69,7 +70,7 @@ export default class DataMap extends React.Component {
   }
 
   componentDidUpdate() {
-    let node = React.findDOMNode(this.refs.mapContainer);
+    let node = this.refs.mapContainer;
     node.innerHTML = '';
     window.removeEventListener('resize', this.resizeHandler);
     this.drawMap();

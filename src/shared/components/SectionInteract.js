@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import SingleMetric from "./SingleMetric";
@@ -55,7 +55,7 @@ function renderMetric (metricName, metric, comparatorName, comparatorMetric) {
 
   let component = FeatureFlag.check(`article:${metricName}`)
     ? <SingleMetric {...componentConfig} />
-    : {}
+    : [];
   return component
 }
 

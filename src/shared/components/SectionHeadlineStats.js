@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import SingleMetric from "./SingleMetric";
@@ -14,7 +14,7 @@ function getMetrics (config, data, comparatorData) {
     let componentConfig = config[value];
     componentConfig.metric = data[value];
     componentConfig.comparatorMetric = comparatorData[config[value].comparatorFormatName] || undefined;
-    componentConfig.comparatorName = data[value] || '';
+    componentConfig.comparatorName = value || '';
 
     let component = <SingleMetric {...componentConfig} />
     metrics.push(addComponentToColumn(component, colWidth));

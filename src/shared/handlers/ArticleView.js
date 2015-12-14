@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import DocumentTitle from 'react-document-title';
 import connectToStores from 'alt/utils/connectToStores';
 import Link from 'react-router/lib/Link';

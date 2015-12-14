@@ -1,6 +1,5 @@
-import React from 'react/addons';
-const TestUtils = React.addons.TestUtils;
-
+import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
 export function createComponent(component, props, ...children) {
   const renderer = TestUtils.createRenderer();
@@ -16,4 +15,3 @@ export function createAltWrappedComponent() {
   let output = renderer.getRenderOutput();
   return output;
 }
-
