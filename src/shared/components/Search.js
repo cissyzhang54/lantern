@@ -191,13 +191,9 @@ export default class Search extends React.Component {
 
     let homeSectionsMarkup = (
       <div style={{
-        display: '-webkit-flex; display: flex',
-        alignItems: 'center',
-        WebkitAlignItems: 'center',
+        textAlign: 'center',
         justifyContent: 'space-around',
         WebkitJustifyContent: 'space-around',
-        flexFlow: 'row wrap',
-        WebkitFlexFlow: 'row wrap',
         marginTop: '20px',
         marginBottom: '20px'
         }}>
