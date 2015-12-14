@@ -125,7 +125,7 @@ let DataAPI = {
 
 function errorName(page, err){
   if (!err.response) return err.code
-  if (err.response.body)
+  if (err.response.body && err.response.body.error && err.response.body.error.name)
     return page + err.response.body.error.name;
   switch(err.response.status) {
     case 404:
