@@ -172,4 +172,25 @@ class ArticleRealtimeView extends React.Component {
 
 }
 
+ArticleRealtimeView.defaultProps = {
+  pageViews: [],
+  timeOnPage: null,
+  scrollDepth: null,
+  livePageViews: null,
+  totalPageViews: null,
+  realtimeNextInternalUrl: null,
+  author: [],
+  genre: [],
+  title: "[No realtime data available]",
+  topics: [],
+  sections: [],
+  published: "",
+  published_human: "",
+  errorMessage: null,
+  error: null,
+  loading: false,
+  uuid: null,
+  isLive: false
+};
+
 export default connectToStores(ArticleRealtimeView);
