@@ -47,6 +47,13 @@ export function getIndicies(h = 'health,index,docs.count,store.size,tm'){
   });
 }
 
+export function getMetaData (uuid) {
+  let query = {
+    uuid : uuid
+  }
+  return retrieveMetaData(query);
+}
+
 export function runArticleQuery(queryData) {
   let queryError = queryDataError('articles', queryData);
   if (queryError){
