@@ -9,28 +9,37 @@ const LIVE_TIMEOUT = 10000;
 class ArticleRealtimeStore {
 
   constructor() {
-    this.pageViews = [];
-    this.timeOnPage = null;
-    this.scrollDepth = null;
-    this.livePageViews = null;
-    this.totalPageViews = null;
-    this.realtimeNextInternalUrl = null;
-    this.author = [];
-    this.genre = [];
-    this.title = "";
-    this.topics = [];
-    this.sections = [];
-    this.published = "";
-    this.published_human = "";
-    this.errorMessage = null;
-    this.loading = false;
-    this.uuid = null;
-    this.isLive = false;
-    this.isLiveTimer = null;
-    this.socket = null;
+    this.setDefaultState();
     this.bindActions(ArticleRealtimeActions);
     this.exportAsync(ArticleRealtimeSource);
   }
+
+  setDefaultState() {
+    this.state = {
+      pageViews: [],
+      timeOnPage: null,
+      scrollDepth: null,
+      livePageViews: null,
+      totalPageViews: null,
+      realtimeNextInternalUrl: [],
+      author: [],
+      genre: [],
+      title: "",
+      topics: [],
+      sections: [],
+      published: "",
+      published_human: "",
+      errorMessage: null,
+      error: null,
+      loading: false,
+      uuid: null,
+      isLive: false,
+      isLiveTimer: null,
+      socket: null
+    }
+  }
+
+
 
   connect() {
     if (!this.socket) {
@@ -38,16 +47,13 @@ class ArticleRealtimeStore {
     }
     this.socket.connect();
     this.socket.on('connect', () => {
-      this.isLive = true;
-      this.emitChange();
+      this.setState({ isLive: true });
     });
     this.socket.on('disconnect', () => {
-      this.isLive = false;
-      this.emitChange();
+      this.setState({ isLive: false });
     });
     this.socket.on('reconnect', () => {
-      this.isLive = true;
-      this.emitChange();
+      this.setState({ isLive: true });
     })
   }
 
@@ -67,16 +73,18 @@ class ArticleRealtimeStore {
   }
 
   subscribeToArticle(uuid) {
-    this.uuid = uuid;
     this.socket.on('updatedArticleData', (data) => {
-      this.pageViews = processData(this.pageViews, data.realtimePageViews);
-      this.totalPageViews = sumAll(this.pageViews);
-      this.timeOnPage = data.timeOnPageLastHour;
-      this.scrollDepth = data.scrollDepthLastHour;
-      this.livePageViews = data.livePageViews;
-      this.realtimeNextInternalUrl = data.realtimeNextInternalUrl
-      this.isLive = true;
-      this.emitChange();
+      this.setState({
+        pageViews: processData(this.state.pageViews, data.realtimePageViews),
+        totalPageViews: sumAll(this.state.pageViews),
+        timeOnPage: data.timeOnPageLastHour,
+        scrollDepth: data.scrollDepthLastHour,
+        livePageViews: data.livePageViews,
+        realtimeNextInternalUrl: data.realtimeNextInternalUrl,
+        isLive: true,
+        uuid: uuid
+      })
+
       this.setIsLiveTimer();
     });
     this.socket.on('error', (error) => {
@@ -86,34 +94,41 @@ class ArticleRealtimeStore {
   }
 
   updateLastHour(data) {
-    this.author = data.author;
-    this.genre = data.genre;
-    this.title = data.title;
-    this.topics = data.topics;
-    this.sections = data.sections;
-    this.published = data.published;
-    this.published_human = data.published_human;
-    this.pageViews = data.realtimePageViews;
-    this.timeOnPage = data.timeOnPageLastHour;
-    this.scrollDepth = data.scrollDepthLastHour;
-    this.realtimeNextInternalUrl = data.realtimeNextInternalUrl;
-    this.livePageViews = data.livePageViews;
-    this.totalPageViews = sumAll(this.pageViews);
+    this.setState({
+      author: data.author,
+      genre: data.genre,
+      title: data.title,
+      topics: data.topics,
+      sections: data.sections,
+      published: data.published,
+      published_human: data.published_human,
+      pageViews: data.realtimePageViews,
+      timeOnPage: data.timeOnPageLastHour,
+      scrollDepth: data.scrollDepthLastHour,
+      realtimeNextInternalUrl: data.realtimeNextInternalUrl,
+      livePageViews: data.livePageViews,
+      totalPageViews: sumAll(data.realtimePageViews)
+    });
   }
 
   loadingData() {
-    this.loading = true;
+    this.setState({
+      loading: true
+    });
   }
 
   loadingFailed(error) {
-    this.loading = false;
-    this.errorMessage = error.message;
+    this.setState({
+      loading: false,
+      errorMessage: error.message,
+      error: error
+    });
   }
 
 }
 
 function processData(oldData, newData) {
-  if (!oldData.length) {
+  if (!oldData || !oldData.length) {
     return newData;
   }
   if (!newData.length) {

@@ -13,6 +13,7 @@ import SectionHeadlineStats from '../components/SectionHeadlineStats';
 import * as formatAuthors from '../utils/formatAuthors';
 import moment from 'moment';
 import Link from 'react-router/lib/Link';
+import ErrorHandler from '../components/ErrorHandler';
 
 const maxStrLen = 60;
 
@@ -46,7 +47,7 @@ class ArticleRealtimeView extends React.Component {
     return [ArticleRealtimeStore]
   }
 
-  static getPropsFromStores() {
+  static getPropsFromStores(props) {
     return ArticleRealtimeStore.getState();
   }
 
@@ -75,6 +76,17 @@ class ArticleRealtimeView extends React.Component {
         views: d[1]
       }
     })
+
+    if (this.props.error) {
+      return (
+        <ErrorHandler
+          category="Article"
+          type="ERROR"
+          message={this.props.errorMessage}
+          error={this.props.error}
+        />
+      );
+    }
 
     let realtimeNextInternalUrl = this.props.realtimeNextInternalUrl.map(getReferrerUrls);
 
@@ -175,7 +187,7 @@ ArticleRealtimeView.defaultProps = {
   scrollDepth: null,
   livePageViews: null,
   totalPageViews: null,
-  realtimeNextInternalUrl: null,
+  realtimeNextInternalUrl: [],
   author: [],
   genre: [],
   title: "[No realtime data available]",
