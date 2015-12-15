@@ -9,15 +9,15 @@ var componentStyles = {
   'default': {
     large: {
       fontSize: '1.2em',
-      margin: '1.2em',
+      margin: '1.2em'
     },
     medium: {
       fontSize: '1.0em',
-      margin: '1.0em',
+      margin: '1.0em'
     },
     small: {
       fontSize: '0.8em',
-      margin: '0.8em',
+      margin: '0.8em'
     },
     singleMetric: {
       textAlign: 'center'
@@ -25,6 +25,7 @@ var componentStyles = {
     label: {
       padding: 0,
       margin: 0,
+      marginBottom: '15px',
       fontSize: '1.0em',
       color: '#666666'
     },
@@ -55,13 +56,13 @@ var componentStyles = {
       display: 'inline-block'
     },
     large: {
-      margin: '1.2em 0',
+      margin: '1.2em 0'
     },
     medium: {
-      margin: '1.0em 0',
+      margin: '1.0em 0'
     },
     small: {
-      margin: '0.8em 0',
+      margin: '0.8em 0'
     }
   }
 };
@@ -132,10 +133,16 @@ export default class SingleMetric extends React.Component {
     styles.comparatorValue.color = (differenceSign === 'down') ? 'red' : 'green';
 
     //If there is no comparator leave the comparator HTML undefined
-    if (!!transfromComparator) {
+    if (transfromComparator) {
       comparatorHTML = (
-        <span style={styles.comparator} title={comparatorStatLabel}>
-          <Glyphicon glyph={'glyphicon glyphicon-chevron-' + differenceSign} style={styles.comparatorSymbol} />
+        <span
+          style={styles.comparator}
+          title={comparatorStatLabel}
+        >
+          <Glyphicon
+            glyph={'glyphicon glyphicon-chevron-' + differenceSign}
+            style={styles.comparatorSymbol}
+          />
           <span style={styles.comparatorValue}>{transfromComparator}</span>
         </span>
       );
@@ -153,29 +160,37 @@ export default class SingleMetric extends React.Component {
                 {this.props.toolTip}
               </Popover>
             }
-          >
+        >
           <span>
-            <Glyphicon glyph="question-sign" style={styles.infoIcon} aria-describedby={toolTipTitle} />
+            <Glyphicon
+              glyph="question-sign"
+              style={styles.infoIcon}
+              aria-describedby={toolTipTitle}
+            />
           </span>
         </OverlayTrigger>
       );
     }
 
     return (
-      <div className={'singleMetric'} style={assign(styles[this.props.size], styles.singleMetric)} data-component={'singleMetric'}>
-        <p style={styles.metric}>{transformMetric} {comparatorHTML}</p>
+      <div
+        className={'singleMetric'}
+        style={assign(styles[this.props.size], styles.singleMetric)}
+        data-component={'singleMetric'}
+      >
         <h3 style={styles.label}>{toolTip} {this.props.label}</h3>
+        <p style={styles.metric}>{transformMetric} {comparatorHTML}</p>
       </div>
     );
   }
 }
 
 SingleMetric.propTypes = {
-  metric: React.PropTypes.number.isRequired,
-  metricType: React.PropTypes.oneOf(['integer', 'time', 'percentage']).isRequired,
   comparatorMetric: React.PropTypes.number,
   comparatorName: React.PropTypes.string,
   label: React.PropTypes.string.isRequired,
+  metric: React.PropTypes.number.isRequired,
+  metricType: React.PropTypes.oneOf(['integer', 'time', 'percentage']).isRequired,
   size: React.PropTypes.oneOf(['small', 'medium', 'large']).isRequired
 };
 
