@@ -16,7 +16,7 @@ import Link from 'react-router/lib/Link';
 
 const maxStrLen = 60;
 
-function getReferrerUrls (value, i) {
+function getReferrerUrls (value) {
   let urlObject = value.top_tag_hits.hits.hits[0]._source;
   let count = value.doc_count;
   let title = urlObject.title_not_analyzed;
@@ -79,27 +79,22 @@ class ArticleRealtimeView extends React.Component {
     let realtimeNextInternalUrl = this.props.realtimeNextInternalUrl.map(getReferrerUrls);
 
     let headlineStats = {
+      totalPageViews: {
+        metricType: 'integer',
+        label: 'Page Views',
+        size: 'large',
+        comparatorFormatName: 'totalPageViews'
+      },
       timeOnPage: {
         metricType: 'time',
-        label: 'Time on Page',
-        size: 'large'
-      },
-      livePageViews: {
-        metricType: 'integer',
-        label: 'Current Readers',
+        label: 'Average Time on Page',
         size: 'large'
       },
       scrollDepth: {
         metricType: 'percentage',
-        label: 'Scroll Depth',
+        label: 'Average Scroll Depth',
         size: 'large',
         comparatorFormatName: 'scrollDepth'
-      },
-      totalPageViews: {
-        metricType: 'integer',
-        label: 'Total Page Views',
-        size: 'large',
-        comparatorFormatName: 'totalPageViews'
       }
     }
 
@@ -110,7 +105,7 @@ class ArticleRealtimeView extends React.Component {
           <ChunkWrapper component="link">
             <Link
               to={'/articles/' + this.props.uuid}
-              >
+            >
               Historical view
             </Link>
           </ChunkWrapper>
@@ -123,7 +118,7 @@ class ArticleRealtimeView extends React.Component {
             author={'By: ' + formatAuthors.join(this.props.author)}
             published={'First Published: ' + this.props.published_human}
             uuid={this.props.uuid}
-            />
+          />
         </ChunkWrapper>
 
         <ChunkWrapper component="headlineStats">
@@ -131,7 +126,7 @@ class ArticleRealtimeView extends React.Component {
             data={this.props}
             comparatorData={{}}
             config={headlineStats}
-            />
+          />
         </ChunkWrapper>
 
 
@@ -146,23 +141,25 @@ class ArticleRealtimeView extends React.Component {
                 category={'date'}
                 yLabel='Page Views'
                 xLabel='Time'
-                realtime={true}
+                realtime
                 cols={12}
-                />
+              />
             </Col>
           </Row>
         </ChunkWrapper>
 
         <ChunkWrapper component="realtime-views">
           <Row>
-            <Col xs={12} sm={6}>
+            <Col
+              xs={12}
+              sm={6}
+            >
               <h3>Where did users go next?</h3>
               <Table
                 headers={['FT Source', 'Views']}
                 rows={realtimeNextInternalUrl}
-                />
+              />
             </Col>
-            <Col xs={12} sm={6}></Col>
           </Row>
         </ChunkWrapper>
       </div>

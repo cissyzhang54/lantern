@@ -16,9 +16,9 @@ describe ('SingleMetric component', function() {
       label: 'I am a single metric'
     });
     const intProps = singleMetricInteger.props;
-    const intMetric = intProps.children[0];
+    const intMetric = intProps.children[1];
     const intCommparator = intMetric.props.children[2].props.children;
-    const intTitle = intProps.children[1];
+    const intTitle = intProps.children[0];
 
     expect(intProps.className).to.equal('singleMetric');
     expect(intMetric.type).to.equal('p');
@@ -38,7 +38,7 @@ describe ('SingleMetric component', function() {
       metricType: 'time',
     });
     const timeProps = singleMetricTime.props;
-    const timeMetric = timeProps.children[0];
+    const timeMetric = timeProps.children[1];
     const timeCommparator = timeMetric.props.children[2].props.children;
 
     expect(timeMetric.props.children[0]).to.equal('5m 40s');
@@ -52,7 +52,7 @@ describe ('SingleMetric component', function() {
       metricType: 'percentage',
     });
     const props = reactComponent.props;
-    const metric = props.children[0];
+    const metric = props.children[1];
     const comparator =  metric.props.children[2].props.children;
 
     expect(metric.props.children[0]).to.equal('80%');
@@ -68,7 +68,7 @@ describe ('SingleMetric component', function() {
     });
 
     const props = zeroComp.props;
-    const metric = props.children[0];
+    const metric = props.children[1];
     const comparator = metric.props.children[2].props.children;
 
     expect(metric.props.children[0]).to.equal('0');
