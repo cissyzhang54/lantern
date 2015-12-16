@@ -1,5 +1,6 @@
 import DataAPI from '../utils/DataAPIUtils';
 import ArticleRealtimeActions from '../actions/ArticleRealtimeActions';
+import moment from 'moment';
 
 let ArticleRealtimeSource = {
   loadArticleRealtimeData: {
@@ -13,8 +14,14 @@ let ArticleRealtimeSource = {
     error: ArticleRealtimeActions.loadingFailed,
     loading: ArticleRealtimeActions.loadingData,
 
-    shouldFetch(query) {
-      return true;
+    shouldFetch(state, query) {
+      return this.isStateStale(state, query.uuid);
+    },
+
+    isStateStale(state, uuid) {
+      const timeDiffSinceLastUpdate = moment.utc().diff(moment(state.lastUpdated));
+      const isFresh = timeDiffSinceLastUpdate < 60000;
+      return (state.uuid !== uuid || isFresh === false);
     }
   }
 };
