@@ -2,7 +2,6 @@ import alt from '../alt';
 import io from 'socket.io-client';
 import ArticleRealtimeActions from '../actions/ArticleRealtimeActions';
 import ArticleRealtimeSource from '../sources/ArticleRealtimeSource';
-import moment from 'moment';
 
 const LIVE_TIMEOUT = 10000;
 
@@ -39,12 +38,12 @@ class ArticleRealtimeStore {
     }
   }
 
-
-
   connect() {
-    if (!this.socket) {
-      this.socket = io();
+    if (this.socket) {
+      return;
     }
+
+    this.socket = io();
     this.socket.connect();
     this.socket.on('connect', () => {
       this.setState({ isLive: true });
@@ -54,12 +53,30 @@ class ArticleRealtimeStore {
     });
     this.socket.on('reconnect', () => {
       this.setState({ isLive: true });
+    });
+    this.socket.on('updatedArticleData', (data) => {
+      this.setState({
+        pageViews: processData(this.state.pageViews, data.realtimePageViews),
+        totalPageViews: sumAll(this.state.pageViews),
+        timeOnPage: data.timeOnPageLastHour,
+        scrollDepth: data.scrollDepthLastHour,
+        livePageViews: data.livePageViews,
+        realtimeNextInternalUrl: data.realtimeNextInternalUrl,
+        isLive: true
+      })
+
+      this.setIsLiveTimer();
+    });
+    this.socket.on('error', (error) => {
+      console.error(error);
     })
+    this.socket.emit('subscribeToArticle', this.state.uuid);
   }
 
   disconnect() {
     if (!this.socket) return;
     this.socket.disconnect();
+    this.socket = null;
   }
 
   setIsLiveTimer() {
@@ -73,24 +90,16 @@ class ArticleRealtimeStore {
   }
 
   subscribeToArticle(uuid) {
-    this.socket.on('updatedArticleData', (data) => {
-      this.setState({
-        pageViews: processData(this.state.pageViews, data.realtimePageViews),
-        totalPageViews: sumAll(this.state.pageViews),
-        timeOnPage: data.timeOnPageLastHour,
-        scrollDepth: data.scrollDepthLastHour,
-        livePageViews: data.livePageViews,
-        realtimeNextInternalUrl: data.realtimeNextInternalUrl,
-        isLive: true,
-        uuid: uuid
-      })
+    // must be wrapped in a timeout to trigger the source action
+    setTimeout(() => {
+      this.getInstance().loadArticleRealtimeData({uuid : uuid});
+      this.setState({ uuid: uuid });
 
-      this.setIsLiveTimer();
-    });
-    this.socket.on('error', (error) => {
-      console.error(error);
-    })
-    this.socket.emit('subscribeToArticle', uuid);
+      if (!this.getInstance().isLoading()) {
+        // Data not being fetched from server, go ahead and listen to web socket
+        this.connect();
+      }
+    }, 0);
   }
 
   updateLastHour(data) {
@@ -107,8 +116,11 @@ class ArticleRealtimeStore {
       scrollDepth: data.scrollDepthLastHour,
       realtimeNextInternalUrl: data.realtimeNextInternalUrl,
       livePageViews: data.livePageViews,
-      totalPageViews: sumAll(data.realtimePageViews)
+      totalPageViews: sumAll(data.realtimePageViews),
+      lastUpdated: data.realtimePageViews.length ? data.realtimePageViews.slice(-1)[0][0] : null
     });
+
+    this.connect();
   }
 
   loadingData() {

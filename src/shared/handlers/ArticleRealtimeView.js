@@ -52,17 +52,7 @@ class ArticleRealtimeView extends React.Component {
   }
 
   componentDidMount() {
-    const uuid = this.props.params.uuid;
-    const isSameArticle = uuid === this.props.uuid;
-    // get the last timestamp to see if the data is old
-    const lastUpdated = this.props.pageViews.length ? this.props.pageViews.slice(-1)[0][0] : null;
-    const timeDiffSinceLastUpdate = moment.utc().diff(moment(lastUpdated));
-    const isFresh = timeDiffSinceLastUpdate < 60000;
-    if (!isSameArticle || !isFresh) {
-      ArticleRealtimeStore.loadArticleRealtimeData({uuid : uuid});
-    }
-    ArticleRealtimeActions.connect();
-    ArticleRealtimeActions.subscribeToArticle(uuid);
+    ArticleRealtimeActions.subscribeToArticle(this.props.params.uuid);
   }
 
   componentWillUnmount() {

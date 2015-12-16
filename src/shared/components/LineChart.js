@@ -87,6 +87,9 @@ export default class LineChart extends React.Component {
 
     this.chart = c3.generate({
       bindto: node,
+      transition: {
+        duration: null,
+      },
       padding: {
         right: 20
       },
