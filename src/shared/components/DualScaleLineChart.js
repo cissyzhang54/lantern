@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import isBrowser from '../utils/isBrowser';
 import Input from 'react-bootstrap/lib/Input';
 import moment from 'moment';
@@ -22,7 +23,7 @@ export default class DualScaleLineChart extends React.Component {
   }
 
   drawChart() {
-    let node = React.findDOMNode(this.refs.chartContainer);
+    let node = this.refs.chartContainer;
     let [attr1, attr2] = this.props.categories
     let [leftKey, rightKey] = this.props.keys
 

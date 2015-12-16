@@ -1,6 +1,6 @@
 
 import {expect} from 'chai';
-import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 
 import sinon from 'sinon';
 import {createAltWrappedComponent, createComponent} from '../createComponent';
@@ -14,7 +14,6 @@ import * as formatAuthors from '../../src/shared/utils/formatAuthors';
 import AnalyticsActions from '../../src/shared/actions/AnalyticsActions';
 import AnalyticsStore from '../../src/shared/stores/AnalyticsStore';
 
-const TestUtils = React.addons.TestUtils;
 import FeatureFlag from '../../src/shared/utils/featureFlag.js';
 
 describe ('ArticleView Handler', function() {
@@ -94,4 +93,3 @@ describe ('ArticleView Handler', function() {
 
 
 });
-

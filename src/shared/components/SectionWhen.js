@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import moment from 'moment';
@@ -32,7 +32,7 @@ export default class SectionWhen extends React.Component {
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
     let [timeData, timeID, timeKeys] = dataFormatter.getMetric('readTimes', 'Article');
     let [pubTimeData, pubTimeID, pubTimeKeys] = dataFormatter.getMetric('readTimesSincePublish', 'Article');
-    
+
     let readTimesChart = (this.props.renderReadTimes)
       ? <LineChart
         data={timeData}
@@ -42,7 +42,7 @@ export default class SectionWhen extends React.Component {
         xLabel='Time'
         cols={12}
         />
-      : {}
+      : null;
     let timeSincePublishedChart = (this.props.renderTimeSincePublished)
       ? <LineChart
       data={pubTimeData}
@@ -53,7 +53,7 @@ export default class SectionWhen extends React.Component {
       xLabel='Time since Published'
       cols={12}
       />
-      : {}
+      : null;
 
     return (<ChunkWrapper component='sectionWhen'>
       <Row>

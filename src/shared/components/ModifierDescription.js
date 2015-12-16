@@ -14,7 +14,7 @@ export default class ModifierDescription extends React.Component {
 
     if(articleCount && comparator) {
       let formattedArticleCount = articleCount ? articleCount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") : '';
-      text = <Text type='text' message={'components.modifierDescription.text'} formattedArticleCount={formattedArticleCount} comparator={comparator} />
+      text = <Text type='text' message='components.modifierDescription.text' formattedArticleCount={formattedArticleCount} comparator={comparator} />
     }
 
     return (

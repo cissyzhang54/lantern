@@ -8,6 +8,7 @@ import Logo from '../components/Logo';
 import SearchResult from './SearchResult.js';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import ErrorHandler from '../components/ErrorHandler';
 
 import AnalyticsActions from '../actions/AnalyticsActions';
 
@@ -67,6 +68,17 @@ export default class Search extends React.Component {
 
   render() {
 
+    if (this.props.error) {
+      return (
+        <ErrorHandler
+          category="Search"
+          type="ERROR"
+          message={this.props.errorMessage}
+          error={this.props.error}
+        />
+      );
+    }
+
     let results = (this.props.results || []).map((r, i) => {
       return (
         <SearchResult
@@ -82,10 +94,10 @@ export default class Search extends React.Component {
 
     let showMore = (
       <div style={{textAlign: 'center', width: '100%'}}>
-      <Button onClick={this.props.getMoreResults}>
-        Show more results
-      </Button>
-    </div>
+        <Button onClick={this.props.getMoreResults}>
+          Show more results
+        </Button>
+      </div>
     );
 
     const blockLinkStyle = {
@@ -191,13 +203,9 @@ export default class Search extends React.Component {
 
     let homeSectionsMarkup = (
       <div style={{
-        display: '-webkit-flex; display: flex',
-        alignItems: 'center',
-        WebkitAlignItems: 'center',
+        textAlign: 'center',
         justifyContent: 'space-around',
         WebkitJustifyContent: 'space-around',
-        flexFlow: 'row wrap',
-        WebkitFlexFlow: 'row wrap',
         marginTop: '20px',
         marginBottom: '20px'
         }}>
@@ -241,5 +249,3 @@ function getAdditionalInfo(props){
   }
   return <ListGroupItem bsStyle={additionalClass} header={additionalMessage} />
 }
-
-

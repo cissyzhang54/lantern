@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
@@ -9,6 +9,7 @@ import FormatData from "../utils/formatData";
 
 import Header from '../components/Header';
 import Messaging from '../components/Messaging';
+import ErrorHandler from '../components/ErrorHandler';
 import SectionModifier from '../components/SectionModifier';
 import SectionHeadlineStats from '../components/SectionHeadlineStats';
 import SectionWho from '../components/SectionWho';
@@ -69,11 +70,13 @@ class TopicView extends React.Component {
   render() {
     if (this.props.errorMessage) {
       return (
-        <Messaging
-          category="Topic"
-          message={this.props.errorMessage}
+        <ErrorHandler
+          category="Article"
           type="ERROR"
-        />);
+          message={this.props.errorMessage}
+          error={this.props.error}
+        />
+      );
     } else if (!this.props.data) {
       return (
         <Messaging

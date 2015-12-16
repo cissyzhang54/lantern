@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import sinon from 'sinon';
 import {createComponent} from '../createComponent';
 import SearchResult from '../../src/shared/components/SearchResult';
@@ -7,8 +7,6 @@ import Link from 'react-router/lib/Link';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import moment from 'moment';
 import * as formatAuthors from '../../src/shared/utils/formatAuthors';
-
-const TestUtils = React.addons.TestUtils;
 
 describe ('SearchResult', function() {
   let stub;

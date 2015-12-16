@@ -14,6 +14,7 @@ class SearchStore {
     this.sections = [];
     this.topics = [];
     this.errorMessage = null;
+    this.error = null;
     this.loading = false;
     this.query = '';
     this.total = 0;
@@ -39,6 +40,7 @@ class SearchStore {
   searchFailed(error) {
     this.loading = false;
     this.errorMessage = error.message;
+    this.error = error;
 
     Raven.captureException(error, {
       extra: error

@@ -1,11 +1,12 @@
-import React from 'react/addons';
+import React from 'react';
 import DocumentTitle from 'react-document-title';
 import connectToStores from 'alt/utils/connectToStores';
 import Link from 'react-router/lib/Link';
 import _ from 'underscore';
-
+import moment from 'moment';
 import Header from "../components/Header";
 import Messaging from '../components/Messaging';
+import ErrorHandler from '../components/ErrorHandler';
 import SectionModifier from "../components/SectionModifier";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
 import SectionReferrers from "../components/SectionReferrers.js";
@@ -69,10 +70,11 @@ class ArticleView extends React.Component {
   render() {
     if (this.props.errorMessage) {
       return (
-        <Messaging
+        <ErrorHandler
           category="Article"
           type="ERROR"
           message={this.props.errorMessage}
+          error={this.props.error}
         />
       );
     } else if (!this.props.data) {
@@ -84,8 +86,14 @@ class ArticleView extends React.Component {
       );
     }
     let updating = (this.props.loading)
-      ? <Messaging category="Article" type="UPDATING" />
-      : <Messaging category="Article" type="PLACEHOLDER" />
+      ? (<Messaging
+        category="Article"
+        type="UPDATING"
+         />)
+      : (<Messaging
+        category="Article"
+        type="PLACEHOLDER"
+         />)
 
     let data = this.props.data;
     let comparatorData = this.props.comparatorData || { article: {}};
@@ -119,6 +127,22 @@ class ArticleView extends React.Component {
       }
     }
 
+    // don't show the realtime link if the article is older than 24 hours
+    let now = moment()
+    let publish = moment(data.published)
+    let dur = moment.duration(now.diff(publish), 'ms');
+    let showRealtimeLink = dur.as('hours') < 24
+    let realtimeLink = null;
+    if (showRealtimeLink) {
+      realtimeLink = (
+        <Link
+          to={'/realtime/articles/' + data.uuid}
+        >
+          Real time view
+        </Link>
+      );
+    }
+
     return (<DocumentTitle title={title}>
       <div>
 
@@ -131,11 +155,7 @@ class ArticleView extends React.Component {
             uuid={data.uuid}
             dateRange='published'
           />
-          <Link
-            to={'/realtime/articles/' + data.uuid}
-            >
-            Real time view
-          </Link>
+          {realtimeLink}
         </ChunkWrapper>
 
         <ChunkWrapper component="header">
@@ -148,58 +168,58 @@ class ArticleView extends React.Component {
             author={'By: ' + formatAuthors.join(data.author)}
             published={'First Published: ' + data.published_human}
             uuid={data.uuid}
-            />
+          />
         </ChunkWrapper>
         <SectionHeadlineStats
           data={data}
           comparatorData={comparatorData}
           config={headlineStats}
-          />
+        />
 
         <SectionWhen
           data={data}
           comparatorData={comparatorData}
           renderReadTimes={FeatureFlag.check('article:readTimes')}
           renderTimeSincePublished={FeatureFlag.check('article:timeSincePublished')}
-          />
+        />
 
         <SectionNext
           data={data}
           comparatorData={comparatorData}
           renderBounceRate={FeatureFlag.check('article:bounceRate')}
-          />
+        />
 
         <SectionInteract
           data={data}
           comparatorData={comparatorData}
           renderWho={FeatureFlag.check('article:interact')}
-          />
+        />
 
         <SectionReferrers
           data={data}
           comparatorData={comparatorData}
           renderReferrers={FeatureFlag.check('article:referrers')}
           renderInternalRefTypes={FeatureFlag.check('article:referrers:internalRefTypes')}
-          />
+        />
 
         <SectionWho
           data={data}
           comparatorData={comparatorData}
           renderWho={FeatureFlag.check('article:who')}
-          />
+        />
 
         <SectionWhere
           data={data}
           comparatorData={comparatorData}
           renderWhere={FeatureFlag.check('article:where')}
-          />
+        />
 
         <SectionHow
           data={data}
           comparatorData={comparatorData}
           renderDevices={FeatureFlag.check('article:devices')}
           renderChannels={FeatureFlag.check('article:channels')}
-          />
+        />
 
       </div>
     </DocumentTitle>);

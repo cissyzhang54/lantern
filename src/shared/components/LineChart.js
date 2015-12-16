@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
@@ -24,7 +25,7 @@ export default class LineChart extends React.Component {
   }
 
   drawChart() {
-    let node = React.findDOMNode(this.refs.chartContainer);
+    let node = this.refs.chartContainer;
     let attr = this.props.category
     let json = this.props.data.map((d) => {
       if (this.props.type === 'timeseries' && typeof d[attr] === 'string')

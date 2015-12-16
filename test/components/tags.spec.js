@@ -1,10 +1,8 @@
 import {expect} from 'chai';
-import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import {createComponent} from '../createComponent';
 import Tags from '../../src/shared/components/Tags';
 import Tag from '../../src/shared/components/Tag';
-
-const TestUtils = React.addons.TestUtils;
 
 describe ('Comparator component', function() {
   let comparator;

@@ -1,5 +1,5 @@
 import {expect} from 'chai';
-import React from 'react';
+import TestUtils from 'react-addons-test-utils';
 import {createComponent} from '../createComponent';
 import SectionWhen from '../../src/shared/components/SectionWhen';
 import LineChart from '../../src/shared/components/LineChart';
@@ -7,8 +7,6 @@ import LineChart from '../../src/shared/components/LineChart';
 import fixtureData from "../fixtures/data/readTimes";
 import fixtureDataSincePublished from '../fixtures/data/readTimesSincePublish';
 import fixtureComparator from "../fixtures/data/readTimesComparator"
-
-const TestUtils = React.addons.TestUtils;
 
 describe ('sectionWhen component', function() {
 

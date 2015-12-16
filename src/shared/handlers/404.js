@@ -1,4 +1,4 @@
-import React from 'react/addons';
+import React from 'react';
 import Link from 'react-router/lib/Link';
 import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';

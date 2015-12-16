@@ -2,6 +2,7 @@ import 'newrelic';
 let express = require("express");
 let exphbs = require("express-handlebars");
 import React from "react";
+import ReactDOMServer from "react-dom/server";
 import { match, RoutingContext } from "react-router";
 import DocumentTitle from 'react-document-title';
 import compress from 'compression';
@@ -14,11 +15,10 @@ let dataPreloader = require("./routers/dataPreloader-routes");
 let apiRouter = require("./routers/api-routes");
 let authRouter = require("./routers/auth-routes");
 let statusRouter = require("./routers/status-routes");
+import * as esClient from './esClient';
 import uuid from 'uuid';
-
 import RealtimeServer from './realtimeServer';
-
-
+import moment from 'moment';
 delete process.env.BROWSER;
 let cacheBustId = uuid();
 const app = express();
@@ -55,6 +55,20 @@ app.use('/bye', (req, res) =>{
 });
 
 app.use('/', authRouter);
+
+app.use('/landing/article/:uuid', ensureApiAuthenticated, (req, res) => {
+  esClient.getMetaData(req.params.uuid).then(function(data){
+    let publishDate = moment(data.initial_publish_date, 'YYYY-MM-DD');
+    let now = moment();
+
+    if(moment(now).isAfter(publishDate, 'day')){
+      res.redirect(`/articles/${req.params.uuid}`);
+    } else {
+      res.redirect(`/realtime/articles/${req.params.uuid}`);
+    }
+  });
+});
+
 app.use('/api/v0', ensureApiAuthenticated, apiRouter);
 app.use('/', ensureAuthenticated, dataPreloader);
 app.use('/', ensureAuthenticated, function appRouter(req, res) {
@@ -63,7 +77,6 @@ app.use('/', ensureAuthenticated, function appRouter(req, res) {
 app.use(function ErrorHandler(err, req, res, next) {
   renderRoute(errorRoutes, req, res)
 });
-
 
 //Go!!!
 var server = app.listen(config.port, function () {
@@ -97,7 +110,7 @@ function renderRoute(route, req, res) {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
-      let content = React.renderToString(<RoutingContext {...renderProps} />);
+      let content = ReactDOMServer.renderToString(<RoutingContext {...renderProps} />);
       iso.add(content, alt.flush());
       const templateProps = {
         content: iso.render(),
@@ -110,7 +123,6 @@ function renderRoute(route, req, res) {
 
   });
 }
-
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()
