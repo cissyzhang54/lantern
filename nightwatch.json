@@ -42,18 +42,6 @@
           ]
         }
       }
-    },
-    "win32": {
-      "cli_args": {
-        "webdriver.chrome.driver": "/usr/local/bin/chromedriver.exe"
-      }
-    },
-    "chrome": {
-      "desiredCapabilities": {
-        "browserName": "chrome",
-        "javascriptEnabled": true,
-        "acceptSslCerts": true
-      }
     }
   }
 }
