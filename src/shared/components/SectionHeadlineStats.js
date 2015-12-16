@@ -1,6 +1,7 @@
 import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
+import Button from 'react-bootstrap/lib/Button';
 import SingleMetric from "./SingleMetric";
 import FeatureFlag from '../utils/featureFlag';
 import ChunkWrapper from './ChunkWrapper.js';

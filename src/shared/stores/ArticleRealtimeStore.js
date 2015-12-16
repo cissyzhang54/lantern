@@ -16,6 +16,8 @@ class ArticleRealtimeStore {
   setDefaultState() {
     this.state = {
       pageViews: [],
+      realtimeScrollDepth: [],
+      realtimeTimeOnPage: [],
       timeOnPage: null,
       scrollDepth: null,
       livePageViews: null,
@@ -56,7 +58,9 @@ class ArticleRealtimeStore {
     });
     this.socket.on('updatedArticleData', (data) => {
       this.setState({
-        pageViews: processData(this.state.pageViews, data.realtimePageViews),
+        pageViews: data.realtimePageViews,
+        realtimeTimeOnPage: data.realtimeTimeOnPage,
+        realtimeScrollDepth: data.realtimeScrollDepth,
         totalPageViews: sumAll(this.state.pageViews),
         timeOnPage: data.timeOnPageLastHour,
         scrollDepth: data.scrollDepthLastHour,
@@ -137,26 +141,6 @@ class ArticleRealtimeStore {
     });
   }
 
-}
-
-function processData(oldData, newData) {
-  if (!oldData || !oldData.length) {
-    return newData;
-  }
-  if (!newData.length) {
-    return oldData;
-  }
-  let last = oldData[oldData.length - 1];
-  let newest = newData[0];
-  // last is an array with:
-  // ['DATE STR', number]
-  if (last[0] === newest[0]) {
-    last[1] = newest[1]
-    return oldData;
-  }
-  let data = oldData.concat(newData);
-  const maxLen = (60);
-  return data.slice(-maxLen);
 }
 
 function sumAll(data) {

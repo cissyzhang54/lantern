@@ -41,6 +41,9 @@ function getReferrerUrls (value) {
 class ArticleRealtimeView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      chartShown: 'pageViews'
+    };
   }
 
   static getStores() {
@@ -60,12 +63,6 @@ class ArticleRealtimeView extends React.Component {
   }
 
   render() {
-    let pageViews = this.props.pageViews.map(function(d) {
-      return {
-        date: d[0],
-        views: d[1]
-      }
-    })
 
     if (this.props.error) {
       return (
@@ -85,20 +82,77 @@ class ArticleRealtimeView extends React.Component {
         metricType: 'integer',
         label: 'Page Views',
         size: 'large',
-        comparatorFormatName: 'totalPageViews'
+        comparatorFormatName: 'totalPageViews',
+        onClick: () => {
+          this.setState({chartShown: 'pageViews'})
+        }
       },
       timeOnPage: {
         metricType: 'time',
         label: 'Average Time on Page',
-        size: 'large'
+        size: 'large',
+        onClick: () => {
+          this.setState({chartShown: 'timeOnPage'})
+        }
       },
       scrollDepth: {
         metricType: 'percentage',
         label: 'Average Scroll Depth',
         size: 'large',
-        comparatorFormatName: 'scrollDepth'
+        comparatorFormatName: 'scrollDepth',
+        onClick: () => {
+          this.setState({chartShown: 'scrollDepth'})
+        }
       }
     }
+
+    let selectedGraphComponentName;
+    let selectedGraphTitle;
+    let selectedGraphData;
+    let selectedGraphKeys;
+    let selectedGraphYLabel;
+
+    switch (this.state.chartShown) {
+      case 'pageViews':
+        selectedGraphComponentName = 'realtime-pageviews';
+        selectedGraphTitle = 'Real time page views';
+        selectedGraphData = this.props.pageViews.map(function(d) {
+          return {
+            date: d[0],
+            views: d[1]
+          }
+        });
+        selectedGraphKeys = ['views'];
+        selectedGraphYLabel = 'Page Views'
+        break;
+      case 'scrollDepth':
+        selectedGraphComponentName = 'realtime-scrolldepth';
+        selectedGraphTitle = 'Real time scroll depth';
+        selectedGraphData =  this.props.realtimeScrollDepth.map(function(d) {
+          return {
+            date: d[0],
+            depth: d[1]
+          }
+        });
+        selectedGraphKeys = ['depth'];
+        selectedGraphYLabel = 'Scroll Depth'
+        break;
+      case 'timeOnPage':
+        selectedGraphComponentName = 'realtime-timeonpage';
+        selectedGraphTitle = 'Real time time on page';
+        selectedGraphData =  this.props.realtimeTimeOnPage.map(function(d) {
+          return {
+            date: d[0],
+            time: d[1]
+          }
+        });
+        selectedGraphKeys = ['time'];
+        selectedGraphYLabel = 'Time On Page (seconds)'
+        break;
+      default:
+
+    }
+
 
     return (
       <div>
@@ -131,17 +185,16 @@ class ArticleRealtimeView extends React.Component {
           />
         </ChunkWrapper>
 
-
-        <ChunkWrapper component="realtime-views">
+        <ChunkWrapper component={selectedGraphComponentName}>
           <Row>
             <Col>
-              <h3>Real time views</h3>
+              <h3>{selectedGraphTitle}</h3>
               <LiveIndicator isLive={this.props.isLive} />
               <LineChart
-                data={pageViews}
-                keys={['views']}
+                data={selectedGraphData}
+                keys={selectedGraphKeys}
                 category={'date'}
-                yLabel='Page Views'
+                yLabel={selectedGraphYLabel}
                 xLabel='Time'
                 realtime
                 cols={12}

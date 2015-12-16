@@ -16,9 +16,11 @@ function getField(d, f, divisor){
       error.name = 'DataParsingError';
       error.data = d;
       //todo: throw + catch properly then test it
+      //yeah well you asshole left the company so fuck you
     }
   }
-  return field.formatter ? field.formatter(parent, field, divisor) : parent
+
+  return field.formatter ? field.formatter(parent, field, divisor, field.bucket_key) : parent
 }
 
 const fields = {
@@ -32,9 +34,28 @@ const fields = {
   published: 'initial_publish_date',
   published_human: {name:'initial_publish_date', formatter: formatPublishDate},
   pageViews: 'hits.total',
-  realtimePageViews: {name: 'aggregations.page_views.filtered', formatter: format},
-  timeOnPageLastHour: {name: 'aggregations.time_on_page_last_hour.filtered.value', formatter: Math.round},
-  scrollDepthLastHour: {name: 'aggregations.scroll_depth_last_hour.filtered.value', formatter: Math.round},
+  realtimePageViews: {
+    name: 'aggregations.page_views.filtered',
+    formatter: format
+  },
+  realtimeTimeOnPage: {
+    name: 'aggregations.time_on_page_last_hour.time_on_page_histogram',
+    formatter: format,
+    bucket_key: 'time_on_page_avg'
+  },
+  realtimeScrollDepth: {
+    name: 'aggregations.scroll_depth_last_hour.scroll_depth_last_hour_histogram',
+    formatter: format,
+    bucket_key: 'scroll_depth_last_hour_avg'
+  },
+  timeOnPageLastHour: {
+    name: 'aggregations.time_on_page_last_hour.time_on_page_avg.value',
+    formatter: Math.round
+  },
+  scrollDepthLastHour: {
+    name: 'aggregations.scroll_depth_last_hour.scroll_depth_last_hour_avg.value',
+    formatter: Math.round
+  },
   livePageViews: {name: 'aggregations.live_page_views.filtered.value', formatter: Math.round},
   timeOnPage: 'aggregations.avg_time_on_page.value',
   topicCount: {name: 'aggregations.topic_count', formatter: format},
@@ -84,25 +105,29 @@ function formatAndFilter(agg, fieldObj, divisor){
   return filterOutTerms(format(agg, fieldObj, divisor), fieldObj.terms)
 }
 
-function formatPublishDate(date, fieldObj, divisor) {
+function formatPublishDate(date) {
   return moment(date).format('MMMM D, YYYY h:mm a');
 }
 
-function format(agg, fieldObj, divisor=1) {
+function format(agg, fieldObj, divisor=1, bucket_key='doc_count') {
   if (!agg){
     //todo: throw + catch properly then test it
     return new Error(`formatterError: ${fieldObj && fieldObj.name ? fieldObj.name : fieldObj} does not exist in the data`)
   }
-  return agg.buckets.map((d, i) => {
+  return agg.buckets.map((d) => {
     let key = 'Unknown';
     if (typeof d.key_as_string !== "undefined"){
       key = d.key_as_string
     } else if (typeof d.key !== "undefined" && d.key !== ''){
       key = d.key
     }
+    let value = d.doc_count;
+    if (bucket_key !== 'doc_count') {
+      value = d[bucket_key].value;
+    }
     return [
       key,
-      Math.round(d.doc_count / divisor)
+      Math.round(value / divisor)
     ];
   });
 }

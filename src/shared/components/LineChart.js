@@ -20,7 +20,8 @@ export default class LineChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      localTime : true
+      localTime : true,
+      unload: false
     }
   }
 
@@ -78,8 +79,14 @@ export default class LineChart extends React.Component {
     };
 
     if(this.chart) {
-      if (!this.props.realtime)
-        dataObject.unload = true;
+      if (this.state.unload) {
+        dataObject.unload = this.state.unload;
+        this.chart.axis.labels({
+          x : xLabel,
+          y : this.props.yLabel
+        });
+      }
+
 
       this.chart.load(dataObject);
       return;
@@ -157,6 +164,15 @@ export default class LineChart extends React.Component {
 
   componentWillUnmount() {
     this.chart && this.chart.destroy();
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (!_.isEqual(this.props.keys, nextProps.keys)) {
+      this.setState({unload: true});
+    } else {
+      this.setState({unload: false});
+    }
+
   }
 
   shouldComponentUpdate(nextProps) {
