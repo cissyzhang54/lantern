@@ -1,6 +1,8 @@
 {
     "globals": {
-      "require" : true
+      "require" : true,
+      "setTimeout" : true,
+      "clearTimeout" : true
     },
     "parser": "espree",
     "ecmaFeatures": {

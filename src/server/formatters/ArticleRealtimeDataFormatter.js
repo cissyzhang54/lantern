@@ -29,10 +29,12 @@ export default function formatData(data) {
     'published_human',
     'genre',
     'sections',
-    'topics',
+    'topics'
   ]
   let realtimeFields = [
     'realtimePageViews',
+    'realtimeTimeOnPage',
+    'realtimeScrollDepth',
     'timeOnPageLastHour',
     'scrollDepthLastHour',
     'livePageViews'

@@ -64,9 +64,27 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         },
         aggs: {
-          filtered: {
+          time_on_page_avg: {
             avg: {
               field: 'attention_time'
+            }
+          },
+          time_on_page_histogram: {
+            date_histogram: {
+              field: 'event_timestamp',
+              interval: '60s',
+              min_doc_count: 0,
+              extended_bounds: {
+                min: query.dateFrom,
+                max: query.dateTo
+              }
+            },
+            aggs : {
+              time_on_page_avg: {
+                avg: {
+                  field: "attention_time"
+                }
+              }
             }
           }
         }
@@ -128,9 +146,27 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         },
         aggs: {
-          filtered: {
+          scroll_depth_last_hour_avg: {
             avg: {
               field: 'scroll_depth'
+            }
+          },
+          scroll_depth_last_hour_histogram: {
+            date_histogram: {
+              field: 'event_timestamp',
+              interval: '60s',
+              min_doc_count: 0,
+              extended_bounds: {
+                min: query.dateFrom,
+                max: query.dateTo
+              }
+            },
+            aggs : {
+              scroll_depth_last_hour_avg: {
+                avg: {
+                  field: "scroll_depth"
+                }
+              }
             }
           }
         }
