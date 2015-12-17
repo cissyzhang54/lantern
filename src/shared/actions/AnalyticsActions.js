@@ -12,7 +12,9 @@ class AnalyticsActions {
   }
 
   loadingData() {
-    setImmediate(() => this.dispatch())
+    return function(dispatch) {
+      setImmediate(() => dispatch())
+    };
   }
 
 }

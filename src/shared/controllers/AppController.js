@@ -1,7 +1,7 @@
 import React from "react";
 import DocumentTitle from 'react-document-title';
 import UserStore from '../stores/UserStore'
-import AltContainer from 'alt/AltContainer';
+import AltContainer from 'alt-container';
 import NavBar from '../components/NavBar';
 import User from '../components/User';
 

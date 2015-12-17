@@ -1,36 +1,9 @@
 import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import Button from 'react-bootstrap/lib/Button';
 import SingleMetric from "./SingleMetric";
-import FeatureFlag from '../utils/featureFlag';
 import ChunkWrapper from './ChunkWrapper.js';
 
-function getMetrics (config, data, comparatorData) {
-  let keys = Object.keys(config);
-  let metrics = [];
-  let colWidth = 12 / keys.length;
-
-  keys.forEach(function (value) {
-    let componentConfig = config[value];
-    componentConfig.metric = data[value];
-    componentConfig.comparatorMetric = comparatorData[config[value].comparatorFormatName] || undefined;
-    componentConfig.comparatorName = value || '';
-
-    let component = <SingleMetric {...componentConfig} />
-    metrics.push(addComponentToColumn(component, colWidth));
-  });
-
-  return metrics;
-}
-
-function addComponentToColumn (component, colWidth) {
-  return (
-    <Col xs={6} sm={colWidth}>
-      {component}
-    </Col>
-  )
-}
 
 export default class SectionHeadlineStats extends React.Component {
 
@@ -39,6 +12,39 @@ export default class SectionHeadlineStats extends React.Component {
   }
 
   render() {
+    function getMetrics (config, data, comparatorData) {
+      let keys = Object.keys(config);
+      let metrics = [];
+      let colWidth = 12 / keys.length;
+
+      keys.forEach(function (value, i) {
+        let componentConfig = config[value];
+        componentConfig.metric = data[value];
+        componentConfig.comparatorMetric = comparatorData[config[value].comparatorFormatName] || undefined;
+        componentConfig.comparatorName = value || '';
+
+        let component = null
+        if (typeof componentConfig.metric !== 'undefined') {
+          component = <SingleMetric {...componentConfig} />
+        }
+        metrics.push(addComponentToColumn(component, colWidth, i));
+      });
+
+      return metrics;
+    }
+
+    function addComponentToColumn (component, colWidth, i) {
+      return (
+        <Col
+          xs={6}
+          sm={colWidth}
+          key={i}
+        >
+          {component}
+        </Col>
+      )
+    }
+
     let config = this.props.config;
     let data = this.props.data;
     if (!Object.keys(data).length) return (<div></div>);

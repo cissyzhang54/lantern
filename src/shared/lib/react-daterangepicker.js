@@ -6,6 +6,7 @@
  * Original copyright in: ./node_modules/bootstrap-daterangepicker/
  */
 import React from 'react';
+import ReactDom from 'react-dom';
 import $ from 'jquery';
 import DateRangePicker from './bootstrap-daterangepicker';
 import getOptions from './react-getoptions.js';
@@ -48,7 +49,7 @@ export default React.createClass({
   },
   componentDidMount: function () {
     var $this = this;
-    $this.$picker = $(React.findDOMNode(this.refs.picker));
+    $this.$picker = $(ReactDom.findDOMNode(this.refs.picker));
     // initialize
     $this.$picker.daterangepicker(this.getOptionsFromProps());
     // attach event listeners

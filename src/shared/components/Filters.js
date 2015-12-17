@@ -1,9 +1,8 @@
 import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import FeatureFlag from '../utils/featureFlag';
 import Filter from './Filter';
-import connectToStores from 'alt/utils/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores';
 
 import FilterStore from '../stores/FilterStore.js';
 

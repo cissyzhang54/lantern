@@ -33,10 +33,9 @@ describe ('SearchResult', function() {
       }
     });
 
+    expect(searchResult.props.className).to.equal('list-group-item')
 
-    expect(TestUtils.isElementOfType(searchResult, ListGroupItem)).to.equal(true);
-
-    let link = searchResult.props.header;
+    let link = searchResult.props.children[0].props.children.props.children;
     expect(TestUtils.isElementOfType(link, Link)).to.equal(true);
 
   });
