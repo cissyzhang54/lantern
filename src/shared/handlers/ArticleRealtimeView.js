@@ -1,7 +1,7 @@
 import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import connectToStores from 'alt/utils/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores';
 import ArticleRealtimeStore from '../stores/ArticleRealtimeStore';
 import ArticleRealtimeActions from '../actions/ArticleRealtimeActions';
 import LineChart from '../components/LineChart';
@@ -11,7 +11,6 @@ import LiveIndicator from '../components/LiveIndicator';
 import Header from '../components/Header';
 import SectionHeadlineStats from '../components/SectionHeadlineStats';
 import * as formatAuthors from '../utils/formatAuthors';
-import moment from 'moment';
 import Link from 'react-router/lib/Link';
 import ErrorHandler from '../components/ErrorHandler';
 
@@ -50,7 +49,7 @@ class ArticleRealtimeView extends React.Component {
     return [ArticleRealtimeStore]
   }
 
-  static getPropsFromStores(props) {
+  static getPropsFromStores() {
     return ArticleRealtimeStore.getState();
   }
 

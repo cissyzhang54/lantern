@@ -201,10 +201,10 @@ SingleMetric.propTypes = {
   comparatorMetric: React.PropTypes.number,
   comparatorName: React.PropTypes.string,
   label: React.PropTypes.string.isRequired,
-  metric: React.PropTypes.number.isRequired,
+  metric: React.PropTypes.number,
   metricType: React.PropTypes.oneOf(['integer', 'time', 'percentage']).isRequired,
-  size: React.PropTypes.oneOf(['small', 'medium', 'large']).isRequired,
-  onClick: React.PropTypes.func
+  onClick: React.PropTypes.func,
+  size: React.PropTypes.oneOf(['small', 'medium', 'large']).isRequired
 };
 
 // Exclude comparator as this is an optional field

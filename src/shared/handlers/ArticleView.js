@@ -1,6 +1,6 @@
 import React from 'react';
 import DocumentTitle from 'react-document-title';
-import connectToStores from 'alt/utils/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores';
 import Link from 'react-router/lib/Link';
 import _ from 'underscore';
 import moment from 'moment';
