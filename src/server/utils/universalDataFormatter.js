@@ -56,6 +56,7 @@ const fields = {
     name: 'aggregations.scroll_depth_last_hour.scroll_depth_last_hour_avg.value',
     formatter: Math.round
   },
+  retentionRate: 'aggregations.retention_rate.filtered.value',
   livePageViews: {name: 'aggregations.live_page_views.filtered.value', formatter: Math.round},
   timeOnPage: 'aggregations.avg_time_on_page.value',
   topicCount: {name: 'aggregations.topic_count', formatter: format},

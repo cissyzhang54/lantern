@@ -41,9 +41,9 @@ export default function formatData(data) {
     'linksClickedLastHour'
   ];
   let realtimeFieldsAllDataFields = [
-    'realtimeNextInternalUrl'
+    'realtimeNextInternalUrl',
+    'retentionRate'
   ]
-
   let results = {}
   return new Promise((resolve, reject) => {
     try {

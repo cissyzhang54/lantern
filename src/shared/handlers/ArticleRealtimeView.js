@@ -5,6 +5,7 @@ import connectToStores from 'alt-utils/lib/connectToStores';
 import ArticleRealtimeStore from '../stores/ArticleRealtimeStore';
 import ArticleRealtimeActions from '../actions/ArticleRealtimeActions';
 import LineChart from '../components/LineChart';
+import PieChart from '../components/PieChart';
 import Table from '../components/Table';
 import ChunkWrapper from '../components/ChunkWrapper';
 import LiveIndicator from '../components/LiveIndicator';
@@ -154,6 +155,10 @@ class ArticleRealtimeView extends React.Component {
 
     }
 
+    let retentionRate = [
+      ['Stayed on FT.com', this.props.retentionRate],
+      ['Left FT.com', 100-this.props.retentionRate]
+    ];
 
     return (
       <div>
@@ -206,6 +211,17 @@ class ArticleRealtimeView extends React.Component {
 
         <ChunkWrapper component="realtime-views">
           <Row>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <h3>What is the Retention Rate?</h3>
+              <PieChart
+                data={retentionRate}
+                keys={['value']}
+                yLabel={'Percentage of Views'}
+              />
+            </Col>
             <Col
               xs={12}
               sm={6}

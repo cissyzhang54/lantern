@@ -1,4 +1,4 @@
-export default function ArticlesRealtimeAllAggregation() {
+export default function ArticlesRealtimeAllAggregation(query) {
   return {
     next_internal_url: {
       filter : {
@@ -50,6 +50,43 @@ export default function ArticlesRealtimeAllAggregation() {
                 size: 1
               }
             }
+          }
+        }
+      }
+    },
+    retention_rate : {
+      filter : {
+        bool : {
+          must : [
+            {
+              term : {
+                event_type: 'page'
+              }
+            },
+            {
+              term : {
+                event_category: 'view'
+              }
+            },
+            {
+              range: {
+                event_timestamp: {
+                  gte: 'now-48h/m'
+                }
+              }
+            },
+            {
+              term: {
+                previous_article_uuid: query.uuid
+              }
+            }
+          ]
+        }
+      },
+      aggs: {
+        filtered: {
+          value_count: {
+            field: 'article_uuid'
           }
         }
       }
