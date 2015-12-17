@@ -24,7 +24,8 @@ function newState() {
       comparator: 'FT',
       comparatorType: 'global',
       publishDate: null
-    }
+    },
+    activeQuery: null
   }
 }
 
@@ -49,6 +50,7 @@ class AnalyticsStore {
    */
   updateData(newData) {
     newData.loading = false;
+    newData.activeQuery = newData.query;
     if (this.state.query.type === 'article') {
       let queryProps = assign({}, this.state.query, {dateFrom : newData.data.published})
       newData.query = queryProps;
@@ -68,7 +70,9 @@ class AnalyticsStore {
     const hasFilterSet = newQueryProps.hasOwnProperty('filters');
     if (!isSame || hasFilterSet) {
       this.setState({query: queryProps});
-      this.getInstance().loadData();
+      setTimeout(() => {
+        this.getInstance().loadData(queryProps);
+      }, 0);
     }
   }
 
@@ -88,7 +92,7 @@ class AnalyticsStore {
    * just read the code
    */
   loadingData() {
-    this.setState({loading: true})
+    if (this.getInstance().isLoading()) this.setState({loading: true});
   }
 
   /**
