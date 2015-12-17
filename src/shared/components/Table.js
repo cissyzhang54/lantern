@@ -1,6 +1,24 @@
 import React from 'react';
 import Table from 'react-bootstrap/lib/Table';
 
+function createDataRows (props) {
+  return props.rows.map((d, i) => {
+    let dataObjectKeys = props.rows.length > 0 ? Object.keys(props.rows[0]) : Object.keys(d);
+    let cells = dataObjectKeys.map((k, j) => {
+      return (
+        <td key={j}>
+          {d[k]}
+        </td>
+      );
+    });
+    return (
+      <tr key={i}>
+        {cells}
+      </tr>
+    );
+  });
+}
+
 export default class DataTable extends React.Component {
 
   render() {
@@ -12,21 +30,7 @@ export default class DataTable extends React.Component {
         );
       });
 
-      let rows = this.props.rows.map((d, i) => {
-        let dataObjectKeys = this.props.rows.length > 0 ? Object.keys(this.props.rows[0]) : Object.keys(d);
-        let cells = dataObjectKeys.map((k, j) => {
-          return (
-            <td key={j}>
-              {d[k]}
-            </td>
-          );
-        });
-        return (
-          <tr key={i}>
-            {cells}
-          </tr>
-        );
-      });
+      let rows = this.props.rows.length === 0 ? [[<tr><td>{'No Data Available'}</td></tr>]] : createDataRows(this.props);
 
       return (
         <Table data-component="table">
