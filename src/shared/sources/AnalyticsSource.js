@@ -4,19 +4,20 @@ import AnalyticsActions from '../actions/AnalyticsActions';
 let AnalyticsSource = {
   loadData: {
 
-    remote(state) {
-      switch (state.query.type) {
+    remote(state, newQuery) {
+      switch (newQuery.type) {
         case 'article':
-          return DataAPI.getArticleData(state.query);
+          return DataAPI.getArticleData(newQuery);
         case 'section':
-          return DataAPI.getSectionData(state.query);
+          return DataAPI.getSectionData(newQuery);
         case 'topic':
-          return DataAPI.getTopicData(state.query);
+          return DataAPI.getTopicData(newQuery);
         default:
       }
     },
 
     local() {
+      return null;
     },
 
     success: AnalyticsActions.updateData,

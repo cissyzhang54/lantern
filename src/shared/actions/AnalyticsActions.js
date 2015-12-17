@@ -7,16 +7,10 @@ class AnalyticsActions {
       'updateData',
       'updateQuery',
       'loadingFailed',
+      'loadingData',
       'destroy'
     );
   }
-
-  loadingData() {
-    return function(dispatch) {
-      setImmediate(() => dispatch())
-    };
-  }
-
 }
 
 export default alt.createActions(AnalyticsActions);
