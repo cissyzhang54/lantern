@@ -9,7 +9,6 @@ const FORMAT_END = 'YYYY-MM-DDTHH:mm:59.999[Z]';
 
 export default function ArticlePoller(uuid) {
   this.uuid = uuid;
-  this.lastPolled = moment();
   // XXX make this like configurable and stuff ;_;
   this.interval = 5000;
   EventEmitter.call(this);
@@ -24,8 +23,8 @@ util.inherits(ArticlePoller, EventEmitter);
 // the updated data
 ArticlePoller.prototype.getArticleData = function() {
   const query = {
-    dateFrom: this.lastPolled.format(FORMAT_START),
-    dateTo: this.lastPolled.format(FORMAT_END),
+    dateFrom: moment().subtract(1, 'hours').format(FORMAT_START),
+    dateTo: moment().format(FORMAT_END),
     uuid: this.uuid
   }
   runArticleRealtimeQuery(query)
@@ -38,15 +37,9 @@ ArticlePoller.prototype.getArticleData = function() {
     let error = new Error(err);
     error.uuid = this.uuid;
     error.name = 'LoadingDataError'
-    error.lastPolled = this.lastPolled;
     error.originalError = err;
     this.emit('error', error);
   });
-  // XXX yo let's assume it's a perfect world and we just
-  // use out timestamp for the lastPolled value but we might
-  // have to use the results (i.e. the last value of the aggs
-  // to choose the lastPolled value
-  this.lastPolled = moment();
 }
 
 // This guy here waits for a set time and then

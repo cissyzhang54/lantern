@@ -1,8 +1,5 @@
 import assert from 'assert';
-import moment from 'moment';
 import ArticleRealtimeAllAggregation from '../aggregations/ArticleRealTimeAll'
-
-const root = process.env.ES_REALTIME_INDEX_ROOT;
 
 export default function ArticlesRealtimeESQuery(query) {
   assert.equal(typeof query, 'object',

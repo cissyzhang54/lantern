@@ -1,7 +1,7 @@
 import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import connectToStores from 'alt/utils/connectToStores';
+import connectToStores from 'alt-utils/lib/connectToStores';
 import ArticleRealtimeStore from '../stores/ArticleRealtimeStore';
 import ArticleRealtimeActions from '../actions/ArticleRealtimeActions';
 import LineChart from '../components/LineChart';
@@ -10,8 +10,8 @@ import ChunkWrapper from '../components/ChunkWrapper';
 import LiveIndicator from '../components/LiveIndicator';
 import Header from '../components/Header';
 import SectionHeadlineStats from '../components/SectionHeadlineStats';
+import SingleMetric from '../components/SingleMetric';
 import * as formatAuthors from '../utils/formatAuthors';
-import moment from 'moment';
 import Link from 'react-router/lib/Link';
 import ErrorHandler from '../components/ErrorHandler';
 
@@ -41,13 +41,16 @@ function getReferrerUrls (value) {
 class ArticleRealtimeView extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      chartShown: 'pageViews'
+    };
   }
 
   static getStores() {
     return [ArticleRealtimeStore]
   }
 
-  static getPropsFromStores(props) {
+  static getPropsFromStores() {
     return ArticleRealtimeStore.getState();
   }
 
@@ -60,12 +63,6 @@ class ArticleRealtimeView extends React.Component {
   }
 
   render() {
-    let pageViews = this.props.pageViews.map(function(d) {
-      return {
-        date: d[0],
-        views: d[1]
-      }
-    })
 
     if (this.props.error) {
       return (
@@ -79,26 +76,84 @@ class ArticleRealtimeView extends React.Component {
     }
 
     let realtimeNextInternalUrl = this.props.realtimeNextInternalUrl.map(getReferrerUrls);
+    let linksClicked = this.props.linksClicked;
 
     let headlineStats = {
       totalPageViews: {
         metricType: 'integer',
         label: 'Page Views',
         size: 'large',
-        comparatorFormatName: 'totalPageViews'
+        comparatorFormatName: 'totalPageViews',
+        onClick: () => {
+          this.setState({chartShown: 'pageViews'})
+        }
       },
       timeOnPage: {
         metricType: 'time',
         label: 'Average Time on Page',
-        size: 'large'
+        size: 'large',
+        onClick: () => {
+          this.setState({chartShown: 'timeOnPage'})
+        }
       },
       scrollDepth: {
         metricType: 'percentage',
         label: 'Average Scroll Depth',
         size: 'large',
-        comparatorFormatName: 'scrollDepth'
+        comparatorFormatName: 'scrollDepth',
+        onClick: () => {
+          this.setState({chartShown: 'scrollDepth'})
+        }
       }
     }
+
+    let selectedGraphComponentName;
+    let selectedGraphTitle;
+    let selectedGraphData;
+    let selectedGraphKeys;
+    let selectedGraphYLabel;
+
+    switch (this.state.chartShown) {
+      case 'pageViews':
+        selectedGraphComponentName = 'realtime-pageviews';
+        selectedGraphTitle = 'Real time page views';
+        selectedGraphData = this.props.pageViews.map(function(d) {
+          return {
+            date: d[0],
+            views: d[1]
+          }
+        });
+        selectedGraphKeys = ['views'];
+        selectedGraphYLabel = 'Page Views'
+        break;
+      case 'scrollDepth':
+        selectedGraphComponentName = 'realtime-scrolldepth';
+        selectedGraphTitle = 'Real time scroll depth';
+        selectedGraphData =  this.props.realtimeScrollDepth.map(function(d) {
+          return {
+            date: d[0],
+            depth: d[1]
+          }
+        });
+        selectedGraphKeys = ['depth'];
+        selectedGraphYLabel = 'Scroll Depth'
+        break;
+      case 'timeOnPage':
+        selectedGraphComponentName = 'realtime-timeonpage';
+        selectedGraphTitle = 'Real time time on page';
+        selectedGraphData =  this.props.realtimeTimeOnPage.map(function(d) {
+          return {
+            date: d[0],
+            time: d[1]
+          }
+        });
+        selectedGraphKeys = ['time'];
+        selectedGraphYLabel = 'Time On Page (seconds)'
+        break;
+      default:
+
+    }
+
 
     return (
       <div>
@@ -131,17 +186,16 @@ class ArticleRealtimeView extends React.Component {
           />
         </ChunkWrapper>
 
-
-        <ChunkWrapper component="realtime-views">
+        <ChunkWrapper component={selectedGraphComponentName}>
           <Row>
             <Col>
-              <h3>Real time views</h3>
+              <h3>{selectedGraphTitle}</h3>
               <LiveIndicator isLive={this.props.isLive} />
               <LineChart
-                data={pageViews}
-                keys={['views']}
+                data={selectedGraphData}
+                keys={selectedGraphKeys}
                 category={'date'}
-                yLabel='Page Views'
+                yLabel={selectedGraphYLabel}
                 xLabel='Time'
                 realtime
                 cols={12}
@@ -164,6 +218,13 @@ class ArticleRealtimeView extends React.Component {
             </Col>
           </Row>
         </ChunkWrapper>
+
+        <SingleMetric
+          metricType='integer'
+          metric={linksClicked}
+          label='Links clicked last hour'
+        />
+
       </div>
     );
 
@@ -178,6 +239,7 @@ ArticleRealtimeView.defaultProps = {
   livePageViews: null,
   totalPageViews: null,
   realtimeNextInternalUrl: [],
+  linksClicked: null,
   author: [],
   genre: [],
   title: "[No realtime data available]",

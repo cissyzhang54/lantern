@@ -4,6 +4,7 @@ import responsiveStyles from '../utils/responsiveStyles';
 import assign from 'object-assign';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import Button from 'react-bootstrap/lib/Button';
 
 var componentStyles = {
   'default': {
@@ -126,8 +127,9 @@ export default class SingleMetric extends React.Component {
     let comparatorHTML;
     let styles = this.state.responsiveStyles;
     let [transformMetric, differenceSign, transfromComparator] =
-      convert[this.props.metricType](this.props.metric, this.props.comparatorMetric)
-    let comparatorStatLabel = this.props.comparatorName + ' ' + this.props.label + ' average : ' + Math.round(this.props.comparatorMetric)
+      convert[this.props.metricType](this.props.metric, this.props.comparatorMetric);
+    let comparatorStatLabel = this.props.comparatorName + ' ' + this.props.label + ' average : ' + Math.round(this.props.comparatorMetric);
+    // let showGraphButton = this.props.showGraphButton;
 
     styles.comparatorSymbol.color = (differenceSign === 'down') ? 'red' : 'green';
     styles.comparatorValue.color = (differenceSign === 'down') ? 'red' : 'green';
@@ -172,6 +174,15 @@ export default class SingleMetric extends React.Component {
       );
     }
 
+    let button = null;
+    if (this.props.onClick) {
+      button = (
+        <Button onClick={this.props.onClick}>
+          {'Show Chart'}
+        </Button>
+      );
+    }
+
     return (
       <div
         className={'singleMetric'}
@@ -180,6 +191,7 @@ export default class SingleMetric extends React.Component {
       >
         <h3 style={styles.label}>{toolTip} {this.props.label}</h3>
         <p style={styles.metric}>{transformMetric} {comparatorHTML}</p>
+        {button}
       </div>
     );
   }
@@ -189,8 +201,9 @@ SingleMetric.propTypes = {
   comparatorMetric: React.PropTypes.number,
   comparatorName: React.PropTypes.string,
   label: React.PropTypes.string.isRequired,
-  metric: React.PropTypes.number.isRequired,
+  metric: React.PropTypes.number,
   metricType: React.PropTypes.oneOf(['integer', 'time', 'percentage']).isRequired,
+  onClick: React.PropTypes.func,
   size: React.PropTypes.oneOf(['small', 'medium', 'large']).isRequired
 };
 

@@ -131,7 +131,8 @@ function getArticleRealtimeData(req, res) {
           timeOnPage: data.timeOnPageLastHour,
           scrollDepth: data.scrollDepthLastHour,
           livePageViews: data.livePageViews,
-          realtimeNextInternalUrl: data.realtimeNextInternalUrl
+          realtimeNextInternalUrl: data.realtimeNextInternalUrl,
+          linksClicked: data.linksClickedLastHour
         }
       };
       return res;

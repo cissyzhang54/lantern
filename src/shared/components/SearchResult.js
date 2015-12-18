@@ -1,5 +1,4 @@
 import React from 'react';
-import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import Link from 'react-router/lib/Link';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
@@ -36,7 +35,7 @@ var controllerStyles = {
   }
 };
 
-export default class SearchItem extends React.Component {
+export default class SearchResult extends React.Component {
 
   constructor(props) {
     super(props);
@@ -65,7 +64,7 @@ export default class SearchItem extends React.Component {
           to={'/sections/' + section}
           key={i}
           style={styles.link}
-          >
+        >
           {section}
         </Link>
       );
@@ -86,21 +85,22 @@ export default class SearchItem extends React.Component {
     }
 
     return (
-      <ListGroupItem header={(
-        <Link
-          data-component='searchResult'
-          to={linkUrl}
-          key={result._id}
-          onClick={clickHandler}
-          uuid={result.article_uuid}
-          publishDate={result.initial_publish_date}
-          >
-          {result.title}
-        </Link>
-      )} >
-
+      <div className="list-group-item">
+        <Row>
+          <Col xs={12}>
+            <Link
+              data-component='searchResult'
+              to={linkUrl}
+              key={result._id}
+              onClick={clickHandler}
+              uuid={result.article_uuid}
+              publishDate={result.initial_publish_date}
+            >
+              {result.title}
+            </Link>
+          </Col>
+        </Row>
         <Row style={styles.row}>
-
           <Col xs={8} >
             <span style={styles.authors} >
               {"Authors: " + authors}
@@ -115,14 +115,14 @@ export default class SearchItem extends React.Component {
           <Col xs={4} >
             <span
               style={styles.date}
-              >
+            >
               {'Published: ' + publishedDate}
             </span>
           </Col>
 
         </Row>
 
-      </ListGroupItem>
+      </div>
     );
   }
 }

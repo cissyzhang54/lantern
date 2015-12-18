@@ -13,9 +13,11 @@ class SearchActions {
   }
 
   searching() {
-    setImmediate(()=> {
-      this.dispatch();
-    });
+    return function(dispatch) {
+      setImmediate(()=> {
+        dispatch();
+      });
+    };
   }
 
 }

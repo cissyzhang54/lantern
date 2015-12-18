@@ -68,6 +68,7 @@ export default class SectionHeadlineStats extends React.Component {
   render() {
 
     let data = this.props.data;
+
     if (!Object.keys(data).length) return (<div></div>);
     let comparatorData = this.props.comparatorData ;
 
