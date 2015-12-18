@@ -37,7 +37,8 @@ export default function formatData(data) {
     'realtimeScrollDepth',
     'timeOnPageLastHour',
     'scrollDepthLastHour',
-    'livePageViews'
+    'livePageViews',
+    'linksClickedLastHour'
   ];
   let realtimeFieldsAllDataFields = [
     'realtimeNextInternalUrl'

@@ -23,6 +23,7 @@ class ArticleRealtimeStore {
       livePageViews: null,
       totalPageViews: null,
       realtimeNextInternalUrl: [],
+      linksClicked: null,
       author: [],
       genre: [],
       title: "",
@@ -66,6 +67,7 @@ class ArticleRealtimeStore {
         scrollDepth: data.scrollDepthLastHour,
         livePageViews: data.livePageViews,
         realtimeNextInternalUrl: data.realtimeNextInternalUrl,
+        linksClicked: data.linksClickedLastHour,
         isLive: true
       })
 
@@ -121,6 +123,7 @@ class ArticleRealtimeStore {
       realtimeNextInternalUrl: data.realtimeNextInternalUrl,
       livePageViews: data.livePageViews,
       totalPageViews: sumAll(data.realtimePageViews),
+      linksClicked: data.linksClickedLastHour,
       lastUpdated: data.realtimePageViews.length ? data.realtimePageViews.slice(-1)[0][0] : null
     });
 
