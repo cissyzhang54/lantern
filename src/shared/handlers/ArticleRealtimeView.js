@@ -10,6 +10,7 @@ import ChunkWrapper from '../components/ChunkWrapper';
 import LiveIndicator from '../components/LiveIndicator';
 import Header from '../components/Header';
 import SectionHeadlineStats from '../components/SectionHeadlineStats';
+import SingleMetric from '../components/SingleMetric';
 import * as formatAuthors from '../utils/formatAuthors';
 import Link from 'react-router/lib/Link';
 import ErrorHandler from '../components/ErrorHandler';
@@ -75,6 +76,7 @@ class ArticleRealtimeView extends React.Component {
     }
 
     let realtimeNextInternalUrl = this.props.realtimeNextInternalUrl.map(getReferrerUrls);
+    let linksClicked = this.props.linksClicked;
 
     let headlineStats = {
       totalPageViews: {
@@ -216,6 +218,13 @@ class ArticleRealtimeView extends React.Component {
             </Col>
           </Row>
         </ChunkWrapper>
+
+        <SingleMetric
+          metricType='integer'
+          metric={linksClicked}
+          label='Links clicked last hour'
+        />
+
       </div>
     );
 
@@ -230,6 +239,7 @@ ArticleRealtimeView.defaultProps = {
   livePageViews: null,
   totalPageViews: null,
   realtimeNextInternalUrl: [],
+  linksClicked: null,
   author: [],
   genre: [],
   title: "[No realtime data available]",
