@@ -7,6 +7,7 @@ import Error404 from "../handlers/404";
 import ArticleView from "../handlers/ArticleView";
 import SectionView from "../handlers/SectionView";
 import TopicView from "../handlers/TopicView";
+import TopArticlesView from "../handlers/TopArticlesView";
 import Playground from '../handlers/Playground';
 import PlaygroundLoader from '../handlers/PlaygroundLoader';
 import ArticleRealtimeView from '../handlers/ArticleRealtimeView';
@@ -24,6 +25,7 @@ export default (
     <Redirect from="articles/:uuid" to="articles/:uuid/global/FT" />
     <Route path="sections/:section" component={SectionView} />
     <Route path="topics/:topic" component={TopicView} />
+    <Route path="toparticles" component={TopArticlesView} />
     <Route path="sections/:section/:comparatorType/:comparator" component={SectionView} />
     <Route path="topics/:topic/:comparatorType/:comparator" component={TopicView} />
     <Route path="realtime/articles/:uuid" component={ArticleRealtimeView} />

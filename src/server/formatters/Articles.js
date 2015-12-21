@@ -37,7 +37,7 @@ export default function formatData(data) {
     'pageViews', 'timeOnPage', 'readTimes', 'readTimesSincePublish', 'channels', 'uniqueVisitors',
     'isSubscription', 'nextInternalUrl', 'internalReferrerTypes', 'internalReferrerUrls', 'isFirstVisit',
     'rfvCluster', 'userCohort', 'isLastPage', 'regions', 'countries', 'devices', 'socialReferrers',
-    'referrerUrls', 'referrerNames', 'referrerTypes'
+    'referrerUrls', 'referrerNames', 'referrerTypes', 'top5TimeOnPage'
   ]
   let eventFields = [
     'totalCommentsPosted', 'totalCommentsViewed', 'socialSharesTotal', 'socialSharesTypes',

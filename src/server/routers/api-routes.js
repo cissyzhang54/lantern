@@ -7,7 +7,9 @@ import ArticleRealtimeDataFormatter from '../formatters/ArticleRealtimeDataForma
 import SearchDataFormatter from '../formatters/Search';
 import SectionDataFormatter from '../formatters/Sections';
 import TopicDataFormatter from '../formatters/Topics';
+import TopArticlesFormatter from '../formatters/TopArticles';
 import getTitleForUrl from '../utils/getTitleFromUrl';
+import moment from 'moment';
 
 const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
 
@@ -17,6 +19,7 @@ router.use(bodyParser.json());
 router.post(`/articles/:uuid(${UUID_REGEX})`, getCategoryData);
 router.post(`/sections/:section`, getSectionData);
 router.post(`/topics/:topic`, getTopicData);
+router.post(`/toparticles`, getTopArticlesData);
 router.get(`/realtime/articles/:uuid(${UUID_REGEX})`, getRealtimeArticleData);
 router.get('/search/:query', search);
 router.use(ErrorHandler.routes(router));
@@ -122,6 +125,21 @@ function search(req, res, next) {
   esClient.runSearchQuery({term: query, from: from})
     .then((response) => SearchDataFormatter(response) )
     .then((formattedData) => res.json(formattedData) )
+    .catch((error) => {
+      res.status(ErrorHandler.statusCode(error.name))
+      next(error);
+    });
+}
+
+function getTopArticlesData(req, res, next) {
+  const query = {
+    dateFrom: moment().subtract(1, 'days').startOf('day').toISOString(),
+    dateTo: moment().subtract(1, 'days').endOf('day').toISOString()
+  }
+
+  esClient.runTopArticleQuery(query)
+    .then((response) => TopArticlesFormatter(response))
+    .then((formattedData) => res.json(formattedData))
     .catch((error) => {
       res.status(ErrorHandler.statusCode(error.name))
       next(error);
