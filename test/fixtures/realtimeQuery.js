@@ -26,6 +26,26 @@ export default {
         }
       }
     },
+    social_shares_last_hour: {
+      filter: {
+        bool: {
+          must: [
+            {
+              term: {
+                event_type: 'social share'
+              }
+            },
+            {
+              range: {
+                event_timestamp: {
+                  gte: "now-1h/m"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
     page_views: {
       filter: {
         bool: {
