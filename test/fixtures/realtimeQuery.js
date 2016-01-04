@@ -32,7 +32,7 @@ export default {
           must: [
             {
               term: {
-                event_type: 'social share'
+                event_type: 'share'
               }
             },
             {

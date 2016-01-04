@@ -26,7 +26,7 @@ export default function ArticlesRealtimeAggregation(query) {
             must: [
               {
                 term: {
-                  event_type: 'social share'
+                  event_type: 'share'
                 }
               },
               {
