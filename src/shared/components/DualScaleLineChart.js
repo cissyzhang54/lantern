@@ -5,7 +5,10 @@ import Input from 'react-bootstrap/lib/Input';
 import moment from 'moment';
 import _ from 'underscore';
 import chartHelpers from '../utils/chartHelpers';
+import md5 from 'md5';
 require('moment-duration-format');
+import assign from 'object-assign';
+
 
 let c3 = {};
 
@@ -63,7 +66,17 @@ export default class DualScaleLineChart extends React.Component {
     });
     // turn all the moments into isoStrings because c3
     // doesn't know what to do with moments anymore wtf ;_;
-    merged.forEach((d) => d[attr1] = d[attr1].toISOString())
+    merged.forEach((d) => d[attr1] = d[attr1].toISOString());
+
+    // Naïve checksumming on the chart data
+    // if the checksums are the same, no need to redraw the chart
+    let dataChecksum = md5(JSON.stringify(merged));
+    if (this.state.dataChecksum === dataChecksum) {
+      // Data has not changed
+      return;
+    }
+
+    this.setState({ dataChecksum });
 
     let labelCount = undefined;
     const labelWidth = 80;
@@ -84,7 +97,6 @@ export default class DualScaleLineChart extends React.Component {
     let formatStr = '%d %b %H:%M:%S';
     if (json1.length > 1) {
       let step = moment.duration(json1[1][attr1] - json1[0][attr1]);
-      let span = moment.duration(json1[json1.length - 1][attr1] - json1[0][attr1] );
       if (step.years()) {
         formatStr = '%Y';
       } else if (step.months()) {
@@ -114,8 +126,6 @@ export default class DualScaleLineChart extends React.Component {
       colors: chartHelpers.getKeyColourMapping(this.props.keys)
     }
 
-
-
     if (this.chart) {
       dataObject.unload = true;
       this.chart.load(dataObject);
@@ -125,7 +135,7 @@ export default class DualScaleLineChart extends React.Component {
     this.chart = c3.generate({
       bindto: node,
       transition: {
-        duration: null,
+        duration: null
       },
       data: dataObject,
       axis: {
@@ -205,15 +215,12 @@ export default class DualScaleLineChart extends React.Component {
       this.drawChart();
   }
 
-  shouldComponentUpdate(nextProps) {
-    return !_.isEqual(this.props, nextProps);
-  }
 
   componentWillUnmount() {
     this.chart && this.chart.destroy();
   }
 
-  _handleLocalTimeSwitch(event) {
+  _handleLocalTimeSwitch() {
     const checked = this.refs.localTimeInput.getChecked();
     this.setState({localTime: !checked});
   }
@@ -222,7 +229,7 @@ export default class DualScaleLineChart extends React.Component {
 
     let input = (
       <div style={{fontSize: '0.85em'}}>
-         <Input
+        <Input
           type="checkbox"
           ref="localTimeInput"
           label="Display dates in UTC"
@@ -237,7 +244,7 @@ export default class DualScaleLineChart extends React.Component {
         <div
           ref='chartContainer'
           id="chartContainer"
-          >
+        >
         </div>
         {(this.props.type === 'timeseries') ? input : null}
       </div>
