@@ -71,7 +71,8 @@ export default function ArticlesRealtimeAllAggregation(query) {
             {
               range: {
                 event_timestamp: {
-                  gte: 'now-48h/m'
+                  gte: 'now-48h/m',
+                  lt: 'now-30m/m'
                 }
               }
             },
