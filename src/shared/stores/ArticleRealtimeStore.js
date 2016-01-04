@@ -24,6 +24,7 @@ class ArticleRealtimeStore {
       totalPageViews: null,
       realtimeNextInternalUrl: [],
       linksClicked: null,
+      retentionRate: 0,
       author: [],
       genre: [],
       title: "",
@@ -62,12 +63,13 @@ class ArticleRealtimeStore {
         pageViews: data.realtimePageViews,
         realtimeTimeOnPage: data.realtimeTimeOnPage,
         realtimeScrollDepth: data.realtimeScrollDepth,
-        totalPageViews: sumAll(this.state.pageViews),
+        totalPageViews: sumAll(data.realtimePageViews),
         timeOnPage: data.timeOnPageLastHour,
         scrollDepth: data.scrollDepthLastHour,
         livePageViews: data.livePageViews,
         realtimeNextInternalUrl: data.realtimeNextInternalUrl,
         linksClicked: data.linksClickedLastHour,
+        retentionRate: (data.retentionRate / sumAll(data.realtimePageViews)) * 100 | 0,
         isLive: true
       })
 
@@ -124,6 +126,7 @@ class ArticleRealtimeStore {
       livePageViews: data.livePageViews,
       totalPageViews: sumAll(data.realtimePageViews),
       linksClicked: data.linksClickedLastHour,
+      retentionRate: (data.retentionRate / sumAll(data.realtimePageViews)) * 100 | 0,
       lastUpdated: data.realtimePageViews.length ? data.realtimePageViews.slice(-1)[0][0] : null
     });
 

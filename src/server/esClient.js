@@ -122,7 +122,7 @@ export function runArticleRealtimeQuery(queryData) {
     }).then((data) => {
       let otherArticles = data;
       return [articleData, otherArticles]
-    });;
+    });
 }
 
 export function runSearchQuery(queryData) {

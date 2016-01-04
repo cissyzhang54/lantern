@@ -1,5 +1,5 @@
+/* eslint-env node */
 import express from 'express';
-import request from "superagent";
 import moment from 'moment';
 import {getKeys} from '../../shared/stores/FilterStore';
 import dataApiUtils from '../../shared/utils/DataAPIUtils';
@@ -42,7 +42,6 @@ router.get(`/sections/:section`, (req, res, next) => {
 
 router.get(`/sections/:section/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
   return getSectionData(req, res)
-    .then(() => getComparatorData(req, res))
     .then(() => next())
     .catch((err) => {
       if (err.status) res.status(err.status);
@@ -61,7 +60,6 @@ router.get(`/topics/:topic`, (req, res, next) => {
 
 router.get(`/topics/:topic/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
   return getTopicData(req, res)
-    .then(() => getComparatorData(req, res))
     .then(() => next())
     .catch((err) => {
       if (err.status) res.status(err.status);
@@ -118,6 +116,8 @@ function getArticleData(req, res){
 function getArticleRealtimeData(req, res) {
   return dataApiUtils.getArticleRealtimeData({uuid: decode(req.params.uuid)}, apiKey)
     .then((data) => {
+      let totalPageViews = data.realtimePageViews.reduce((a, b) => { return a + b[1]; }, 0);
+      let retentionRate = (data.retentionRate / totalPageViews) * 100 | 0;
       res.locals.data = {
         ArticleRealtimeStore: {
           author: data.author,
@@ -128,11 +128,13 @@ function getArticleRealtimeData(req, res) {
           published: data.published,
           published_human: data.published_human,
           pageViews: data.realtimePageViews,
+          totalPageViews: totalPageViews,
           timeOnPage: data.timeOnPageLastHour,
           scrollDepth: data.scrollDepthLastHour,
           livePageViews: data.livePageViews,
           realtimeNextInternalUrl: data.realtimeNextInternalUrl,
-          linksClicked: data.linksClickedLastHour
+          linksClicked: data.linksClickedLastHour,
+          retentionRate: retentionRate
         }
       };
       return res;
