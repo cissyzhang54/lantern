@@ -100,6 +100,22 @@ let DataAPI = {
       })
     },
 
+    getTopArticlesData(query, apiKey) {
+      assert.equal(typeof query, 'object',
+        "argument 'query' must be an object");
+
+      return new Promise((resolve, reject) => {
+        let url = `${config.baseUrl}/api/v0/toparticles`;
+        if (apiKey) {
+          url += "?apiKey=" + apiKey;
+        }
+        request.post(url)
+          .send(query)
+          .set('Accept', 'application/json')
+          .end(handleResponse('Top Articles', query, reject, resolve));
+      })
+    },
+
     search(query, from = 0, apiKey = '') {
 
       assert.equal(typeof query, 'object',

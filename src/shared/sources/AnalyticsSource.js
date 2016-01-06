@@ -12,6 +12,8 @@ let AnalyticsSource = {
           return DataAPI.getSectionData(newQuery);
         case 'topic':
           return DataAPI.getTopicData(newQuery);
+        case 'topArticles':
+          return DataAPI.getTopArticlesData(newQuery);
         default:
       }
     },

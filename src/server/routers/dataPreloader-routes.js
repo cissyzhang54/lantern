@@ -67,6 +67,15 @@ router.get(`/topics/:topic/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req
     });
 });
 
+router.get(`/toparticles`, (req, res, next) => {
+  return getTopArticlesData(req, res)
+    .then(() => next())
+    .catch((err) => {
+      if (err.status) res.status(err.status);
+      next(err);
+    });
+});
+
 function getArticleData(req, res){
   let query = {
     uuid: decode(req.params.uuid),
@@ -148,7 +157,6 @@ function getArticleRealtimeData(req, res) {
     })
 }
 
-
 function getSectionData(req, res){
   let query = {
     section: decode(req.params.section),
@@ -220,6 +228,30 @@ function getTopicData(req, res){
       }
     })
 
+  }
+
+function getTopArticlesData(req, res) {
+  let query = {
+    dateFrom: moment().subtract(1, 'days').startOf('day').toISOString(),
+    dateTo: moment().subtract(1, 'days').endOf('day').toISOString(),
+    type: 'topArticles',
+    filters: {}
+  }
+
+  return dataApiUtils.getTopArticlesData(query, apiKey)
+    .then((data) => {
+      res.locals.data = {
+        AnalyticsStore: {
+          data: data.data,
+          query: query
+        }
+      };
+      return res;
+    }).catch((error) => {
+      res.locals.data.AnalyticsStore = {
+        errorMessage: error.message
+      }
+    })
   }
 
   export default router;

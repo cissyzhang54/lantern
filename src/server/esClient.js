@@ -3,6 +3,7 @@ import elasticsearch from 'elasticsearch';
 import awsElasticSearchConnector from 'http-aws-es';
 import ArticleComparatorQuery from './esQueries/ArticleComparator';
 import SectionsQuery from './esQueries/Sections';
+import TopArticlesQuery from './esQueries/TopArticles';
 import SectionComparatorQuery from './esQueries/SectionComparator';
 import SectionMetadataQuery from './esQueries/SectionMetadata';
 import SectionMetadataComparatorQuery from './esQueries/SectionMetadataComparator';
@@ -125,6 +126,21 @@ export function runArticleRealtimeQuery(queryData) {
     });
 }
 
+export function runTopArticleQuery(queryData) {
+  let queryError = queryDataError('articles', queryData);
+  if (queryError) {
+    return Promise.reject(queryError);
+  }
+
+  if (!queryData.dateFrom || !queryData.dateTo) {
+    queryData.dateFrom = moment().subtract(1, 'days').startOf('day').toISOString();
+    queryData.dateTo = moment().subtract(1, 'days').endOf('day').toISOString();
+  }
+
+  return retrieveTopArticleData(queryData)
+    .then((topArticleData) => { return topArticleData });
+}
+
 export function runSearchQuery(queryData) {
   let queryError = queryDataError('search', queryData);
   if (queryError){
@@ -163,7 +179,6 @@ function retrieveArticleData(queryData){
       search_type: 'count'
     };
 
-
     let request = {
       body: [
         articlesHeader,
@@ -185,7 +200,6 @@ function retrieveArticleData(queryData){
     });
   })
 }
-
 
 function retrieveSectionData(queryData){
   return new Promise((resolve, reject) => {
@@ -318,8 +332,6 @@ function retrieveMetaData(queryData){
   })
 }
 
-
-
 function retrieveRealtimeArticleData(queryData) {
   return new Promise((resolve, reject) => {
     let queryObject = ArticleRealtimeQuery(queryData);
@@ -346,6 +358,26 @@ function retrieveRealtimeAllData(queryData) {
       ignore_unavailable: true,
       body: queryObject
     }
+    client.search(request, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+
+      return resolve(response);
+    })
+  })
+}
+
+function retrieveTopArticleData(queryData) {
+  return new Promise((resolve, reject) => {
+    let queryObject = TopArticlesQuery(queryData);
+    let request = {
+      index: 'article_page_view-*', // TODO wrong index to be using
+      ignore_unavailable: true,
+      search_type: 'count',
+      body: queryObject
+    }
+
     client.search(request, (error, response) => {
       if (error) {
         return reject(error);
