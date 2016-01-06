@@ -134,7 +134,8 @@ function getArticleRealtimeData(req, res) {
           livePageViews: data.livePageViews,
           realtimeNextInternalUrl: data.realtimeNextInternalUrl,
           linksClicked: data.linksClickedLastHour,
-          retentionRate: retentionRate
+          retentionRate: retentionRate,
+          socialShares: data.socialSharesLastHour
         }
       };
       return res;

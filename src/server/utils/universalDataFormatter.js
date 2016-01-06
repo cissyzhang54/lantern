@@ -97,7 +97,8 @@ const fields = {
   linkClickCategories: 'aggregations.page_clicks.category_breakdown',
   uniqueVisitors: 'aggregations.unique_visitors.value',
   realtimeNextInternalUrl : 'aggregations.next_internal_url.titles.buckets',
-  linksClickedLastHour : 'aggregations.links_clicked_last_hour.doc_count'
+  linksClickedLastHour : 'aggregations.links_clicked_last_hour.doc_count',
+  socialSharesLastHour : 'aggregations.social_shares_last_hour.doc_count'
 }
 
 function divide(agg, fieldObj, divisor=1){

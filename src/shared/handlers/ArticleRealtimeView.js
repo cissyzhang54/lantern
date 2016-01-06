@@ -78,6 +78,7 @@ class ArticleRealtimeView extends React.Component {
 
     let realtimeNextInternalUrl = this.props.realtimeNextInternalUrl.map(getReferrerUrls);
     let linksClicked = this.props.linksClicked;
+    let socialShares = this.props.socialShares;
 
     let headlineStats = {
       totalPageViews: {
@@ -241,6 +242,13 @@ class ArticleRealtimeView extends React.Component {
           label='Links clicked last hour'
         />
 
+        <SingleMetric
+          metricType='integer'
+          metric={socialShares}
+          label='Social shares last hour'
+        />
+
+
       </div>
     );
 
@@ -256,6 +264,7 @@ ArticleRealtimeView.defaultProps = {
   totalPageViews: null,
   realtimeNextInternalUrl: [],
   linksClicked: null,
+  socialShares: null,
   author: [],
   genre: [],
   title: "[No realtime data available]",
