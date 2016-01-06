@@ -3,8 +3,11 @@ import getField from '../utils/universalDataFormatter';
 
 export default function formatData(data) {
   try {
+    assert.equal(Object.prototype.toString.call(data), '[object Array]',
+      "argument 'data' should be an array");
 
-    // TODO add error checking back in here
+    assert.equal(typeof data[0], 'object',
+      "the first element of 'data' should be an object");
 
   } catch (e) {
     let error = new Error(e);
@@ -13,7 +16,7 @@ export default function formatData(data) {
     return Promise.reject(error);
   }
 
-  let articleData = data;
+  let [articleData] = data;
 
   let articleFields = [
     'timeOnPageTop'
