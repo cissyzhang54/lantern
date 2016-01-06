@@ -1,6 +1,8 @@
 import { expect } from 'chai';
 import TestUtils from 'react-addons-test-utils';
 import Search from '../../src/shared/components/Search';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Link from 'react-router/lib/Link';
 import Logo from '../../src/shared/components/Logo';
 import Input from 'react-bootstrap/lib/Input';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
@@ -16,8 +18,10 @@ describe('Search component', function() {
       results:[]
     });
     let searchResults = search.props.children[3];
-    expect(TestUtils.isElementOfType(search.props.children[0], Logo)).to.equal(true);
-    expect(TestUtils.isElementOfType(search.props.children[1], Input)).to.equal(true);
+    expect(TestUtils.isElementOfType(search.props.children[0], Glyphicon)).to.equal(true);
+    expect(TestUtils.isElementOfType(search.props.children[1], Link)).to.equal(true);
+    expect(TestUtils.isElementOfType(search.props.children[2], Logo)).to.equal(true);
+    expect(TestUtils.isElementOfType(search.props.children[3], Input)).to.equal(true);
     expect(TestUtils.isElementOfType(searchResults, ListGroup)).to.equal(false);
   });
 
@@ -31,7 +35,7 @@ describe('Search component', function() {
       query: 'film quotes'
     });
 
-    let searchResults = search.props.children[5].props.children[1];
+    let searchResults = search.props.children[7].props.children[1];
     expect(TestUtils.isElementOfType(searchResults, ListGroup)).to.equal(true);
     expect(searchResults.props.children.length).to.equal(2)
   });
@@ -42,7 +46,7 @@ describe('Search component', function() {
       errorMessage:'Couldn\'t find any',
       query: 'good nicholas cage movies'
     });
-    let errors = search.props.children[2];
+    let errors = search.props.children[4];
     expect(TestUtils.isElementOfType(errors, ListGroupItem)).to.equal(true);
     expect(errors.props.header).to.equal(`Couldn't find any`)
   });

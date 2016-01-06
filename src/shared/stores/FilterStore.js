@@ -32,10 +32,10 @@ class FilterStore {
     let data = newData.data;
 
     let newState = assign({}, this.state, {
-      devices: getKeys(data.devices),
-      regions: getKeys(data.regions),
-      cohort: getKeys(data.userCohort),
-      referrers: getKeys(data.referrerTypes)
+      devices: getKeys(data.devices || []),
+      regions: getKeys(data.regions || []),
+      cohort: getKeys(data.userCohort || []),
+      referrers: getKeys(data.referrerTypes || [])
     })
 
     this.setState(newState);

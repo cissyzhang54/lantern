@@ -5,6 +5,7 @@ import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import Button from 'react-bootstrap/lib/Button';
 import Link from 'react-router/lib/Link';
 import Logo from '../components/Logo';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import SearchResult from './SearchResult.js';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -125,6 +126,23 @@ export default class Search extends React.Component {
       textAlign: 'center'
     }
 
+    const borderlessLinkStyle = {
+      marginRight: '10px',
+      marginLeft: '10px',
+      marginBottom: '5px',
+      marginTop: '5px',
+      padding: '10px',
+      display: 'inline-block',
+      textAlign: 'center'
+    }
+
+    const starGlyphStyle = {
+      'fontSize' : '15px',
+      'color': '#039',
+      'top': '1.5px',
+      'right': '-14px'
+    }
+
     let sections = (this.props.sections || [])
     .map((section, i) => {
       return (
@@ -214,6 +232,18 @@ export default class Search extends React.Component {
     )
 
     return (<div data-component='search'>
+
+      <Glyphicon glyph="star-empty" style={starGlyphStyle} />
+
+      <Link
+        to={'/toparticles'}
+        style={borderlessLinkStyle}
+        >
+        {'Pick of the day'}
+      </Link>
+
+
+
       <Logo
         message={isLoading ? 'Searching...' : ''}
         loading={isLoading}
