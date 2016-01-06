@@ -144,7 +144,9 @@ function getArticleRealtimeData(req, res) {
           realtimeNextInternalUrl: data.realtimeNextInternalUrl,
           linksClicked: data.linksClickedLastHour,
           retentionRate: retentionRate,
-          socialShares: data.socialSharesLastHour
+          socialShares: data.socialSharesLastHour,
+          retentionRate: retentionRate,
+          comments: data.commentsLastHour
         }
       };
       return res;
