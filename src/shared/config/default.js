@@ -5,6 +5,7 @@ let config = {
   baseUrl: 'http://localhost:' + port,
   jsUrl: "//localhost:8082",
   gaTrackingID: 'UA-60698836-4',
+  newrelic: false,
   features : {
     'home:recentArticles' : true,
     'article:scrollDepth' : true,

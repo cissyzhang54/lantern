@@ -1,4 +1,9 @@
-import 'newrelic';
+let config = require("../shared/config");
+
+if (config.newrelic) {
+  require('newrelic');
+}
+
 let express = require("express");
 let exphbs = require("express-handlebars");
 import React from "react";
@@ -8,7 +13,6 @@ import DocumentTitle from 'react-document-title';
 import compress from 'compression';
 import Iso from "iso";
 import alt from "../shared/alt";
-let config = require("../shared/config");
 let routes = require("../shared/routers/routes");
 let errorRoutes = require("../shared/routers/error");
 let dataPreloader = require("./routers/dataPreloader-routes");
@@ -115,6 +119,7 @@ function renderRoute(route, req, res) {
       const templateProps = {
         content: iso.render(),
         jsUrl: config.jsUrl,
+        newrelic: config.newrelic,
         version: '?v=' + cacheBustId,
         title: DocumentTitle.rewind()
       };
