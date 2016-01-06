@@ -104,8 +104,8 @@ class TopArticlesView extends React.Component {
         return d.key;
       }).toString();
 
-      let titleUrl = <a href={`http://www.ft.com/cms/s/${uuid}.html`}>{title}<Glyphicon glyph="new-window" style={styles.tagStyle} /></a>;
-      let lanternUrl = <a href={`/landing/article/${uuid}`}> <Glyphicon glyph="stats" style={styles.tagStyle} /></a>;
+      let titleUrl = <a href={`http://www.ft.com/cms/s/${uuid}.html`} target="_blank">{title}<Glyphicon glyph="new-window" style={styles.tagStyle} /></a>;
+      let lanternUrl = <a href={`/landing/article/${uuid}`} target="_blank"> <Glyphicon glyph="stats" style={styles.tagStyle} /></a>;
 
       return [
         titleUrl, author, avg, lanternUrl
