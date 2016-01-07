@@ -19,7 +19,7 @@ export default function formatData(data) {
   let [articleData] = data;
 
   let articleFields = [
-    'timeOnPageTop'
+    'timeOnPageTop', 'topArticleViews'
   ]
 
   let results = {};

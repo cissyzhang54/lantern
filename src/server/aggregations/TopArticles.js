@@ -27,6 +27,30 @@ export default function TopArticlesAggregation(query) {
          }
        }
      }
+   },
+   "top_article_views" : {
+     terms : {
+       field: "article_uuid",
+       "order" : { "_count" : "desc" },
+       size: 5
+     },
+     aggs : {
+       count : {
+         "value_count" : {
+           "field" : "article_uuid"
+         }
+       },
+       title : {
+         terms : {
+           field : "title_not_analyzed"
+         }
+       },
+       author : {
+         terms : {
+           field : "authors_not_analyzed"
+         }
+       }
+     }
    }
  }
 }
