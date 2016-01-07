@@ -28,6 +28,16 @@ let cacheBustId = uuid();
 const app = express();
 const hbs = exphbs.create({});
 
+// Force regular garbage collection
+// avoid memory leaking when used with socket.io
+// it's dirty. I'm sorry.
+// see: http://stackoverflow.com/questions/30766753/nodejs-socket-io-simple-code-memory-leak
+if (global.gc) {
+  setInterval(function(){
+    global.gc();
+  }, config.garbageCollectionInterval);
+}
+
 
 let prefetch = ['<https://fonts.googleapis.com/css?family=Work+Sans>; rel=prefetch',
   '<https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css>; rel=prefetch'];

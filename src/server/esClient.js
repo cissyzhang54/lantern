@@ -115,15 +115,12 @@ export function runArticleRealtimeQuery(queryData) {
     queryData.dateTo = moment().toISOString();
   }
 
-  let articleData;
-  return retrieveRealtimeArticleData(queryData)
-    .then((data) => {
-      articleData = data;
-      return retrieveRealtimeAllData(queryData)
-    }).then((data) => {
-      let otherArticles = data;
-      return [articleData, otherArticles]
-    });
+  let requests = [];
+
+  requests.push(retrieveRealtimeArticleData(queryData));
+  requests.push(retrieveRealtimeAllData(queryData));
+
+  return Promise.all(requests);
 }
 
 export function runTopArticleQuery(queryData) {

@@ -6,6 +6,7 @@ let config = {
   jsUrl: "//localhost:8082",
   gaTrackingID: 'UA-60698836-4',
   newrelic: false,
+  garbageCollectionInterval: 60000,
   features : {
     'home:recentArticles' : true,
     'article:scrollDepth' : true,
