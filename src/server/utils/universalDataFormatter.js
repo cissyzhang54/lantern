@@ -100,7 +100,8 @@ const fields = {
   linksClickedLastHour : 'aggregations.links_clicked_last_hour.doc_count',
   socialSharesLastHour : 'aggregations.social_shares_last_hour.doc_count',
   timeOnPageTop: 'aggregations.time_on_page.buckets',
-  commentsLastHour : 'aggregations.comments_last_hour.doc_count'
+  commentsLastHour : 'aggregations.comments_last_hour.doc_count',
+  topArticleViews: 'aggregations.top_article_views.buckets'
 }
 
 function divide(agg, fieldObj, divisor=1){

@@ -4,7 +4,6 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import FeatureFlag from '../utils/featureFlag';
-import responsiveStyles from '../utils/responsiveStyles';
 import FormatData from "../utils/formatData";
 import Header from '../components/Header';
 import Messaging from '../components/Messaging';
@@ -23,20 +22,42 @@ import AnalyticsStore from '../stores/AnalyticsStore';
 import _ from 'underscore';
 import moment from 'moment';
 
-const componentStyles = {
-  'default': {
-    tagStyle : {
-      fontSize: '15px',
-      marginLeft: '8px'
-    }
-  },
-  '(max-width: 500px)': {
 
-  }
-};
+const tagStyle = {
+  fontSize: '15px',
+  marginLeft: '8px'
+}
 
 function decode(uri){
   return uri ? decodeURI(uri) : null
+}
+
+function convertTime (avg) {
+  let seconds = Math.abs(avg)
+  let metricMinutes = Math.floor(seconds / 60);
+  let metricSeconds = Math.floor(seconds - metricMinutes * 60);
+  return `${metricMinutes}m ${metricSeconds}s`
+}
+
+function getAuthors (authors) {
+  return authors.author.buckets.map((d,i) => {
+    return d.key;
+  }).toString();
+}
+
+function getColumns (data, metric) {
+  return data.map((d, i) => {
+    let uuid = d.key;
+    let metricVal = d[metric].value;
+    let title = d.title.buckets[0].key
+    let author = getAuthors(d);
+    let titleUrl = <a href={`http://www.ft.com/cms/s/${uuid}.html`}>{title}<Glyphicon glyph="new-window" style={tagStyle} /></a>;
+    let lanternUrl = <a href={`/landing/article/${uuid}`}> <Glyphicon glyph="stats" style={tagStyle}  /></a>;
+
+    return [
+      titleUrl, author, metricVal, lanternUrl
+    ];
+  });
 }
 
 class TopArticlesView extends React.Component {
@@ -44,7 +65,7 @@ class TopArticlesView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      responsiveStyles : componentStyles['default']
+
     };
   }
 
@@ -63,12 +84,10 @@ class TopArticlesView extends React.Component {
   }
 
   componentWillUnmount(){
-    responsiveStyles.removeListeners(this);
     AnalyticsActions.destroy();
   }
 
   componentDidMount() {
-    responsiveStyles.addListeners(this, componentStyles);
     let analytics = require('../utils/analytics');
     analytics.sendGAEvent('pageview');
     analytics.trackScroll();
@@ -82,35 +101,17 @@ class TopArticlesView extends React.Component {
 
 
   render() {
-    let styles = this.state.responsiveStyles;
     let data = this.props.data;
     let title = (data) ? 'Lantern - Top Articles' : '';
+    let top5Date = moment(this.props.query.dateTo).format('dddd MMMM Do YYYY');
 
-    let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
-    let today = moment().subtract(1, 'days');
-    let top5Date = today.format('dddd MMMM Do YYYY');
-
-    let avg_time_rows = data.timeOnPageTop.map((d, i) => {
-      let uuid = d.key;
-      let avg = d.avg_time_on_page.value;
-      let title = d.title.buckets[0].key
-
-      let seconds = Math.abs(avg)
-      let metricMinutes = Math.floor(seconds / 60);
-      let metricSeconds = Math.floor(seconds - metricMinutes * 60);
-      avg = `${metricMinutes}m ${metricSeconds}s`
-
-      let author = d.author.buckets.map((d,i) => {
-        return d.key;
-      }).toString();
-
-      let titleUrl = <a href={`http://www.ft.com/cms/s/${uuid}.html`} target="_blank">{title}<Glyphicon glyph="new-window" style={styles.tagStyle} /></a>;
-      let lanternUrl = <a href={`/landing/article/${uuid}`} target="_blank"> <Glyphicon glyph="stats" style={styles.tagStyle} /></a>;
-
-      return [
-        titleUrl, author, avg, lanternUrl
-      ];
+    let avg_time_rows = getColumns(data.timeOnPageTop, 'avg_time_on_page');
+    avg_time_rows = avg_time_rows.map((d, i) => {
+      let time = convertTime(d[2])
+      return [d[0], d[1], time, d[3]]
     });
+
+    let topArticleViews = getColumns(data.topArticleViews, 'count');
 
     let updating
     if (this.props.loading) {
@@ -198,8 +199,8 @@ class TopArticlesView extends React.Component {
           <Row>
             <Col xs={12}>
               <Table
-                headers={['Article', 'Author(s)', 'Time']}
-                rows={[{Article: 'Article title', Author: 'Somebody important', Time: 3}, {Article: 'Another article', Author: 'Some peeps', Time: 4}]}
+                headers={['Article', 'Author(s)', 'Views']}
+                rows={topArticleViews}
               />
             </Col>
           </Row>
