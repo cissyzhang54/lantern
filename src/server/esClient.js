@@ -138,7 +138,7 @@ export function runTopArticleQuery(queryData) {
   }
 
   return retrieveTopArticleData(queryData)
-    .then((topArticleData) => { return topArticleData });
+    .then((topArticleData) => { return [topArticleData] });
 }
 
 export function runSearchQuery(queryData) {
