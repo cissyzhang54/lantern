@@ -185,14 +185,12 @@ class ArticleRealtimeView extends React.Component {
           />
         </ChunkWrapper>
 
-        <ChunkWrapper component="headlineStats">
-          <SectionHeadlineStats
-            data={this.props}
-            comparatorData={{}}
-            config={headlineStats}
-          />
-        </ChunkWrapper>
-
+        <SectionHeadlineStats
+          data={this.props}
+          comparatorData={{}}
+          config={headlineStats}
+        />
+        
         <ChunkWrapper component={selectedGraphComponentName}>
           <Row>
             <Col>
