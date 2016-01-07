@@ -12,7 +12,7 @@
     "clean": "rm -rf lib",
     "watch-js": "babel src -d lib --experimental -w",
     "dev-server": "env $(cat .env) node lib/server/webpack",
-    "server": "nodemon --expose-gc --delay 1 lib/server/server",
+    "server": "nodemon --max_old_space_size=${NODE_MAX_OLD_SPACE_SIZE:-0} --delay 1 lib/server/server",
     "server-debug": "env $(cat .env) nodemon --debug lib/server/server",
     "postinstall": "npm run build && env $(cat .env) webpack --config webpack.config.prod.js",
     "start": "npm run watch-js & npm run dev-server & env $(cat .env) npm run server",
