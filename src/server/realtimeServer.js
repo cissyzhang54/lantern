@@ -27,6 +27,8 @@ export default function RealtimeServer(app) {
         let isEmpty = !(io.sockets.adapter.rooms[uuid]);
         if (isEmpty) {
           let poller = articlePollers[uuid];
+          poller.removeAllListeners('updatedArticleData');
+          poller.removeAllListeners('error');
           delete articlePollers[uuid];
           poller.stop();
         }
