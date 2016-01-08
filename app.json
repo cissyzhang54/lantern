@@ -9,6 +9,7 @@
     "HEROKU_APP_NAME": {
       "required": true
     },
+    "NODE_MAX_OLD_SPACE_SIZE": 256,
     "OAUTH_CLIENT_ID": {
       "required": true
     },
