@@ -48,7 +48,6 @@ class ArticleView extends React.Component {
   componentWillMount() {
     AnalyticsActions.updateQuery({
       uuid : this.props.params.uuid,
-      dateFrom: null,
       type: 'article',
       comparatorType: this.props.params.comparatorType,
       comparator: this.props.params.comparator
