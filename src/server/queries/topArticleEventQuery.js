@@ -1,6 +1,6 @@
 import * as QueryUtils from '../utils/queryUtils'
 
-export default function TopArticleQuery(query){
+export default function TopArticleEventQuery(query){
 
   QueryUtils.checkString(query,'dateFrom');
   QueryUtils.checkString(query,'dateTo');
@@ -15,7 +15,7 @@ export default function TopArticleQuery(query){
           must: [
             {
               range: {
-                view_timestamp: {
+                event_timestamp: {
                   "from": query.dateFrom,
                   "to": query.dateTo
                   /*"from": "2016-01-06T00:00:00.000Z",

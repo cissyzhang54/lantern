@@ -16,10 +16,14 @@ export default function formatData(data) {
     return Promise.reject(error);
   }
 
-  let [articleData] = data;
+  let [articleData, eventData] = data;
 
   let articleFields = [
     'timeOnPageTop', 'topArticleViews'
+  ]
+
+  let eventFields = [
+    'topArticlesCommentPosts'
   ]
 
   let results = {};
@@ -27,6 +31,7 @@ export default function formatData(data) {
   return new Promise((resolve, reject) => {
     try {
       articleFields.forEach(f => { results[f] = getField(articleData, f)})
+      eventFields.forEach(f => { results[f] = getField(eventData, f)})
       resolve({
         data:results
       });
