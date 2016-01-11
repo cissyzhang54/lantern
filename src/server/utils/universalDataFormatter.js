@@ -102,7 +102,8 @@ const fields = {
   timeOnPageTop: 'aggregations.time_on_page.buckets',
   commentsLastHour : 'aggregations.comments_last_hour.doc_count',
   topArticleViews: 'aggregations.top_article_views.buckets',
-  topArticlesCommentPosts : 'aggregations.top_article_comments_posted.buckets'
+  topArticlesCommentPosts : 'aggregations.top_article_comments_posted.buckets',
+  topArticlesSearchRef: 'aggregations.top_articles_search_ref.buckets'
 }
 
 function divide(agg, fieldObj, divisor=1){

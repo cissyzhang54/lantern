@@ -46,6 +46,38 @@ export default function TopArticlesAggregation(query) {
          }
        }
      }
+   },
+   "top_articles_search_ref" : {
+     terms: {
+       field: "article_uuid",
+       order : {
+         "views" : "desc"
+       },
+       size: 5
+     },
+     aggs : {
+       views : {
+         filter: {
+           bool : {
+             must :[
+               {term: { "referrer_type": "search" }}
+             ]
+           }
+         },
+         aggs: {
+           title : {
+             terms : {
+               field : "title_not_analyzed"
+             }
+           },
+           author : {
+             terms : {
+               field : "authors_not_analyzed"
+             }
+           }
+         }
+       }
+     }
    }
  }
 }
