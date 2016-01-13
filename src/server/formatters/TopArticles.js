@@ -19,7 +19,7 @@ export default function formatData(data) {
   let [articleData, eventData] = data;
 
   let articleFields = [
-    'timeOnPageTop', 'topArticleViews', 'topArticlesSearchRef'
+    'timeOnPageTop', 'topArticleViews', 'topArticlesSearchRef', 'topArticlesSocialRef'
   ]
 
   let eventFields = [

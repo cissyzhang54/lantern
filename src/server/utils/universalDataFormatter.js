@@ -103,6 +103,7 @@ const fields = {
   commentsLastHour : 'aggregations.comments_last_hour.doc_count',
   topArticleViews: 'aggregations.top_article_views.buckets',
   topArticlesCommentPosts : 'aggregations.top_article_comments_posted.buckets',
+  topArticlesSocialRef: 'aggregations.top_articles_social_ref.buckets',
   topArticlesSearchRef: 'aggregations.top_articles_search_ref.buckets'
 }
 
