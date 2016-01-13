@@ -395,7 +395,6 @@ function retrieveTopArticleData(queryData) {
       if (error) {
         return reject(error);
       }
-
       return resolve(response.responses);
     })
   })

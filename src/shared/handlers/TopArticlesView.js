@@ -79,7 +79,9 @@ class TopArticlesView extends React.Component {
 
   componentWillMount() {
     AnalyticsActions.updateQuery({
-      type: 'topArticles'
+      type: 'topArticles',
+      dateFrom: moment().subtract(1, 'days').startOf('day').toISOString(),
+      dateTo: moment().subtract(1, 'days').endOf('day').toISOString()
     });
   }
 
@@ -99,11 +101,28 @@ class TopArticlesView extends React.Component {
     }
   }
 
-
   render() {
     let data = this.props.data;
     let title = (data) ? 'Lantern - Top Articles' : '';
     let top5Date = moment(this.props.query.dateTo).format('dddd MMMM Do YYYY');
+
+    if (this.props.errorMessage) {
+      return (
+        <ErrorHandler
+        category="Article"
+        type="ERROR"
+        message={this.props.errorMessage}
+        error={this.props.error}
+        />
+      );
+    } else if (!this.props.data) {
+      return (
+        <Messaging
+        category="Article"
+        type="LOADING"
+        />
+      );
+    }
 
     /* Average time reading the article */
     let avg_time_rows = getColumns(data.timeOnPageTop, 'avg_time_on_page');
