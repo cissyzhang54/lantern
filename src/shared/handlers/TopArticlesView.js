@@ -126,6 +126,17 @@ class TopArticlesView extends React.Component {
     });
     topArticleCommented = getColumns(topArticleCommented, 'doc_count');
 
+    /* Top referred articles from seach engines */
+    let searchReferrers = data.topArticlesSearchRef.map((d, i) => {
+      return {
+        key : d.key,
+        author: d.views.author,
+        doc_count: d.views.doc_count,
+        title: d.views.title
+      }
+    });
+    searchReferrers = getColumns(searchReferrers, 'doc_count');
+
     let updating
     if (this.props.loading) {
       updating = (
@@ -231,6 +242,22 @@ class TopArticlesView extends React.Component {
                 headers={['Article', 'Author(s)', 'Time', ""]}
                 rows={[{Article: 'Article title', Author: 'Somebody important', Time: 3}, {Article: 'Another article', Author: 'Some peeps', Time: 4}]}
               />
+            </Col>
+          </Row>
+        </ChunkWrapper>
+
+        <ChunkWrapper component="Top5FromSocialMedia">
+          <Row>
+            <Col xs={12}>
+              <h3>Top 5 - Traffic from seach engines</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col xs={12}>
+              <Table
+                headers={['Article', 'Author(s)', 'Views']}
+                rows={searchReferrers}
+                />
             </Col>
           </Row>
         </ChunkWrapper>
