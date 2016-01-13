@@ -1,31 +1,23 @@
 import {expect} from 'chai';
 import TestUtils from 'react-addons-test-utils';
-import sinon from 'sinon';
 import {createAltWrappedComponent} from '../createComponent';
 import Filters from '../../src/shared/components/Filters';
 import Filter from '../../src/shared/components/Filter';
-import FilterStore from '../../src/shared/stores/FilterStore';
 
 describe ('Filters component', function() {
-  let stub;
-  // Uses the default data from the module
-  beforeEach(function() {
-    stub = sinon.stub(FilterStore, 'getState');
-  });
 
   it ('Should render component', function() {
-    stub.returns({
-      devices: ['gameboy', 'psp', 'gba'],
-      regions: ['uk', 'us'],
-      cohort: ['putins', 'obamas', 'millenials', 'snake people'],
-      referrers: ['social', 'antisocial', 'supersocial']
-    });
-
     let filters = createAltWrappedComponent(Filters, {
       renderDevice:true,
       renderRegion:true,
       renderReferrers:true,
-      renderUserTypes:true
+      renderUserTypes:true,
+      availableFilters:   {
+        devices: ['gameboy', 'psp', 'gba'],
+        regions: ['uk', 'us'],
+        cohort: ['putins', 'obamas', 'millenials', 'snake people'],
+        referrers: ['social', 'antisocial', 'supersocial']
+      }
     });
 
     const regionFilter = filters.props.children.props.children[0].props.children;

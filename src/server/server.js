@@ -104,6 +104,7 @@ function renderRoute(route, req, res) {
   res.locals.data.UserStore = {
     user: user
   }
+
   alt.bootstrap(JSON.stringify(res.locals.data || {}));
   let iso = new Iso();
 

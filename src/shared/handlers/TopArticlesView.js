@@ -3,22 +3,14 @@ import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import connectToStores from 'alt-utils/lib/connectToStores';
-import FeatureFlag from '../utils/featureFlag';
-import FormatData from "../utils/formatData";
 import Header from '../components/Header';
 import Messaging from '../components/Messaging';
 import ErrorHandler from '../components/ErrorHandler';
-import SectionModifier from '../components/SectionModifier';
-import SectionHeadlineStats from '../components/SectionHeadlineStats';
-import SectionWho from '../components/SectionWho';
-import DualScaleLineChart from "../components/DualScaleLineChart";
 import ChunkWrapper from "../components/ChunkWrapper";
-import SectionWhere from '../components/SectionWhere';
-import BarChart from '../components/BarChart.js';
 import Table from '../components/Table.js';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import AnalyticsActions from '../actions/AnalyticsActions';
-import AnalyticsStore from '../stores/AnalyticsStore';
+import TopArticlesActions from '../actions/TopArticlesActions';
+import TopArticlesStore from '../stores/TopArticlesStore';
 import _ from 'underscore';
 import moment from 'moment';
 
@@ -70,23 +62,15 @@ class TopArticlesView extends React.Component {
   }
 
   static getStores() {
-    return [AnalyticsStore];
+    return [TopArticlesStore];
   }
 
   static getPropsFromStores() {
-    return AnalyticsStore.getState();
+    return TopArticlesStore.getState();
   }
 
   componentWillMount() {
-    AnalyticsActions.updateQuery({
-      type: 'topArticles',
-      dateFrom: moment().subtract(1, 'days').startOf('day').toISOString(),
-      dateTo: moment().subtract(1, 'days').endOf('day').toISOString()
-    });
-  }
-
-  componentWillUnmount(){
-    AnalyticsActions.destroy();
+    TopArticlesActions.fetch();
   }
 
   componentDidMount() {
@@ -95,31 +79,25 @@ class TopArticlesView extends React.Component {
     analytics.trackScroll();
   }
 
-  componentWillUpdate(nextProps) {
-    if (!_.isEqual(nextProps.params, this.props.params)) {
-      AnalyticsActions.updateQuery.defer(nextProps.params);
-    }
-  }
-
   render() {
     let data = this.props.data;
     let title = (data) ? 'Lantern - Top Articles' : '';
-    let top5Date = moment(this.props.query.dateTo).format('dddd MMMM Do YYYY');
+    let top5Date = moment(this.props.dateTo).format('dddd MMMM Do YYYY');
 
     if (this.props.errorMessage) {
       return (
         <ErrorHandler
-        category="Article"
-        type="ERROR"
-        message={this.props.errorMessage}
-        error={this.props.error}
+          category="Article"
+          type="ERROR"
+          message={this.props.errorMessage}
+          error={this.props.error}
         />
       );
-    } else if (!this.props.data) {
+    } else if (!data || Object.keys(data).length === 0) {
       return (
         <Messaging
-        category="Article"
-        type="LOADING"
+          category="Article"
+          type="LOADING"
         />
       );
     }
@@ -287,7 +265,7 @@ class TopArticlesView extends React.Component {
               <Table
                 headers={['Article', 'Author(s)', 'Views']}
                 rows={searchReferrers}
-                />
+              />
             </Col>
           </Row>
         </ChunkWrapper>

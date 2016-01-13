@@ -11,7 +11,6 @@ import ModifierDescription from "./ModifierDescription";
 import Text from "./Text";
 
 import AnalyticsActions from '../actions/AnalyticsActions';
-import FilterActions from '../actions/FilterActions';
 
 const styles = {
   modifierWrapper : {
@@ -61,8 +60,20 @@ export default class Modifier extends React.Component {
 
   }
 
-  handleFilterChange (selectedFilters) {
-    FilterActions.selectFilter(selectedFilters);
+  handleFilterChange (filter) {
+    let key;
+    switch (filter.key){
+      case 'Device': key = 'device_type'; break;
+      case 'Region': key = 'geo_region'; break;
+      case 'UserCohort': key = 'user_cohort'; break;
+      case 'Referrers': key = 'referrer_type'; break;
+    }
+
+    if (!filter.value.length) {
+      AnalyticsActions.removeFilter(key);
+    }  else {
+      AnalyticsActions.addFilter(key, filter.value);
+    }
   }
 
   render() {
@@ -128,6 +139,7 @@ export default class Modifier extends React.Component {
           </Col>
           <Filters
             onChange={this.handleFilterChange}
+            availableFilters={this.props.availableFilters}
           />
         </Row>
 

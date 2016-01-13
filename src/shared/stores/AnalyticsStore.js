@@ -25,6 +25,12 @@ function newState() {
       comparatorType: 'global',
       publishDate: null
     },
+    availableFilters: {
+      devices: [],
+      regions: [],
+      cohort: [],
+      referrers: []
+    },
     activeQuery: null
   }
 }
@@ -51,10 +57,23 @@ class AnalyticsStore {
   updateData(newData) {
     newData.loading = false;
     newData.activeQuery = newData.query;
+
     if (this.state.query.type === 'article') {
       let queryProps = assign({}, this.state.query, {dateFrom : newData.data.published})
       newData.query = queryProps;
     }
+
+    if (Object.keys(this.state.query.filters).length === 0) {
+      let getKeys = (item) => item[0];
+
+      assign(newData, { availableFilters: {
+        devices: newData.data.devices.map(getKeys),
+        regions: newData.data.regions.map(getKeys),
+        cohort: newData.data.userCohort.map(getKeys),
+        referrers: newData.data.referrerTypes.map(getKeys)
+      }})
+    }
+
     this.setState(newData);
   }
 
@@ -74,6 +93,18 @@ class AnalyticsStore {
         this.getInstance().loadData(queryProps);
       }, 0);
     }
+  }
+
+  removeFilter(filterProps) {
+    var newState = this.state;
+    delete newState.query.filters[filterProps];
+    this.updateQuery(newState.query);
+  }
+
+  addFilter(filterProps) {
+    var newState = this.state;
+    newState.query.filters[filterProps[0]] = filterProps[1];
+    this.updateQuery(newState.query);
   }
 
   /**
