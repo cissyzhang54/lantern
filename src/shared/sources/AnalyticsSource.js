@@ -4,17 +4,16 @@ import AnalyticsActions from '../actions/AnalyticsActions';
 let AnalyticsSource = {
   loadData: {
 
-    remote(state, newQuery) {
-      switch (newQuery.type) {
+    remote(state) {
+      switch (state.query.type) {
         case 'article':
-          return DataAPI.getArticleData(newQuery);
+          return DataAPI.getArticleData(state.query);
         case 'section':
-          return DataAPI.getSectionData(newQuery);
+          return DataAPI.getSectionData(state.query);
         case 'topic':
-          return DataAPI.getTopicData(newQuery);
-        case 'topArticles':
-          return DataAPI.getTopArticlesData(newQuery);
+          return DataAPI.getTopicData(state.query);
         default:
+          throw new Error('Unhandled query type: ' + state.query.type);
       }
     },
 

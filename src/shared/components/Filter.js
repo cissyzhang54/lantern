@@ -1,5 +1,4 @@
 import React from "react";
-import Input from 'react-bootstrap/lib/Input';
 import Select from 'react-select';
 
 export default class Filter extends React.Component {
@@ -35,7 +34,7 @@ export default class Filter extends React.Component {
           placeholder={this.props.label}
           options={options}
           value={this.state.value}
-          multi={true}
+          multi
           onChange={this._handleChange.bind(this)}
         />
     );

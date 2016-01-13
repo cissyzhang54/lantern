@@ -1,5 +1,4 @@
 import React from 'react';
-import connectToStores from 'alt-utils/lib/connectToStores';
 import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
@@ -8,7 +7,6 @@ import FeatureFlag from '../utils/featureFlag';
 
 import Header from '../components/Header';
 import Messaging from '../components/Messaging';
-import ErrorHandler from '../components/ErrorHandler';
 import SectionModifier from '../components/SectionModifier';
 import BarChart from '../components/BarChart.js';
 import Table from '../components/Table.js';
@@ -17,42 +15,12 @@ import SectionWho from "../components/SectionWho";
 import SectionWhere from "../components/SectionWhere";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
 
-import AnalyticsActions from '../actions/AnalyticsActions';
-import AnalyticsStore from '../stores/AnalyticsStore';
-
 import ChunkWrapper from "../components/ChunkWrapper";
-
-import _ from 'underscore'
-
-function decode(uri){
-  return uri ? decodeURI(uri) : null
-}
 
 class SectionView extends React.Component {
 
   constructor(props) {
     super(props);
-  }
-
-  static getStores() {
-    return [AnalyticsStore];
-  }
-
-  static getPropsFromStores() {
-    return AnalyticsStore.getState();
-  }
-
-  componentWillMount() {
-    AnalyticsActions.updateQuery({
-      section: decode(this.props.params.section),
-      type: 'section',
-      comparator: decode(this.props.params.comparator),
-      comparatorType: decode(this.props.params.comparatorType)
-    });
-  }
-
-  componentWillUnmount(){
-    AnalyticsActions.destroy();
   }
 
   componentDidMount() {
@@ -61,29 +29,7 @@ class SectionView extends React.Component {
     analytics.trackScroll();
   }
 
-  componentWillUpdate(nextProps) {
-    if (!_.isEqual(nextProps.params, this.props.params)) {
-      AnalyticsActions.updateQuery.defer(nextProps.params);
-    }
-  }
-
   render() {
-    if (this.props.errorMessage) {
-      return (
-        <ErrorHandler
-          category="Section"
-          message={this.props.errorMessage}
-          error={this.props.error}
-          type="ERROR"
-        />
-      );
-    } else if (!this.props.data) {
-      return (
-        <Messaging
-          category="Section"
-          type="LOADING"
-        />);
-    }
     let updating
     if (this.props.loading) {
       updating = (
@@ -160,6 +106,7 @@ class SectionView extends React.Component {
             category={'sections'}
             uuid={this.props.params.section}
             dateRange='historical'
+            availableFilters={this.props.availableFilters}
           />
         </ChunkWrapper>
 
@@ -300,4 +247,4 @@ class SectionView extends React.Component {
   }
 }
 
-export default connectToStores(SectionView);
+export default SectionView;

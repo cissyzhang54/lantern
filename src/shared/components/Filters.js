@@ -2,78 +2,38 @@ import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import Filter from './Filter';
-import connectToStores from 'alt-utils/lib/connectToStores';
-
-import FilterStore from '../stores/FilterStore.js';
-
-const DEFAULT_STATE = {
-
-  filters : [
-    {
-      name: 'Region',
-      label: 'Region',
-      options: []
-    },
-    {
-      name: 'Device',
-      label: 'Device',
-      options: []
-    },
-    {
-      name: 'UserCohort',
-      label: 'User Type',
-      options: []
-    },
-    {
-      name: 'Referrers',
-      label: 'Traffic Source',
-      options: []
-    }
-  ]
-};
 
 class Filters extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = DEFAULT_STATE;
-  }
-
-  static getStores() {
-    return [FilterStore];
-  }
-
-  static getPropsFromStores() {
-    let filterState = FilterStore.getState();
-
-    return {
-      filters : [
-        {
-          name: 'Region',
-          label: 'Region',
-          options: filterState.regions
-        },
-        {
-          name: 'Device',
-          label: 'Device',
-          options: filterState.devices
-        },
-        {
-          name: 'UserCohort',
-          label: 'User Type',
-          options: filterState.cohort
-        },
-        {
-          name: 'Referrers',
-          label: 'Traffic Source',
-          options: filterState.referrers
-        }
-      ]
-    };
   }
 
   render() {
-    let filterDropDowns = this.props.filters.map((f, i) => {
+    let filters = [
+      {
+        name: 'Region',
+        label: 'Region',
+        options: this.props.availableFilters.regions
+      },
+      {
+        name: 'Device',
+        label: 'Device',
+        options: this.props.availableFilters.devices
+      },
+      {
+        name: 'UserCohort',
+        label: 'User Type',
+        options: this.props.availableFilters.cohort
+      },
+      {
+        name: 'Referrers',
+        label: 'Traffic Source',
+        options: this.props.availableFilters.referrers
+      }
+    ];
+
+    let filterDropDowns = filters.map((f, i) => {
       return (
         <Col xs={6} sm={3} key={i}>
           <Filter
@@ -105,4 +65,4 @@ Filters.defaultProps = {
 }
 
 
-export default connectToStores(Filters);
+export default Filters;

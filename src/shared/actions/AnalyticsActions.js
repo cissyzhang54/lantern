@@ -6,6 +6,10 @@ class AnalyticsActions {
     this.generateActions(
       'updateData',
       'updateQuery',
+      'updateUuid',
+      'updateComparatorType',
+      'addFilter',
+      'removeFilter',
       'loadingFailed',
       'loadingData',
       'destroy'
