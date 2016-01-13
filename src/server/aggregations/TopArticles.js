@@ -35,11 +35,6 @@ export default function TopArticlesAggregation(query) {
        size: 5
      },
      aggs : {
-       count : {
-         "value_count" : {
-           "field" : "article_uuid"
-         }
-       },
        title : {
          terms : {
            field : "title_not_analyzed"

@@ -4,6 +4,7 @@ import awsElasticSearchConnector from 'http-aws-es';
 import ArticleComparatorQuery from './esQueries/ArticleComparator';
 import SectionsQuery from './esQueries/Sections';
 import TopArticlesQuery from './esQueries/TopArticles';
+import TopArticleEventsQuery from './esQueries/TopArticleEvents';
 import SectionComparatorQuery from './esQueries/SectionComparator';
 import SectionMetadataQuery from './esQueries/SectionMetadata';
 import SectionMetadataComparatorQuery from './esQueries/SectionMetadataComparator';
@@ -135,7 +136,7 @@ export function runTopArticleQuery(queryData) {
   }
 
   return retrieveTopArticleData(queryData)
-    .then((topArticleData) => { return [topArticleData] });
+    .then((topArticleData) => { return topArticleData });
 }
 
 export function runSearchQuery(queryData) {
@@ -367,20 +368,35 @@ function retrieveRealtimeAllData(queryData) {
 
 function retrieveTopArticleData(queryData) {
   return new Promise((resolve, reject) => {
-    let queryObject = TopArticlesQuery(queryData);
-    let request = {
+    let articleQuery = TopArticlesQuery(queryData);
+    let articleHeader = {
       index: 'article_page_view-*', // TODO wrong index to be using
       ignore_unavailable: true,
-      search_type: 'count',
-      body: queryObject
+      search_type: 'count'
     }
 
-    client.search(request, (error, response) => {
+    let articleEventsQuery = TopArticleEventsQuery(queryData);
+    let articleEventsHeader = {
+      index: 'article_page_event-*', // TODO wrong index to be using
+      ignore_unavailable: true,
+      search_type: 'count'
+    }
+
+    let request = {
+      body: [
+        articleHeader,
+        articleQuery,
+        articleEventsHeader,
+        articleEventsQuery
+      ]
+    }
+
+    client.msearch(request, (error, response) => {
       if (error) {
         return reject(error);
       }
 
-      return resolve(response);
+      return resolve(response.responses);
     })
   })
 }

@@ -48,8 +48,8 @@ function getAuthors (authors) {
 function getColumns (data, metric) {
   return data.map((d, i) => {
     let uuid = d.key;
-    let metricVal = d[metric].value;
-    let title = d.title.buckets[0].key
+    let metricVal = d[metric];
+    let title =  d.title.buckets[0] ? d.title.buckets[0].key : "Unknown"
     let author = getAuthors(d);
     let titleUrl = <a href={`http://www.ft.com/cms/s/${uuid}.html`}>{title}<Glyphicon glyph="new-window" style={tagStyle} /></a>;
     let lanternUrl = <a href={`/landing/article/${uuid}`}> <Glyphicon glyph="stats" style={tagStyle}  /></a>;
@@ -105,13 +105,26 @@ class TopArticlesView extends React.Component {
     let title = (data) ? 'Lantern - Top Articles' : '';
     let top5Date = moment(this.props.query.dateTo).format('dddd MMMM Do YYYY');
 
+    /* Average time reading the article */
     let avg_time_rows = getColumns(data.timeOnPageTop, 'avg_time_on_page');
     avg_time_rows = avg_time_rows.map((d, i) => {
-      let time = convertTime(d[2])
+      let time = convertTime(d[2].value)
       return [d[0], d[1], time, d[3]]
     });
 
-    let topArticleViews = getColumns(data.topArticleViews, 'count');
+    /* Most read article */
+    let topArticleViews = getColumns(data.topArticleViews, 'doc_count');
+
+    /* Most commented article */
+    let topArticleCommented = data.topArticlesCommentPosts.map((d, i) => {
+      return {
+        key : d.key,
+        author: d.posts.author,
+        doc_count: d.posts.doc_count,
+        title: d.posts.title
+      }
+    });
+    topArticleCommented = getColumns(topArticleCommented, 'doc_count');
 
     let updating
     if (this.props.loading) {
@@ -183,8 +196,8 @@ class TopArticlesView extends React.Component {
           <Row>
             <Col xs={12}>
               <Table
-                headers={['Article', 'Author(s)', 'Time']}
-                rows={[{Article: 'Article title', Author: 'Somebody important', Time: 3}, {Article: 'Another article', Author: 'Some peeps', Time: 4}]}
+                headers={['Article', 'Author(s)', 'Comments']}
+                rows={topArticleCommented}
               />
             </Col>
           </Row>
