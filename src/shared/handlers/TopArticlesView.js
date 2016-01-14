@@ -87,7 +87,7 @@ class TopArticlesView extends React.Component {
     if (this.props.errorMessage) {
       return (
         <ErrorHandler
-          category="Article"
+          category="Pick of the day"
           type="ERROR"
           message={this.props.errorMessage}
           error={this.props.error}
@@ -96,7 +96,7 @@ class TopArticlesView extends React.Component {
     } else if (!data || Object.keys(data).length === 0) {
       return (
         <Messaging
-          category="Article"
+          category="Pick of the day"
           type="LOADING"
         />
       );
@@ -149,7 +149,7 @@ class TopArticlesView extends React.Component {
     if (this.props.loading) {
       updating = (
         <Messaging
-          category="Section"
+          category="Pick of the day"
           type="UPDATING"
         />
       );

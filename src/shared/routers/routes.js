@@ -49,7 +49,7 @@ export default (
     />
 
 
-    <Route path="toparticles" component={TopArticlesView} />
+  <Route path="pickoftheday" component={TopArticlesView} />
 
     <Route path="realtime/articles/:uuid" component={ArticleRealtimeView} />
     <Route path="*" name='404' component={Error404}   />
