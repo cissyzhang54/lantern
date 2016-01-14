@@ -16,10 +16,9 @@ export default function ArticleEventsComparatorESQuery(query) {
   } else {
     delete comparatorQuery.filtered.query.bool.must;
   }
-
   return {
     "query" : comparatorQuery,
-    "size": 1,
-    "aggs" : ArticleEventsComparatorAggregation
-  }
+    "size": 0,
+    "aggs" : ArticleEventsComparatorAggregation()
+  };
 }
