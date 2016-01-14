@@ -236,7 +236,7 @@ export default class Search extends React.Component {
       <Glyphicon glyph="star-empty" style={starGlyphStyle} />
 
       <Link
-        to={'/toparticles'}
+        to={'/pickoftheday'}
         style={borderlessLinkStyle}
         >
         {'Pick of the day'}
