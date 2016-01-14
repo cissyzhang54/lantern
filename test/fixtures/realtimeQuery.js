@@ -52,7 +52,12 @@ export default {
           must: [
             {
               term: {
-                event_type: 'comments'
+                event_type: 'page'
+              }
+            },
+            {
+              term: {
+                event_category: 'comment_posted'
               }
             },
             {
