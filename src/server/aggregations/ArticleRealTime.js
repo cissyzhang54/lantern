@@ -20,6 +20,47 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         }
       },
+
+      social_shares_last_hour: {
+        filter: {
+          bool: {
+            must: [
+              {
+                term: {
+                  event_type: 'share'
+                }
+              },
+              {
+                range: {
+                  event_timestamp: {
+                    gte: "now-1h/m"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
+      comments_last_hour: {
+         filter: {
+           bool: {
+             must: [
+               {
+                 term: {
+                   event_type: 'comments'
+                 }
+               },
+               {
+                 range: {
+                   event_timestamp: {
+                     gte: "now-1h/m"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      },
       page_views: {
         filter : {
           bool : {

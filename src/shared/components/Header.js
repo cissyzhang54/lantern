@@ -27,6 +27,11 @@ const componentStyles = {
     },
     anchor :{
       color: '#333'
+    },
+    miniSubHeading : {
+      fontSize: '12px',
+      textAlign: 'center',
+      marginTop: '20px'
     }
   },
   '(max-width: 500px)': {
@@ -65,6 +70,7 @@ export default class Header extends React.Component {
         let title = url ? link : this.props.title
         let author = this.props.author ? <p style={styles.text}>{this.props.author}</p> : [];
         let publishDate = this.props.published ? <p style={styles.text} className="pull-right">{this.props.published}</p> : [];
+        let subHeading = this.props.subHeading
         return (
           <header style={styles.header} className="clearfix" data-component='header' >
             <div style={styles.titleContainer} >
@@ -73,6 +79,9 @@ export default class Header extends React.Component {
               </h1>
               {author}
               {publishDate}
+              <p style={styles.miniSubHeading}>
+                {subHeading}
+              </p>
             </div>
           </header>
         );

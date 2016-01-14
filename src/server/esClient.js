@@ -3,6 +3,8 @@ import elasticsearch from 'elasticsearch';
 import awsElasticSearchConnector from 'http-aws-es';
 import ArticleComparatorQuery from './esQueries/ArticleComparator';
 import SectionsQuery from './esQueries/Sections';
+import TopArticlesQuery from './esQueries/TopArticles';
+import TopArticleEventsQuery from './esQueries/TopArticleEvents';
 import SectionComparatorQuery from './esQueries/SectionComparator';
 import SectionMetadataQuery from './esQueries/SectionMetadata';
 import SectionMetadataComparatorQuery from './esQueries/SectionMetadataComparator';
@@ -114,15 +116,27 @@ export function runArticleRealtimeQuery(queryData) {
     queryData.dateTo = moment().toISOString();
   }
 
-  let articleData;
-  return retrieveRealtimeArticleData(queryData)
-    .then((data) => {
-      articleData = data;
-      return retrieveRealtimeAllData(queryData)
-    }).then((data) => {
-      let otherArticles = data;
-      return [articleData, otherArticles]
-    });
+  let requests = [];
+
+  requests.push(retrieveRealtimeArticleData(queryData));
+  requests.push(retrieveRealtimeAllData(queryData));
+
+  return Promise.all(requests);
+}
+
+export function runTopArticleQuery(queryData) {
+  let queryError = queryDataError('articles', queryData);
+  if (queryError) {
+    return Promise.reject(queryError);
+  }
+
+  if (!queryData.dateFrom || !queryData.dateTo) {
+    queryData.dateFrom = moment().subtract(1, 'days').startOf('day').toISOString();
+    queryData.dateTo = moment().subtract(1, 'days').endOf('day').toISOString();
+  }
+
+  return retrieveTopArticleData(queryData)
+    .then((topArticleData) => { return topArticleData });
 }
 
 export function runSearchQuery(queryData) {
@@ -163,7 +177,6 @@ function retrieveArticleData(queryData){
       search_type: 'count'
     };
 
-
     let request = {
       body: [
         articlesHeader,
@@ -185,7 +198,6 @@ function retrieveArticleData(queryData){
     });
   })
 }
-
 
 function retrieveSectionData(queryData){
   return new Promise((resolve, reject) => {
@@ -318,8 +330,6 @@ function retrieveMetaData(queryData){
   })
 }
 
-
-
 function retrieveRealtimeArticleData(queryData) {
   return new Promise((resolve, reject) => {
     let queryObject = ArticleRealtimeQuery(queryData);
@@ -352,6 +362,40 @@ function retrieveRealtimeAllData(queryData) {
       }
 
       return resolve(response);
+    })
+  })
+}
+
+function retrieveTopArticleData(queryData) {
+  return new Promise((resolve, reject) => {
+    let articleQuery = TopArticlesQuery(queryData);
+    let articleHeader = {
+      index: 'article_page_view-*', // TODO wrong index to be using
+      ignore_unavailable: true,
+      search_type: 'count'
+    }
+
+    let articleEventsQuery = TopArticleEventsQuery(queryData);
+    let articleEventsHeader = {
+      index: 'article_page_event-*', // TODO wrong index to be using
+      ignore_unavailable: true,
+      search_type: 'count'
+    }
+
+    let request = {
+      body: [
+        articleHeader,
+        articleQuery,
+        articleEventsHeader,
+        articleEventsQuery
+      ]
+    }
+
+    client.msearch(request, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      return resolve(response.responses);
     })
   })
 }

@@ -1,12 +1,8 @@
 import React from 'react';
 import DocumentTitle from 'react-document-title';
-import connectToStores from 'alt-utils/lib/connectToStores';
 import Link from 'react-router/lib/Link';
-import _ from 'underscore';
 import moment from 'moment';
 import Header from "../components/Header";
-import Messaging from '../components/Messaging';
-import ErrorHandler from '../components/ErrorHandler';
 import SectionModifier from "../components/SectionModifier";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
 import SectionReferrers from "../components/SectionReferrers.js";
@@ -17,9 +13,8 @@ import SectionNext from "../components/SectionNext";
 import SectionWho from "../components/SectionWho";
 import SectionInteract from "../components/SectionInteract";
 import Text from '../components/Text'
+import Messaging from '../components/Messaging';
 
-import AnalyticsActions from '../actions/AnalyticsActions';
-import AnalyticsStore from '../stores/AnalyticsStore';
 
 import FeatureFlag from '../utils/featureFlag';
 import * as formatAuthors from '../utils/formatAuthors';
@@ -33,34 +28,6 @@ class ArticleView extends React.Component {
     this.state = {}
   }
 
-  static getStores() {
-    return [AnalyticsStore];
-  }
-
-  static getPropsFromStores() {
-    return AnalyticsStore.getState();
-  }
-
-  componentWillUnmount() {
-    AnalyticsActions.destroy();
-  }
-
-  componentWillMount() {
-    AnalyticsActions.updateQuery({
-      uuid : this.props.params.uuid,
-      dateFrom: null,
-      type: 'article',
-      comparatorType: this.props.params.comparatorType,
-      comparator: this.props.params.comparator
-    });
-  }
-
-  componentWillUpdate(nextProps) {
-    if (!_.isEqual(nextProps.params, this.props.params)) {
-      AnalyticsActions.updateQuery.defer(nextProps.params);
-    }
-  }
-
   componentDidMount() {
     let analytics = require('../utils/analytics');
     analytics.sendGAEvent('pageview');
@@ -68,33 +35,6 @@ class ArticleView extends React.Component {
   }
 
   render() {
-    if (this.props.errorMessage) {
-      return (
-        <ErrorHandler
-          category="Article"
-          type="ERROR"
-          message={this.props.errorMessage}
-          error={this.props.error}
-        />
-      );
-    } else if (!this.props.data) {
-      return (
-        <Messaging
-          category="Article"
-          type="LOADING"
-        />
-      );
-    }
-    let updating = (this.props.loading)
-      ? (<Messaging
-        category="Article"
-        type="UPDATING"
-         />)
-      : (<Messaging
-        category="Article"
-        type="PLACEHOLDER"
-         />)
-
     let data = this.props.data;
     let comparatorData = this.props.comparatorData || { article: {}};
     let title = (data) ? 'Lantern - ' + data.title : '';
@@ -143,6 +83,16 @@ class ArticleView extends React.Component {
       );
     }
 
+    let updating = (this.props.loading)
+      ? (<Messaging
+        category="Article"
+        type="UPDATING"
+         />)
+      : (<Messaging
+        category="Article"
+        type="PLACEHOLDER"
+         />)
+
     return (<DocumentTitle title={title}>
       <div>
 
@@ -154,6 +104,7 @@ class ArticleView extends React.Component {
             query={this.props.query}
             uuid={data.uuid}
             dateRange='published'
+            availableFilters={this.props.availableFilters}
           />
           {realtimeLink}
         </ChunkWrapper>
@@ -226,4 +177,4 @@ class ArticleView extends React.Component {
   }
 }
 
-export default connectToStores(ArticleView);
+export default ArticleView;

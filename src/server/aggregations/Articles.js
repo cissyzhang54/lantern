@@ -8,7 +8,7 @@ export default function ArticlesAggregation(query) {
           interval: calculateInterval.minuteInterval(query.dateFrom, query.dateTo),
           min_doc_count : 0
         }
-      },
+      },  
       "page_views_over_time" : {
         "date_histogram" : {
           "field" : "view_timestamp",

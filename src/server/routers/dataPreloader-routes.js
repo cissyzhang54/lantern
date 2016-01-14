@@ -1,7 +1,6 @@
 /* eslint-env node */
 import express from 'express';
 import moment from 'moment';
-import {getKeys} from '../../shared/stores/FilterStore';
 import dataApiUtils from '../../shared/utils/DataAPIUtils';
 
 let router = express.Router();
@@ -67,6 +66,15 @@ router.get(`/topics/:topic/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req
     });
 });
 
+router.get(`/toparticles`, (req, res, next) => {
+  return getTopArticlesData(req, res)
+    .then(() => next())
+    .catch((err) => {
+      if (err.status) res.status(err.status);
+      next(err);
+    });
+});
+
 function getArticleData(req, res){
   let query = {
     uuid: decode(req.params.uuid),
@@ -77,6 +85,7 @@ function getArticleData(req, res){
     .then((data) => {
       let dateFrom = moment(data.data.published).toISOString();
       let dateTo = moment().toISOString();
+      let getKeys = (item) => item[0];
       res.locals.data = {
         AnalyticsStore: {
           comparatorData: data.comparatorData,
@@ -90,16 +99,13 @@ function getArticleData(req, res){
             comparator: query.comparator,
             comparatorType: query.comparatorType,
             publishDate: dateFrom
-          }
-        },
-        FilterStore : {
-          query: {
-            filters: {}
           },
-          devices: getKeys(data.data.devices),
-          regions: getKeys(data.data.regions),
-          cohort: getKeys(data.data.userCohort),
-          referrers: getKeys(data.data.referrerTypes)
+          availableFilters: {
+            devices: data.data.devices.map(getKeys),
+            regions: data.data.regions.map(getKeys),
+            cohort: data.data.userCohort.map(getKeys),
+            referrers: data.data.referrerTypes.map(getKeys)
+          }
         }
       };
       return res;
@@ -134,7 +140,9 @@ function getArticleRealtimeData(req, res) {
           livePageViews: data.livePageViews,
           realtimeNextInternalUrl: data.realtimeNextInternalUrl,
           linksClicked: data.linksClickedLastHour,
-          retentionRate: retentionRate
+          retentionRate: retentionRate,
+          socialShares: data.socialSharesLastHour,
+          comments: data.commentsLastHour
         }
       };
       return res;
@@ -146,7 +154,6 @@ function getArticleRealtimeData(req, res) {
       }
     })
 }
-
 
 function getSectionData(req, res){
   let query = {
@@ -160,20 +167,18 @@ function getSectionData(req, res){
   }
   return dataApiUtils.getSectionData(query, apiKey)
     .then((data) => {
+      let getKeys = (item) => item[0];
       res.locals.data = {
         AnalyticsStore: {
           comparatorData: data.comparatorData,
           data: data.data,
-          query: query
-        },
-        FilterStore : {
-          query: {
-            filters: {}
-          },
-          devices: getKeys(data.data.devices),
-          regions: getKeys(data.data.regions),
-          cohort: getKeys(data.data.userCohort),
-          referrers: getKeys(data.data.referrerTypes)
+          query: query,
+          availableFilters: {
+            devices: data.data.devices.map(getKeys),
+            regions: data.data.regions.map(getKeys),
+            cohort: data.data.userCohort.map(getKeys),
+            referrers: data.data.referrerTypes.map(getKeys)
+          }
         }
       };
       return res;
@@ -196,20 +201,18 @@ function getTopicData(req, res){
   }
   return dataApiUtils.getTopicData(query, apiKey)
     .then((data) => {
+      let getKeys = (item) => item[0];
       res.locals.data = {
         AnalyticsStore: {
           comparatorData: data.comparatorData,
           data: data.data,
-          query: query
-        },
-        FilterStore : {
-          query: {
-            filters: {}
-          },
-          devices: getKeys(data.data.devices),
-          regions: getKeys(data.data.regions),
-          cohort: getKeys(data.data.userCohort),
-          referrers: getKeys(data.data.referrerTypes)
+          query: query,
+          availableFilters: {
+            devices: data.data.devices.map(getKeys),
+            regions: data.data.regions.map(getKeys),
+            cohort: data.data.userCohort.map(getKeys),
+            referrers: data.data.referrerTypes.map(getKeys)
+          }
         }
       };
       return res;
@@ -219,6 +222,31 @@ function getTopicData(req, res){
       }
     })
 
+  }
+
+function getTopArticlesData(req, res) {
+  let query = {
+    dateFrom: moment().subtract(1, 'days').startOf('day').toISOString(),
+    dateTo: moment().subtract(1, 'days').endOf('day').toISOString(),
+    type: 'topArticles',
+    filters: {}
+  }
+
+  return dataApiUtils.getTopArticlesData(query, apiKey)
+    .then((data) => {
+      res.locals.data = {
+        TopArticlesStore: {
+          data: data.data,
+          dateTo: query.dateTo,
+          dateFrom: query.dateFrom
+        }
+      };
+      return res;
+    }).catch((error) => {
+      res.locals.data.AnalyticsStore = {
+        errorMessage: error.message
+      }
+    })
   }
 
   export default router;

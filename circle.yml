@@ -7,9 +7,6 @@ test:
     - npm run start-test:
         background: true
     - sleep 30
-  post:
-    - git config --global user.name "circleci"
-    - git config --global user.email "peter.mouland@ft.com"
 general:
   artifacts:
     - test/nightwatch/report

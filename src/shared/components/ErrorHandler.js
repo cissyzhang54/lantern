@@ -67,8 +67,10 @@ export default class ErrorHandler extends React.Component {
   }
 
   render() {
+    let status = this.props.error.status || 500;
+
     return (<div>
-      {ERRORS[this.props.error.status](this.props.category, this.props.message)}
+      {ERRORS[status](this.props.category, this.props.message)}
     </div>);
   }
 }

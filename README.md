@@ -9,6 +9,9 @@ Data analytics for the connoisseur FT worker
 The following keys all need to placed with corresponding values within a `.env` file in the root of the project.
 - LANTERN_API_KEY
 
+#### Node environment
+- NODE_MAX_OLD_SPACE_SIZE - size in Mb reserved for 'old' objects before being garbage collected
+
 #### Google Auth
 - OAUTH_CLIENT_ID
 - OAUTH_CLIENT_SECRET

@@ -97,7 +97,14 @@ const fields = {
   linkClickCategories: 'aggregations.page_clicks.category_breakdown',
   uniqueVisitors: 'aggregations.unique_visitors.value',
   realtimeNextInternalUrl : 'aggregations.next_internal_url.titles.buckets',
-  linksClickedLastHour : 'aggregations.links_clicked_last_hour.doc_count'
+  linksClickedLastHour : 'aggregations.links_clicked_last_hour.doc_count',
+  socialSharesLastHour : 'aggregations.social_shares_last_hour.doc_count',
+  timeOnPageTop: 'aggregations.time_on_page.buckets',
+  commentsLastHour : 'aggregations.comments_last_hour.doc_count',
+  topArticleViews: 'aggregations.top_article_views.buckets',
+  topArticlesCommentPosts : 'aggregations.top_article_comments_posted.buckets',
+  topArticlesSocialRef: 'aggregations.top_articles_social_ref.buckets',
+  topArticlesSearchRef: 'aggregations.top_articles_search_ref.buckets'
 }
 
 function divide(agg, fieldObj, divisor=1){

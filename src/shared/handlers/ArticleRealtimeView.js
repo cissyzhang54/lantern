@@ -78,6 +78,8 @@ class ArticleRealtimeView extends React.Component {
 
     let realtimeNextInternalUrl = this.props.realtimeNextInternalUrl.map(getReferrerUrls);
     let linksClicked = this.props.linksClicked;
+    let socialShares = this.props.socialShares;
+    let comments = this.props.comments;
 
     let headlineStats = {
       totalPageViews: {
@@ -183,14 +185,12 @@ class ArticleRealtimeView extends React.Component {
           />
         </ChunkWrapper>
 
-        <ChunkWrapper component="headlineStats">
-          <SectionHeadlineStats
-            data={this.props}
-            comparatorData={{}}
-            config={headlineStats}
-          />
-        </ChunkWrapper>
-
+        <SectionHeadlineStats
+          data={this.props}
+          comparatorData={{}}
+          config={headlineStats}
+        />
+        
         <ChunkWrapper component={selectedGraphComponentName}>
           <Row>
             <Col>
@@ -241,6 +241,18 @@ class ArticleRealtimeView extends React.Component {
           label='Links clicked last hour'
         />
 
+        <SingleMetric
+          metricType='integer'
+          metric={socialShares}
+          label='Social shares last hour'
+        />
+
+        <SingleMetric
+          metricType='integer'
+          metric={comments}
+          label='Comments last hour'
+        />
+
       </div>
     );
 
@@ -256,6 +268,8 @@ ArticleRealtimeView.defaultProps = {
   totalPageViews: null,
   realtimeNextInternalUrl: [],
   linksClicked: null,
+  socialShares: null,
+  comments: null,
   author: [],
   genre: [],
   title: "[No realtime data available]",

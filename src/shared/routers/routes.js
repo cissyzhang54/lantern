@@ -4,12 +4,12 @@ import React from "react";
 import AppController from "../controllers/AppController";
 import Search from "../handlers/Search";
 import Error404 from "../handlers/404";
-import ArticleView from "../handlers/ArticleView";
-import SectionView from "../handlers/SectionView";
-import TopicView from "../handlers/TopicView";
+import TopArticlesView from "../handlers/TopArticlesView";
 import Playground from '../handlers/Playground';
 import PlaygroundLoader from '../handlers/PlaygroundLoader';
 import ArticleRealtimeView from '../handlers/ArticleRealtimeView';
+
+import HistoricalAnalyticsView from '../handlers/HistoricalAnalyticsView';
 
 
 export default (
@@ -20,12 +20,37 @@ export default (
     <Route path="playground" component={Playground}>
       <Route path=":componentName" component={PlaygroundLoader}/>
     </Route>
-    <Route path="articles/:uuid/:comparatorType/:comparator" component={ArticleView} />
+    <Route
+      path="articles/:uuid/:comparatorType/:comparator"
+      component={HistoricalAnalyticsView}
+      analyticsView="article"
+    />
     <Redirect from="articles/:uuid" to="articles/:uuid/global/FT" />
-    <Route path="sections/:section" component={SectionView} />
-    <Route path="topics/:topic" component={TopicView} />
-    <Route path="sections/:section/:comparatorType/:comparator" component={SectionView} />
-    <Route path="topics/:topic/:comparatorType/:comparator" component={TopicView} />
+    <Route
+      path="sections/:section"
+      component={HistoricalAnalyticsView}
+      analyticsView="section"
+    />
+    <Route
+      path="sections/:section/:comparatorType/:comparator"
+      component={HistoricalAnalyticsView}
+      analyticsView="section"
+    />
+
+    <Route
+      path="topics/:topic"
+      component={HistoricalAnalyticsView}
+      analyticsView="topic"
+    />
+    <Route
+      path="topics/:topic/:comparatorType/:comparator"
+      component={HistoricalAnalyticsView}
+      analyticsView="topic"
+    />
+
+
+    <Route path="toparticles" component={TopArticlesView} />
+
     <Route path="realtime/articles/:uuid" component={ArticleRealtimeView} />
     <Route path="*" name='404' component={Error404}   />
   </Route>

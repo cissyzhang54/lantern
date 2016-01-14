@@ -25,6 +25,8 @@ class ArticleRealtimeStore {
       realtimeNextInternalUrl: [],
       linksClicked: null,
       retentionRate: 0,
+      socialShares: null,
+      comments: null,
       author: [],
       genre: [],
       title: "",
@@ -70,6 +72,8 @@ class ArticleRealtimeStore {
         realtimeNextInternalUrl: data.realtimeNextInternalUrl,
         linksClicked: data.linksClickedLastHour,
         retentionRate: (data.retentionRate / sumAll(data.realtimePageViews)) * 100 | 0,
+        socialShares: data.socialSharesLastHour,
+        comments: data.commentsLastHour,
         isLive: true
       })
 
@@ -127,6 +131,8 @@ class ArticleRealtimeStore {
       totalPageViews: sumAll(data.realtimePageViews),
       linksClicked: data.linksClickedLastHour,
       retentionRate: (data.retentionRate / sumAll(data.realtimePageViews)) * 100 | 0,
+      socialShares: data.socialSharesLastHour,
+      comments: data.commentsLastHour,
       lastUpdated: data.realtimePageViews.length ? data.realtimePageViews.slice(-1)[0][0] : null
     });
 
