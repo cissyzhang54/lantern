@@ -20,6 +20,7 @@ let apiRouter = require("./routers/api-routes");
 let authRouter = require("./routers/auth-routes");
 let statusRouter = require("./routers/status-routes");
 import * as esClient from './esClient';
+import getStatus from './utils/dataImportStatusPoller';
 import uuid from 'uuid';
 import RealtimeServer from './realtimeServer';
 import moment from 'moment';
@@ -74,6 +75,20 @@ app.use('/landing/article/:uuid', ensureAuthenticated, (req, res) => {
 
 app.use('/api/v0', ensureApiAuthenticated, apiRouter);
 app.use('/', ensureAuthenticated, dataPreloader);
+
+// Set up global state
+app.use((req, res, next) => {
+  res.locals.data = res.locals.data || {};
+
+  res.locals.data.GlobalStore = {
+    latestIndex: {
+      data: getStatus(),
+      lastUpdated: moment().valueOf()
+    }
+  }
+  next();
+});
+
 app.use('/', ensureAuthenticated, function appRouter(req, res) {
   renderRoute(routes, req, res)
 });

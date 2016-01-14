@@ -116,6 +116,24 @@ let DataAPI = {
       })
     },
 
+    getStatus () {
+      return new Promise((resolve, reject) => {
+        let url = `${config.baseUrl}/status`;
+        request.get(url)
+          .set('Accept', 'application/json')
+          .end((err, res) => {
+            if (err) {
+              err.name = errorName(type, err);
+              if (res && res.body) {
+                err.message = res.body.message;
+              }
+              reject(err);
+            }
+            !err && resolve(res.body);
+          });
+      });
+    },
+
     search(query, from = 0, apiKey = '') {
 
       assert.equal(typeof query, 'object',

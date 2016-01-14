@@ -4,4 +4,34 @@ nav .active{
 }
 .navbar {
   min-height: initial;
+  background-color: #f8f8f8;
+  border: 1px solid transparent;
+  border-color: #e7e7e7;
+  border-radius: 4px;
+  position: relative;
+  margin-bottom: 0px
+}
+
+.navbar__list {
+  padding-left:0;
+  width: 100%;
+  float: left;
+  margin: 0;
+}
+
+.navbar__item {
+  width: 50px;
+  float: left;
+}
+
+.navbar__link {
+  line-height: 3em;
+  padding : 0 15px;
+  display: block;
+}
+
+@media (min-width: 500px) {
+  .navbar__item {
+    width: 200px;
+  }
 }

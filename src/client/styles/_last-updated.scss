@@ -1,0 +1,11 @@
+.last-updated {
+  line-height: 1.5;
+  font-size: 12px;
+  text-align: right;
+}
+
+@media (min-width: 500px) {
+  .last-updated {
+    line-height: 2;
+  }
+}
