@@ -29,14 +29,12 @@ router.use('/', function (req, res, next) {
       .sort((a,b) => new Date(b) - new Date(a))
       .shift();
 
-    let json = {"status":status, "latestIndex": latestIndex};
+    historical = {"status":status, "latestIndex": latestIndex};
 
     if ((new Date) - new Date(latestIndex) > TIME_LIMIT){
-      json.error = `Index is older than ${MAX_HOURS} Hours`
-      json.status = "warning"
+      historical.error = `Index is older than ${MAX_HOURS} Hours`
+      historical.status = "warning"
     }
-
-    historical = json
 
   }).then(() => {
     return esClient.getIndicies('realtime*', 'index')
@@ -53,14 +51,20 @@ router.use('/', function (req, res, next) {
 
     let status = 'ok'
 
-    if (moment() - moment(latestIndex, 'YYYY-MM-DD-hh') > ONE_HOUR){
-      json.error = `Index is out of date`
+    let now = moment();
+    let indexDate = moment(latestIndex, 'YYYY-MM-DD-hh')
+
+    if (now - indexDate > ONE_HOUR){
+
+      let timeDiff = Math.round(moment.duration(now.diff(indexDate)).asHours());
+
+      json.error = `Index is ${timeDiff} hours out of date`
       json.status = "warning"
     }
 
     let realtime = {"status":status, "latestIndex": latestIndex}
 
-    res.status(200).json({hist: historical, real: realtime}).end()
+    res.status(200).json({historical: historical, realtime: realtime}).end()
   })
 });
 
