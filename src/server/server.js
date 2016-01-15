@@ -59,7 +59,7 @@ app.use('/bye', (req, res) =>{
 
 app.use('/', authRouter);
 
-app.use('/landing/article/:uuid', ensureApiAuthenticated, (req, res) => {
+app.use('/landing/article/:uuid', ensureAuthenticated, (req, res) => {
   esClient.getMetaData(req.params.uuid).then(function(data){
     let publishDate = moment(data.initial_publish_date, 'YYYY-MM-DD');
     let now = moment();
