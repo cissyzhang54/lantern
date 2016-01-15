@@ -1,13 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import isBrowser from '../utils/isBrowser';
 import Input from 'react-bootstrap/lib/Input';
 import moment from 'moment';
-import _ from 'underscore';
 import chartHelpers from '../utils/chartHelpers';
 import md5 from 'md5';
+import d3 from 'd3';
 require('moment-duration-format');
-import assign from 'object-assign';
 
 
 let c3 = {};
@@ -196,11 +194,6 @@ export default class DualScaleLineChart extends React.Component {
 
     function numericFormat(x) {
       let duration = moment.duration(x, 'minutes');
-      let fmt;
-      if (duration.years()) {
-        fmt = 'j'
-      }
-
       return duration.format();
     }
 
@@ -226,7 +219,7 @@ export default class DualScaleLineChart extends React.Component {
   }
 
   render() {
-
+    let handler = this._handleLocalTimeSwitch.bind(this);
     let input = (
       <div style={{fontSize: '0.85em'}}>
         <Input
@@ -234,7 +227,7 @@ export default class DualScaleLineChart extends React.Component {
           ref="localTimeInput"
           label="Display dates in UTC"
           checked={!this.state.localTime}
-          onChange={this._handleLocalTimeSwitch.bind(this)}
+          onChange={handler}
         />
       </div>
     );

@@ -1,11 +1,9 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
 import responsiveStyles from '../utils/responsiveStyles';
 import chartHelpers from '../utils/chartHelpers';
 import _ from 'underscore';
+import md5 from 'md5';
 
 let c3 = {};
 
@@ -32,6 +30,16 @@ export default class BarChart extends React.Component {
     let keys = this.props.keys;
     let yLabel = this.props.yLabel;
     let rotated = this.props.reverseAxis;
+
+    // Naïve checksumming on the chart data
+    // if the checksums are the same, no need to redraw the chart
+    let dataChecksum = md5(JSON.stringify(json));
+    if (this.state.dataChecksum === dataChecksum) {
+      // Data has not changed
+      return;
+    }
+
+    this.setState({ dataChecksum });
 
     if (this.props.usePercentages) {
       keys = keys.map((k) => {
@@ -63,7 +71,7 @@ export default class BarChart extends React.Component {
     this.chart = c3.generate({
       bindto: node,
       transition: {
-        duration: null,
+        duration: null
       },
       data: {
         type: 'bar',
@@ -93,7 +101,7 @@ export default class BarChart extends React.Component {
           padding: {
             top: 0,
             bottom: 0
-          },
+          }
         }
       },
       tooltip : {
@@ -140,7 +148,11 @@ export default class BarChart extends React.Component {
   render() {
     return (
       <div data-component={this.props.componentName}>
-        <div ref='chartContainer' id="chartContainer"></div>
+        <div
+          ref='chartContainer'
+          id="chartContainer"
+        >
+        </div>
       </div>
     );
   }
@@ -170,8 +182,8 @@ BarChart.defaultProps = {
 };
 
 BarChart.propTypes = {
-  data: React.PropTypes.array.isRequired,
   category: React.PropTypes.string.isRequired,
+  data: React.PropTypes.array.isRequired,
   keys: React.PropTypes.array.isRequired,
   yLabel: React.PropTypes.string.isRequired
 };
