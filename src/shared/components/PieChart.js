@@ -13,6 +13,7 @@ export default class PieChart extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {};
   }
 
   drawChart() {
