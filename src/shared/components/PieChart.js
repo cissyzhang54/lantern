@@ -1,6 +1,7 @@
 import React from 'react';
 import isBrowser from '../utils/isBrowser';
 import _ from 'underscore';
+import md5 from 'md5';
 
 let c3 = {};
 
@@ -16,6 +17,18 @@ export default class PieChart extends React.Component {
 
   drawChart() {
     let node = this.refs.chartContainer;
+
+    // Naïve checksumming on the chart data
+    // if the checksums are the same, no need to redraw the chart
+    let dataChecksum = md5(JSON.stringify(this.props.data));
+    if (this.state.dataChecksum === dataChecksum) {
+      // Data has not changed
+      return;
+    }
+
+    this.setState({ dataChecksum });
+
+
     if(this.chart) {
       this.chart.load({data: {
         type: 'pie',
