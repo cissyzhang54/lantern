@@ -13,7 +13,7 @@ let AnalyticsSource = {
         case 'topic':
           return DataAPI.getTopicData(state.query);
         default:
-          throw new Error('Unhandled query type: ' + state.query.type);
+          return Promise.reject(new Error('Unhandled query type: ' + state.query.type));
       }
     },
 
