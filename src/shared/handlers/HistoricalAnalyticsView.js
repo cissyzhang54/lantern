@@ -33,6 +33,8 @@ class HistoricalAnalyticsView extends React.Component {
   }
 
   componentWillMount() {
+    if (this.props.error) return; // in an error case, there's no valid query
+
     switch (this.props.route.analyticsView) {
       case VIEW_TYPE_ARTICLE:
         AnalyticsActions.updateQuery({
