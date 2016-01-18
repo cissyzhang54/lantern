@@ -48,7 +48,7 @@ const ERRORS = {
     <Error404
       title={title}
       message={[
-              'Ooops!',
+              'Oops!',
               `Our server experienced an internal error. Hopefully it's temporary and you can try again shortly.`
               ]}
       extra={<pre>
