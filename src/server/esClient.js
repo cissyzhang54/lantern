@@ -37,16 +37,16 @@ var client = elasticsearch.Client({
   log: LoggerFactory('elasticsearch')
 });
 
-export function getIndicies(h = 'health,index,docs.count,store.size,tm'){
+export function getIndicies(indicies, h = 'health,index,docs.count,store.size,tm'){
   return new Promise((resolve, reject) => {
     client.cat.indices({
       h: h,
-      index: 'article_page_view*'
+      index: indicies
     }, function(e, response){
       e && reject(e)
       !e && resolve(response)
     })
-  });
+  })
 }
 
 export function getMetaData (uuid) {

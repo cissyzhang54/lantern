@@ -87,7 +87,7 @@ class TopArticlesView extends React.Component {
     if (this.props.errorMessage) {
       return (
         <ErrorHandler
-          category="Article"
+          category="Pick of the day"
           type="ERROR"
           message={this.props.errorMessage}
           error={this.props.error}
@@ -96,7 +96,7 @@ class TopArticlesView extends React.Component {
     } else if (!data || Object.keys(data).length === 0) {
       return (
         <Messaging
-          category="Article"
+          category="Pick of the day"
           type="LOADING"
         />
       );
@@ -143,13 +143,17 @@ class TopArticlesView extends React.Component {
         title: d.views.title
       }
     });
+
     socialReferrers = getColumns(socialReferrers, 'doc_count');
+
+    /* Top articles keeping users on FT */
+    let topArticlesRetention = getColumns(data.topArticlesRetention, 'doc_count');
 
     let updating
     if (this.props.loading) {
       updating = (
         <Messaging
-          category="Section"
+          category="Pick of the day"
           type="UPDATING"
         />
       );
@@ -183,7 +187,7 @@ class TopArticlesView extends React.Component {
           <Row>
             <Col xs={12}>
               <Table
-                headers={['Article', 'Author', 'Time']}
+                headers={['Article', 'Author(s)', 'Time']}
                 rows={avg_time_rows}
               />
             </Col>
@@ -199,8 +203,8 @@ class TopArticlesView extends React.Component {
           <Row>
             <Col xs={12}>
               <Table
-                headers={['Article', 'Author(s)', 'Time']}
-                rows={[{Article: 'Article title', Author: 'Somebody important', Time: 3}, {Article: 'Another article', Author: 'Some peeps', Time: 4}]}
+                headers={['Article', 'Author(s)', 'Users retained']}
+                rows={topArticlesRetention}
               />
             </Col>
           </Row>

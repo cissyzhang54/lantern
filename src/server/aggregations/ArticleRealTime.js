@@ -45,11 +45,16 @@ export default function ArticlesRealtimeAggregation(query) {
          filter: {
            bool: {
              must: [
-               {
-                 term: {
-                   event_type: 'comments'
-                 }
-               },
+                {
+                  term: {
+                    event_type: 'page'
+                  }
+                },
+                {
+                  term: {
+                    event_category: 'comment_posted'
+                  }
+                },
                {
                  range: {
                    event_timestamp: {

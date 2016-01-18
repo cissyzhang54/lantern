@@ -110,6 +110,33 @@ export default function TopArticlesAggregation(query) {
          }
        }
      }
+   },
+   "top_articles_retention" : {
+       filter: {
+           term : {
+               "is_last_page": "F"
+           }
+       },
+       aggs : {
+           retained: {
+               terms: {
+                   field: "article_uuid",
+                   size: 5
+               },
+               aggs : {
+                  title : {
+                      terms : {
+                          field : "title_not_analyzed"
+                      }
+                  },
+                  author : {
+                      terms : {
+                          field : "authors_not_analyzed"
+                      }
+                  }
+               }
+           }
+       }
    }
  }
 }

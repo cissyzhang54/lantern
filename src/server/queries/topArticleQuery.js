@@ -18,8 +18,6 @@ export default function TopArticleQuery(query){
                 view_timestamp: {
                   "from": query.dateFrom,
                   "to": query.dateTo
-                  /*"from": "2016-01-06T00:00:00.000Z",
-                  "to": "2016-01-06T23:59:00.000Z"*/
                 }
               }
             }

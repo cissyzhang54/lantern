@@ -1,12 +1,11 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
 import isBrowser from '../utils/isBrowser';
 import Input from 'react-bootstrap/lib/Input';
 import moment from 'moment';
 import _ from 'underscore';
 import chartHelpers from '../utils/chartHelpers';
+import md5 from 'md5';
+import d3 from 'd3';
 require('moment-duration-format');
 
 let c3 = {};
@@ -34,6 +33,16 @@ export default class LineChart extends React.Component {
       return d;
     });
 
+    // Naïve checksumming on the chart data
+    // if the checksums are the same, no need to redraw the chart
+    let dataChecksum = md5(JSON.stringify(json));
+    if (this.state.dataChecksum === dataChecksum) {
+      // Data has not changed
+      return;
+    }
+
+    this.setState({ dataChecksum });
+
     let labelCount = undefined;
     const labelWidth = 80;
     if (window && window.innerWidth < 900){
@@ -53,7 +62,6 @@ export default class LineChart extends React.Component {
     let formatStr = '%d %b %H:%M:%S';
     if (json.length > 1) {
       let step = moment.duration(json[1][attr] - json[0][attr]);
-      let span = moment.duration(json[json.length - 1][attr] - json[0][attr]);
       if (step.years()) {
         formatStr = '%Y';
       } else if (step.months()) {
@@ -95,7 +103,7 @@ export default class LineChart extends React.Component {
     this.chart = c3.generate({
       bindto: node,
       transition: {
-        duration: null,
+        duration: null
       },
       padding: {
         right: 20
@@ -143,11 +151,6 @@ export default class LineChart extends React.Component {
 
     function numericFormat(x) {
       let duration = moment.duration(x, 'minutes');
-      let fmt;
-      if (duration.years()) {
-        fmt = 'j'
-      }
-
       return duration.format();
     }
 
@@ -179,21 +182,21 @@ export default class LineChart extends React.Component {
     return !_.isEqual(this.props, nextProps);
   }
 
-  _handleLocalTimeSwitch(event) {
+  _handleLocalTimeSwitch() {
     const checked = this.refs.localTimeInput.getChecked();
     this.setState({localTime: !checked});
   }
 
   render() {
-
+    let handler = this._handleLocalTimeSwitch.bind(this);
     let input = (
       <div style={{fontSize: '0.85em'}}>
-         <Input
+        <Input
           type="checkbox"
           ref="localTimeInput"
           label="Display dates in UTC"
           checked={!this.state.localTime}
-          onChange={this._handleLocalTimeSwitch.bind(this)}
+          onChange={handler}
         />
       </div>
     );
@@ -203,7 +206,7 @@ export default class LineChart extends React.Component {
         <div
           ref='chartContainer'
           id="chartContainer"
-          >
+        >
         </div>
         {(this.props.type === 'timeseries') ? input : null}
       </div>
@@ -238,6 +241,6 @@ LineChart.propTypes = {
   data: React.PropTypes.array.isRequired,
   keys: React.PropTypes.array.isRequired,
   title: React.PropTypes.string.isRequired,
-  yLabel: React.PropTypes.string.isRequired,
-  type: React.PropTypes.string
+  type: React.PropTypes.string,
+  yLabel: React.PropTypes.string.isRequired
 };
