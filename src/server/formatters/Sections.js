@@ -52,19 +52,19 @@ export default function SectionDataFormatter(data) {
       });
     } catch (e) {
       let error = new Error(e);
-      if (!metaData) {
+      if (!metaData.hasOwnProperty('aggregations')) {
         error.name = 'NoDataError';
         error.message = 'Unable to find metadata for the current query';
       }
-      else if (!sectionData) {
+      else if (!sectionData.hasOwnProperty('aggregations')) {
         error.name = 'NoDataError';
         error.message = 'Unable to find data for the current query';
       }
-      else if (!compMetaData) {
+      else if (!compMetaData || !compMetaData.hasOwnProperty('aggregations')) {
         error.name = 'NoDataError';
         error.message = 'Unable to find metadata for the current comparator query';
       }
-      else if (!compData) {
+      else if (!compData || !compData.hasOwnProperty('aggregations')) {
         error.name = 'NoDataError';
         error.message = 'Unable to find data for the current comparator query';
       }
