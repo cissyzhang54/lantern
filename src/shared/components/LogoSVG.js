@@ -62,7 +62,6 @@ export default class LogoSVG extends React.Component {
     let optStyles = assign({}, styles);
     let viewBox = "0 0 782.335 219"
     let logoStyles = styles.logo;
-    if (this.props.iconOnly) optStyles.text.display = 'none'
     if (this.props.large) {
       viewBox = "0 0 219 219"
       logoStyles = styles.logoLarge;
@@ -101,7 +100,7 @@ export default class LogoSVG extends React.Component {
             V71.272C131.595,70.456,130.935,69.796,130.119,69.796z"/>
         </g>
       </g>
-      <g id="text" style={styles.text} >
+      <g id="text" style={styles.text} className="logo__text">
         <path d="M247.507,159.95V46.596h8.142v106.01h67.693v7.344H247.507z"/>
         <path d="M359.741,161.545c-3.832,0-7.424-0.666-10.776-1.996c-3.353-1.328-6.281-3.137-8.781-5.428
           c-2.502-2.287-4.445-5.002-5.828-8.143c-1.384-3.138-2.075-6.518-2.075-10.137c0-3.617,0.851-6.917,2.554-9.898
