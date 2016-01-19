@@ -3,6 +3,7 @@ import moment from 'moment'
 
 const POLL_INTERVAL = 5 * 60000; // 5 minutes
 const ONE_HOUR = 60 * 60 * 1000; /* ms */
+const FIVE_MINS = 5 * 60 * 1000;
 const MAX_HOURS = 72; /* ms */
 const TIME_LIMIT = ONE_HOUR * MAX_HOURS; /* ms */
 
@@ -31,42 +32,24 @@ function formatHistoricalStatus(sourceData) {
   return result;
 }
 
-function strToArray (stuff, str) {
-  let indexRow = stuff.split('\n')
-
-  let indexes = indexRow
-    .filter((index) => index && index.indexOf('%')<0)
-    .map((index) =>  index.trim().replace(str,''))
-
-  return indexes
-}
-
 function formatRealtimeStatus(sourceData) {
-  let latestIndex = strToArray(sourceData, 'realtime-')
-    .sort((a,b) => {
-      if (a < b)
-        return 1
-      if (a > b)
-        return -1
-      return 0
-    }).shift();
-
+  let docEventTimestamp = sourceData.hits[0]._source.event_timestamp;
   let status = 'ok'
 
   let now = moment();
-  let indexDate = moment(latestIndex, 'YYYY-MM-DD-hh');
+  let docDate = moment(docEventTimestamp);
   let result = {};
 
-  if (now - indexDate > ONE_HOUR){
+  if (now - docDate > FIVE_MINS){
 
-    let timeDiff = Math.round(moment.duration(now.diff(indexDate)).asHours());
+    let timeDiff = Math.round(moment.duration(now.diff(docDate)).asHours());
 
     result.error = `Index is ${timeDiff} hours out of date`
     status = "warning"
   }
 
   result.status = status;
-  result.latestIndex = latestIndex;
+  result.docDate = docDate;
 
   return result;
 }
@@ -74,15 +57,15 @@ function formatRealtimeStatus(sourceData) {
 function fetchStatus() {
   var fetches = [
     esClient.getIndicies('article_page_view*', 'index'),
-    esClient.getIndicies('realtime*', 'index')
+    esClient.getLatestRealtimeDocument()
   ];
 
   Promise.all(fetches).then(function(responses){
     let historicalIndices = responses[0],
-      realtimeIndices = responses[1];
+      realtimeLatestDoc = responses[1];
 
     latestStatus.historical = formatHistoricalStatus(historicalIndices);
-    latestStatus.realtime = formatRealtimeStatus(realtimeIndices);
+    latestStatus.realtime = formatRealtimeStatus(realtimeLatestDoc);
 
     setTimeout(fetchStatus, POLL_INTERVAL);
   });
