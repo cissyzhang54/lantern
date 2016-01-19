@@ -15,9 +15,9 @@ export default function TopArticleQuery(query){
           must: [
             {
               range: {
-                view_timestamp: {
-                  "from": query.dateFrom,
-                  "to": query.dateTo
+                initial_publish_date: {
+                  gt: 'now-1d/d',
+                  lt: 'now/d'
                 }
               }
             }

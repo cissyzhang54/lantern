@@ -15,11 +15,9 @@ export default function TopArticleEventQuery(query){
           must: [
             {
               range: {
-                event_timestamp: {
-                  "from": query.dateFrom,
-                  "to": query.dateTo
-                  /*"from": "2016-01-06T00:00:00.000Z",
-                  "to": "2016-01-06T23:59:00.000Z"*/
+                initial_publish_date: {
+                  gt: 'now-1d/d',
+                  lt: 'now/d'
                 }
               }
             }

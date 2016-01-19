@@ -43,9 +43,9 @@ describe('Top Articles Query', () => {
               must: [
                 {
                   range: {
-                    view_timestamp: {
-                      "from": '2015-09-16T19:58:26.000Z',
-                      "to": '2015-10-16T19:58:26.000Z'
+                    initial_publish_date: {
+                      gt: 'now-1d/d',
+                      lt: 'now/d'
                     }
                   }
                 }
