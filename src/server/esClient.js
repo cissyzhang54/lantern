@@ -49,6 +49,33 @@ export function getIndicies(indicies, h = 'health,index,docs.count,store.size,tm
   })
 }
 
+export function getLatestRealtimeDocument() {
+  return new Promise((resolve, reject) => {
+    let request = {
+      index: process.env.ES_REALTIME_INDEX_ROOT + '*',
+      body: {
+        query : {
+          match_all: {}
+        },
+        size: 1,
+        sort : [
+          {
+            event_timestamp : {
+              order : "desc"
+            }
+          }
+        ]
+      }
+    }
+    client.search(request, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      return resolve(response.hits);
+    });
+  })
+}
+
 export function getMetaData (uuid) {
   let query = {
     uuid : uuid
