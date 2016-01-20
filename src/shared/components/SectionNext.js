@@ -58,30 +58,6 @@ export default class SectionWhere extends React.Component {
       </Row>
       <Row>
         <Col xs={12} sm={6}>
-          <h4>
-            <OverlayTrigger
-              trigger="click"
-              placement="bottom"
-              overlay={
-                <Popover id="tag-description">
-                    <p><Text message='explanations.sectionNext.bounceRate' /></p>
-                </Popover>
-                }
-              >
-              <Glyphicon glyph="question-sign" style={styles.infoIcon} />
-            </OverlayTrigger>
-            What was the Bounce-Rate?
-          </h4>
-          <BarChart
-            data={metricData}
-            keys={keys}
-            category={id}
-            yLabel="Users"
-            xLabel=""
-            usePercentages={true}
-            />
-        </Col>
-        <Col xs={12} sm={6}>
           <h4>Of those who stayed where did they go?</h4>
           <Table
             headers={['Next Destination', 'Views']}

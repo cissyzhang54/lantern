@@ -23,7 +23,7 @@ module.exports = {
   'Assert elements in Header Section' : function (browser) {
     nExtras.assertElementsInSection(browser, articlePage.sectionHeader);
 
-    currentSection = articlePage.sectionHeader;
+    var currentSection = articlePage.sectionHeader;
 
     browser
       .assert.attributeContains(nConcat.dataComponent(articlePage.sectionHeader.articleTitle), 'href', articlePage.exampleArticleLink,
