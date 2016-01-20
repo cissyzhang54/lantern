@@ -48,6 +48,7 @@ const fields = {
     formatter: format,
     bucket_key: 'scroll_depth_last_hour_avg'
   },
+  realtimeLinksClickedByCategory: {name: 'aggregations.links_clicked_by_category_last_hour.categories', formatter: format},
   timeOnPageLastHour: {
     name: 'aggregations.time_on_page_last_hour.time_on_page_avg.value',
     formatter: Math.round
@@ -56,6 +57,11 @@ const fields = {
     name: 'aggregations.scroll_depth_last_hour.scroll_depth_last_hour_avg.value',
     formatter: Math.round
   },
+  referrerLastHourTypes: {name: 'aggregations.referrer_last_hour.types', formatter: formatAndFilter, terms: ['search', 'unknown', 'partner', 'social-network', 'email']},
+  referrerLastHourNames: {name: 'aggregations.referrer_last_hour.names', formatter: format},
+  internalReferrerLastHourTypes: {name: 'aggregations.internal_referrer_last_hour.types', formatter: formatAndFilter, terms: ['search', 'unknown', 'partner', 'social-network', 'email']},
+  internalReferrerLastHourUrls: {name: 'aggregations.internal_referrer_last_hour.urls', formatter: format},
+  socialReferrersLastHour: {name: 'aggregations.referrer_last_hour.names', formatter: formatAndFilter, terms: ['Facebook', 'Twitter', 'Linked-In']},
   retentionRate: 'aggregations.retention_rate.filtered.value',
   livePageViews: {name: 'aggregations.live_page_views.filtered.value', formatter: Math.round},
   timeOnPage: 'aggregations.avg_time_on_page.value',

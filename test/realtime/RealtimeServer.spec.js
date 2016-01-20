@@ -12,7 +12,7 @@ describe('Realtime Server', () => {
   let rtServer;
   let client;
   let sandbox;
-  const UUID = '2fd9ae9c-92be-11e5-94e6-c5413829caa5';
+  const UUID = '3068994c-bf71-11e5-9fdb-87b8d15baec2';
 
   before((done) => {
     app = express();

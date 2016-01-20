@@ -20,7 +20,96 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         }
       },
-
+      links_clicked_by_category_last_hour: {
+        filter: {
+          bool: {
+            must: [
+              {
+                term: {
+                  event_type: 'links clicked'
+                }
+              },
+              {
+                range: {
+                  event_timestamp: {
+                    gte: "now-1h/m"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        aggs: {
+          categories: {
+            terms: {
+              field: "event_category"
+            }
+          }
+        }
+      },
+      referrer_last_hour: {
+        filter: {
+          bool: {
+            must: {
+              range: {
+                event_timestamp: {
+                  gte: "now-1h/m"
+                }
+              }
+            },
+            must_not: {
+              term: {
+                referrer_type: "internal"
+              }
+            }
+          }
+        },
+        aggs: {
+          names: {
+            terms: {
+              field: "referrer_name"
+            }
+          },
+          types: {
+            terms: {
+              field: "referrer_type",
+              min_doc_count: 0
+            }
+          }
+        }
+      },
+      internal_referrer_last_hour: {
+        filter: {
+          bool: {
+            must: [
+              {
+                range: {
+                  event_timestamp: {
+                    gte: "now-1h/m"
+                  }
+                }
+              },
+              {
+                term: {
+                  referrer_type: "internal"
+                }
+              }
+            ]
+          }
+        },
+        aggs: {
+          urls : {
+            terms: {
+              field: "referrer_url"
+            }
+          },
+          types : {
+            terms: {
+              field: "page_type"
+            }
+          }
+        }
+      },
       social_shares_last_hour: {
         filter: {
           bool: {

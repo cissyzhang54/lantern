@@ -35,12 +35,18 @@ export default function formatData(data) {
     'realtimePageViews',
     'realtimeTimeOnPage',
     'realtimeScrollDepth',
+    'realtimeLinksClickedByCategory',
     'timeOnPageLastHour',
     'scrollDepthLastHour',
     'livePageViews',
     'linksClickedLastHour',
     'socialSharesLastHour',
-    'commentsLastHour'
+    'socialReferrersLastHour',
+    'commentsLastHour',
+    'referrerLastHourNames',
+    'referrerLastHourTypes',
+    'internalReferrerLastHourTypes',
+    'internalReferrerLastHourUrls'
   ];
   let realtimeFieldsAllDataFields = [
     'realtimeNextInternalUrl',
@@ -66,6 +72,7 @@ export default function formatData(data) {
     let error = new Error(e);
     error.message = 'DataParsingError';
     error.response = data;
+    error.originalError = e;
     throw error;
   }
 }
