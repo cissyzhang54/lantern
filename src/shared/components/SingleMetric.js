@@ -10,15 +10,15 @@ var componentStyles = {
   'default': {
     large: {
       fontSize: '1.2em',
-      margin: '1.2em'
+      margin: '0.5em'
     },
     medium: {
       fontSize: '1.0em',
-      margin: '1.0em'
+      margin: '0.5em'
     },
     small: {
       fontSize: '0.8em',
-      margin: '0.8em'
+      margin: '0.5em'
     },
     singleMetric: {
       textAlign: 'center'
@@ -26,7 +26,7 @@ var componentStyles = {
     label: {
       padding: 0,
       margin: 0,
-      marginBottom: '15px',
+      marginBottom: '10px',
       fontSize: '1.0em',
       color: '#666666'
     },
@@ -37,7 +37,8 @@ var componentStyles = {
     },
     comparator: {
       display: 'block',
-      fontSize: '0.6em'
+      fontSize: '0.6em',
+      marginTop: '10px'
     },
     comparatorSymbol: {
       display: 'inline-block',

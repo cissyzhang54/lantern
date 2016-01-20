@@ -14,7 +14,7 @@ import SectionWho from "../components/SectionWho";
 import SectionInteract from "../components/SectionInteract";
 import Text from '../components/Text'
 import Messaging from '../components/Messaging';
-
+import FormatData from "../utils/formatData";
 
 import FeatureFlag from '../utils/featureFlag';
 import * as formatAuthors from '../utils/formatAuthors';
@@ -39,6 +39,18 @@ class ArticleView extends React.Component {
     let comparatorData = this.props.comparatorData || { article: {}};
     let title = (data) ? 'Lantern - ' + data.title : '';
 
+    let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
+    let [retentionRateData, , keys] = dataFormatter.getPCTMetric('isLastPage', 'Article', 'Exited FT', 'Stayed on FT')
+
+    let dataPoint;
+    for (let i = 0; i < retentionRateData.length; i++) {
+      dataPoint = retentionRateData[i];
+      if (dataPoint.category === 'Stayed on FT') {
+        data.retentionRate = parseFloat(dataPoint[keys[0] + ' %']);
+        comparatorData.retentionRate = parseFloat(dataPoint[keys[1] + ' %']);
+      }
+    }
+
     let headlineStats = {
       timeOnPage: {
         metricType: 'time',
@@ -57,6 +69,12 @@ class ArticleView extends React.Component {
         label: 'Unique Visitors',
         size: 'large',
         comparatorFormatName: 'categoryAverageUniqueVisitors'
+      },
+      retentionRate: {
+        metricType: 'percentage',
+        label: 'Retention Rate',
+        size: 'large',
+        comparatorFormatName: 'retentionRate'
       },
       scrollDepth: {
         metricType: 'percentage',

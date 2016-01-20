@@ -15,8 +15,9 @@ export default class SectionHeadlineStats extends React.Component {
     function getMetrics (config, data, comparatorData) {
       let keys = Object.keys(config);
       let metrics = [];
-      let colWidth = 12 / keys.length;
-
+      let colWidth = Math.floor(12 / keys.length);
+      let isFive = keys.length === 5;
+      if (isFive) colWidth = '5ths'
       keys.forEach(function (value, i) {
         let componentConfig = config[value];
         componentConfig.metric = data[value];

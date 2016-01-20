@@ -94,10 +94,20 @@ module.exports = {
         percentile: ' span[style]:nth-child(2)'
       }
     },
+    retentionRate: {
+      name: 'Retention Rate',
+      selectors: {
+        container: 'div[data-component="sectionHeadlineStats"] div:nth-child(4) > div[class="singleMetric"]',
+        dataComponent: ' > p',
+        heading: ' > h3',
+        chevron: ' span[style]:nth-child(1)',
+        percentile: ' span[style]:nth-child(2)'
+      }
+    },
     scrollDepth: {
       name: 'Scroll Depth',
       selectors: {
-        container: 'div[data-component="sectionHeadlineStats"] div:nth-child(4) > div[class="singleMetric"]',
+        container: 'div[data-component="sectionHeadlineStats"] div:nth-child(5) > div[class="singleMetric"]',
         dataComponent: ' > p',
         heading: ' > h3',
         chevron: ' span[style]:nth-child(1)',
@@ -120,18 +130,10 @@ module.exports = {
 
   // Next Section
   sectionNext: {
-    bounceRate: {
-      name: 'Bounce-Rate',
-      selectors: {
-        container: 'div[data-component="sectionNext"] div[class="col-sm-6 col-xs-12"]:nth-child(1)',
-        dataComponent: ' div[data-component="barChart"]',
-        heading: ' h4'
-      }
-    },
     exitPage: {
       name: 'where did they go?',
       selectors: {
-        container: 'div[data-component="sectionNext"] div[class="col-sm-6 col-xs-12"]:nth-child(2)',
+        container: 'div[data-component="sectionNext"] div[class="col-sm-6 col-xs-12"]:nth-child(1)',
         dataComponent: ' table[data-component="table"]',
         heading: ' h4'
       }
