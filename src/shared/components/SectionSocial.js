@@ -1,62 +1,48 @@
 import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import BarChart from "../components/BarChart";
-import FormatData from "../utils/formatData";
+import BarChart from '../components/BarChart';
+import MetricList from '../components/MetricList'
 import Table from '../components/Table';
-import Text from '../components/Text';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-import Popover from 'react-bootstrap/lib/Popover';
-import ChunkWrapper from './ChunkWrapper.js';
+import FormatData from '../utils/formatData';
+import ChunkWrapper from './ChunkWrapper';
 
-const styles = {
-  infoIcon : {
-    'fontSize' : '15px',
-    'color': '#039',
-    'top': '0px',
-    'paddingRight': '8px',
-    cursor:'pointer'
-  }
-};
-
-function getReferrerUrls(data, i) {
-  const maxLen = 60;
-  const displayString = data[0].length > maxLen ? data[0].substr(0, maxLen) + '…' : data[0];
-  let title = data[2];
-  if (!title || title === 'unknown') title = displayString;
-  let url = displayString.indexOf('http') < 0 ? displayString : (
-    <a target="_blank" href={data[0]}>
-      {title}
-    </a>
-  );
-  return {
-    'referrer': url,
-    'Views': data[1]
-  }
-}
-
-export default class SectionWhere extends React.Component {
+export default class SectionSocial extends React.Component {
 
   constructor(props) {
     super(props);
   }
 
   render() {
-    if (!this.props.renderBounceRate){
-      return <div></div>
-    }
-    let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
+    let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
     let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Article')
-    return (<ChunkWrapper component='sectionNext'>
+
+    let socialTrafficTotal = this.props.data.socialReferrers.reduce((a,b) => (a + b[1]), 0);
+    let socialTrafficTotalRow = ['Total traffic from social', socialTrafficTotal];
+    let socialTrafficReferrerValues = this.props.data.socialReferrers.slice(0);
+    socialTrafficReferrerValues.unshift(socialTrafficTotalRow);
+    let socialTrafficList = socialTrafficReferrerValues.map((row, index) => {
+      return {
+        term:  row[0],
+        value: row[1],
+        header: (index === 0)
+      };
+    });
+
+
+    return (<ChunkWrapper component='sectionSocial'>
+
       <Row>
         <Col xs={12}>
-          <h3>Where did they go next?</h3>
+          <h3>How did the article perform on social media?</h3>
         </Col>
       </Row>
-      <Row>
+
+      <Row style={
+          {marginTop:"10px"}
+        }>
         <Col xs={12} sm={6}>
-          <h4>Social Networks</h4>
+        <h5>Social Networks</h5>
           <BarChart
             data={socialData}
             keys={socialKeys}
@@ -65,6 +51,11 @@ export default class SectionWhere extends React.Component {
             xLabel="Social Network"
             usePercentages={true}
             />
+        </Col>
+        <Col xs={12} sm={6}>
+          <MetricList
+            items={socialTrafficList}
+          />
         </Col>
       </Row>
     </ChunkWrapper>);
