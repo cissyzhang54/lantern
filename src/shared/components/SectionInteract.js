@@ -9,11 +9,43 @@ import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import ChunkWrapper from './ChunkWrapper.js';
 import Text from './Text';
+import responsiveStyles from '../utils/responsiveStyles';
+
+var controllerStyles = {
+  'default': {
+    infoIcon : {
+      'fontSize' : '15px',
+      'color': '#039',
+      cursor:'pointer'
+    },
+    list : {
+      listStyle: 'none',
+      padding : 0,
+      margin : 0
+    },
+    list__item : {
+      borderBottom: "1px solid #ccc"
+    },
+    'list__item--first' : {
+      fontWeight: 'bold',
+      borderBottom: "2px solid #ccc"
+    },
+    'list__item--last' : {
+      fontWeight: 'bold',
+      borderBottom: "none"
+    }
+  },
+  '(max-width: 500px)' : {
+    list : {
+      marginBottom: '20px',
+    }
+  }
+};
 
 let config = {
   subscription: {
     metricType: 'integer',
-    label: 'Subscriptions',
+    label: 'Total Subscriptions',
     size: 'small'
   },
   social_shares: {
@@ -37,56 +69,89 @@ let config = {
     label: 'Comments Viewed',
     size: 'small',
     toolTip : (<p><Text message='explanations.sectionInteract.commentsViewed'/></p>)
-  }
-}
-const styles = {
-  infoIcon : {
-    'fontSize' : '15px',
-    'color': '#039',
-    cursor:'pointer'
+  },
+  comments_total: {
+    metricType: 'integer',
+    label: 'Total Comments',
+    size: 'small'
   }
 }
 
 function renderMetric (metricName, metric, comparatorName, comparatorMetric) {
-  let componentConfig = config[metricName];
+  let defaultConf = {
+    metricType: 'integer',
+    size: 'small'
+  }
+
+  let componentConfig;
+  if (typeof config[metricName] == 'undefined' ) {
+    componentConfig = defaultConf;
+    componentConfig['label'] = metricName;
+  } else {
+    componentConfig = config[metricName]
+  }
+
   componentConfig.metric = metric;
   componentConfig.comparatorName = comparatorName || '';
   componentConfig.comparatorMetric = comparatorMetric >= 0 ? comparatorMetric : undefined;
+  componentConfig.horizontal = true;
 
-  let component = FeatureFlag.check(`article:${metricName}`)
-    ? <SingleMetric {...componentConfig} />
-    : [];
-  return component
+  return <SingleMetric {...componentConfig} />
 }
 
 export default class SectionHeadlineStats extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      responsiveStyles : controllerStyles['default']
+    };
+  }
+
+  componentDidMount() {
+    responsiveStyles.addListeners(this, controllerStyles);
+  }
+
+  componentWillUnmount() {
+    responsiveStyles.removeListeners(this);
   }
 
   render() {
-
+    let styles = this.state.responsiveStyles;
     let data = this.props.data;
 
     if (!Object.keys(data).length) return (<div></div>);
     let comparatorData = this.props.comparatorData ;
 
+    /* Subscriptions */
     let subscriptions = data.isSubscription.length <= 1 ? 0 : data.isSubscription[1][1] ;
     let subscription = renderMetric('subscription', subscriptions);
 
-    let social_shares_total = renderMetric('social_shares', data.socialSharesTotal, comparatorData.comparator, comparatorData.socialSharesTotal);
-    let links_clicked_total = renderMetric('total_links_clicked', data.totalLinksClicked, comparatorData.comparator, comparatorData.totalLinksClicked);
+    /* Comments */
     let comments_posted_total = renderMetric('comments_posted_total', data.totalCommentsPosted, comparatorData.comparator, comparatorData.totalCommentsPosted);
     let comments_viewed_total = renderMetric('comments_viewed_total', data.totalCommentsViewed, comparatorData.comparator, comparatorData.totalCommentsViewed);
+    let comments_total = renderMetric('comments_total', (data.totalCommentsViewed + data.totalCommentsPosted), comparatorData.comparator, (comparatorData.totalCommentsViewed + comparatorData.totalCommentsPosted));
+
+    /* Links */
+    let links_clicked_total = renderMetric('total_links_clicked', data.totalLinksClicked, comparatorData.comparator, comparatorData.totalLinksClicked);
 
     let link_click_categories = data.linkClickCategories.buckets.map((d, i) => {
       let key = d.key;
       let value = d.total_clicks.value;
-      return [
-        key,
-        value
-      ];
+      let element = renderMetric(key, value)
+      return element
+    });
+
+    link_click_categories.unshift(links_clicked_total);
+
+    link_click_categories = link_click_categories.map((d, i) => {
+      let className = 'list__item';
+      if(i === 0){
+        className += '--first'
+      } else if (i++ === data.linkClickCategories.buckets.length) {
+        className += '--last'
+      }
+      return <li style={styles[className]}>{d}</li>;
     });
 
     return ( <ChunkWrapper component='sectionInteractiveStats' >
@@ -96,39 +161,22 @@ export default class SectionHeadlineStats extends React.Component {
         </Col>
       </Row>
       <Row>
-        <Col xs={12} sm={6} >
-          {links_clicked_total}
-        </Col>
-        <Col xs={12} sm={6} >
-          {social_shares_total}
-        </Col>
-      </Row>
-      <Row>
         <Col xs={12} sm={4} >
-          {comments_viewed_total}
+          <ul style={styles.list}>
+            {link_click_categories}
+          </ul>
         </Col>
         <Col xs={12} sm={4} >
-          {comments_posted_total}
+          <ul style={styles.list}>
+            <li style={styles['list__item--first']}>{comments_total}</li>
+            <li style={styles.list__item}>{comments_viewed_total}</li>
+            <li style={styles['list__item--last']}>{comments_posted_total}</li>
+          </ul>
         </Col>
         <Col xs={12} sm={4} >
-          {subscription}
-        </Col>
-      </Row>
-      <Row style={{marginTop: '20px'}}>
-        <Col xs={12} sm={4} >
-          <Table
-            headers={['Link Category', 'Clicks']}
-            rows={link_click_categories}
-            />
-        </Col>
-        <Col xs={12} sm={4} >
-
-        </Col>
-        <Col xs={12} sm={4} >
-          <Table
-            headers={['Social Network', 'Shares']}
-            rows={data.socialSharesTypes}
-            />
+          <ul style={styles.list}>
+            <li style={styles['list__item--first']}>{subscription}</li>
+          </ul>
         </Col>
       </Row>
     </ChunkWrapper>);
