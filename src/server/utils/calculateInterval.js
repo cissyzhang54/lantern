@@ -8,7 +8,7 @@ export function interval(dateFrom, dateTo) {
   if (span <= moment.duration(1, 'day')) {
     return 'hour';
   } else if (span <= moment.duration(1, 'week')) {
-    return 'day';
+    return 'hour';
   } else if (span <= moment.duration(6, 'month')) {
     return 'day';
   } else {

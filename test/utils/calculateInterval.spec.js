@@ -5,7 +5,7 @@ describe('#calculateInterval', () => {
   describe('interval', () => {
     it('should calculate the interval correctly for two dates', () => {
       expect(calculateInterval.interval('2015-10-01', '2015-10-01')).to.equal('hour');
-      expect(calculateInterval.interval('2015-10-01', '2015-10-07')).to.equal('day');
+      expect(calculateInterval.interval('2015-10-01', '2015-10-07')).to.equal('hour');
       expect(calculateInterval.interval('2015-10-01', '2015-10-09')).to.equal('day');
       expect(calculateInterval.interval('2015-10-01', '2015-12-01')).to.equal('day');
     });

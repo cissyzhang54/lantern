@@ -58,7 +58,7 @@ describe('Topics Query', () => {
     expect(TopicsQuery(query).aggs.page_views_over_time.date_histogram.interval)
       .to.equal('hour');
   });
-  it('should return an interval of a day fror spans of a week or less', () => {
+  it('should return an interval of an hour for spans of a week or less', () => {
     const query = {
       uuid: '123',
       dateFrom: '2015-01-01',
@@ -67,7 +67,7 @@ describe('Topics Query', () => {
       topic: 'test'
     };
     expect(TopicsQuery(query).aggs.page_views_over_time.date_histogram.interval)
-      .to.equal('day');
+      .to.equal('hour');
   });
   it('should return an interval of a day for spans of a month or less', () => {
     const query = {
