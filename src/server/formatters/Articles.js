@@ -34,7 +34,7 @@ export default function formatData(data) {
   let [metaData, articleData, eventData, articleComparatorData, eventComparatorData] = data;
   let metaFields = ['title', 'uuid', 'author', 'published', 'published_human', 'genre', 'sections', 'topics']
   let articleFields = [
-    'pageViews', 'timeOnPage', 'readTimes', 'readTimesSincePublish', 'channels', 'uniqueVisitors',
+    'pageViews', 'timeOnPage', 'readTimes', 'channels', 'uniqueVisitors',
     'isSubscription', 'nextInternalUrl', 'internalReferrerTypes', 'internalReferrerUrls', 'isFirstVisit',
     'rfvCluster', 'userCohort', 'isLastPage', 'regions', 'countries', 'devices', 'socialReferrers',
     'referrerUrls', 'referrerNames', 'referrerTypes', 'top5TimeOnPage'
@@ -49,7 +49,7 @@ export default function formatData(data) {
     'articleCount', 'uniqueVisitors' , 'pageViews'
   ]
   let articleComparatorAverages = [
-    'readTimes', 'readTimesSincePublish', 'referrerTypes', 'socialReferrers', 'regions',
+    'referrerTypes', 'socialReferrers', 'regions',
     'isLastPage', 'userCohort', 'rfvCluster', 'isFirstVisit', 'internalReferrerTypes',
     'categoryAverageViewCount', 'categoryAverageUniqueVisitors'
   ]

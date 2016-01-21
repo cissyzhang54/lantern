@@ -23,8 +23,8 @@ describe ('sectionWhen component', function() {
       const rows = section.props.children;
       const col = rows[1].props.children
       const lineChart = col.props.children.props
-      const metricLabel = 'Article'
-      const comparatorLabel = '\'testComp\' Average Article'
+      const metricLabel = 'Page Views'
+      const comparatorLabel = '\'testComp\' Page Views'
 
       expect(lineChart.data.length).to.equal(31)
       expect(lineChart.data[0][metricLabel]).to.equal(38)
@@ -32,36 +32,6 @@ describe ('sectionWhen component', function() {
       expect(lineChart.data[0].category).to.equal('2015-09-07T00:00:000Z')
       expect(lineChart.keys.length).to.equal(1)
       expect(lineChart.keys[0]).to.equal(metricLabel)
-    });
-
-    it ('comparator data', function() {
-      let section = createComponent(SectionWhen, {
-        renderReadTimes:true,
-        data: {
-          readTimes: fixtureData,
-          readTimesSincePublish: fixtureDataSincePublished
-        },
-        comparatorData: {
-          comparator: 'testComp',
-          readTimes: fixtureComparator
-        }
-      });
-      const rows = section.props.children;
-      const col = rows[1].props.children
-      const lineChart = col.props.children.props
-      const metricLabel = 'Article'
-      const comparatorLabel = '\'testComp\' Average Article'
-
-      expect(lineChart.data.length).to.equal(31)
-      expect(lineChart.data[0][metricLabel]).to.equal(38)
-      expect(lineChart.data[0][comparatorLabel]).to.equal(7)
-      expect(lineChart.data[0].category).to.equal('2015-09-07T00:00:000Z')
-      expect(lineChart.data[2][metricLabel]).to.equal(51)
-      expect(lineChart.data[2][comparatorLabel]).to.equal(16)
-      expect(lineChart.data[2].category).to.equal('2015-09-09T00:00:000Z')
-      expect(lineChart.keys.length).to.equal(2)
-      expect(lineChart.keys[0]).to.equal(metricLabel)
-      expect(lineChart.keys[1]).to.equal(comparatorLabel)
     });
 
   })
@@ -84,10 +54,9 @@ describe ('sectionWhen component', function() {
       const col = rows[1].props.children
       const lineChart = col.props.children.props
 
-      expect(lineChart.data.length).to.equal(31)
-      expect(lineChart.keys.length).to.equal(2)
-      expect(lineChart.keys[0]).to.equal('Article')
-      expect(lineChart.keys[1]).to.equal('\'testComp\' Average Article')
+      expect(lineChart.data.length).to.equal(0)
+      expect(lineChart.keys.length).to.equal(1)
+      expect(lineChart.keys[0]).to.equal('Page Views')
     })
 
     it('when there is no comparator data', function(){
@@ -106,7 +75,7 @@ describe ('sectionWhen component', function() {
 
       expect(lineChart.data.length).to.equal(31)
       expect(lineChart.keys.length).to.equal(1)
-      expect(lineChart.keys[0]).to.equal('Article')
+      expect(lineChart.keys[0]).to.equal('Page Views')
     })
 
 

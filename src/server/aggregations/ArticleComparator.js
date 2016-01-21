@@ -2,20 +2,6 @@ import * as calculateInterval from '../utils/calculateInterval'
 
 export default function ArticleComparatorAggregation(query) {
   return {
-      page_views_since_publish: {
-        histogram: {
-          field: "time_since_publish",
-          interval: calculateInterval.minuteInterval(query.dateFrom, query.dateTo),
-          min_doc_count : 0
-        }
-      },
-      "page_views_over_time" : {
-        "date_histogram" : {
-          "field" : "view_timestamp",
-          interval : calculateInterval.interval(query.dateFrom, query.dateTo),
-          min_doc_count : 0
-        }
-      },
       avg_time_on_page : {
         avg : {
           field: "time_on_page"

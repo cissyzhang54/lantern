@@ -51,7 +51,6 @@ describe('Article Formatter', function() {
           'pageViews',
           'timeOnPage',
           'readTimes',
-          'readTimesSincePublish',
           'genre',
           'sections',
           'topics',

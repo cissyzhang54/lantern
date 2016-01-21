@@ -29,31 +29,8 @@ export default class SectionWhen extends React.Component {
       return (<div></div>);
     }
 
-    let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
-    let [timeData, timeID, timeKeys] = dataFormatter.getMetric('readTimes', 'Article');
-    let [pubTimeData, pubTimeID, pubTimeKeys] = dataFormatter.getMetric('readTimesSincePublish', 'Article');
-
-    let readTimesChart = (this.props.renderReadTimes)
-      ? <LineChart
-        data={timeData}
-        keys={timeKeys}
-        category={timeID}
-        yLabel='Page Views'
-        xLabel='Time'
-        cols={12}
-        />
-      : null;
-    let timeSincePublishedChart = (this.props.renderTimeSincePublished)
-      ? <LineChart
-      data={pubTimeData}
-      keys={pubTimeKeys}
-      category={pubTimeID}
-      type='indexed'
-      yLabel='Page Views Since Publish date'
-      xLabel='Time since Published'
-      cols={12}
-      />
-      : null;
+    let dataFormatter = new FormatData(this.props.data);
+    let [timeData, timeID, timeKeys] = dataFormatter.getMetric('readTimes', 'Page Views');
 
     return (<ChunkWrapper component='sectionWhen'>
       <Row>
@@ -67,9 +44,13 @@ export default class SectionWhen extends React.Component {
                     <p><Text message='explanations.sectionWhen.articleViews' /></p>
                   </Popover>
                   }
-              >
+            >
               <span>
-                <Glyphicon glyph="question-sign" style={styles.infoIcon} aria-describedby="chart-description" />
+                <Glyphicon
+                  glyph="question-sign"
+                  style={styles.infoIcon}
+                  aria-describedby="chart-description"
+                />
               </span>
             </OverlayTrigger>
             <span >When did the users view the article?</span>
@@ -78,12 +59,14 @@ export default class SectionWhen extends React.Component {
       </Row>
       <Row>
         <Col xs={12}>
-          {readTimesChart}
-        </Col>
-      </Row>
-      <Row>
-        <Col xs={12}>
-          {timeSincePublishedChart}
+          <LineChart
+            data={timeData}
+            keys={timeKeys}
+            category={timeID}
+            yLabel='Page Views Since Publish date'
+            xLabel='Time since Published'
+            cols={12}
+          />
         </Col>
       </Row>
     </ChunkWrapper>);
