@@ -1,73 +1,10 @@
 import React from 'react';
+import ReactCSS from 'reactcss';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import responsiveStyles from '../utils/responsiveStyles';
 import assign from 'object-assign';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Button from 'react-bootstrap/lib/Button';
-
-var componentStyles = {
-  'default': {
-    large: {
-      fontSize: '1.2em',
-      margin: '0.5em'
-    },
-    medium: {
-      fontSize: '1.0em',
-      margin: '0.5em'
-    },
-    small: {
-      fontSize: '0.8em',
-      margin: '0.5em'
-    },
-    singleMetric: {
-      textAlign: 'center'
-    },
-    label: {
-      padding: 0,
-      margin: 0,
-      marginBottom: '10px',
-      fontSize: '1.0em',
-      color: '#666666'
-    },
-    metric: {
-      padding: 0,
-      margin: '0 0 2px 0',
-      fontSize: '1.5em'
-    },
-    comparator: {
-      display: 'block',
-      fontSize: '0.6em',
-      marginTop: '10px'
-    },
-    comparatorSymbol: {
-      display: 'inline-block',
-      margin: '0 5px',
-      verticalAlign: 'bottom'
-    },
-    comparatorValue: {
-      fontSize: '1.0em'
-    },
-    infoIcon : {
-      cursor:'pointer',
-      color: '#039'
-    }
-  },
-  '(max-width: 500px)': {
-    comparator: {
-      display: 'inline-block'
-    },
-    large: {
-      margin: '1.2em 0'
-    },
-    medium: {
-      margin: '1.0em 0'
-    },
-    small: {
-      margin: '0.8em 0'
-    }
-  }
-};
 
 function getPercentageDifference (compared , comparator) {
   return ((Math.abs(compared-comparator)/ comparator) * 100) | 0;
@@ -108,45 +45,130 @@ let convert = {
   }
 };
 
-export default class SingleMetric extends React.Component {
+export default class SingleMetric extends ReactCSS.Component {
   constructor(props) {
     super(props);
     this.state = {
-      responsiveStyles : componentStyles['default']
+
     };
   }
 
-  componentDidMount() {
-    responsiveStyles.addListeners(this, componentStyles);
-  }
-
-  componentWillUnmount() {
-    responsiveStyles.removeListeners(this);
+  classes () {
+    return {
+      'default': {
+        large: {
+          fontSize: '1.2em',
+          margin: '0.5em'
+        },
+        medium: {
+          fontSize: '1.0em',
+          margin: '0.5em'
+        },
+        small: {
+          fontSize: '0.8em',
+          margin: '0.5em'
+        },
+        singleMetric: {
+          textAlign: 'center'
+        },
+        label: {
+          padding: 0,
+          margin: 0,
+          marginBottom: '10px',
+          fontSize: '1.0em',
+          color: '#666666'
+        },
+        metric: {
+          padding: 0,
+          margin: '0 0 2px 0',
+          fontSize: '1.5em'
+        },
+        comparator: {
+          display: 'block',
+          fontSize: '0.6em',
+          marginTop: '10px'
+        },
+        comparatorSymbol: {
+          display: 'inline-block',
+          margin: '0 5px',
+          verticalAlign: 'bottom'
+        },
+        comparatorValue: {
+          fontSize: '1.0em'
+        },
+        infoIcon: {
+          cursor: 'pointer',
+          color: '#039'
+        },
+        'compColor-green' : {
+          color: 'green'
+        },
+        'compColor-red' : {
+          color: 'red'
+        }
+      },
+      'horizontal': {
+        large: {
+          fontSize: '1.0em',
+          margin: '1.0em'
+        },
+        medium: {
+          fontSize: '1.0em',
+          margin: '1.0em'
+        },
+        small: {
+          fontSize: '1.0em',
+          margin: '1.0em'
+        },
+        singleMetric : {
+          textAlign: 'left'
+        },
+        label : {
+          display: 'inline-block',
+          marginBottom: '0px',
+          lineHeight: '1.8em'
+        },
+        metric : {
+          fontSize: '1.0em',
+          display: 'inline-block',
+          float: 'right',
+          lineHeight: '1.5em',
+          margin: '0'
+        },
+        comparator: {
+          fontSize: '0.8em',
+          lineHeight: '1.0em',
+          display: 'inline-block'
+        }
+      }
+    }
   }
 
   render() {
     let comparatorHTML;
-    let styles = this.state.responsiveStyles;
+
     let [transformMetric, differenceSign, transfromComparator] =
       convert[this.props.metricType](this.props.metric, this.props.comparatorMetric);
     let comparatorStatLabel = this.props.comparatorName + ' ' + this.props.label + ' average : ' + Math.round(this.props.comparatorMetric);
     // let showGraphButton = this.props.showGraphButton;
 
-    styles.comparatorSymbol.color = (differenceSign === 'down') ? 'red' : 'green';
-    styles.comparatorValue.color = (differenceSign === 'down') ? 'red' : 'green';
+    let compColor = (differenceSign === 'down') ? {color: 'red'} : {color: 'green'};
 
     //If there is no comparator leave the comparator HTML undefined
     if (transfromComparator) {
       comparatorHTML = (
         <span
-          style={styles.comparator}
+          style={this.styles().comparator}
           title={comparatorStatLabel}
         >
           <Glyphicon
             glyph={'glyphicon glyphicon-chevron-' + differenceSign}
-            style={styles.comparatorSymbol}
+            style={assign(this.styles().comparatorSymbol, compColor)}
           />
-          <span style={styles.comparatorValue}>{transfromComparator}</span>
+          <span
+            style={assign(this.styles().comparatorValue, compColor)}>
+            {transfromComparator}
+          </span>
         </span>
       );
     }
@@ -167,7 +189,7 @@ export default class SingleMetric extends React.Component {
           <span>
             <Glyphicon
               glyph="question-sign"
-              style={styles.infoIcon}
+              style={this.styles().infoIcon}
               aria-describedby={toolTipTitle}
             />
           </span>
@@ -187,11 +209,11 @@ export default class SingleMetric extends React.Component {
     return (
       <div
         className={'singleMetric'}
-        style={assign(styles[this.props.size], styles.singleMetric)}
+        style={this.styles().singleMetric}
         data-component={'singleMetric'}
       >
-        <h3 style={styles.label}>{toolTip} {this.props.label}</h3>
-        <p style={styles.metric}>{transformMetric} {comparatorHTML}</p>
+        <h3 style={this.styles().label}>{this.props.label} {toolTip}</h3>
+        <p style={this.styles().metric}>{transformMetric} {comparatorHTML}</p>
         {button}
       </div>
     );

@@ -146,17 +146,17 @@ module.exports = {
     linksClicked: {
       name: 'Links Clicked',
       selectors: {
-        container: 'div[data-component="sectionInteractiveStats"] div:nth-child(2) > div:nth-child(1) > div[class="singleMetric"]',
+        container: 'div[data-component="sectionInteractiveStats"] div:nth-child(2) > div:nth-child(1) > ul > li > div[class="singleMetric"]',
         dataComponent: ' span:nth-child(1)',
         heading: ' h3',
         chevron: ' span[style]:nth-child(1)',
         percentile: ' span[style]:nth-child(2)'
       }
     },
-    socialShares: {
-      name: 'Social Shares',
+    commentsTotal: {
+      name: 'Total Comments',
       selectors: {
-        container: 'div[data-component="sectionInteractiveStats"] div:nth-child(2) > div:nth-child(2) > div[class="singleMetric"]',
+        container: 'div[data-component="sectionInteractiveStats"] div:nth-child(2) > div:nth-child(2) > ul > li:nth-child(1) > div[class="singleMetric"]',
         dataComponent: ' span:nth-child(1)',
         heading: ' h3',
         chevron: ' span[style]:nth-child(1)',
@@ -166,7 +166,7 @@ module.exports = {
     commentsViewed: {
       name: 'Comments Viewed',
       selectors: {
-        container: 'div[data-component="sectionInteractiveStats"] div:nth-child(3) > div:nth-child(1) > div[class="singleMetric"]',
+        container: 'div[data-component="sectionInteractiveStats"] div:nth-child(2) > div:nth-child(2) > ul > li:nth-child(2) > div[class="singleMetric"]',
         dataComponent: ' span:nth-child(1)',
         heading: ' h3',
         chevron: ' span[style]:nth-child(1)',
@@ -176,7 +176,7 @@ module.exports = {
     commentsPosted: {
       name: 'Comments Posted',
       selectors: {
-        container: 'div[data-component="sectionInteractiveStats"] div:nth-child(3) > div:nth-child(2) > div[class="singleMetric"]',
+        container: 'div[data-component="sectionInteractiveStats"] div:nth-child(2) > div:nth-child(2) > ul > li:nth-child(3) > div[class="singleMetric"]',
         dataComponent: ' span:nth-child(1)',
         heading: ' h3',
         chevron: ' span[style]:nth-child(1)',
@@ -184,29 +184,13 @@ module.exports = {
       }
     },
     subscriptions: {
-      name: 'Subscriptions',
+      name: 'Total Subscriptions',
       selectors: {
-        container: 'div[data-component="sectionInteractiveStats"] div:nth-child(3) > div:nth-child(3) > div[class="singleMetric"]',
+        container: 'div[data-component="sectionInteractiveStats"] div:nth-child(2) > div:nth-child(3) > ul > li:nth-child(1) > div[class="singleMetric"]',
         dataComponent: ' span:nth-child(1)',
         heading: ' h3',
         chevron: ' span[style]:nth-child(1)',
         percentile: ' span[style]:nth-child(2)'
-      }
-    },
-    linkCategory: {
-      name: 'Link Category',
-      selectors: {
-        container: 'div[data-component="sectionInteractiveStats"] div:nth-child(1) > table[data-component="table"]',
-        dataComponent: ' tbody',
-        heading: ' tr'
-      }
-    },
-    socialNetwork: {
-      name: 'Social Network',
-      selectors: {
-        container: 'div[data-component="sectionInteractiveStats"] div:nth-child(3) > table[data-component="table"]',
-        dataComponent: ' tbody',
-        heading: ' tr'
       }
     }
   },
