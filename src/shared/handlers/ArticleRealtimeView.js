@@ -99,6 +99,14 @@ class ArticleRealtimeView extends React.Component {
           this.setState({chartShown: 'timeOnPage'})
         }
       },
+      retentionRate: {
+        metricType: 'percentage',
+        label: 'Retention Rate',
+        size: 'large',
+        onClick: () => {
+          this.setState({chartShown: 'retentionRate'})
+        }
+      },
       scrollDepth: {
         metricType: 'percentage',
         label: 'Average Scroll Depth',
@@ -153,6 +161,18 @@ class ArticleRealtimeView extends React.Component {
         selectedGraphKeys = ['time'];
         selectedGraphYLabel = 'Time On Page (seconds)'
         break;
+      case 'retentionRate':
+        selectedGraphComponentName = 'realtime-retentionRate';
+        selectedGraphTitle = 'Real time retention on page';
+        selectedGraphData =  this.props.realtimeRetention.map(function(d) {
+          return {
+            date: d[0],
+            time: d[1]
+          }
+        });
+        selectedGraphKeys = ['time'];
+        selectedGraphYLabel = 'Time On Page (seconds)'
+        break;
       default:
 
     }
@@ -190,7 +210,7 @@ class ArticleRealtimeView extends React.Component {
           comparatorData={{}}
           config={headlineStats}
         />
-        
+
         <ChunkWrapper component={selectedGraphComponentName}>
           <Row>
             <Col>
@@ -211,17 +231,6 @@ class ArticleRealtimeView extends React.Component {
 
         <ChunkWrapper component="realtime-views">
           <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <h3>What is the Retention Rate?</h3>
-              <PieChart
-                data={retentionRate}
-                keys={['value']}
-                yLabel={'Percentage of Views'}
-              />
-            </Col>
             <Col
               xs={12}
               sm={6}

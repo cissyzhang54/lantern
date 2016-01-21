@@ -50,7 +50,8 @@ export default function formatData(data) {
   ];
   let realtimeFieldsAllDataFields = [
     'realtimeNextInternalUrl',
-    'retentionRate'
+    'retentionRate',
+    'realtimeRetention'
   ]
   let results = {}
 
