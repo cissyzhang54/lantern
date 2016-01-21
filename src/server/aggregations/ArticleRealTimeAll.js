@@ -89,7 +89,27 @@ export default function ArticlesRealtimeAllAggregation(query) {
           value_count: {
             field: 'article_uuid'
           }
+        },
+        retention_last_hour_histogram: {
+          date_histogram: {
+            field: "event_timestamp",
+            interval: "60s",
+            min_doc_count: 0,
+            extended_bounds: {
+              min: query.dateFrom,
+              max: query.dateTo
+            }
+          },
+          aggs : {
+            retention_last_hour_count: {
+              value_count: {
+                field: "article_uuid"
+              }
+            }
+          }
         }
+
+
       }
     }
   }

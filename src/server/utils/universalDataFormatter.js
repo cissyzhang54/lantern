@@ -48,6 +48,11 @@ const fields = {
     formatter: format,
     bucket_key: 'scroll_depth_last_hour_avg'
   },
+  realtimeRetention: {
+    name: 'aggregations.retention_rate.retention_last_hour_histogram',
+    formatter: format,
+    bucket_key: 'retention_last_hour_count'
+  },
   realtimeLinksClickedByCategory: {name: 'aggregations.links_clicked_by_category_last_hour.categories', formatter: format},
   timeOnPageLastHour: {
     name: 'aggregations.time_on_page_last_hour.time_on_page_avg.value',
