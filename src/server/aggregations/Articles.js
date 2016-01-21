@@ -81,7 +81,8 @@ export default function ArticlesAggregation(query) {
             aggs: {
               filtered: {
                 terms: {
-                  field: 'referrer'
+                  field: 'referrer',
+                  size: 5
                 }
               }
             }
@@ -97,7 +98,8 @@ export default function ArticlesAggregation(query) {
         aggs: {
           urls : {
             terms: {
-              field: "referrer"
+              field: "referrer",
+              size: 5
             }
           },
           types : {
@@ -166,7 +168,8 @@ export default function ArticlesAggregation(query) {
       },
       next_internal_url: {
         terms: {
-          field: "next_internal_url"
+          field: "next_internal_url",
+          size: 5
         }
       },
       is_subscription: {

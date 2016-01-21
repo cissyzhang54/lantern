@@ -47,9 +47,7 @@ export default class SectionWhere extends React.Component {
       return <div></div>
     }
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
-    let [metricData, id, keys] = dataFormatter.getPCTMetric('isLastPage', 'Article', 'Exited FT', 'Stayed on FT')
-    let intUrls = this.props.data.nextInternalUrl.map(getReferrerUrls);
-
+    let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Article')
     return (<ChunkWrapper component='sectionNext'>
       <Row>
         <Col xs={12}>
@@ -58,10 +56,14 @@ export default class SectionWhere extends React.Component {
       </Row>
       <Row>
         <Col xs={12} sm={6}>
-          <h4>Of those who stayed where did they go?</h4>
-          <Table
-            headers={['Next Destination', 'Views']}
-            rows={intUrls}
+          <h4>Social Networks</h4>
+          <BarChart
+            data={socialData}
+            keys={socialKeys}
+            category={socialID}
+            yLabel="Page Views"
+            xLabel="Social Network"
+            usePercentages={true}
             />
         </Col>
       </Row>

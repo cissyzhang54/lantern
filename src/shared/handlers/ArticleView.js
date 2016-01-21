@@ -5,11 +5,11 @@ import moment from 'moment';
 import Header from "../components/Header";
 import SectionModifier from "../components/SectionModifier";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
-import SectionReferrers from "../components/SectionReferrers.js";
+import SectionJourney from "../components/SectionJourney.js";
 import SectionWhere from "../components/SectionWhere";
 import SectionHow from "../components/SectionHow";
 import SectionWhen from "../components/SectionWhen";
-import SectionNext from "../components/SectionNext";
+import SectionSocial from "../components/SectionSocial";
 import SectionWho from "../components/SectionWho";
 import SectionInteract from "../components/SectionInteract";
 import Text from '../components/Text'
@@ -152,7 +152,7 @@ class ArticleView extends React.Component {
           renderTimeSincePublished={FeatureFlag.check('article:timeSincePublished')}
         />
 
-        <SectionNext
+        <SectionSocial
           data={data}
           comparatorData={comparatorData}
           renderBounceRate={FeatureFlag.check('article:bounceRate')}
@@ -164,7 +164,7 @@ class ArticleView extends React.Component {
           renderWho={FeatureFlag.check('article:interact')}
         />
 
-        <SectionReferrers
+        <SectionJourney
           data={data}
           comparatorData={comparatorData}
           renderReferrers={FeatureFlag.check('article:referrers')}

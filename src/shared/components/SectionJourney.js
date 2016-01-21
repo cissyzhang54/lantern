@@ -45,8 +45,11 @@ export default class SectionReferrers extends React.Component {
     let internalRefUrls = this.props.data.internalReferrerUrls.map(getReferrerUrls);
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
     let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrerTypes', 'Article')
-    let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Article')
     let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Article')
+
+    let [metricData, id, keys] = dataFormatter.getPCTMetric('isLastPage', 'Article', 'Exited FT', 'Stayed on FT')
+
+    let intUrls = this.props.data.nextInternalUrl.map(getReferrerUrls);
 
     let internalRefTypeChart = this.props.renderInternalRefTypes ? <Col xs={12} sm={6}>
       <h5>FT Traffic Source</h5>
@@ -60,11 +63,11 @@ export default class SectionReferrers extends React.Component {
       />
       </Col> : [];
 
-    return (<ChunkWrapper component='sectionReferrers'>
+    return (<ChunkWrapper component='sectionJourney'>
 
       <Row>
         <Col xs={12}>
-          <h3>Where did the users come from?</h3>
+          <h3>What was the user journey?</h3>
         </Col>
       </Row>
 
@@ -86,18 +89,9 @@ export default class SectionReferrers extends React.Component {
             xLabel="Traffic Source"
             usePercentages={true}
             />
-          <h5>Social Networks</h5>
-          <BarChart
-            data={socialData}
-            keys={socialKeys}
-            category={socialID}
-            yLabel="Page Views"
-            xLabel="Social Network"
-            usePercentages={true}
-            />
         </Col>
         <Col xs={12} sm={6}>
-          <h5>Top URLs</h5>
+          <h5>Top 5 traffic sources</h5>
           <Table
             headers={['Traffic Source', 'Views']}
             rows={refUrls}
@@ -109,17 +103,27 @@ export default class SectionReferrers extends React.Component {
           {marginTop:"20px"}
         }>
         <Col xs={12}>
-          <h4>FT Source</h4>
+          <h4>Internal Source</h4>
         </Col>
       </Row>
 
       <Row>
         {internalRefTypeChart}
         <Col xs={12} sm={6}>
-          <h5>Top Internal URLs</h5>
+          <h5>Top 5 traffic sources</h5>
           <Table
             headers={['FT Source', 'Views']}
             rows={internalRefUrls}
+            />
+        </Col>
+      </Row>
+
+      <Row>
+        <Col xs={12} sm={12}>
+          <h4>Of those who stayed where did they go?</h4>
+          <Table
+            headers={['Next Destination', 'Views']}
+            rows={intUrls}
             />
         </Col>
       </Row>

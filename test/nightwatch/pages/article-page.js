@@ -128,13 +128,14 @@ module.exports = {
     }
   },
 
+
   // Next Section
   sectionNext: {
     exitPage: {
-      name: 'where did they go?',
+      name: 'Social Networks',
       selectors: {
         container: 'div[data-component="sectionNext"] div[class="col-sm-6 col-xs-12"]:nth-child(1)',
-        dataComponent: ' table[data-component="table"]',
+        dataComponent: ' div[data-component="barChart"]',
         heading: ' h4'
       }
     }
@@ -196,21 +197,13 @@ module.exports = {
   },
 
 // Referrers Section
-  sectionReferrers: {
+  sectionJourney: {
     referrerTypes: {
       name: 'Traffic Source',
       selectors: {
         container: 'div[data-component="sectionReferrers"] > div:nth-child(3) > div:nth-child(1)',
         dataComponent: ' > div[data-component="barChart"]:nth-child(2)',
         heading: ' > h5:nth-child(1)'
-      }
-    },
-    socialNetworks: {
-      name: 'Social Networks',
-      selectors: {
-        container: 'div[data-component="sectionReferrers"] > div:nth-child(3) > div:nth-child(1)',
-        dataComponent: ' > div[data-component="barChart"]:nth-child(4)',
-        heading: ' > h5:nth-child(3)'
       }
     },
     topUrls: {
