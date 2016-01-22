@@ -18,7 +18,7 @@ export default function formatData(data) {
     error.data = data;
     throw e;
   }
-  
+
   let [realtimeData, allData] = data;
 
   let metaFields = [
@@ -44,6 +44,7 @@ export default function formatData(data) {
     'socialReferrersLastHour',
     'commentsLastHour',
     'referrerLastHourNames',
+    'referrerLastHourUrls',
     'referrerLastHourTypes',
     'internalReferrerLastHourTypes',
     'internalReferrerLastHourUrls'

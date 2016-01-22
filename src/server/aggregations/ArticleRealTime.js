@@ -65,6 +65,12 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         },
         aggs: {
+          urls: {
+            terms: {
+              field: "referrer_url",
+              size: 5
+            }
+          },
           names: {
             terms: {
               field: "referrer_name"
@@ -102,6 +108,11 @@ export default function ArticlesRealtimeAggregation(query) {
             terms: {
               field: "referrer_url",
               size: 5
+            }
+          },
+          names: {
+            terms: {
+              field: "referrer_name"
             }
           },
           types : {

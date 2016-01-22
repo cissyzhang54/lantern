@@ -64,6 +64,7 @@ const fields = {
   },
   referrerLastHourTypes: {name: 'aggregations.referrer_last_hour.types', formatter: formatAndFilter, terms: ['search', 'unknown', 'partner', 'social-network', 'email']},
   referrerLastHourNames: {name: 'aggregations.referrer_last_hour.names', formatter: format},
+  referrerLastHourUrls: {name: 'aggregations.referrer_last_hour.urls', formatter: format},
   internalReferrerLastHourTypes: {name: 'aggregations.internal_referrer_last_hour.types', formatter: formatAndFilter, terms: ['search', 'unknown', 'partner', 'social-network', 'email']},
   internalReferrerLastHourUrls: {name: 'aggregations.internal_referrer_last_hour.urls', formatter: format},
   socialReferrersLastHour: {name: 'aggregations.referrer_last_hour.names', formatter: formatAndFilter, terms: ['Facebook', 'Twitter', 'Linked-In']},

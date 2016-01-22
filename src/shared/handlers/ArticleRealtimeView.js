@@ -17,6 +17,7 @@ import Link from 'react-router/lib/Link';
 import ErrorHandler from '../components/ErrorHandler';
 import FormatData from "../utils/formatData";
 import BarChart from '../components/BarChart.js';
+import Url from 'url';
 
 const maxStrLen = 60;
 
@@ -39,6 +40,32 @@ function getReferrerUrls (value) {
     link: link,
     count: count
   };
+}
+
+function getLinksForReferrerUrls(data) {
+  const maxLen = 60;
+
+  var parsed = Url.parse(data[0]);
+  let displayString = data[0].length > maxLen ? data[0].substr(0, maxLen) + '…' : data[0];
+
+  if (!/ft.com/.test(parsed.hostname)) {
+    displayString = displayString.split('?')[0];
+  }
+
+  let title = data[2];
+  if (!title || (title === 'Unknown')) title = displayString;
+  let url = displayString.indexOf('http') < 0 ? displayString : (
+    <a
+      target="_blank"
+      href={data[0]}
+    >
+      {(title !== 'Unknown') ? title : displayString}
+    </a>
+  );
+  return {
+    'referrer': url,
+    'Views': data[1]
+  }
 }
 
 class ArticleRealtimeView extends React.Component {
@@ -179,12 +206,14 @@ class ArticleRealtimeView extends React.Component {
 
     }
 
-    let formatterData = {internalReferrerLastHourTypes: this.props.internalReferrerLastHourTypes}
+    let formatterData = this.props
     let dataFormatter = new FormatData(formatterData , null);
 
     let [refData, refID, refKeys] = dataFormatter.getPCTMetric('internalReferrerLastHourTypes', 'Article')
+    let [extRefData, extRefID, extRefKeys] = dataFormatter.getPCTMetric('externalReferrerLastHourTypes', 'Article')
 
-    let internalReferrerLastHourUrls = this.props.internalReferrerLastHourUrls
+    let internalReferrerLastHourUrls = this.props.internalReferrerLastHourUrls.map(getLinksForReferrerUrls);
+    let externalReferrerLastHourUrls = this.props.externalReferrerLastHourUrls.map(getLinksForReferrerUrls);
 
     let linksClickedByCategory = this.props.realtimeLinksClickedByCategory;
     let linksClicked = linksClickedByCategory.reduce((prev, curr) => {
@@ -265,25 +294,67 @@ class ArticleRealtimeView extends React.Component {
         </ChunkWrapper>
 
 
-      <ChunkWrapper component="realtime-views">
+      <ChunkWrapper component="traffic-sources">
         <Row>
-          <Col xs={12} sm={6}>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <h3>External Sources</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <h4>Traffic Source</h4>
+            <BarChart
+              data={extRefData}
+              keys={extRefKeys}
+              category={extRefID}
+              yLabel="Page Views"
+              xLabel="Traffic Source"
+              usePercentages
+            />
+          </Col>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <Table
+              headers={['Top 5 traffic sources', 'Views']}
+              rows={externalReferrerLastHourUrls}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            xs={12}
+            sm={6}
+          >
             <h3>Internal Sources</h3>
           </Col>
         </Row>
         <Row>
-          <Col xs={12} sm={6}>
-            <h3>FT Traffic Sources</h3>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <h4>FT Traffic Sources</h4>
             <BarChart
               data={refData}
               keys={refKeys}
               category={refID}
               yLabel="Page Views"
-              xLabel="Referrer"
-              usePercentages={true}
-              />
+              xLabel="Traffic Source"
+              usePercentages
+            />
           </Col>
-          <Col xs={12} sm={6}>
+          <Col
+            xs={12}
+            sm={6}
+          >
             <Table
               headers={['Top 5 traffic sources', 'Views']}
               rows={internalReferrerLastHourUrls}
