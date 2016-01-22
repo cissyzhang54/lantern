@@ -1,6 +1,7 @@
 import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
+import DocumentTitle from 'react-document-title';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import ArticleRealtimeStore from '../stores/ArticleRealtimeStore';
 import ArticleRealtimeActions from '../actions/ArticleRealtimeActions';
@@ -15,6 +16,8 @@ import SingleMetric from '../components/SingleMetric';
 import * as formatAuthors from '../utils/formatAuthors';
 import Link from 'react-router/lib/Link';
 import ErrorHandler from '../components/ErrorHandler';
+import FormatData from "../utils/formatData";
+import BarChart from '../components/BarChart.js';
 
 const maxStrLen = 60;
 
@@ -76,6 +79,7 @@ class ArticleRealtimeView extends React.Component {
       );
     }
 
+    let title = (this.props.title) ? 'Lantern - ' + this.props.title : '';
     let realtimeNextInternalUrl = this.props.realtimeNextInternalUrl.map(getReferrerUrls);
     let linksClicked = this.props.linksClicked;
     let socialShares = this.props.socialShares;
@@ -177,12 +181,15 @@ class ArticleRealtimeView extends React.Component {
 
     }
 
-    let retentionRate = [
-      ['Stayed on FT.com', this.props.retentionRate],
-      ['Left FT.com', 100-this.props.retentionRate]
-    ];
+    let formatterData = {internalReferrerLastHourTypes: this.props.internalReferrerLastHourTypes}
+    let dataFormatter = new FormatData(formatterData , null);
+
+    let [refData, refID, refKeys] = dataFormatter.getPCTMetric('internalReferrerLastHourTypes', 'Article')
+
+    let internalReferrerLastHourUrls = this.props.internalReferrerLastHourUrls
 
     return (
+      <DocumentTitle title={title}>
       <div>
 
         <Row>
@@ -229,12 +236,10 @@ class ArticleRealtimeView extends React.Component {
           </Row>
         </ChunkWrapper>
 
+
         <ChunkWrapper component="realtime-views">
           <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
+            <Col>
               <h3>Where did users go next?</h3>
               <Table
                 headers={['FT Source', 'Views']}
@@ -243,6 +248,35 @@ class ArticleRealtimeView extends React.Component {
             </Col>
           </Row>
         </ChunkWrapper>
+
+
+      <ChunkWrapper component="realtime-views">
+        <Row>
+          <Col xs={12} sm={6}>
+            <h3>Internal Sources</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12} sm={6}>
+            <h3>FT Traffic Sources</h3>
+            <BarChart
+              data={refData}
+              keys={refKeys}
+              category={refID}
+              yLabel="Page Views"
+              xLabel="Referrer"
+              usePercentages={true}
+              />
+          </Col>
+          <Col xs={12} sm={6}>
+            <Table
+              headers={['Top 5 traffic sources', 'Views']}
+              rows={internalReferrerLastHourUrls}
+              />
+          </Col>
+        </Row>
+      </ChunkWrapper>
+
 
         <SingleMetric
           metricType='integer'
@@ -263,10 +297,10 @@ class ArticleRealtimeView extends React.Component {
         />
 
       </div>
+      </DocumentTitle>
     );
 
   }
-
 }
 
 ArticleRealtimeView.defaultProps = {
