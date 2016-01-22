@@ -30,6 +30,7 @@ class ArticleRealtimeStore {
       realtimeLinksClickedByCategory: [],
       retentionRate: 0,
       socialShares: null,
+      socialReferrersLastHour: [],
       comments: null,
       author: [],
       genre: [],
@@ -81,6 +82,7 @@ class ArticleRealtimeStore {
         realtimeLinksClickedByCategory: data.realtimeLinksClickedByCategory,
         retentionRate: (data.retentionRate / sumAll(data.realtimePageViews)) * 100 | 0,
         socialShares: data.socialSharesLastHour,
+        socialReferrersLastHour: data.socialReferrersLastHour,
         comments: data.commentsLastHour,
         isLive: true
       })
@@ -142,6 +144,7 @@ class ArticleRealtimeStore {
       linksClicked: data.linksClickedLastHour,
       realtimeLinksClickedByCategory: data.realtimeLinksClickedByCategory,
       retentionRate: (data.retentionRate / sumAll(data.realtimePageViews)) * 100 | 0,
+      socialReferrersLastHour: data.socialReferrersLastHour,
       socialShares: data.socialSharesLastHour,
       comments: data.commentsLastHour,
       lastUpdated: data.realtimePageViews.length ? data.realtimePageViews.slice(-1)[0][0] : null

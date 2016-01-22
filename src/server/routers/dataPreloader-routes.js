@@ -142,6 +142,7 @@ function getArticleRealtimeData(req, res) {
           linksClicked: data.linksClickedLastHour,
           realtimeLinksClickedByCategory: data.realtimeLinksClickedByCategory,
           retentionRate: retentionRate,
+          socialReferrersLastHour: data.socialReferrersLastHour,
           socialShares: data.socialSharesLastHour,
           comments: data.commentsLastHour,
           internalReferrerLastHourTypes: data.internalReferrerLastHourTypes,
