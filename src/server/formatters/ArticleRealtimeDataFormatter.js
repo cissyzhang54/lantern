@@ -18,7 +18,7 @@ export default function formatData(data) {
     error.data = data;
     throw e;
   }
-
+  
   let [realtimeData, allData] = data;
 
   let metaFields = [

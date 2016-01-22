@@ -106,7 +106,8 @@ export default {
       aggs: {
         urls : {
           terms: {
-            field: "referrer_url"
+            field: "referrer_url",
+            "size": 5
           }
         },
         types : {
