@@ -6,7 +6,6 @@ import connectToStores from 'alt-utils/lib/connectToStores';
 import ArticleRealtimeStore from '../stores/ArticleRealtimeStore';
 import ArticleRealtimeActions from '../actions/ArticleRealtimeActions';
 import LineChart from '../components/LineChart';
-import PieChart from '../components/PieChart';
 import Table from '../components/Table';
 import ChunkWrapper from '../components/ChunkWrapper';
 import LiveIndicator from '../components/LiveIndicator';
@@ -81,7 +80,6 @@ class ArticleRealtimeView extends React.Component {
 
     let title = (this.props.title) ? 'Lantern - ' + this.props.title : '';
     let realtimeNextInternalUrl = this.props.realtimeNextInternalUrl.map(getReferrerUrls);
-    let linksClicked = this.props.linksClicked;
     let socialShares = this.props.socialShares;
     let comments = this.props.comments;
 
@@ -188,6 +186,11 @@ class ArticleRealtimeView extends React.Component {
 
     let internalReferrerLastHourUrls = this.props.internalReferrerLastHourUrls
 
+    let linksClickedByCategory = this.props.realtimeLinksClickedByCategory;
+    let linksClicked = linksClickedByCategory.reduce((prev, curr) => {
+      return prev + curr[1];
+    }, 0);
+
     return (
       <DocumentTitle title={title}>
       <div>
@@ -277,6 +280,21 @@ class ArticleRealtimeView extends React.Component {
         </Row>
       </ChunkWrapper>
 
+        <ChunkWrapper component="user-interact">
+          <h3>How did the users interact?</h3>
+          <Row>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <Table
+                headers={['Total links clicked', linksClicked]}
+                rows={linksClickedByCategory}
+              />
+            </Col>
+
+          </Row>
+        </ChunkWrapper>
 
         <SingleMetric
           metricType='integer'
