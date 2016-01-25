@@ -45,17 +45,13 @@ module.exports = {
     nExtras.assertElementsInSection(browser, articlePage.sectionWhen);
   },
 
-  'Assert elements in Next Section' : function (browser) {
-    nExtras.assertElementsInSection(browser, articlePage.sectionNext);
-  },
-
   'Assert elements in Interactive Stats Section' : function (browser) {
     // TODO:  link category and social network in interactive stats section needs to be finished by data team
     nExtras.assertElementsInSection(browser, articlePage.sectionInteractive);
   },
 
-  'Assert elements in Referrers Section' : function (browser) {
-    nExtras.assertElementsInSection(browser, articlePage.sectionReferrers);
+  'Assert elements in Social Section' : function (browser) {
+    nExtras.assertElementsInSection(browser, articlePage.sectionSocial);
   },
 
   'Assert elements in Who Section' : function (browser) {

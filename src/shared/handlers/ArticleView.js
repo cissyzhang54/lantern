@@ -128,7 +128,6 @@ class ArticleView extends React.Component {
         </ChunkWrapper>
 
         <ChunkWrapper component="header">
-
           {updating}
 
           <Header
@@ -152,16 +151,15 @@ class ArticleView extends React.Component {
           renderTimeSincePublished={FeatureFlag.check('article:timeSincePublished')}
         />
 
-        <SectionSocial
-          data={data}
-          comparatorData={comparatorData}
-          renderBounceRate={FeatureFlag.check('article:bounceRate')}
-        />
-
         <SectionInteract
           data={data}
           comparatorData={comparatorData}
           renderWho={FeatureFlag.check('article:interact')}
+        />
+        
+        <SectionSocial
+        data={data}
+        comparatorData={comparatorData}
         />
 
         <SectionJourney

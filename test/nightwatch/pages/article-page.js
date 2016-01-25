@@ -128,20 +128,6 @@ module.exports = {
     }
   },
 
-
-  // Next Section
-  sectionNext: {
-    exitPage: {
-      name: 'Social Networks',
-      selectors: {
-        container: 'div[data-component="sectionNext"] div[class="col-sm-6 col-xs-12"]:nth-child(1)',
-        dataComponent: ' div[data-component="barChart"]',
-        heading: ' h4'
-      }
-    }
-  },
-
-
   // Interactive Stats Section
   sectionInteractive: {
     linksClicked: {
@@ -196,8 +182,29 @@ module.exports = {
     }
   },
 
+  // Social Section
+  sectionSocial: {
+    socialNetworks:{
+      name: 'Social Networks',
+      selectors: {
+        container: 'div[data-component="sectionSocial"] > div:nth-child(2) > div:nth-child(1)',
+        dataComponent: ' div[data-component="barChart"]',
+        heading: ' h5'
+      }
+    },
+    trafficSocial:{
+      name: 'Total traffic from social',
+      selectors: {
+        container: 'div[data-component="sectionSocial"] > div:nth-child(2) > div:nth-child(2)',
+        dataComponent: ' dl[class="metric-list"]',
+        heading: ' dt:nth-child(1)'
+      }
+    }
+
+
+  },
 // Referrers Section
-  sectionJourney: {
+  sectionReferrers: {
     referrerTypes: {
       name: 'Traffic Source',
       selectors: {

@@ -1,0 +1,37 @@
+.metric-list {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  flex-direction: row;
+}
+
+.metric-list__term, .metric-list__value {
+  border-top: 1px solid #ddd;
+}
+
+.metric-list__term:nth-child(1), .metric-list__value:nth-child(2) {
+  border-top: none;
+}
+
+.metric-list__term:nth-child(3), .metric-list__value:nth-child(4) {
+  border-top: 2px solid #ddd;
+}
+
+.metric-list__term:first-child:before {
+  border-top: none;
+}
+
+.metric-list__term {
+  flex: 1 0 75%;
+  padding: 8px;
+}
+
+.metric-list__value {
+  flex: 0 4 25%;
+  padding: 8px;
+  text-align: right;
+}
+
+.metric-list__term--header, .metric-list__value--header {
+  font-weight: bolder;
+}
