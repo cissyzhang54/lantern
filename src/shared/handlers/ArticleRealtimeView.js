@@ -171,11 +171,11 @@ class ArticleRealtimeView extends React.Component {
         selectedGraphData =  this.props.realtimeRetention.map(function(d) {
           return {
             date: d[0],
-            time: d[1]
+            views: d[1]
           }
         });
-        selectedGraphKeys = ['time'];
-        selectedGraphYLabel = 'Time On Page (seconds)'
+        selectedGraphKeys = ['views'];
+        selectedGraphYLabel = 'Page Views'
         break;
       default:
 
