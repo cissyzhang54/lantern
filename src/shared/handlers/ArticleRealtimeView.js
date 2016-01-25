@@ -191,6 +191,18 @@ class ArticleRealtimeView extends React.Component {
       return prev + curr[1];
     }, 0);
 
+    let socialMedia = this.props.socialReferrersLastHour;
+    let socialMediaTotal = socialMedia.reduce((prev, curr) => {
+      return prev + curr[1];
+    }, 0);
+    let socialMediaChartData = socialMedia.map((d) => {
+      return {
+        network: d[0],
+        'referrals %': (d[1] / socialMediaTotal * 100) | 0,
+        referrals: d[1]
+      };
+    });
+
     return (
       <DocumentTitle title={title}>
       <div>
@@ -293,6 +305,38 @@ class ArticleRealtimeView extends React.Component {
               />
             </Col>
 
+          </Row>
+        </ChunkWrapper>
+
+        <ChunkWrapper component="social-media">
+          <Row>
+            <Col>
+              <h3>How did the article perform on social media?</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <BarChart
+                data={socialMediaChartData}
+                keys={['referrals']}
+                category={'network'}
+                yLabel="Traffic from Social"
+                xLabel="Social Network"
+                usePercentages
+              />
+            </Col>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <Table
+                headers={['Total traffic from social', socialMediaTotal]}
+                rows={socialMedia}
+              />
+            </Col>
           </Row>
         </ChunkWrapper>
 
