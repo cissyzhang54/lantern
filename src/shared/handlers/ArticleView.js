@@ -56,7 +56,7 @@ class ArticleView extends React.Component {
         metricType: 'time',
         label: 'Time on Page',
         size: 'large',
-        comparatorFormatName: 'timeOnPage'
+        comparatorFormatName: 'timeOnPage',
       },
       pageViews: {
         metricType: 'integer',
@@ -138,6 +138,7 @@ class ArticleView extends React.Component {
             uuid={data.uuid}
           />
         </ChunkWrapper>
+
         <SectionHeadlineStats
           data={data}
           comparatorData={comparatorData}

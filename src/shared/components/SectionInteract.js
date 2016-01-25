@@ -99,7 +99,7 @@ function renderMetric (metricName, metric, comparatorName, comparatorMetric) {
   return <SingleMetric {...componentConfig} />
 }
 
-export default class SectionHeadlineStats extends React.Component {
+export default class SectionInteract extends React.Component {
 
   constructor(props) {
     super(props);
@@ -151,7 +151,7 @@ export default class SectionHeadlineStats extends React.Component {
       } else if (i++ === data.linkClickCategories.buckets.length) {
         className += '--last'
       }
-      return <li style={styles[className]}>{d}</li>;
+      return <li key={i} style={styles[className]}>{d}</li>;
     });
 
     return ( <ChunkWrapper component='sectionInteractiveStats' >
