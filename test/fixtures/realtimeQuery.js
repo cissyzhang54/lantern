@@ -71,6 +71,12 @@ export default {
         }
       },
       aggs: {
+        urls: {
+          terms: {
+            field: "referrer_url",
+            "size": 5
+          }
+        },
         names: {
           terms: {
             field: "referrer_name"
@@ -108,6 +114,11 @@ export default {
           terms: {
             field: "referrer_url",
             "size": 5
+          }
+        },
+        names : {
+          terms: {
+            field: "referrer_name"
           }
         },
         types : {

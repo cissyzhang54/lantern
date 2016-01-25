@@ -145,6 +145,9 @@ function getArticleRealtimeData(req, res) {
           socialReferrersLastHour: data.socialReferrersLastHour,
           socialShares: data.socialSharesLastHour,
           comments: data.commentsLastHour,
+          externalReferrerLastHourTypes : data.referrerLastHourTypes,
+          externalReferrerLastHourNames : data.referrerLastHourNames,
+          externalReferrerLastHourUrls : data.referrerLastHourUrls,
           internalReferrerLastHourTypes: data.internalReferrerLastHourTypes,
           internalReferrerLastHourUrls: data.internalReferrerLastHourUrls
         }
