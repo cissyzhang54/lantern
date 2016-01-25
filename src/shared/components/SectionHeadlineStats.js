@@ -17,16 +17,16 @@ export default class SectionHeadlineStats extends React.Component {
       let metrics = [];
       let colWidth = Math.floor(12 / keys.length);
       let isFive = keys.length === 5;
-      if (isFive) colWidth = '5ths'
+      if (isFive) colWidth = 5
       keys.forEach(function (value, i) {
         let componentConfig = config[value];
         componentConfig.metric = data[value];
         componentConfig.comparatorMetric = comparatorData[config[value].comparatorFormatName] || undefined;
         componentConfig.comparatorName = value || '';
-
+        componentConfig.key = i;
         let component = null
         if (typeof componentConfig.metric !== 'undefined') {
-          component = <SingleMetric {...componentConfig} />
+          component = <SingleMetric key={i} {...componentConfig} />
         }
         metrics.push(addComponentToColumn(component, colWidth, i));
       });
@@ -53,13 +53,11 @@ export default class SectionHeadlineStats extends React.Component {
     let metricsComponents = getMetrics(config, data, comparatorData);
 
     return (
-    <ChunkWrapper component='SectionHeadlineStats'>
-     <Row data-component='sectionHeadlineStats' >
-      <Col xs={12} >
-        {metricsComponents}
-      </Col>
-    </Row>
-    </ChunkWrapper>
+      <ChunkWrapper component='SectionHeadlineStats'>
+        <Row data-component='sectionHeadlineStats' >
+          {metricsComponents}
+        </Row>
+      </ChunkWrapper>
     );
   }
 }
