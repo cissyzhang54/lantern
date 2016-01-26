@@ -6,7 +6,6 @@ test:
     - wget http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar -O test/bin/selenium-server-standalone-2.47.1.jar
     - npm run start-test:
         background: true
-    - sleep 30
 general:
   artifacts:
     - test/nightwatch/report
