@@ -111,6 +111,7 @@ const fields = {
   realtimeNextInternalUrl : 'aggregations.next_internal_url.titles.buckets',
   linksClickedLastHour : 'aggregations.links_clicked_last_hour.doc_count',
   socialSharesLastHour : 'aggregations.social_shares_last_hour.doc_count',
+  userTypesLastHour  : {name: 'aggregations.user_types_last_hour.cohorts', formatter: format},
   timeOnPageTop: 'aggregations.time_on_page.buckets',
   commentsLastHour : 'aggregations.comments_last_hour.doc_count',
   commentsReadLastHour : 'aggregations.comments_last_hour.doc_count',

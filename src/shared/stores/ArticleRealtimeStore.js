@@ -36,6 +36,7 @@ class ArticleRealtimeStore {
       socialReferrersLastHour: [],
       comments: null,
       commentsReadLastHour: null,
+      userTypesLastHour: null,
       author: [],
       genre: [],
       title: "",
@@ -92,6 +93,7 @@ class ArticleRealtimeStore {
         socialReferrersLastHour: data.socialReferrersLastHour,
         comments: data.commentsLastHour,
         commentsReadLastHour: data.commentsReadLastHour,
+        userTypesLastHour: data.userTypesLastHour,
         isLive: true
       })
 
@@ -159,6 +161,7 @@ class ArticleRealtimeStore {
       socialShares: data.socialSharesLastHour,
       comments: data.commentsLastHour,
       commentsReadLastHour: data.commentsReadLastHour,
+      userTypesLastHour: data.userTypesLastHour,
       lastUpdated: data.realtimePageViews.length ? data.realtimePageViews.slice(-1)[0][0] : null
     });
 

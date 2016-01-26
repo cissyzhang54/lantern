@@ -48,7 +48,8 @@ export default function formatData(data) {
     'referrerLastHourUrls',
     'referrerLastHourTypes',
     'internalReferrerLastHourTypes',
-    'internalReferrerLastHourUrls'
+    'internalReferrerLastHourUrls',
+    'userTypesLastHour'
   ];
   let realtimeFieldsAllDataFields = [
     'realtimeNextInternalUrl',
