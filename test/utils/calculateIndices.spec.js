@@ -13,22 +13,18 @@ describe('#calculateRealtimeIndices', () => {
      dateTo : ('2015-01-01T21:00:00')
     }
 
-    expect(calculateRealtimeIndices(query, 'realtime-')).to.deep.equal([
-      'realtime-2015-01-01-20',
-      'realtime-2015-01-01-21',
-    ]);
+    expect(calculateRealtimeIndices(query, 'realtime-'))
+      .to.equal('realtime-2015-01-01-2*');
   })
 
   it('should return two indices if dates are in different hours', () => {
     const query = {
-     dateFrom : ('2015-01-01T20:15:00'),
+     dateFrom : ('2015-01-01T10:15:00'),
      dateTo : ('2015-01-01T21:15:00')
     }
 
-    expect(calculateRealtimeIndices(query, 'realtime-')).to.deep.equal([
-      'realtime-2015-01-01-20',
-      'realtime-2015-01-01-21'
-    ]);
+    expect(calculateRealtimeIndices(query, 'realtime-'))
+      .to.equal('realtime-2015-01-01-*');
   })
 
   it('should calculate dates between days correctly', () => {
@@ -37,10 +33,8 @@ describe('#calculateRealtimeIndices', () => {
      dateTo : ('2015-01-02T00:15:00')
     }
 
-    expect(calculateRealtimeIndices(query, 'realtime-')).to.deep.equal([
-      'realtime-2015-01-01-23',
-      'realtime-2015-01-02-00'
-    ]);
+    expect(calculateRealtimeIndices(query, 'realtime-'))
+      .to.equal('realtime-2015-01-0*');
   })
 });
 

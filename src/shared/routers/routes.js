@@ -62,6 +62,11 @@ export default (
       analyticsView="realtime"
     />
     <Route
+      path="realtime/articles/:uuid/:timespan"
+      component={ArticleRealtimeView}
+      analyticsView="realtime"
+    />
+    <Route
       path="*"
       name='404'
       component={Error404}

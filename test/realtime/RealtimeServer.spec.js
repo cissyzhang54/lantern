@@ -44,7 +44,10 @@ describe('Realtime Server', () => {
       done();
     });
     client.on('error', done);
-    client.emit('subscribeToArticle', UUID);
+    client.emit('subscribeToArticle', {
+      uuid: UUID,
+      timespan: '1h'
+    });
   });
 
   it('should clean up pollers when there are no clients', (done) => {

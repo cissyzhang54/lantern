@@ -1,4 +1,10 @@
 export default function ArticlesRealtimeAllAggregation(query) {
+
+  const timespan = 'now-' + query.timespan + '/m';
+  let interval = '60s';
+  if (query.timespan === '48h') interval = '10m';
+
+
   return {
     next_internal_url: {
       filter : {
@@ -17,7 +23,7 @@ export default function ArticlesRealtimeAllAggregation(query) {
             {
               range: {
                 event_timestamp: {
-                  gte: 'now-48h/m'
+                  gte: timespan
                 }
               }
             }
@@ -71,8 +77,7 @@ export default function ArticlesRealtimeAllAggregation(query) {
             {
               range: {
                 event_timestamp: {
-                  gte: 'now-48h/m',
-                  lt: 'now-30m/m'
+                  gte: timespan
                 }
               }
             },
@@ -93,7 +98,7 @@ export default function ArticlesRealtimeAllAggregation(query) {
         retention_last_hour_histogram: {
           date_histogram: {
             field: "event_timestamp",
-            interval: "60s",
+            interval: interval,
             min_doc_count: 0,
             extended_bounds: {
               min: query.dateFrom,
@@ -108,8 +113,6 @@ export default function ArticlesRealtimeAllAggregation(query) {
             }
           }
         }
-
-
       }
     }
   }

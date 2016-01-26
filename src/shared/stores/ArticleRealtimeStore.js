@@ -26,7 +26,6 @@ class ArticleRealtimeStore {
       externalReferrerLastHourUrls : [],
       timeOnPage: null,
       scrollDepth: null,
-      livePageViews: null,
       totalPageViews: null,
       realtimeNextInternalUrl: [],
       linksClicked: null,
@@ -50,59 +49,63 @@ class ArticleRealtimeStore {
       uuid: null,
       isLive: false,
       isLiveTimer: null,
-      socket: null
+      socket: null,
+      timespan: '1h'
     }
   }
 
   connect() {
     if (this.socket) {
-      return;
+      this.socket.emit('unsubscribeFromArticle', this.state.previousArticle);
+    }
+    else {
+      this.socket = io();
+      this.socket.connect();
+      this.socket.on('connect', () => {
+        this.setState({ isLive: true });
+      });
+      this.socket.on('disconnect', () => {
+        this.setState({ isLive: false });
+      });
+      this.socket.on('reconnect', () => {
+        this.setState({ isLive: true });
+      });
+      this.socket.on('updatedArticleData', (data) => {
+        this.setState({
+          pageViews: data.realtimePageViews,
+          realtimeTimeOnPage: data.realtimeTimeOnPage,
+          realtimeScrollDepth: data.realtimeScrollDepth,
+          realtimeRetention: data.realtimeRetention,
+          internalReferrerLastHourTypes : data.internalReferrerLastHourTypes,
+          internalReferrerLastHourUrls : data.internalReferrerLastHourUrls,
+          externalReferrerLastHourTypes : data.referrerLastHourTypes,
+          externalReferrerLastHourNames : data.referrerLastHourNames,
+          externalReferrerLastHourUrls : data.referrerLastHourUrls,
+          totalPageViews: sumAll(data.realtimePageViews),
+          timeOnPage: data.timeOnPageLastHour,
+          scrollDepth: data.scrollDepthLastHour,
+          realtimeNextInternalUrl: data.realtimeNextInternalUrl,
+          realtimeLinksClickedByCategory: data.realtimeLinksClickedByCategory,
+          retentionRate: (data.retentionRate / sumAll(data.realtimePageViews)) * 100 | 0,
+          socialShares: data.socialSharesLastHour,
+          socialReferrersLastHour: data.socialReferrersLastHour,
+          comments: data.commentsLastHour,
+          commentsReadLastHour: data.commentsReadLastHour,
+          userTypesLastHour: data.userTypesLastHour,
+          isLive: true
+        })
+
+        this.setIsLiveTimer();
+      });
+      this.socket.on('error', (error) => {
+        console.error(error);
+      });
     }
 
-    this.socket = io();
-    this.socket.connect();
-    this.socket.on('connect', () => {
-      this.setState({ isLive: true });
+    this.socket.emit('subscribeToArticle', {
+      uuid: this.state.uuid,
+      timespan: this.state.timespan
     });
-    this.socket.on('disconnect', () => {
-      this.setState({ isLive: false });
-    });
-    this.socket.on('reconnect', () => {
-      this.setState({ isLive: true });
-    });
-    this.socket.on('updatedArticleData', (data) => {
-      this.setState({
-        pageViews: data.realtimePageViews,
-        realtimeTimeOnPage: data.realtimeTimeOnPage,
-        realtimeScrollDepth: data.realtimeScrollDepth,
-        realtimeRetention: data.realtimeRetention,
-        internalReferrerLastHourTypes : data.internalReferrerLastHourTypes,
-        internalReferrerLastHourUrls : data.internalReferrerLastHourUrls,
-        externalReferrerLastHourTypes : data.referrerLastHourTypes,
-        externalReferrerLastHourNames : data.referrerLastHourNames,
-        externalReferrerLastHourUrls : data.referrerLastHourUrls,
-        totalPageViews: sumAll(data.realtimePageViews),
-        timeOnPage: data.timeOnPageLastHour,
-        scrollDepth: data.scrollDepthLastHour,
-        livePageViews: data.livePageViews,
-        realtimeNextInternalUrl: data.realtimeNextInternalUrl,
-        linksClicked: data.linksClickedLastHour,
-        realtimeLinksClickedByCategory: data.realtimeLinksClickedByCategory,
-        retentionRate: (data.retentionRate / sumAll(data.realtimePageViews)) * 100 | 0,
-        socialShares: data.socialSharesLastHour,
-        socialReferrersLastHour: data.socialReferrersLastHour,
-        comments: data.commentsLastHour,
-        commentsReadLastHour: data.commentsReadLastHour,
-        userTypesLastHour: data.userTypesLastHour,
-        isLive: true
-      })
-
-      this.setIsLiveTimer();
-    });
-    this.socket.on('error', (error) => {
-      console.error(error);
-    })
-    this.socket.emit('subscribeToArticle', this.state.uuid);
   }
 
   disconnect() {
@@ -121,16 +124,16 @@ class ArticleRealtimeStore {
     this.emitChange();
   }
 
-  subscribeToArticle(uuid) {
+  subscribeToArticle(query) {
     // must be wrapped in a timeout to trigger the source action
     setTimeout(() => {
-      this.getInstance().loadArticleRealtimeData({uuid : uuid});
-      this.setState({ uuid: uuid });
+      this.getInstance().loadArticleRealtimeData(query);
+      this.setState(query);
 
-      if (!this.getInstance().isLoading()) {
-        // Data not being fetched from server, go ahead and listen to web socket
+      // if (!this.getInstance().isLoading()) {
+      //   // Data not being fetched from server, go ahead and listen to web socket
         this.connect();
-      }
+      // }
     }, 0);
   }
 
@@ -147,7 +150,6 @@ class ArticleRealtimeStore {
       timeOnPage: data.timeOnPageLastHour,
       scrollDepth: data.scrollDepthLastHour,
       realtimeNextInternalUrl: data.realtimeNextInternalUrl,
-      livePageViews: data.livePageViews,
       internalReferrerLastHourTypes: data.internalReferrerLastHourTypes,
       internalReferrerLastHourUrls: data.internalReferrerLastHourUrls,
       externalReferrerLastHourTypes : data.referrerLastHourTypes,

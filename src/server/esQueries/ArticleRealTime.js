@@ -5,11 +5,11 @@ export default function ArticlesRealtimeESQuery(query) {
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  assert.equal(typeof query.dateFrom, 'string',
-    "argument 'query' should contain a dateFrom string")
+  assert.equal(typeof query.timespan, 'string',
+    "argument 'query' should contain a timespan string")
 
-  assert.equal(typeof query.dateTo, 'string',
-    "argument 'query' should contain a dateTo string")
+  assert.ok(/(\d+)(\w+)/.test(query.timespan),
+    "argument query.timespan should be a timespan string (i.e. 48h)")
 
   assert.equal(typeof query.uuid, 'string',
     "argument 'query' should contain a 'uuid' string")

@@ -1,4 +1,9 @@
 export default function ArticlesRealtimeAggregation(query) {
+
+  const timespan = 'now-' + query.timespan + '/m';
+  let interval = '60s';
+  if (query.timespan === '48h') interval = '10m';
+
   return {
       links_clicked_last_hour: {
         filter: {
@@ -12,7 +17,7 @@ export default function ArticlesRealtimeAggregation(query) {
               {
                 range: {
                   event_timestamp: {
-                    gte: "now-1h/m"
+                    gte: timespan
                   }
                 }
               }
@@ -32,7 +37,7 @@ export default function ArticlesRealtimeAggregation(query) {
               {
                 range: {
                   event_timestamp: {
-                    gte: "now-1h/m"
+                    gte: timespan
                   }
                 }
               }
@@ -53,7 +58,7 @@ export default function ArticlesRealtimeAggregation(query) {
             must: {
               range: {
                 event_timestamp: {
-                  gte: "now-1h/m"
+                  gte: timespan
                 }
               }
             },
@@ -91,7 +96,7 @@ export default function ArticlesRealtimeAggregation(query) {
               {
                 range: {
                   event_timestamp: {
-                    gte: "now-1h/m"
+                    gte: timespan
                   }
                 }
               },
@@ -134,7 +139,7 @@ export default function ArticlesRealtimeAggregation(query) {
               {
                 range: {
                   event_timestamp: {
-                    gte: "now-1h/m"
+                    gte: timespan
                   }
                 }
               }
@@ -159,7 +164,7 @@ export default function ArticlesRealtimeAggregation(query) {
                {
                  range: {
                    event_timestamp: {
-                     gte: "now-1h/m"
+                     gte: timespan
                   }
                 }
               }
@@ -209,8 +214,7 @@ export default function ArticlesRealtimeAggregation(query) {
               {
                 range: {
                   event_timestamp : {
-                    from: query.dateFrom,
-                    to: query.dateTo
+                    gte: timespan
                   }
                 }
               }
@@ -221,7 +225,7 @@ export default function ArticlesRealtimeAggregation(query) {
           filtered : {
             date_histogram : {
               field: 'event_timestamp',
-              interval: '60s', // XXX this is likely to change
+              interval: interval, // XXX this is likely to change
               min_doc_count: 0,
               extended_bounds: {
                 min: query.dateFrom,
@@ -248,7 +252,7 @@ export default function ArticlesRealtimeAggregation(query) {
               {
                 range: {
                   event_timestamp: {
-                    gte: "now-1h/m"
+                    gte: timespan
                   }
                 }
               }
@@ -264,7 +268,7 @@ export default function ArticlesRealtimeAggregation(query) {
           time_on_page_histogram: {
             date_histogram: {
               field: 'event_timestamp',
-              interval: '60s',
+              interval: interval,
               min_doc_count: 0,
               extended_bounds: {
                 min: query.dateFrom,
@@ -277,38 +281,6 @@ export default function ArticlesRealtimeAggregation(query) {
                   field: "attention_time"
                 }
               }
-            }
-          }
-        }
-      },
-      live_page_views : {
-        filter: {
-          bool: {
-            must: [
-              {
-                term : {
-                  event_type : 'page'
-                }
-              },
-              {
-                term : {
-                  event_category: 'view'
-                }
-              },
-              {
-                range: {
-                  event_timestamp: {
-                    gte: "now-5m/m"
-                  }
-                }
-              }
-            ]
-          }
-        },
-        aggs : {
-          filtered: {
-            cardinality: {
-              field: 'visitor_id'
             }
           }
         }
@@ -346,7 +318,7 @@ export default function ArticlesRealtimeAggregation(query) {
           scroll_depth_last_hour_histogram: {
             date_histogram: {
               field: 'event_timestamp',
-              interval: '60s',
+              interval: interval,
               min_doc_count: 0,
               extended_bounds: {
                 min: query.dateFrom,

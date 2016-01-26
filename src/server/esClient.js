@@ -25,6 +25,7 @@ import LoggerFactory from './logger';
 import moment from 'moment';
 import calculateIndices from './utils/calculateIndices.js';
 import {calculateRealtimeIndices} from './utils/calculateIndices.js';
+import timestampParser from './utils/timestampParser';
 
 var client = elasticsearch.Client({
   hosts: process.env.ES_AWS_HOST,
@@ -138,11 +139,13 @@ export function runArticleRealtimeQuery(queryData) {
     return Promise.reject(queryError);
   }
 
-  if (!queryData.dateFrom || !queryData.dateTo) {
-    queryData.dateFrom = moment().subtract(1, 'hour').toISOString();
-    queryData.dateTo = moment().toISOString();
+  if (!queryData.timespan) {
+    queryData.timespan = '1h'
   }
 
+  const dates = timestampParser(queryData.timespan, moment());
+  Object.assign(queryData, dates);
+  
   let requests = [];
 
   requests.push(retrieveRealtimeArticleData(queryData));

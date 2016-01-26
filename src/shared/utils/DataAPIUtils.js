@@ -44,6 +44,7 @@ let DataAPI = {
             url += "?apiKey=" + apiKey;
           }
           request.get(url)
+            .query({ timespan: query.timespan })
             .set('Accept', 'application/json')
             .end(handleResponse('ArticleRealtime', query, reject, resolve));
         });

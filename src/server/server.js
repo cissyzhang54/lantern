@@ -65,10 +65,13 @@ app.use('/landing/article/:uuid', ensureAuthenticated, (req, res) => {
     let publishDate = moment(data.initial_publish_date, 'YYYY-MM-DD');
     let now = moment();
 
-    if(moment(now).isAfter(publishDate, 'day')){
-      res.redirect(`/articles/${req.params.uuid}`);
-    } else {
+    const duration = moment.duration(now.diff(publishDate));
+    const hours = duration.asHours();
+
+    if(hours <= 48){
       res.redirect(`/realtime/articles/${req.params.uuid}`);
+    } else {
+      res.redirect(`/articles/${req.params.uuid}`);
     }
   });
 });
