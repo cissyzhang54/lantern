@@ -43,6 +43,7 @@ export default function formatData(data) {
     'socialSharesLastHour',
     'socialReferrersLastHour',
     'commentsLastHour',
+    'commentsReadLastHour',
     'referrerLastHourNames',
     'referrerLastHourUrls',
     'referrerLastHourTypes',

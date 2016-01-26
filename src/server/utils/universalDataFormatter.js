@@ -113,6 +113,7 @@ const fields = {
   socialSharesLastHour : 'aggregations.social_shares_last_hour.doc_count',
   timeOnPageTop: 'aggregations.time_on_page.buckets',
   commentsLastHour : 'aggregations.comments_last_hour.doc_count',
+  commentsReadLastHour : 'aggregations.comments_last_hour.doc_count',
   topArticleViews: 'aggregations.top_article_views.buckets',
   topArticlesCommentPosts : 'aggregations.top_article_comments_posted.buckets',
   topArticlesSocialRef: 'aggregations.top_articles_social_ref.buckets',
