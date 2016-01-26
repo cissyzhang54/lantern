@@ -18,7 +18,7 @@
     "postinstall": "npm run build && env $(cat .env) webpack --config webpack.config.prod.js",
     "start": "npm run watch-js & npm run dev-server & env $(cat .env) npm run server",
     "start-debug": "npm run watch-js & npm run dev-server & npm run server-debug",
-    "start-test": "env NODE_ENV=test npm start",
+    "start-test": "env $(cat .env) NODE_ENV=test node lib/server/server.js",
     "build": "npm run clean && babel src -d lib --experimental",
     "functional": "node nightwatch.js -g test/nightwatch/functional --suiteRetries 3"
   },
@@ -50,6 +50,7 @@
     "css-loader": "^0.18.0",
     "d3": "^3.5.6",
     "datamaps": "^0.4.0",
+    "deep-assign": "^2.0.0",
     "elasticsearch": "^8.0.1",
     "express": "^4.13.3",
     "express-handlebars": "^2.0.1",

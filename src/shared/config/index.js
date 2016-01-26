@@ -1,4 +1,4 @@
-import assign from 'object-assign';
+import deepAssign from 'deep-assign';
 
 import configDefault from './default';
 import configTest from './test';
@@ -10,6 +10,6 @@ let configs = {
     default: configDefault
 };
 
-let config = assign(configDefault, configs[(process.env.NODE_ENV || 'default')]);
+let config = deepAssign(configDefault, configs[(process.env.NODE_ENV || 'default')]);
 
 export default config;
