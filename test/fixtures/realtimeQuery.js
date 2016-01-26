@@ -173,6 +173,31 @@ export default {
         }
       }
     },
+    comments_read_last_hour: {
+      filter: {
+        bool: {
+          must: [
+            {
+              term: {
+                event_type: 'comment'
+              }
+            },
+            {
+              term: {
+                event_category: 'view'
+              }
+            },
+            {
+              range: {
+                event_timestamp: {
+                  gte: "now-1h/m"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
     page_views: {
       filter: {
         bool: {

@@ -18,6 +18,7 @@ import ErrorHandler from '../components/ErrorHandler';
 import FormatData from "../utils/formatData";
 import BarChart from '../components/BarChart.js';
 import Url from 'url';
+import MetricList from '../components/MetricList'
 
 const maxStrLen = 60;
 
@@ -108,7 +109,6 @@ class ArticleRealtimeView extends React.Component {
     let title = (this.props.title) ? 'Lantern - ' + this.props.title : '';
     let realtimeNextInternalUrl = this.props.realtimeNextInternalUrl.map(getReferrerUrls);
     let socialShares = this.props.socialShares;
-    let comments = this.props.comments;
 
     let headlineStats = {
       totalPageViews: {
@@ -206,6 +206,7 @@ class ArticleRealtimeView extends React.Component {
 
     }
 
+    /* User Journey Section */
     let formatterData = this.props
     let dataFormatter = new FormatData(formatterData , null);
 
@@ -215,11 +216,38 @@ class ArticleRealtimeView extends React.Component {
     let internalReferrerLastHourUrls = this.props.internalReferrerLastHourUrls.map(getLinksForReferrerUrls);
     let externalReferrerLastHourUrls = this.props.externalReferrerLastHourUrls.map(getLinksForReferrerUrls);
 
+
+
+    /* Interaction Section */
+    // Links Clicked
     let linksClickedByCategory = this.props.realtimeLinksClickedByCategory;
+
     let linksClicked = linksClickedByCategory.reduce((prev, curr) => {
       return prev + curr[1];
     }, 0);
 
+    linksClickedByCategory.unshift(['Total links clicked', linksClicked])
+
+    let linksClickedCategoryList = linksClickedByCategory.map((row, index) => {
+      return {
+        term:  row[0],
+        value: row[1],
+        header: (index === 0)
+      };
+    });
+
+    //Comments
+    let comments = this.props.comments;
+    let commentsReadLastHour = this.props.commentsReadLastHour;
+    let commentsTotal = comments + commentsReadLastHour;
+    let commentsList = [
+      {term: 'Total comments', value: commentsTotal, header: true},
+      {term: 'Comments viewed', value: commentsReadLastHour, header: false},
+      {term: 'Comments posted', value: comments, header: false}
+    ]
+
+
+    /* Social Media Section */
     let socialMedia = this.props.socialReferrersLastHour;
     let socialMediaTotal = socialMedia.reduce((prev, curr) => {
       return prev + curr[1];
@@ -294,86 +322,94 @@ class ArticleRealtimeView extends React.Component {
         </ChunkWrapper>
 
 
-      <ChunkWrapper component="traffic-sources">
-        <Row>
-          <Col
-            xs={12}
-            sm={6}
-          >
-            <h3>External Sources</h3>
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            xs={12}
-            sm={6}
-          >
-            <h4>Traffic Source</h4>
-            <BarChart
-              data={extRefData}
-              keys={extRefKeys}
-              category={extRefID}
-              yLabel="Page Views"
-              xLabel="Traffic Source"
-              usePercentages
-            />
-          </Col>
-          <Col
-            xs={12}
-            sm={6}
-          >
-            <Table
-              headers={['Top 5 traffic sources', 'Views']}
-              rows={externalReferrerLastHourUrls}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            xs={12}
-            sm={6}
-          >
-            <h3>Internal Sources</h3>
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            xs={12}
-            sm={6}
-          >
-            <h4>FT Traffic Sources</h4>
-            <BarChart
-              data={refData}
-              keys={refKeys}
-              category={refID}
-              yLabel="Page Views"
-              xLabel="Traffic Source"
-              usePercentages
-            />
-          </Col>
-          <Col
-            xs={12}
-            sm={6}
-          >
-            <Table
-              headers={['Top 5 traffic sources', 'Views']}
-              rows={internalReferrerLastHourUrls}
-              />
-          </Col>
-        </Row>
-      </ChunkWrapper>
-
-        <ChunkWrapper component="user-interact">
-          <h3>How did the users interact?</h3>
+        <ChunkWrapper component="traffic-sources">
           <Row>
             <Col
               xs={12}
               sm={6}
             >
-              <Table
-                headers={['Total links clicked', linksClicked]}
-                rows={linksClickedByCategory}
+              <h3>External Sources</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <h4>Traffic Source</h4>
+              <BarChart
+                data={extRefData}
+                keys={extRefKeys}
+                category={extRefID}
+                yLabel="Page Views"
+                xLabel="Traffic Source"
+                usePercentages
               />
+            </Col>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <Table
+                headers={['Top 5 traffic sources', 'Views']}
+                rows={externalReferrerLastHourUrls}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <h3>Internal Sources</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <h4>FT Traffic Sources</h4>
+              <BarChart
+                data={refData}
+                keys={refKeys}
+                category={refID}
+                yLabel="Page Views"
+                xLabel="Traffic Source"
+                usePercentages
+              />
+            </Col>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <Table
+                headers={['Top 5 traffic sources', 'Views']}
+                rows={internalReferrerLastHourUrls}
+                />
+            </Col>
+          </Row>
+        </ChunkWrapper>
+
+        <ChunkWrapper component="user-interact">
+          <h3>How did the user interact?</h3>
+          <Row>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <MetricList
+                items={linksClickedCategoryList}
+                />
+            </Col>
+
+            <Col
+              xs={12}
+              sm={6}
+              >
+              <MetricList
+                items={commentsList}
+                />
             </Col>
 
           </Row>
@@ -413,20 +449,8 @@ class ArticleRealtimeView extends React.Component {
 
         <SingleMetric
           metricType='integer'
-          metric={linksClicked}
-          label='Links clicked last hour'
-        />
-
-        <SingleMetric
-          metricType='integer'
           metric={socialShares}
           label='Social shares last hour'
-        />
-
-        <SingleMetric
-          metricType='integer'
-          metric={comments}
-          label='Comments last hour'
         />
 
       </div>
@@ -446,6 +470,8 @@ ArticleRealtimeView.defaultProps = {
   linksClicked: null,
   socialShares: null,
   comments: null,
+  commentsReadLastHour: null,
+  realtimeLinksClickedByCategory: null,
   author: [],
   genre: [],
   title: "[No realtime data available]",
