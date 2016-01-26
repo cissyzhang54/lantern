@@ -362,6 +362,34 @@ export default function ArticlesRealtimeAggregation(query) {
             }
           }
         }
+      },
+      user_types_last_hour: {
+        filter: {
+          bool: {
+            must: [
+              {
+                term: {
+                  event_category: "view"
+                }
+              },
+              {
+                range: {
+                  event_timestamp: {
+                    gte: "now-1h/m"
+                  }
+                }
+              }
+            ]
+          }
+        },
+        aggs: {
+          cohorts: {
+            terms: {
+              field: "user_cohort",
+              min_doc_count: 0
+            }
+          }
+        }
       }
     }
 }

@@ -150,7 +150,8 @@ function getArticleRealtimeData(req, res) {
           externalReferrerLastHourNames : data.referrerLastHourNames,
           externalReferrerLastHourUrls : data.referrerLastHourUrls,
           internalReferrerLastHourTypes: data.internalReferrerLastHourTypes,
-          internalReferrerLastHourUrls: data.internalReferrerLastHourUrls
+          internalReferrerLastHourUrls: data.internalReferrerLastHourUrls,
+          userTypesLastHour: data.userTypesLastHour
         }
       };
       return res;

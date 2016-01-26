@@ -17,6 +17,7 @@ import Link from 'react-router/lib/Link';
 import ErrorHandler from '../components/ErrorHandler';
 import FormatData from "../utils/formatData";
 import BarChart from '../components/BarChart.js';
+import ColumnChart from '../components/ColumnChart.js'
 import Url from 'url';
 import MetricList from '../components/MetricList'
 
@@ -260,6 +261,11 @@ class ArticleRealtimeView extends React.Component {
       };
     });
 
+
+    /* Who are the users */
+    let [userTypeData, userTypeID, userTypeKeys] = dataFormatter.getPCTMetric('userTypesLastHour', 'Article')
+
+
     return (
       <DocumentTitle title={title}>
       <div>
@@ -447,6 +453,31 @@ class ArticleRealtimeView extends React.Component {
           </Row>
         </ChunkWrapper>
 
+
+        <ChunkWrapper component="user-type">
+          <Row>
+            <Col>
+              <h3>Who are the users?</h3>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              xs={12}
+              sm={6}
+              >
+              <ColumnChart
+                data={userTypeData}
+                keys={userTypeKeys}
+                category={userTypeID}
+                yLabel="Page Views"
+                xLabel="User Type"
+                usePercentages
+                />
+            </Col>
+          </Row>
+        </ChunkWrapper>
+
+
         <SingleMetric
           metricType='integer'
           metric={socialShares}
@@ -471,6 +502,7 @@ ArticleRealtimeView.defaultProps = {
   socialShares: null,
   comments: null,
   commentsReadLastHour: null,
+  userTypesLastHour: null,
   realtimeLinksClickedByCategory: null,
   author: [],
   genre: [],
