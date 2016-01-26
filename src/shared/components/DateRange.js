@@ -33,11 +33,8 @@ export default class DateRange extends React.Component {
     if (this.props.dateRange === 'published') {
       this.state.ranges = {
         'Publish Day': [moment(props.startDate), moment(props.startDate)],
-        'First 2 days': [moment(props.startDate), moment(props.startDate).add(1, 'days')],
         'First 3 days': [moment(props.startDate), moment(props.startDate).add(2, 'days')],
         'First 7 days': [moment(props.startDate), moment(props.startDate).add(6, 'days')],
-        'First 30 days': [moment(props.startDate), moment(props.startDate).add(29, 'days')],
-        'Previous 7 Days': [moment().subtract(6, 'days'), moment()]
       }
     } else {
       this.state.ranges = {
