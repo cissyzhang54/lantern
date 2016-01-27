@@ -36,7 +36,7 @@ class ArticleRealtimeStore {
       socialReferrersLastHour: [],
       comments: null,
       commentsReadLastHour: null,
-      userTypesLastHour: null,
+      userTypesLastHour: [],
       author: [],
       genre: [],
       title: "",

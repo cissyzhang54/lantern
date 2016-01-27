@@ -13,6 +13,7 @@ import SectionSocial from "../components/SectionSocial";
 import SectionWho from "../components/SectionWho";
 import SectionInteract from "../components/SectionInteract";
 import Text from '../components/Text'
+import TabNav from '../components/TabNav'
 import Messaging from '../components/Messaging';
 import FormatData from "../utils/formatData";
 
@@ -85,22 +86,6 @@ class ArticleView extends React.Component {
       }
     }
 
-    // don't show the realtime link if the article is older than 24 hours
-    let now = moment()
-    let publish = moment(data.published)
-    let dur = moment.duration(now.diff(publish), 'ms');
-    let showRealtimeLink = dur.as('hours') < 24
-    let realtimeLink = null;
-    if (showRealtimeLink) {
-      realtimeLink = (
-        <Link
-          to={'/realtime/articles/' + data.uuid}
-        >
-          Real time view
-        </Link>
-      );
-    }
-
     let updating = (this.props.loading)
       ? (<Messaging
         category="Article"
@@ -114,6 +99,12 @@ class ArticleView extends React.Component {
     return (<DocumentTitle title={title}>
       <div>
 
+        <TabNav
+          analyticsView={this.props.route.analyticsView}
+          publishDate={data.published}
+          uuid={data.uuid}
+          />
+
         <ChunkWrapper component="modifier">
           <SectionModifier
             data={data}
@@ -124,7 +115,6 @@ class ArticleView extends React.Component {
             dateRange='published'
             availableFilters={this.props.availableFilters}
           />
-          {realtimeLink}
         </ChunkWrapper>
 
         <ChunkWrapper component="header">
@@ -157,7 +147,7 @@ class ArticleView extends React.Component {
           comparatorData={comparatorData}
           renderWho={FeatureFlag.check('article:interact')}
         />
-        
+
         <SectionSocial
         data={data}
         comparatorData={comparatorData}

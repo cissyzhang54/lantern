@@ -17,8 +17,13 @@ export default (
     <Route
       path="/"
       component={Search} />
-    <Route path="playground" component={Playground}>
-      <Route path=":componentName" component={PlaygroundLoader}/>
+    <Route
+      path="playground"
+      component={Playground}>
+      <Route
+        path=":componentName"
+        component={PlaygroundLoader}
+      />
     </Route>
     <Route
       path="articles/:uuid/:comparatorType/:comparator"
@@ -36,7 +41,6 @@ export default (
       component={HistoricalAnalyticsView}
       analyticsView="section"
     />
-
     <Route
       path="topics/:topic"
       component={HistoricalAnalyticsView}
@@ -47,11 +51,20 @@ export default (
       component={HistoricalAnalyticsView}
       analyticsView="topic"
     />
-
-
-  <Route path="pickoftheday" component={TopArticlesView} />
-
-    <Route path="realtime/articles/:uuid" component={ArticleRealtimeView} />
-    <Route path="*" name='404' component={Error404}   />
+    <Route
+      path="pickoftheday"
+      component={TopArticlesView}
+      analyticsView="pickoftheday"
+    />
+    <Route
+      path="realtime/articles/:uuid"
+      component={ArticleRealtimeView}
+      analyticsView="realtime"
+    />
+    <Route
+      path="*"
+      name='404'
+      component={Error404}
+    />
   </Route>
 );
