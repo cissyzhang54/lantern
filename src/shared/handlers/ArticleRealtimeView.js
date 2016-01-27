@@ -20,6 +20,7 @@ import BarChart from '../components/BarChart.js';
 import ColumnChart from '../components/ColumnChart.js'
 import Url from 'url';
 import MetricList from '../components/MetricList'
+import TabNav from '../components/TabNav'
 
 const maxStrLen = 60;
 
@@ -270,15 +271,11 @@ class ArticleRealtimeView extends React.Component {
       <DocumentTitle title={title}>
       <div>
 
-        <Row>
-          <ChunkWrapper component="link">
-            <Link
-              to={'/articles/' + this.props.uuid}
-            >
-              Historical view
-            </Link>
-          </ChunkWrapper>
-        </Row>
+        <TabNav
+          analyticsView={this.props.route.analyticsView}
+          publishDate={this.props.published}
+          uuid={this.props.uuid}
+          />
 
         <ChunkWrapper component="header">
           <Header
@@ -502,7 +499,9 @@ ArticleRealtimeView.defaultProps = {
   socialShares: null,
   comments: null,
   commentsReadLastHour: null,
-  userTypesLastHour: null,
+  userTypesLastHour: [],
+  externalReferrerLastHourTypes: [],
+  internalReferrerLastHourTypes : [],
   realtimeLinksClickedByCategory: null,
   author: [],
   genre: [],

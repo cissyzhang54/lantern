@@ -1,0 +1,41 @@
+.tabNav {
+  margin-top: 10px;
+  border-bottom: 1px solid #ccc;
+}
+.tabNav__tab {
+  border: 1px solid #ccc;
+  border-bottom: none;
+  border-radius: 3px 3px 0 0;
+  padding: 5px 8px;
+  margin-right: 3px;
+  display: inline-block;
+  background: #efefef;
+}
+.tabNav__tab--enabled {
+  cursor: pointer;
+}
+.tabNav__tab--disabled {
+  color: #ccc;
+  cursor: default;
+  pointer-events: none;
+}
+.tabNav__tab--disabled:hover {
+  cursor: default;
+  text-decoration: none;
+  color: #ccc;
+  pointer-events: none;
+}
+.tabNav__tab--active {
+  padding-top: 8px;
+  cursor: default;
+  pointer-events: none;
+  border-bottom: 1px solid white;
+  margin-bottom: -1px;
+  color: #555;
+  background: white;
+}
+.tabNav__tab--active:hover {
+  cursor: default;
+  text-decoration: none;
+  pointer-events: none;
+}
