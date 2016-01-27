@@ -4,6 +4,7 @@ import UserStore from '../stores/UserStore'
 import AltContainer from 'alt-container';
 import NavBar from '../components/NavBar';
 import User from '../components/User';
+import LastUpdated from '../components/LastUpdated';
 
 export default class AppController extends React.Component {
 
@@ -16,6 +17,7 @@ export default class AppController extends React.Component {
       <AltContainer store={UserStore} >
         <User />
         <NavBar />
+        <LastUpdated />
         {this.props.children}
       </AltContainer>
     </DocumentTitle>);

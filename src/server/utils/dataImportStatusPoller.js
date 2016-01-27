@@ -1,7 +1,7 @@
 import * as esClient from '../esClient';
 import moment from 'moment'
 
-const POLL_INTERVAL = 5 * 60000; // 5 minutes
+const POLL_INTERVAL = 2 * 60000; // 2 minutes
 const ONE_HOUR = 60 * 60 * 1000; /* ms */
 const FIVE_MINS = 5 * 60 * 1000;
 const MAX_HOURS = 72; /* ms */
