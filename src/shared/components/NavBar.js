@@ -5,7 +5,6 @@ import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
 import LogoSVG from '../components/LogoSVG';
-import LastUpdated from '../components/LastUpdated';
 
 import Text from './Text';
 
@@ -50,11 +49,6 @@ export default class NavBar extends React.Component {
             ALPHA <Glyphicon style={styles.infoIcon} glyph="question-sign" />
           </div>
         </OverlayTrigger>
-      </li>
-    );
-    rows.push(
-      <li className='pull-right navbar__link' key={i++} >
-        <LastUpdated />
       </li>
     );
 

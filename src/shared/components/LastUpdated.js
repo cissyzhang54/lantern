@@ -37,35 +37,41 @@ class LastUpdated extends React.Component {
   }
 
   render() {
-
     let twentyFourHoursAgo = moment().subtract(24, 'hours');
-    let updatedDate = moment(this.props.latestIndex.data.historical.latestIndex);
-    let icon;
-    let friendlyDate = this.props.latestIndex.data.historical.latestIndex
-      .split('-')
-      .reverse()
-      .join('/');
+    let fiveMinutesAgo = moment().subtract(5, 'minutes');
 
-    let outOfDate = (twentyFourHoursAgo > updatedDate);
+    let historicalUpdatedDate = moment(this.props.latestIndex.data.historical.latestIndex);
+    let realtimeUpdatedDate = moment(this.props.latestIndex.data.realtime.docDate);
 
-    if(outOfDate) {
-      return (<div className="last-updated">
-        <div><Glyphicon glyph="exclamation-sign"
+    let historicalFriendlyDate = moment.duration(historicalUpdatedDate.diff(moment())).humanize();
+    let realtimeFriendlyDate = moment.duration(realtimeUpdatedDate.diff(moment())).humanize();
+
+    let historicalOutOfDate = (twentyFourHoursAgo > historicalUpdatedDate);
+    let realtimeOutOfDate = (fiveMinutesAgo > realtimeUpdatedDate);
+    let message = '';
+
+    if (realtimeOutOfDate && historicalOutOfDate) {
+      message = 'Sorry, both realtime and historical views may be out of date. We\'re working on it.';
+    }
+    else if (realtimeOutOfDate) {
+      message = `Sorry, the realtime views may only be up to date as of ${realtimeFriendlyDate} ago. We're working on it.`;
+    }
+    else if (historicalOutOfDate) {
+      message = `Sorry, the historical views may only be up to date as of ${historicalFriendlyDate} ago. We're working on it.`;
+    }
+    else {
+      // If nothing's out of date, don't render anything
+      return false;
+    }
+
+    return (<div className="last-updated">
+      <div className="last-updated__text">
+        <Glyphicon glyph="exclamation-sign"
           style={warning_style}
         />
-      &nbsp;Possibly out of date:</div>
-    <div>data up to {friendlyDate}</div>
-  </div>
-      );
-    } else {
-      return (<div>
-        <Glyphicon glyph="ok"
-          style={ok_style}
-        />
-      &nbsp;Up to date
+        &nbsp;{message}
       </div>
-      );
-    }
+    </div>);
   }
 }
 

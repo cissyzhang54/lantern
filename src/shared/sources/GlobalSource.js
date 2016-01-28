@@ -3,7 +3,7 @@ import GlobalActions from '../actions/GlobalActions';
 import moment from 'moment';
 import assign from 'object-assign';
 
-const UPDATE_INTERVAL = 5; // minutes
+const UPDATE_INTERVAL = 2; // minutes
 
 let GlobalSource = {
   loadIndexStatus: {
