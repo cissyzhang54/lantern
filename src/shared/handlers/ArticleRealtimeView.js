@@ -202,7 +202,7 @@ class ArticleRealtimeView extends React.Component {
           }
         });
         selectedGraphKeys = ['views'];
-        selectedGraphYLabel = 'Page Views'
+        selectedGraphYLabel = 'Retained Users'
         break;
       default:
 
