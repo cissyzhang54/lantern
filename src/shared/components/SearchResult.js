@@ -82,6 +82,9 @@ export default class SearchResult extends React.Component {
     if (diff < 24) {
       linkUrl = '/realtime' + linkUrl;
       clickHandler = null;
+    } else if (diff < 48) {
+      linkUrl = '/realtime' + linkUrl + '/48h';
+      clickHandler = null;
     }
 
     return (
