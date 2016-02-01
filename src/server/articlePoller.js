@@ -2,15 +2,15 @@ import EventEmitter from 'events';
 import util from 'util';
 import {runArticleRealtimeQuery} from './esClient.js';
 import ArticleRealtimeDataFormatter from './formatters/ArticleRealtimeDataFormatter.js';
-import moment from 'moment';
 
-const FORMAT_START = 'YYYY-MM-DDTHH:mm:00.000[Z]';
-const FORMAT_END = 'YYYY-MM-DDTHH:mm:59.999[Z]';
-
-export default function ArticlePoller(uuid) {
+export default function ArticlePoller(uuid, timespan) {
   this.uuid = uuid;
+  this.timespan = timespan;
   // XXX make this like configurable and stuff ;_;
   this.interval = 5000;
+  if (this.timespan !== '1h') {
+    this.interval = 60 * 1000;
+  }
   EventEmitter.call(this);
   // then we immediately getArticleData which triggers
   // the polling
@@ -23,10 +23,10 @@ util.inherits(ArticlePoller, EventEmitter);
 // the updated data
 ArticlePoller.prototype.getArticleData = function() {
   const query = {
-    dateFrom: moment().subtract(1, 'hours').format(FORMAT_START),
-    dateTo: moment().format(FORMAT_END),
+    timespan: this.timespan,
     uuid: this.uuid
   }
+
   runArticleRealtimeQuery(query)
   .then(ArticleRealtimeDataFormatter)
   .then(results => {

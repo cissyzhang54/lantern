@@ -9,26 +9,13 @@ describe('#articlesRealtimeQuery', () => {
     let queryObject = ArticlesRealtimeQuery({
       dateFrom : "2015-11-24T10:15:00.000",
       dateTo : "2015-11-24T11:15:00.000",
+      timespan: '1h',
       uuid: "f02cca28-9028-11e5-bd82-c1fb87bef7af"
     })
     expect(queryObject).to.deep.equal(sampleQuery);
   })
   it('should throw if passed no query', () => {
     expect(() => ArticlesRealtimeQuery()).to.throw();
-  });
-  it('should throw if passed no dateFrom', () => {
-    const queryObject = {
-      dateTo : "2015-11-24T11:15:00.000",
-      uuid: "f02cca28-9028-11e5-bd82-c1fb87bef7af"
-    };
-    expect(() => ArticlesRealtimeQuery(queryObject)).to.throw();
-  });
-  it('should throw if passed no dateTo', () => {
-    const queryObject = {
-      dateFrom : "2015-11-24T10:15:00.000",
-      uuid: "f02cca28-9028-11e5-bd82-c1fb87bef7af"
-    };
-    expect(() => ArticlesRealtimeQuery(queryObject)).to.throw();
   });
   it('should throw if passed no uuid', () => {
     const queryObject = {
@@ -37,11 +24,16 @@ describe('#articlesRealtimeQuery', () => {
     };
     expect(() => ArticlesRealtimeQuery(queryObject)).to.throw();
   });
+  it('should throw if passed no timespan', () => {
+    const queryObject = {
+      uuid: 'woowowowowow'
+    };
+    expect(() => ArticlesRealtimeQuery(queryObject)).to.throw();
+  });
   it('should return the correct aggregators', () => {
     const query = {
       uuid: '123',
-      dateFrom: '2015-10-01',
-      dateTo: '2015-10-10'
+      timespan: '1h'
     };
     const queryJSON = ArticlesRealtimeQuery(query);
     const props = [

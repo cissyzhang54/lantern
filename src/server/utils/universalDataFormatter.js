@@ -69,7 +69,6 @@ const fields = {
   internalReferrerLastHourUrls: {name: 'aggregations.internal_referrer_last_hour.urls', formatter: format},
   socialReferrersLastHour: {name: 'aggregations.referrer_last_hour.names', formatter: formatAndFilter, terms: ['Facebook', 'Twitter', 'Linked-In']},
   retentionRate: 'aggregations.retention_rate.filtered.value',
-  livePageViews: {name: 'aggregations.live_page_views.filtered.value', formatter: Math.round},
   timeOnPage: 'aggregations.avg_time_on_page.value',
   topicCount: {name: 'aggregations.topic_count', formatter: format},
   topicViews: {name: 'aggregations.topic_views', formatter: format},

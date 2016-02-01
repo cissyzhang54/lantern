@@ -21,6 +21,15 @@ router.get(`/realtime/articles/:uuid(${UUID_REGEX})`, (req, res, next) => {
     });
 });
 
+router.get(`/realtime/articles/:uuid(${UUID_REGEX})/:timespan`, (req, res, next) => {
+  return getArticleRealtimeData(req, res)
+    .then(() => next())
+    .catch((err) => {
+      if (err.status) res.status(err.status);
+      next(err);
+    });
+});
+
 router.get(`/articles/:uuid(${UUID_REGEX})/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
   return getArticleData(req, res)
     .then(() => next())
@@ -120,7 +129,11 @@ function getArticleData(req, res){
 }
 
 function getArticleRealtimeData(req, res) {
-  return dataApiUtils.getArticleRealtimeData({uuid: decode(req.params.uuid)}, apiKey)
+  var query = {
+    uuid: decode(req.params.uuid),
+    timespan: req.params.timespan || '1h'
+  }
+  return dataApiUtils.getArticleRealtimeData(query, apiKey)
     .then((data) => {
       let totalPageViews = data.realtimePageViews.reduce((a, b) => { return a + b[1]; }, 0);
       let retentionRate = (data.retentionRate / totalPageViews) * 100 | 0;
@@ -137,7 +150,6 @@ function getArticleRealtimeData(req, res) {
           totalPageViews: totalPageViews,
           timeOnPage: data.timeOnPageLastHour,
           scrollDepth: data.scrollDepthLastHour,
-          livePageViews: data.livePageViews,
           realtimeNextInternalUrl: data.realtimeNextInternalUrl,
           linksClicked: data.linksClickedLastHour,
           realtimeLinksClickedByCategory: data.realtimeLinksClickedByCategory,
@@ -151,7 +163,8 @@ function getArticleRealtimeData(req, res) {
           externalReferrerLastHourUrls : data.referrerLastHourUrls,
           internalReferrerLastHourTypes: data.internalReferrerLastHourTypes,
           internalReferrerLastHourUrls: data.internalReferrerLastHourUrls,
-          userTypesLastHour: data.userTypesLastHour
+          userTypesLastHour: data.userTypesLastHour,
+          timespan: req.params.timespan || '1h'
         }
       };
       return res;

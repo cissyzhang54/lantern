@@ -69,8 +69,7 @@ function getCategoryData(req, res, next) {
 function getRealtimeArticleData(req, res, next) {
   const query = {
     uuid: decode(req.params.uuid),
-    dateFrom: req.query.dateFrom,
-    dateTo: req.query.dateTo
+    timespan: req.query.timespan
   }
   // XXX add cache 5 seconds
   esClient.runArticleRealtimeQuery(query)

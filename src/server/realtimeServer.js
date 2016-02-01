@@ -9,43 +9,54 @@ export default function RealtimeServer(app) {
   let articlePollers = {};
   this.pollers = articlePollers;
 
+  function unsubscribe(query) {
+    if (query) {
+      this.leave(query.uuid + query.timespan);
+    }
+
+    Object.keys(articlePollers).forEach((pollerId) => {
+      //if the room is empty,
+      //delete the poller
+      let isEmpty = !(io.sockets.adapter.rooms[pollerId]);
+      if (isEmpty) {
+        let poller = articlePollers[pollerId];
+        poller.removeAllListeners('updatedArticleData');
+        poller.removeAllListeners('error');
+        delete articlePollers[pollerId];
+        poller.stop();
+      }
+    });
+  }
+
   io.on('connection', (socket) => {
     // find the room and add the user to it
-    socket.on('subscribeToArticle', (uuid) => {
+    socket.on('subscribeToArticle', (query) => {
+      const uuid = query.uuid;
+      const timespan = query.timespan;
       // this adds the user to the room
-      socket.join(uuid, () => {
+      socket.join(uuid + timespan, () => {
         // if there isn't a poller for that room
         // create it
-        if (!articlePollers[uuid]) createPoller(uuid);
+        if (!articlePollers[uuid+timespan]) createPoller(uuid, timespan);
       });
     })
 
-    socket.on('disconnect', () => {
-      Object.keys(articlePollers).forEach((uuid) => {
-        //if the room is empty,
-        //delet the poller
-        let isEmpty = !(io.sockets.adapter.rooms[uuid]);
-        if (isEmpty) {
-          let poller = articlePollers[uuid];
-          poller.removeAllListeners('updatedArticleData');
-          poller.removeAllListeners('error');
-          delete articlePollers[uuid];
-          poller.stop();
-        }
-      });
-    });
+    socket.on('unsubscribeFromArticle', unsubscribe.bind(socket));
+
+    socket.on('disconnect', unsubscribe);
   });
 
   /**
    * @param {uuid} string - the uuid of the article to poll about
    */
-  function createPoller(uuid) {
-    articlePollers[uuid] = new ArticlePoller(uuid);
-    articlePollers[uuid].on('updatedArticleData', (data) => {
-      io.to(uuid).emit('updatedArticleData', data);
+  function createPoller(uuid, timespan) {
+    const pollerId = uuid + timespan;
+    articlePollers[pollerId] = new ArticlePoller(uuid, timespan);
+    articlePollers[pollerId].on('updatedArticleData', (data) => {
+      io.to(pollerId).emit('updatedArticleData', data);
     });
-    articlePollers[uuid].on('error', (error) => {
-      io.to(uuid).emit('error', error);
+    articlePollers[pollerId].on('error', (error) => {
+      io.to(pollerId).emit('error', error);
     });
   }
 

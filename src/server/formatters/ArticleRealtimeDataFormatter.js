@@ -38,7 +38,6 @@ export default function formatData(data) {
     'realtimeLinksClickedByCategory',
     'timeOnPageLastHour',
     'scrollDepthLastHour',
-    'livePageViews',
     'linksClickedLastHour',
     'socialSharesLastHour',
     'socialReferrersLastHour',

@@ -215,8 +215,7 @@ export default {
             {
               range: {
                 event_timestamp: {
-                  from: "2015-11-24T10:15:00.000",
-                  to: "2015-11-24T11:15:00.000"
+                  gte: "now-1h/m"
                 }
               }
             }
@@ -285,38 +284,6 @@ export default {
                 field: "attention_time"
               }
             }
-          }
-        }
-      }
-    },
-    live_page_views : {
-      filter: {
-        bool: {
-          must: [
-            {
-              term : {
-                event_type : 'page'
-              }
-            },
-            {
-              term : {
-                event_category: 'view'
-              }
-            },
-            {
-              range: {
-                event_timestamp: {
-                  gte: "now-5m/m"
-                }
-              }
-            }
-          ]
-        }
-      },
-      aggs : {
-        filtered: {
-          cardinality: {
-            field: 'visitor_id'
           }
         }
       }

@@ -36,8 +36,8 @@ export default class TabNav extends React.Component {
 
   render() {
     let links = [
-      {title: "Last hour", url:`/realtime/articles/${this.props.uuid}`, type: "realtime"},
-      {title: "Last 48 hours", url:`/realtime/articles/${this.props.uuid}`, type: "realtime48"},
+      {title: "Last hour", url:`/realtime/articles/${this.props.uuid}`, type: "realtime1h"},
+      {title: "Last 48 hours", url:`/realtime/articles/${this.props.uuid}/48h`, type: "realtime48h"},
       {title: "Historical", url:`/articles/${this.props.uuid}`, type: "article", timePeriod: 24}
     ];
     let linkHtml = test(links, this.props.analyticsView, this.props.publishDate);
@@ -51,5 +51,3 @@ export default class TabNav extends React.Component {
     )
   }
 }
-
-

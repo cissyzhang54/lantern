@@ -88,7 +88,24 @@ class ArticleRealtimeView extends React.Component {
   }
 
   componentDidMount() {
-    ArticleRealtimeActions.subscribeToArticle(this.props.params.uuid);
+    const timespan = this.props.params.timespan || '1h';
+    ArticleRealtimeActions.subscribeToArticle({
+      uuid: this.props.params.uuid,
+      timespan: timespan
+    });
+  }
+
+  componentWillReceiveProps(nextProps) {
+     if (this.props.params.timespan !== nextProps.params.timespan) {
+       ArticleRealtimeActions.subscribeToArticle({
+         timespan: nextProps.params.timespan || '1h',
+         uuid: this.props.uuid,
+         previousArticle: {
+           timespan: this.props.timespan,
+           uuid: this.props.uuid
+         }
+       });
+     }
   }
 
   componentWillUnmount() {
@@ -265,14 +282,14 @@ class ArticleRealtimeView extends React.Component {
 
     /* Who are the users */
     let [userTypeData, userTypeID, userTypeKeys] = dataFormatter.getPCTMetric('userTypesLastHour', 'Article')
-
+    let timespan = this.props.timespan || "";
 
     return (
       <DocumentTitle title={title}>
       <div>
 
         <TabNav
-          analyticsView={this.props.route.analyticsView}
+          analyticsView={this.props.route.analyticsView + timespan}
           publishDate={this.props.published}
           uuid={this.props.uuid}
           />
@@ -492,7 +509,6 @@ ArticleRealtimeView.defaultProps = {
   pageViews: [],
   timeOnPage: null,
   scrollDepth: null,
-  livePageViews: null,
   totalPageViews: null,
   realtimeNextInternalUrl: [],
   linksClicked: null,
@@ -514,7 +530,8 @@ ArticleRealtimeView.defaultProps = {
   error: null,
   loading: false,
   uuid: null,
-  isLive: false
+  isLive: false,
+  timespan: '1h'
 };
 
 export default connectToStores(ArticleRealtimeView);
