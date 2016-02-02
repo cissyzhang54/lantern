@@ -120,10 +120,15 @@ export default function ArticlesRealtimeAggregation(query) {
               field: "referrer_name"
             }
           },
-          types : {
-            terms: {
-              field: "page_type"
-            }
+          referrer_type_other : {
+            missing : { field : "previous_article_uuid" }
+          },
+          referrer_type_article : {
+              filter: {
+                exists: {
+                  field: "previous_article_uuid"
+                }
+             }
           }
         }
       },

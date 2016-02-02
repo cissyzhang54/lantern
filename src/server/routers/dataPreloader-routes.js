@@ -161,7 +161,8 @@ function getArticleRealtimeData(req, res) {
           externalReferrerLastHourTypes : data.referrerLastHourTypes,
           externalReferrerLastHourNames : data.referrerLastHourNames,
           externalReferrerLastHourUrls : data.referrerLastHourUrls,
-          internalReferrerLastHourTypes: data.internalReferrerLastHourTypes,
+          internalReferrerLastHourArticles: data.internalReferrerLastHourArticles,
+          internalReferrerLastHourOther: data.internalReferrerLastHourOther,
           internalReferrerLastHourUrls: data.internalReferrerLastHourUrls,
           userTypesLastHour: data.userTypesLastHour,
           timespan: req.params.timespan || '1h'

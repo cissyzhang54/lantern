@@ -46,7 +46,8 @@ export default function formatData(data) {
     'referrerLastHourNames',
     'referrerLastHourUrls',
     'referrerLastHourTypes',
-    'internalReferrerLastHourTypes',
+    'internalReferrerLastHourArticles',
+    'internalReferrerLastHourOther',
     'internalReferrerLastHourUrls',
     'userTypesLastHour'
   ];
