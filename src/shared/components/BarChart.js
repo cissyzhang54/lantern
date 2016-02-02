@@ -4,6 +4,7 @@ import responsiveStyles from '../utils/responsiveStyles';
 import chartHelpers from '../utils/chartHelpers';
 import _ from 'underscore';
 import md5 from 'md5';
+import d3 from 'd3';
 
 let c3 = {};
 
@@ -30,7 +31,8 @@ export default class BarChart extends React.Component {
     let keys = this.props.keys;
     let yLabel = this.props.yLabel;
     let rotated = this.props.reverseAxis;
-
+    let usePercentages = this.props.usePercentages;
+    let formatter = d3.format(',n');
     // Naïve checksumming on the chart data
     // if the checksums are the same, no need to redraw the chart
     let dataChecksum = md5(JSON.stringify(json));
@@ -96,8 +98,8 @@ export default class BarChart extends React.Component {
             text: yLabel,
             position: 'outer-top'
           },
-          max: this.props.usePercentages ? 100 : null,
-          min: this.props.usePercentages ? 0 : null,
+          max: usePercentages ? 100 : null,
+          min: usePercentages ? 0 : null,
           padding: {
             top: 0,
             bottom: 0
@@ -106,12 +108,14 @@ export default class BarChart extends React.Component {
       },
       tooltip : {
         format : {
-          value: (value, ratio, id, index) => {
-            if (id.indexOf('%') >= 0) {
-              var val = json[index][id.replace(' %', '')];
-              return value + '% (' + val + ')';
+          value: function(val, ratio, id, index) {
+            if (usePercentages) {
+              const theValue = json[index][id.replace(' %', '')];
+              return val + '% (' + formatter(theValue) + ')';
+            } else {
+              const pct = json[index][id + ' %'];
+              return formatter(val) + ' (' + pct + '%)';
             }
-            return value;
           }
         }
       },
@@ -183,7 +187,7 @@ BarChart.defaultProps = {
 
 BarChart.propTypes = {
   category: React.PropTypes.string.isRequired,
-  data: React.PropTypes.array.isRequired,
-  keys: React.PropTypes.array.isRequired,
+  //data: React.PropTypes.array.isRequired,
+  //keys: React.PropTypes.array.isRequired,
   yLabel: React.PropTypes.string.isRequired
 };

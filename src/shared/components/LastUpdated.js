@@ -2,7 +2,6 @@ import React from 'react';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import GlobalActions from '../actions/GlobalActions';
 import GlobalStore from '../stores/GlobalStore';
-import _ from 'underscore';
 import moment from 'moment';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 
@@ -10,9 +9,6 @@ const warning_style = {
   color: "red"
 }
 
-const ok_style = {
-  color: "#555"
-}
 
 class LastUpdated extends React.Component {
 

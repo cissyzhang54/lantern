@@ -16,7 +16,7 @@ export default class formatData {
     }
     return {
       [this.id]: label,
-      [this.metricLabel]: dataItem[1],
+      [this.metricLabel]: dataItem[1]
     };
   }
 
@@ -65,8 +65,12 @@ export default class formatData {
     return [metricData, this.id, keys]
   }
 
-  getPCTMetric(metricName, metricLabel, tLabel, fLabel) {
-    let [data, id, keys] = this.getMetric(...arguments);
+  // this has no arguments cos pete was showing off and then left all those
+  // unused variables on the args, but we're just passing ...arguments to
+  // getMetric so we dont need to define any arguments, just be aware they are
+  // actually there :)
+  getPCTMetric() {
+    let [data, , keys] = this.getMetric(...arguments);
     let sums = {};
     let d, k;
     for (let i = 0; i < data.length; i++) {

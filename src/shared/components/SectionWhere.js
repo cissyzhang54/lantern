@@ -2,7 +2,6 @@ import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import BarChart from "../components/BarChart";
-import Table from "../components/Table";
 import Map from "../components/Map";
 import FormatData from "../utils/formatData";
 import ChunkWrapper from "./ChunkWrapper.js";
@@ -33,20 +32,23 @@ export default class SectionWhere extends React.Component {
         </Col>
       </Row>
       <Row>
-        <Col xs={12} sm={6}>
+        <Col xs={12}
+          sm={6}
+        >
           <BarChart
             data={regionData}
             keys={regionKeys}
             category={regionID}
             yLabel="Page Views"
             xLabel="Regions"
-            usePercentages={true}
-            />
+          />
         </Col>
-        <Col xs={12} sm={6}>
+        <Col xs={12}
+          sm={6}
+        >
           <Map
             data={this.props.data.countries}
-            />
+          />
         </Col>
       </Row>
     </ChunkWrapper>);

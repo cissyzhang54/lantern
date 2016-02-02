@@ -1,7 +1,5 @@
 import React from 'react';
 import DocumentTitle from 'react-document-title';
-import Link from 'react-router/lib/Link';
-import moment from 'moment';
 import Header from "../components/Header";
 import SectionModifier from "../components/SectionModifier";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
@@ -36,11 +34,12 @@ class ArticleView extends React.Component {
   }
 
   render() {
-    let data = this.props.data;
-    let comparatorData = this.props.comparatorData || { article: {}};
-    let title = (data) ? 'Lantern - ' + data.title : '';
+    const data = this.props.data;
+    const comparatorData = this.props.comparatorData || { article: {}};
+    comparatorData.comparator = unescape(this.props.params.comparatorType + ' ' + this.props.params.comparator);
+    const title = (data) ? 'Lantern - ' + data.title : '';
 
-    let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
+    const dataFormatter = new FormatData(data, comparatorData);
     let [retentionRateData, , keys] = dataFormatter.getPCTMetric('isLastPage', 'Article', 'Exited FT', 'Stayed on FT')
 
     let dataPoint;
@@ -57,7 +56,7 @@ class ArticleView extends React.Component {
         metricType: 'time',
         label: 'Time on Page',
         size: 'large',
-        comparatorFormatName: 'timeOnPage',
+        comparatorFormatName: 'timeOnPage'
       },
       pageViews: {
         metricType: 'integer',

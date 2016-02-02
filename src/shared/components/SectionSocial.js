@@ -3,7 +3,6 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import BarChart from '../components/BarChart';
 import MetricList from '../components/MetricList'
-import Table from '../components/Table';
 import FormatData from '../utils/formatData';
 import ChunkWrapper from './ChunkWrapper';
 
@@ -38,10 +37,10 @@ export default class SectionSocial extends React.Component {
         </Col>
       </Row>
 
-      <Row style={
-          {marginTop:"10px"}
-        }>
-        <Col xs={12} sm={6}>
+      <Row style={{marginTop:"10px"}}>
+        <Col xs={12}
+          sm={6}
+        >
         <h5>Social Networks</h5>
           <BarChart
             data={socialData}
@@ -49,10 +48,11 @@ export default class SectionSocial extends React.Component {
             category={socialID}
             yLabel="Page Views"
             xLabel="Social Network"
-            usePercentages={true}
-            />
+          />
         </Col>
-        <Col xs={12} sm={6}>
+        <Col xs={12}
+          sm={6}
+        >
           <MetricList
             items={socialTrafficList}
           />
