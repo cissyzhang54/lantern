@@ -170,7 +170,8 @@ export default class LineChart extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!_.isEqual(this.props.keys, nextProps.keys)) {
+    if (!_.isEqual(this.props.keys, nextProps.keys)
+      || this.props.yLabel !== nextProps.yLabel) {
       this.setState({unload: true});
     } else {
       this.setState({unload: false});
