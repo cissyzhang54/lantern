@@ -113,18 +113,23 @@ export default {
         urls : {
           terms: {
             field: "referrer_url",
-            "size": 5
+            size: 5
           }
         },
-        names : {
+        names: {
           terms: {
             field: "referrer_name"
           }
         },
-        types : {
-          terms: {
-            field: "page_type"
-          }
+        referrer_type_other : {
+          missing : { field : "previous_article_uuid" }
+        },
+        referrer_type_article : {
+            filter: {
+              exists: {
+                field: "previous_article_uuid"
+              }
+           }
         }
       }
     },

@@ -227,9 +227,17 @@ class ArticleRealtimeView extends React.Component {
 
     /* User Journey Section */
     let formatterData = this.props
+
     let dataFormatter = new FormatData(formatterData , null);
 
-    let [refData, refID, refKeys] = dataFormatter.getPCTMetric('internalReferrerLastHourTypes', 'Article')
+    let totalInternalReferrers = formatterData.internalReferrerLastHourArticles + formatterData.internalReferrerLastHourOther;
+    let refData = [
+      { category: 'article', 'referrals': formatterData.internalReferrerLastHourArticles, 'referrals %':  Math.round(formatterData.internalReferrerLastHourArticles / totalInternalReferrers * 100)},
+      { category: 'other', 'referrals': formatterData.internalReferrerLastHourOther, 'referrals %':  Math.round(formatterData.internalReferrerLastHourOther / totalInternalReferrers * 100)}
+    ];
+    let refID = 'category';
+    let refKeys = ['referrals'];
+
     let [extRefData, extRefID, extRefKeys] = dataFormatter.getPCTMetric('externalReferrerLastHourTypes', 'Article')
 
     let internalReferrerLastHourUrls = this.props.internalReferrerLastHourUrls.map(getLinksForReferrerUrls);
@@ -394,7 +402,7 @@ class ArticleRealtimeView extends React.Component {
                 data={refData}
                 keys={refKeys}
                 category={refID}
-                yLabel="Page Views"
+                yLabel="Internal referrals"
                 xLabel="Traffic Source"
                 usePercentages
               />
@@ -516,8 +524,9 @@ ArticleRealtimeView.defaultProps = {
   comments: null,
   commentsReadLastHour: null,
   userTypesLastHour: [],
+  internalReferrerLastHourOther: 0,
+  internalReferrerLastHourArticles: 0,
   externalReferrerLastHourTypes: [],
-  internalReferrerLastHourTypes : [],
   realtimeLinksClickedByCategory: null,
   author: [],
   genre: [],
