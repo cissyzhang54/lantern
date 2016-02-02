@@ -40,11 +40,11 @@ export default class SectionWhen extends React.Component {
               trigger="click"
               placement="bottom"
               overlay={
-                  <Popover id="chart-description">
-                    <p><Text message='explanations.sectionWhen.articleViews' /></p>
-                  </Popover>
-                  }
-            >
+                <Popover id="chart-description">
+                  <p><Text message='explanations.sectionWhen.articleViews' /></p>
+                </Popover>
+                }
+              >
               <span>
                 <Glyphicon
                   glyph="question-sign"
