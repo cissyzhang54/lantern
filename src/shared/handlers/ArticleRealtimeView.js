@@ -129,6 +129,14 @@ class ArticleRealtimeView extends React.Component {
     let socialShares = this.props.socialShares;
 
     let headlineStats = {
+      timeOnPage: {
+        metricType: 'time',
+        label: 'Average Time on Page',
+        size: 'large',
+        onClick: () => {
+          this.setState({chartShown: 'timeOnPage'})
+        }
+      },
       totalPageViews: {
         metricType: 'integer',
         label: 'Page Views',
@@ -136,14 +144,6 @@ class ArticleRealtimeView extends React.Component {
         comparatorFormatName: 'totalPageViews',
         onClick: () => {
           this.setState({chartShown: 'pageViews'})
-        }
-      },
-      timeOnPage: {
-        metricType: 'time',
-        label: 'Average Time on Page',
-        size: 'large',
-        onClick: () => {
-          this.setState({chartShown: 'timeOnPage'})
         }
       },
       retentionRate: {
@@ -335,109 +335,26 @@ class ArticleRealtimeView extends React.Component {
           </Row>
         </ChunkWrapper>
 
-
-        <ChunkWrapper component="realtime-views">
-          <Row>
-            <Col>
-              <h3>Where did users go next?</h3>
-              <Table
-                headers={['FT Source', 'Views']}
-                rows={realtimeNextInternalUrl}
-              />
-            </Col>
-          </Row>
-        </ChunkWrapper>
-
-
-        <ChunkWrapper component="traffic-sources">
-          <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <h3>External Sources</h3>
-            </Col>
-          </Row>
-          <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <h4>Traffic Source</h4>
-              <BarChart
-                data={extRefData}
-                keys={extRefKeys}
-                category={extRefID}
-                yLabel="Page Views"
-                xLabel="Traffic Source"
-              />
-            </Col>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <Table
-                headers={['Top 5 traffic sources', 'Views']}
-                rows={externalReferrerLastHourUrls}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <h3>Internal Sources</h3>
-            </Col>
-          </Row>
-          <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <h4>FT Traffic Sources</h4>
-              <BarChart
-                data={refData}
-                keys={refKeys}
-                category={refID}
-                yLabel="Internal referrals"
-                xLabel="Traffic Source"
-              />
-            </Col>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <Table
-                headers={['Top 5 traffic sources', 'Views']}
-                rows={internalReferrerLastHourUrls}
-              />
-            </Col>
-          </Row>
-        </ChunkWrapper>
-
         <ChunkWrapper component="user-interact">
           <h3>How did the user interact?</h3>
-          <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <MetricList
-                items={linksClickedCategoryList}
-              />
-            </Col>
-
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <MetricList
-                items={commentsList}
-              />
-            </Col>
-
-          </Row>
+            <Row>
+              <Col
+                xs={12}
+                sm={6}
+              >
+                <MetricList
+                  items={linksClickedCategoryList}
+                />
+              </Col>
+              <Col
+                xs={12}
+                sm={6}
+              >
+                <MetricList
+                  items={commentsList}
+                />
+              </Col>
+            </Row>
         </ChunkWrapper>
 
         <ChunkWrapper component="social-media">
@@ -471,6 +388,92 @@ class ArticleRealtimeView extends React.Component {
           </Row>
         </ChunkWrapper>
 
+        <ChunkWrapper component="traffic-sources">
+          <Row>
+            <Col xs={12}>
+              <h3>What was the user journey?</h3>
+            </Col>
+          </Row>
+
+          <Row>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <h4>External Sources</h4>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <h5>Traffic Source</h5>
+              <BarChart
+                data={extRefData}
+                keys={extRefKeys}
+                category={extRefID}
+                yLabel="Page Views"
+                xLabel="Traffic Source"
+              />
+            </Col>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <h5>Top 5 traffic sources</h5>
+              <Table
+                headers={['Traffic Source', 'Views']}
+                rows={externalReferrerLastHourUrls}
+              />
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <h4>Internal Sources</h4>
+            </Col>
+          </Row>
+          <Row>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <h5>FT Traffic Sources</h5>
+              <BarChart
+                data={refData}
+                keys={refKeys}
+                category={refID}
+                yLabel="Internal referrals"
+                xLabel="Traffic Source"
+              />
+            </Col>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <h5>Top 5 traffic sources</h5>
+              <Table
+                headers={['FT Source', 'Views']}
+                rows={internalReferrerLastHourUrls}
+              />
+            </Col>
+          </Row>
+        </ChunkWrapper>
+
+        <ChunkWrapper component="realtime-views">
+          <Row>
+            <Col>
+              <h3>Where did users go next?</h3>
+              <Table
+                headers={['FT Source', 'Views']}
+                rows={realtimeNextInternalUrl}
+              />
+            </Col>
+          </Row>
+        </ChunkWrapper>
 
         <ChunkWrapper component="user-type">
           <Row>
