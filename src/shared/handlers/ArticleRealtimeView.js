@@ -13,7 +13,6 @@ import Header from '../components/Header';
 import SectionHeadlineStats from '../components/SectionHeadlineStats';
 import SingleMetric from '../components/SingleMetric';
 import * as formatAuthors from '../utils/formatAuthors';
-import Link from 'react-router/lib/Link';
 import ErrorHandler from '../components/ErrorHandler';
 import FormatData from "../utils/formatData";
 import BarChart from '../components/BarChart.js';
@@ -238,7 +237,7 @@ class ArticleRealtimeView extends React.Component {
     let refID = 'category';
     let refKeys = ['referrals'];
 
-    let [extRefData, extRefID, extRefKeys] = dataFormatter.getPCTMetric('externalReferrerLastHourTypes', 'Article')
+    let [extRefData, extRefID, extRefKeys] = dataFormatter.getPCTMetric('externalReferrerLastHourTypes', 'External Referrals');
 
     let internalReferrerLastHourUrls = this.props.internalReferrerLastHourUrls.map(getLinksForReferrerUrls);
     let externalReferrerLastHourUrls = this.props.externalReferrerLastHourUrls.map(getLinksForReferrerUrls);
@@ -282,14 +281,14 @@ class ArticleRealtimeView extends React.Component {
     let socialMediaChartData = socialMedia.map((d) => {
       return {
         network: d[0],
-        'referrals %': (d[1] / socialMediaTotal * 100) | 0,
-        referrals: d[1]
+        'Social Media Referrals %': (d[1] / socialMediaTotal * 100) | 0,
+        'Social Media Referrals': d[1]
       };
     });
 
 
     /* Who are the users */
-    let [userTypeData, userTypeID, userTypeKeys] = dataFormatter.getPCTMetric('userTypesLastHour', 'Article')
+    let [userTypeData, userTypeID, userTypeKeys] = dataFormatter.getPCTMetric('userTypesLastHour', 'Page Views')
     let timespan = this.props.timespan || "";
 
     return (
@@ -300,7 +299,7 @@ class ArticleRealtimeView extends React.Component {
           analyticsView={this.props.route.analyticsView + timespan}
           publishDate={this.props.published}
           uuid={this.props.uuid}
-          />
+        />
 
         <ChunkWrapper component="header">
           <Header
@@ -371,7 +370,6 @@ class ArticleRealtimeView extends React.Component {
                 category={extRefID}
                 yLabel="Page Views"
                 xLabel="Traffic Source"
-                usePercentages
               />
             </Col>
             <Col
@@ -404,7 +402,6 @@ class ArticleRealtimeView extends React.Component {
                 category={refID}
                 yLabel="Internal referrals"
                 xLabel="Traffic Source"
-                usePercentages
               />
             </Col>
             <Col
@@ -414,7 +411,7 @@ class ArticleRealtimeView extends React.Component {
               <Table
                 headers={['Top 5 traffic sources', 'Views']}
                 rows={internalReferrerLastHourUrls}
-                />
+              />
             </Col>
           </Row>
         </ChunkWrapper>
@@ -428,16 +425,16 @@ class ArticleRealtimeView extends React.Component {
             >
               <MetricList
                 items={linksClickedCategoryList}
-                />
+              />
             </Col>
 
             <Col
               xs={12}
               sm={6}
-              >
+            >
               <MetricList
                 items={commentsList}
-                />
+              />
             </Col>
 
           </Row>
@@ -456,11 +453,10 @@ class ArticleRealtimeView extends React.Component {
             >
               <BarChart
                 data={socialMediaChartData}
-                keys={['referrals']}
+                keys={['Social Media Referrals']}
                 category={'network'}
                 yLabel="Traffic from Social"
                 xLabel="Social Network"
-                usePercentages
               />
             </Col>
             <Col
@@ -486,15 +482,14 @@ class ArticleRealtimeView extends React.Component {
             <Col
               xs={12}
               sm={6}
-              >
+            >
               <ColumnChart
                 data={userTypeData}
                 keys={userTypeKeys}
                 category={userTypeID}
                 yLabel="Page Views"
                 xLabel="User Type"
-                usePercentages
-                />
+              />
             </Col>
           </Row>
         </ChunkWrapper>

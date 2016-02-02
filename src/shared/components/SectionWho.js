@@ -2,7 +2,6 @@ import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import ColumnChart from './ColumnChart';
-import BarChart from "../components/BarChart";
 import FormatData from "../utils/formatData";
 import ChunkWrapper from './ChunkWrapper.js';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
@@ -47,7 +46,9 @@ export default class SectionWho extends React.Component {
           </Col>
         </Row>
         <Row>
-          <Col xs={12} sm={6}>
+          <Col xs={12}
+            sm={6}
+          >
             <h4>User Type</h4>
             <ColumnChart
               data={cohortData}
@@ -55,10 +56,11 @@ export default class SectionWho extends React.Component {
               category={cohortID}
               yLabel="Page Views"
               xLabel="User Type"
-              usePercentages={true}
             />
           </Col>
-          <Col xs={12} sm={6}>
+          <Col xs={12}
+            sm={6}
+          >
             <h4>New vs Returning</h4>
             <ColumnChart
               data={returningData}
@@ -66,19 +68,18 @@ export default class SectionWho extends React.Component {
               category={returningID}
               yLabel="Page Views"
               xLabel="User Type"
-              usePercentages={true}
             />
           </Col>
         </Row>
-        <Row style={
-          {marginTop: "35px"}
-          }>
+        <Row style={{marginTop: "35px"}}>
           <Col xs={12}>
             <h3>Who is this content appealing to?</h3>
           </Col>
         </Row>
         <Row>
-          <Col xs={12} sm={12}>
+          <Col xs={12}
+            sm={12}
+          >
             <h4>
               <OverlayTrigger
                 trigger="click"
@@ -86,12 +87,16 @@ export default class SectionWho extends React.Component {
                 overlay={
                   <Popover id="rfv-description" >
                     <div style={styles.toolTip} >
-                      <Text type='html' message='explanations.sectionWho.rfv' />
+                      <Text type='html'
+                        message='explanations.sectionWho.rfv'
+                      />
                     </div>
                   </Popover>
                   }
-                >
-                <Glyphicon glyph="question-sign" style={styles.infoIcon} />
+              >
+              <Glyphicon glyph="question-sign"
+                style={styles.infoIcon}
+              />
               </OverlayTrigger>
               Engagement Groups
             </h4>
@@ -101,9 +106,8 @@ export default class SectionWho extends React.Component {
               category={rfvID}
               yLabel="Page Views"
               xLabel="User Type"
-              usePercentages={true}
-              reverseMobileAxis={true}
-              />
+              reverseMobileAxis
+            />
           </Col>
         </Row>
       </ChunkWrapper>

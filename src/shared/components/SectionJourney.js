@@ -7,7 +7,7 @@ import FormatData from "../utils/formatData";
 import ChunkWrapper from './ChunkWrapper.js';
 import Url from 'url';
 
-function getReferrerUrls(data, i) {
+function getReferrerUrls(data) {
   const maxLen = 60;
 
   var parsed = Url.parse(data[0]);
@@ -20,7 +20,9 @@ function getReferrerUrls(data, i) {
   let title = data[2];
   if (!title || (title === 'Unknown')) title = displayString;
   let url = displayString.indexOf('http') < 0 ? displayString : (
-    <a target="_blank" href={data[0]}>
+    <a target="_blank"
+      href={data[0]}
+    >
       {(title !== 'Unknown') ? title : displayString}
     </a>
   );
@@ -47,21 +49,23 @@ export default class SectionReferrers extends React.Component {
     let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrerTypes', 'Article')
     let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Article')
 
-    let [metricData, id, keys] = dataFormatter.getPCTMetric('isLastPage', 'Article', 'Exited FT', 'Stayed on FT')
+    //let [metricData, id, keys] = dataFormatter.getPCTMetric('isLastPage', 'Article', 'Exited FT', 'Stayed on FT')
 
     let intUrls = this.props.data.nextInternalUrl.map(getReferrerUrls);
 
-    let internalRefTypeChart = this.props.renderInternalRefTypes ? <Col xs={12} sm={6}>
-      <h5>FT Traffic Source</h5>
-      <BarChart
-        data={internalData}
-        keys={internalKeys}
-        category={internalID}
-        yLabel="Page Views"
-        xLabel="Referrer"
-        usePercentages={true}
-      />
-      </Col> : [];
+    let internalRefTypeChart = this.props.renderInternalRefTypes ? (
+      <Col xs={12}
+        sm={6}
+      >
+        <h5>FT Traffic Source</h5>
+        <BarChart
+          data={internalData}
+          keys={internalKeys}
+          category={internalID}
+          yLabel="Page Views"
+          xLabel="Referrer"
+        />
+      </Col>) : [];
 
     return (<ChunkWrapper component='sectionJourney'>
 
@@ -71,15 +75,15 @@ export default class SectionReferrers extends React.Component {
         </Col>
       </Row>
 
-      <Row style={
-          {marginTop:"10px"}
-        }>
+      <Row style={{marginTop:"10px"}}>
         <Col xs={12}>
           <h4>External Sources</h4>
         </Col>
       </Row>
       <Row>
-        <Col xs={12} sm={6}>
+        <Col xs={12}
+          sm={6}
+        >
           <h5>Traffic Source</h5>
           <BarChart
             data={refData}
@@ -87,21 +91,20 @@ export default class SectionReferrers extends React.Component {
             category={refID}
             yLabel="Page Views"
             xLabel="Traffic Source"
-            usePercentages={true}
-            />
+          />
         </Col>
-        <Col xs={12} sm={6}>
+        <Col xs={12}
+          sm={6}
+        >
           <h5>Top 5 traffic sources</h5>
           <Table
             headers={['Traffic Source', 'Views']}
             rows={refUrls}
-            />
+          />
         </Col>
       </Row>
 
-      <Row style={
-          {marginTop:"20px"}
-        }>
+      <Row style={{marginTop:"20px"}}>
         <Col xs={12}>
           <h4>Internal Source</h4>
         </Col>
@@ -109,22 +112,26 @@ export default class SectionReferrers extends React.Component {
 
       <Row>
         {internalRefTypeChart}
-        <Col xs={12} sm={6}>
+        <Col xs={12}
+          sm={6}
+        >
           <h5>Top 5 traffic sources</h5>
           <Table
             headers={['FT Source', 'Views']}
             rows={internalRefUrls}
-            />
+          />
         </Col>
       </Row>
 
       <Row>
-        <Col xs={12} sm={12}>
+        <Col xs={12}
+          sm={12}
+        >
           <h4>Of those who stayed where did they go?</h4>
           <Table
             headers={['Next Destination', 'Views']}
             rows={intUrls}
-            />
+          />
         </Col>
       </Row>
     </ChunkWrapper>);
