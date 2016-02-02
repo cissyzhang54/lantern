@@ -60,13 +60,16 @@ function fetchStatus() {
     esClient.getLatestRealtimeDocument()
   ];
 
-  Promise.all(fetches).then(function(responses){
+  Promise.all(fetches).then((responses) => {
     let historicalIndices = responses[0],
       realtimeLatestDoc = responses[1];
 
     latestStatus.historical = formatHistoricalStatus(historicalIndices);
     latestStatus.realtime = formatRealtimeStatus(realtimeLatestDoc);
 
+    setTimeout(fetchStatus, POLL_INTERVAL);
+  }).catch((error) => {
+    console.error('there was an error, wait a bit longer: ', error.message);
     setTimeout(fetchStatus, POLL_INTERVAL);
   });
 }
