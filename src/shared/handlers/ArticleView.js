@@ -81,7 +81,7 @@ class ArticleView extends React.Component {
         label: 'Scroll Depth',
         size: 'large',
         comparatorFormatName: 'scrollDepth',
-        toolTip: (<Text message='explanations.articleHandler.scrollDepth' />)
+        toolTip: (<Text message='explanations.articleHandlers.scrollDepth' />)
       }
     }
 

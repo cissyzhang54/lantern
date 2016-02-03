@@ -2,6 +2,7 @@ import {expect} from 'chai';
 import React from 'react';
 import {createComponent} from '../createComponent';
 import MetricList from '../../src/shared/components/MetricList';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import TestUtils from 'react-addons-test-utils';
 
 describe('The MetricList component', function() {
@@ -23,8 +24,17 @@ describe('The MetricList component', function() {
     expect(elementDT.type).to.equal('dt');
     expect(elementDD.type).to.equal('dd');
 
-    expect(elementDT.props.children).to.equal('Momobot');
+    expect(elementDT.props.children[0]).to.equal('Momobot');
     expect(elementDD.props.children).to.equal(8);
+  });
+
+  it('renders a tooltip if there is one', function() {
+    let component = createComponent(MetricList, {
+      items: [{term: 'Momobot', toolTip: 'Explanation yo', value: 8}]
+    });
+    let elementDT = component.props.children[0][0];
+
+    expect(TestUtils.isElementOfType(elementDT.props.children[1], OverlayTrigger)).to.equal(true);
   });
 
   it('renders the correct number of items', function() {

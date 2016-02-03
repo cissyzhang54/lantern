@@ -35,3 +35,9 @@
 .metric-list__term--header, .metric-list__value--header {
   font-weight: bolder;
 }
+
+.metric-list__infoIcon {
+  cursor: pointer;
+  color: #039;
+  margin-left: 0.5em;
+}

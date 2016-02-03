@@ -19,9 +19,21 @@ import BarChart from '../components/BarChart.js';
 import ColumnChart from '../components/ColumnChart.js'
 import Url from 'url';
 import MetricList from '../components/MetricList'
-import TabNav from '../components/TabNav'
+import TabNav from '../components/TabNav';
+import Text from '../components/Text';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import Popover from 'react-bootstrap/lib/Popover';
+import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 
 const maxStrLen = 60;
+
+const styles = {
+  infoIcon : {
+    'fontSize' : '15px',
+    'color': '#039',
+    cursor:'pointer'
+  }
+}
 
 function getReferrerUrls (value) {
   let urlObject = value.top_tag_hits.hits.hits[0]._source;
@@ -161,7 +173,8 @@ class ArticleRealtimeView extends React.Component {
         comparatorFormatName: 'scrollDepth',
         onClick: () => {
           this.setState({chartShown: 'scrollDepth'})
-        }
+        },
+        toolTip: (<Text message='explanations.articleHandlers.scrollDepth' />)
       }
     }
 
@@ -170,11 +183,14 @@ class ArticleRealtimeView extends React.Component {
     let selectedGraphData;
     let selectedGraphKeys;
     let selectedGraphYLabel;
+    let selectedGraphToolTipMessage;
+    let timespan48h = this.props.timespan === '48h';
 
     switch (this.state.chartShown) {
       case 'pageViews':
         selectedGraphComponentName = 'realtime-pageviews';
         selectedGraphTitle = 'Real time page views';
+        selectedGraphToolTipMessage = timespan48h ? 'explanations.pageViewsChart.realtime48h' : 'explanations.pageViewsChart.realtime1h';
         selectedGraphData = this.props.pageViews.map(function(d) {
           return {
             date: d[0],
@@ -187,6 +203,7 @@ class ArticleRealtimeView extends React.Component {
       case 'scrollDepth':
         selectedGraphComponentName = 'realtime-scrolldepth';
         selectedGraphTitle = 'Real time scroll depth';
+        selectedGraphToolTipMessage = timespan48h ? 'explanations.scrollDepthChart.realtime48h' : 'explanations.scrollDepthChart.realtime1h';
         selectedGraphData =  this.props.realtimeScrollDepth.map(function(d) {
           return {
             date: d[0],
@@ -199,6 +216,7 @@ class ArticleRealtimeView extends React.Component {
       case 'timeOnPage':
         selectedGraphComponentName = 'realtime-timeonpage';
         selectedGraphTitle = 'Real time time on page';
+        selectedGraphToolTipMessage = timespan48h ? 'explanations.timeOnPageChart.realtime48h' : 'explanations.timeOnPageChart.realtime1h';
         selectedGraphData =  this.props.realtimeTimeOnPage.map(function(d) {
           return {
             date: d[0],
@@ -211,6 +229,7 @@ class ArticleRealtimeView extends React.Component {
       case 'retentionRate':
         selectedGraphComponentName = 'realtime-retentionRate';
         selectedGraphTitle = 'Real time retention on page';
+        selectedGraphToolTipMessage = timespan48h ? 'explanations.retentionRateChart.realtime48h' : 'explanations.retentionRateChart.realtime1h';
         selectedGraphData =  this.props.realtimeRetention.map(function(d) {
           return {
             date: d[0],
@@ -268,7 +287,7 @@ class ArticleRealtimeView extends React.Component {
     let commentsTotal = comments + commentsReadLastHour;
     let commentsList = [
       {term: 'Total comments', value: commentsTotal, header: true},
-      {term: 'Comments viewed', value: commentsReadLastHour, header: false},
+      {term: 'Comments viewed', toolTip: (<p><Text message='explanations.sectionInteract.commentsViewed'/></p>), value: commentsReadLastHour, header: false},
       {term: 'Comments posted', value: comments, header: false}
     ]
 
@@ -320,7 +339,26 @@ class ArticleRealtimeView extends React.Component {
         <ChunkWrapper component={selectedGraphComponentName}>
           <Row>
             <Col>
-              <h3>{selectedGraphTitle}</h3>
+              <h3>
+                <OverlayTrigger
+                  trigger="click"
+                  placement="bottom"
+                  overlay={
+                    <Popover id="chart-description">
+                     <p><Text message={selectedGraphToolTipMessage} /></p>
+                    </Popover>
+                    }
+                  >
+                  <span>
+                     <Glyphicon
+                     glyph="question-sign"
+                     style={styles.infoIcon}
+                     aria-describedby="chart-description"
+                     />
+                  </span>
+                </OverlayTrigger>
+                <span > {selectedGraphTitle}</span>
+              </h3>
               <LiveIndicator isLive={this.props.isLive} />
               <LineChart
                 data={selectedGraphData}
