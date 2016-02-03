@@ -191,7 +191,13 @@ class ArticleRealtimeView extends React.Component {
         selectedGraphComponentName = 'realtime-pageviews';
         selectedGraphTitle = 'Real time page views';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.pageViewsChart.realtime48h' : 'explanations.pageViewsChart.realtime1h';
-        selectedGraphData = this.props.pageViews.map(function(d) {
+        selectedGraphData = this.props.pageViews.map((d) => {
+          if (d[0] < this.props.published) {
+            return {
+              date: d[0],
+              views: null
+            }
+          }
           return {
             date: d[0],
             views: d[1]
@@ -204,7 +210,13 @@ class ArticleRealtimeView extends React.Component {
         selectedGraphComponentName = 'realtime-scrolldepth';
         selectedGraphTitle = 'Real time scroll depth';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.scrollDepthChart.realtime48h' : 'explanations.scrollDepthChart.realtime1h';
-        selectedGraphData =  this.props.realtimeScrollDepth.map(function(d) {
+        selectedGraphData =  this.props.realtimeScrollDepth.map((d) => {
+          if (d[0] < this.props.published) {
+            return {
+              date: d[0],
+              depth: null
+            }
+          }
           return {
             date: d[0],
             depth: d[1]
@@ -217,7 +229,13 @@ class ArticleRealtimeView extends React.Component {
         selectedGraphComponentName = 'realtime-timeonpage';
         selectedGraphTitle = 'Real time time on page';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.timeOnPageChart.realtime48h' : 'explanations.timeOnPageChart.realtime1h';
-        selectedGraphData =  this.props.realtimeTimeOnPage.map(function(d) {
+        selectedGraphData =  this.props.realtimeTimeOnPage.map((d) => {
+          if (d[0] < this.props.published) {
+            return {
+              date: d[0],
+              time: null
+            }
+          }
           return {
             date: d[0],
             time: d[1]
@@ -230,13 +248,19 @@ class ArticleRealtimeView extends React.Component {
         selectedGraphComponentName = 'realtime-retentionRate';
         selectedGraphTitle = 'Real time retention on page';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.retentionRateChart.realtime48h' : 'explanations.retentionRateChart.realtime1h';
-        selectedGraphData =  this.props.realtimeRetention.map(function(d) {
+        selectedGraphData =  this.props.realtimeRetention.map((d) => {
+          if (d[0] < this.props.published) {
+            return {
+              date: d[0],
+              retention: null
+            }
+          }
           return {
             date: d[0],
-            views: d[1]
+            retention: d[1]
           }
         });
-        selectedGraphKeys = ['views'];
+        selectedGraphKeys = ['retention'];
         selectedGraphYLabel = 'Retained Users'
         break;
       default:
@@ -348,12 +372,12 @@ class ArticleRealtimeView extends React.Component {
                      <p><Text message={selectedGraphToolTipMessage} /></p>
                     </Popover>
                     }
-                  >
+                >
                   <span>
                      <Glyphicon
-                     glyph="question-sign"
-                     style={styles.infoIcon}
-                     aria-describedby="chart-description"
+                       glyph="question-sign"
+                       style={styles.infoIcon}
+                       aria-describedby="chart-description"
                      />
                   </span>
                 </OverlayTrigger>
