@@ -54,7 +54,7 @@ class ArticleView extends React.Component {
     let headlineStats = {
       timeOnPage: {
         metricType: 'time',
-        label: 'Time on Page',
+        label: 'Average Time on Page',
         size: 'large',
         comparatorFormatName: 'timeOnPage'
       },
@@ -78,7 +78,7 @@ class ArticleView extends React.Component {
       },
       scrollDepth: {
         metricType: 'percentage',
-        label: 'Scroll Depth',
+        label: 'Average Scroll Depth',
         size: 'large',
         comparatorFormatName: 'scrollDepth',
         toolTip: (<Text message='explanations.articleHandlers.scrollDepth' />)
