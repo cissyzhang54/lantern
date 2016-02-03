@@ -246,7 +246,7 @@ class ArticleRealtimeView extends React.Component {
 
     /* Interaction Section */
     // Links Clicked
-    let linksClickedByCategory = this.props.realtimeLinksClickedByCategory;
+    let linksClickedByCategory = this.props.realtimeLinksClickedByCategory.slice();
 
     let linksClicked = linksClickedByCategory.reduce((prev, curr) => {
       return prev + curr[1];
