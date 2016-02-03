@@ -14,6 +14,7 @@ import DualScaleLineChart from "../components/DualScaleLineChart";
 import SectionWho from "../components/SectionWho";
 import SectionWhere from "../components/SectionWhere";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
+import TabNav from '../components/TabNav';
 
 import ChunkWrapper from "../components/ChunkWrapper";
 
@@ -90,8 +91,26 @@ class SectionView extends React.Component {
       }
     }
 
+    let links = [
+      {
+        title: "Today",
+        url:`/realtime/sections/${this.props.params.section}`,
+        type: "realtime"
+      },
+      {
+        title: "Historical",
+        url:`/sections/${this.props.params.section}`,
+        type: "section", timePeriod: 24
+      }
+    ];
+
     return(<DocumentTitle title={title}>
       <div>
+
+        <TabNav
+          links={links}
+          analyticsView={"section"}
+        />
 
         <ChunkWrapper component="modifier">
           <SectionModifier

@@ -16,10 +16,12 @@ export default (
   <Route component={ AppController } >
     <Route
       path="/"
-      component={Search} />
+      component={Search}
+    />
     <Route
       path="playground"
-      component={Playground}>
+      component={Playground}
+    >
       <Route
         path=":componentName"
         component={PlaygroundLoader}
@@ -30,7 +32,9 @@ export default (
       component={HistoricalAnalyticsView}
       analyticsView="article"
     />
-    <Redirect from="articles/:uuid" to="articles/:uuid/global/FT" />
+    <Redirect from="articles/:uuid"
+      to="articles/:uuid/global/FT"
+    />
     <Route
       path="sections/:section"
       component={HistoricalAnalyticsView}
