@@ -37,11 +37,11 @@ export default function formatData(data) {
     'pageViews', 'timeOnPage', 'readTimes', 'channels', 'uniqueVisitors',
     'isSubscription', 'nextInternalUrl', 'internalReferrerTypes', 'internalReferrerUrls', 'isFirstVisit',
     'rfvCluster', 'userCohort', 'isLastPage', 'regions', 'countries', 'devices', 'socialReferrers',
-    'referrerUrls', 'referrerNames', 'referrerTypes', 'top5TimeOnPage'
+    'referrerUrls', 'referrerNames', 'referrerTypes', 'top5TimeOnPage', 'headlineStatsOverTime'
   ]
   let eventFields = [
     'totalCommentsPosted', 'totalCommentsViewed', 'socialSharesTotal', 'socialSharesTypes',
-    'totalLinksClicked', 'scrollDepth', 'linkClickCategories'
+    'totalLinksClicked', 'scrollDepth', 'linkClickCategories', 'scrollOverTime'
   ]
   let divisor = getField(articleComparatorData, 'articleCount')
   let articleComparatorFields = [

@@ -82,6 +82,8 @@ const fields = {
   categoryAverageViewCount: {name: 'aggregations.page_view_total_count.value', formatter: divide},
   categoryAverageUniqueVisitors: {name: 'aggregations.unique_visitors.value', formatter: divide},
   readTimes: {name: 'aggregations.page_views_over_time', formatter: format},
+  headlineStatsOverTime : 'aggregations.headline_stats_over_time.buckets',
+  scrollOverTime : 'aggregations.scroll_over_time.buckets',
   readTimesSincePublish: {name: 'aggregations.page_views_since_publish', formatter: format},
   publishTimes: {name: 'aggregations.articles_published_over_time', formatter: format},
   channels: {name: 'aggregations.channels', formatter: format},

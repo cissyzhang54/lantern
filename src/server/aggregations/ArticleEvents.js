@@ -1,5 +1,30 @@
-export default function ArticleEventsAggregation() {
+import * as calculateInterval from '../utils/calculateInterval'
+
+export default function ArticleEventsAggregation(query) {
   return {
+    scroll_over_time : {
+      date_histogram : {
+        field : "event_timestamp",
+        interval : calculateInterval.interval(query.dateFrom, query.dateTo),
+        min_doc_count : 0
+      },
+      aggs : {
+        "scroll_depth": {
+          "filter": {
+            "term": {
+              "event_type": "scroll"
+            }
+          },
+          "aggs": {
+            "average_scroll": {
+              "avg": {
+                "field": "event_value"
+              }
+            }
+          }
+        }
+      }
+    },
     social_shares: {
       filter: {
         term: {
@@ -40,7 +65,6 @@ export default function ArticleEventsAggregation() {
         }
       }
     },
-
     "scroll_depth": {
       "filter": {
         "term": {

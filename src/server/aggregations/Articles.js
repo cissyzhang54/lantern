@@ -9,6 +9,31 @@ export default function ArticlesAggregation(query) {
           min_doc_count : 0
         }
       },
+      headline_stats_over_time : {
+        date_histogram : {
+          field : "view_timestamp",
+          interval : calculateInterval.interval(query.dateFrom, query.dateTo),
+          min_doc_count : 0
+        },
+        aggs : {
+          avg_time_on_page : {
+            avg : {
+              field: "time_on_page"
+            }
+          },
+          unique_visitors: {
+            cardinality: {
+              field: "visitor_id"
+            }
+          },
+          is_last_page: {
+            terms: {
+              field: 'is_last_page',
+              min_doc_count: 0
+            }
+          }
+        }
+      },
       avg_time_on_page : {
         avg : {
           field: "time_on_page"
