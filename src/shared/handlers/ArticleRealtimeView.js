@@ -104,6 +104,9 @@ class ArticleRealtimeView extends React.Component {
       uuid: this.props.params.uuid,
       timespan: timespan
     });
+    let analytics = require('../utils/analytics');
+    analytics.sendGAPageViewEvent();
+    analytics.trackScroll();
   }
 
   componentWillReceiveProps(nextProps) {

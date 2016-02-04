@@ -1,6 +1,6 @@
 import pageDepth from './pageDepth';
 import config from '../config/index';
-import ga from 'react-google-analytics';
+import ga from 'react-ga';
 
 class Analytics {
   constructor () {
@@ -15,12 +15,17 @@ class Analytics {
     this.track = true;
     this.attached = false;
 
-    ga('create', config.gaTrackingID, 'auto');
+    var options = { debug: true };
+    ga.initialize(config.gaTrackingID, options)
   }
 
-  sendGAEvent(event) {
+  sendGAPageViewEvent(event) {
     if (!this.track) return;
-    ga('send', event); // e.g. pageview
+    ga.pageview(document.location.pathname)
+  }
+
+  sendGACustomEvent(json) {
+    ga.event(json)
   }
 
   sendSplunkEvent (container, eventType, eventValue) {
@@ -41,10 +46,11 @@ class Analytics {
       let el = document.querySelector('#react-app');
       if (!el) return;
       el.addEventListener('scrollDepth', function (e) {
-        this.sendGAEvent({
-          'hitType': 'event',
-          'eventCategory': 'Page Scrolling',
-          'eventAction': 'Scrolled ' + e.detail.scrollDepth + '%'
+        this.sendGACustomEvent({
+          'category': 'User',
+          'action': 'Page Scroll',
+          'label': 'Scrolled ' + e.detail.scrollDepth + '%',
+          'value': e.detail.scrollDepth
         });
       }.bind(this));
       this.attached = true;
