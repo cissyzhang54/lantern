@@ -25,12 +25,8 @@ export default class SectionWhen extends React.Component {
   }
 
   render() {
-    if (!this.props.renderReadTimes && !this.props.renderTimeSincePublished){
-      return (<div></div>);
-    }
-
-    let dataFormatter = new FormatData(this.props.data);
-    let [timeData, timeID, timeKeys] = dataFormatter.getMetric('readTimes', 'Page Views');
+    console.log( this.props.data)
+    let [timeData, timeID, timeKeys] = this.props.data;
 
     return (<ChunkWrapper component='sectionWhen'>
       <Row>
@@ -55,6 +51,7 @@ export default class SectionWhen extends React.Component {
             </OverlayTrigger>
             <span >When did the users view the article?</span>
           </h3>
+          <h4>{this.props.title}</h4>
         </Col>
       </Row>
       <Row>
@@ -63,7 +60,7 @@ export default class SectionWhen extends React.Component {
             data={timeData}
             keys={timeKeys}
             category={timeID}
-            yLabel='Page Views Since Publish date'
+            yLabel={this.props.selectedGraphYLabel}
             xLabel='Time since Published'
             cols={12}
           />

@@ -24,7 +24,9 @@ class ArticleView extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {}
+    this.state = {
+      chartShown: 'timeOnPage'
+    }
   }
 
   componentDidMount() {
@@ -56,33 +58,105 @@ class ArticleView extends React.Component {
         metricType: 'time',
         label: 'Average Time on Page',
         size: 'large',
-        comparatorFormatName: 'timeOnPage'
+        comparatorFormatName: 'timeOnPage',
+        onClick: () => {
+          this.setState({chartShown: 'timeOnPage'})
+        }
       },
       pageViews: {
         metricType: 'integer',
         label: 'Page Views',
         size: 'large',
-        comparatorFormatName: 'categoryAverageViewCount'
+        comparatorFormatName: 'categoryAverageViewCount',
+        onClick: () => {
+          this.setState({chartShown: 'pageViews'})
+        }
       },
       uniqueVisitors: {
         metricType: 'integer',
         label: 'Unique Visitors',
         size: 'large',
-        comparatorFormatName: 'categoryAverageUniqueVisitors'
+        comparatorFormatName: 'categoryAverageUniqueVisitors',
+        onClick: () => {
+          this.setState({chartShown: 'uniqueVisitors'})
+        }
       },
       retentionRate: {
         metricType: 'percentage',
         label: 'Retention Rate',
         size: 'large',
-        comparatorFormatName: 'retentionRate'
+        comparatorFormatName: 'retentionRate',
+        onClick: () => {
+          this.setState({chartShown: 'retentionRate'})
+        }
       },
       scrollDepth: {
         metricType: 'percentage',
         label: 'Average Scroll Depth',
         size: 'large',
         comparatorFormatName: 'scrollDepth',
-        toolTip: (<Text message='explanations.articleHandlers.scrollDepth' />)
+        toolTip: (<Text message='explanations.articleHandlers.scrollDepth' />),
+        onClick: () => {
+          this.setState({chartShown: 'scrollDepth'})
+        }
       }
+    }
+
+    let selectedGraphTitle;
+    let selectedGraphData;
+    let selectedGraphYLabel;
+
+    switch (this.state.chartShown) {
+      case 'timeOnPage':
+        selectedGraphTitle = 'Time on page';
+        selectedGraphData = data.headlineStatsOverTime.map((row, i) => {
+          return {
+            'Average time on page' : row.avg_time_on_page.value != null ? row.avg_time_on_page.value : 0,
+            "category" : row.key_as_string
+          }
+        });
+        selectedGraphData =  [selectedGraphData, "category", ['Average time on page']];
+        selectedGraphYLabel = 'Time On Page (seconds)';
+        break;
+      case 'pageViews':
+        selectedGraphTitle = 'Page views';
+        selectedGraphData = dataFormatter.getMetric('readTimes', 'Page views');
+        selectedGraphYLabel = 'Page Views';
+        break;
+      case 'uniqueVisitors':
+        selectedGraphTitle = 'Unique Visitors';
+        selectedGraphData = data.headlineStatsOverTime.map((row, i) => {
+          return {
+            'Unique visitors' : row.unique_visitors.value != null ? row.unique_visitors.value : 0,
+            "category" : row.key_as_string
+          }
+        });
+        selectedGraphData =  [selectedGraphData, "category", ['Unique visitors']];
+        selectedGraphYLabel = 'Unique Visitors';
+        break;
+      case 'retentionRate':
+        selectedGraphTitle = 'Retention on page';
+        selectedGraphData = data.headlineStatsOverTime.map((row, i) => {
+          return {
+            'Retention' : row.is_last_page.buckets.length != 0 ? row.is_last_page.buckets[1].doc_count : 0,
+            "category" : row.key_as_string
+          }
+        });
+        selectedGraphData =  [selectedGraphData, "category", ['Retention']];
+        selectedGraphYLabel = 'Retained Users';
+        break;
+      case 'scrollDepth':
+        selectedGraphTitle = 'Scroll depth';
+        selectedGraphData = data.scrollOverTime.map((row, i) => {
+          return {
+            'Average scroll depth' : row.scroll_depth.average_scroll.value != null ? row.scroll_depth.average_scroll.value : 0,
+            "category" : row.key_as_string
+          }
+        })
+        selectedGraphData =  [selectedGraphData, "category", ['Average scroll depth']];
+        selectedGraphYLabel = 'Scroll Depth'
+        break;
+      default:
     }
 
     let updating = (this.props.loading)
@@ -94,6 +168,7 @@ class ArticleView extends React.Component {
         category="Article"
         type="PLACEHOLDER"
          />)
+
 
     return (<DocumentTitle title={title}>
       <div>
@@ -135,10 +210,9 @@ class ArticleView extends React.Component {
         />
 
         <SectionWhen
-          data={data}
-          comparatorData={comparatorData}
-          renderReadTimes={FeatureFlag.check('article:readTimes')}
-          renderTimeSincePublished={FeatureFlag.check('article:timeSincePublished')}
+          data={selectedGraphData}
+          title={selectedGraphTitle}
+          selectedGraphYLabel={selectedGraphYLabel}
         />
 
         <SectionInteract

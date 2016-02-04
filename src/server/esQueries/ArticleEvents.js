@@ -12,6 +12,6 @@ export default function ArticleEventsESQuery(query) {
   return {
     query : articleQuery,
     "size": 1,
-    "aggs" : ArticleEventsAggregation()
+    "aggs" : ArticleEventsAggregation(query)
   };
 }
