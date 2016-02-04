@@ -131,11 +131,7 @@ class ArticleRealtimeStore {
     setTimeout(() => {
       this.getInstance().loadArticleRealtimeData(query);
       this.setState(query);
-
-      // if (!this.getInstance().isLoading()) {
-      //   // Data not being fetched from server, go ahead and listen to web socket
-        this.connect();
-      // }
+      this.connect();
     }, 0);
   }
 
@@ -169,8 +165,6 @@ class ArticleRealtimeStore {
       userTypesLastHour: data.userTypesLastHour,
       lastUpdated: data.realtimePageViews.length ? data.realtimePageViews.slice(-1)[0][0] : null
     });
-
-    this.connect();
   }
 
   loadingData() {
