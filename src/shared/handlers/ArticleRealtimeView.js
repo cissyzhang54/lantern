@@ -178,6 +178,13 @@ class ArticleRealtimeView extends React.Component {
       }
     }
 
+    let publishedDates = this.props.lastPublishDate.map((d, i) => {
+      return {
+        value: d.key_as_string,
+        text: (i) ? 'Republished' : 'Published'
+      }
+    })
+
     let selectedGraphComponentName;
     let selectedGraphTitle;
     let selectedGraphData;
@@ -390,6 +397,7 @@ class ArticleRealtimeView extends React.Component {
                 category={'date'}
                 yLabel={selectedGraphYLabel}
                 xLabel='Time'
+                marks={publishedDates}
                 realtime
                 cols={12}
               />

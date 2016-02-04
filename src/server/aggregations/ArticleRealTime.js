@@ -367,6 +367,11 @@ export default function ArticlesRealtimeAggregation(query) {
             }
           }
         }
+      },
+      last_publish_date : {
+        terms : {
+            field : "last_publish_date"
+        }
       }
     }
 }
