@@ -97,6 +97,7 @@ export default class LineChart extends React.Component {
 
 
       this.chart.load(dataObject);
+      this.chart.xgrids(this.props.marks || [])
       return;
     }
 
@@ -109,6 +110,11 @@ export default class LineChart extends React.Component {
         right: 20
       },
       data: dataObject,
+      grid: {
+        x: {
+          lines: this.props.marks || []
+        }
+      },
       axis: {
         x: {
           type: this.props.type,

@@ -165,7 +165,8 @@ function getArticleRealtimeData(req, res) {
           internalReferrerLastHourOther: data.internalReferrerLastHourOther,
           internalReferrerLastHourUrls: data.internalReferrerLastHourUrls,
           userTypesLastHour: data.userTypesLastHour,
-          timespan: req.params.timespan || '1h'
+          timespan: req.params.timespan || '1h',
+          lastPublishDate: data.lastPublishDate
         }
       };
       return res;

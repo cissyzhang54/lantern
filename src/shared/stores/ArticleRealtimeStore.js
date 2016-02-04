@@ -51,7 +51,8 @@ class ArticleRealtimeStore {
       isLive: false,
       isLiveTimer: null,
       socket: null,
-      timespan: '1h'
+      timespan: '1h',
+      lastPublishDate: []
     }
   }
 
@@ -94,6 +95,7 @@ class ArticleRealtimeStore {
           comments: data.commentsLastHour,
           commentsReadLastHour: data.commentsReadLastHour,
           userTypesLastHour: data.userTypesLastHour,
+          lastPublishDate: data.lastPublishDate,
           isLive: true
         })
 
@@ -167,6 +169,7 @@ class ArticleRealtimeStore {
       comments: data.commentsLastHour,
       commentsReadLastHour: data.commentsReadLastHour,
       userTypesLastHour: data.userTypesLastHour,
+      lastPublishDate: data.lastPublishDate,
       lastUpdated: data.realtimePageViews.length ? data.realtimePageViews.slice(-1)[0][0] : null
     });
 

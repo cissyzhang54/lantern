@@ -370,6 +370,11 @@ export default {
           }
         }
       }
+    },
+    last_publish_date : {
+      terms : {
+          field : "last_publish_date"
+      }
     }
   }
 }
