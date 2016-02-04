@@ -13,7 +13,7 @@ class Error404View extends React.Component {
 
   componentDidMount() {
     let analytics = require('../utils/analytics');
-    analytics.sendGAEvent('pageview');
+    analytics.sendGAPageViewEvent();
   }
 
   render() {

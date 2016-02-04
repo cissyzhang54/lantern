@@ -24,7 +24,7 @@ class TopicView extends React.Component {
 
   componentDidMount() {
     let analytics = require('../utils/analytics');
-    analytics.sendGAEvent('pageview');
+    analytics.sendGAPageViewEvent();
     analytics.trackScroll();
   }
 

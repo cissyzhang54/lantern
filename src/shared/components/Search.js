@@ -58,6 +58,12 @@ export default class Search extends React.Component {
       query: this.refs.searchinput.getValue()
     });
     if (this.shouldPerformSearch()) {
+      let analytics = require('../utils/analytics');
+      analytics.sendGACustomEvent({
+        'category': 'User',
+        'action': 'Search',
+        'label': this.state.query
+      });
       this.props.search(this.state.query);
     } else {
       this.props.destroy();

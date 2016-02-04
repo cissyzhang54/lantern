@@ -75,6 +75,12 @@ class HistoricalAnalyticsView extends React.Component {
       }
   }
 
+  componentDidMount() {
+    let analytics = require('../utils/analytics');
+    analytics.sendGAPageViewEvent();
+    analytics.trackScroll();
+  }
+
   componentWillUnmount() {
     AnalyticsActions.destroy();
   }
