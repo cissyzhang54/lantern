@@ -181,7 +181,7 @@ class ArticleRealtimeView extends React.Component {
       }
     }
 
-    let publishedDates = this.props.lastPublishDate.map((d, i) => {
+    let publishedDates = this.props.lastPublishDate.slice().reverse().map((d, i) => {
       return {
         value: d.key_as_string,
         text: (i) ? 'Republished' : 'Published'
