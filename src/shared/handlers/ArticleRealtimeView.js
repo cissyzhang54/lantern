@@ -233,7 +233,7 @@ class ArticleRealtimeView extends React.Component {
           }
         });
         selectedGraphKeys = ['depth'];
-        selectedGraphYLabel = 'Scroll Depth'
+        selectedGraphYLabel = 'Scroll Depth (%)'
         break;
       case 'timeOnPage':
         selectedGraphComponentName = 'realtime-timeonpage';
@@ -271,7 +271,7 @@ class ArticleRealtimeView extends React.Component {
           }
         });
         selectedGraphKeys = ['retention'];
-        selectedGraphYLabel = 'Retained Users'
+        selectedGraphYLabel = 'Retained Users (%)'
         break;
       default:
 
@@ -376,6 +376,7 @@ class ArticleRealtimeView extends React.Component {
               <h3>
                 <OverlayTrigger
                   trigger="click"
+                  rootClose
                   placement="bottom"
                   overlay={
                     <Popover id="chart-description">

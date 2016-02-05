@@ -1,14 +1,5 @@
 import React from "react";
 import Tag from './Tag';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
-import moment from 'moment'
-
-import AnalyticsActions from '../actions/AnalyticsActions';
-
-function decode(uri){
-  return uri ? decodeURI(uri) : null
-}
 
 export default class Tags extends React.Component {
 
@@ -36,12 +27,11 @@ export default class Tags extends React.Component {
 }
 
 Tags.propTypes = {
-  tags: React.PropTypes.array.isRequired,
   onChange: React.PropTypes.func
 };
 
 Tags.defaultProps = {
   category: 'articles',
   tags : [{label: 'Default 1', url : '#'}, {label: 'Default 2', url : '#'}, {label: 'Default 3', url : '#'}],
-  onChange: _ => {console.log(_)}
+  onChange: () => {}
 }

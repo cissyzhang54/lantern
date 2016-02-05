@@ -17,7 +17,7 @@ const styles = {
     'padding': '0px 15px 0px 15px'
   },
   title : {
-    lineHeight: '1.5em',
+    lineHeight: '1.5em'
   },
   titleText : {
     'paddingLeft': '0px'
@@ -46,8 +46,10 @@ export default class Modifier extends React.Component {
   constructor(props) {
     super(props);
     this.state = {};
-    this.state.isSectionOrTopic = ['sections', 'topics'].indexOf(this.props.category) >= 0;
-    this.state.isGlobalFTComparator = this.props.comparatorQuery.comparatorType === 'global';
+    this.setState({
+      isSectionOrTopic : ['sections', 'topics'].indexOf(this.props.category) >= 0,
+      isGlobalFTComparator : this.props.comparatorQuery.comparatorType === 'global'
+    });
   }
 
   handleDateRangeChange (dates) {
@@ -100,13 +102,18 @@ export default class Modifier extends React.Component {
     let count = typeof comparatorData.articleCount == 'number' ? comparatorData.articleCount : null;
 
     return (
-      <div data-component='sectionModifier' style={styles.modifierWrapper}>
+      <div data-component='sectionModifier'
+        style={styles.modifierWrapper}
+      >
         <Row style={styles.row}>
-          <Col sm={2} xs={12}>
+          <Col sm={2}
+            xs={12}
+          >
             <span style={styles.title}>
               <OverlayTrigger
                 trigger="click"
                 placement="bottom"
+                rootClose
                 overlay={
                   <Popover id="tag-description">
                       <p>
@@ -114,14 +121,22 @@ export default class Modifier extends React.Component {
                       </p>
                   </Popover>
                   }
-                >
-                <Glyphicon glyph="question-sign" style={styles.infoIcon} />
+              >
+                <Glyphicon glyph="question-sign"
+                  style={styles.infoIcon}
+                />
               </OverlayTrigger>
-              <span style={styles.titleText} aria-dscribedby="tag-description">Metadata Tags:</span>
+              <span style={styles.titleText}
+                aria-dscribedby="tag-description"
+              >
+                Metadata Tags:
+              </span>
             </span>
 
           </Col>
-          <Col sm={10} xs={12}>
+          <Col sm={10}
+            xs={12}
+          >
             <Tags
               tags={tags}
               currentTag={this.props.comparatorQuery.comparator}
@@ -134,7 +149,9 @@ export default class Modifier extends React.Component {
         </Row>
 
         <Row style={styles.row}>
-          <Col sm={2} xs={12}>
+          <Col sm={2}
+            xs={12}
+          >
             <span style={styles.title}><span style={styles.titleText}>Filters:</span></span>
           </Col>
           <Filters
@@ -144,10 +161,14 @@ export default class Modifier extends React.Component {
         </Row>
 
         <Row style={styles.row}>
-          <Col sm={2} xs={12}>
+          <Col sm={2}
+            xs={12}
+          >
             <span style={styles.title}><span style={styles.titleText}>Date Range:</span></span>
           </Col>
-          <Col sm={4} xs={12}>
+          <Col sm={4}
+            xs={12}
+          >
             <DateRange
               onChange={this.handleDateRangeChange}
               startDate={this.props.query.dateFrom}
@@ -158,15 +179,19 @@ export default class Modifier extends React.Component {
         </Row>
 
         <Row>
-          <Col sm={2} xs={12}>
+          <Col sm={2}
+            xs={12}
+          >
             <span style={styles.title}></span>
           </Col>
-          <Col sm={10} xs={12}>
+          <Col sm={10}
+            xs={12}
+          >
             <div style={styles.descriptorText}>
               <ModifierDescription
                 articleCount={count}
                 comparator={this.props.comparatorQuery.comparator}
-                />
+              />
             </div>
           </Col>
         </Row>
@@ -175,9 +200,6 @@ export default class Modifier extends React.Component {
   }
 }
 
-Modifier.propTypes = {
-  data: React.PropTypes.object.isRequired
-};
 
 Modifier.defaultProps = {
   category : 'articles',

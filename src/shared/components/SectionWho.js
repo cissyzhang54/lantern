@@ -84,6 +84,7 @@ export default class SectionWho extends React.Component {
               <OverlayTrigger
                 trigger="click"
                 placement="bottom"
+                rootClose
                 overlay={
                   <Popover id="rfv-description" >
                     <div style={styles.toolTip} >

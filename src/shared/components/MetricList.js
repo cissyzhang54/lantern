@@ -16,6 +16,7 @@ export default class DefinitionList extends React.Component {
           <OverlayTrigger
             trigger="click"
             placement="bottom"
+            rootClose
             overlay={
               <Popover id={toolTipTitle}>
                 {item.toolTip}
@@ -31,7 +32,7 @@ export default class DefinitionList extends React.Component {
             </span>
           </OverlayTrigger>
         );
-      };
+      }
 
       let additionalTermClassNames = item.header? "metric-list__term--header" : "";
       let additionalValueClassNames = item.header? "metric-list__value--header" : "";

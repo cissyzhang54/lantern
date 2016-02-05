@@ -1,10 +1,8 @@
 import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
-import moment from 'moment';
 import LineChart from "../components/LineChart";
 import Text from '../components/Text'
-import FormatData from "../utils/formatData";
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
@@ -25,7 +23,6 @@ export default class SectionWhen extends React.Component {
   }
 
   render() {
-    console.log( this.props.data)
     let [timeData, timeID, timeKeys] = this.props.data;
 
     return (<ChunkWrapper component='sectionWhen'>
@@ -35,12 +32,13 @@ export default class SectionWhen extends React.Component {
             <OverlayTrigger
               trigger="click"
               placement="bottom"
+              rootClose
               overlay={
                 <Popover id="chart-description">
-                  <p><Text message='explanations.sectionWhen.articleViews' /></p>
+                  <p><Text message='explanations.sectionWhen.articleViews.historical' /></p>
                 </Popover>
-                }
-              >
+              }
+            >
               <span>
                 <Glyphicon
                   glyph="question-sign"
