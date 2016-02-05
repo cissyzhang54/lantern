@@ -79,6 +79,11 @@ app.use('/landing/article/:uuid', ensureAuthenticated, (req, res) => {
 app.use('/api/v0', ensureApiAuthenticated, apiRouter);
 app.use('/', ensureAuthenticated, dataPreloader);
 
+app.use('/', function(req, res ,next) {
+  if (!req.query.hasOwnProperty('json')) return next();
+  return res.json(res.locals.data);
+});
+
 // Set up global state
 app.use((req, res, next) => {
   res.locals.data = res.locals.data || {};
