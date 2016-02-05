@@ -15,7 +15,7 @@ export default function EventQuery(query){
           must: [
             {
               range: {
-                event_date: {
+                event_timestamp: {
                   from: query.dateFrom,
                   to: query.dateTo
                 }

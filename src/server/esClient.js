@@ -145,7 +145,7 @@ export function runArticleRealtimeQuery(queryData) {
 
   const dates = timestampParser(queryData.timespan, moment());
   Object.assign(queryData, dates);
-  
+
   let requests = [];
 
   requests.push(retrieveRealtimeArticleData(queryData));
