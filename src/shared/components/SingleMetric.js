@@ -180,6 +180,7 @@ export default class SingleMetric extends ReactCSS.Component {
         <OverlayTrigger
           trigger="click"
           placement="bottom"
+          rootClose
           overlay={
               <Popover id={toolTipTitle}>
                 {this.props.toolTip}

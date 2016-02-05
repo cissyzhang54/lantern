@@ -1,5 +1,4 @@
 import React from 'react'
-import Intl from 'intl'
 import assign from 'object-assign'
 import {IntlProvider, FormattedMessage, FormattedHTMLMessage} from 'react-intl'
 import ComponentStrings from '../strings/ComponentStrings'
