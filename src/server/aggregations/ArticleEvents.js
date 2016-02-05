@@ -9,16 +9,27 @@ export default function ArticleEventsAggregation(query) {
         min_doc_count : 0
       },
       aggs : {
-        "scroll_depth": {
-          "filter": {
-            "term": {
-              "event_type": "scroll"
+        scroll_depth: {
+          filter: {
+            bool : {
+              must : [
+                {
+                  term: {
+                    "event_type": "scroll"
+                  }
+                },
+                {
+                  term: {
+                    event_category: "depth"
+                  }
+                }
+              ]
             }
           },
-          "aggs": {
-            "average_scroll": {
-              "avg": {
-                "field": "event_value"
+          aggs: {
+            average_scroll: {
+              avg: {
+                field: "event_value"
               }
             }
           }
@@ -28,7 +39,7 @@ export default function ArticleEventsAggregation(query) {
     social_shares: {
       filter: {
         term: {
-          "event_type": "social share"
+          event_type: "social share"
         }
       },
       aggs: {
@@ -65,10 +76,21 @@ export default function ArticleEventsAggregation(query) {
         }
       }
     },
-    "scroll_depth": {
-      "filter": {
-        "term": {
-          "event_type": "scroll"
+    scroll_depth: {
+      filter: {
+        bool : {
+          must : [
+            {
+              term: {
+                "event_type": "scroll"
+              }
+            },
+            {
+              term: {
+                event_category: "depth"
+              }
+            }
+          ]
         }
       },
       "aggs": {

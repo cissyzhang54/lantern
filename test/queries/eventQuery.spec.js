@@ -48,7 +48,7 @@ describe('Event Query', () => {
               must:[
                 {
                   range:{
-                    event_date:{
+                    event_timestamp:{
                       from:"11-mar-2014",
                       to:"12-mar-2015"
                     }
@@ -78,7 +78,7 @@ describe('Event Query', () => {
               must:[
                 {
                   range:{
-                    event_date:{
+                    event_timestamp:{
                       from:"11-mar-2014",
                       to:"12-mar-2015"
                     }
