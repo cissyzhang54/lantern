@@ -213,24 +213,7 @@ export default class DualScaleLineChart extends React.Component {
     this.chart && this.chart.destroy();
   }
 
-  _handleLocalTimeSwitch() {
-    const checked = this.refs.localTimeInput.getChecked();
-    this.setState({localTime: !checked});
-  }
-
   render() {
-    let handler = this._handleLocalTimeSwitch.bind(this);
-    let input = (
-      <div style={{fontSize: '0.85em'}}>
-        <Input
-          type="checkbox"
-          ref="localTimeInput"
-          label="Display dates in UTC"
-          checked={!this.state.localTime}
-          onChange={handler}
-        />
-      </div>
-    );
 
     return (
       <div data-component='dualScaleLineChart'>
@@ -239,7 +222,6 @@ export default class DualScaleLineChart extends React.Component {
           id="chartContainer"
         >
         </div>
-        {(this.props.type === 'timeseries') ? input : null}
       </div>
     );
   }
