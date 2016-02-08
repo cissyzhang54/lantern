@@ -92,9 +92,11 @@ export function runArticleQuery(queryData) {
 
   let metaData;
   return retrieveMetaData(queryData).then((data) => {
+    console.log('before In here', JSON.stringify(queryData));
     metaData = data;
     queryData.publishDate = moment(metaData.initial_publish_date).toISOString();
     if (!queryData.dateFrom || !queryData.dateTo) {
+      console.log('In here', JSON.stringify(queryData));
       queryData.dateFrom = queryData.publishDate
       queryData.dateTo = moment().toISOString();
     }
@@ -145,7 +147,7 @@ export function runArticleRealtimeQuery(queryData) {
 
   const dates = timestampParser(queryData.timespan, moment());
   Object.assign(queryData, dates);
-  
+
   let requests = [];
 
   requests.push(retrieveRealtimeArticleData(queryData));
@@ -219,6 +221,8 @@ function retrieveArticleData(queryData){
         eventsComparatorQueryObject
       ]
     };
+
+    console.log(JSON.stringify(request));
 
     client.msearch(request, (error, response) => {
       if (error) {

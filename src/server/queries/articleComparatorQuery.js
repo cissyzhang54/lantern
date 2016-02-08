@@ -21,56 +21,19 @@ export default function ArticleComparatorQuery(query){
     author : {  authors: query.comparator  }
   }
 
-  let matchComparatorType = {
-    match : comparatorTypes[query.comparatorType]
-  }
+  var filters = [
+    { "range" : { "initial_publish_date" : { from: moment(query.publishDate).subtract(30,'days'), to: query.publishDate }}},
+    { "range" : { "time_since_publish" : { from: Math.round(fromDuration), to: Math.round(toDuration) }}},
+    { "not": { "term": { "article_uuid": query.uuid}}}
+  ].concat(QueryUtils.mapFilters(query));
 
-  let filter = {
-    bool: {
-      must : [
-        {
-          range : {
-            time_since_publish : {
-              from: fromDuration,
-              to: toDuration
-            }
-          }
-        }
-      ],
-      should :  QueryUtils.mapFilters(query)
-    }
-  }
-
-  let matchPublishDate = {
-    "range" : {
-      "initial_publish_date" : {
-        from: moment(query.publishDate).subtract(30,'days'),
-        to: query.publishDate
-      }
-    }
-  }
-
-  let matchAll = {
-    bool: {
-      must: [matchPublishDate, matchComparatorType ],
-      "must_not": {
-        "match": {
-          "article_uuid": query.uuid
-        }
-      }
-    }
-  }
-
-  let filtered = {
-    query : matchAll,
-    filter : filter
-  }
-
-  if (query.comparator === 'FT'){
-    filtered.query.bool.must = [matchPublishDate];
+  if (query.comparator !== 'FT') {
+    filters.push({ "term": comparatorTypes[query.comparatorType] });
   }
 
   return {
-    "filtered" : filtered
-  };
+    filtered : {
+      filter : filters
+    }
+  }
 }

@@ -70,33 +70,13 @@ export default function ArticlesAggregation(query) {
                 filter: {
                   or: [
                     {
-                      term: {
-                        referrer_type: "search"
-                      }
-                    },
-                    {
-                      term: {
-                        referrer_type: "social-network"
+                      terms: {
+                        referrer_type: ["search","social-network"]
                       }
                     },
                     {
                       prefix: {
-                        referrer: "http://localhost"
-                      }
-                    },
-                    {
-                      prefix: {
-                        referrer: "http://lantern.ft.com"
-                      }
-                    },
-                    {
-                      prefix: {
-                        referrer: "https://lantern.ft.com"
-                      }
-                    },
-                    {
-                      prefix: {
-                        referrer: "http://ft-editorial-lantern"
+                        referrer: ["http://localhost","http://lantern.ft.com","https://lantern.ft.com", "http://ft-editorial-lantern"]
                       }
                     }
                   ]
