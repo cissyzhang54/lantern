@@ -35,12 +35,9 @@ function documentSizeDisplayed () {
 function scrollEventHandler() {
   let percentage = getPercentageScrolled();
 
-  // Check the increment is in view and hasnt been scrolled past before load
-  // Create increment bucket of the increments the screen currently displays
+  // Filter out the percentage scroll increments that havent yet been reached
   let currentIncrements = percentageIncrements.filter(function (bucket) {
-    if (bucket > getPercentageScrolled() - documentSizeDisplayed()) {
       return bucket <= percentage;
-    }
   });
 
   // Check if the event has been fired before
