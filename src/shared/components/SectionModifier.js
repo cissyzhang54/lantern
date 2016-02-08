@@ -45,11 +45,10 @@ export default class Modifier extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {};
-    this.setState({
+    this.state = {
       isSectionOrTopic : ['sections', 'topics'].indexOf(this.props.category) >= 0,
       isGlobalFTComparator : this.props.comparatorQuery.comparatorType === 'global'
-    });
+    };
   }
 
   handleDateRangeChange (dates) {
