@@ -47,9 +47,9 @@ class Analytics {
       if (!el) return;
       el.addEventListener('scrollDepth', function (e) {
         this.sendGACustomEvent({
-          'category': 'User',
+          'category': 'Scroll',
           'action': 'Page Scroll',
-          'label': 'Scrolled ' + e.detail.scrollDepth + '%',
+          'label': 'Scrolled: ' + e.detail.scrollDepth + '%',
           'value': e.detail.scrollDepth
         });
       }.bind(this));
