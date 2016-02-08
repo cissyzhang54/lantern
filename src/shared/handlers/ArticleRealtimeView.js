@@ -140,11 +140,11 @@ class ArticleRealtimeView extends React.Component {
     }
 
     let title = (this.props.title) ? 'Lantern - ' + this.props.title : '';
-    let realtimeNextInternalUrl = this.props.realtimeNextInternalUrl.map(getReferrerUrls);
+    let realtimeNextInternalUrl = this.props.nextInternalUrl.map(getReferrerUrls);
     let socialShares = this.props.socialShares;
 
     let headlineStats = {
-      timeOnPage: {
+      timeOnPageAvg: {
         metricType: 'time',
         label: 'Average Time on Page',
         size: 'large',
@@ -169,7 +169,7 @@ class ArticleRealtimeView extends React.Component {
           this.setState({chartShown: 'retentionRate'})
         }
       },
-      scrollDepth: {
+      scrollDepthAvg: {
         metricType: 'percentage',
         label: 'Average Scroll Depth',
         size: 'large',
@@ -220,7 +220,7 @@ class ArticleRealtimeView extends React.Component {
         selectedGraphComponentName = 'realtime-scrolldepth';
         selectedGraphTitle = 'Real time scroll depth';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.scrollDepthChart.realtime48h' : 'explanations.scrollDepthChart.realtime1h';
-        selectedGraphData =  this.props.realtimeScrollDepth.map((d) => {
+        selectedGraphData =  this.props.scrollDepth.map((d) => {
           if (d[0] < this.props.published) {
             return {
               date: d[0],
@@ -239,7 +239,7 @@ class ArticleRealtimeView extends React.Component {
         selectedGraphComponentName = 'realtime-timeonpage';
         selectedGraphTitle = 'Real time time on page';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.timeOnPageChart.realtime48h' : 'explanations.timeOnPageChart.realtime1h';
-        selectedGraphData =  this.props.realtimeTimeOnPage.map((d) => {
+        selectedGraphData =  this.props.timeOnPage.map((d) => {
           if (d[0] < this.props.published) {
             return {
               date: d[0],
@@ -258,8 +258,8 @@ class ArticleRealtimeView extends React.Component {
         selectedGraphComponentName = 'realtime-retentionRate';
         selectedGraphTitle = 'Real time retention on page';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.retentionRateChart.realtime48h' : 'explanations.retentionRateChart.realtime1h';
-        selectedGraphData =  this.props.realtimeRetention.map((d) => {
-          if (d[0] < this.props.published || d[0] > this.props.realtimeLatestEvent) {
+        selectedGraphData =  this.props.retention.map((d) => {
+          if (d[0] < this.props.published || d[0] > this.props.latestEvent) {
             return {
               date: d[0],
               retention: null
@@ -282,24 +282,24 @@ class ArticleRealtimeView extends React.Component {
 
     let dataFormatter = new FormatData(formatterData , null);
 
-    let totalInternalReferrers = formatterData.internalReferrerLastHourArticles + formatterData.internalReferrerLastHourOther;
+    let totalInternalReferrers = formatterData.internalReferrerArticles + formatterData.internalReferrerOther;
     let refData = [
-      { category: 'article', 'referrals': formatterData.internalReferrerLastHourArticles, 'referrals %':  Math.round(formatterData.internalReferrerLastHourArticles / totalInternalReferrers * 100)},
-      { category: 'other', 'referrals': formatterData.internalReferrerLastHourOther, 'referrals %':  Math.round(formatterData.internalReferrerLastHourOther / totalInternalReferrers * 100)}
+      { category: 'article', 'referrals': formatterData.internalReferrerArticles, 'referrals %':  Math.round(formatterData.internalReferrerArticles / totalInternalReferrers * 100)},
+      { category: 'other', 'referrals': formatterData.internalReferrerOther, 'referrals %':  Math.round(formatterData.internalReferrerOther / totalInternalReferrers * 100)}
     ];
     let refID = 'category';
     let refKeys = ['referrals'];
 
-    let [extRefData, extRefID, extRefKeys] = dataFormatter.getPCTMetric('externalReferrerLastHourTypes', 'External Referrals');
+    let [extRefData, extRefID, extRefKeys] = dataFormatter.getPCTMetric('externalReferrerTypes', 'External Referrals');
 
-    let internalReferrerLastHourUrls = this.props.internalReferrerLastHourUrls.map(getLinksForReferrerUrls);
-    let externalReferrerLastHourUrls = this.props.externalReferrerLastHourUrls.map(getLinksForReferrerUrls);
+    let internalReferrerUrls = this.props.internalReferrerUrls.map(getLinksForReferrerUrls);
+    let externalReferrerUrls = this.props.externalReferrerUrls.map(getLinksForReferrerUrls);
 
 
 
     /* Interaction Section */
     // Links Clicked
-    let linksClickedByCategory = this.props.realtimeLinksClickedByCategory.slice();
+    let linksClickedByCategory = this.props.linksClickedByCategory.slice();
 
     let linksClicked = linksClickedByCategory.reduce((prev, curr) => {
       return prev + curr[1];
@@ -317,17 +317,17 @@ class ArticleRealtimeView extends React.Component {
 
     //Comments
     let comments = this.props.comments;
-    let commentsReadLastHour = this.props.commentsReadLastHour;
-    let commentsTotal = comments + commentsReadLastHour;
+    let commentsRead = this.props.commentsRead;
+    let commentsTotal = comments + commentsRead;
     let commentsList = [
       {term: 'Total comments', value: commentsTotal, header: true},
-      {term: 'Comments viewed', toolTip: (<p><Text message='explanations.sectionInteract.commentsViewed'/></p>), value: commentsReadLastHour, header: false},
+      {term: 'Comments viewed', toolTip: (<p><Text message='explanations.sectionInteract.commentsViewed'/></p>), value: commentsRead, header: false},
       {term: 'Comments posted', value: comments, header: false}
     ]
 
 
     /* Social Media Section */
-    let socialMedia = this.props.socialReferrersLastHour;
+    let socialMedia = this.props.socialReferrers;
     let socialMediaTotal = socialMedia.reduce((prev, curr) => {
       return prev + curr[1];
     }, 0);
@@ -341,7 +341,7 @@ class ArticleRealtimeView extends React.Component {
 
 
     /* Who are the users */
-    let [userTypeData, userTypeID, userTypeKeys] = dataFormatter.getPCTMetric('userTypesLastHour', 'Page Views')
+    let [userTypeData, userTypeID, userTypeKeys] = dataFormatter.getPCTMetric('userTypes', 'Page Views')
     let timespan = this.props.timespan || "";
 
     return (
@@ -498,7 +498,7 @@ class ArticleRealtimeView extends React.Component {
               <h5>Top 5 traffic sources</h5>
               <Table
                 headers={['Traffic Source', 'Views']}
-                rows={externalReferrerLastHourUrls}
+                rows={externalReferrerUrls}
               />
             </Col>
           </Row>
@@ -531,7 +531,7 @@ class ArticleRealtimeView extends React.Component {
               <h5>Top 5 traffic sources</h5>
               <Table
                 headers={['FT Source', 'Views']}
-                rows={internalReferrerLastHourUrls}
+                rows={internalReferrerUrls}
               />
             </Col>
           </Row>
@@ -587,19 +587,22 @@ class ArticleRealtimeView extends React.Component {
 
 ArticleRealtimeView.defaultProps = {
   pageViews: [],
-  timeOnPage: null,
+  timeOnPage: [],
   scrollDepth: null,
   totalPageViews: null,
-  realtimeNextInternalUrl: [],
+  nextInternalUrl: [],
   linksClicked: null,
   socialShares: null,
-  comments: null,
-  commentsReadLastHour: null,
-  userTypesLastHour: [],
-  internalReferrerLastHourOther: 0,
-  internalReferrerLastHourArticles: 0,
-  externalReferrerLastHourTypes: [],
-  realtimeLinksClickedByCategory: null,
+  comments: 0,
+  commentsRead: 0,
+  userTypes: [],
+  internalReferrerOther: 0,
+  internalReferrerArticles: 0,
+  internalReferrerUrls: [],
+  externalReferrerTypes: [],
+  externalReferrerUrls: [],
+  socialReferrers: [],
+  linksClickedByCategory: null,
   author: [],
   genre: [],
   title: "[No realtime data available]",

@@ -38,7 +38,7 @@ describe('#articlesRealtimeQuery', () => {
     const queryJSON = ArticlesRealtimeQuery(query);
     const props = [
       'page_views',
-      'time_on_page_last_hour'
+      'realtime_time_on_page'
     ];
 
     for (let i = 0; i < props.length; i++) {
