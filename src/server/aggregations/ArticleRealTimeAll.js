@@ -6,6 +6,9 @@ export default function ArticlesRealtimeAllAggregation(query) {
 
 
   return {
+    latest_event_time: {
+      max: { field: 'event_timestamp'}
+    },
     next_internal_url: {
       filter : {
         bool : {
