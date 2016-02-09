@@ -259,7 +259,7 @@ class ArticleRealtimeView extends React.Component {
         selectedGraphTitle = 'Real time retention on page';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.retentionRateChart.realtime48h' : 'explanations.retentionRateChart.realtime1h';
         selectedGraphData =  this.props.realtimeRetention.map((d) => {
-          if (d[0] < this.props.published) {
+          if (d[0] < this.props.published || d[0] > this.props.realtimeLatestEvent) {
             return {
               date: d[0],
               retention: null

@@ -110,6 +110,7 @@ const fields = {
   scrollDepth: {name: 'aggregations.scroll_depth.average_scroll.value', formatter: Math.round},
   linkClickCategories: 'aggregations.page_clicks.category_breakdown',
   uniqueVisitors: 'aggregations.unique_visitors.value',
+  realtimeLatestEvent: 'aggregations.latest_event_time.value_as_string',
   realtimeNextInternalUrl : 'aggregations.next_internal_url.titles.buckets',
   linksClickedLastHour : 'aggregations.links_clicked_last_hour.doc_count',
   socialSharesLastHour : 'aggregations.social_shares_last_hour.doc_count',

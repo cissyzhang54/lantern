@@ -53,6 +53,7 @@ export default function formatData(data) {
     'lastPublishDate'
   ];
   let realtimeFieldsAllDataFields = [
+    'realtimeLatestEvent',
     'realtimeNextInternalUrl',
     'retentionRate',
     'realtimeRetention'

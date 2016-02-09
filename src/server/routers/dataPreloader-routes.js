@@ -150,6 +150,7 @@ function getArticleRealtimeData(req, res) {
           totalPageViews: totalPageViews,
           timeOnPage: data.timeOnPageLastHour,
           scrollDepth: data.scrollDepthLastHour,
+          realtimeLatestEvent: data.realtimeLatestEvent,
           realtimeNextInternalUrl: data.realtimeNextInternalUrl,
           linksClicked: data.linksClickedLastHour,
           realtimeLinksClickedByCategory: data.realtimeLinksClickedByCategory,
