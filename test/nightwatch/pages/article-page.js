@@ -140,8 +140,8 @@ module.exports = {
         percentile: ' span[style]:nth-child(2)'
       }
     },
-    commentsTotal: {
-      name: 'Total Comments',
+    commentsPosted: {
+      name: 'Total comments posted',
       selectors: {
         container: 'div[data-component="sectionInteractiveStats"] div:nth-child(2) > div:nth-child(2) > ul > li:nth-child(1) > div[class="singleMetric"]',
         dataComponent: ' span:nth-child(1)',
@@ -151,7 +151,7 @@ module.exports = {
       }
     },
     commentsViewed: {
-      name: 'Comments Viewed',
+      name: '% of people who read comments',
       selectors: {
         container: 'div[data-component="sectionInteractiveStats"] div:nth-child(2) > div:nth-child(2) > ul > li:nth-child(2) > div[class="singleMetric"]',
         dataComponent: ' span:nth-child(1)',
@@ -160,16 +160,7 @@ module.exports = {
         percentile: ' span[style]:nth-child(2)'
       }
     },
-    commentsPosted: {
-      name: 'Comments Posted',
-      selectors: {
-        container: 'div[data-component="sectionInteractiveStats"] div:nth-child(2) > div:nth-child(2) > ul > li:nth-child(3) > div[class="singleMetric"]',
-        dataComponent: ' span:nth-child(1)',
-        heading: ' h3',
-        chevron: ' span[style]:nth-child(1)',
-        percentile: ' span[style]:nth-child(2)'
-      }
-    },
+
     subscriptions: {
       name: 'Total Subscriptions',
       selectors: {
