@@ -65,7 +65,7 @@ describe('Section Query', () => {
                 },
                 {
                   match: {
-                    sections: 'sectionName'
+                    primary_section: 'sectionName'
                   }
                 }
               ]

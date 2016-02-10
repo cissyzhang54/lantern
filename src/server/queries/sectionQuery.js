@@ -6,7 +6,7 @@ export default function sectionQuery(query){
   QueryUtils.checkString(query,'section');
 
   let matchCategory = {
-    match : {  sections: query.section  }
+    match : {  primary_section: query.section  }
   }
 
   let filter = {

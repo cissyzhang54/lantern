@@ -19,7 +19,7 @@ export default function sectionComparatorQuery(query){
   }
 
   let matchSection = {
-    match : {  sections: query.comparator  }
+    match : {  primary_section: query.comparator  }
   }
 
   let filter = {

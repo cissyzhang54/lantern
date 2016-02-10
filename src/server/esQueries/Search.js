@@ -48,6 +48,11 @@ export default function SearchESQuery(query) {
             match_phrase: {
               sections: term
             }
+          },
+          {
+            match_phrase: {
+              primary_section: term
+            }
           }
         ]
       }
