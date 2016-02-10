@@ -39,36 +39,35 @@ const fields = {
     formatter: format
   },
   realtimeTimeOnPage: {
-    name: 'aggregations.time_on_page_last_hour.time_on_page_histogram',
+    name: 'aggregations.realtime_time_on_page.time_on_page_histogram',
     formatter: format,
     bucket_key: 'time_on_page_avg'
   },
   realtimeScrollDepth: {
-    name: 'aggregations.scroll_depth_last_hour.scroll_depth_last_hour_histogram',
-    formatter: format,
-    bucket_key: 'scroll_depth_last_hour_avg'
+    name: 'aggregations.realtime_scroll_depth.scroll_depth_histogram',
+    formatter: format
   },
   realtimeRetention: {
-    name: 'aggregations.retention_rate.retention_last_hour_histogram',
+    name: 'aggregations.retention_rate.retention_histogram',
     formatter: format,
-    bucket_key: 'retention_last_hour_count'
+    bucket_key: 'retention_count'
   },
-  realtimeLinksClickedByCategory: {name: 'aggregations.links_clicked_by_category_last_hour.categories', formatter: format},
-  timeOnPageLastHour: {
-    name: 'aggregations.time_on_page_last_hour.time_on_page_avg.value',
+  realtimeLinksClickedByCategory: {name: 'aggregations.realtime_links_clicked_by_category.categories', formatter: format},
+  realtimeTimeOnPageAvg: {
+    name: 'aggregations.realtime_time_on_page.time_on_page_avg.value',
     formatter: Math.round
   },
-  scrollDepthLastHour: {
-    name: 'aggregations.scroll_depth_last_hour.scroll_depth_last_hour_avg.value',
+  realtimeScrollDepthAvg: {
+    name: 'aggregations.realtime_scroll_depth.scroll_depth_avg.value',
     formatter: Math.round
   },
-  referrerLastHourTypes: {name: 'aggregations.referrer_last_hour.types', formatter: formatAndFilter, terms: ['search', 'unknown', 'partner', 'social-network', 'email']},
-  referrerLastHourNames: {name: 'aggregations.referrer_last_hour.names', formatter: format},
-  referrerLastHourUrls: {name: 'aggregations.referrer_last_hour.urls', formatter: format},
-  internalReferrerLastHourArticles: {name: 'aggregations.internal_referrer_last_hour.referrer_type_article.doc_count'},
-  internalReferrerLastHourOther: {name: 'aggregations.internal_referrer_last_hour.referrer_type_other.doc_count'},
-  internalReferrerLastHourUrls: {name: 'aggregations.internal_referrer_last_hour.urls', formatter: format},
-  socialReferrersLastHour: {name: 'aggregations.referrer_last_hour.names', formatter: formatAndFilter, terms: ['Facebook', 'Twitter', 'Linked-In']},
+  realtimeReferrerTypes: {name: 'aggregations.realtime_referrer.types', formatter: formatAndFilter, terms: ['search', 'unknown', 'partner', 'social-network', 'email']},
+  realtimeReferrerNames: {name: 'aggregations.realtime_referrer.names', formatter: format},
+  realtimeReferrerUrls: {name: 'aggregations.realtime_referrer.urls', formatter: format},
+  realtimeInternalReferrerArticles: {name: 'aggregations.realtime_internal_referrer.referrer_type_article.doc_count'},
+  realtimeInternalReferrerOther: {name: 'aggregations.realtime_internal_referrer.referrer_type_other.doc_count'},
+  realtimeInternalReferrerUrls: {name: 'aggregations.realtime_internal_referrer.urls', formatter: format},
+  realtimeSocialReferrers: {name: 'aggregations.realtime_social_referrer.names', formatter: formatAndFilter, terms: ['Facebook', 'Twitter', 'Linked-In']},
   retentionRate: 'aggregations.retention_rate.filtered.value',
   timeOnPage: 'aggregations.avg_time_on_page.value',
   topicCount: {name: 'aggregations.topic_count', formatter: format},
@@ -112,12 +111,12 @@ const fields = {
   uniqueVisitors: 'aggregations.unique_visitors.value',
   realtimeLatestEvent: 'aggregations.latest_event_time.value_as_string',
   realtimeNextInternalUrl : 'aggregations.next_internal_url.titles.buckets',
-  linksClickedLastHour : 'aggregations.links_clicked_last_hour.doc_count',
-  socialSharesLastHour : 'aggregations.social_shares_last_hour.doc_count',
-  userTypesLastHour  : {name: 'aggregations.user_types_last_hour.cohorts', formatter: format},
+  realtimeLinksClicked : 'aggregations.realtime_links_clicked.doc_count',
+  realtimeSocialShares : 'aggregations.realtime_social_shares.doc_count',
+  realtimeUserTypes  : {name: 'aggregations.realtime_user_types.cohorts', formatter: format},
   timeOnPageTop: 'aggregations.time_on_page.buckets',
-  commentsLastHour : 'aggregations.comments_last_hour.doc_count',
-  commentsReadLastHour : 'aggregations.comments_last_hour.doc_count',
+  realtimeComments : 'aggregations.realtime_comments.doc_count',
+  realtimeCommentsRead : 'aggregations.realtime_comments_read.doc_count',
   topArticleViews: 'aggregations.top_article_views.buckets',
   topArticlesCommentPosts : 'aggregations.top_article_comments_posted.buckets',
   topArticlesSocialRef: 'aggregations.top_articles_social_ref.buckets',

@@ -98,7 +98,7 @@ export default function ArticlesRealtimeAllAggregation(query) {
             field: 'article_uuid'
           }
         },
-        retention_last_hour_histogram: {
+        retention_histogram: {
           date_histogram: {
             field: "event_timestamp",
             interval: interval,
@@ -109,7 +109,7 @@ export default function ArticlesRealtimeAllAggregation(query) {
             }
           },
           aggs : {
-            retention_last_hour_count: {
+            retention_count: {
               value_count: {
                 field: "article_uuid"
               }

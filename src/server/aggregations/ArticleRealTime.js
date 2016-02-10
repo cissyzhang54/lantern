@@ -5,7 +5,7 @@ export default function ArticlesRealtimeAggregation(query) {
   if (query.timespan === '48h') interval = '10m';
 
   return {
-      links_clicked_last_hour: {
+      realtime_links_clicked: {
         filter: {
           bool: {
             must: [
@@ -25,7 +25,7 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         }
       },
-      links_clicked_by_category_last_hour: {
+      realtime_links_clicked_by_category: {
         filter: {
           bool: {
             must: [
@@ -52,16 +52,28 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         }
       },
-      referrer_last_hour: {
+      realtime_referrer: {
         filter: {
           bool: {
-            must: {
+            must: [
+              {
+                term: {
+                  event_type: 'page'
+                }
+              },
+              {
+                term: {
+                  event_category: 'view'
+                }
+              },
+              {
               range: {
                 event_timestamp: {
                   gte: timespan
                 }
               }
-            },
+            }
+          ],
             must_not: {
               term: {
                 referrer_type: "internal"
@@ -89,10 +101,58 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         }
       },
-      internal_referrer_last_hour: {
+      realtime_social_referrer: {
         filter: {
           bool: {
             must: [
+              {
+                term: {
+                  event_type: 'page'
+                }
+              },
+              {
+                term: {
+                  event_category: 'view'
+                }
+              },
+              {
+                term: {
+                  referrer_type: 'social-network'
+                }
+              },
+              {
+                range: {
+                  event_timestamp: {
+                    gte: timespan
+                  }
+                }
+              }
+            ]
+          }
+        },
+        aggs: {
+          names: {
+            terms: {
+              field: "referrer_name",
+              min_doc_count: 0
+            }
+          }
+        }
+      },
+      realtime_internal_referrer: {
+        filter: {
+          bool: {
+            must: [
+              {
+                term: {
+                  event_type: 'page'
+                }
+              },
+              {
+                term: {
+                  event_category: 'view'
+                }
+              },
               {
                 range: {
                   event_timestamp: {
@@ -132,7 +192,7 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         }
       },
-      social_shares_last_hour: {
+      realtime_social_shares: {
         filter: {
           bool: {
             must: [
@@ -152,7 +212,7 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         }
       },
-      comments_last_hour: {
+      realtime_comments: {
          filter: {
            bool: {
              must: [
@@ -177,7 +237,7 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         }
       },
-      comments_read_last_hour: {
+      realtime_comments_read: {
         filter: {
           bool: {
             must: [
@@ -194,7 +254,7 @@ export default function ArticlesRealtimeAggregation(query) {
               {
                 range: {
                   event_timestamp: {
-                    gte: "now-1h/m"
+                    gte: timespan
                   }
                 }
               }
@@ -240,7 +300,7 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         }
       },
-      time_on_page_last_hour : {
+      realtime_time_on_page : {
         filter: {
           bool: {
             must: [
@@ -290,7 +350,7 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         }
       },
-      scroll_depth_last_hour : {
+      realtime_scroll_depth : {
         filter: {
           bool : {
             must : [
@@ -307,7 +367,7 @@ export default function ArticlesRealtimeAggregation(query) {
               {
                 range: {
                   event_timestamp: {
-                    gte: 'now-1h/m'
+                    gte: timespan
                   }
                 }
               }
@@ -315,12 +375,12 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         },
         aggs: {
-          scroll_depth_last_hour_avg: {
+          scroll_depth_avg: {
             avg: {
               field: 'scroll_depth'
             }
           },
-          scroll_depth_last_hour_histogram: {
+          scroll_depth_histogram: {
             date_histogram: {
               field: 'event_timestamp',
               interval: interval,
@@ -329,18 +389,11 @@ export default function ArticlesRealtimeAggregation(query) {
                 min: query.dateFrom,
                 max: query.dateTo
               }
-            },
-            aggs : {
-              scroll_depth_last_hour_avg: {
-                avg: {
-                  field: "scroll_depth"
-                }
-              }
             }
           }
         }
       },
-      user_types_last_hour: {
+      realtime_user_types: {
         filter: {
           bool: {
             must: [
@@ -352,7 +405,7 @@ export default function ArticlesRealtimeAggregation(query) {
               {
                 range: {
                   event_timestamp: {
-                    gte: "now-1h/m"
+                    gte: timespan
                   }
                 }
               }
