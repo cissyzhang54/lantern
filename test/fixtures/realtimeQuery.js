@@ -193,26 +193,6 @@ export default {
         }
       }
     },
-    realtime_social_shares: {
-      filter: {
-        bool: {
-          must: [
-            {
-              term: {
-                event_type: 'share'
-              }
-            },
-            {
-              range: {
-                event_timestamp: {
-                  gte: "now-1h/m"
-                }
-              }
-            }
-          ]
-        }
-      }
-    },
     realtime_comments: {
       filter: {
         bool: {

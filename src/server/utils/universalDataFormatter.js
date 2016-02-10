@@ -112,7 +112,6 @@ const fields = {
   realtimeLatestEvent: 'aggregations.latest_event_time.value_as_string',
   realtimeNextInternalUrl : 'aggregations.next_internal_url.titles.buckets',
   realtimeLinksClicked : 'aggregations.realtime_links_clicked.doc_count',
-  realtimeSocialShares : 'aggregations.realtime_social_shares.doc_count',
   realtimeUserTypes  : {name: 'aggregations.realtime_user_types.cohorts', formatter: format},
   timeOnPageTop: 'aggregations.time_on_page.buckets',
   realtimeComments : 'aggregations.realtime_comments.doc_count',

@@ -192,26 +192,6 @@ export default function ArticlesRealtimeAggregation(query) {
           }
         }
       },
-      realtime_social_shares: {
-        filter: {
-          bool: {
-            must: [
-              {
-                term: {
-                  event_type: 'share'
-                }
-              },
-              {
-                range: {
-                  event_timestamp: {
-                    gte: timespan
-                  }
-                }
-              }
-            ]
-          }
-        }
-      },
       realtime_comments: {
          filter: {
            bool: {
