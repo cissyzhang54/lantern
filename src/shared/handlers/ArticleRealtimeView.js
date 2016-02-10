@@ -141,7 +141,6 @@ class ArticleRealtimeView extends React.Component {
 
     let title = (this.props.title) ? 'Lantern - ' + this.props.title : '';
     let realtimeNextInternalUrl = this.props.nextInternalUrl.map(getReferrerUrls);
-    let socialShares = this.props.socialShares;
 
     let headlineStats = {
       timeOnPageAvg: {
@@ -571,13 +570,6 @@ class ArticleRealtimeView extends React.Component {
           </Row>
         </ChunkWrapper>
 
-
-        <SingleMetric
-          metricType='integer'
-          metric={socialShares}
-          label='Social shares last hour'
-        />
-
       </div>
       </DocumentTitle>
     );
@@ -592,7 +584,6 @@ ArticleRealtimeView.defaultProps = {
   totalPageViews: null,
   nextInternalUrl: [],
   linksClicked: null,
-  socialShares: null,
   comments: 0,
   commentsRead: 0,
   userTypes: [],
