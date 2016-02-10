@@ -19,7 +19,7 @@ export default function topicComparatorQuery(query){
   }
 
   let matchTopic = {
-    match : {  topics: query.comparator  }
+    match : {  primary_theme: query.comparator  }
   }
 
   let filter = {

@@ -6,7 +6,7 @@ export default function topicQuery(query){
   QueryUtils.checkString(query,'topic');
 
   let matchTopic = {
-    match : {  topics: query.topic  }
+    match : {  primary_theme: query.topic  }
   }
 
   let filter = {
