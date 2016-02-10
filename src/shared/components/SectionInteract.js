@@ -61,18 +61,12 @@ let config = {
   },
   comments_posted_total: {
     metricType: 'integer',
-    label: 'Comments Posted',
+    label: 'Total comments posted',
     size: 'small'
   },
   comments_viewed_total: {
-    metricType: 'integer',
-    label: 'Comments Viewed',
-    size: 'small',
-    toolTip : (<p><Text message='explanations.sectionInteract.commentsViewed'/></p>)
-  },
-  comments_total: {
-    metricType: 'integer',
-    label: 'Total Comments',
+    metricType: 'percentage',
+    label: '% of people who read comments',
     size: 'small'
   }
 }
@@ -128,9 +122,9 @@ export default class SectionInteract extends React.Component {
     let subscription = renderMetric('subscription', subscriptions);
 
     /* Comments */
+    data.totalCommentsViewed = Math.round((data.totalCommentsViewed / data.pageViews) * 100);
     let comments_posted_total = renderMetric('comments_posted_total', data.totalCommentsPosted, comparatorData.comparator, comparatorData.totalCommentsPosted);
-    let comments_viewed_total = renderMetric('comments_viewed_total', data.totalCommentsViewed, comparatorData.comparator, comparatorData.totalCommentsViewed);
-    let comments_total = renderMetric('comments_total', (data.totalCommentsViewed + data.totalCommentsPosted), comparatorData.comparator, (comparatorData.totalCommentsViewed + comparatorData.totalCommentsPosted));
+    let comments_viewed_total = renderMetric('comments_viewed_total', data.totalCommentsViewed);
 
     /* Links */
     let links_clicked_total = renderMetric('total_links_clicked', data.totalLinksClicked, comparatorData.comparator, comparatorData.totalLinksClicked);
@@ -161,19 +155,18 @@ export default class SectionInteract extends React.Component {
         </Col>
       </Row>
       <Row>
-        <Col xs={12} sm={4} >
+        <Col xs={12} sm={3} >
           <ul style={styles.list}>
             {link_click_categories}
           </ul>
         </Col>
-        <Col xs={12} sm={4} >
+        <Col xs={12} sm={6} >
           <ul style={styles.list}>
-            <li style={styles['list__item--first']}>{comments_total}</li>
+            <li style={styles['list__item--first']}>{comments_posted_total}</li>
             <li style={styles.list__item}>{comments_viewed_total}</li>
-            <li style={styles['list__item--last']}>{comments_posted_total}</li>
           </ul>
         </Col>
-        <Col xs={12} sm={4} >
+        <Col xs={12} sm={3} >
           <ul style={styles.list}>
             <li style={styles['list__item--first']}>{subscription}</li>
           </ul>
