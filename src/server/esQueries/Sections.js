@@ -1,6 +1,7 @@
 import assert from 'assert';
-import SectionAggregation from '../aggregations/Sections'
-import SectionQuery from '../queries/sectionQuery'
+import SectionAggregation from '../aggregations/Sections';
+import SectionQuery from '../queries/sectionQuery';
+import ArticleListQuery from './ArticleList';
 
 export default function SectionESQuery(query) {
 
@@ -24,5 +25,10 @@ export default function SectionESQuery(query) {
     query : sectionQuery,
     aggs: SectionAggregation(query)
   };
+
+  let articleListQuery = ArticleListQuery(query);
+
+  Object.assign(esQuery.aggs, articleListQuery.aggs);
+
   return esQuery
 }

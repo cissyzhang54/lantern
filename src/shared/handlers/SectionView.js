@@ -4,7 +4,6 @@ import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import FormatData from "../utils/formatData";
 import FeatureFlag from '../utils/featureFlag';
-
 import Header from '../components/Header';
 import Messaging from '../components/Messaging';
 import SectionModifier from '../components/SectionModifier';
@@ -15,8 +14,8 @@ import SectionWho from "../components/SectionWho";
 import SectionWhere from "../components/SectionWhere";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
 import TabNav from '../components/TabNav';
-
 import ChunkWrapper from "../components/ChunkWrapper";
+import ArticleList from '../components/ArticleList';
 
 class SectionView extends React.Component {
 
@@ -70,7 +69,8 @@ class SectionView extends React.Component {
     let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views');
     let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views');
 
-    let headlineStats = {
+
+    const headlineStats = {
       topicsCovered: {
         metricType: 'integer',
         label: 'Topics Covered',
@@ -93,19 +93,28 @@ class SectionView extends React.Component {
 
     let links = [
       {
-        title: "Today",
+        title: "Live",
         url:`/realtime/sections/${this.props.params.section}`,
         type: "realtime"
       },
       {
-        title: "Historical",
+        title: "Archive",
         url:`/sections/${this.props.params.section}`,
-        type: "section", timePeriod: 24
+        type: "section"
       }
     ];
 
+
     return(<DocumentTitle title={title}>
       <div>
+
+        <ChunkWrapper component="header">
+          {updating}
+
+          <Header
+            title={'Section: ' + this.props.params.section}
+          />
+        </ChunkWrapper>
 
         <TabNav
           links={links}
@@ -129,18 +138,14 @@ class SectionView extends React.Component {
           />
         </ChunkWrapper>
 
-          <ChunkWrapper component="header">
-            {updating}
-
-            <Header
-              title={'Section: ' + this.props.params.section}
-            />
-          </ChunkWrapper>
-
           <SectionHeadlineStats
             data={data}
             comparatorData={comparatorData}
             config={headlineStats}
+          />
+
+          <ArticleList
+            articleList={data.articleList}
           />
 
           <ChunkWrapper component="ArticlesPublished">

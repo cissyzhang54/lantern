@@ -75,6 +75,46 @@ let DataAPI = {
       });
     },
 
+    getRealtimeArticleList(query) {
+      assert.equal(typeof query, 'object',
+        "argument 'query' must be an object");
+
+      assert.ok(query.hasOwnProperty('type'),
+        "a query type of {section, author} must be supplied")
+
+      assert.ok(query.hasOwnProperty(query.type),
+        "a specifier for the query type must be supplied")
+
+      return new Promise(function handlePromise(resolve, reject) {
+        const url = `${config.baseUrl}/api/v0/realtime/articlelist/${query.type}s/${query[query.type]}`
+        request.get(url)
+          .send(query)
+          .set('Accept', 'application/json')
+          .end(handleResponse('SectionArticleList', query, reject, resolve));
+      });
+
+    },
+
+    getArticleList(query) {
+      assert.equal(typeof query, 'object',
+        "argument 'query' must be an object");
+
+      assert.ok(query.hasOwnProperty('type'),
+        "a query type of {section, author} must be supplied")
+
+      assert.ok(query.hasOwnProperty(query.type),
+        "a specifier for the query type must be supplied")
+
+      return new Promise(function handlePromise(resolve, reject) {
+        const url = `${config.baseUrl}/api/v0/articlelist/${query.type}s/${query[query.type]}`
+        request.post(url)
+          .send(query)
+          .set('Accept', 'application/json')
+          .end(handleResponse('SectionArticleList', query, reject, resolve));
+      });
+
+    },
+
     getTopicData(query, apiKey) {
       assert.equal(typeof query, 'object',
         "argument 'query' must be an object");

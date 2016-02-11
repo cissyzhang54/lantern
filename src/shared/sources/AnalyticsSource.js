@@ -25,7 +25,42 @@ let AnalyticsSource = {
     error: AnalyticsActions.loadingFailed,
     loading: AnalyticsActions.loadingData,
 
-    shouldFetch(query) {
+    shouldFetch() {
+      return true;
+    }
+
+  },
+  loadArticleList: {
+    remote(state) {
+      return DataAPI.getArticleList(state.query);
+    },
+
+    local() {
+      return null;
+    },
+
+    success: AnalyticsActions.updateArticleList,
+    error: AnalyticsActions.loadingFailed,
+    loading: AnalyticsActions.loadingData,
+
+    shouldFetch() {
+      return true;
+    }
+  },
+  loadRealtimeArticleList: {
+    remote(state) {
+      return DataAPI.getRealtimeArticleList(state.query);
+    },
+
+    local() {
+      return null;
+    },
+
+    success: AnalyticsActions.updateArticleList,
+    error: AnalyticsActions.loadingFailed,
+    loading: AnalyticsActions.loadingData,
+
+    shouldFetch() {
       return true;
     }
 

@@ -1,5 +1,6 @@
 import assert from 'assert';
 import getField from '../utils/universalDataFormatter';
+import articleListFormatter from './ArticleListFormatter';
 
 export default function SectionDataFormatter(data) {
   try {
@@ -33,6 +34,8 @@ export default function SectionDataFormatter(data) {
       ];
       metaFields.forEach(f => { results[f] = getField(metaData, f)})
       sectionFields.forEach(f => { results[f] = getField(sectionData, f)})
+
+      results.articleList = articleListFormatter(sectionData);
 
       let comparatorResults = {};
       if (compMetaData) {
