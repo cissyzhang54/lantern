@@ -16,6 +16,10 @@ const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}
 let router = express.Router();
 router.use(bodyParser.json());
 
+router.get('/queries', function(req, res, next) {
+  req.pipe(esClient.queryStream).pipe(res);
+});
+
 router.post(`/articles/:uuid(${UUID_REGEX})`, getCategoryData);
 router.post(`/sections/:section`, getSectionData);
 router.post(`/topics/:topic`, getTopicData);

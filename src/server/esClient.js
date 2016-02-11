@@ -26,6 +26,11 @@ import moment from 'moment';
 import calculateIndices from './utils/calculateIndices.js';
 import {calculateRealtimeIndices} from './utils/calculateIndices.js';
 import timestampParser from './utils/timestampParser';
+import stream from 'stream';
+
+var queryStream = new stream.Readable();
+queryStream._read = function noop() {};
+queryStream.end = function noop() {};
 
 var client = elasticsearch.Client({
   hosts: process.env.ES_AWS_HOST,
@@ -37,6 +42,21 @@ var client = elasticsearch.Client({
   },
   log: LoggerFactory('elasticsearch')
 });
+
+export {queryStream};
+
+var proxySearch = function(type, request, callback) {
+  var requestTimer = new Date();
+  var wrappedCallback = function(error, response) {
+    queryStream.push('\n===== took ' + (new Date().valueOf() - requestTimer) + 'ms ===== \n\n');
+    callback(error, response);
+  }
+
+  queryStream.push('\n\n===== [' + new Date().toTimeString() + '] ===== '+ type +' =====\n');
+  queryStream.push(JSON.stringify(arguments[1]));
+
+  return client[type].call(client, request, wrappedCallback);
+};
 
 export function getIndicies(indicies, h = 'health,index,docs.count,store.size,tm'){
   return new Promise((resolve, reject) => {
@@ -68,7 +88,7 @@ export function getLatestRealtimeDocument() {
         ]
       }
     }
-    client.search(request, (error, response) => {
+    proxySearch('search', request, (error, response) => {
       if (error) {
         return reject(error);
       }
@@ -181,7 +201,7 @@ export function runSearchQuery(queryData) {
       body: queryObject,
       from: queryData.from
     }
-    client.search(request, (error, response) => {
+    proxySearch('search', request, (error, response) => {
       if (error) {
         return reject(error);
       }
@@ -220,7 +240,7 @@ function retrieveArticleData(queryData){
       ]
     };
 
-    client.msearch(request, (error, response) => {
+    proxySearch('msearch', request, (error, response) => {
       if (error) {
         return reject(error);
       }
@@ -268,7 +288,7 @@ function retrieveSectionData(queryData){
     }
 
 
-    client.msearch(request, (error, response) => {
+    proxySearch('msearch', request, (error, response) => {
       if (error) {
         return reject(error);
       }
@@ -316,7 +336,7 @@ function retrieveTopicData(queryData){
       ])
     }
 
-    client.msearch(request, (error, response) => {
+    proxySearch('msearch', request, (error, response) => {
       if (error) {
         return reject(error);
       }
@@ -368,7 +388,7 @@ function retrieveRealtimeArticleData(queryData) {
       ignore_unavailable: true,
       body: queryObject
     }
-    client.search(request, (error, response) => {
+    proxySearch('search', request, (error, response) => {
       if (error) {
         return reject(error);
       }
@@ -386,7 +406,7 @@ function retrieveRealtimeAllData(queryData) {
       ignore_unavailable: true,
       body: queryObject
     }
-    client.search(request, (error, response) => {
+    proxySearch('search', request, (error, response) => {
       if (error) {
         return reject(error);
       }
@@ -421,7 +441,7 @@ function retrieveTopArticleData(queryData) {
       ]
     }
 
-    client.msearch(request, (error, response) => {
+    proxySearch('msearch', request, (error, response) => {
       if (error) {
         return reject(error);
       }
