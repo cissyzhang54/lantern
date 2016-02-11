@@ -6,7 +6,7 @@ export default function formatData(data) {
     assert.equal(Object.prototype.toString.call(data), '[object Array]',
       "argument 'data' should be an array");
 
-    assert.equal(data.length, 5,
+    assert.equal(data.length, 6,
       "argument 'data' should be an array of length 5");
 
     assert.equal(typeof data[0], 'object',
@@ -24,6 +24,9 @@ export default function formatData(data) {
     assert.equal(typeof data[4], 'object',
       "the fifth element of 'data' should be an object");
 
+    assert.equal(typeof data[5], 'object',
+      "the fifth element of 'data' should be an object");
+
   } catch (e) {
     let error = new Error(e);
     error.name = 'MalformedArgumentsError';
@@ -31,7 +34,7 @@ export default function formatData(data) {
     return Promise.reject(error);
   }
 
-  let [metaData, articleData, eventData, articleComparatorData, eventComparatorData] = data;
+  let [metaData, articleData, eventData, articleComparatorData, eventComparatorData, articlePublishTimesData] = data;
   let metaFields = ['title', 'uuid', 'author', 'published', 'published_human', 'genre', 'sections', 'topics']
   let articleFields = [
     'pageViews', 'timeOnPage', 'readTimes', 'channels', 'uniqueVisitors',
@@ -57,12 +60,15 @@ export default function formatData(data) {
   let eventComparatorAverages = [
     'socialSharesTotal', 'socialSharesTypes', 'totalLinksClicked', 'totalCommentsPosted', 'totalCommentsViewed'
   ]
+  let articlePublishTimeFields = ['lastPublishDate']
+
   let results = {}
   let comparatorResults = {};
   return new Promise((resolve, reject) => {
     try {
       metaFields.forEach(f => { results[f] = getField(metaData, f)})
       articleFields.forEach(f => { results[f] = getField(articleData, f)})
+      articlePublishTimeFields.forEach(f => { results[f] = getField(articlePublishTimesData, f)})
       eventFields.forEach(f => { results[f] = getField(eventData, f)})
       articleComparatorFields.forEach(f => { comparatorResults[f] = getField(articleComparatorData, f)})
       articleComparatorAverages.forEach(f => { comparatorResults[f] = getField(articleComparatorData, f, divisor)})

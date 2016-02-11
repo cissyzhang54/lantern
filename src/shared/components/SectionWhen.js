@@ -7,6 +7,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import ChunkWrapper from './ChunkWrapper.js';
+import moment from 'moment';
 
 const styles = {
   infoIcon : {
@@ -23,7 +24,13 @@ export default class SectionWhen extends React.Component {
   }
 
   render() {
-    let [timeData, timeID, timeKeys] = this.props.data;
+    let [timeData, timeID, timeKeys] = this.props.graphData;
+    let publishDates = this.props.lastPublishDates.map((d, i) => {
+      return {
+        value: moment(d.key_as_string).toISOString(),
+        text: (i) ? 'Republished' : 'Published'
+      }
+    })
 
     return (<ChunkWrapper component='sectionWhen'>
       <Row>
@@ -60,6 +67,7 @@ export default class SectionWhen extends React.Component {
             category={timeID}
             yLabel={this.props.selectedGraphYLabel}
             xLabel='Time since Published'
+            marks={publishDates}
             cols={12}
           />
         </Col>
