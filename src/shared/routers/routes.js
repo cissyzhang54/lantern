@@ -13,7 +13,7 @@ import HistoricalAnalyticsView from '../handlers/HistoricalAnalyticsView';
 
 function scrollToTop() {
   if (isBrowser()) {
-    window.scrollTop = 0;
+    window.scrollTo(0, 0);
   }
 }
 
