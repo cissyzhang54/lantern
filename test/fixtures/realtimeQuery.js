@@ -282,6 +282,32 @@ export default {
         }
       }
     },
+    page_views_shifted: {
+      filter : {
+        bool : {
+          must : [
+            {
+              term : {
+                event_type: 'page'
+              }
+            },
+            {
+              term : {
+                event_category: 'view'
+              }
+            },
+            {
+              range: {
+                event_timestamp : {
+                  gte: "now-1h/m",
+                  lt: 'now-30m/m'
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
     realtime_time_on_page: {
       filter: {
         bool: {

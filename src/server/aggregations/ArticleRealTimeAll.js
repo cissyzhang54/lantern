@@ -80,7 +80,8 @@ export default function ArticlesRealtimeAllAggregation(query) {
             {
               range: {
                 event_timestamp: {
-                  gte: timespan
+                  gte: timespan,
+                  lt: 'now-30m/m'
                 }
               }
             },

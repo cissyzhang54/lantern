@@ -33,6 +33,7 @@ export default function formatData(data) {
   ]
   let realtimeFields = [
     'realtimePageViews',
+    'realtimePageViewsShifted',
     'realtimeTimeOnPage',
     'realtimeScrollDepth',
     'realtimeLinksClickedByCategory',
