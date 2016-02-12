@@ -113,7 +113,9 @@ class TopArticlesView extends React.Component {
     let topArticleViews = getColumns(data.topArticleViews, 'doc_count');
 
     /* Most commented article */
-    let topArticleCommented = data.topArticlesCommentPosts.map((d, i) => {
+    let topArticleCommented = data.topArticlesCommentPosts.filter((d,i) => {
+      return d.posts.doc_count !== 0;
+    }).map((d, i) => {
       return {
         key : d.key,
         author: d.posts.author,
