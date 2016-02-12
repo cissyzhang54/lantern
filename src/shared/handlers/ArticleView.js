@@ -210,7 +210,8 @@ class ArticleView extends React.Component {
         />
 
         <SectionWhen
-          data={selectedGraphData}
+          graphData={selectedGraphData}
+          lastPublishDates={data.lastPublishDate}
           title={selectedGraphTitle}
           selectedGraphYLabel={selectedGraphYLabel}
         />

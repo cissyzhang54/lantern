@@ -15,6 +15,7 @@ import TopicMetadataComparatorQuery from './esQueries/TopicMetadataComparator';
 import ArticlesQuery from './esQueries/Articles';
 import ArticleEventsQuery from './esQueries/ArticleEvents';
 import ArticleEventsComparatorQuery from './esQueries/ArticleEventsComparator';
+import ArticlePublishedTimeQuery from './esQueries/ArticlePublished';
 
 import ArticleRealtimeQuery from './esQueries/ArticleRealTime.js';
 import ArticleRealtimeAllQuery from './esQueries/ArticleRealTimeAll';
@@ -213,9 +214,11 @@ export function runSearchQuery(queryData) {
 function retrieveArticleData(queryData){
   return new Promise((resolve, reject) => {
     const articlesQueryObject = ArticlesQuery(queryData);
+    const articlePublishedQueryObject = ArticlePublishedTimeQuery(queryData);
     const eventsQueryObject = ArticleEventsQuery(queryData);
     const articlesComparatorQueryObject = ArticleComparatorQuery(queryData);
     const eventsComparatorQueryObject = ArticleEventsComparatorQuery(queryData);
+
     const articlesHeader = {
       index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
       ignore_unavailable: true,
@@ -227,6 +230,12 @@ function retrieveArticleData(queryData){
       search_type: 'count'
     };
 
+    const articlePublished = {
+      index: process.env.ES_ARTICLE_PUBLISHED_INDEX_ROOT + "*",
+      ignore_unavailable: true,
+      search_type: 'count'
+    }
+
     let request = {
       body: [
         articlesHeader,
@@ -236,7 +245,9 @@ function retrieveArticleData(queryData){
         articlesHeader,
         articlesComparatorQueryObject,
         eventsHeader,
-        eventsComparatorQueryObject
+        eventsComparatorQueryObject,
+        articlePublished,
+        articlePublishedQueryObject
       ]
     };
 

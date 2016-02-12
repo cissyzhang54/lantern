@@ -2133,4 +2133,26 @@ export default [{
       }
     }
   }
+}, {
+  "took": 66,
+  "timed_out": false,
+  "_shards": {
+    "total": 7,
+    "successful": 7,
+    "failed": 0
+  },
+  "hits": {
+    "total": 1977758,
+    "max_score": 0,
+    "hits": []
+  },
+  "aggregations": {
+    "last_publish_date": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+
+      ]
+    }
+  }
 }];

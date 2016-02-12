@@ -14,10 +14,13 @@ describe ('sectionWhen component', function() {
     it ('data', function() {
       let section = createComponent(SectionWhen, {
         renderReadTimes:true,
-        data: [
+        graphData: [
           fixtureData,
           'category',
           ['Page Views']
+        ],
+        lastPublishDates : [
+
         ]
       });
       const rows = section.props.children;
