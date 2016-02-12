@@ -316,12 +316,10 @@ class ArticleRealtimeView extends React.Component {
 
     //Comments
     let comments = this.props.comments;
-    let commentsRead = this.props.commentsRead;
-    let commentsTotal = comments + commentsRead;
+    let commentsRead = Math.round((this.props.commentsRead / this.props.totalPageViews) * 100);
     let commentsList = [
-      {term: 'Total comments', value: commentsTotal, header: true},
-      {term: 'Comments viewed', toolTip: (<p><Text message='explanations.sectionInteract.commentsViewed'/></p>), value: commentsRead, header: false},
-      {term: 'Comments posted', value: comments, header: false}
+      {term: 'Total comments posted', value: comments, header: false},
+      {term: '% of people who read comments', toolTip: (<p><Text message='explanations.sectionInteract.commentsViewed'/></p>), value: `${commentsRead}%`, header: false},
     ]
 
 
