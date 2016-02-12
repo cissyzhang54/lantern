@@ -136,8 +136,7 @@ function getArticleRealtimeData(req, res) {
   return dataApiUtils.getArticleRealtimeData(query, apiKey)
     .then((data) => {
       let totalPageViews = data.realtimePageViews.reduce((a, b) => { return a + b[1]; }, 0);
-      let retentionRate = (data.retentionRate / totalPageViews) * 100 | 0;
-      res.locals.data = {
+      let retentionRate = (data.retentionRate / data.realtimePageViewsShifted) * 100 | 0;      res.locals.data = {
         ArticleRealtimeStore: {
           author: data.author,
           genre: data.genre,
@@ -148,6 +147,7 @@ function getArticleRealtimeData(req, res) {
           published_human: data.published_human,
           pageViews: data.realtimePageViews,
           totalPageViews: totalPageViews,
+          totalPageViewsShifted: data.realtimePageViewsShifted,
           timeOnPage: data.realtimeTimeOnPage,
           timeOnPageAvg: data.realtimeTimeOnPageAvg,
           scrollDepth: data.realtimeScrollDepth,

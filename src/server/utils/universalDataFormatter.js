@@ -34,6 +34,9 @@ const fields = {
   published: 'initial_publish_date',
   published_human: {name:'initial_publish_date', formatter: formatPublishDate},
   pageViews: 'hits.total',
+  realtimePageViewsShifted: {
+    name: 'aggregations.page_views_shifted.doc_count'
+  },
   realtimePageViews: {
     name: 'aggregations.page_views.filtered',
     formatter: format
