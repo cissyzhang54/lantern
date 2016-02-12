@@ -15,7 +15,7 @@ export default function TopArticleEventQuery(query){
           must: [
             {
               range: {
-                initial_publish_date: {
+                event_timestamp: {
                   gt: 'now-1d/d',
                   lt: 'now/d'
                 }
