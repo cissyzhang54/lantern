@@ -374,9 +374,17 @@ export default {
               }
             },
             {
-              range: {
-                event_timestamp: {
-                  gte: "now-1h/m"
+              "range": {
+                "event_timestamp": {
+                  "gte": "now-1h/m",
+                  "lte": "now"
+                }
+              }
+            },
+            {
+              "range": {
+                "scroll_depth": {
+                  "gte": "-1"
                 }
               }
             }
