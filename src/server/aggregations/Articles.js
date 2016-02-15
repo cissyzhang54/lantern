@@ -191,10 +191,23 @@ export default function ArticlesAggregation(query) {
           min_doc_count: 0
         }
       },
-      next_internal_url: {
-        terms: {
-          field: "next_internal_url",
-          size: 5
+      "next_internal_url": {
+        filter : {
+          bool :{
+            "must_not": [{
+              "term" : {
+                "next_internal_url": ""
+              }
+            }]
+          }
+        },
+        aggs : {
+          filtered : {
+            "terms": {
+              "field": "next_internal_url",
+              "size": 5
+            }
+          }
         }
       },
       is_subscription: {
