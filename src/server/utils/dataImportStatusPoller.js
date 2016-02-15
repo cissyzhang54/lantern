@@ -11,21 +11,15 @@ var latestStatus = {};
 
 fetchStatus();
 
-function formatHistoricalStatus(sourceData) {
+function formatHistoricalStatus(latestEvent) {
   let result = {};
   let status = 'ok'
-  let indexRow = sourceData.split('\n')
-  let latestIndex = indexRow
-    .filter((index) => index && index.indexOf('%')<0)
-    .map((index) =>  index.trim().replace('article_page_view-',''))
-    .sort((a,b) => new Date(b) - new Date(a))
-    .shift();
 
   result.status = status;
-  result.latestIndex = latestIndex;
+  result.latestEvent = latestEvent;
 
-  if ((new Date) - new Date(latestIndex) > TIME_LIMIT){
-    result.error = `Index is older than ${MAX_HOURS} Hours`
+  if ((new Date) - new Date(latestEvent) > TIME_LIMIT){
+    result.error = `Historical data is older than ${MAX_HOURS} Hours`
     result.status = "warning"
   }
 
@@ -56,7 +50,7 @@ function formatRealtimeStatus(sourceData) {
 
 function fetchStatus() {
   var fetches = [
-    esClient.getIndicies('article_page_view*', 'index'),
+    esClient.getLatestHistoricalDocument(),
     esClient.getLatestRealtimeDocument()
   ];
 
