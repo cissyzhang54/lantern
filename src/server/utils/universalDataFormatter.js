@@ -46,10 +46,7 @@ const fields = {
     formatter: format,
     bucket_key: 'time_on_page_avg'
   },
-  realtimeScrollDepth: {
-    name: 'aggregations.realtime_scroll_depth.scroll_depth_histogram',
-    formatter: format
-  },
+  realtimeScrollDepth: 'aggregations.realtime_scroll_depth.scroll_depth_histogram.buckets',
   realtimeRetention: {
     name: 'aggregations.retention_rate.retention_histogram',
     formatter: format,

@@ -403,6 +403,13 @@ export default function ArticlesRealtimeAggregation(query) {
                 min: query.dateFrom,
                 max: query.dateTo
               }
+            },
+            aggs : {
+              scroll_depth_avg: {
+                avg: {
+                  field: "scroll_depth"
+                }
+              }
             }
           }
         }

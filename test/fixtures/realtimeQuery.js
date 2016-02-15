@@ -397,14 +397,21 @@ export default {
             field: "scroll_depth"
           }
         },
-        scroll_depth_histogram : {
+        scroll_depth_histogram: {
           date_histogram: {
-            field: "event_timestamp",
-            interval: "60s",
+            field: 'event_timestamp',
+            interval: '60s',
             min_doc_count: 0,
             extended_bounds: {
               min: "2015-11-24T10:15:00.000",
               max: "2015-11-24T11:15:00.000"
+            }
+          },
+          aggs : {
+            scroll_depth_avg: {
+              avg: {
+                field: "scroll_depth"
+              }
             }
           }
         }

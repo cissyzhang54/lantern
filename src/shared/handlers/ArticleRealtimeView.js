@@ -24,6 +24,7 @@ import Text from '../components/Text';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import moment from 'moment';
 
 const maxStrLen = 60;
 
@@ -220,16 +221,16 @@ class ArticleRealtimeView extends React.Component {
         selectedGraphTitle = 'Real time scroll depth';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.scrollDepthChart.realtime48h' : 'explanations.scrollDepthChart.realtime1h';
         selectedGraphData =  this.props.scrollDepth.map((d) => {
-          if (d[0] < this.props.published) {
+          if (!d.scroll_depth_avg.value) {
             return {
-              date: d[0],
-              depth: null
+              date: d.key_as_string,
+              depth: 0
             }
           }
           return {
-            date: d[0],
-            depth: d[1]
-          }
+            date : d.key_as_string,
+            depth: d.scroll_depth_avg.value
+          };
         });
         selectedGraphKeys = ['depth'];
         selectedGraphYLabel = 'Scroll Depth (%)'
