@@ -99,7 +99,7 @@ const fields = {
   isFirstVisit: {name: 'aggregations.is_first_visit', formatter: format},
   internalReferrerUrls: {name: 'aggregations.internal_referrer.urls', formatter: format},
   internalReferrerTypes: {name: 'aggregations.internal_referrer.types', formatter: format},
-  nextInternalUrl: {name: 'aggregations.next_internal_url', formatter: format},
+  nextInternalUrl: {name: 'aggregations.next_internal_url.filtered', formatter: format},
   isSubscription: {name: 'aggregations.is_subscription', formatter: format},
   totalCommentsPosted: {name: 'aggregations.page_comments.posts.total.value', formatter: divide},
   totalCommentsViewed: {name: 'aggregations.page_comments.views.doc_count', formatter: divide},

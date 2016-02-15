@@ -317,44 +317,44 @@ describe('universalDataFormatter', function() {
       expect(data).to.be.a('array');
       expect(data).to.deep.equal([
         [
-          "Unknown",
-          924
+          "http://app.ft.com/cms/s/3451177a-cd52-11e5-92a1-c5e23ef99c77.html?sectionid=home",
+          2135
         ],
         [
-          "http://app.ft.com/index_page/home",
-          153
+          "http://app.ft.com/cms/s/d48d0394-cc1b-11e5-a8ef-ea66e967dd44.html?sectionid=home",
+          713
         ],
         [
-          "http://www.ft.com/home/us",
-          119
+          "http://app.ft.com/cms/s/12ef2de6-cc72-11e5-be0b-b7ece4e953a0.html?sectionid=home",
+          670
         ],
         [
-          "http://www.ft.com/home/uk",
-          80
+          "http://app.ft.com/cms/s/51bc0958-cc1e-11e5-a8ef-ea66e967dd44.html?sectionid=home",
+          669
         ],
         [
-          "http://app.ft.com/cms/s/53e21070-9987-11e5-9228-87e603d47bdc.html?sectionid=world",
-          77
+          "http://app.ft.com/cms/s/38d1b3b2-cc22-11e5-a8ef-ea66e967dd44.html?sectionid=home",
+          612
         ],
         [
-          "http://app.ft.com/#index_page/home",
-          74
+         "http://app.ft.com/cms/s/b33d75fe-cc5a-11e5-be0b-b7ece4e953a0.html?sectionid=home",
+          475
         ],
         [
-          "http://app.ft.com/index_page/world",
-          60
+           "http://app.ft.com/cms/s/feec9014-cdbf-11e5-92a1-c5e23ef99c77.html?sectionid=world",
+          412
         ],
         [
-          "http://app.ft.com/cms/s/a388cbb4-9a5e-11e5-987b-d6cdef1b205c.html?sectionid=world",
-          44
+          "http://app.ft.com/cms/s/2f52094a-cc27-11e5-be0b-b7ece4e953a0.html?sectionid=home",
+          394
         ],
         [
-          "http://app.ft.com/cms/s/ba6a3142-9a86-11e5-be4f-0abd1978acaa.html?sectionid=home",
-          40
+          "http://www.ft.com/intl/cms/s/3451177a-cd52-11e5-92a1-c5e23ef99c77,Authorised=false.html?siteedition=intl&_i_location=http%3A%2F%2Fwww.ft.com%2Fcms%2Fs%2F0%2F3451177a-cd52-11e5-92a1-c5e23ef99c77.html%3Fsiteedition%3Dintl&_i_referer=http%3A%2F%2Fwww.ft.com%2Fhome%2Fus&classification=conditional_standard&iab=barrier-app",
+          317
         ],
         [
-          "http://app.ft.com/cms/s/6c154e58-99a7-11e5-9228-87e603d47bdc.html?sectionid=home",
-          33
+          "http://app.ft.com/cms/s/547a2ad4-ce0e-11e5-831d-09f7778e7377.html?sectionid=home",
+          301
         ]
       ]);
     });
