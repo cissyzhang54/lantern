@@ -371,9 +371,17 @@ export default function ArticlesRealtimeAggregation(query) {
                 }
               },
               {
-                range: {
-                  event_timestamp: {
-                    gte: timespan
+                "range": {
+                  "event_timestamp": {
+                    "gte": timespan,
+                    "lte": "now"
+                  }
+                }
+              },
+              {
+                "range": {
+                  "scroll_depth": {
+                    "gte": "-1"
                   }
                 }
               }
