@@ -30,7 +30,7 @@ describe('The LastUpdated component', function() {
       latestIndex: {
         data: {
           historical: {
-            latestIndex: '2016-02-05'
+            latestEvent: '2016-02-05T00:00:00.000Z'
           },
           realtime: {
             docDate: '2016-02-05T10:00:00.000Z'
@@ -48,7 +48,7 @@ describe('The LastUpdated component', function() {
       latestIndex: {
         data: {
           historical: {
-            latestIndex: '2016-02-01'
+            latestEvent: '2016-02-04T09:00:00.000Z'
           },
           realtime: {
             docDate: '2016-02-05T10:00:00.000Z'
@@ -59,7 +59,7 @@ describe('The LastUpdated component', function() {
 
     let output = createAltWrappedComponent(LastUpdated);
 
-    expect(output.props.children.props.children[2]).to.equal('Sorry, the historical views may only be up to date as of 4 days ago. We\'re working on it.');
+    expect(output.props.children.props.children[2]).to.equal('Sorry, the historical views may only be up to date as of a day ago. We\'re working on it.');
   });
 
   it('renders a message for the realtime indices being more than an hour out of date', function() {
@@ -67,7 +67,7 @@ describe('The LastUpdated component', function() {
       latestIndex: {
         data: {
           historical: {
-            latestIndex: '2016-02-05'
+            latestEvent: '2016-02-05T10:00:00.000Z'
           },
           realtime: {
             docDate: '2016-02-05T09:00:00.000Z'
@@ -86,7 +86,7 @@ describe('The LastUpdated component', function() {
       latestIndex: {
         data: {
           historical: {
-            latestIndex: '2016-02-01'
+            latestEvent: '2016-02-01T00:00:00.000Z'
           },
           realtime: {
             docDate: '2016-02-05T09:00:00.000Z'

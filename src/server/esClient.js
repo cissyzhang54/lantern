@@ -98,6 +98,30 @@ export function getLatestRealtimeDocument() {
   })
 }
 
+export function getLatestHistoricalDocument() {
+  return new Promise((resolve, reject) => {
+    let request = {
+      index: process.env.ES_INDEX_ROOT + '*',
+      search_type: 'count',
+      body: {
+        query : {
+          match_all: {}
+        },
+        size: 0,
+        aggs : {
+          newest_article_event : { max : { field : "view_timestamp" } }
+        }
+      }
+    }
+    proxySearch('search', request, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      return resolve(response.aggregations.newest_article_event.value_as_string);
+    });
+  })
+}
+
 export function getMetaData (uuid) {
   let query = {
     uuid : uuid

@@ -36,7 +36,7 @@ class LastUpdated extends React.Component {
     let twentyFourHoursAgo = moment().subtract(24, 'hours');
     let fiveMinutesAgo = moment().subtract(5, 'minutes');
 
-    let historicalUpdatedDate = moment(this.props.latestIndex.data.historical.latestIndex);
+    let historicalUpdatedDate = moment(this.props.latestIndex.data.historical.latestEvent);
     let realtimeUpdatedDate = moment(this.props.latestIndex.data.realtime.docDate);
 
     let historicalFriendlyDate = moment.duration(historicalUpdatedDate.diff(moment())).humanize();
