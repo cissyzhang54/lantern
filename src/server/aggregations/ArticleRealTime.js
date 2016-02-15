@@ -175,11 +175,6 @@ export default function ArticlesRealtimeAggregation(query) {
               size: 5
             }
           },
-          names: {
-            terms: {
-              field: "referrer_name"
-            }
-          },
           referrer_type_other : {
             missing : { field : "previous_article_uuid" }
           },
