@@ -1,5 +1,4 @@
 import assert from 'assert';
-import moment from 'moment';
 import ArticleComparatorAggregation from '../aggregations/ArticleComparator'
 import ArticleComparatorQuery from '../queries/articleComparatorQuery'
 

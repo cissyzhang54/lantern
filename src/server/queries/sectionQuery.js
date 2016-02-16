@@ -35,10 +35,6 @@ export default function sectionQuery(query){
     filter : filter
   }
 
-  if (query.comparator === 'FT'){
-    filtered.query.bool.must = [matchDates];
-  }
-
   return {
     "filtered" : filtered
   };

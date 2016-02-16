@@ -62,7 +62,8 @@ describe('Section Formatter', function() {
           'uniqueVisitors',
           'topicCount',
           'topicViews',
-          'articleCount'
+          'articleCount',
+          'articleList'
         ];
         for (let i = 0; i < props.length; i++){
           try{

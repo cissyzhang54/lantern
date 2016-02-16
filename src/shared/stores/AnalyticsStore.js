@@ -78,6 +78,16 @@ class AnalyticsStore {
   }
 
   /**
+   * @param {articleList} array - an array of article data that is obtained from
+   * the query, contains the articles published
+   */
+  updateArticleList(articleList) {
+    this.setState({
+      articleList: articleList
+    });
+  }
+
+  /**
    * @param {newQueryProps} object - an object with the new query
    * properties to update
    *

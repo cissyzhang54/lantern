@@ -24,6 +24,8 @@ router.post(`/articles/:uuid(${UUID_REGEX})`, getCategoryData);
 router.post(`/sections/:section`, getSectionData);
 router.post(`/topics/:topic`, getTopicData);
 router.post(`/toparticles`, getTopArticlesData);
+router.post(`/articlelist/:type/:value`, getArticleList);
+router.get(`/realtime/articlelist/:type/:value`, getRealtimeArticleList);
 router.get(`/realtime/articles/:uuid(${UUID_REGEX})`, getRealtimeArticleData);
 router.get('/search/:query', search);
 router.use(ErrorHandler.routes(router));
@@ -99,6 +101,40 @@ function getSectionData(req, res, next) {
     .then((formattedData) => res.json(formattedData))
     .catch((error) => {
       res.status(ErrorHandler.statusCode(error.name))
+      next(error);
+    });
+}
+
+import RealtimeArticleListFormatter from '../formatters/RealtimeArticleListFormatter';
+function getRealtimeArticleList(req, res, next) {
+  const query = {
+    type: req.params.type,
+    value: decode(req.params.value),
+    dateFrom: moment().subtract(1, 'days').toISOString(),
+    dateTo: moment().toISOString()
+  }
+  esClient.runRealtimeArticleList(query)
+    .then((response) => {
+      return RealtimeArticleListFormatter(response);
+    })
+    .catch((error) => {
+      res.status(ErrorHandler.statusCode(error.name));
+      next(error);
+    })
+}
+
+import ArticleListFormatter from '../formatters/ArticleListFormatter';
+function getArticleList(req, res, next) {
+  const query = {
+    type: req.params.type,
+    value: decode(req.params.value),
+    dateFrom: req.body.dateFrom,
+    dateTo: req.body.dateTo
+  }
+  esClient.runArticleList(query)
+    .then((response) => ArticleListFormatter(response))
+    .catch((error) => {
+      res.status(ErrorHandler.statusCode(error.name));
       next(error);
     });
 }

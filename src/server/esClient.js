@@ -59,11 +59,11 @@ var proxySearch = function(type, request, callback) {
   return client[type].call(client, request, wrappedCallback);
 };
 
-export function getIndicies(indicies, h = 'health,index,docs.count,store.size,tm'){
+export function getIndicies(indices, h = 'health,index,docs.count,store.size,tm'){
   return new Promise((resolve, reject) => {
     client.cat.indices({
       h: h,
-      index: indicies
+      index: indices
     }, function(e, response){
       e && reject(e)
       !e && resolve(response)
@@ -161,6 +161,20 @@ export function runSectionQuery(queryData) {
   }
   return retrieveSectionData(queryData)
     .then((sectionData) => { return sectionData });
+}
+
+export function runArticleList(queryData) {
+  return retrieveArticleList(queryData)
+  .then((articleList) => {
+    return articleList;
+  });
+}
+
+export function runRealtimeArticleList(queryData) {
+  return retrieveRealtimeArticleList(queryData)
+  .then((articleList) => {
+    return articleList;
+  });
 }
 
 export function runTopicQuery(queryData) {
@@ -283,6 +297,42 @@ function retrieveArticleData(queryData){
     });
   })
 }
+
+import ArticleListQuery from './esQueries/ArticleList';
+function retrieveArticleList(queryData) {
+  return new Promise((resolve, reject) => {
+    const query = {
+      index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
+      body: ArticleListQuery(queryData)
+    };
+
+    client.search(query, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      resolve(response);
+    });
+
+  });
+}
+
+import RealtimeArticleListQuery from './esQueries/RealtimeArticleList';
+function retrieveRealtimeArticleList(queryData) {
+  return new Promise((resolve, reject) => {
+    const query = {
+      index: calculateIndices(queryData, process.env.ES_REALTIME_INDEX_ROOT),
+      body: RealtimeArticleListQuery(queryData)
+    };
+
+    client.search(query, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+      resolve(response);
+    })
+  });
+}
+
 
 function retrieveSectionData(queryData){
   return new Promise((resolve, reject) => {

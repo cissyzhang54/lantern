@@ -599,6 +599,335 @@ export default [{
           }
         ]
       },
+      "articles": {
+      "doc_count_error_upper_bound": 51126,
+      "sum_other_doc_count": 21048817,
+      "buckets": [
+        {
+          "key": "b6d1fc34-ce9f-11e5-831d-09f7778e7377",
+          "doc_count": 347203,
+          "metadata": {
+            "hits": {
+              "total": 347203,
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "article_page_view-2016-02-08",
+                  "_type": "logs",
+                  "_id": "cikei2x1900023q38w0mftvth",
+                  "_score": null,
+                  "_source": {
+                    "article_uuid": "b6d1fc34-ce9f-11e5-831d-09f7778e7377",
+                    "initial_publish_date": "2016-02-08T20:56:25.000Z",
+                    "title": "Michael Bloomberg considers joining race for the White House",
+                    "primary_section": "US Election 2016"
+                  },
+                  "sort": [
+                    "b6d1fc34-ce9f-11e5-831d-09f7778e7377"
+                  ]
+                }
+              ]
+            }
+          },
+          "avg_time_on_page": {
+            "value": 39.11566432317693
+          },
+          "retention": {
+            "doc_count": 85650
+          }
+        },
+        {
+          "key": "b57fee24-cb3c-11e5-be0b-b7ece4e953a0",
+          "doc_count": 166583,
+          "metadata": {
+            "hits": {
+              "total": 166583,
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "article_page_view-2016-02-07",
+                  "_type": "logs",
+                  "_id": "cikd19bd400037639wib4jl0q",
+                  "_score": null,
+                  "_source": {
+                    "article_uuid": "b57fee24-cb3c-11e5-be0b-b7ece4e953a0",
+                    "initial_publish_date": "2016-02-07T12:46:20.000Z",
+                    "title": "An old-school reply to an advertisers retro threat",
+                    "primary_section": "Management"
+                  },
+                  "sort": [
+                    "b57fee24-cb3c-11e5-be0b-b7ece4e953a0"
+                  ]
+                }
+              ]
+            }
+          },
+          "avg_time_on_page": {
+            "value": 51.93876926216961
+          },
+          "retention": {
+            "doc_count": 38561
+          }
+        },
+        {
+          "key": "646f7384-b623-11e5-b147-e5e5bba42e51",
+          "doc_count": 143827,
+          "metadata": {
+            "hits": {
+              "total": 143827,
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "article_page_view-2016-01-24",
+                  "_type": "logs",
+                  "_id": "t1453674014722h2r253.56436963193119",
+                  "_score": null,
+                  "_source": {
+                    "article_uuid": "646f7384-b623-11e5-b147-e5e5bba42e51",
+                    "initial_publish_date": "2016-01-24T20:05:02.000Z",
+                    "title": "Global MBA ranking 2016  analysis and school profiles"
+                  },
+                  "sort": [
+                    "646f7384-b623-11e5-b147-e5e5bba42e51"
+                  ]
+                }
+              ]
+            }
+          },
+          "avg_time_on_page": {
+            "value": 62.05159670993624
+          },
+          "retention": {
+            "doc_count": 32973
+          }
+        },
+        {
+          "key": "fcb4202a-c04d-11e5-846f-79b0e3d20eaf",
+          "doc_count": 136169,
+          "metadata": {
+            "hits": {
+              "total": 136169,
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "article_page_view-2016-01-25",
+                  "_type": "logs",
+                  "_id": "t1453719086359h12r729.0424692910165",
+                  "_score": null,
+                  "_source": {
+                    "article_uuid": "fcb4202a-c04d-11e5-846f-79b0e3d20eaf",
+                    "initial_publish_date": "2016-01-25T09:06:01.000Z",
+                    "title": "Talk of Fed policy error grows"
+                  },
+                  "sort": [
+                    "fcb4202a-c04d-11e5-846f-79b0e3d20eaf"
+                  ]
+                }
+              ]
+            }
+          },
+          "avg_time_on_page": {
+            "value": 41.317568609595426
+          },
+          "retention": {
+            "doc_count": 33662
+          }
+        },
+        {
+          "key": "8acceda4-ba0b-11e5-bf7e-8a339b6f2164",
+          "doc_count": 128071,
+          "metadata": {
+            "hits": {
+              "total": 128071,
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "article_page_view-2016-01-17",
+                  "_type": "logs",
+                  "_id": "cijiyras600032z3864z5bj60",
+                  "_score": null,
+                  "_source": {
+                    "article_uuid": "8acceda4-ba0b-11e5-bf7e-8a339b6f2164",
+                    "initial_publish_date": "2016-01-17T13:11:23.000Z",
+                    "title": "Deloitte chiefs new year memo is a classic in demotivation"
+                  },
+                  "sort": [
+                    "8acceda4-ba0b-11e5-bf7e-8a339b6f2164"
+                  ]
+                }
+              ]
+            }
+          },
+          "avg_time_on_page": {
+            "value": 43.18778646219675
+          },
+          "retention": {
+            "doc_count": 48635
+          }
+        },
+        {
+          "key": "59c763a8-c24c-11e5-b3b1-7b2481276e45",
+          "doc_count": 123920,
+          "metadata": {
+            "hits": {
+              "total": 123920,
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "article_page_view-2016-01-24",
+                  "_type": "logs",
+                  "_id": "t1453661728248h3r237.81065503135324",
+                  "_score": null,
+                  "_source": {
+                    "article_uuid": "59c763a8-c24c-11e5-b3b1-7b2481276e45",
+                    "initial_publish_date": "2016-01-24T13:57:52.000Z",
+                    "title": "Apple results: talk swirls of iPhone decline"
+                  },
+                  "sort": [
+                    "59c763a8-c24c-11e5-b3b1-7b2481276e45"
+                  ]
+                }
+              ]
+            }
+          },
+          "avg_time_on_page": {
+            "value": 59.04701420271142
+          },
+          "retention": {
+            "doc_count": 46686
+          }
+        },
+        {
+          "key": "cdcc295c-c290-11e5-b3b1-7b2481276e45",
+          "doc_count": 96433,
+          "metadata": {
+            "hits": {
+              "total": 96433,
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "article_page_view-2016-01-24",
+                  "_type": "logs",
+                  "_id": "t1453676598688h3r373.4026844613254",
+                  "_score": null,
+                  "_source": {
+                    "article_uuid": "cdcc295c-c290-11e5-b3b1-7b2481276e45",
+                    "initial_publish_date": "2016-01-24T12:25:31.000Z",
+                    "title": "Iran plans to buy 114 Airbus jets on Rouhanis Europe visit"
+                  },
+                  "sort": [
+                    "cdcc295c-c290-11e5-b3b1-7b2481276e45"
+                  ]
+                }
+              ]
+            }
+          },
+          "avg_time_on_page": {
+            "value": 48.08618419005942
+          },
+          "retention": {
+            "doc_count": 34035
+          }
+        },
+        {
+          "key": "ef24be04-be8d-11e5-9fdb-87b8d15baec2",
+          "doc_count": 95908,
+          "metadata": {
+            "hits": {
+              "total": 95908,
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "article_page_view-2016-01-20",
+                  "_type": "logs",
+                  "_id": "t1453276368312h12r219.8961975518614",
+                  "_score": null,
+                  "_source": {
+                    "article_uuid": "ef24be04-be8d-11e5-9fdb-87b8d15baec2",
+                    "initial_publish_date": "2016-01-19T14:51:17.000Z",
+                    "title": "Davos 2016: The 4 big themes facing the World Economic Forum"
+                  },
+                  "sort": [
+                    "ef24be04-be8d-11e5-9fdb-87b8d15baec2"
+                  ]
+                }
+              ]
+            }
+          },
+          "avg_time_on_page": {
+            "value": 51.28589898652876
+          },
+          "retention": {
+            "doc_count": 29049
+          }
+        },
+        {
+          "key": "b33d75fe-cc5a-11e5-be0b-b7ece4e953a0",
+          "doc_count": 86541,
+          "metadata": {
+            "hits": {
+              "total": 86541,
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "article_page_view-2016-02-07",
+                  "_type": "logs",
+                  "_id": "t1454874682421h2r444.625711068511",
+                  "_score": null,
+                  "_source": {
+                    "article_uuid": "b33d75fe-cc5a-11e5-be0b-b7ece4e953a0",
+                    "initial_publish_date": "2016-02-07T18:43:14.000Z",
+                    "title": "Google pushes further into virtual reality with new headset",
+                    "primary_section": "Technology"
+                  },
+                  "sort": [
+                    "b33d75fe-cc5a-11e5-be0b-b7ece4e953a0"
+                  ]
+                }
+              ]
+            }
+          },
+          "avg_time_on_page": {
+            "value": 37.696918223732105
+          },
+          "retention": {
+            "doc_count": 34401
+          }
+        },
+        {
+          "key": "4ea4deb4-baaf-11e5-bf7e-8a339b6f2164",
+          "doc_count": 81685,
+          "metadata": {
+            "hits": {
+              "total": 81685,
+              "max_score": null,
+              "hits": [
+                {
+                  "_index": "article_page_view-2016-01-24",
+                  "_type": "logs",
+                  "_id": "cijt0v2so00037038b45zlan6",
+                  "_score": null,
+                  "_source": {
+                    "article_uuid": "4ea4deb4-baaf-11e5-bf7e-8a339b6f2164",
+                    "initial_publish_date": "2016-01-24T17:02:17.000Z",
+                    "title": "Inseads 1-year MBA tops FT rankings"
+                  },
+                  "sort": [
+                    "4ea4deb4-baaf-11e5-bf7e-8a339b6f2164"
+                  ]
+                }
+              ]
+            }
+          },
+          "avg_time_on_page": {
+            "value": 43.887066168819246
+          },
+          "retention": {
+            "doc_count": 30220
+          }
+        }
+      ]
+    },
       "referrer": {
         "doc_count": 447093,
         "types": {

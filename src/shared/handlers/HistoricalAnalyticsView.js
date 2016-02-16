@@ -5,6 +5,7 @@ import AnalyticsStore from '../stores/AnalyticsStore';
 import Messaging from '../components/Messaging';
 import ErrorHandler from '../components/ErrorHandler';
 import assign from 'object-assign';
+import alt from '../alt';
 
 import ArticleView from "./ArticleView";
 import SectionView from "./SectionView";
@@ -32,47 +33,55 @@ class HistoricalAnalyticsView extends React.Component {
     return AnalyticsStore.getState();
   }
 
-  componentWillMount() {
-    if (this.props.error) return; // in an error case, there's no valid query
-
-    switch (this.props.route.analyticsView) {
+  updateQuery(props) {
+    switch (props.route.analyticsView) {
       case VIEW_TYPE_ARTICLE:
         AnalyticsActions.updateQuery({
-          uuid : decode(this.props.params.uuid),
+          uuid : decode(props.params.uuid),
           type: 'article',
-          comparatorType: decode(this.props.params.comparatorType),
-          comparator: decode(this.props.params.comparator)
+          comparatorType: decode(props.params.comparatorType),
+          comparator: decode(props.params.comparator)
         });
         break;
       case VIEW_TYPE_SECTION:
         AnalyticsActions.updateQuery({
-          section: decode(this.props.params.section),
+          section: decode(props.params.section),
           type: 'section',
-          comparator: decode(this.props.params.comparator),
-          comparatorType: decode(this.props.params.comparatorType)
+          comparator: decode(props.params.comparator),
+          comparatorType: decode(props.params.comparatorType)
         });
         break;
       case VIEW_TYPE_TOPIC:
         AnalyticsActions.updateQuery({
-          topic: decode(this.props.params.topic),
+          topic: decode(props.params.topic),
           type: 'topic',
-          comparator: decode(this.props.params.comparator),
-          comparatorType: decode(this.props.params.comparatorType)
+          comparator: decode(props.params.comparator),
+          comparatorType: decode(props.params.comparatorType)
         });
         break;
     }
+
+  }
+
+  componentWillMount() {
+    if (this.props.error) return; // in an error case, there's no valid query
+    this.updateQuery(this.props);
   }
 
   componentWillReceiveProps(newProps) {
     // Update the query if the comparator changes
     if (this.props.params.comparator !== newProps.params.comparator
       || this.props.params.comparatorType !== newProps.params.comparatorType) {
-        AnalyticsActions.updateQuery(assign(
-          {},
-          this.props.query,
-          { comparator: newProps.params.comparator, comparatorType: newProps.params.comparatorType }
-        ));
+      AnalyticsActions.updateQuery(assign(
+        {},
+        this.props.query,
+        { comparator: newProps.params.comparator, comparatorType: newProps.params.comparatorType }
+      ));
       }
+    if (this.props.route.analyticsView !== newProps.route.analyticsView) {
+      alt.recycle(AnalyticsStore);
+      this.updateQuery(newProps);
+    }
   }
 
   componentDidMount() {
@@ -83,6 +92,7 @@ class HistoricalAnalyticsView extends React.Component {
 
   componentWillUnmount() {
     AnalyticsActions.destroy();
+    alt.recycle(AnalyticsStore);
   }
 
   render() {

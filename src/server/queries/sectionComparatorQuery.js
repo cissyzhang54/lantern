@@ -39,13 +39,17 @@ export default function sectionComparatorQuery(query){
 
   let matchAll = {
     bool: {
-      must: [matchDates, matchSection],
+      must: [matchDates, matchSection]
     }
   }
 
   let filtered = {
     query : matchAll,
     filter : filter
+  }
+
+  if (query.comparator === 'FT'){
+    filtered.query.bool.must = [matchDates];
   }
 
   return {

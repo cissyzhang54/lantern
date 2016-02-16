@@ -1,9 +1,6 @@
 import React from 'react';
-import Col from 'react-bootstrap/lib/Col';
-import Row from 'react-bootstrap/lib/Row';
 import responsiveStyles from '../utils/responsiveStyles';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import ChunkWrapper from './ChunkWrapper.js';
 
 const componentStyles = {
   'default': {

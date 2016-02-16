@@ -75,3 +75,7 @@ export default class SectionWhen extends React.Component {
     </ChunkWrapper>);
   }
 }
+
+SectionWhen.defaultProps = {
+  lastPublishDates: []
+}
