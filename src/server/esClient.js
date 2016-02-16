@@ -141,7 +141,11 @@ export function runArticleQuery(queryData) {
   return retrieveMetaData(queryData).then((data) => {
     metaData = data;
     queryData.publishDate = moment(metaData.initial_publish_date).toISOString();
-    if (!queryData.dateFrom || !queryData.dateTo) {
+    if (queryData.timespan && queryData.timespan !== 'custom') {
+      queryData.dateFrom = queryData.publishDate;
+      queryData.dateTo = moment(queryData.publishDate).add(queryData.timespan, 'hours').toISOString();
+    }
+    else if (!queryData.dateFrom || !queryData.dateTo) {
       queryData.dateFrom = queryData.publishDate
       queryData.dateTo = moment().toISOString();
     }
@@ -157,7 +161,11 @@ export function runSectionQuery(queryData) {
     return Promise.reject(queryError);
   }
 
-  if (!queryData.dateFrom || !queryData.dateTo) {
+  if (queryData.timespan && queryData.timespan !== 'custom') {
+    queryData.dateFrom = moment().subtract(queryData.timespan, 'hours').toISOString();
+    queryData.dateTo = moment().toISOString();
+  }
+  else if (!queryData.dateFrom || !queryData.dateTo) {
     queryData.dateFrom = moment().subtract(29,'days').toISOString();
     queryData.dateTo = moment().toISOString();
   }
@@ -185,11 +193,14 @@ export function runTopicQuery(queryData) {
     return Promise.reject(queryError);
   }
 
-  if (!queryData.dateFrom || !queryData.dateTo) {
+  if (queryData.timespan && queryData.timespan !== 'custom') {
+    queryData.dateFrom = moment().subtract(queryData.timespan, 'hours').toISOString();
+    queryData.dateTo = moment().toISOString();
+  }
+  else if (!queryData.dateFrom || !queryData.dateTo) {
     queryData.dateFrom = moment().subtract(29,'days').toISOString();
     queryData.dateTo = moment().toISOString();
   }
-
   return retrieveTopicData(queryData)
     .then((topicData) => { return topicData });
 }

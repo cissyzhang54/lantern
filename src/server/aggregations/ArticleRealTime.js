@@ -1,8 +1,25 @@
 export default function ArticlesRealtimeAggregation(query) {
 
   const timespan = 'now-' + query.timespan + '/m';
-  let interval = '60s';
-  if (query.timespan === '48h') interval = '10m';
+  let interval;
+
+  switch (query.timespan) {
+    case '1h':
+      interval = '60s';
+      break;
+    case '6h':
+      interval = '1m';
+      break;
+    case '24h':
+      interval = '5m';
+      break;
+    case '48h':
+      interval = '10m';
+      break;
+    default :
+      interval = '10m';
+      break;
+  }
 
   return {
       realtime_links_clicked: {

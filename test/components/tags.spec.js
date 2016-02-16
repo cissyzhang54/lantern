@@ -12,7 +12,8 @@ describe ('Comparator component', function() {
       tags: [
         {label:'Private equity',url:'topic/Private equity'},
         {label:'Financial Services',url:'section/Financial Services'}
-      ]
+      ],
+      query: {timespan: '24'}
     });
   });
 

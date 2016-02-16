@@ -20,6 +20,7 @@ import Url from 'url';
 import MetricList from '../components/MetricList'
 import TabNav from '../components/TabNav';
 import Text from '../components/Text';
+import TimespanSelector from '../components/TimespanSelector';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
@@ -118,6 +119,7 @@ class ArticleRealtimeView extends React.Component {
            uuid: this.props.uuid
          }
        });
+
      }
   }
 
@@ -126,7 +128,6 @@ class ArticleRealtimeView extends React.Component {
   }
 
   render() {
-
     if (this.props.error) {
       return (
         <ErrorHandler
@@ -340,17 +341,19 @@ class ArticleRealtimeView extends React.Component {
     let [userTypeData, userTypeID, userTypeKeys] = dataFormatter.getPCTMetric('userTypes', 'Page Views')
     let timespan = this.props.timespan || "";
 
+    let queryLinkProps = {
+      type: 'realtimeArticle',
+      timespan: this.props.timespan,
+      uuid: this.props.uuid
+    };
+
     return (
       <DocumentTitle title={title}>
       <div>
-
-        <TabNav
-          analyticsView={this.props.route.analyticsView + timespan}
-          publishDate={this.props.published}
-          uuid={this.props.uuid}
-        />
-
-        <ChunkWrapper component="header">
+        <ChunkWrapper
+          component="modifier"
+          noBorder
+        >
           <Header
             title={this.props.title}
             linkURL={'http://www.ft.com/cms/s/0/' + this.props.uuid + '.html'}
@@ -358,6 +361,36 @@ class ArticleRealtimeView extends React.Component {
             published={'First Published: ' + this.props.published_human}
             uuid={this.props.uuid}
           />
+        </ChunkWrapper>
+
+        <TabNav
+          analyticsView={this.props.route.analyticsView + timespan}
+          publishDate={this.props.published}
+          uuid={this.props.uuid}
+          />
+
+        <ChunkWrapper component="modifier">
+          <Row>
+            <Col sm={2}
+                 xs={12}
+              >
+              <span style={{lineHeight: "1.5em"}}>Timespan:</span>
+            </Col>
+            <Col sm={10}
+                 xs={12}
+              >
+                <TimespanSelector
+                  current={this.props.timespan}
+                  options={[
+                  {label: 'Last hour', value: '1h'},
+                  {label: 'Last 6 hours', value: '6h'},
+                  {label: 'Last 24 hours', value: '24h'},
+                  {label: 'Last 48 hours', value: '48h'},
+                 ]}
+                  query={queryLinkProps}
+                  />
+            </Col>
+          </Row>
         </ChunkWrapper>
 
         <SectionHeadlineStats

@@ -30,7 +30,7 @@ module.exports = {
 
   'Assert Article Page' : function (browser) {
     browser
-      .expect.element(searchPage.exampleExternalArticleLink).visible.after(10000);
+      .expect.element(searchPage.exampleExternalArticleLink).visible.after(20000);
 
     browser
       .assert.title('Lantern - Team VIP wins FT MBA Challenge of 2015')

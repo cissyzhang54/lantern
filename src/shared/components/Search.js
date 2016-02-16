@@ -154,7 +154,7 @@ export default class Search extends React.Component {
       return (
         <Link
           data-component='sectionResult'
-          to={'/sections/' + section}
+          to={'/sections/' + section + '/168'}
           key={i}
           style={blockLinkStyle}
           >
@@ -168,7 +168,7 @@ export default class Search extends React.Component {
       return (
         <Link
           data-component='topicResult'
-          to={'/topics/' + topic}
+          to={'/topics/' + topic + '/168'}
           key={i}
           style={blockLinkStyle}
           >
@@ -216,7 +216,7 @@ export default class Search extends React.Component {
       return (
         <Link
           data-component='homeSectionsLinks'
-          to={'/sections/' + section}
+          to={'/sections/' + section + '/168'}
           key={i}
           style={homeLinkStyle}
           >

@@ -61,7 +61,7 @@ export default class SearchResult extends React.Component {
       return (
         <Link
           data-component='searchResult'
-          to={'/sections/' + section}
+          to={'/sections/168/' + section}
           key={i}
           style={styles.link}
         >
@@ -85,6 +85,8 @@ export default class SearchResult extends React.Component {
     } else if (diff < 48) {
       linkUrl = '/realtime' + linkUrl + '/48h';
       clickHandler = null;
+    } else {
+      linkUrl += '/48';
     }
 
     return (
@@ -134,4 +136,3 @@ function formatDate(date) {
   let m = moment(date);
   return m.fromNow();
 }
-

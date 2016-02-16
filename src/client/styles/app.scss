@@ -1,12 +1,22 @@
-@import "reset";
-@import "global";
-@import "c3-charts";
-@import "logo";
-@import "nav";
-@import "comparators";
-@import "last-updated";
-@import "5col";
-@import "metric-list";
-@import "tab-nav";
+/* Vendor */
+@import "vendor/reset";
+@import "vendor/c3-charts";
 @import "../../shared/lib/daterangepicker.css";
 @import "../../shared/lib/react-select.css";
+
+/* modules */
+@import "modules/colors";
+@import "modules/fonts";
+@import "modules/sizes";
+
+/* Global */
+@import "partials/global";
+@import "partials/logo";
+@import "partials/nav";
+@import "partials/comparators";
+@import "partials/last-updated";
+@import "partials/5col";
+@import "partials/metric-list";
+@import "partials/tab-nav";
+@import "partials/timespanSelector";
+@import "partials/sectionModifier";
