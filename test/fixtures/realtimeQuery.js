@@ -314,7 +314,7 @@ export default {
             },
             {
               term: {
-                event_category: "supplement"
+                event_category: "attention"
               }
             },
             {

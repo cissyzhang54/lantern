@@ -312,7 +312,7 @@ export default function ArticlesRealtimeAggregation(query) {
               },
               {
                 term : {
-                  event_category: 'supplement'
+                  event_category: 'attention'
                 }
               },
               {
