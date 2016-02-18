@@ -11,7 +11,7 @@ import Messaging from '../components/Messaging';
 import SectionModifier from '../components/SectionModifier';
 import SectionHeadlineStats from '../components/SectionHeadlineStats';
 import SectionWho from '../components/SectionWho';
-import DualScaleLineChart from "../components/DualScaleLineChart";
+import LineChart from "../components/LineChart";
 import ChunkWrapper from "../components/ChunkWrapper";
 import SectionWhere from '../components/SectionWhere';
 import BarChart from '../components/BarChart.js';
@@ -52,8 +52,7 @@ class TopicView extends React.Component {
     let title = (data) ? 'Lantern - ' + this.props.params.topic : '';
 
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
-    let [publishData, publishID, publishKeys] =  dataFormatter.getMetric('publishTimes', 'Articles published');
-    let [readData, readID, readKeys] =  dataFormatter.getMetric('readTimes', 'Articles read');
+    let [readData, readID, readKeys] =  dataFormatter.getMetric('readTimes', 'Article page views');
 
     let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrerTypes', 'Views');
     let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views');
@@ -105,22 +104,20 @@ class TopicView extends React.Component {
             data={data}
           />
 
-          <ChunkWrapper component="ArticlesPublished">
+          <ChunkWrapper component="ArticlesRead">
             <Row>
               <Col xs={12}>
-                <h3>{'Articles Published vs Articles Read for this topic'}</h3>
+                <h3>{'Article page views for this topic'}</h3>
               </Col>
             </Row>
             <Row>
               <Col xs={12}>
-                <DualScaleLineChart
-                  categories={[publishID, readID]}
-                  keys={publishKeys.concat(readKeys)}
-                  leftData={publishData}
-                  rightData={readData}
+                <LineChart
+                  category={readID}
+                  keys={readKeys}
+                  data={readData}
                   xLabel='Time'
-                  y2Label='Articles read'
-                  yLabel='Articles published'
+                  yLabel='Article page views'
                 />
               </Col>
             </Row>
