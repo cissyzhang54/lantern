@@ -20,6 +20,8 @@ import ArticlePublishedTimeQuery from './esQueries/ArticlePublished';
 import ArticleRealtimeQuery from './esQueries/ArticleRealTime.js';
 import ArticleRealtimeAllQuery from './esQueries/ArticleRealTimeAll';
 
+import SectionRealtimeQuery from './esQueries/SectionRealTime';
+
 import SearchQuery from './esQueries/Search';
 import assert from 'assert';
 import LoggerFactory from './logger';
@@ -212,6 +214,23 @@ export function runArticleRealtimeQuery(queryData) {
 
   return Promise.all(requests);
 }
+
+export function runSectionRealtimeQuery(queryData) {
+  let queryError = queryDataError('sections', queryData);
+  if (queryError) {
+    return Promise.reject(queryError);
+  }
+
+  if (!queryData.timespan) {
+    queryData.timespan = '24h';
+  }
+
+  const dates = timestampParser(queryData.timespan, moment());
+  Object.assign(queryData, dates);
+
+  return retrieveRealtimeSectionData(queryData);
+}
+
 
 export function runTopArticleQuery(queryData) {
   let queryError = queryDataError('articles', queryData);
@@ -486,6 +505,24 @@ function retrieveRealtimeArticleData(queryData) {
 function retrieveRealtimeAllData(queryData) {
   return new Promise((resolve, reject) => {
     let queryObject = ArticleRealtimeAllQuery(queryData);
+    let request = {
+      index: calculateRealtimeIndices(queryData, process.env.ES_REALTIME_INDEX_ROOT),
+      ignore_unavailable: true,
+      body: queryObject
+    }
+    proxySearch('search', request, (error, response) => {
+      if (error) {
+        return reject(error);
+      }
+
+      return resolve(response);
+    })
+  })
+}
+
+function retrieveRealtimeSectionData(queryData) {
+  return new Promise((resolve, reject) => {
+    let queryObject = SectionRealtimeQuery(queryData);
     let request = {
       index: calculateRealtimeIndices(queryData, process.env.ES_REALTIME_INDEX_ROOT),
       ignore_unavailable: true,

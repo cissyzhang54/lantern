@@ -4,6 +4,11 @@ export default function RealitmeArticleListQuery(query) {
   assert.equal(typeof query, 'object',
     "argument 'query' must be an object");
 
+  const timespan = 'now-' + query.timespan + '/m';
+  let interval = '60s';
+  if (query.timespan === '48h') interval = '10m';
+  if (query.timespan === '24h') interval = '15m';
+
   const termField = `primary_${query.type}`;
   const esQuery = {
     query: {
@@ -12,7 +17,7 @@ export default function RealitmeArticleListQuery(query) {
           {
             range: {
               event_timestamp: {
-                gte: 'now-1d/d'
+                gte: timespan
               }
             }
           },
@@ -28,7 +33,11 @@ export default function RealitmeArticleListQuery(query) {
     aggs: {
       articles: {
         terms: {
-          field: 'article_uuid'
+          field: 'article_uuid',
+          size: 1000,
+          order: {
+            publish_date: 'desc'
+          }
         },
         aggs: {
           metadata: {
@@ -51,6 +60,11 @@ export default function RealitmeArticleListQuery(query) {
               size: 1
             }
           },
+          publish_date: {
+            max: {
+              field: 'initial_publish_date'
+            }
+          },
           page_views: {
             filter: {
               bool: {
@@ -62,10 +76,19 @@ export default function RealitmeArticleListQuery(query) {
                   },
                   {
                     term: {
-                      event_type: 'view'
+                      event_category: 'view'
                     }
                   }
                 ]
+              }
+            },
+            aggs: {
+              page_views_over_time: {
+                date_histogram: {
+                  field: 'event_timestamp',
+                  interval: interval,
+                  min_doc_count: 0
+                }
               }
             }
           },
@@ -80,7 +103,7 @@ export default function RealitmeArticleListQuery(query) {
                   },
                   {
                     term: {
-                      event_category: 'supplement'
+                      event_category: 'attention'
                     }
                   }
                 ]

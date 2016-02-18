@@ -8,6 +8,7 @@ import TopArticlesView from "../handlers/TopArticlesView";
 import Playground from '../handlers/Playground';
 import PlaygroundLoader from '../handlers/PlaygroundLoader';
 import ArticleRealtimeView from '../handlers/ArticleRealtimeView';
+import SectionRealtimeView from '../handlers/SectionRealtimeView';
 
 import HistoricalAnalyticsView from '../handlers/HistoricalAnalyticsView';
 
@@ -78,13 +79,19 @@ export default (
       path="realtime/articles/:uuid"
       onEnter={scrollToTop}
       component={ArticleRealtimeView}
-      analyticsView="realtime"
+      analyticsView="realtime-article"
     />
     <Route
       path="realtime/articles/:uuid/:timespan"
       onEnter={scrollToTop}
       component={ArticleRealtimeView}
-      analyticsView="realtime"
+      analyticsView="realtime-article"
+    />
+    <Route
+      path="realtime/sections/:section"
+      onEnter={scrollToTop}
+      component={SectionRealtimeView}
+      analyticsView="realtime-section"
     />
     <Route
       path="*"

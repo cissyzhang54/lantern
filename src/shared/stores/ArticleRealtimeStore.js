@@ -72,7 +72,7 @@ class ArticleRealtimeStore {
       this.socket.on('reconnect', () => {
         this.setState({ isLive: true });
       });
-      this.socket.on('updatedArticleData', (data) => {
+      this.socket.on('updatedData', (data) => {
         this.setState({
           pageViews: data.realtimePageViews,
           timeOnPage: data.realtimeTimeOnPage,
@@ -103,11 +103,8 @@ class ArticleRealtimeStore {
 
         this.setIsLiveTimer();
       });
-      this.socket.on('error', (error) => {
-        console.error(error);
-      });
+      this.socket.on('error', this.loadingFailed.bind(this));
     }
-
     this.socket.emit('subscribeToArticle', {
       uuid: this.state.uuid,
       timespan: this.state.timespan

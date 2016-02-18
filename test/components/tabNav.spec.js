@@ -53,7 +53,7 @@ describe('The TabNav component', function() {
 
   it('Renders the tab with a active realtime tab', function() {
     let component = createComponent(TabNav, {
-      analyticsView: "realtime1h",
+      analyticsView: "realtime-article1h",
       publishDate: moment().subtract(32, 'h').toISOString(),
       uuid: "wewwe-23dsd3"
     });

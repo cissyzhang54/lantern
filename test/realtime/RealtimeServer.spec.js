@@ -3,7 +3,6 @@ import ioClient from 'socket.io-client';
 import express from 'express';
 import {expect} from 'chai';
 import sinon from 'sinon';
-import ArticlePoller from '../../src/server/articlePoller';
 
 describe('Realtime Server', () => {
 
@@ -12,52 +11,73 @@ describe('Realtime Server', () => {
   let rtServer;
   let client;
   let sandbox;
+  const port = 3666;
   const UUID = '3068994c-bf71-11e5-9fdb-87b8d15baec2';
 
   before((done) => {
     app = express();
     server = require('http').createServer(app);
-    const port = 3666;
     sandbox = sinon.sandbox.create();
 
     server.listen(port, () => {
-      console.log('Server listening at port %d', port);
-
-      client = ioClient(`http://localhost:${port}`);
-      client.on('connect', () => {
-        console.log('connected!');
-        done();
-      })
+      //console.log('Server listening at port %d', port);
+      done();
     });
 
     rtServer = new RealtimeServer(server);
   });
 
+  beforeEach((done) => {
+
+    client = ioClient(`http://localhost:${port}`);
+    client.on('connect', () => {
+      //console.log('connected!');
+      done();
+    })
+
+  })
+
+  afterEach((done) => {
+    client.on('disconnect', () => {
+      done();
+    })
+    client.disconnect();
+  })
+
   after(() => {
     sandbox.restore();
-  });
+  })
 
-  it('should poll for data', function (done) {
+  it('should poll for article data', function (done) {
     this.timeout(10000)
-
-    client.on('updatedArticleData', (data) => {
+    const query = {
+      uuid: UUID,
+      timespan: '1h'
+    };
+    client.on('updatedData', () => {
+      client.emit('unsubscribeFromArticle', query);
       done();
     });
     client.on('error', done);
-    client.emit('subscribeToArticle', {
-      uuid: UUID,
-      timespan: '1h'
-    });
+    client.emit('subscribeToArticle', query);
   });
 
-  it('should clean up pollers when there are no clients', (done) => {
-    let poller = rtServer.pollers[UUID];
-    sandbox.stub(ArticlePoller.prototype, 'stop', () => {
-      expect(rtServer.pollers).to.be.empty;
+  it('should poll for section data', function (done) {
+    this.timeout(10000)
+    const query = {
+      section: 'World' ,
+      timespan: '1h'
+    };
+    client.on('updatedData', () => {
+      client.emit('unsubscribeFromSection', query);
       done();
     });
+    client.on('error', done);
+    client.emit('subscribeToSection', query);
+  });
 
-    client.disconnect();
+  it('should clean up pollers when there are no clients', function () {
+    expect(rtServer.pollers).to.be.empty;
   });
 
 

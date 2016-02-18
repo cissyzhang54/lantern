@@ -11,7 +11,6 @@ import ChunkWrapper from '../components/ChunkWrapper';
 import LiveIndicator from '../components/LiveIndicator';
 import Header from '../components/Header';
 import SectionHeadlineStats from '../components/SectionHeadlineStats';
-import SingleMetric from '../components/SingleMetric';
 import * as formatAuthors from '../utils/formatAuthors';
 import ErrorHandler from '../components/ErrorHandler';
 import FormatData from "../utils/formatData";
@@ -24,7 +23,6 @@ import Text from '../components/Text';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-import moment from 'moment';
 
 const maxStrLen = 60;
 
@@ -320,7 +318,7 @@ class ArticleRealtimeView extends React.Component {
     let commentsRead = Math.round((this.props.commentsRead / this.props.totalPageViews) * 100);
     let commentsList = [
       {term: 'Total comments posted', value: comments, header: false},
-      {term: '% of people who read comments', toolTip: (<p><Text message='explanations.sectionInteract.commentsViewed'/></p>), value: `${commentsRead}%`, header: false},
+      {term: '% of people who read comments', toolTip: (<p><Text message='explanations.sectionInteract.commentsViewed'/></p>), value: `${commentsRead}%`, header: false}
     ]
 
 
