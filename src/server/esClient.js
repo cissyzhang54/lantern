@@ -145,7 +145,7 @@ export function runArticleQuery(queryData) {
       let DAY_IN_MILLISECS = 24 * 60 * 60 * 1000;
       let endOfTodayMillsecs = Math.ceil((+moment()) / DAY_IN_MILLISECS) * DAY_IN_MILLISECS;
 
-      queryData.dateFrom = queryData.publishDate
+      queryData.dateFrom = queryData.publishDate;
       queryData.dateTo = moment(endOfTodayMillsecs).toISOString();
     }
     return retrieveArticleData(queryData)
