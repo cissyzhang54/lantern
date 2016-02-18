@@ -4,7 +4,8 @@
   "description": "Lantern - a data analytics platform for the FT",
   "main": "src/server/server.js",
   "scripts": {
-    "test": "npm run unit && npm run functional",
+    "postinstall": "npm run build",
+    "test": "npm run unit && npm run functional-pre-built",
     "unit": "env $(cat .env) env NODE_ENV=test mocha --compilers js:babel/register --require test/setupDom.js --recursive test/**/*.spec.js",
     "test-watch": "env NODE_ENV=test mocha --compilers js:babel/register --recursive test/**/*.spec.js --watch --reporter min",
     "test-debug": "env NODE_ENV=test mocha --debug-brk --compilers js:babel/register --recursive test/**/*.spec.js",
@@ -15,12 +16,11 @@
     "server": "nodemon --max_old_space_size=${NODE_MAX_OLD_SPACE_SIZE:-0} --delay 1 lib/server/server",
     "production": "node --max_old_space_size=${NODE_MAX_OLD_SPACE_SIZE:-0} lib/server/server.js",
     "server-debug": "env $(cat .env) nodemon --debug lib/server/server",
-    "postinstall": "npm run build && env $(cat .env) webpack --config webpack.config.prod.js",
     "start": "npm run watch-js & npm run dev-server & env $(cat .env) npm run server",
     "start-debug": "npm run watch-js & npm run dev-server & npm run server-debug",
-    "start-test": "env $(cat .env) NODE_ENV=test node lib/server/server.js",
-    "build": "npm run clean && babel src -d lib --experimental",
-    "functional": "node nightwatch.js -g test/nightwatch/functional --suiteRetries 3"
+    "build": "npm run clean && babel src -d lib --experimental && webpack --config webpack.config.prod.js",
+    "functional": "npm run build && npm run functional-pre-built",
+    "functional-pre-built": "./scripts/run-functional-tests"
   },
   "pre-commit": "unit",
   "author": "Dario Villanueva",

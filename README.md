@@ -57,3 +57,6 @@ The following keys all need to placed with corresponding values within a `.env` 
 - Use the correct version of Selenium server : put `http://selenium-release.storage.googleapis.com/2.47/selenium-server-standalone-2.47.1.jar` into `test/bin` of the project
 - Ensure you have chromedriver installed with : `brew install chromedriver`
 - If you have trouble, look at `circle.yml` to find out how to get the selenium-server-standalone downloaded
+- `npm run functional` will build the static assets, start a test server and run the tests
+- `npm run functional-pre-built` will do the above without rebuilding the static assets
+- `npm run test` assumes that a build has already happened
