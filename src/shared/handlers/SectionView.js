@@ -9,7 +9,7 @@ import Messaging from '../components/Messaging';
 import SectionModifier from '../components/SectionModifier';
 import BarChart from '../components/BarChart.js';
 import Table from '../components/Table.js';
-import DualScaleLineChart from "../components/DualScaleLineChart";
+import LineChart from "../components/LineChart";
 import SectionWho from "../components/SectionWho";
 import SectionWhere from "../components/SectionWhere";
 import SectionHeadlineStats from "../components/SectionHeadlineStats";
@@ -54,8 +54,7 @@ class SectionView extends React.Component {
     let title = (data) ? 'Lantern - ' + this.props.params.section : '';
 
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
-    let [publishData, publishID, publishKeys] =  dataFormatter.getMetric('publishTimes', 'Articles published');
-    let [readData, readID, readKeys] =  dataFormatter.getMetric('readTimes', 'Articles read');
+    let [readData, readID, readKeys] =  dataFormatter.getMetric('readTimes', 'Article page views');
 
     let [topicViewData] = dataFormatter.getMetric('topicViews', 'Views');
     let [topicCountData] = dataFormatter.getMetric('topicCount', 'Count');
@@ -148,21 +147,19 @@ class SectionView extends React.Component {
             articleList={data.articleList}
           />
 
-          <ChunkWrapper component="ArticlesPublished">
+          <ChunkWrapper component="ArticlesRead">
             <Row>
               <Col xs={12}>
-                <h3>Articles Published vs Articles Read for this topic</h3>
+                <h3>Article page views for this section</h3>
               </Col>
             </Row>
             <Row>
               <Col xs={12}>
-                <DualScaleLineChart
-                  categories={[publishID, readID]}
-                  leftData={publishData}
-                  rightData={readData}
-                  keys={publishKeys.concat(readKeys)}
-                  yLabel='Articles published'
-                  y2Label='Articles read'
+                <LineChart
+                  category={readID}
+                  data={readData}
+                  keys={readKeys}
+                  yLabel='Article page views'
                   xLabel='Time'
                 />
               </Col>
