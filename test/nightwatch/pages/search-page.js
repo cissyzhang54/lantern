@@ -2,7 +2,7 @@
 module.exports = {
 
   // Links
-  lanternUrl : 'http://localhost:3000',
+  lanternUrl : 'http://localhost:' + process.env.PORT,
   lanternTitle: 'Lantern - Search',
 
   lanternHome: 'ul a svg',

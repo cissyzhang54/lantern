@@ -1,0 +1,10 @@
+#!/bin/bash
+set -a
+. .env
+NODE_ENV=test
+PORT=3001
+
+node lib/server/server.js &
+node nightwatch.js -g test/nightwatch/functional --suiteRetries 3
+
+kill %1

@@ -5,7 +5,7 @@ var HOMEPAGE_POLL_TIMEOUT = 60000,
   request = require('superagent');
 
 function pollForTestServerReady() {
-  request.get('http://localhost:3000/').end(function(error, response) {
+  request.get('http://localhost:' + process.env.PORT + '/').end(function(error, response) {
     if (error || response.status !== 200) {
       console.log('Test server not ready after ' + (pollTime / 1000) + 's');
 
