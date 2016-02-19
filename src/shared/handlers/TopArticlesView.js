@@ -260,7 +260,7 @@ class TopArticlesView extends React.Component {
           </Row>
         </ChunkWrapper>
 
-        <ChunkWrapper component="Top5FromSocialMedia">
+        <ChunkWrapper component="Top5FromSearchEngines">
           <Row>
             <Col xs={12}>
               <h3>Top 5 - Traffic from search engines</h3>
