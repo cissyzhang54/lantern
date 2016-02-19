@@ -140,8 +140,13 @@ export function runArticleQuery(queryData) {
     metaData = data;
     queryData.publishDate = moment(metaData.initial_publish_date).toISOString();
     if (!queryData.dateFrom || !queryData.dateTo) {
-      queryData.dateFrom = queryData.publishDate
-      queryData.dateTo = moment().toISOString();
+
+      //for optimal query cache performance round the query to a whole day so it doesnt change frequently.
+      let DAY_IN_MILLISECS = 24 * 60 * 60 * 1000;
+      let endOfTodayMillsecs = Math.ceil((+moment()) / DAY_IN_MILLISECS) * DAY_IN_MILLISECS;
+
+      queryData.dateFrom = queryData.publishDate;
+      queryData.dateTo = moment(endOfTodayMillsecs).toISOString();
     }
     return retrieveArticleData(queryData)
   }).then((articleData) => {
@@ -275,6 +280,7 @@ function retrieveArticleData(queryData){
     }
 
     let request = {
+      search_type : 'count',
       body: [
         articlesHeader,
         articlesQueryObject,
