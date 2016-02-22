@@ -136,7 +136,8 @@ class HistoricalAnalyticsView extends React.Component {
 
     switch (this.props.route.analyticsView) {
       case VIEW_TYPE_ARTICLE:
-        this.props.history.push(`/articles/${params.uuid}/custom/${params.comparatorType}/${params.comparator}?dateFrom=${dateFrom}&dateTo=${dateTo}`);
+        comparatorPath = (params.comparator) ? `/${params.comparatorType}/${params.comparator}` : '';
+        this.props.history.push(`/articles/${params.uuid}/custom${comparatorPath}?dateFrom=${dateFrom}&dateTo=${dateTo}`);
         break;
       case VIEW_TYPE_SECTION:
         comparatorPath = (params.comparator) ? `/${params.comparatorType}/${params.comparator}` : '';

@@ -13,7 +13,7 @@ describe ('Modifier component', function() {
 
   beforeEach(function() {
     modifier = createComponent(SectionModifier, {
-      data:{ topics: [], sections:[], genre:[], author:[]},
+      data:{ topics: [], sections:[], genre:[], author:[], primarySection:''},
       comparatorData:{},
       renderDateRange: true,
       renderComparator: true,

@@ -21,8 +21,8 @@ function newState() {
       dateFrom: null,
       dateTo: null,
       filters: {},
-      comparator: 'FT',
-      comparatorType: 'global',
+      comparator: null,
+      comparatorType: null,
       publishDate: null
     },
     availableFilters: {

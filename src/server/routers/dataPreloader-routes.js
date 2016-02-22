@@ -30,6 +30,15 @@ router.get(`/realtime/articles/:uuid(${UUID_REGEX})/:timespan`, (req, res, next)
     });
 });
 
+router.get(`/articles/:uuid(${UUID_REGEX})/:timespan`, (req, res, next) => {
+  return getArticleData(req, res)
+    .then(() => next())
+    .catch((err) => {
+      if (err.status) res.status(err.status);
+      next(err);
+    });
+});
+
 router.get(`/articles/:uuid(${UUID_REGEX})/:timespan/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
   return getArticleData(req, res)
     .then(() => next())

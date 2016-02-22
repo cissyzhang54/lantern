@@ -140,6 +140,7 @@ export function runArticleQuery(queryData) {
   let metaData;
   return retrieveMetaData(queryData).then((data) => {
     metaData = data;
+
     queryData.publishDate = moment(metaData.initial_publish_date).toISOString();
     if (queryData.timespan && queryData.timespan !== 'custom') {
       queryData.dateFrom = queryData.publishDate;
@@ -149,6 +150,12 @@ export function runArticleQuery(queryData) {
       queryData.dateFrom = queryData.publishDate
       queryData.dateTo = moment().toISOString();
     }
+
+    if (!queryData.comparator) {
+      queryData.comparatorType = 'section';
+      queryData.comparator = metaData.primary_section.split(',')[0];
+    }
+
     return retrieveArticleData(queryData)
   }).then((articleData) => {
     return [metaData].concat(articleData);

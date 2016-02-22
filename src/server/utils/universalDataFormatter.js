@@ -29,6 +29,7 @@ const fields = {
   author : 'authors',
   genre : 'genre',
   sections : 'sections',
+  primarySection : 'primary_section',
   topics : 'topics',
   published: 'initial_publish_date',
   published_human: {name:'initial_publish_date', formatter: formatPublishDate},
