@@ -172,7 +172,7 @@ class SectionView extends React.Component {
             </Row>
           </ChunkWrapper>
 
-          <ChunkWrapper component="Topics">
+          <ChunkWrapper featureflag={FeatureFlag.check('section:topics')} component="Topics">
             <Row>
               <Col xs={12}>
                 <h3>Topics Published vs Topics Read</h3>
