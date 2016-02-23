@@ -70,6 +70,17 @@ export default class BarChart extends React.Component {
       return;
     }
 
+    const tooltipFormatter = (val, ratio, id, index) => {
+      const json = this.props.data;
+      if (usePercentages) {
+        const theValue = json[index][id.replace(' %', '')];
+        return val + '% (' + formatter(theValue) + ')';
+      } else {
+        const pct = json[index][id + ' %'];
+        return formatter(val) + ' (' + pct + '%)';
+      }
+    }
+
     this.chart = c3.generate({
       bindto: node,
       transition: {
@@ -108,15 +119,7 @@ export default class BarChart extends React.Component {
       },
       tooltip : {
         format : {
-          value: function(val, ratio, id, index) {
-            if (usePercentages) {
-              const theValue = json[index][id.replace(' %', '')];
-              return val + '% (' + formatter(theValue) + ')';
-            } else {
-              const pct = json[index][id + ' %'];
-              return formatter(val) + ' (' + pct + '%)';
-            }
-          }
+          value: tooltipFormatter
         }
       },
       title: this.props.title || null
