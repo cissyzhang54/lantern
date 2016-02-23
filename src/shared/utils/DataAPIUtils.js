@@ -38,16 +38,16 @@ let DataAPI = {
       assert.equal(typeof query.uuid, 'string',
         "property 'uuid' of argument 'query' must be a string");
 
-        return new Promise(function handlePromise(resolve, reject) {
-          let url = config.baseUrl + '/api/v0/realtime/articles/' + query.uuid;
-          if (apiKey) {
-            url += "?apiKey=" + apiKey;
-          }
-          request.get(url)
-            .query({ timespan: query.timespan })
-            .set('Accept', 'application/json')
-            .end(handleResponse('ArticleRealtime', query, reject, resolve));
-        });
+      return new Promise(function handlePromise(resolve, reject) {
+        let url = config.baseUrl + '/api/v0/realtime/articles/' + query.uuid;
+        if (apiKey) {
+          url += "?apiKey=" + apiKey;
+        }
+        request.get(url)
+          .query({ timespan: query.timespan })
+          .set('Accept', 'application/json')
+          .end(handleResponse('ArticleRealtime', query, reject, resolve));
+      });
     },
 
     getSectionData(query, apiKey) {
@@ -72,6 +72,28 @@ let DataAPI = {
           .send(query)
           .set('Accept', 'application/json')
           .end(handleResponse('Section', query, reject, resolve));
+      });
+    },
+
+    getSectionRealtimeData(query, apiKey) {
+      assert.equal(typeof query, 'object',
+        "argument 'query' must be an object");
+
+      assert.ok(query.hasOwnProperty('section'),
+        "argument 'query' must contain a section property");
+
+      assert.equal(typeof query.section, 'string',
+        "property 'section' of argument 'query' must be a string");
+
+      return new Promise(function handlePromise(resolve, reject) {
+        let url = config.baseUrl + '/api/v0/realtime/sections/' + query.section;
+        if (apiKey) {
+          url += "?apiKey=" + apiKey;
+        }
+        request.get(url)
+          .query({ timespan: query.timespan })
+          .set('Accept', 'application/json')
+          .end(handleResponse('SectionRealtime', query, reject, resolve));
       });
     },
 

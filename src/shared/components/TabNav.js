@@ -22,7 +22,9 @@ function test (links, currentPageType, publishDate) {
 
 function checkIsDisabled(publishDate, link) {
   let isDisabled = false;
-
+  if (link.hasOwnProperty('disabled')) {
+    return link.disabled;
+  }
   if (typeof link.timePeriod != 'undefined') {
     isDisabled = moment().isBetween(moment(publishDate), moment(publishDate).add(link.timePeriod, 'h'));
   }
@@ -39,8 +41,8 @@ export default class TabNav extends React.Component {
 
   render() {
     let links = [
-      {title: "Last hour", url:`/realtime/articles/${this.props.uuid}`, type: "realtime1h"},
-      {title: "Last 48 hours", url:`/realtime/articles/${this.props.uuid}/48h`, type: "realtime48h"},
+      {title: "Last hour", url:`/realtime/articles/${this.props.uuid}`, type: "realtime-article1h"},
+      {title: "Last 48 hours", url:`/realtime/articles/${this.props.uuid}/48h`, type: "realtime-article48h"},
       {title: "Historical", url:`/articles/${this.props.uuid}`, type: "article", timePeriod: 24}
     ];
 

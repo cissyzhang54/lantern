@@ -1,28 +1,28 @@
 import Server from 'socket.io';
 import ArticlePoller from './articlePoller';
-
+import SectionPoller from './sectionPoller';
 /**
  * @param {app} Express App
  */
 export default function RealtimeServer(app) {
   let io = Server(app);
-  let articlePollers = {};
-  this.pollers = articlePollers;
-
-  function unsubscribe(query) {
-    if (query) {
-      this.leave(query.uuid + query.timespan);
+  let pollers = {};
+  this.pollers = pollers;
+  // this is socket.
+  function unsubscribe(pollerId) {
+    if (pollerId) {
+      this.leave(pollerId);
     }
 
-    Object.keys(articlePollers).forEach((pollerId) => {
+    Object.keys(pollers).forEach((id) => {
       //if the room is empty,
       //delete the poller
-      let isEmpty = !(io.sockets.adapter.rooms[pollerId]);
+      let isEmpty = !(io.sockets.adapter.rooms[id]);
       if (isEmpty) {
-        let poller = articlePollers[pollerId];
-        poller.removeAllListeners('updatedArticleData');
+        let poller = pollers[id];
+        poller.removeAllListeners('updatedData');
         poller.removeAllListeners('error');
-        delete articlePollers[pollerId];
+        delete pollers[id];
         poller.stop();
       }
     });
@@ -33,31 +33,71 @@ export default function RealtimeServer(app) {
     socket.on('subscribeToArticle', (query) => {
       const uuid = query.uuid;
       const timespan = query.timespan;
+      const pollerId = uuid + timespan;
       // this adds the user to the room
-      socket.join(uuid + timespan, () => {
+      socket.join(pollerId, () => {
         // if there isn't a poller for that room
         // create it
-        if (!articlePollers[uuid+timespan]) createPoller(uuid, timespan);
+        if (!pollers[pollerId]) createPoller('article', query);
       });
-    })
+    });
 
-    socket.on('unsubscribeFromArticle', unsubscribe.bind(socket));
+
+    socket.on('subscribeToSection', (query) => {
+      const section = query.section;
+      const timespan = query.timespan;
+      const pollerId = section + timespan;
+      // this adds the user to the room
+      socket.join(pollerId, () => {
+        // if there isn't a poller for that room
+        // create it
+        if (!pollers[pollerId]) createPoller('section', query);
+      });
+    });
+
+    socket.on('unsubscribeFromArticle', (query) => {
+      const pollerId = query.uuid + query.timespan;
+      unsubscribe.call(socket, pollerId);
+    });
+
+    socket.on('unsubscribeFromSection', (query) => {
+      const pollerId = query.section + query.timespan;
+      unsubscribe.call(socket, pollerId);
+    });
 
     socket.on('disconnect', unsubscribe);
+
+    socket.on('error', (error) => {
+      console.error(error);
+    })
   });
 
   /**
    * @param {uuid} string - the uuid of the article to poll about
    */
-  function createPoller(uuid, timespan) {
-    const pollerId = uuid + timespan;
-    articlePollers[pollerId] = new ArticlePoller(uuid, timespan);
-    articlePollers[pollerId].on('updatedArticleData', (data) => {
-      io.to(pollerId).emit('updatedArticleData', data);
+  function createPoller(type, query) {
+    let pollerId, poller;
+    switch (type) {
+
+      case 'article':
+        pollerId = query.uuid + query.timespan;
+        poller = new ArticlePoller(query);
+        break;
+      case 'section':
+        pollerId = query.section + query.timespan;
+        poller = new SectionPoller(query);
+        break;
+      default:
+        return;
+    }
+
+    poller.on('updatedData', (data) => {
+      io.to(pollerId).emit('updatedData', data);
     });
-    articlePollers[pollerId].on('error', (error) => {
+    poller.on('error', (error) => {
       io.to(pollerId).emit('error', error);
     });
+    pollers[pollerId] = poller;
   }
 
 }

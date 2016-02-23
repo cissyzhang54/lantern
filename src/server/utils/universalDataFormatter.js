@@ -121,7 +121,9 @@ const fields = {
   topArticlesSocialRef: 'aggregations.top_articles_social_ref.buckets',
   topArticlesSearchRef: 'aggregations.top_articles_search_ref.buckets',
   topArticlesRetention: 'aggregations.top_articles_retention.retained.buckets',
-  lastPublishDate: 'aggregations.last_publish_date.buckets'
+  lastPublishDate: 'aggregations.last_publish_date.buckets',
+  realtimeTopicsCovered: 'aggregations.topics_covered.value',
+  realtimeArticlesPublished: 'aggregations.articles_published.value'
 }
 
 function divide(agg, fieldObj, divisor=1){

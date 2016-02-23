@@ -1,20 +1,24 @@
 import React from 'react';
 import Table from './Table';
 import Button from 'react-bootstrap/lib/Button';
+
 import ChunkWrapper from './ChunkWrapper';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
+import GlyphIcon from 'react-bootstrap/lib/Glyphicon';
+
 import d3 from 'd3';
 import moment from 'moment';
 import {Link} from 'react-router';
 import convert from '../utils/convertUnits';
-import GlyphIcon from 'react-bootstrap/lib/Glyphicon';
+import Sparkline from './Sparkline';
 
-export default class ArticleList extends React.Component {
+
+export default class RealtimeArticleList extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state =  {
+    this.state = {
       showAllArticles: false,
       page: 0,
       articlesPerPage: 10,
@@ -53,10 +57,10 @@ export default class ArticleList extends React.Component {
       'title',
       'initial_publish_date',
       'page_views',
-      'retention_rate',
+      'page_views',
       'time_on_page'
     ];
-    // this list contains the data to sort on
+
     const articleList = this.props.articleList
     .sort((a, b) => {
       const propName = headersForSorting[this.state.sortIndex];
@@ -88,14 +92,15 @@ export default class ArticleList extends React.Component {
       }
 
       const pageViews = formatter(d.page_views);
-      const retRate = Math.floor(d.retention_rate * 100) + '%';
       const timeOnPage = convert.time(d.time_on_page)[0];
       const row = [
         i+1,
         link,
         publishedMoment.format('MMM D, YYYY HH:mm'),
         pageViews,
-        retRate,
+        <Sparkline key={d.article_uuid}
+          data={d.page_views_over_time}
+        />,
         timeOnPage
       ];
       return row;
@@ -103,7 +108,7 @@ export default class ArticleList extends React.Component {
 
     const articleListHeaders = [
       '', 'Article', 'Publish Date',
-      'Page Views', 'Retention Rate',
+      'Page Views', 'Page Views Chart',
       'Time on Page'
     ];
 
@@ -112,17 +117,17 @@ export default class ArticleList extends React.Component {
       : <GlyphIcon glyph="arrow-down"/>
 
     const sortedEl = (
-      <span>
+      <div>
         {articleListHeaders[this.state.sortIndex+1]}
         {sortDirectionIndicator}
-      </span>
+      </div>
     );
 
     articleListHeaders[this.state.sortIndex+1] = sortedEl;
-
     const sortHandler = this.handleSort.bind(this);
+
     return (
-      <ChunkWrapper component="ArticleList">
+      <ChunkWrapper component="article-list">
         <Row>
           <Col xs={12}>
             <h3>Stories</h3>
@@ -147,6 +152,8 @@ export default class ArticleList extends React.Component {
         </Row>
       </ChunkWrapper>
     );
+
   }
+
 
 }

@@ -4,6 +4,7 @@ import * as esClient from '../esClient';
 import * as ErrorHandler from '../apiErrorHandler';
 import ArticleDataFormatter from '../formatters/Articles';
 import ArticleRealtimeDataFormatter from '../formatters/ArticleRealtimeDataFormatter';
+import SectionRealtimeDataFormatter from '../formatters/SectionRealtimeDataFormatter';
 import SearchDataFormatter from '../formatters/Search';
 import SectionDataFormatter from '../formatters/Sections';
 import TopicDataFormatter from '../formatters/Topics';
@@ -16,7 +17,7 @@ const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}
 let router = express.Router();
 router.use(bodyParser.json());
 
-router.get('/queries', function(req, res, next) {
+router.get('/queries', function(req, res) {
   req.pipe(esClient.queryStream).pipe(res);
 });
 
@@ -27,6 +28,7 @@ router.post(`/toparticles`, getTopArticlesData);
 router.post(`/articlelist/:type/:value`, getArticleList);
 router.get(`/realtime/articlelist/:type/:value`, getRealtimeArticleList);
 router.get(`/realtime/articles/:uuid(${UUID_REGEX})`, getRealtimeArticleData);
+router.get(`/realtime/sections/:section`, getRealtimeSectionData);
 router.get('/search/:query', search);
 router.use(ErrorHandler.routes(router));
 
@@ -80,6 +82,21 @@ function getRealtimeArticleData(req, res, next) {
   // XXX add cache 5 seconds
   esClient.runArticleRealtimeQuery(query)
     .then(ArticleRealtimeDataFormatter)
+    .then(results => res.json(results))
+    .catch((error) => {
+      res.status(ErrorHandler.statusCode(error.name))
+      next(error);
+    });
+}
+
+function getRealtimeSectionData(req, res, next) {
+  const query = {
+    section: decode(req.params.section),
+    timespan: req.query.timespan
+  }
+  // XXX add cache 5 seconds
+  esClient.runSectionRealtimeQuery(query)
+    .then(SectionRealtimeDataFormatter)
     .then(results => res.json(results))
     .catch((error) => {
       res.status(ErrorHandler.statusCode(error.name))

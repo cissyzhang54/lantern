@@ -1,10 +1,10 @@
 import EventEmitter from 'events';
 import util from 'util';
-import {runArticleRealtimeQuery} from './esClient.js';
-import ArticleRealtimeDataFormatter from './formatters/ArticleRealtimeDataFormatter.js';
+import {runSectionRealtimeQuery} from './esClient.js';
+import SectionRealtimeDataFormatter from './formatters/SectionRealtimeDataFormatter.js';
 
-export default function ArticlePoller(query) {
-  this.uuid = query.uuid;
+export default function SectionPoller(query) {
+  this.section = query.section;
   this.timespan = query.timespan;
   // XXX make this like configurable and stuff ;_;
   this.interval = 5000;
@@ -12,23 +12,23 @@ export default function ArticlePoller(query) {
     this.interval = 60 * 1000;
   }
   EventEmitter.call(this);
-  // then we immediately getArticleData which triggers
+  // then we immediately getSectionData which triggers
   // the polling
-  this.getArticleData();
+  this.getSectionData();
 }
 
-util.inherits(ArticlePoller, EventEmitter);
+util.inherits(SectionPoller, EventEmitter);
 
 // Polls for an article data and emits an event with
 // the updated data
-ArticlePoller.prototype.getArticleData = function() {
+SectionPoller.prototype.getSectionData = function() {
   const query = {
     timespan: this.timespan,
-    uuid: this.uuid
+    section: this.section
   }
 
-  runArticleRealtimeQuery(query)
-  .then(ArticleRealtimeDataFormatter)
+  runSectionRealtimeQuery(query)
+  .then(SectionRealtimeDataFormatter)
   .then(results => {
     this.emit('updatedData', results);
     this.waitAndPoll();
@@ -43,13 +43,14 @@ ArticlePoller.prototype.getArticleData = function() {
 }
 
 // This guy here waits for a set time and then
-// requests article data.
-ArticlePoller.prototype.waitAndPoll = function() {
-  this.timeoutId = setTimeout(this.getArticleData.bind(this), this.interval)
+// requests section data.
+SectionPoller.prototype.waitAndPoll = function() {
+  this.timeoutId = setTimeout(this.getSectionData.bind(this), this.interval)
 }
 
 // Stop
-ArticlePoller.prototype.stop = function() {
+SectionPoller.prototype.stop = function() {
   clearTimeout(this.timeoutId);
   this.emit('stopped', 'i am done');
 }
+
