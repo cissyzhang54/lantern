@@ -16,7 +16,6 @@ function getField(d, f, divisor){
       error.name = 'DataParsingError';
       error.data = d;
       //todo: throw + catch properly then test it
-      //yeah well you asshole left the company so fuck you
     }
   }
 
