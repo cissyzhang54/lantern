@@ -419,6 +419,11 @@ export default function ArticlesRealtimeAggregation(query) {
                 }
               },
               {
+                term: {
+                  event_type: "page"
+                }
+              },
+              {
                 range: {
                   event_timestamp: {
                     gte: timespan

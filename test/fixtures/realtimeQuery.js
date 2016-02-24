@@ -422,6 +422,11 @@ export default {
               }
             },
             {
+              term: {
+                event_type: "page"
+              }
+            },
+            {
               range: {
                 event_timestamp: {
                   gte: "now-1h/m"
