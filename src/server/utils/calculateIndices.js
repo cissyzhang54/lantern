@@ -48,6 +48,6 @@ export function calculateRealtimeIndices(query, ES_INDEX) {
     }
     i++;
   }
-  
+
   return ES_INDEX + indexStr;
 }

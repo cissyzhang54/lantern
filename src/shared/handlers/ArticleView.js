@@ -172,6 +172,17 @@ class ArticleView extends React.Component {
 
     return (<DocumentTitle title={title}>
       <div>
+        {updating}
+
+        <ChunkWrapper noBorder>
+          <Header
+            title={data.title}
+            linkURL={'http://www.ft.com/cms/s/0/' + data.uuid + '.html'}
+            author={'By: ' + formatAuthors.join(data.author)}
+            published={'First Published: ' + data.published_human}
+            uuid={data.uuid}
+          />
+        </ChunkWrapper>
 
         <TabNav
           analyticsView={this.props.route.analyticsView}
@@ -188,19 +199,15 @@ class ArticleView extends React.Component {
             uuid={data.uuid}
             dateRange='published'
             availableFilters={this.props.availableFilters}
-          />
-        </ChunkWrapper>
-
-        <ChunkWrapper component="header">
-          {updating}
-
-          <Header
-            title={data.title}
-            linkURL={'http://www.ft.com/cms/s/0/' + data.uuid + '.html'}
-            author={'By: ' + formatAuthors.join(data.author)}
-            published={'First Published: ' + data.published_human}
-            uuid={data.uuid}
-          />
+            onDateRangeChange={this.props.onDateRangeChange}
+            publishDate={data.published}
+            timespanOptions={[
+              {label: 'First 24h', value: 24},
+              {label: 'First 48h', value: 48},
+              {label: 'First 3 days', value: 24 * 3},
+              {label: 'First 7 days', value: 24 * 7}
+             ]}
+            />
         </ChunkWrapper>
 
         <SectionHeadlineStats

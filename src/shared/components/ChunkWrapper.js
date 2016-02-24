@@ -11,6 +11,10 @@ export default class ChunkWrapper extends React.Component {
       borderBottom: '1px solid #ccc'
     };
 
+    if (this.props.noBorder) {
+      delete style.borderBottom;
+    }
+
     return (
       <div
         data-component={this.props.component}

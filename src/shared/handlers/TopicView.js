@@ -75,6 +75,16 @@ class TopicView extends React.Component {
 
     return(<DocumentTitle title={title}>
       <div>
+        <ChunkWrapper
+          component="header"
+          noBorder
+        >
+          {updating}
+
+          <Header
+            title={'Topic: ' + this.props.params.topic}
+          />
+        </ChunkWrapper>
           <ChunkWrapper component="modifier">
             <SectionModifier
               category={'topics'}
@@ -89,15 +99,14 @@ class TopicView extends React.Component {
               renderUserCohort
               uuid={this.props.params.topic}
               availableFilters={this.props.availableFilters}
+              timespanOptions={[
+                {label: 'Last 7 days', value: 24 * 7},
+                {label: 'Last 30 days', value: 24 * 30}
+               ]}
+              onDateRangeChange={this.props.onDateRangeChange}
             />
           </ChunkWrapper>
-          <ChunkWrapper component="header">
-            {updating}
 
-            <Header
-              title={'Topic: ' + this.props.params.topic}
-            />
-          </ChunkWrapper>
           <SectionHeadlineStats
             comparatorData={comparatorData}
             config={headlineStats}

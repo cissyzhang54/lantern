@@ -30,7 +30,7 @@ router.get(`/realtime/articles/:uuid(${UUID_REGEX})/:timespan`, (req, res, next)
     });
 });
 
-router.get(`/articles/:uuid(${UUID_REGEX})/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
+router.get(`/articles/:uuid(${UUID_REGEX})/:timespan/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
   return getArticleData(req, res)
     .then(() => next())
     .catch((err) => {
@@ -39,7 +39,7 @@ router.get(`/articles/:uuid(${UUID_REGEX})/:comparatorType(${COMPTYPE_REGEX})/:c
     });
 });
 
-router.get(`/sections/:section`, (req, res, next) => {
+router.get(`/sections/:section/:timespan`, (req, res, next) => {
   return getSectionData(req, res)
     .then(() => next())
     .catch((err) => {
@@ -48,7 +48,7 @@ router.get(`/sections/:section`, (req, res, next) => {
     });
 });
 
-router.get(`/sections/:section/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
+router.get(`/sections/:section/:timespan/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
   return getSectionData(req, res)
     .then(() => next())
     .catch((err) => {
@@ -57,7 +57,7 @@ router.get(`/sections/:section/:comparatorType(${COMPTYPE_REGEX})/:comparator`, 
     });
 });
 
-router.get(`/topics/:topic`, (req, res, next) => {
+router.get(`/topics/:topic/:timespan`, (req, res, next) => {
   return getTopicData(req, res)
     .then(() => {next()})
     .catch((err) => {
@@ -66,7 +66,7 @@ router.get(`/topics/:topic`, (req, res, next) => {
     });
 });
 
-router.get(`/topics/:topic/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
+router.get(`/topics/:topic/:timespan/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
   return getTopicData(req, res)
     .then(() => next())
     .catch((err) => {
@@ -88,12 +88,30 @@ function getArticleData(req, res){
   let query = {
     uuid: decode(req.params.uuid),
     comparator: decode(req.params.comparator),
-    comparatorType: decode(req.params.comparatorType)
+    comparatorType: decode(req.params.comparatorType),
+    timespan: decode(req.params.timespan)
   }
+
+  let dateFrom;
+  let dateTo;
+
+  if(req.params.timespan === 'custom') {
+    dateFrom = query.dateFrom = req.query.dateFrom
+    dateTo = query.dateTo = req.query.dateTo
+  }
+
   return dataApiUtils.getArticleData(query, apiKey)
     .then((data) => {
-      let dateFrom = moment(data.data.published).toISOString();
-      let dateTo = moment().toISOString();
+
+      if (req.params.timespan && req.params.timespan !== 'custom') {
+        dateTo = moment(data.data.published).add(req.params.timespan, 'hours').toISOString();
+      } else if (req.params.timespan !== 'custom'){
+        dateFrom = moment(data.data.published).toISOString();
+        dateTo = moment().toISOString();
+      }
+
+      console.log(dateFrom, dateTo);
+
       let getKeys = (item) => item[0];
       res.locals.data = {
         AnalyticsStore: {
@@ -107,7 +125,8 @@ function getArticleData(req, res){
             filters: {},
             comparator: query.comparator,
             comparatorType: query.comparatorType,
-            publishDate: dateFrom
+            publishDate: dateFrom,
+            timespan: decode(req.params.timespan)
           },
           availableFilters: {
             devices: data.data.devices.map(getKeys),
@@ -187,13 +206,23 @@ function getSectionData(req, res){
     section: decode(req.params.section),
     comparator: decode(req.params.comparator),
     comparatorType: decode(req.params.comparatorType),
-    dateFrom: moment().subtract(29,'days').toISOString(),
-    dateTo: moment().toISOString(),
+    timespan: decode(req.params.timespan),
     filters: {},
     type: 'section'
   }
+
+  if(req.params.timespan === 'custom') {
+    query.dateFrom = req.query.dateFrom
+    query.dateTo = req.query.dateTo
+  }
+
   return dataApiUtils.getSectionData(query, apiKey)
     .then((data) => {
+      if(req.params.timespan !== 'custom') {
+        query.dateFrom = moment().subtract(req.params.timespan, 'hours').toISOString();
+        query.dateTo = moment().toISOString();
+      }
+
       let getKeys = (item) => item[0];
       res.locals.data = {
         AnalyticsStore: {
@@ -221,14 +250,25 @@ function getTopicData(req, res){
     topic: decode(req.params.topic),
     comparator: decode(req.params.comparator),
     comparatorType: decode(req.params.comparatorType),
-    dateFrom: moment().subtract(29,'days').toISOString(),
-    dateTo: moment().toISOString(),
+    timespan: req.params.timespan,
     filters: {},
     type: 'topic'
   }
+
+  if(req.params.timespan === 'custom') {
+    query.dateFrom = req.query.dateFrom
+    query.dateTo = req.query.dateTo
+  }
+
   return dataApiUtils.getTopicData(query, apiKey)
     .then((data) => {
       let getKeys = (item) => item[0];
+
+      if(req.params.timespan !== 'custom') {
+        query.dateFrom = moment().subtract(req.params.timespan, 'hours').toISOString();
+        query.dateTo = moment().toISOString();
+      }
+
       res.locals.data = {
         AnalyticsStore: {
           comparatorData: data.comparatorData,

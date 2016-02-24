@@ -30,21 +30,11 @@ export default class DateRange extends React.Component {
     if (moment(this.state.minDate).isAfter(this.state.startDate, 'day')){
       this.state.startDate = this.state.minDate;
     }
-    if (this.props.dateRange === 'published') {
-      this.state.ranges = {
-        'Publish Day': [moment(props.startDate), moment(props.startDate)],
-        'First 3 days': [moment(props.startDate), moment(props.startDate).add(2, 'days')],
-        'First 7 days': [moment(props.startDate), moment(props.startDate).add(6, 'days')],
-      }
-    } else {
-      this.state.ranges = {
-        'Today': [moment().startOf('day'), moment().endOf('day')],
-        'Yesterday': [moment().subtract(1, 'days'), moment()],
-        'Week To Date': [moment().day(0), moment()],
-        'Last 7 days': [moment().subtract(6, 'days'), moment()],
-        'Last 30 days': [moment().subtract(29, 'days'), moment()]
-      }
-    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    this.state.startDate = moment(newProps.startDate);
+    this.state.endDate = moment(newProps.endDate);
   }
 
   handleEvent(event, picker) {

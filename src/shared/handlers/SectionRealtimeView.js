@@ -112,7 +112,10 @@ class SectionRealtimeView extends React.Component {
       <DocumentTitle title={title}>
         <div>
 
-          <ChunkWrapper component="header">
+          <ChunkWrapper
+            component="header"
+            noBorder
+          >
             <Header title={`Section: ${this.props.params.section}`}/>
           </ChunkWrapper>
 

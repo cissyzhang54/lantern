@@ -68,7 +68,6 @@ class SectionView extends React.Component {
     let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views');
     let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views');
 
-
     const headlineStats = {
       topicsCovered: {
         metricType: 'integer',
@@ -107,7 +106,10 @@ class SectionView extends React.Component {
     return(<DocumentTitle title={title}>
       <div>
 
-        <ChunkWrapper component="header">
+        <ChunkWrapper
+          component="header"
+          noBorder
+        >
           {updating}
 
           <Header
@@ -132,8 +134,12 @@ class SectionView extends React.Component {
             query={query}
             category={'sections'}
             uuid={this.props.params.section}
-            dateRange='historical'
             availableFilters={this.props.availableFilters}
+            timespanOptions={[
+              {label: 'Last 7 days', value: 24 * 7},
+              {label: 'Last 30 days', value: 24 * 30}
+             ]}
+            onDateRangeChange={this.props.onDateRangeChange}
           />
         </ChunkWrapper>
 

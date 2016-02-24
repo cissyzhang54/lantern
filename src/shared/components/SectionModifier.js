@@ -8,7 +8,9 @@ import Tags from "./Tags";
 import Filters from "./Filters";
 import DateRange from "./DateRange";
 import ModifierDescription from "./ModifierDescription";
+import TimespanSelector from "./TimespanSelector";
 import Text from "./Text";
+import moment from "moment";
 
 import AnalyticsActions from '../actions/AnalyticsActions';
 
@@ -51,16 +53,6 @@ export default class Modifier extends React.Component {
     };
   }
 
-  handleDateRangeChange (dates) {
-    let updatedDates = {
-      dateFrom: dates.startDate.format('YYYY-MM-DD'),
-      dateTo: dates.endDate.format('YYYY-MM-DD')
-    }
-
-    return AnalyticsActions.updateQuery(updatedDates);
-
-  }
-
   handleFilterChange (filter) {
     let key;
     switch (filter.key){
@@ -95,15 +87,50 @@ export default class Modifier extends React.Component {
       arrAuthors.map(d => {return {label:d, url:`author/${d}`}})
     )
 
+    let startDate = this.props.query.dateFrom, endDate = this.props.query.dateTo;
+
+    if (this.props.query.timespan !== 'custom' && this.props.category === 'articles') {
+      startDate = moment(this.props.publishDate).toISOString();
+      endDate = moment(this.props.publishDate).add(this.props.query.timespan, 'hours').toISOString();
+    }
+    else if (this.props.query.timespan !== 'custom') {
+      endDate = moment().toISOString();
+      startDate = moment().subtract(this.props.query.timespan, 'hours').toISOString();
+    }
+
     this.props.category === 'sections' && tags.push({label: this.props.query.section, url : `section/${this.props.query.section}`});
     this.props.category === 'topics' && tags.push({label: this.props.query.topic, url : `topic/${this.props.query.topic}`});
 
     let count = typeof comparatorData.articleCount == 'number' ? comparatorData.articleCount : null;
 
     return (
-      <div data-component='sectionModifier'
+      <div
+        className="sectionModifier" 
+        data-component='sectionModifier'
         style={styles.modifierWrapper}
       >
+        <Row style={styles.row}>
+          <Col sm={2}
+               xs={12}
+            >
+            <span style={styles.title}><span style={styles.titleText}>Timespan:</span></span>
+          </Col>
+          <Col sm={10}
+               xs={12}
+            >
+            <TimespanSelector
+              current={this.props.query.timespan}
+              options={this.props.timespanOptions}
+              query={this.props.query}
+              />
+            <DateRange
+              onChange={this.props.onDateRangeChange}
+              startDate={startDate}
+              endDate={endDate}
+              />
+          </Col>
+        </Row>
+
         <Row style={styles.row}>
           <Col sm={2}
             xs={12}
@@ -128,7 +155,7 @@ export default class Modifier extends React.Component {
               <span style={styles.titleText}
                 aria-dscribedby="tag-description"
               >
-                Metadata Tags:
+                Compare with:
               </span>
             </span>
 
@@ -157,24 +184,6 @@ export default class Modifier extends React.Component {
             onChange={this.handleFilterChange}
             availableFilters={this.props.availableFilters}
           />
-        </Row>
-
-        <Row style={styles.row}>
-          <Col sm={2}
-            xs={12}
-          >
-            <span style={styles.title}><span style={styles.titleText}>Date Range:</span></span>
-          </Col>
-          <Col sm={4}
-            xs={12}
-          >
-            <DateRange
-              onChange={this.handleDateRangeChange}
-              startDate={this.props.query.dateFrom}
-              endDate={this.props.query.dateTo}
-              dateRange={this.props.dateRange}
-            />
-          </Col>
         </Row>
 
         <Row>

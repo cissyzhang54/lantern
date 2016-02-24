@@ -2,16 +2,32 @@
 module.exports = {
 
   // Links
-  exampleArticleUrl : 'http://localhost:' + process.env.PORT + '/articles/69feb35e-893d-11e5-90de-f44762bf9896',
+  exampleArticleUrl : 'http://localhost:' + process.env.PORT + '/articles/69feb35e-893d-11e5-90de-f44762bf9896/48',
   exampleArticleTitle: 'Lantern - First general strike since Syriza win brings Greece to standstill',
   exampleArticleLink: 'http://www.ft.com/cms/s/0/69feb35e-893d-11e5-90de-f44762bf9896.html',
 
   // Modifier Section
   sectionModifier: {
-    tags: {
-      name: 'Tags',
+    dateRange: {
+      name: 'Timespan',
       selectors: {
         container: 'div[data-component="sectionModifier"] > div[class="row"]:nth-child(1)',
+        dataComponent: ' div[data-component="dateRange"]',
+        heading: ' > div > span'
+      }
+    },
+    timespan: {
+      name: 'Timespan',
+      selectors: {
+        container: 'div[data-component="sectionModifier"] > div[class="row"]:nth-child(1)',
+        dataComponent: ' ol[data-component="timespanSelector"]',
+        heading: ' > div > span'
+      }
+    },
+    tags: {
+      name: 'Compare with',
+      selectors: {
+        container: 'div[data-component="sectionModifier"] > div[class="row"]:nth-child(2)',
         dataComponent: ' div[data-component="tags"]',
         heading: ' > div > span'
       }
@@ -19,16 +35,8 @@ module.exports = {
     filters: {
       name: 'Filters',
       selectors: {
-        container: 'div[data-component="sectionModifier"] > div[class="row"]:nth-child(2)',
-        dataComponent: ' div[data-component="filters"]',
-        heading: ' > div > span'
-      }
-    },
-    dateRange: {
-      name: 'Date Range',
-      selectors: {
         container: 'div[data-component="sectionModifier"] > div[class="row"]:nth-child(3)',
-        dataComponent: ' div[data-component="dateRange"]',
+        dataComponent: ' div[data-component="filters"]',
         heading: ' > div > span'
       }
     }

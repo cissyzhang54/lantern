@@ -17,7 +17,6 @@ function scrollToTop() {
     window.scrollTo(0, 0);
   }
 }
-
 export default (
   <Route component={AppController}>
     <Route
@@ -36,39 +35,68 @@ export default (
         component={PlaygroundLoader}
       />
     </Route>
+    <Redirect from="articles/:uuid(/:timespan)"
+      to="articles/:uuid/48/global/FT"
+    />
     <Route
-      path="articles/:uuid/:comparatorType/:comparator"
+      path="articles/:uuid"
       component={HistoricalAnalyticsView}
       onEnter={scrollToTop}
       analyticsView="article"
-    />
-    <Redirect from="articles/:uuid"
-      to="articles/:uuid/global/FT"
+    >
+      <Route
+        path=":timespan/:comparatorType/:comparator"
+        component={HistoricalAnalyticsView}
+        onEnter={scrollToTop}
+        analyticsView="article"
+        >
+      </Route>
+    </Route>
+    <Redirect from="sections/:section"
+      to="sections/:section/168"
     />
     <Route
       path="sections/:section"
       onEnter={scrollToTop}
       component={HistoricalAnalyticsView}
       analyticsView="section"
-    />
-    <Route
-      path="sections/:section/:comparatorType/:comparator"
-      onEnter={scrollToTop}
-      component={HistoricalAnalyticsView}
-      analyticsView="section"
+    >
+      <Route
+        path=":timespan"
+        onEnter={scrollToTop}
+        component={HistoricalAnalyticsView}
+        analyticsView="section"
+      />
+      <Route
+        path=":timespan/:comparatorType/:comparator"
+        onEnter={scrollToTop}
+        component={HistoricalAnalyticsView}
+        analyticsView="section"
+      />
+    </Route>
+    <Redirect from="topics/:topic"
+      to="topics/:topic/168"
     />
     <Route
       path="topics/:topic"
       onEnter={scrollToTop}
       component={HistoricalAnalyticsView}
       analyticsView="topic"
-    />
-    <Route
-      path="topics/:topic/:comparatorType/:comparator"
-      onEnter={scrollToTop}
-      component={HistoricalAnalyticsView}
-      analyticsView="topic"
-    />
+    >
+      <Route
+        path=":timespan"
+        onEnter={scrollToTop}
+        component={HistoricalAnalyticsView}
+        analyticsView="topic"
+      />
+      <Route
+        path=":timespan/:comparatorType/:comparator"
+        onEnter={scrollToTop}
+        component={HistoricalAnalyticsView}
+        analyticsView="topic"
+      />
+    </Route>
+
     <Route
       path="pickoftheday"
       onEnter={scrollToTop}
@@ -76,23 +104,25 @@ export default (
       analyticsView="pickoftheday"
     />
     <Route
-      path="realtime/articles/:uuid"
-      onEnter={scrollToTop}
-      component={ArticleRealtimeView}
-      analyticsView="realtime-article"
-    />
-    <Route
-      path="realtime/articles/:uuid/:timespan"
-      onEnter={scrollToTop}
-      component={ArticleRealtimeView}
-      analyticsView="realtime-article"
-    />
-    <Route
       path="realtime/sections/:section"
       onEnter={scrollToTop}
       component={SectionRealtimeView}
       analyticsView="realtime-section"
     />
+    <Redirect
+      from="realtime/articles/:uuid"
+      to="realtime/articles/:uuid/48h"
+      />
+    <Route
+      path="realtime/articles/:uuid"
+      component={ArticleRealtimeView}
+    >
+      <Route
+        path=":timespan"
+        component={ArticleRealtimeView}
+        onEnter={scrollToTop}
+        />
+    </Route>
     <Route
       path="*"
       name='404'

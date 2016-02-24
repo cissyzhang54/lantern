@@ -18,8 +18,8 @@ function newState() {
       topic: null,
       section: null,
       uuid: null,
-      dateFrom: moment().subtract(30, 'days').toISOString(),
-      dateTo: moment().toISOString(),
+      dateFrom: null,
+      dateTo: null,
       filters: {},
       comparator: 'FT',
       comparatorType: 'global',
@@ -57,11 +57,6 @@ class AnalyticsStore {
   updateData(newData) {
     newData.loading = false;
     newData.activeQuery = newData.query;
-
-    if (this.state.query.type === 'article') {
-      let queryProps = assign({}, this.state.query, {dateFrom : newData.data.published})
-      newData.query = queryProps;
-    }
 
     if (Object.keys(this.state.query.filters).length === 0) {
       let getKeys = (item) => item[0];

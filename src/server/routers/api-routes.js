@@ -43,7 +43,8 @@ function getCategoryData(req, res, next) {
     dateTo: req.body.dateTo,
     filters: req.body.filters,
     comparator: req.body.comparator,
-    comparatorType: req.body.comparatorType
+    comparatorType: req.body.comparatorType,
+    timespan: req.body.timespan
   };
   esClient.runArticleQuery(query)
     .then((response) => ArticleDataFormatter(response))
@@ -111,7 +112,8 @@ function getSectionData(req, res, next) {
     dateTo: req.body.dateTo,
     filters: req.body.filters,
     comparator: req.body.comparator,
-    comparatorType: req.body.comparatorType
+    comparatorType: req.body.comparatorType,
+    timespan: req.body.timespan
   };
   esClient.runSectionQuery(query)
     .then((response) => SectionDataFormatter(response))
@@ -163,7 +165,8 @@ function getTopicData(req, res, next) {
     dateTo: req.body.dateTo,
     filters: req.body.filters,
     comparator: req.body.comparator,
-    comparatorType: req.body.comparatorType
+    comparatorType: req.body.comparatorType,
+    timespan: req.body.timespan
   };
   esClient.runTopicQuery(query)
     .then((response) => TopicDataFormatter(response))
