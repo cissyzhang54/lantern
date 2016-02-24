@@ -75,11 +75,6 @@ export default function ArticlesAggregation(query) {
                       }
                     },
                     {
-                      term: {
-                        referrer_type: "social-network"
-                      }
-                    },
-                    {
                       prefix: {
                         referrer: "http://localhost"
                       }
