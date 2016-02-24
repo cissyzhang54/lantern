@@ -40,10 +40,20 @@ describe('Top Articles Query', () => {
           },
           filter : {
             bool: {
-              must: [
+              must_not: [
                 {
                   range: {
                     initial_publish_date: {
+                      gt: moment().startOf('day').toISOString(),
+                      lt: moment().endOf('day').toISOString()
+                    }
+                  }
+                }
+              ],
+              must: [
+                {
+                  range: {
+                    view_timestamp: {
                       gt: 'now-1d/d',
                       lt: 'now/d'
                     }

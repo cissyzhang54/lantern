@@ -1,4 +1,5 @@
 import * as QueryUtils from '../utils/queryUtils'
+import moment from 'moment'
 
 export default function TopArticleQuery(query){
 
@@ -12,10 +13,20 @@ export default function TopArticleQuery(query){
       },
       filter : {
         bool: {
-          must: [
+          must_not: [
             {
               range: {
                 initial_publish_date: {
+                  gt: moment().startOf('day').toISOString(),
+                  lt: moment().endOf('day').toISOString()
+                }
+              }
+            }
+          ],
+          must: [
+            {
+              range: {
+                view_timestamp: {
                   gt: 'now-1d/d',
                   lt: 'now/d'
                 }
