@@ -9,13 +9,6 @@ export default function ArticleEventsComparatorESQuery(query) {
 
   let comparatorQuery = ArticleComparatorQuery(query)
 
-  // we don't need the date range here
-  let must = comparatorQuery.filtered.query.bool.must;
-  if (must.length > 1) {
-    must.splice(0,1);
-  } else {
-    delete comparatorQuery.filtered.query.bool.must;
-  }
   return {
     "query" : comparatorQuery,
     "size": 0,
