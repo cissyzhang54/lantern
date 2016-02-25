@@ -43,11 +43,26 @@ function getColumns (data, metric) {
     let metricVal = d[metric];
     let title =  d.title.buckets[0] ? d.title.buckets[0].key : "Unknown"
     let author = getAuthors(d);
-    let titleUrl = <a href={`http://www.ft.com/cms/s/${uuid}.html`}>{title}<Glyphicon glyph="new-window" style={tagStyle} /></a>;
-    let lanternUrl = <a href={`/landing/article/${uuid}`}> <Glyphicon glyph="stats" style={tagStyle}  /></a>;
+    let articleUrl = (
+      <a href={`/landing/article/${uuid}`}
+        target="_blank"
+      >
+        {title}
+      </a>
+      );
+    let ftUrl = (
+      <a href={`http://www.ft.com/cms/s/${uuid}.html`}
+        target="_blank"
+      >
+        FT
+        <Glyphicon glyph="new-window"
+          style={tagStyle}
+        />
+      </a>
+    );
 
     return [
-      titleUrl, author, metricVal, lanternUrl
+      articleUrl, author, metricVal, ftUrl
     ];
   });
 }
@@ -189,7 +204,7 @@ class TopArticlesView extends React.Component {
           <Row>
             <Col xs={12}>
               <Table
-                headers={['Article', 'Author(s)', 'Time']}
+                headers={['Article', 'Author(s)', 'Time', '']}
                 rows={avg_time_rows}
               />
             </Col>
@@ -205,7 +220,7 @@ class TopArticlesView extends React.Component {
           <Row>
             <Col xs={12}>
               <Table
-                headers={['Article', 'Author(s)', 'Users retained']}
+                headers={['Article', 'Author(s)', 'Users retained', '']}
                 rows={topArticlesRetention}
               />
             </Col>
@@ -221,7 +236,7 @@ class TopArticlesView extends React.Component {
           <Row>
             <Col xs={12}>
               <Table
-                headers={['Article', 'Author(s)', 'Comments']}
+                headers={['Article', 'Author(s)', 'Comments', '']}
                 rows={topArticleCommented}
               />
             </Col>
@@ -237,7 +252,7 @@ class TopArticlesView extends React.Component {
           <Row>
             <Col xs={12}>
               <Table
-                headers={['Article', 'Author(s)', 'Views']}
+                headers={['Article', 'Author(s)', 'Views', '']}
                 rows={topArticleViews}
               />
             </Col>
@@ -253,7 +268,7 @@ class TopArticlesView extends React.Component {
           <Row>
             <Col xs={12}>
               <Table
-                headers={['Article', 'Author(s)', 'Views']}
+                headers={['Article', 'Author(s)', 'Views', '']}
                 rows={socialReferrers}
               />
             </Col>
@@ -269,7 +284,7 @@ class TopArticlesView extends React.Component {
           <Row>
             <Col xs={12}>
               <Table
-                headers={['Article', 'Author(s)', 'Views']}
+                headers={['Article', 'Author(s)', 'Views', '']}
                 rows={searchReferrers}
               />
             </Col>
