@@ -1,5 +1,6 @@
 import * as esClient from '../esClient';
 import moment from 'moment'
+import assign from 'object-assign';
 
 const POLL_INTERVAL = 2 * 60000; // 2 minutes
 const ONE_HOUR = 60 * 60 * 1000; /* ms */
@@ -69,5 +70,5 @@ function fetchStatus() {
 }
 
 export default function getStatus() {
-  return latestStatus;
+  return assign({}, latestStatus);
 }

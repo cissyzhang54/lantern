@@ -101,3 +101,7 @@ export default function RealtimeServer(app) {
   }
 
 }
+
+RealtimeServer.prototype.getNumberOfActivePollers = function() {
+  return Object.keys(this.pollers).length;
+}
