@@ -35,7 +35,7 @@ export default function formatData(data) {
   }
 
   let [metaData, articleData, eventData, articleComparatorData, eventComparatorData, articlePublishTimesData] = data;
-  let metaFields = ['title', 'uuid', 'author', 'published', 'published_human', 'genre', 'sections', 'topics']
+  let metaFields = ['title', 'uuid', 'author', 'published', 'published_human', 'genre', 'sections', 'topics', 'primarySection']
   let articleFields = [
     'pageViews', 'timeOnPage', 'readTimes', 'channels', 'uniqueVisitors',
     'isSubscription', 'nextInternalUrl', 'internalReferrerTypes', 'internalReferrerUrls', 'isFirstVisit',

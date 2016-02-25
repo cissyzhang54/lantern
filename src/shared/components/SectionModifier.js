@@ -76,11 +76,24 @@ export default class Modifier extends React.Component {
     let arrAuthors = data.author;
     if (!Array.isArray(arrAuthors)) arrAuthors = [arrAuthors]
     if (!arrAuthors[0]) arrAuthors=[]
+
+    let primarySections = data.primarySection.split(',');
+    let firstPrimarySection = primarySections[0];
+    let comparator = this.props.comparatorQuery.comparator || firstPrimarySection;
+
+    function listAllSections (sections, primarySections) {
+      return sections.concat(primarySections.filter(function(primarySection) {
+        return sections.indexOf(primarySection) == -1;
+      }))
+    }
+
+    let allSections = listAllSections(data.sections, primarySections);
+
     let tags = [{label:'FT',url:`global/FT`}]
       .concat(
       data.topics.map(d => {return {label:d, url:`topic/${d}`}})
     ).concat(
-      data.sections.map(d => {return {label:d, url:`section/${d}`}})
+      allSections.map(d => {return {label:d, url:`section/${d}`}})
     ).concat(
       data.genre.map(d => {return {label:d, url:`genre/${d}`}})
     ).concat(
@@ -165,7 +178,7 @@ export default class Modifier extends React.Component {
           >
             <Tags
               tags={tags}
-              currentTag={this.props.comparatorQuery.comparator}
+              currentTag={comparator}
               uuid={this.props.uuid}
               category={this.props.category}
               comparatorQuery={this.props.comparatorQuery}

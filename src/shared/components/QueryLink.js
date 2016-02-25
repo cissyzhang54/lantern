@@ -19,7 +19,12 @@ export default class QueryLink extends React.Component {
         }
         break;
       case 'article' :
-        url = `/${query.type}s/${query.uuid}/${query.timespan}/${query.comparatorType}/${query.comparator}`
+        if (query.comparatorType) {
+          url = `/${query.type}s/${query.uuid}/${query.timespan}/${query.comparatorType}/${query.comparator}`;
+        }
+        else {
+          url = `/${query.type}s/${query.uuid}/${query.timespan}`;
+        }
         break;
       case 'realtimeArticle' :
         url = `/realtime/articles/${query.uuid}/${query.timespan}`

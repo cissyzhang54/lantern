@@ -35,9 +35,6 @@ export default (
         component={PlaygroundLoader}
       />
     </Route>
-    <Redirect from="articles/:uuid(/:timespan)"
-      to="articles/:uuid/48/global/FT"
-    />
     <Route
       path="articles/:uuid"
       component={HistoricalAnalyticsView}
@@ -45,12 +42,11 @@ export default (
       analyticsView="article"
     >
       <Route
-        path=":timespan/:comparatorType/:comparator"
+        path=":timespan(/:comparatorType/:comparator)"
         component={HistoricalAnalyticsView}
         onEnter={scrollToTop}
         analyticsView="article"
-        >
-      </Route>
+        />
     </Route>
     <Redirect from="sections/:section"
       to="sections/:section/168"
