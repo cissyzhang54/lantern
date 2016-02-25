@@ -151,9 +151,17 @@ export function runArticleQuery(queryData) {
       queryData.dateTo = moment().toISOString();
     }
 
+    let primarySection = [];
+    if (Array.isArray(metaData.primary_section)) {
+      primarySection = metaData.primary_section;
+    }
+    else if (typeof(metaData.primary_section) === 'string') {
+      primarySection = metaData.primary_section.split(',');
+    }
+
     if (!queryData.comparator) {
       queryData.comparatorType = 'section';
-      queryData.comparator = metaData.primary_section.split(',')[0];
+      queryData.comparator = primarySection[0];
     }
 
     return retrieveArticleData(queryData)

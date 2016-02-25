@@ -77,7 +77,14 @@ export default class Modifier extends React.Component {
     if (!Array.isArray(arrAuthors)) arrAuthors = [arrAuthors]
     if (!arrAuthors[0]) arrAuthors=[]
 
-    let primarySections = data.primarySection.split(',');
+    let primarySections = [];
+    if (Array.isArray(data.primarySection)) {
+      primarySections = data.primarySection;
+    }
+    else if (typeof(data.primarySection) === 'string') {
+      primarySections = data.primarySection.split(',');
+    }
+
     let firstPrimarySection = primarySections[0];
     let comparator = this.props.comparatorQuery.comparator || firstPrimarySection;
 
@@ -118,7 +125,7 @@ export default class Modifier extends React.Component {
 
     return (
       <div
-        className="sectionModifier" 
+        className="sectionModifier"
         data-component='sectionModifier'
         style={styles.modifierWrapper}
       >
