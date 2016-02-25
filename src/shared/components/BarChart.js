@@ -12,16 +12,10 @@ if (isBrowser()) {
   c3 = require('c3');
 }
 
-var controllerStyles = {
-  'default': {},
-  '(max-width: 500px)' : {}
-};
-
 export default class BarChart extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      responsiveStyles : controllerStyles['default']
     };
   }
 
@@ -137,14 +131,11 @@ export default class BarChart extends React.Component {
   }
 
   componentDidMount() {
-    responsiveStyles.addListeners(this, controllerStyles);
-
     if (this.props.data)
       this.drawChart();
   }
 
   componentWillUnmount() {
-    responsiveStyles.removeListeners(this);
     this.chart && this.chart.destroy();
   }
 
