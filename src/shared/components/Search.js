@@ -48,6 +48,9 @@ export default class Search extends React.Component {
     let query = this.props.query || '';
     el.setAttribute('value', query);
     el.focus();
+    setImmediate(()=>{
+      el.select();
+    });
     if (el.setSelectionRange) {
       el.setSelectionRange(query.length, query.length);
     }
