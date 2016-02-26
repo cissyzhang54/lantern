@@ -32,6 +32,12 @@ export default class SectionWhen extends React.Component {
       }
     })
 
+    // Update the first data point to match the publish time
+    // as the aggs are in hours not minutes
+    if(this.props.lastPublishDates.length > 0) {
+      timeData[0].category = this.props.lastPublishDates[0].key_as_string
+    }
+
     return (<ChunkWrapper component='sectionWhen'>
       <Row>
         <Col xs={12}>
