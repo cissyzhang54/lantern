@@ -33,8 +33,8 @@ function convertTime (avg) {
 
 function getAuthors (authors) {
   return authors.author.buckets.map((d,i) => {
-    return d.key;
-  }).toString();
+      return d.key;
+    }).join(", ") || 'Unknown author';
 }
 
 function getColumns (data, metric) {
@@ -45,18 +45,18 @@ function getColumns (data, metric) {
     let author = getAuthors(d);
     let articleUrl = (
       <a href={`/landing/article/${uuid}`}
-        target="_blank"
+         target="_blank"
       >
         {title}
       </a>
-      );
+    );
     let ftUrl = (
       <a href={`http://www.ft.com/cms/s/${uuid}.html`}
-        target="_blank"
+         target="_blank"
       >
         FT
         <Glyphicon glyph="new-window"
-          style={tagStyle}
+                   style={tagStyle}
         />
       </a>
     );
