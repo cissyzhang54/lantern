@@ -488,7 +488,174 @@ export default [{
           "doc_count": 5
         }
       ]
-    }
+    },
+    "unique_visitors": {
+      "doc_count_error_upper_bound": 0,
+      "sum_other_doc_count": 0,
+      "buckets": [
+        {
+          "key": "03ae3552-d186-11e5-831d-09f7778e7377",
+          "doc_count": 15034,
+          "unique_visitors": {
+            "value": 12360
+          }
+        },
+        {
+          "key": "c95abbc2-cbe1-11e5-be0b-b7ece4e953a0",
+          "doc_count": 9642,
+          "unique_visitors": {
+            "value": 7778
+          }
+        },
+        {
+          "key": "70e6ee72-d3fa-11e5-969e-9d801cf5e15b",
+          "doc_count": 8695,
+          "unique_visitors": {
+            "value": 7076
+          }
+        },
+        {
+          "key": "24c61c06-d4a5-11e5-829b-8564e7528e54",
+          "doc_count": 8016,
+          "unique_visitors": {
+            "value": 6375
+          }
+        },
+        {
+          "key": "a3267dfe-cc1a-11e5-be0b-b7ece4e953a0",
+          "doc_count": 6272,
+          "unique_visitors": {
+            "value": 4763
+          }
+        },
+        {
+          "key": "878fa516-ce63-11e5-831d-09f7778e7377",
+          "doc_count": 5793,
+          "unique_visitors": {
+            "value": 4507
+          }
+        },
+        {
+          "key": "351b86c8-cf18-11e5-831d-09f7778e7377",
+          "doc_count": 3387,
+          "unique_visitors": {
+            "value": 2852
+          }
+        },
+        {
+          "key": "7405277a-cc2c-11e5-a8ef-ea66e967dd44",
+          "doc_count": 2664,
+          "unique_visitors": {
+            "value": 2147
+          }
+        },
+        {
+          "key": "9bdbfbd4-cfe7-11e5-92a1-c5e23ef99c77",
+          "doc_count": 2482,
+          "unique_visitors": {
+            "value": 1755
+          }
+        },
+        {
+          "key": "0b462a2a-cbe3-11e5-be0b-b7ece4e953a0",
+          "doc_count": 2417,
+          "unique_visitors": {
+            "value": 1873
+          }
+        },
+        {
+          "key": "b093839a-cb5e-11e5-a8ef-ea66e967dd44",
+          "doc_count": 2225,
+          "unique_visitors": {
+            "value": 1765
+          }
+        },
+        {
+          "key": "65231676-d583-11e5-8887-98e7feb46f27",
+          "doc_count": 1813,
+          "unique_visitors": {
+            "value": 1425
+          }
+        },
+        {
+          "key": "8aaea406-cff1-11e5-831d-09f7778e7377",
+          "doc_count": 1756,
+          "unique_visitors": {
+            "value": 1385
+          }
+        },
+        {
+          "key": "0ace3536-cb36-11e5-a8ef-ea66e967dd44",
+          "doc_count": 1522,
+          "unique_visitors": {
+            "value": 1322
+          }
+        },
+        {
+          "key": "bbbc342a-d099-11e5-92a1-c5e23ef99c77",
+          "doc_count": 1171,
+          "unique_visitors": {
+            "value": 1015
+          }
+        },
+        {
+          "key": "d379403e-ca5f-11e5-a8ef-ea66e967dd44",
+          "doc_count": 990,
+          "unique_visitors": {
+            "value": 853
+          }
+        },
+        {
+          "key": "60c954c6-d558-11e5-829b-8564e7528e54",
+          "doc_count": 445,
+          "unique_visitors": {
+            "value": 392
+          }
+        },
+        {
+          "key": "80b15db4-ca87-11e5-be0b-b7ece4e953a0",
+          "doc_count": 360,
+          "unique_visitors": {
+            "value": 315
+          }
+        },
+        {
+          "key": "06f1bafa-ca64-11e5-a8ef-ea66e967dd44",
+          "doc_count": 233,
+          "unique_visitors": {
+            "value": 202
+          }
+        },
+        {
+          "key": "9f9aba4e-c9d4-11e5-a8ef-ea66e967dd44",
+          "doc_count": 66,
+          "unique_visitors": {
+            "value": 56
+          }
+        },
+        {
+          "key": "2c8d577c-c98f-11e5-be0b-b7ece4e953a0",
+          "doc_count": 57,
+          "unique_visitors": {
+            "value": 46
+          }
+        },
+        {
+          "key": "5affd234-c975-11e5-84df-70594b99fc47",
+          "doc_count": 35,
+          "unique_visitors": {
+            "value": 31
+          }
+        },
+        {
+          "key": "922dcc26-c357-11e5-808f-8231cd71622e",
+          "doc_count": 1,
+          "unique_visitors": {
+            "value": 1
+          }
+        }
+      ]
+    },
   },
   comparator: 'Regulation & Governance'
 }, {

@@ -24,9 +24,9 @@ export default function SectionDataFormatter(data) {
     let [metaData, sectionData, compMetaData, compData] = data;
     try {
       let results = {genre:[],sections:[], topics:[]}
-      let metaFields = ['topicsCovered', 'topicCount', 'publishTimes']
+      let metaFields = ['articleCount', 'topicsCovered', 'topicCount', 'publishTimes']
       let sectionFields = [
-        'articleCount', 'readTimes', 'pageViews', 'referrerTypes',
+        'readTimes', 'pageViews', 'referrerTypes',
         'referrerNames', 'socialReferrers', 'devices', 'countries',
         'regions', 'userCohort', 'rfvCluster', 'isFirstVisit',
         'internalReferrerTypes', 'isSubscription', 'uniqueVisitors',
@@ -39,8 +39,8 @@ export default function SectionDataFormatter(data) {
 
       let comparatorResults = {};
       if (compMetaData) {
-        let compMetaFields = ['topicsCovered', 'topicCount']
-        let compSectionFields = ['comparator', 'articleCount', 'pageViews', 'referrerTypes',
+        let compMetaFields = ['articleCount', 'topicsCovered', 'topicCount']
+        let compSectionFields = ['comparator', 'pageViews', 'referrerTypes',
           'referrerNames', 'socialReferrers', 'devices', 'countries', 'regions', 'userCohort',
           'rfvCluster', 'isFirstVisit', 'internalReferrerTypes', 'isSubscription', 'uniqueVisitors',
           'topicViews'

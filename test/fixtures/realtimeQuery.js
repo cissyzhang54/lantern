@@ -1,7 +1,18 @@
 export default {
   query: {
-    match: {
-      article_uuid: "f02cca28-9028-11e5-bd82-c1fb87bef7af"
+    bool: {
+      must : [
+        {
+          match: {
+            article_uuid: "f02cca28-9028-11e5-bd82-c1fb87bef7af"
+          }
+        },
+        {
+          match: {
+            page_type: 'article'
+          }
+        }
+      ]
     }
   },
   size: 1,
