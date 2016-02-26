@@ -33,6 +33,7 @@ let config = {
     'article:modifier:DateRange' : true,
     'section:who' : true,
     'section:where' : true,
+    'section:topics' : false,
     'topic:who' : true,
     'topic:where' : true
   }

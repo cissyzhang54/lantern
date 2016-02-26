@@ -11,8 +11,13 @@ export default class ChunkWrapper extends React.Component {
       borderBottom: '1px solid #ccc'
     };
 
+
     if (this.props.noBorder) {
       delete style.borderBottom;
+    }
+
+    if (!this.props.featureflag) {
+      return null; 
     }
 
     return (
@@ -25,3 +30,7 @@ export default class ChunkWrapper extends React.Component {
   }
 
 }
+
+ChunkWrapper.defaultProps = {
+  featureflag : true
+};
