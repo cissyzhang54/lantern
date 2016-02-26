@@ -32,7 +32,7 @@ const STYLES = {
 const MESSAGES = {
   PLACEHOLDER :  (extra) => { return (<div></div>)},
   LOADING :  (category, extra) => {
-    let title = "Loading " + category + "..."
+    let title = "Loading page ..."
     return (
     <div style={STYLES.LOADING}>
       <Logo message={title} loading />
