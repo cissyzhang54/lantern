@@ -30,6 +30,7 @@ import calculateIndices from './utils/calculateIndices.js';
 import {calculateRealtimeIndices} from './utils/calculateIndices.js';
 import timestampParser from './utils/timestampParser';
 import stream from 'stream';
+import assign from 'object-assign';
 
 var queryStream = new stream.Readable();
 queryStream._read = function noop() {};
@@ -131,6 +132,31 @@ export function getMetaData (uuid) {
   return retrieveMetaData(query);
 }
 
+// Normalise the various primary section formats we can get
+export function _normalisePrimarySection(primarySections) {
+  if (Array.isArray(primarySections)) {
+    return primarySections[0];
+  }
+  else if (typeof(primarySections) === 'string') {
+    return primarySections.split(',')[0];
+  }
+}
+
+// When no comparator is supplied, see if we can
+// default to the article's primary section.
+// Failing that, default to the global/FT comparator
+export function _getComparatorFromPrimarySection(primarySection) {
+  let queryData = {};
+  if (primarySection) {
+    queryData.comparatorType = 'section';
+    queryData.comparator = primarySection;
+  } else {
+    queryData.comparatorType = 'global';
+    queryData.comparator = 'FT';
+  }
+  return queryData;
+}
+
 export function runArticleQuery(queryData) {
   let queryError = queryDataError('articles', queryData);
   if (queryError){
@@ -151,17 +177,12 @@ export function runArticleQuery(queryData) {
       queryData.dateTo = moment().toISOString();
     }
 
-    let primarySection = [];
-    if (Array.isArray(metaData.primary_section)) {
-      primarySection = metaData.primary_section;
-    }
-    else if (typeof(metaData.primary_section) === 'string') {
-      primarySection = metaData.primary_section.split(',');
+    if (metaData.primary_section) {
+      metaData.primary_section = _normalisePrimarySection(metaData.primary_section);
     }
 
-    if (!queryData.comparator) {
-      queryData.comparatorType = 'section';
-      queryData.comparator = primarySection[0];
+    if(!queryData.comparator) {
+      assign(queryData, _getComparatorFromPrimarySection(metaData.primary_section));
     }
 
     return retrieveArticleData(queryData)

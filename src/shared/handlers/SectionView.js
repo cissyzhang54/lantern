@@ -52,6 +52,7 @@ class SectionView extends React.Component {
     let data = this.props.data
     let query = this.props.query
     let comparatorData = this.props.comparatorData
+    comparatorData.comparator = this.props.params.comparator;
     let title = (data) ? 'Lantern - ' + this.props.params.section : '';
 
     let dataFormatter = new FormatData(this.props.data, this.props.comparatorData);
@@ -127,7 +128,8 @@ class SectionView extends React.Component {
           <SectionModifier
             data={data}
             comparatorData={comparatorData}
-            comparatorQuery={this.props.query}
+            comparator={this.props.params.comparator}
+            comparatorType={this.props.params.comparatorType}
             renderDevice
             renderRegion
             renderReferrers
