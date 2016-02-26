@@ -35,6 +35,9 @@ export default (
         component={PlaygroundLoader}
       />
     </Route>
+    <Redirect from="articles/:uuid"
+      to="articles/:uuid/48"
+    />
     <Route
       path="articles/:uuid"
       component={HistoricalAnalyticsView}
