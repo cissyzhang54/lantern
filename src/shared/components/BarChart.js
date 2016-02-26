@@ -59,7 +59,6 @@ export default class BarChart extends React.Component {
     }
 
     if(this.chart) {
-      dataObject.unload = true;
       this.chart.load(dataObject);
       return;
     }
