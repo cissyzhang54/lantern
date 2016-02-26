@@ -21,7 +21,7 @@ class Analytics {
 
   sendGAPageViewEvent(event) {
     if (!this.track) return;
-    ga.pageview(document.location.pathname)
+    ga.pageview(document.location.pathname + document.location.search)
   }
 
   sendGACustomEvent(json) {
