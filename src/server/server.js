@@ -69,9 +69,9 @@ app.use('/landing/article/:uuid', ensureAuthenticated, (req, res) => {
     const hours = duration.asHours();
 
     if(hours <= 48){
-      res.redirect(`/realtime/articles/${req.params.uuid}`);
+      res.redirect(`/realtime/articles/${req.params.uuid}?chrome_extension=true`);
     } else {
-      res.redirect(`/articles/${req.params.uuid}`);
+      res.redirect(`/articles/${req.params.uuid}?chrome_extension=true`);
     }
   });
 });
