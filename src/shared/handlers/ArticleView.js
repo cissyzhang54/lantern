@@ -86,6 +86,7 @@ class ArticleView extends React.Component {
         label: 'Retention Rate',
         size: 'large',
         comparatorFormatName: 'retentionRate',
+        toolTip: (<Text message='explanations.articleHandlers.retentionRate' />),
         onClick: () => {
           this.setState({chartShown: 'retentionRate'})
         }
