@@ -15,6 +15,7 @@ import LineChart from "../components/LineChart";
 import ChunkWrapper from "../components/ChunkWrapper";
 import SectionWhere from '../components/SectionWhere';
 import BarChart from '../components/BarChart.js';
+import ToolTip from '../components/ToolTip'
 
 class TopicView extends React.Component {
 
@@ -149,7 +150,14 @@ class TopicView extends React.Component {
                 sm={4}
                 xs={12}
               >
-                <h4>{'External Sources'}</h4>
+                <h4>
+                  <ToolTip
+                    type="html"
+                    message='explanations.sectionJourney.articleViews.external'
+                    id={'external-sources-desc'}
+                  />
+                  {'External Sources'}
+                </h4>
                 <BarChart
                   category={refID}
                   data={refData}

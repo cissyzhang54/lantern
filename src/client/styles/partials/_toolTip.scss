@@ -1,0 +1,23 @@
+/* Clickable glyph */
+.toolTip {
+  .glyphicon {
+    font-size : 15px;
+    color: #039;
+    cursor: pointer;
+  }
+}
+
+/* Inline tooltips */
+h3, h4 {
+  .toolTip {
+    display: inline-block;
+    margin-right: 5px;
+  }
+}
+
+/* Text Modal */
+div[role="tooltip"] {
+  p {
+    white-space: pre-wrap;
+  }
+}

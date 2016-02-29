@@ -24,6 +24,7 @@ import TimespanSelector from '../components/TimespanSelector';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
+import ToolTip from '../components/ToolTip'
 
 const maxStrLen = 60;
 
@@ -501,7 +502,14 @@ class ArticleRealtimeView extends React.Component {
               xs={12}
               sm={6}
             >
-              <h4>External Sources</h4>
+              <h4>
+                <ToolTip
+                type="html"
+                message='explanations.sectionJourney.articleViews.external'
+                id={'external-sources-desc'}
+                />
+                External Sources
+              </h4>
             </Col>
           </Row>
           <Row>

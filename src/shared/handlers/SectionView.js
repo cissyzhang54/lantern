@@ -16,6 +16,7 @@ import SectionHeadlineStats from "../components/SectionHeadlineStats";
 import TabNav from '../components/TabNav';
 import ChunkWrapper from "../components/ChunkWrapper";
 import ArticleList from '../components/ArticleList';
+import ToolTip from '../components/ToolTip'
 
 class SectionView extends React.Component {
 
@@ -219,7 +220,14 @@ class SectionView extends React.Component {
                 xs={12}
                 sm={4}
               >
-                <h4>External Sources</h4>
+                <h4>
+                  <ToolTip
+                  type="html"
+                  message='explanations.sectionJourney.articleViews.external'
+                  id={'external-sources-desc'}
+                  />
+                  External Sources
+                </h4>
                 <BarChart
                   data={refData}
                   keys={refKeys}
