@@ -6,6 +6,8 @@ import Table from '../components/Table';
 import FormatData from "../utils/formatData";
 import ChunkWrapper from './ChunkWrapper.js';
 import Url from 'url';
+import ToolTip from '../components/ToolTip'
+
 
 function getReferrerUrls(data) {
   const maxLen = 60;
@@ -31,6 +33,7 @@ function getReferrerUrls(data) {
     'Views': data[1]
   }
 }
+
 
 export default class SectionReferrers extends React.Component {
 
@@ -77,7 +80,14 @@ export default class SectionReferrers extends React.Component {
 
       <Row style={{marginTop:"10px"}}>
         <Col xs={12}>
-          <h4>External Sources</h4>
+          <h4>
+             <ToolTip
+               type="html"
+               message='explanations.sectionJourney.articleViews.external'
+               id={'external-sources-desc'}
+             />
+             External Sources
+          </h4>
         </Col>
       </Row>
       <Row>
