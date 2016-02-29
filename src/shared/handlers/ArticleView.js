@@ -77,6 +77,7 @@ class ArticleView extends React.Component {
         label: 'Unique Visitors',
         size: 'large',
         comparatorFormatName: 'categoryAverageUniqueVisitors',
+        toolTip: (<Text message='explanations.metric.uniqueVisitors' />),
         onClick: () => {
           this.setState({chartShown: 'uniqueVisitors'})
         }

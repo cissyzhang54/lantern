@@ -16,6 +16,7 @@ import ChunkWrapper from "../components/ChunkWrapper";
 import SectionWhere from '../components/SectionWhere';
 import BarChart from '../components/BarChart.js';
 import ToolTip from '../components/ToolTip'
+import Text from '../components/Text'
 
 class TopicView extends React.Component {
 
@@ -64,7 +65,8 @@ class TopicView extends React.Component {
         metricType: 'integer',
         label: 'Unique Visitors',
         size: 'large',
-        comparatorFormatName: 'uniqueVisitors'
+        comparatorFormatName: 'uniqueVisitors',
+        toolTip: (<Text message='explanations.metric.uniqueVisitors' />)
       },
       articleCount: {
         metricType: 'integer',
