@@ -334,7 +334,6 @@ class ArticleRealtimeView extends React.Component {
       };
     });
 
-
     /* Who are the users */
     let [userTypeData, userTypeID, userTypeKeys] = dataFormatter.getPCTMetric('userTypes', 'Page Views')
     let timespan = this.props.timespan || "";
