@@ -1,6 +1,4 @@
-import * as calculateInterval from '../utils/calculateInterval'
-
-export default function ArticleComparatorAggregation(query) {
+export default function ArticleComparatorAggregation() {
   return {
       avg_time_on_page : {
         avg : {
@@ -151,8 +149,16 @@ export default function ArticleComparatorAggregation(query) {
         }
       },
       unique_visitors: {
-        cardinality: {
-          field: 'visitor_id'
+        terms: {
+          field: 'article_uuid',
+          size: 10000000
+        },
+        aggs: {
+          unique_visitors: {
+            cardinality: {
+              field: 'visitor_id'
+            }
+          }
         }
       }
   }

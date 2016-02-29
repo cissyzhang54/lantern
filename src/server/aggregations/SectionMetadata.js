@@ -11,13 +11,18 @@ export default function SectionMetadataAggregation(query) {
       },
       topics_covered: {
         cardinality: {
-          field: "topics"
+          field: "topics_not_analyzed"
         }
       },
       topic_count: {
         terms: {
           field: "topics_not_analyzed",
           size : 10
+        }
+      },
+      distinct_articles: {
+        cardinality: {
+          field: "article_uuid"
         }
       }
     }

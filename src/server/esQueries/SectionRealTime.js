@@ -34,6 +34,11 @@ export default function SectionRealtimeESQuery(query) {
             match: {
               primary_section : query.section
             }
+          },
+          {
+            match: {
+              page_type: 'article'
+            }
           }
         ]
       }

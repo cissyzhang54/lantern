@@ -22,6 +22,11 @@ export default function ArticleListQuery(query) {
                 to: query.dateTo
               }
             }
+          },
+          {
+            match: {
+              page_type: 'article'
+            }
           }
         ]
       }

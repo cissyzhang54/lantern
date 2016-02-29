@@ -16,8 +16,19 @@ export default function ArticlesRealtimeESQuery(query) {
 
   return {
     query: {
-      match: {
-        article_uuid : query.uuid
+      bool: {
+        must: [
+          {
+            match: {
+              article_uuid : query.uuid
+            }
+          },
+          {
+            match: {
+              page_type: 'article'
+            }
+          }
+        ]
       }
     },
     size: 1,

@@ -116,11 +116,6 @@ export default function SectionAggregation(query) {
         "field": "topics_not_analyzed",
         size: 10
       }
-    },
-    distinct_articles: {
-      cardinality: {
-        field: "article_uuid"
-      }
     }
   }
 }

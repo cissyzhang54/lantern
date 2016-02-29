@@ -79,7 +79,7 @@ const fields = {
   articleCount: 'aggregations.distinct_articles.value',
   categoryTotalViewCount: 'aggregations.page_view_total_count.value',
   categoryAverageViewCount: {name: 'aggregations.page_view_total_count.value', formatter: divide},
-  categoryAverageUniqueVisitors: {name: 'aggregations.unique_visitors.value', formatter: divide},
+  categoryAverageUniqueVisitors: {name: 'aggregations.unique_visitors', formatter: average, bucket_key: 'unique_visitors'},
   readTimes: {name: 'aggregations.page_views_over_time', formatter: format},
   headlineStatsOverTime : 'aggregations.headline_stats_over_time.buckets',
   scrollOverTime : 'aggregations.scroll_over_time.buckets',
@@ -124,6 +124,13 @@ const fields = {
   lastPublishDate: 'aggregations.last_publish_date.buckets',
   realtimeTopicsCovered: 'aggregations.topics_covered.value',
   realtimeArticlesPublished: 'aggregations.articles_published.value'
+}
+
+function average(agg, fieldObj) {
+  const sum = agg.buckets.reduce((prev, curr) => {
+    return prev + curr[fieldObj.bucket_key].value;
+  }, 0);
+  return sum / agg.buckets.length;
 }
 
 function divide(agg, fieldObj, divisor=1){
