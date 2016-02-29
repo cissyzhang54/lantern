@@ -118,8 +118,33 @@ export default class Modifier extends React.Component {
       startDate = moment().subtract(this.props.query.timespan, 'hours').toISOString();
     }
 
-    this.props.category === 'sections' && tags.push({label: this.props.query.section, url : `section/${this.props.query.section}`});
-    this.props.category === 'topics' && tags.push({label: this.props.query.topic, url : `topic/${this.props.query.topic}`});
+    let sameTagLabel;
+    switch (this.props.query.timespan) {
+      case "168":
+        sameTagLabel = "Previous Week";
+        break;
+      case "720":
+        sameTagLabel =  "Previous Month";
+        break;
+      default:
+        sameTagLabel = "Previous custom time period";
+        break
+    }
+
+    let selectedTag = comparator;
+    if (comparator === this.props.query.section ||
+        comparator === this.props.query.topic) {
+      selectedTag = sameTagLabel;
+    }
+
+    this.props.category === 'sections' && tags.push({
+      label: sameTagLabel,
+      url : `section/${this.props.query.section}`
+    });
+    this.props.category === 'topics' && tags.push({
+      label: sameTagLabel,
+      url : `topic/${this.props.query.topic}`
+    });
 
     let count = typeof comparatorData.articleCount == 'number' ? comparatorData.articleCount : null;
 
@@ -185,7 +210,7 @@ export default class Modifier extends React.Component {
           >
             <Tags
               tags={tags}
-              currentTag={comparator}
+              currentTag={selectedTag}
               uuid={this.props.uuid}
               category={this.props.category}
               comparatorQuery={this.props.comparatorQuery}
