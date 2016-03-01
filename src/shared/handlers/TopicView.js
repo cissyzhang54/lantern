@@ -121,7 +121,7 @@ class TopicView extends React.Component {
           <ChunkWrapper component="ArticlesRead">
             <Row>
               <Col xs={12}>
-                <h3>{'Article page views for this topic'}</h3>
+                <h3>{'Story page views for this topic'}</h3>
               </Col>
             </Row>
             <Row>
@@ -176,7 +176,7 @@ class TopicView extends React.Component {
                 sm={4}
                 xs={12}
               >
-                <h4>{'Social Network Breakdown'}</h4>
+                <h4>{'Social Networks'}</h4>
                 <BarChart
                   category={socialID}
                   data={socialData}

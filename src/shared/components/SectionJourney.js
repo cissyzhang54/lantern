@@ -74,7 +74,7 @@ export default class SectionReferrers extends React.Component {
 
       <Row>
         <Col xs={12}>
-          <h3>What was the user journey?</h3>
+          <h3>How was the user referred to the story?</h3>
         </Col>
       </Row>
 
@@ -137,7 +137,7 @@ export default class SectionReferrers extends React.Component {
         <Col xs={12}
           sm={12}
         >
-          <h4>Of those who stayed where did they go?</h4>
+          <h4>Of those who stayed, where did they go?</h4>
           <Table
             headers={['Next Destination', 'Views']}
             rows={intUrls}

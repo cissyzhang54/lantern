@@ -133,7 +133,7 @@ class SectionRealtimeView extends React.Component {
           <ChunkWrapper compoonent="page-views-chart">
             <Row>
               <Col>
-                <h3>Page views chart</h3>
+                <h3>Story page views for this section</h3>
                 <LiveIndicator isLive={this.props.isLive} />
                 <LineChart
                   data={pageViews}
