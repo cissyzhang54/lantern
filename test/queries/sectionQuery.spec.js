@@ -65,7 +65,7 @@ describe('Section Query', () => {
                 },
                 {
                   match: {
-                    primary_section: 'sectionName'
+                    sections_not_analyzed: 'sectionName'
                   }
                 }
               ]

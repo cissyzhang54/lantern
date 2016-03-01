@@ -6,7 +6,7 @@ export default function topicQuery(query){
   QueryUtils.checkString(query,'topic');
 
   let matchTopic = {
-    match : {  primary_theme: query.topic  }
+    match : {  topics_not_analyzed: query.topic  }
   }
 
   let filter = {
@@ -39,4 +39,3 @@ export default function topicQuery(query){
     "filtered" : filtered
   };
 }
-
