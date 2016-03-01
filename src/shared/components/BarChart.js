@@ -1,6 +1,5 @@
 import React from 'react';
 import isBrowser from '../utils/isBrowser';
-import responsiveStyles from '../utils/responsiveStyles';
 import chartHelpers from '../utils/chartHelpers';
 import _ from 'underscore';
 import md5 from 'md5';
@@ -74,6 +73,17 @@ export default class BarChart extends React.Component {
       }
     }
 
+    const yAxisFormatter = (val) => {
+      if(val > 1) {
+        const prefix = d3.formatPrefix(val);
+        const symbol = prefix.symbol;
+        const scaledVal = prefix.scale(val);
+        return `${scaledVal}${symbol}`;
+      } else {
+        return val
+      }
+    }
+
     this.chart = c3.generate({
       bindto: node,
       transition: {
@@ -107,6 +117,9 @@ export default class BarChart extends React.Component {
           padding: {
             top: 0,
             bottom: 0
+          },
+          tick: {
+            format: yAxisFormatter
           }
         }
       },
@@ -180,7 +193,5 @@ BarChart.defaultProps = {
 
 BarChart.propTypes = {
   category: React.PropTypes.string.isRequired,
-  //data: React.PropTypes.array.isRequired,
-  //keys: React.PropTypes.array.isRequired,
   yLabel: React.PropTypes.string.isRequired
 };
