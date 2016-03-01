@@ -97,10 +97,9 @@ export default (
     </Route>
 
     <Route
-      path="pickoftheday"
+      path="thehighlights"
       onEnter={scrollToTop}
       component={TopArticlesView}
-      analyticsView="pickoftheday"
     />
     <Route
       path="realtime/sections/:section"
