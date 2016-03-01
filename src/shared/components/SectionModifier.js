@@ -49,7 +49,6 @@ export default class Modifier extends React.Component {
     super(props);
     this.state = {
       isSectionOrTopic : ['sections', 'topics'].indexOf(this.props.category) >= 0,
-      isGlobalFTComparator : this.props.comparatorQuery.comparatorType === 'global'
     };
   }
 
@@ -77,24 +76,15 @@ export default class Modifier extends React.Component {
     if (!Array.isArray(arrAuthors)) arrAuthors = [arrAuthors]
     if (!arrAuthors[0]) arrAuthors=[]
 
-    let primarySections = [];
-    if (Array.isArray(data.primarySection)) {
-      primarySections = data.primarySection;
-    }
-    else if (typeof(data.primarySection) === 'string') {
-      primarySections = data.primarySection.split(',');
-    }
-
-    let firstPrimarySection = primarySections[0];
-    let comparator = this.props.comparatorQuery.comparator || firstPrimarySection;
-
-    function listAllSections (sections, primarySections) {
-      return sections.concat(primarySections.filter(function(primarySection) {
-        return sections.indexOf(primarySection) == -1;
-      }))
+    function listAllSections (sections, primarySection) {
+      let clonedSections = sections.slice();
+      if (primarySection && clonedSections.indexOf(primarySection) === -1) {
+        clonedSections.push(primarySection);
+      }
+      return clonedSections;
     }
 
-    let allSections = listAllSections(data.sections, primarySections);
+    let allSections = listAllSections(data.sections, data.primarySection);
 
     let tags = [{label:'FT',url:`global/FT`}]
       .concat(
@@ -131,10 +121,10 @@ export default class Modifier extends React.Component {
         break
     }
 
-    let selectedTag = comparator;
-    if (comparator === this.props.query.section ||
-        comparator === this.props.query.topic) {
-      selectedTag = sameTagLabel;
+    let selectedTag = this.props.comparator;
+    if (selectedTag === this.props.query.section ||
+       selectedTag === this.props.query.topic) {
+     selectedTag = sameTagLabel;
     }
 
     this.props.category === 'sections' && tags.push({
@@ -213,7 +203,6 @@ export default class Modifier extends React.Component {
               currentTag={selectedTag}
               uuid={this.props.uuid}
               category={this.props.category}
-              comparatorQuery={this.props.comparatorQuery}
               query={this.props.query}
             />
           </Col>
@@ -243,7 +232,7 @@ export default class Modifier extends React.Component {
             <div style={styles.descriptorText}>
               <ModifierDescription
                 articleCount={count}
-                comparator={this.props.comparatorQuery.comparator}
+                comparator={this.props.comparator}
               />
             </div>
           </Col>

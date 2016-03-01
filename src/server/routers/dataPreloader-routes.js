@@ -119,8 +119,6 @@ function getArticleData(req, res){
         dateTo = moment().toISOString();
       }
 
-      console.log(dateFrom, dateTo);
-
       let getKeys = (item) => item[0];
       res.locals.data = {
         AnalyticsStore: {

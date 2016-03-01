@@ -38,7 +38,11 @@ class ArticleView extends React.Component {
   render() {
     const data = this.props.data;
     const comparatorData = this.props.comparatorData || { article: {}};
-    comparatorData.comparator = unescape(this.props.params.comparatorType + ' ' + this.props.params.comparator);
+
+    let comparator = this.props.params.comparator || this.props.data.primarySection || 'FT';
+    let comparatorType = this.props.params.comparatorType || ((comparator === 'FT') ? 'global' : 'section');
+
+    comparatorData.comparator = unescape(comparatorType + ' ' + comparator);
     const title = (data) ? 'Lantern - ' + data.title : '';
 
     const dataFormatter = new FormatData(data, comparatorData);
@@ -194,7 +198,7 @@ class ArticleView extends React.Component {
           <SectionModifier
             data={data}
             comparatorData={comparatorData}
-            comparatorQuery={this.props.query}
+            comparator={comparator}
             query={this.props.query}
             uuid={data.uuid}
             dateRange='published'
