@@ -1,6 +1,6 @@
 export default {
+  'explanations.articleHandlers.retentionRate': 'Percentage of the users who navigated to another FT.com page after reading the article.',
   'explanations.articleHandlers.scrollDepth': 'Percentage of the article the user has scrolled through. This is based on the height of the article rather then the height of the page, so the comments section is excluded.',
-
   'explanations.navBar.alpha': `Lantern is currently in an alpha state and is not a live system.
     The data used does not represent the live FT.com.
     There will be ongoing changes, without warning,

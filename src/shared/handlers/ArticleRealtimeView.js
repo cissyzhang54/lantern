@@ -167,7 +167,8 @@ class ArticleRealtimeView extends React.Component {
         size: 'large',
         onClick: () => {
           this.setState({chartShown: 'retentionRate'})
-        }
+        },
+        toolTip: (<Text message='explanations.articleHandlers.retentionRate' />)
       },
       scrollDepthAvg: {
         metricType: 'percentage',
