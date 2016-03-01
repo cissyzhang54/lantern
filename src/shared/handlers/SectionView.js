@@ -17,6 +17,7 @@ import TabNav from '../components/TabNav';
 import ChunkWrapper from "../components/ChunkWrapper";
 import ArticleList from '../components/ArticleList';
 import ToolTip from '../components/ToolTip'
+import Text from '../components/Text'
 
 class SectionView extends React.Component {
 
@@ -81,7 +82,8 @@ class SectionView extends React.Component {
         metricType: 'integer',
         label: 'Unique Visitors',
         size: 'large',
-        comparatorFormatName: 'uniqueVisitors'
+        comparatorFormatName: 'uniqueVisitors',
+        toolTip: (<Text message='explanations.metric.uniqueVisitors' />)
       },
       articleCount: {
         metricType: 'integer',
@@ -103,7 +105,6 @@ class SectionView extends React.Component {
         type: "section"
       }
     ];
-
 
     return(<DocumentTitle title={title}>
       <div>

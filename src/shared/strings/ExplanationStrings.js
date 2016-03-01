@@ -57,6 +57,8 @@ export default {
 
   'explanations.sectionJourney.articleViews.external' : "<b>News Sharing:</b> a news sharing site e.g. Reddit\n"
     + "<b>Aggregator:</b> a curated collection of news e.g. Drudge or Huffington Post\n"
-    + "<b>Partner:</b> someone we have a deal or partnership with e.g. Yahoo Finance"
+    + "<b>Partner:</b> someone we have a deal or partnership with e.g. Yahoo Finance",
+
+  'explanations.metric.uniqueVisitors' : "The number of distinct users who read the article."
 
 }
