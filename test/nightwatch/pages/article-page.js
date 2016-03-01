@@ -127,7 +127,7 @@ module.exports = {
   // When Section
   sectionWhen: {
     accessTime: {
-      name: 'When did the users view the article?',
+      name: 'When did the users view the story?',
       selectors: {
         container: 'div[data-component="sectionWhen"]',
         dataComponent: ' div[data-component="lineChart"]',

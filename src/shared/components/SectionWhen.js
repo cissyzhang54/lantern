@@ -60,7 +60,7 @@ export default class SectionWhen extends React.Component {
                 />
               </span>
             </OverlayTrigger>
-            <span >When did the users view the article?</span>
+            <span >When did the users view the story?</span>
           </h3>
           <h4>{this.props.title}</h4>
         </Col>

@@ -59,7 +59,7 @@ describe('The LastUpdated component', function() {
 
     let output = createAltWrappedComponent(LastUpdated);
 
-    expect(output.props.children.props.children[2]).to.equal('Sorry, the historical views may only be up to date as of a day ago. We\'re working on it.');
+    expect(output.props.children.props.children[2]).to.equal('Sorry, the archive views may only be up to date as of a day ago. We\'re working on it.');
   });
 
   it('renders a message for the realtime indices being more than an hour out of date', function() {
@@ -78,7 +78,7 @@ describe('The LastUpdated component', function() {
 
     let output = createAltWrappedComponent(LastUpdated);
 
-    expect(output.props.children.props.children[2]).to.equal('Sorry, the realtime views may only be up to date as of an hour ago. We\'re working on it.');
+    expect(output.props.children.props.children[2]).to.equal('Sorry, the live views may only be up to date as of an hour ago. We\'re working on it.');
   });
 
   it('renders a message for both the historical and realtime indices being out of date', function() {
@@ -97,7 +97,7 @@ describe('The LastUpdated component', function() {
 
     let output = createAltWrappedComponent(LastUpdated);
 
-    expect(output.props.children.props.children[2]).to.equal('Sorry, both realtime and historical views may be out of date. We\'re working on it.');
+    expect(output.props.children.props.children[2]).to.equal('Sorry, both live and archive views may be out of date. We\'re working on it.');
   });
 
 

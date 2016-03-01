@@ -261,7 +261,7 @@ class ArticleRealtimeView extends React.Component {
         break;
       case 'retentionRate':
         selectedGraphComponentName = 'realtime-retentionRate';
-        selectedGraphTitle = 'Real time retention on page';
+        selectedGraphTitle = 'When did the users view the story?';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.retentionRateChart.realtime48h' : 'explanations.retentionRateChart.realtime1h';
         selectedGraphData =  this.props.retention.map((d) => {
           if (d[0] < this.props.published || d[0] > this.props.latestEvent) {
@@ -467,7 +467,7 @@ class ArticleRealtimeView extends React.Component {
         <ChunkWrapper component="social-media">
           <Row>
             <Col>
-              <h3>How did the article perform on social media?</h3>
+              <h3>How did the story perform on social media?</h3>
             </Col>
           </Row>
           <Row>
@@ -498,7 +498,7 @@ class ArticleRealtimeView extends React.Component {
         <ChunkWrapper component="traffic-sources">
           <Row>
             <Col xs={12}>
-              <h3>What was the user journey?</h3>
+              <h3>How was the user referred to the story?</h3>
             </Col>
           </Row>
 
@@ -580,7 +580,7 @@ class ArticleRealtimeView extends React.Component {
         <ChunkWrapper component="realtime-views">
           <Row>
             <Col>
-              <h3>Where did users go next?</h3>
+              <h3>Of those who stayed, where did they go?</h3>
               <Table
                 headers={['FT Source', 'Views']}
                 rows={realtimeNextInternalUrl}

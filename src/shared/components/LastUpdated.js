@@ -47,13 +47,13 @@ class LastUpdated extends React.Component {
     let message = '';
 
     if (realtimeOutOfDate && historicalOutOfDate) {
-      message = 'Sorry, both realtime and historical views may be out of date. We\'re working on it.';
+      message = 'Sorry, both live and archive views may be out of date. We\'re working on it.';
     }
     else if (realtimeOutOfDate) {
-      message = `Sorry, the realtime views may only be up to date as of ${realtimeFriendlyDate} ago. We're working on it.`;
+      message = `Sorry, the live views may only be up to date as of ${realtimeFriendlyDate} ago. We're working on it.`;
     }
     else if (historicalOutOfDate) {
-      message = `Sorry, the historical views may only be up to date as of ${historicalFriendlyDate} ago. We're working on it.`;
+      message = `Sorry, the archive views may only be up to date as of ${historicalFriendlyDate} ago. We're working on it.`;
     }
     else {
       // If nothing's out of date, don't render anything

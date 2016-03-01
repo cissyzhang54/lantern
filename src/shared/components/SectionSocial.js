@@ -33,7 +33,7 @@ export default class SectionSocial extends React.Component {
 
       <Row>
         <Col xs={12}>
-          <h3>How did the article perform on social media?</h3>
+          <h3>How did the story perform on social media?</h3>
         </Col>
       </Row>
 

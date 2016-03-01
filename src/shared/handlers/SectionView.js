@@ -157,7 +157,7 @@ class SectionView extends React.Component {
           <ChunkWrapper component="ArticlesRead">
             <Row>
               <Col xs={12}>
-                <h3>Article page views for this section</h3>
+                <h3>Story page views for this section</h3>
               </Col>
             </Row>
             <Row>
@@ -242,7 +242,7 @@ class SectionView extends React.Component {
                 xs={12}
                 sm={4}
               >
-                <h4>Social Network Breakdown</h4>
+                <h4>Social Networks</h4>
                 <BarChart
                   data={socialData}
                   keys={socialKeys}
