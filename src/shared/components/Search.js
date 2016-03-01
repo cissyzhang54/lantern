@@ -4,7 +4,6 @@ import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import Button from 'react-bootstrap/lib/Button';
 import Link from 'react-router/lib/Link';
-import Logo from '../components/Logo';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import SearchResult from './SearchResult.js';
 import Row from 'react-bootstrap/lib/Row';
@@ -110,48 +109,6 @@ export default class Search extends React.Component {
       </div>
     );
 
-    const blockLinkStyle = {
-      marginRight: '5px',
-      marginBottom: '5px',
-      padding: '10px',
-      border: '1px solid #ddd',
-      borderRadius: '4px',
-      display: 'inline-block',
-      flexGrow: 1,
-      WebkitFlexGrow: 1,
-      minWidth: '15%',
-      textAlign: 'center'
-    };
-
-    const homeLinkStyle = {
-      marginRight: '10px',
-      marginLeft: '10px',
-      marginBottom: '5px',
-      marginTop: '5px',
-      padding: '10px',
-      border: '1px solid #ddd',
-      borderRadius: '4px',
-      display: 'inline-block',
-      textAlign: 'center'
-    }
-
-    const borderlessLinkStyle = {
-      marginRight: '10px',
-      marginLeft: '10px',
-      marginBottom: '5px',
-      marginTop: '5px',
-      padding: '10px',
-      display: 'inline-block',
-      textAlign: 'center'
-    }
-
-    const starGlyphStyle = {
-      'fontSize' : '15px',
-      'color': '#039',
-      'top': '1.5px',
-      'right': '-14px'
-    }
-
     let sections = (this.props.sections || [])
     .map((section, i) => {
       return (
@@ -159,7 +116,7 @@ export default class Search extends React.Component {
           data-component='sectionResult'
           to={'/sections/' + section + '/168'}
           key={i}
-          style={blockLinkStyle}
+          className='blockLinkStyle'
           >
           {section}
         </Link>
@@ -173,25 +130,18 @@ export default class Search extends React.Component {
           data-component='topicResult'
           to={'/topics/' + topic + '/168'}
           key={i}
-          style={blockLinkStyle}
+          className='blockLinkStyle'
           >
           {topic}
         </Link>
       )
     });
 
-    const resultsStyle= {
-      display: '-webkit-flex; display: flex',
-      flexWrap: 'wrap',
-      WebkitFlexWrap: 'wrap'
-    };
-
-
     let sectionResults = (
       <div>
         <h2><small>Sections</small></h2>
         <div
-          style={resultsStyle}>
+          className='resultsStyle'>
           {sections}
         </div>
       </div>
@@ -201,7 +151,7 @@ export default class Search extends React.Component {
       <div>
         <h2><small>Topics</small></h2>
         <div
-          style={resultsStyle}>
+          className='resultsStyle'>
           {topics}
         </div>
       </div>
@@ -221,7 +171,7 @@ export default class Search extends React.Component {
           data-component='homeSectionsLinks'
           to={'/sections/' + section + '/168'}
           key={i}
-          style={homeLinkStyle}
+          className='homeLinkStyle'
           >
           {section}
         </Link>
@@ -229,35 +179,23 @@ export default class Search extends React.Component {
     });
 
     let homeSectionsMarkup = (
-      <div style={{
-        textAlign: 'center',
-        justifyContent: 'space-around',
-        WebkitJustifyContent: 'space-around',
-        marginTop: '20px',
-        marginBottom: '20px'
-        }}>
+      <div className='homeSectionsMarkup'>
         {homeSectionsLinks}
       </div>
+    );
+
+    let video = (
+      <iframe
+        className="video"
+        width="560"
+        height="315"
+        src="https://www.youtube.com/embed/RFcGvmFtR-s"
+        frameBorder="0"
+        allowFullScreen={true}>
+      </iframe>
     )
 
-    return (<div data-component='search'>
-
-      <Glyphicon glyph="star-empty" style={starGlyphStyle} />
-
-      <Link
-        to={'/pickoftheday'}
-        style={borderlessLinkStyle}
-        >
-        {'Pick of the day'}
-      </Link>
-
-
-
-      <Logo
-        message={isLoading ? 'Searching...' : ''}
-        loading={isLoading}
-        displayLogo={(!(results.length) && !(isLoading))}
-        search/>
+    return (<div className='search-component' data-component='search'>
       <Input
         ref="searchinput"
         labelClassName='large'
@@ -271,9 +209,9 @@ export default class Search extends React.Component {
       { sections.length ? sectionResults : homeSectionsMarkup}
       { topics.length ? topicResults : null}
       { results.length ? articleResults : null }
+      { sections.length ? null : video}
      </div>);
   }
-
 }
 
 
