@@ -1,13 +1,12 @@
-import * as calculateInterval from '../utils/calculateInterval'
 
-export default function TopArticleEventsAggregation(query) {
+export default function TopArticleEventsAggregation() {
  return {
-   "top_article_comments_posted" : {
+   top_article_comments_posted : {
      terms : {
        field: "article_uuid",
        size: 5,
        order : {
-         "posts" : "desc"
+         posts : "desc"
        }
      },
      aggs : {
