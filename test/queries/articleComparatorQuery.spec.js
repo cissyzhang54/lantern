@@ -110,7 +110,7 @@ describe('Article Comparator Query', () => {
                 },
                 {
                   match: {
-                    sections: 'comparator'
+                    sections_not_analyzed: 'comparator'
                   }
                 }
               ],
@@ -176,7 +176,7 @@ describe('Article Comparator Query', () => {
                 },
                 {
                   match: {
-                    sections: 'comparator'
+                    sections_not_analyzed: 'comparator'
                   }
                 }
               ],
@@ -242,7 +242,7 @@ describe('Article Comparator Query', () => {
                 },
                 {
                   match: {
-                    sections: 'comparator'
+                    sections_not_analyzed: 'comparator'
                   }
                 }
               ],

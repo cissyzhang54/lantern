@@ -16,8 +16,8 @@ export default function ArticleComparatorQuery(query){
 
   let comparatorTypes = {
     genre : {  genre: query.comparator  },
-    section : {  sections: query.comparator  },
-    topic : {  topics: query.comparator  },
+    section : {  sections_not_analyzed: query.comparator  },
+    topic : {  topics_not_analyzed: query.comparator  },
     author : {  authors: query.comparator  }
   }
 
