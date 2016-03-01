@@ -96,13 +96,13 @@ class TopArticlesView extends React.Component {
 
   render() {
     let data = this.props.data;
-    let title = (data) ? 'Lantern - Top Articles' : '';
+    let title = (data) ? 'Lantern - The Highlights' : '';
     let top5Date = moment(this.props.dateTo).format('dddd MMMM Do YYYY');
 
     if (this.props.errorMessage) {
       return (
         <ErrorHandler
-          category="Pick of the day"
+          category="The Highlights"
           type="ERROR"
           message={this.props.errorMessage}
           error={this.props.error}
@@ -111,7 +111,7 @@ class TopArticlesView extends React.Component {
     } else if (!data || Object.keys(data).length === 0) {
       return (
         <Messaging
-          category="Pick of the day"
+          category="The Highlights"
           type="LOADING"
         />
       );
@@ -170,7 +170,7 @@ class TopArticlesView extends React.Component {
     if (this.props.loading) {
       updating = (
         <Messaging
-          category="Pick of the day"
+          category="The Highlights"
           type="UPDATING"
         />
       );
@@ -190,8 +190,8 @@ class TopArticlesView extends React.Component {
           {updating}
 
           <Header
-            title={'Pick of the day'}
-            subHeading={`Articles first published between 00:00 and 23:59 GMT on ${top5Date}`}
+            title={'The Highlights'}
+            subHeading={`Stories first published between 00:00 and 23:59 GMT on ${top5Date}`}
           />
         </ChunkWrapper>
 
