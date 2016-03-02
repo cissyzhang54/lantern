@@ -130,6 +130,10 @@ class SectionRealtimeView extends React.Component {
             config={headlineStats}
           />
 
+          <RealtimeArticleList component="article-list"
+                               articleList={this.props.articleList}
+            />
+
           <ChunkWrapper compoonent="page-views-chart">
             <Row>
               <Col>
@@ -147,10 +151,6 @@ class SectionRealtimeView extends React.Component {
               </Col>
             </Row>
           </ChunkWrapper>
-
-          <RealtimeArticleList component="article-list"
-            articleList={this.props.articleList}
-          />
 
         </div>
       </DocumentTitle>
