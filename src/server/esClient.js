@@ -1,7 +1,7 @@
 /* eslint-env node */
 import elasticsearch from 'elasticsearch';
 import awsElasticSearchConnector from 'http-aws-es';
-import ArticleComparatorQuery from './esQueries/ArticleComparator';
+import ArticleComparatorQuery, {ArticleComparatorQueryHeader} from './queries/articleComparatorQuery';
 import SectionsQuery from './esQueries/Sections';
 import TopArticlesQuery from './esQueries/TopArticles';
 import SectionComparatorQuery from './esQueries/SectionComparator';
@@ -319,8 +319,9 @@ function retrieveArticleData(queryData){
     const articlesQueryObject = ArticlesQuery(queryData);
     const articlePublishedQueryObject = ArticlePublishedTimeQuery(queryData);
     const eventsQueryObject = ArticleEventsQuery(queryData);
-    const articlesComparatorQueryObject = ArticleComparatorQuery(queryData);
     const eventsComparatorQueryObject = ArticleEventsComparatorQuery(queryData);
+    const fromIndex = moment(queryData.publishDate).subtract(30,'days');
+    const toIndex = queryData.publishDate;
 
     const articlesHeader = {
       index: calculateIndices(queryData, process.env.ES_INDEX_ROOT),
@@ -332,6 +333,15 @@ function retrieveArticleData(queryData){
       ignore_unavailable: true,
       search_type: 'count'
     };
+
+    const eventsComparatorHeader = {
+      index: calculateIndices({
+        dateFrom: fromIndex,
+        dateTo: toIndex
+      }, process.env.ES_EVENT_INDEX_ROOT),
+      ignore_unavailable: true,
+      search_type: 'count'
+    }
 
     const articlePublished = {
       index: process.env.ES_ARTICLE_PUBLISHED_INDEX_ROOT + "*",
@@ -345,9 +355,9 @@ function retrieveArticleData(queryData){
         articlesQueryObject,
         eventsHeader,
         eventsQueryObject,
-        articlesHeader,
-        articlesComparatorQueryObject,
-        eventsHeader,
+        ArticleComparatorQueryHeader(queryData),
+        ArticleComparatorQuery(queryData),
+        eventsComparatorHeader,
         eventsComparatorQueryObject,
         articlePublished,
         articlePublishedQueryObject

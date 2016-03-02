@@ -9,17 +9,18 @@ export default function sectionComparatorQuery(query){
   QueryUtils.checkString(query,'comparator');
   QueryUtils.checkString(query,'comparatorType');
 
+  let dateFrom = moment(query.dateFrom);
+  let dateTo = moment(query.dateTo);
+
   if (query.comparatorType !== 'global') {
-      let dateFrom = moment(query.dateFrom);
-      let dateTo = moment(query.dateTo);
       let span = dateTo - dateFrom;
 
-      query.dateFrom = dateFrom.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD'),
-      query.dateTo = dateTo.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD')
+      dateFrom = dateFrom.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD'),
+      dateTo = dateTo.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD')
   }
 
   let matchSection = {
-    match : {  primary_section: query.comparator  }
+    match : {  sections_not_analyzed: query.comparator  }
   }
 
   let filter = {
@@ -31,8 +32,8 @@ export default function sectionComparatorQuery(query){
   let matchDates = {
     "range" : {
       "view_timestamp" : {
-        from: query.dateFrom,
-        to: query.dateTo
+        from: dateFrom,
+        to: dateTo
       }
     }
   }
