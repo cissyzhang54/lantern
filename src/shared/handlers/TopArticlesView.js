@@ -11,17 +11,12 @@ import Table from '../components/Table.js';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import TopArticlesActions from '../actions/TopArticlesActions';
 import TopArticlesStore from '../stores/TopArticlesStore';
-import _ from 'underscore';
 import moment from 'moment';
 
 
 const tagStyle = {
   fontSize: '15px',
   marginLeft: '8px'
-}
-
-function decode(uri){
-  return uri ? decodeURI(uri) : null
 }
 
 function convertTime (avg) {
@@ -32,31 +27,44 @@ function convertTime (avg) {
 }
 
 function getAuthors (authors) {
-  return authors.author.buckets.map((d,i) => {
-      return d.key;
-    }).join(", ") || 'Unknown author';
+  return authors.author.buckets.map((d) => {
+    return d.key;
+  }).join(", ") || 'Unknown author';
+}
+
+function getFilteredColumns(data, filterName, metric) {
+  if (!metric) metric = filterName;
+  const flattenedData = data.map((d) => {
+    const obj = d[filterName];
+    obj.key = d.key;
+    if (metric != 'doc_count')
+      obj.doc_count = d.doc_count;
+    return obj;
+  });
+
+  return getColumns(flattenedData, metric);
 }
 
 function getColumns (data, metric) {
-  return data.map((d, i) => {
+  return data.map((d) => {
     let uuid = d.key;
     let metricVal = d[metric];
     let title =  d.title.buckets[0] ? d.title.buckets[0].key : "Unknown"
     let author = getAuthors(d);
     let articleUrl = (
       <a href={`/landing/article/${uuid}`}
-         target="_blank"
+        target="_blank"
       >
         {title}
       </a>
     );
     let ftUrl = (
       <a href={`http://www.ft.com/cms/s/${uuid}.html`}
-         target="_blank"
+        target="_blank"
       >
         FT
         <Glyphicon glyph="new-window"
-                   style={tagStyle}
+          style={tagStyle}
         />
       </a>
     );
@@ -118,53 +126,32 @@ class TopArticlesView extends React.Component {
     }
 
     /* Average time reading the article */
-    let avg_time_rows = getColumns(data.timeOnPageTop, 'avg_time_on_page');
-    avg_time_rows = avg_time_rows.map((d, i) => {
+    let avg_time_rows = getFilteredColumns(data.timeOnPageTop, 'avg_time_on_page');
+    avg_time_rows = avg_time_rows.map((d) => {
       let time = convertTime(d[2].value)
       return [d[0], d[1], time, d[3]]
     });
 
     /* Most read article */
-    let topArticleViews = getColumns(data.topArticleViews, 'doc_count');
-
+    let topArticleViews = getFilteredColumns(data.topArticleViews, 'top_article_views', 'doc_count');
     /* Most commented article */
-    let topArticleCommented = data.topArticlesCommentPosts.filter((d,i) => {
+    let topArticleCommented = data.topArticlesCommentPosts.filter((d) => {
       return d.posts.doc_count !== 0;
-    }).map((d, i) => {
-      return {
-        key : d.key,
-        author: d.posts.author,
-        doc_count: d.posts.doc_count,
-        title: d.posts.title
-      }
     });
-    topArticleCommented = getColumns(topArticleCommented, 'doc_count');
+    topArticleCommented = getFilteredColumns(topArticleCommented, 'posts', 'doc_count');
 
     /* Top referred articles from seach engines */
-    let searchReferrers = data.topArticlesSearchRef.map((d, i) => {
-      return {
-        key : d.key,
-        author: d.views.author,
-        doc_count: d.views.doc_count,
-        title: d.views.title
-      }
-    });
-    searchReferrers = getColumns(searchReferrers, 'doc_count');
+    let searchReferrers = getFilteredColumns(data.topArticlesSearchRef, 'views', 'doc_count');
 
     /* Top referred articles from social sites */
-    let socialReferrers = data.topArticlesSocialRef.map((d, i) => {
-      return {
-        key : d.key,
-        author: d.views.author,
-        doc_count: d.views.doc_count,
-        title: d.views.title
-      }
-    });
-
-    socialReferrers = getColumns(socialReferrers, 'doc_count');
+    let socialReferrers = getFilteredColumns(data.topArticlesSocialRef, 'views', 'doc_count');
 
     /* Top articles keeping users on FT */
-    let topArticlesRetention = getColumns(data.topArticlesRetention, 'doc_count');
+    let topArticlesRetention = getFilteredColumns(data.topArticlesRetention, 'retained_users')
+    .map((d) => {
+      d[2] = d[2].value;
+      return d;
+    });
 
     let updating
     if (this.props.loading) {

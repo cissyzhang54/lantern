@@ -53,10 +53,15 @@ describe('Top Articles Query', () => {
               must: [
                 {
                   range: {
-                    view_timestamp: {
+                    event_timestamp: {
                       gt: 'now-1d/d',
                       lt: 'now/d'
                     }
+                  }
+                },
+                {
+                  term: {
+                    page_type: "article"
                   }
                 }
               ]
