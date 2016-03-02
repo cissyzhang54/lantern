@@ -9,8 +9,14 @@ import SearchResult from './SearchResult.js';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import ErrorHandler from '../components/ErrorHandler';
-
+import Table from '../components/Table.js';
+import Messaging from '../components/Messaging';
 import AnalyticsActions from '../actions/AnalyticsActions';
+
+import connectToStores from 'alt-utils/lib/connectToStores';
+import TopArticlesActions from '../actions/TopArticlesActions';
+import TopArticlesStore from '../stores/TopArticlesStore';
+import TableFormatting from '../utils/tableFormatting';
 
 import _ from 'underscore';
 import moment from 'moment';
@@ -37,12 +43,26 @@ export default class Search extends React.Component {
     };
   }
 
+  static getStores() {
+    return [TopArticlesStore];
+  }
+
+  static getPropsFromStores() {
+    return TopArticlesStore.getState();
+  }
+
   shouldPerformSearch(){
     const val = (this.refs && this.refs.searchinput) ? this.refs.searchinput.getValue() : '';
     return val.length >= MIN_SEARCH_LENGTH;
   }
 
   componentDidMount() {
+    TopArticlesActions.fetch();
+
+    let analytics = require('../utils/analytics');
+    analytics.sendGAPageViewEvent();
+    analytics.trackScroll();
+
     let el = this.refs.searchinput.getInputDOMNode();
     let query = this.props.query || '';
     el.setAttribute('value', query);
@@ -50,6 +70,7 @@ export default class Search extends React.Component {
     setImmediate(()=>{
       el.select();
     });
+
     if (el.setSelectionRange) {
       el.setSelectionRange(query.length, query.length);
     }
@@ -76,8 +97,9 @@ export default class Search extends React.Component {
   }
 
   render() {
+    let data = this.props.data;
 
-    if (this.props.error) {
+    if (this.props.errorMessage) {
       return (
         <ErrorHandler
           category="Search"
@@ -85,7 +107,7 @@ export default class Search extends React.Component {
           message={this.props.errorMessage}
           error={this.props.error}
         />
-      );
+      )
     }
 
     let results = (this.props.results || []).map((r, i) => {
@@ -98,7 +120,6 @@ export default class Search extends React.Component {
       )
     });
     let additionalInfo = getAdditionalInfo(this.props)
-    let isLoading = this.props.loading;
     let showShowMore = results.length < this.props.total;
 
     let showMore = (
@@ -185,15 +206,38 @@ export default class Search extends React.Component {
     );
 
     let video = (
-      <iframe
-        className="video"
-        width="560"
-        height="315"
-        src="https://www.youtube.com/embed/RFcGvmFtR-s"
-        frameBorder="0"
-        allowFullScreen={true}>
-      </iframe>
+      <Row>
+        <Col xs={12}>
+          <div className='video'>
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/RFcGvmFtR-s"
+              frameBorder="0"
+              allowFullScreen={true}>
+            </iframe>
+          </div>
+        </Col>
+      </Row>
     )
+
+    let articleHighlights = null
+
+    if (data.topArticleViews) {
+      let tableData = TableFormatting(data.topArticleViews, 'top_article_views', 'doc_count');
+      articleHighlights = (
+        <Row>
+          <Col xs={12}>
+            <h3><Link to={'/thehighlights'}>The Highlights</Link></h3>
+            <h4>Yesterday's top stories by page views</h4>
+            <Table
+              headers={['Article', 'Author(s)', 'Views', '']}
+              rows={tableData}
+              />
+          </Col>
+        </Row>
+      )
+    }
 
     return (<div className='search-component' data-component='search'>
       <Input
@@ -210,6 +254,7 @@ export default class Search extends React.Component {
       { topics.length ? topicResults : null}
       { results.length ? articleResults : null }
       { sections.length ? null : video}
+      { sections.length ? null : articleHighlights}
      </div>);
   }
 }
@@ -226,3 +271,5 @@ function getAdditionalInfo(props){
   }
   return <ListGroupItem bsStyle={additionalClass} header={additionalMessage} />
 }
+
+export default connectToStores(Search);
