@@ -22,7 +22,7 @@ module.exports = {
 
   'Find Article' : function (browser) {
     browser
-      .setValue(searchPage.searchBar, "Team VIP wins FT MBA Challenge of 2015")
+      .setValue(searchPage.searchBar, "London Fashion Week trends")
       .expect.element(searchPage.exampleArticleLink).visible.after(10000);
     browser
       .click(searchPage.exampleArticleLink);
@@ -33,7 +33,7 @@ module.exports = {
       .expect.element(searchPage.exampleExternalArticleLink).visible.after(20000);
 
     browser
-      .assert.title('Lantern - Team VIP wins FT MBA Challenge of 2015')
+      .assert.title('Lantern - London Fashion Week trends')
   },
 
   after : function (browser) {

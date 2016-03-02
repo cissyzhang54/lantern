@@ -2,9 +2,9 @@
 module.exports = {
 
   // Links
-  exampleArticleUrl : 'http://localhost:' + process.env.PORT + '/articles/69feb35e-893d-11e5-90de-f44762bf9896/48',
-  exampleArticleTitle: 'Lantern - First general strike since Syriza win brings Greece to standstill',
-  exampleArticleLink: 'http://www.ft.com/cms/s/0/69feb35e-893d-11e5-90de-f44762bf9896.html',
+  exampleArticleUrl : 'http://localhost:' + process.env.PORT + '/articles/ff767034-da82-11e5-98fd-06d75973fe09/48',
+  exampleArticleTitle: "Lantern - ‘I wore a top hat while sleeping rough, then set up a top-hat business’",
+  exampleArticleLink: 'http://www.ft.com/cms/s/0/ff767034-da82-11e5-98fd-06d75973fe09.html',
 
   // Modifier Section
   sectionModifier: {
