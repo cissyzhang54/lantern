@@ -178,7 +178,7 @@ class TopArticlesView extends React.Component {
 
           <Header
             title={'The Highlights'}
-            subHeading={`Stories first published between 00:00 and 23:59 GMT on ${top5Date}`}
+            subHeading={`Stories viewed between 00:00 and 23:59 GMT on ${top5Date}`}
           />
         </ChunkWrapper>
 
