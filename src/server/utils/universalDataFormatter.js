@@ -76,6 +76,7 @@ const fields = {
   sectionViews: {name: 'aggregations.section_views', formatter: format},
   topicsCovered: 'aggregations.topics_covered.value',
   sectionsCovered: 'aggregations.sections_covered.value',
+  articlePublishCount: 'aggregations.distinct_articles_published.value',
   articleCount: 'aggregations.distinct_articles.value',
   categoryTotalViewCount: 'aggregations.page_view_total_count.value',
   categoryAverageViewCount: {name: 'aggregations.page_view_total_count.value', formatter: divide},

@@ -1,16 +1,16 @@
 import assert from 'assert';
 import SectionMetadataAggregation from '../aggregations/SectionMetadata'
-import SectionQuery from '../queries/sectionQuery';
+import SectionMetadataQuery from '../queries/sectionMetadataQuery';
 
 export default function SectionMetadataESQuery(query) {
 
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  let sectionQuery = SectionQuery(query);
+  let sectionMetadataQuery = SectionMetadataQuery(query);
 
   let esQuery = {
-    query: sectionQuery,
+    query: sectionMetadataQuery,
     aggs: SectionMetadataAggregation(query)
   };
   return esQuery

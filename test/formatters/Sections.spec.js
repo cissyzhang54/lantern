@@ -43,7 +43,6 @@ describe('Section Formatter', function() {
         expect(data).to.be.a('object');
         const props = [
           'articleCount',
-          'topicsCovered',
           'pageViews',
           'genre',
           'sections',
@@ -62,7 +61,7 @@ describe('Section Formatter', function() {
           'uniqueVisitors',
           'topicCount',
           'topicViews',
-          'articleCount',
+          'articlePublishCount',
           'articleList'
         ];
         for (let i = 0; i < props.length; i++){

@@ -111,10 +111,20 @@ export default function SectionAggregation(query) {
         field: 'visitor_id'
       }
     },
-    "topic_views": {
-      "terms": {
-        "field": "topics_not_analyzed",
+    topic_views: {
+      terms: {
+        field: "topics_not_analyzed",
         size: 10
+      }
+    },
+    topics_covered: {
+      cardinality: {
+        field: "topics_not_analyzed"
+      }
+    },
+    distinct_articles: {
+      cardinality: {
+        field: "article_uuid"
       }
     }
   }

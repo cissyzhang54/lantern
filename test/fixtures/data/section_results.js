@@ -41,7 +41,7 @@ export default [{
     ]
   },
   "aggregations": {
-    "distinct_articles": {
+    "distinct_articles_published": {
       "value": 252
     },
     "topics_covered": {

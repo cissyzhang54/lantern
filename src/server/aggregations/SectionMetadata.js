@@ -20,7 +20,7 @@ export default function SectionMetadataAggregation(query) {
           size : 10
         }
       },
-      distinct_articles: {
+      distinct_articles_published: {
         cardinality: {
           field: "article_uuid"
         }

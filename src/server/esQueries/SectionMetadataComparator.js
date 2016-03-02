@@ -1,15 +1,15 @@
 import assert from 'assert';
 import SectionMetadataComparatorAggregation from '../aggregations/SectionMetadataComparator'
-import SectionComparatorQuery from '../queries/sectionComparatorQuery'
+import SectionMetadataComparatorQuery from '../queries/sectionMetadataComparatorQuery'
 
 export default function SectionMetadataComparatorESQuery(query) {
 
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  let sectionComparatorQuery = SectionComparatorQuery(query)
+  let sectionMetadataComparatorQuery = SectionMetadataComparatorQuery(query)
   let esQuery = {
-    query: sectionComparatorQuery,
+    query: sectionMetadataComparatorQuery,
     size: 1,
     aggs: SectionMetadataComparatorAggregation()
   };
