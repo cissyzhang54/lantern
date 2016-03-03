@@ -191,36 +191,37 @@ module.exports = {
 
 
   },
-// Referrers Section
-  sectionReferrers: {
+
+  // Referrers Section
+  sectionJourney: {
     referrerTypes: {
       name: 'Traffic Source',
       selectors: {
-        container: 'div[data-component="sectionReferrers"] > div:nth-child(3) > div:nth-child(1)',
+        container: 'div[data-component="sectionJourney"] > div:nth-child(3) > div:nth-child(1)',
         dataComponent: ' > div[data-component="barChart"]:nth-child(2)',
         heading: ' > h5:nth-child(1)'
-      }
-    },
-    topUrls: {
-      name: 'Top URLs',
-      selectors: {
-        container: 'div[data-component="sectionReferrers"] > div:nth-child(3) > div:nth-child(2)',
-        dataComponent: ' table[data-component="table"]',
-        heading: ' > h5'
       }
     },
     internalReferrerTypes: {
       name: 'FT Traffic Source',
       selectors: {
-        container: 'div[data-component="sectionReferrers"] > div:nth-child(5) > div:nth-child(1)',
+        container: 'div[data-component="sectionJourney"] > div:nth-child(3) > div:nth-child(2)',
         dataComponent: ' div[data-component="barChart"]',
         heading: ' > h5'
       }
     },
-    topInternalUrls: {
-      name: 'Top Internal URLs',
+    topExternalUrls: {
+      name: 'Top 5 internal sources',
       selectors: {
-        container: 'div[data-component="sectionReferrers"] > div:nth-child(5) > div:nth-child(2)',
+        container: 'div[data-component="sectionJourney"] > div:nth-child(5) > div:nth-child(1)',
+        dataComponent: ' table[data-component="table"]',
+        heading: ' > h5'
+      }
+    },
+    topInternalUrls: {
+      name: 'Top 5 external sources',
+      selectors: {
+        container: 'div[data-component="sectionJourney"] > div:nth-child(5) > div:nth-child(2)',
         dataComponent: ' table[data-component="table"]',
         heading: ' > h5'
       }
