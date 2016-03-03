@@ -11,3 +11,9 @@ export function join(authors) {
   }
   return authors.join(", ") + ' and ' + lastAuthor;
 }
+
+export function split (authors) {
+    return authors.author.buckets.map((d) => {
+        return d.key;
+    }).join(", ") || 'Unknown author';
+}

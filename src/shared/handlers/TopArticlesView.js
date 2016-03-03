@@ -12,68 +12,8 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import TopArticlesActions from '../actions/TopArticlesActions';
 import TopArticlesStore from '../stores/TopArticlesStore';
 import moment from 'moment';
-
-
-const tagStyle = {
-  fontSize: '15px',
-  marginLeft: '8px'
-}
-
-function convertTime (avg) {
-  let seconds = Math.abs(avg)
-  let metricMinutes = Math.floor(seconds / 60);
-  let metricSeconds = Math.floor(seconds - metricMinutes * 60);
-  return `${metricMinutes}m ${metricSeconds}s`
-}
-
-function getAuthors (authors) {
-  return authors.author.buckets.map((d) => {
-    return d.key;
-  }).join(", ") || 'Unknown author';
-}
-
-function getFilteredColumns(data, filterName, metric) {
-  if (!metric) metric = filterName;
-  const flattenedData = data.map((d) => {
-    const obj = d[filterName];
-    obj.key = d.key;
-    if (metric != 'doc_count')
-      obj.doc_count = d.doc_count;
-    return obj;
-  });
-
-  return getColumns(flattenedData, metric);
-}
-
-function getColumns (data, metric) {
-  return data.map((d) => {
-    let uuid = d.key;
-    let metricVal = d[metric];
-    let title =  d.title.buckets[0] ? d.title.buckets[0].key : "Unknown"
-    let author = getAuthors(d);
-    let articleUrl = (
-      <a href={`/landing/article/${uuid}`}
-        target="_blank"
-      >
-        {title}
-      </a>
-    );
-    let ftUrl = (
-      <a href={`http://www.ft.com/cms/s/${uuid}.html`}
-        target="_blank"
-      >
-        FT
-        <Glyphicon glyph="new-window"
-          style={tagStyle}
-        />
-      </a>
-    );
-
-    return [
-      articleUrl, author, metricVal, ftUrl
-    ];
-  });
-}
+import TableFormatting from '../utils/tableFormatting';
+import ConvertUnits from '../utils/convertUnits';
 
 class TopArticlesView extends React.Component {
 
@@ -126,28 +66,29 @@ class TopArticlesView extends React.Component {
     }
 
     /* Average time reading the article */
-    let avg_time_rows = getFilteredColumns(data.timeOnPageTop, 'avg_time_on_page');
+    let avg_time_rows = TableFormatting(data.timeOnPageTop, 'avg_time_on_page');
     avg_time_rows = avg_time_rows.map((d) => {
-      let time = convertTime(d[2].value)
+      let time = ConvertUnits.secondsToMinutes(d[2].value)
+      time = `${time.minutes}m ${time.seconds}s`
       return [d[0], d[1], time, d[3]]
     });
 
     /* Most read article */
-    let topArticleViews = getFilteredColumns(data.topArticleViews, 'top_article_views', 'doc_count');
+    let topArticleViews = TableFormatting(data.topArticleViews, 'top_article_views', 'doc_count');
     /* Most commented article */
     let topArticleCommented = data.topArticlesCommentPosts.filter((d) => {
       return d.posts.doc_count !== 0;
     });
-    topArticleCommented = getFilteredColumns(topArticleCommented, 'posts', 'doc_count');
+    topArticleCommented = TableFormatting(topArticleCommented, 'posts', 'doc_count');
 
     /* Top referred articles from seach engines */
-    let searchReferrers = getFilteredColumns(data.topArticlesSearchRef, 'views', 'doc_count');
+    let searchReferrers = TableFormatting(data.topArticlesSearchRef, 'views', 'doc_count');
 
     /* Top referred articles from social sites */
-    let socialReferrers = getFilteredColumns(data.topArticlesSocialRef, 'views', 'doc_count');
+    let socialReferrers = TableFormatting(data.topArticlesSocialRef, 'views', 'doc_count');
 
     /* Top articles keeping users on FT */
-    let topArticlesRetention = getFilteredColumns(data.topArticlesRetention, 'retained_users')
+    let topArticlesRetention = TableFormatting(data.topArticlesRetention, 'retained_users')
     .map((d) => {
       d[2] = d[2].value;
       return d;
