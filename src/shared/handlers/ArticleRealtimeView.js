@@ -296,7 +296,7 @@ class ArticleRealtimeView extends React.Component {
     let refID = 'category';
     let refKeys = ['referrals'];
 
-    let [extRefData, extRefID, extRefKeys] = dataFormatter.getPCTMetric('externalReferrerTypes', 'External Referrals');
+    let [extRefData, extRefID, extRefKeys] = dataFormatter.getPCTMetric('internalExternalReferrers', 'Referrals');
 
     let internalReferrerUrls = this.props.internalReferrerUrls.map(getLinksForReferrerUrls);
     let externalReferrerUrls = this.props.externalReferrerUrls.map(getLinksForReferrerUrls);
@@ -631,6 +631,7 @@ ArticleRealtimeView.defaultProps = {
   internalReferrerOther: 0,
   internalReferrerArticles: 0,
   internalReferrerUrls: [],
+  internalExternalReferrers:[],
   externalReferrerTypes: [],
   externalReferrerUrls: [],
   socialReferrers: [],
