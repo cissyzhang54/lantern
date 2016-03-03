@@ -34,7 +34,6 @@ function getReferrerUrls(data) {
   }
 }
 
-
 export default class SectionReferrers extends React.Component {
 
   constructor(props) {
@@ -46,29 +45,17 @@ export default class SectionReferrers extends React.Component {
       return <div></div>
     }
 
+    let data = this.props.data;
+    let comparatorData = this.props.comparatorData
+
+    // Tables
     let refUrls = this.props.data.referrerUrls.map(getReferrerUrls);
-    let internalRefUrls = this.props.data.internalReferrerUrls.map(getReferrerUrls);
-    let dataFormatter = new FormatData(this.props.data, this.props.comparatorData)
-    let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrerTypes', 'Article')
-    let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Article')
+    let internalRefUrls = data.internalReferrerUrls.map(getReferrerUrls);
+    let intUrls = data.nextInternalUrl.map(getReferrerUrls);
 
-    //let [metricData, id, keys] = dataFormatter.getPCTMetric('isLastPage', 'Article', 'Exited FT', 'Stayed on FT')
-
-    let intUrls = this.props.data.nextInternalUrl.map(getReferrerUrls);
-
-    let internalRefTypeChart = this.props.renderInternalRefTypes ? (
-      <Col xs={12}
-        sm={6}
-      >
-        <h5>FT Traffic Source</h5>
-        <BarChart
-          data={internalData}
-          keys={internalKeys}
-          category={internalID}
-          yLabel="Page Views"
-          xLabel="Referrer"
-        />
-      </Col>) : [];
+    // Bar Chart
+    let dataFormatter = new FormatData(data, comparatorData);
+    let [externalData, externalID, externalKeys] = dataFormatter.getPCTMetric('internalExternalReferrers', 'Article');
 
     return (<ChunkWrapper component='sectionJourney'>
 
@@ -94,16 +81,22 @@ export default class SectionReferrers extends React.Component {
         <Col xs={12}
           sm={6}
         >
-          <h5>Traffic Source</h5>
+          <h5>Internal vs External</h5>
+
+        </Col>
+        <Col xs={12}
+             sm={6}
+          >
+          <h5>Referrers</h5>
           <BarChart
-            data={refData}
-            keys={refKeys}
-            category={refID}
+            data={externalData}
+            keys={externalKeys}
+            category={externalID}
             yLabel="Page Views"
             xLabel="Traffic Source"
-          />
+            />
+
         </Col>
-        {internalRefTypeChart}
       </Row>
 
       <Row style={{marginTop:"20px"}}>

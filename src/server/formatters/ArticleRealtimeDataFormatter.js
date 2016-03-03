@@ -63,6 +63,10 @@ export default function formatData(data) {
 
   try {
     realtimeFields.forEach(f => {
+      let internalExternalReferrers = getField(realtimeData, 'realtimeReferrerTypes');
+      internalExternalReferrers.push(['internal', getField(realtimeData, 'realtimeInternalReferrerTotal')]);
+      results['realtimeInternalExternalReferrers'] = internalExternalReferrers
+
       results[f] = getField(realtimeData, f)
     });
     realtimeFieldsAllDataFields.forEach(f => {

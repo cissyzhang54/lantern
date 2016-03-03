@@ -22,6 +22,8 @@ function getField(d, f, divisor){
   return field.formatter ? field.formatter(parent, field, divisor, field.bucket_key) : parent
 }
 
+
+
 const fields = {
   title : 'title',
   comparator : 'comparator',
@@ -66,6 +68,7 @@ const fields = {
   realtimeReferrerUrls: {name: 'aggregations.realtime_referrer.urls', formatter: format},
   realtimeInternalReferrerArticles: {name: 'aggregations.realtime_internal_referrer.referrer_type_article.doc_count'},
   realtimeInternalReferrerOther: {name: 'aggregations.realtime_internal_referrer.referrer_type_other.doc_count'},
+  realtimeInternalReferrerTotal: {name: 'aggregations.realtime_internal_referrer.doc_count'},
   realtimeInternalReferrerUrls: {name: 'aggregations.realtime_internal_referrer.urls', formatter: format},
   realtimeSocialReferrers: {name: 'aggregations.realtime_social_referrer.names', formatter: formatAndFilter, terms: ['Facebook', 'Twitter', 'Linked-In']},
   retentionRate: 'aggregations.retention_rate.filtered.value',
@@ -97,6 +100,7 @@ const fields = {
   userCohort: {name: 'aggregations.user_cohort', formatter: format},
   rfvCluster: {name: 'aggregations.rfv_cluster', formatter: format},
   isFirstVisit: {name: 'aggregations.is_first_visit', formatter: format},
+  internalReferrerTotal: 'aggregations.internal_referrer.doc_count',
   internalReferrerUrls: {name: 'aggregations.internal_referrer.urls', formatter: format},
   internalReferrerTypes: {name: 'aggregations.internal_referrer.types', formatter: format},
   nextInternalUrl: {name: 'aggregations.next_internal_url.filtered', formatter: format},

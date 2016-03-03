@@ -1,5 +1,6 @@
 import assert from 'assert';
 import getField from '../utils/universalDataFormatter';
+import assign from 'object-assign';
 
 export default function formatData(data) {
   try {
@@ -35,10 +36,11 @@ export default function formatData(data) {
   }
 
   let [metaData, articleData, eventData, articleComparatorData, eventComparatorData, articlePublishTimesData] = data;
+
   let metaFields = ['title', 'uuid', 'author', 'published', 'published_human', 'genre', 'sections', 'topics', 'primarySection']
   let articleFields = [
     'pageViews', 'timeOnPage', 'readTimes', 'channels', 'uniqueVisitors',
-    'isSubscription', 'nextInternalUrl', 'internalReferrerTypes', 'internalReferrerUrls', 'isFirstVisit',
+    'isSubscription', 'nextInternalUrl', 'internalReferrerTotal', 'internalReferrerTypes', 'internalReferrerUrls', 'isFirstVisit',
     'rfvCluster', 'userCohort', 'isLastPage', 'regions', 'countries', 'devices', 'socialReferrers',
     'referrerUrls', 'referrerNames', 'referrerTypes', 'top5TimeOnPage', 'headlineStatsOverTime'
   ]
@@ -52,7 +54,7 @@ export default function formatData(data) {
     'articleCount', 'uniqueVisitors' , 'pageViews'
   ]
   let articleComparatorAverages = [
-    'referrerTypes', 'socialReferrers', 'regions',
+    'referrerTypes', 'socialReferrers', 'regions', 'internalReferrerTotal',
     'isLastPage', 'userCohort', 'rfvCluster', 'isFirstVisit', 'internalReferrerTypes',
     'categoryAverageViewCount', 'categoryAverageUniqueVisitors'
   ]
@@ -64,16 +66,28 @@ export default function formatData(data) {
 
   let results = {}
   let comparatorResults = {};
+
   return new Promise((resolve, reject) => {
     try {
-      metaFields.forEach(f => { results[f] = getField(metaData, f)})
-      articleFields.forEach(f => { results[f] = getField(articleData, f)})
-      articlePublishTimeFields.forEach(f => { results[f] = getField(articlePublishTimesData, f)})
-      eventFields.forEach(f => { results[f] = getField(eventData, f)})
-      articleComparatorFields.forEach(f => { comparatorResults[f] = getField(articleComparatorData, f)})
-      articleComparatorAverages.forEach(f => { comparatorResults[f] = getField(articleComparatorData, f, divisor)})
-      eventComparatorFields.forEach(f => { comparatorResults[f] = getField(eventComparatorData, f)})
-      eventComparatorAverages.forEach(f => { comparatorResults[f] = getField(eventComparatorData, f, divisor)})
+      // Data
+      let internalExternalReferrers = getField(articleData, 'referrerTypes');
+      internalExternalReferrers.push(['internal', getField(articleData, 'internalReferrerTotal')]);
+      results['internalExternalReferrers'] = internalExternalReferrers;
+
+      metaFields.forEach(f => { results[f] = getField(metaData, f)});
+      articleFields.forEach(f => { results[f] = getField(articleData, f)});
+      articlePublishTimeFields.forEach(f => { results[f] = getField(articlePublishTimesData, f)});
+      eventFields.forEach(f => { results[f] = getField(eventData, f)});
+
+      // Comparator Data
+      let internalExternalReferrersComp = getField(articleComparatorData, 'referrerTypes');
+      internalExternalReferrersComp.push(['internal', getField(articleComparatorData, 'internalReferrerTotal')]);
+      comparatorResults['internalExternalReferrers'] = internalExternalReferrersComp;
+
+      articleComparatorFields.forEach(f => { comparatorResults[f] = getField(articleComparatorData, f)});
+      articleComparatorAverages.forEach(f => { comparatorResults[f] = getField(articleComparatorData, f, divisor)});
+      eventComparatorFields.forEach(f => { comparatorResults[f] = getField(eventComparatorData, f)});
+      eventComparatorAverages.forEach(f => { comparatorResults[f] = getField(eventComparatorData, f, divisor)});
       resolve({
         data: results,
         comparatorData: comparatorResults

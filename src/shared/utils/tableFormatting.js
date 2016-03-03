@@ -27,7 +27,7 @@ function getColumns (data, metric) {
     let title =  d.title.buckets[0] ? d.title.buckets[0].key : "Unknown"
     let author = formatAuthors.split(d);
     let articleUrl = (
-      <a href={`/landing/article/${uuid}`}
+      <a href={`/articles/${uuid}`}
          target="_blank"
         >
         {title}
