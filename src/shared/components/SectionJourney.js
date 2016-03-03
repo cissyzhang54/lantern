@@ -103,15 +103,7 @@ export default class SectionReferrers extends React.Component {
             xLabel="Traffic Source"
           />
         </Col>
-        <Col xs={12}
-          sm={6}
-        >
-          <h5>Top 5 traffic sources</h5>
-          <Table
-            headers={['Traffic Source', 'Views']}
-            rows={refUrls}
-          />
-        </Col>
+        {internalRefTypeChart}
       </Row>
 
       <Row style={{marginTop:"20px"}}>
@@ -121,15 +113,23 @@ export default class SectionReferrers extends React.Component {
       </Row>
 
       <Row>
-        {internalRefTypeChart}
         <Col xs={12}
-          sm={6}
-        >
-          <h5>Top 5 traffic sources</h5>
+             sm={6}
+          >
+          <h5>Top 5 internal sources</h5>
           <Table
             headers={['FT Source', 'Views']}
             rows={internalRefUrls}
-          />
+            />
+        </Col>
+        <Col xs={12}
+             sm={6}
+          >
+          <h5>Top 5 external sources</h5>
+          <Table
+            headers={['Traffic Source', 'Views']}
+            rows={refUrls}
+            />
         </Col>
       </Row>
 

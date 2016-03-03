@@ -535,11 +535,14 @@ class ArticleRealtimeView extends React.Component {
               xs={12}
               sm={6}
             >
-              <h5>Top 5 traffic sources</h5>
-              <Table
-                headers={['Traffic Source', 'Views']}
-                rows={externalReferrerUrls}
-              />
+              <h5>FT Traffic Sources</h5>
+              <BarChart
+                data={refData}
+                keys={refKeys}
+                category={refID}
+                yLabel="Internal referrals"
+                xLabel="Traffic Source"
+                />
             </Col>
           </Row>
           <Row>
@@ -555,24 +558,21 @@ class ArticleRealtimeView extends React.Component {
               xs={12}
               sm={6}
             >
-              <h5>FT Traffic Sources</h5>
-              <BarChart
-                data={refData}
-                keys={refKeys}
-                category={refID}
-                yLabel="Internal referrals"
-                xLabel="Traffic Source"
-              />
+              <h5>Top 5 Internal sources</h5>
+              <Table
+                headers={['FT Source', 'Views']}
+                rows={internalReferrerUrls}
+                />
             </Col>
             <Col
               xs={12}
               sm={6}
             >
-              <h5>Top 5 traffic sources</h5>
+              <h5>Top 5 External sources</h5>
               <Table
-                headers={['FT Source', 'Views']}
-                rows={internalReferrerUrls}
-              />
+                headers={['Traffic Source', 'Views']}
+                rows={externalReferrerUrls}
+                />
             </Col>
           </Row>
         </ChunkWrapper>

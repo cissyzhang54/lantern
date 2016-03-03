@@ -54,6 +54,10 @@ module.exports = {
     nExtras.assertElementsInSection(browser, articlePage.sectionSocial);
   },
 
+  'Assert elements in Journey Section' : function (browser) {
+    nExtras.assertElementsInSection(browser, articlePage.sectionJourney);
+  },
+
   'Assert elements in Who Section' : function (browser) {
     nExtras.assertElementsInSection(browser, articlePage.sectionWho);
   },
