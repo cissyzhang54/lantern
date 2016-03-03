@@ -35,7 +35,13 @@ let config = {
     'section:where' : true,
     'section:topics' : false,
     'topic:who' : true,
-    'topic:where' : true
+    'topic:where' : true,
+    'highlights:timeOnPage': true,
+    'highlights:retention': true,
+    'highlights:commented': false,
+    'highlights:pageViews': true,
+    'highlights:socialMedia': true,
+    'highlights:searchEngines': true
   }
 };
 

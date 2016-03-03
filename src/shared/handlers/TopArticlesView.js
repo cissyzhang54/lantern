@@ -8,12 +8,13 @@ import Messaging from '../components/Messaging';
 import ErrorHandler from '../components/ErrorHandler';
 import ChunkWrapper from "../components/ChunkWrapper";
 import Table from '../components/Table.js';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import TopArticlesActions from '../actions/TopArticlesActions';
 import TopArticlesStore from '../stores/TopArticlesStore';
 import moment from 'moment';
 import TableFormatting from '../utils/tableFormatting';
 import ConvertUnits from '../utils/convertUnits';
+
+import FeatureFlag from '../utils/featureFlag';
 
 class TopArticlesView extends React.Component {
 
@@ -112,6 +113,126 @@ class TopArticlesView extends React.Component {
       );
     }
 
+    const top5TimeSpentOnPage = (
+      <ChunkWrapper component="Top5TimeSpentOnPage"
+        featureflag={FeatureFlag.check('highlights:timeOnPage')}
+      >
+        <Row>
+          <Col xs={12}>
+            <h3>Top 5 - Time spent on page</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <Table
+              headers={['Article', 'Author(s)', 'Time', '']}
+              rows={avg_time_rows}
+            />
+          </Col>
+        </Row>
+      </ChunkWrapper>
+    );
+
+    const top5keptOnft = (
+      <ChunkWrapper component="Top5KeptOnFt"
+        featureflag={FeatureFlag.check('highlights:retention')}
+      >
+        <Row>
+          <Col xs={12}>
+            <h3>Top 5 - Articles that kept readers on FT.com</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <Table
+              headers={['Article', 'Author(s)', 'Users retained', '']}
+              rows={topArticlesRetention}
+            />
+          </Col>
+        </Row>
+      </ChunkWrapper>
+    );
+
+    const top5MostCommented = (
+      <ChunkWrapper component="Top5MostCommented"
+        featureflag={FeatureFlag.check('highlights:commented')}
+      >
+        <Row>
+          <Col xs={12}>
+            <h3>Top 5 - Most commented</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <Table
+              headers={['Article', 'Author(s)', 'Comments', '']}
+              rows={topArticleCommented}
+            />
+          </Col>
+        </Row>
+      </ChunkWrapper>
+    );
+
+    const top5PageViews = (
+      <ChunkWrapper component="Top5PageViews"
+        featureflag={FeatureFlag.check('highlights:pageViews')}
+      >
+        <Row>
+          <Col xs={12}>
+            <h3>Top 5 - Number of page views</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <Table
+              headers={['Article', 'Author(s)', 'Views', '']}
+              rows={topArticleViews}
+            />
+          </Col>
+        </Row>
+      </ChunkWrapper>
+    );
+
+    const top5SocialMedia = (
+      <ChunkWrapper component="Top5FromSocialMedia"
+        featureflag={FeatureFlag.check('highlights:socialMedia')}
+      >
+        <Row>
+          <Col xs={12}>
+            <h3>Top 5 - Traffic from social media</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <Table
+              headers={['Article', 'Author(s)', 'Views', '']}
+              rows={socialReferrers}
+            />
+          </Col>
+        </Row>
+      </ChunkWrapper>
+    );
+
+    const top5SearchEngines = (
+      <ChunkWrapper component="Top5FromSearchEngines"
+        featureflag={FeatureFlag.check('highlights:searchEngines')}
+      >
+        <Row>
+          <Col xs={12}>
+            <h3>Top 5 - Traffic from search engines</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col xs={12}>
+            <Table
+              headers={['Article', 'Author(s)', 'Views', '']}
+              rows={searchReferrers}
+            />
+          </Col>
+        </Row>
+      </ChunkWrapper>
+    );
+
     return(<DocumentTitle title={title}>
       <div>
         <ChunkWrapper component="header">
@@ -123,101 +244,13 @@ class TopArticlesView extends React.Component {
           />
         </ChunkWrapper>
 
-        <ChunkWrapper component="Top5TimeSpentOnPage">
-          <Row>
-            <Col xs={12}>
-              <h3>Top 5 - Time spent on page</h3>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <Table
-                headers={['Article', 'Author(s)', 'Time', '']}
-                rows={avg_time_rows}
-              />
-            </Col>
-          </Row>
-        </ChunkWrapper>
+        {top5TimeSpentOnPage}
+        {top5keptOnft}
+        {top5MostCommented}
+        {top5PageViews}
+        {top5SocialMedia}
+        {top5SearchEngines}
 
-        <ChunkWrapper component="Top5KeptOnFt">
-          <Row>
-            <Col xs={12}>
-              <h3>Top 5 - Articles that kept readers on FT.com</h3>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <Table
-                headers={['Article', 'Author(s)', 'Users retained', '']}
-                rows={topArticlesRetention}
-              />
-            </Col>
-          </Row>
-        </ChunkWrapper>
-
-        <ChunkWrapper component="Top5MostCommented">
-          <Row>
-            <Col xs={12}>
-              <h3>Top 5 - Most commented</h3>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <Table
-                headers={['Article', 'Author(s)', 'Comments', '']}
-                rows={topArticleCommented}
-              />
-            </Col>
-          </Row>
-        </ChunkWrapper>
-
-        <ChunkWrapper component="Top5PageViews">
-          <Row>
-            <Col xs={12}>
-              <h3>Top 5 - Number of page views</h3>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <Table
-                headers={['Article', 'Author(s)', 'Views', '']}
-                rows={topArticleViews}
-              />
-            </Col>
-          </Row>
-        </ChunkWrapper>
-
-        <ChunkWrapper component="Top5FromSocialMedia">
-          <Row>
-            <Col xs={12}>
-              <h3>Top 5 - Traffic from social media</h3>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <Table
-                headers={['Article', 'Author(s)', 'Views', '']}
-                rows={socialReferrers}
-              />
-            </Col>
-          </Row>
-        </ChunkWrapper>
-
-        <ChunkWrapper component="Top5FromSearchEngines">
-          <Row>
-            <Col xs={12}>
-              <h3>Top 5 - Traffic from search engines</h3>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs={12}>
-              <Table
-                headers={['Article', 'Author(s)', 'Views', '']}
-                rows={searchReferrers}
-              />
-            </Col>
-          </Row>
-        </ChunkWrapper>
       </div>
     </DocumentTitle>)
   }
