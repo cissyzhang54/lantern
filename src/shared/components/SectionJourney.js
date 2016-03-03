@@ -6,7 +6,7 @@ import Table from '../components/Table';
 import FormatData from "../utils/formatData";
 import ChunkWrapper from './ChunkWrapper.js';
 import Url from 'url';
-import ToolTip from '../components/ToolTip'
+import ToolTip from '../components/ToolTip';
 
 
 function getReferrerUrls(data) {

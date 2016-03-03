@@ -8,6 +8,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
 import Text from './Text'
+import ToolTip from '../components/ToolTip';
 
 const styles = {
   infoIcon : {
@@ -61,7 +62,14 @@ export default class SectionWho extends React.Component {
           <Col xs={12}
             sm={6}
           >
-            <h4>New vs Returning</h4>
+            <h4>
+              <ToolTip
+                type="html"
+                message='explanations.barChart.newVsReturning'
+                id={'new-vs-returning'}
+              />
+              New vs Returning
+            </h4>
             <ColumnChart
               data={returningData}
               keys={returningKeys}
