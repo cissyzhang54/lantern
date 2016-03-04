@@ -289,6 +289,9 @@ class ArticleRealtimeView extends React.Component {
     let formatterData = this.props
     let dataFormatter = new FormatData(formatterData , null);
     let [extRefData, extRefID, extRefKeys] = dataFormatter.getPCTMetric('internalExternalReferrers', 'Referrals');
+    extRefData.sort(function(a,b) {
+      return b.Referrals - a.Referrals
+    });
 
     // Table Data
     let internalReferrerUrls = this.props.internalReferrerUrls.map(getLinksForReferrerUrls);

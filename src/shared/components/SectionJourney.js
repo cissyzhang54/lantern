@@ -57,6 +57,9 @@ export default class SectionReferrers extends React.Component {
     // Bar Chart
     let dataFormatter = new FormatData(data, comparatorData);
     let [externalData, externalID, externalKeys] = dataFormatter.getPCTMetric('internalExternalReferrers', 'Article');
+    externalData.sort(function(a,b) {
+      return b.Article - a.Article
+    });
 
     // Pie Chart
     let referrers = [['internal', data.internalReferrerTotal], ['external', data.referrerTotal]]
