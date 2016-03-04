@@ -72,12 +72,12 @@ class SectionView extends React.Component {
     let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views');
 
     const headlineStats = {
-      topicsCovered: {
+      /*topicsCovered: {
         metricType: 'integer',
         label: 'Topics Covered',
         size: 'large',
         comparatorFormatName: 'topicsCovered'
-      },
+        },*/
       uniqueVisitors: {
         metricType: 'integer',
         label: 'Unique Visitors',
