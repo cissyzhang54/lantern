@@ -2,11 +2,6 @@ import React from 'react';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
 import SingleMetric from "./SingleMetric";
-import FeatureFlag from '../utils/featureFlag';
-import Table from '../components/Table';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
-import Popover from 'react-bootstrap/lib/Popover';
-import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import ChunkWrapper from './ChunkWrapper.js';
 import Text from './Text';
 import responsiveStyles from '../utils/responsiveStyles';
@@ -37,7 +32,7 @@ var controllerStyles = {
   },
   '(max-width: 500px)' : {
     list : {
-      marginBottom: '20px',
+      marginBottom: '20px'
     }
   }
 };
@@ -106,10 +101,12 @@ export default class SectionInteract extends React.Component {
   }
 
   render() {
+    if (!this.props.renderInteract) return null;
+
     let styles = this.state.responsiveStyles;
     let data = this.props.data;
 
-    if (!Object.keys(data).length) return (<div></div>);
+    if (!Object.keys(data).length) return null;
     let comparatorData = this.props.comparatorData ;
 
     /* Subscriptions */
@@ -123,7 +120,7 @@ export default class SectionInteract extends React.Component {
     /* Links */
     let links_clicked_total = renderMetric('total_links_clicked', data.totalLinksClicked, comparatorData.comparator, comparatorData.totalLinksClicked);
 
-    let link_click_categories = data.linkClickCategories.buckets.map((d, i) => {
+    let link_click_categories = data.linkClickCategories.buckets.map((d) => {
       let key = d.key;
       let value = d.total_clicks.value;
       let element = renderMetric(key, value)
@@ -139,7 +136,13 @@ export default class SectionInteract extends React.Component {
       } else if (i++ === data.linkClickCategories.buckets.length) {
         className += '--last'
       }
-      return <li key={i} style={styles[className]}>{d}</li>;
+      return (
+        <li key={i}
+          style={styles[className]}
+        >
+          {d}
+        </li>
+      );
     });
 
     return ( <ChunkWrapper component='sectionInteractiveStats' >
@@ -149,17 +152,23 @@ export default class SectionInteract extends React.Component {
         </Col>
       </Row>
       <Row>
-        <Col xs={12} sm={4} >
+        <Col xs={12}
+          sm={4}
+        >
           <ul style={styles.list}>
             {link_click_categories}
           </ul>
         </Col>
-        <Col xs={12} sm={4} >
+        <Col xs={12}
+          sm={4}
+        >
           <ul style={styles.list}>
             <li style={styles['list__item--first']}>{comments_posted_total}</li>
           </ul>
         </Col>
-        <Col xs={12} sm={4} >
+        <Col xs={12}
+          sm={4}
+        >
           <ul style={styles.list}>
             <li style={styles['list__item--first']}>{subscription}</li>
           </ul>

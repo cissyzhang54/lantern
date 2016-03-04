@@ -26,6 +26,7 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import ToolTip from '../components/ToolTip'
+import FeatureFlag from '../utils/featureFlag';
 
 const maxStrLen = 60;
 
@@ -348,6 +349,191 @@ class ArticleRealtimeView extends React.Component {
       uuid: this.props.uuid
     };
 
+    const userInteract = (
+      <ChunkWrapper component="user-interact"
+        featureflag={FeatureFlag.check('articleLive:interact')}
+      >
+        <h3>How did the user interact?</h3>
+          <Row>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <MetricList
+                items={linksClickedCategoryList}
+              />
+            </Col>
+            <Col
+              xs={12}
+              sm={6}
+            >
+              <MetricList
+                items={commentsList}
+              />
+            </Col>
+          </Row>
+      </ChunkWrapper>
+    );
+
+    const socialMediaChunk = (
+      <ChunkWrapper component="social-media"
+        featureflag={FeatureFlag.check('articleLive:socialMedia')}
+      >
+        <Row>
+          <Col>
+            <h3>How did the story perform on social media?</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <BarChart
+              data={socialMediaChartData}
+              keys={['Social Media Referrals']}
+              category={'network'}
+              yLabel="Traffic from Social"
+              xLabel="Social Network"
+            />
+          </Col>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <Table
+              headers={['Total traffic from social', socialMediaTotal]}
+              rows={socialMedia}
+            />
+          </Col>
+        </Row>
+      </ChunkWrapper>
+    );
+
+    const trafficSources = (
+      <ChunkWrapper component="traffic-sources"
+        featureflag={FeatureFlag.check('articleLive:trafficSources')}
+      >
+        <Row>
+          <Col xs={12}>
+            <h3>How was the user referred to the story?</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <h4>
+              <ToolTip
+                type="html"
+                message='explanations.sectionJourney.articleViews.external'
+                id={'external-sources-desc'}
+              />
+              External Sources
+            </h4>
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <h5>Internal vs External</h5>
+            <PieChart
+              data={referrerTotalsData}
+              keys={['referrers']}
+            />
+          </Col>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <h5>Traffic Source</h5>
+            <BarChart
+              data={extRefData}
+              keys={extRefKeys}
+              category={extRefID}
+              yLabel="Page Views"
+              xLabel="Traffic Source"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <h4>Internal Sources</h4>
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <h5>Top 5 Internal sources</h5>
+            <Table
+              headers={['FT Source', 'Views']}
+              rows={internalReferrerUrls}
+            />
+          </Col>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <h5>Top 5 External sources</h5>
+            <Table
+              headers={['Traffic Source', 'Views']}
+              rows={externalReferrerUrls}
+            />
+          </Col>
+        </Row>
+      </ChunkWrapper>
+    );
+
+    const realtimeNext = (
+      <ChunkWrapper component="realtime-next-internal"
+        featureflag={FeatureFlag.check('articleLive:realtimeNext')}
+      >
+        <Row>
+          <Col>
+            <h3>Of those who stayed, where did they go?</h3>
+            <Table
+              headers={['FT Source', 'Views']}
+              rows={realtimeNextInternalUrl}
+            />
+          </Col>
+        </Row>
+      </ChunkWrapper>
+    );
+
+    const userType = (
+      <ChunkWrapper component="user-type"
+        featureflag={FeatureFlag.check('articleLive:userType')}
+      >
+        <Row>
+          <Col>
+            <h3>Who are the users?</h3>
+          </Col>
+        </Row>
+        <Row>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <ColumnChart
+              data={userTypeData}
+              keys={userTypeKeys}
+              category={userTypeID}
+              yLabel="Page Views"
+              xLabel="User Type"
+            />
+          </Col>
+        </Row>
+      </ChunkWrapper>
+    );
+
     return (
       <DocumentTitle title={title}>
       <div>
@@ -368,28 +554,28 @@ class ArticleRealtimeView extends React.Component {
           analyticsView={this.props.route.analyticsView + timespan}
           publishDate={this.props.published}
           uuid={this.props.uuid}
-          />
+        />
 
         <ChunkWrapper component="modifier">
           <Row>
             <Col sm={2}
-                 xs={12}
-              >
+              xs={12}
+            >
               <span style={{lineHeight: "1.5em"}}>Timespan:</span>
             </Col>
             <Col sm={10}
-                 xs={12}
-              >
-                <TimespanSelector
-                  current={this.props.timespan}
-                  options={[
+              xs={12}
+            >
+              <TimespanSelector
+                current={this.props.timespan}
+                options={[
                   {label: 'Last hour', value: '1h'},
                   {label: 'Last 6 hours', value: '6h'},
                   {label: 'Last 24 hours', value: '24h'},
-                  {label: 'Last 48 hours', value: '48h'},
+                  {label: 'Last 48 hours', value: '48h'}
                  ]}
-                  query={queryLinkProps}
-                  />
+                query={queryLinkProps}
+              />
             </Col>
           </Row>
         </ChunkWrapper>
@@ -409,9 +595,9 @@ class ArticleRealtimeView extends React.Component {
                   rootClose
                   placement="bottom"
                   overlay={
-                    <Popover id="chart-description">
-                     <p><Text message={selectedGraphToolTipMessage} /></p>
-                    </Popover>
+                    (<Popover id="chart-description">
+                      <p><Text message={selectedGraphToolTipMessage} /></p>
+                    </Popover>)
                     }
                 >
                   <span>
@@ -439,171 +625,11 @@ class ArticleRealtimeView extends React.Component {
           </Row>
         </ChunkWrapper>
 
-        <ChunkWrapper component="user-interact">
-          <h3>How did the user interact?</h3>
-            <Row>
-              <Col
-                xs={12}
-                sm={6}
-              >
-                <MetricList
-                  items={linksClickedCategoryList}
-                />
-              </Col>
-              <Col
-                xs={12}
-                sm={6}
-              >
-                <MetricList
-                  items={commentsList}
-                />
-              </Col>
-            </Row>
-        </ChunkWrapper>
-
-        <ChunkWrapper component="social-media">
-          <Row>
-            <Col>
-              <h3>How did the story perform on social media?</h3>
-            </Col>
-          </Row>
-          <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <BarChart
-                data={socialMediaChartData}
-                keys={['Social Media Referrals']}
-                category={'network'}
-                yLabel="Traffic from Social"
-                xLabel="Social Network"
-              />
-            </Col>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <Table
-                headers={['Total traffic from social', socialMediaTotal]}
-                rows={socialMedia}
-              />
-            </Col>
-          </Row>
-        </ChunkWrapper>
-
-        <ChunkWrapper component="traffic-sources">
-          <Row>
-            <Col xs={12}>
-              <h3>How was the user referred to the story?</h3>
-            </Col>
-          </Row>
-
-          <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <h4>
-                <ToolTip
-                type="html"
-                message='explanations.sectionJourney.articleViews.external'
-                id={'external-sources-desc'}
-                />
-                External Sources
-              </h4>
-            </Col>
-          </Row>
-          <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <h5>Internal vs External</h5>
-              <PieChart
-                data={referrerTotalsData}
-                keys={['referrers']}
-                />
-            </Col>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <h5>Traffic Source</h5>
-              <BarChart
-                data={extRefData}
-                keys={extRefKeys}
-                category={extRefID}
-                yLabel="Page Views"
-                xLabel="Traffic Source"
-                />
-            </Col>
-          </Row>
-          <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <h4>Internal Sources</h4>
-            </Col>
-          </Row>
-          <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <h5>Top 5 Internal sources</h5>
-              <Table
-                headers={['FT Source', 'Views']}
-                rows={internalReferrerUrls}
-                />
-            </Col>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <h5>Top 5 External sources</h5>
-              <Table
-                headers={['Traffic Source', 'Views']}
-                rows={externalReferrerUrls}
-                />
-            </Col>
-          </Row>
-        </ChunkWrapper>
-
-        <ChunkWrapper component="realtime-views">
-          <Row>
-            <Col>
-              <h3>Of those who stayed, where did they go?</h3>
-              <Table
-                headers={['FT Source', 'Views']}
-                rows={realtimeNextInternalUrl}
-              />
-            </Col>
-          </Row>
-        </ChunkWrapper>
-
-        <ChunkWrapper component="user-type">
-          <Row>
-            <Col>
-              <h3>Who are the users?</h3>
-            </Col>
-          </Row>
-          <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <ColumnChart
-                data={userTypeData}
-                keys={userTypeKeys}
-                category={userTypeID}
-                yLabel="Page Views"
-                xLabel="User Type"
-              />
-            </Col>
-          </Row>
-        </ChunkWrapper>
+        {FeatureFlag.check('articleLive:interact') ? userInteract : null}
+        {FeatureFlag.check('articleLive:socialMedia') ? socialMediaChunk : null}
+        {FeatureFlag.check('articleLive:trafficSources') ? trafficSources : null}
+        {FeatureFlag.check('articleLive:realtimeNext') ? realtimeNext : null}
+        {FeatureFlag.check('articleLive:userType') ? userType : null}
 
       </div>
       </DocumentTitle>
