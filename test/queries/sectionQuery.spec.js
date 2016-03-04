@@ -57,7 +57,7 @@ describe('Section Query', () => {
               must:[
                 {
                   range:{
-                    initial_publish_date: {
+                    view_timestamp: {
                       "from": '2015-09-16T19:58:26.000Z',
                       to : '2015-10-16T19:58:26.000Z'
                     }

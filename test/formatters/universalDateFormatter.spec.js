@@ -13,8 +13,8 @@ describe('universalDataFormatter', function() {
   describe('should parse sectionData correctly', function () {
 
     it('should parse sectionMetaData correctly', function () {
-      expect(getField(sectionMetaData, 'articleCount')).to.be.a('number')
-      expect(getField(sectionMetaData, 'articleCount')).to.deep.equal(252)
+      expect(getField(sectionMetaData, 'articlePublishCount')).to.be.a('number')
+      expect(getField(sectionMetaData, 'articlePublishCount')).to.deep.equal(252)
 
       expect(getField(sectionMetaData, 'topicsCovered')).to.be.a('number')
       expect(getField(sectionMetaData, 'topicsCovered')).to.deep.equal(108)

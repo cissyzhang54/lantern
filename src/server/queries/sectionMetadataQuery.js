@@ -1,6 +1,6 @@
 import * as QueryUtils from '../utils/queryUtils'
 
-export default function sectionQuery(query){
+export default function sectionMetadataQuery(query){
   QueryUtils.checkString(query,'dateFrom');
   QueryUtils.checkString(query,'dateTo');
   QueryUtils.checkString(query,'section');
@@ -17,7 +17,7 @@ export default function sectionQuery(query){
 
   let matchDates = {
     range : {
-      view_timestamp : {
+      initial_publish_date : {
         from: query.dateFrom,
         to: query.dateTo
       }

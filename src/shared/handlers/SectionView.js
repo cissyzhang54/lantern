@@ -85,11 +85,11 @@ class SectionView extends React.Component {
         comparatorFormatName: 'uniqueVisitors',
         toolTip: (<Text message='explanations.metric.uniqueVisitors' />)
       },
-      articleCount: {
+      articlePublishCount: {
         metricType: 'integer',
         label: 'Articles Published',
         size: 'large',
-        comparatorFormatName: 'articleCount'
+        comparatorFormatName: 'articlePublishCount'
       }
     }
 

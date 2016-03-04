@@ -1,7 +1,7 @@
 import * as QueryUtils from '../utils/queryUtils'
 import moment from 'moment'
 
-export default function sectionComparatorQuery(query){
+export default function sectionMetadataComparatorQuery(query){
   //This is always compared against the whole of the FT
   QueryUtils.checkString(query,'section');
   QueryUtils.checkString(query,'dateFrom');
@@ -30,7 +30,7 @@ export default function sectionComparatorQuery(query){
 
   let matchDates = {
     "range" : {
-      "view_timestamp" : {
+      "initial_publish_date" : {
         from: query.dateFrom,
         to: query.dateTo
       }

@@ -7,10 +7,10 @@ export default function SectionComparatorESQuery(query) {
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  let sectionQuery = SectionComparatorQuery(query)
+  let sectionComparatorQuery = SectionComparatorQuery(query)
 
   let esQuery = {
-    query : sectionQuery,
+    query : sectionComparatorQuery,
     size: 1,
     aggs: SectionComparatorAggregation(query)
   };
