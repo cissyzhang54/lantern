@@ -194,14 +194,14 @@ module.exports = {
 
   // Referrers Section
   sectionJourney: {
-    /*referrerTypes: {
+    referrerTypes: {
       name: 'Internal vs External',
       selectors: {
         container: 'div[data-component="sectionJourney"] > div:nth-child(3) > div:nth-child(1)',
-        dataComponent: ' > div[data-component="barChart"]:nth-child(2)',
+        dataComponent: ' > div[data-component="pieChart"]:nth-child(2)',
         heading: ' > h5:nth-child(1)'
       }
-    },*/
+    },
     internalReferrerTypes: {
       name: 'Referrers',
       selectors: {

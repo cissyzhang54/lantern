@@ -15,6 +15,7 @@ import * as formatAuthors from '../utils/formatAuthors';
 import ErrorHandler from '../components/ErrorHandler';
 import FormatData from "../utils/formatData";
 import BarChart from '../components/BarChart.js';
+import PieChart from "../components/PieChart";
 import ColumnChart from '../components/ColumnChart.js'
 import Url from 'url';
 import MetricList from '../components/MetricList'
@@ -284,22 +285,18 @@ class ArticleRealtimeView extends React.Component {
     }
 
     /* User Journey Section */
+    // Bar Chart Data
     let formatterData = this.props
-
     let dataFormatter = new FormatData(formatterData , null);
-
-    let totalInternalReferrers = formatterData.internalReferrerArticles + formatterData.internalReferrerOther;
-    let refData = [
-      { category: 'article', 'referrals': formatterData.internalReferrerArticles, 'referrals %':  Math.round(formatterData.internalReferrerArticles / totalInternalReferrers * 100)},
-      { category: 'other', 'referrals': formatterData.internalReferrerOther, 'referrals %':  Math.round(formatterData.internalReferrerOther / totalInternalReferrers * 100)}
-    ];
-    let refID = 'category';
-    let refKeys = ['referrals'];
-
     let [extRefData, extRefID, extRefKeys] = dataFormatter.getPCTMetric('internalExternalReferrers', 'Referrals');
 
+    // Table Data
     let internalReferrerUrls = this.props.internalReferrerUrls.map(getLinksForReferrerUrls);
     let externalReferrerUrls = this.props.externalReferrerUrls.map(getLinksForReferrerUrls);
+
+    // Pie Chart Data
+    let externalRefTotal = this.props.externalReferrerTypes.reduce((a, b) => { return a + b[1]; }, 0);
+    let referrerTotalsData = [['internal', this.props.internalReferrerTotal], ['external', externalRefTotal]]
 
 
 
@@ -522,25 +519,22 @@ class ArticleRealtimeView extends React.Component {
               xs={12}
               sm={6}
             >
+              <h5>Internal vs External</h5>
+              <PieChart
+                data={referrerTotalsData}
+                keys={['referrers']}
+                />
+            </Col>
+            <Col
+              xs={12}
+              sm={6}
+            >
               <h5>Traffic Source</h5>
               <BarChart
                 data={extRefData}
                 keys={extRefKeys}
                 category={extRefID}
                 yLabel="Page Views"
-                xLabel="Traffic Source"
-              />
-            </Col>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <h5>FT Traffic Sources</h5>
-              <BarChart
-                data={refData}
-                keys={refKeys}
-                category={refID}
-                yLabel="Internal referrals"
                 xLabel="Traffic Source"
                 />
             </Col>
@@ -628,6 +622,7 @@ ArticleRealtimeView.defaultProps = {
   comments: 0,
   commentsRead: 0,
   userTypes: [],
+  internalReferrerTotal: 0,
   internalReferrerOther: 0,
   internalReferrerArticles: 0,
   internalReferrerUrls: [],

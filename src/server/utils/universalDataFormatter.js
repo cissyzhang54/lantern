@@ -90,6 +90,7 @@ const fields = {
   readTimesSincePublish: {name: 'aggregations.page_views_since_publish', formatter: format},
   publishTimes: {name: 'aggregations.articles_published_over_time', formatter: format},
   channels: {name: 'aggregations.channels', formatter: format},
+  referrerTotal: 'aggregations.referrer.doc_count',
   referrerTypes: {name: 'aggregations.referrer.types', formatter: formatAndFilter, terms: ['search', 'unknown', 'partner', 'social-network', 'email']},
   referrerNames: {name: 'aggregations.referrer.names', formatter: format},
   referrerUrls: {name: 'aggregations.referrer.urls.filtered', formatter: format},

@@ -193,6 +193,8 @@ function getArticleRealtimeData(req, res) {
           internalReferrerArticles: data.realtimeInternalReferrerArticles,
           internalReferrerOther: data.realtimeInternalReferrerOther,
           internalReferrerUrls: data.realtimeInternalReferrerUrls,
+          internalReferrerTotal: data.realtimeInternalReferrerTotal,
+          internalExternalReferrers: data.realtimeInternalExternalReferrers,
           userTypes: data.realtimeUserTypes,
           timespan: req.params.timespan || '1h',
           lastPublishDate: data.lastPublishDate

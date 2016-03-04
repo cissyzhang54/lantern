@@ -7,6 +7,7 @@ import FormatData from "../utils/formatData";
 import ChunkWrapper from './ChunkWrapper.js';
 import Url from 'url';
 import ToolTip from '../components/ToolTip';
+import PieChart from "../components/PieChart";
 
 
 function getReferrerUrls(data) {
@@ -57,6 +58,10 @@ export default class SectionReferrers extends React.Component {
     let dataFormatter = new FormatData(data, comparatorData);
     let [externalData, externalID, externalKeys] = dataFormatter.getPCTMetric('internalExternalReferrers', 'Article');
 
+    // Pie Chart
+    let referrers = [['internal', data.internalReferrerTotal], ['external', data.referrerTotal]]
+
+
     return (<ChunkWrapper component='sectionJourney'>
 
       <Row>
@@ -82,6 +87,10 @@ export default class SectionReferrers extends React.Component {
           sm={6}
         >
           <h5>Internal vs External</h5>
+          <PieChart
+            data={referrers}
+            keys={['referrers']}
+            />
 
         </Col>
         <Col xs={12}
