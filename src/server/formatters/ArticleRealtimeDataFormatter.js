@@ -47,6 +47,7 @@ export default function formatData(data) {
     'realtimeReferrerNames',
     'realtimeReferrerUrls',
     'realtimeReferrerTypes',
+    'realtimeInternalReferrerTotal',
     'realtimeInternalReferrerArticles',
     'realtimeInternalReferrerOther',
     'realtimeInternalReferrerUrls',

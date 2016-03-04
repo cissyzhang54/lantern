@@ -42,7 +42,7 @@ export default function formatData(data) {
     'pageViews', 'timeOnPage', 'readTimes', 'channels', 'uniqueVisitors',
     'isSubscription', 'nextInternalUrl', 'internalReferrerTotal', 'internalReferrerTypes', 'internalReferrerUrls', 'isFirstVisit',
     'rfvCluster', 'userCohort', 'isLastPage', 'regions', 'countries', 'devices', 'socialReferrers',
-    'referrerUrls', 'referrerNames', 'referrerTypes', 'top5TimeOnPage', 'headlineStatsOverTime'
+    'referrerTotal', 'referrerUrls', 'referrerNames', 'referrerTypes', 'top5TimeOnPage', 'headlineStatsOverTime'
   ]
   let eventFields = [
     'totalCommentsPosted', 'totalCommentsViewed', 'socialSharesTotal', 'socialSharesTypes',
