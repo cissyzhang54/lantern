@@ -28,11 +28,11 @@ module.exports = {
     browser
       .assert.attributeContains(nConcat.dataComponent(articlePage.sectionHeader.articleTitle), 'href', articlePage.exampleArticleLink,
       'href for article title is correct')
-      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articleTitle), "Google takes on Go grandmaster in AI test",
+      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articleTitle), "Commodity prices signal market bottom",
       "Article title is correct")
-      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articleAuthor), 'Jung-a Song',
+      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articleAuthor), 'Neil Hume and David Sheppard',
       'Article author is correct')
-      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articlePublished), 'March 8, 2016 8:26 am',
+      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articlePublished), 'March 4, 2016 10:43 am',
       'Article publish date is correct')
   },
 
@@ -59,7 +59,7 @@ module.exports = {
   },
 
   'Assert elements in Who Section' : function (browser) {
-    nExtras.assertElementsInSection(browser, articlePage.sectionWho);
+    nExtras.assertElementsInSection(browser, articlePage.sectionWhoUsers);
   },
 
   'Assert elements in Where Section' : function (browser) {

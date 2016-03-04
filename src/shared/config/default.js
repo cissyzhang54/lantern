@@ -46,7 +46,9 @@ let config = {
     'highlights:commented': false,
     'highlights:pageViews': true,
     'highlights:socialMedia': true,
-    'highlights:searchEngines': true
+    'highlights:searchEngines': true,
+    'sectionWhoUsers' : true,
+    'sectionWhoEngagementGroups' : false
   }
 };
 
