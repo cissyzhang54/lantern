@@ -17,13 +17,15 @@ export default class ChunkWrapper extends React.Component {
     }
 
     if (!this.props.featureflag) {
-      return null; 
+      return null;
     }
 
     return (
       <div
         data-component={this.props.component}
-        style={style} className="container-fluid">
+        style={style}
+        className="container-fluid"
+      >
         {this.props.children}
       </div>
     );
