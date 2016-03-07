@@ -58,6 +58,9 @@ export default class BarChart extends React.Component {
     }
 
     if(this.chart) {
+      if (!this.props.realtime) {
+        dataObject.unload = true;
+      }
       this.chart.load(dataObject);
       return;
     }
@@ -193,5 +196,6 @@ BarChart.defaultProps = {
 
 BarChart.propTypes = {
   category: React.PropTypes.string.isRequired,
+  realtime: React.PropTypes.bool,
   yLabel: React.PropTypes.string.isRequired
 };
