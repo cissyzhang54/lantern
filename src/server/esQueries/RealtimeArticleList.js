@@ -53,7 +53,7 @@ export default function RealitmeArticleListQuery(query) {
                 include: [
                   "title",
                   "article_uuid",
-                  "primary_section",
+                  "sections_not_analyzed",
                   "initial_publish_date"
                 ]
               },
