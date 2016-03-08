@@ -1,5 +1,27 @@
 import moment from 'moment';
 import * as QueryUtils from '../utils/queryUtils'
+import calculateIndices from '../utils/calculateIndices.js';
+import ArticleComparatorAggregation from '../aggregations/ArticleComparator'
+
+export function _getDateRangeFromQuery(query) {
+  return {
+    from: moment(query.publishDate).subtract(30,'days'),
+    to: query.publishDate
+  }
+}
+
+export function ArticleComparatorQueryHeader(query) {
+  const dateRange = _getDateRangeFromQuery(query);
+
+  return {
+    index: calculateIndices({
+      dateFrom: dateRange.from,
+      dateTo: dateRange.to
+    }, process.env.ES_INDEX_ROOT),
+    ignore_unavailable: true,
+    search_type: 'count'
+  }
+}
 
 export default function ArticleComparatorQuery(query){
   QueryUtils.checkString(query,'uuid');
@@ -43,10 +65,7 @@ export default function ArticleComparatorQuery(query){
 
   let matchPublishDate = {
     "range" : {
-      "initial_publish_date" : {
-        from: moment(query.publishDate).subtract(30,'days'),
-        to: query.publishDate
-      }
+      "initial_publish_date" : _getDateRangeFromQuery(query)
     }
   }
 
@@ -71,6 +90,11 @@ export default function ArticleComparatorQuery(query){
   }
 
   return {
-    "filtered" : filtered
-  };
+    "query" : {
+      "filtered" : filtered
+    },
+    "size": 1,
+    "aggs" : ArticleComparatorAggregation(query)
+  }
+
 }

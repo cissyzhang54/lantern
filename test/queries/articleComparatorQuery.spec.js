@@ -72,189 +72,70 @@ describe('Article Comparator Query', () => {
 
 
 
-  describe('builds and comparator query', () => {
-
-    it('with the mandatory fields', () => {
-      let comparatorQuery = ArticleComparatorQuery({
-        uuid:'uuid', dateFrom:'2015-09-16T19:58:26.000Z', dateTo:'2015-10-16T19:58:26.000Z',
-        comparator:'comparator', comparatorType:'section',
-        publishDate: '2015-09-16T19:58:26.000Z'
-      })
-      expect(comparatorQuery).to.deep.equal({
-        filtered: {
-          filter:{
-            bool:{
-              must:[
-                {
-                  range:{
-                    time_since_publish:{
-                      from:0,
-                      to:43200
-                    }
-                  }
-                }
-              ],
-              should:[]
-            }
-          },
-          query:{
-            bool: {
-              must:[
-                {
-                  range:{
-                    initial_publish_date: {
-                      "from": moment('2015-09-16T19:58:26.000Z').subtract(30,'days'),
-                      to : '2015-09-16T19:58:26.000Z'
-                    }
-                  }
-                },
-                {
-                  match: {
-                    sections_not_analyzed: 'comparator'
-                  }
-                }
-              ],
-              must_not: {
-                match:{
-                  article_uuid: 'uuid'
-                }
-              }
-            }
-          }
-        }
-      })
+  describe('query object', () => {
+    const sampleQuery = ArticleComparatorQuery({
+      uuid:'uuid', dateFrom:'2015-09-16T19:58:26.000Z', dateTo:'2015-10-16T19:58:26.000Z',
+      comparator:'comparator', comparatorType:'section',
+      publishDate: '2015-09-16T19:58:26.000Z',
+      filters:{cq1:['zx',12], cq2:['spectrum',45]}
     });
 
-    it('with filters', () => {
-      let comparatorQuery = ArticleComparatorQuery({
-        uuid:'uuid', dateFrom:'2015-09-16T19:58:26.000Z', dateTo:'2015-10-16T19:58:26.000Z',
-        comparator:'comparator', comparatorType:'section',
-        publishDate: '2015-09-16T19:58:26.000Z',
-        filters:{cq1:['zx',12], cq2:['spectrum',45]}
-      })
+    const PATH_QUERY_FILTER = 'query.filtered.filter.bool';
+    const PATH_QUERY_FILTER_MUST = PATH_QUERY_FILTER + '.must[0]';
+    const PATH_QUERY_FILTER_SHOULD = PATH_QUERY_FILTER + '.should';
+    const PATH_QUERY = 'query.filtered.query';
 
-      expect(comparatorQuery).to.deep.equal({
-        filtered: {
-          filter:{
-            bool:{
-              must:[
-                {
-                  range:{
-                    time_since_publish:{
-                      from:0,
-                      to:43200
-                    }
-                  }
-                }
-              ],
-              should:[
-                {
-                  term:{cq1:'zx'}
-                },
-                {
-                  term:{cq1:12}
-                },
-                {
-                  term:{cq2:'spectrum'}
-                },
-                {
-                  term:{cq2:45}
-                },
-              ]
-            }
-          },
-          query:{
-            bool: {
-              must:[
-                {
-                  range:{
-                    initial_publish_date: {
-                      "from": moment('2015-09-16T19:58:26.000Z').subtract(30,'days'),
-                      to : '2015-09-16T19:58:26.000Z'
-                    }
-                  }
-                },
-                {
-                  match: {
-                    sections_not_analyzed: 'comparator'
-                  }
-                }
-              ],
-              must_not: {
-                match:{
-                  article_uuid: 'uuid'
-                }
-              }
-            }
-          }
+    it('filters by time_since_publish', () => {
+      expect(sampleQuery).to.have.deep.property(
+        PATH_QUERY_FILTER_MUST + '.range.time_since_publish'
+      ).and.include({ to: 43200, from: 0 });
+    });
+
+    it('includes results from the previous [time_since_publish] days', () => {
+      expect(sampleQuery).with.deep.property(PATH_QUERY + '.bool.must')
+      .to.be.an('Array')
+      .and.include({range:{
+        initial_publish_date: {
+          from: moment('2015-09-16T19:58:26.000Z').subtract(30,'days'),
+          to : '2015-09-16T19:58:26.000Z'
         }
-      })
+      }});
+    });
+
+    it('includes results from the correct section', () => {
+      expect(sampleQuery).with.deep.property(PATH_QUERY + '.bool.must')
+      .to.include({
+        match: {
+          sections_not_analyzed: 'comparator'
+        }
+      });
+    });
+
+    it('excludes results for the specified UUID', () => {
+      expect(sampleQuery).with.deep.property(PATH_QUERY + '.bool.must_not')
+      .to.deep.equal({
+        match:{
+          article_uuid: 'uuid'
+        }
+      });
+    });
+
+    it('adds term filters', () => {
+      expect(sampleQuery).with.deep.property(PATH_QUERY_FILTER_SHOULD)
+      .to.be.an('Array')
+      .and.to.have.members([{
+          term:{cq1:'zx'}
+        },
+        {
+          term:{cq1:12}
+        },
+        {
+          term:{cq2:'spectrum'}
+        },
+        {
+          term:{cq2: 45}
+        }]);
     })
 
-    it('with filters', () => {
-      let comparatorQuery = ArticleComparatorQuery({
-        uuid:'uuid', dateFrom:'2015-09-16T19:58:26.000Z', dateTo:'2015-10-16T19:58:26.000Z',
-        comparator:'comparator', comparatorType:'section',
-        publishDate: '2015-09-16T19:58:26.000Z',
-        filters:{cq1:['zx',12], cq2:['spectrum',45]}
-      })
-
-      expect(comparatorQuery).to.deep.equal({
-        filtered: {
-          filter:{
-            bool:{
-              must:[
-                {
-                  range:{
-                    time_since_publish:{
-                      from:0,
-                      to:43200
-                    }
-                  }
-                }
-              ],
-              should:[
-                {
-                  term:{cq1:'zx'}
-                },
-                {
-                  term:{cq1:12}
-                },
-                {
-                  term:{cq2:'spectrum'}
-                },
-                {
-                  term:{cq2:45}
-                },
-              ]
-            }
-          },
-          query:{
-            bool: {
-              must:[
-                {
-                  range:{
-                    initial_publish_date: {
-                      "from": moment('2015-09-16T19:58:26.000Z').subtract(30,'days'),
-                      to : '2015-09-16T19:58:26.000Z'
-                    }
-                  }
-                },
-                {
-                  match: {
-                    sections_not_analyzed: 'comparator'
-                  }
-                }
-              ],
-              must_not: {
-                match:{
-                  article_uuid: 'uuid'
-                }
-              }
-            }
-          }
-        }
-      })
-    })
   })
 })
