@@ -69,6 +69,7 @@ describe('Search component', function() {
 
     search = createAltWrappedComponent(Search, {
       errorMessage:'Couldn\'t find any',
+      error: new Error('Couldn\'t find any good nicholas cage movies'),
       query: 'good nicholas cage movies'
     });
 
