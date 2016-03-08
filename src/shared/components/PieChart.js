@@ -30,11 +30,16 @@ export default class PieChart extends React.Component {
     this.setState({ dataChecksum });
 
     if(this.chart) {
-      this.chart.load( {
+      let chartProps = {
         type: 'pie',
-        columns: this.props.data,
-        unload: true
-      });
+        columns: this.props.data
+      };
+
+      if (!this.props.realtime) {
+        chartProps.unload = true;
+      }
+
+      this.chart.load(chartProps);
 
       return;
     }

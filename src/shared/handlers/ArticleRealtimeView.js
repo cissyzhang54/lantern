@@ -393,6 +393,7 @@ class ArticleRealtimeView extends React.Component {
             sm={6}
           >
             <BarChart
+              realtime
               data={socialMediaChartData}
               keys={['Social Media Referrals']}
               category={'network'}
@@ -444,6 +445,7 @@ class ArticleRealtimeView extends React.Component {
           >
             <h5>Internal vs External</h5>
             <PieChart
+              realtime
               data={referrerTotalsData}
               keys={['referrers']}
             />
@@ -454,6 +456,7 @@ class ArticleRealtimeView extends React.Component {
           >
             <h5>Traffic Source</h5>
             <BarChart
+              realtime
               data={extRefData}
               keys={extRefKeys}
               category={extRefID}
