@@ -134,7 +134,7 @@ export default function ArticlesRealtimeAggregation(query) {
               },
               {
                 term: {
-                  referrer_type: 'social-network'
+                  referrer_type: 'social media'
                 }
               },
               {

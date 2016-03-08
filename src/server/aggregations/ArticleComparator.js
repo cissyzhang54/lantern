@@ -47,7 +47,7 @@ export default function ArticleComparatorAggregation() {
                     },
                     {
                       term: {
-                        referrer_type: "social-network"
+                        referrer_type: "social media"
                       }
                     },
                     {
@@ -87,7 +87,7 @@ export default function ArticleComparatorAggregation() {
       social_referrers : {
         filter : {
           term : {
-            referrer_type : 'social-network'
+            referrer_type : 'social media'
           }
         },
         aggs: {

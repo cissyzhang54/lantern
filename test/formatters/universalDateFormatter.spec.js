@@ -82,7 +82,7 @@ describe('universalDataFormatter', function() {
       expect(getField(sectionData, 'referrerTypes')).to.deep.equal([
         ["Unknown", 289392],
         ["search", 83155],
-        ["social-network", 59516],
+        ["social media", 59516],
         ["partner", 8498],
         ["news-sharing", 6171],
         ["email", 324],
@@ -580,7 +580,7 @@ describe('universalDataFormatter', function() {
               {"key": "search","doc_count": 0},
               {"key": "unknown","doc_count": 0},
               {"key": "partner","doc_count": 0},
-              {"key": "social-network","doc_count": 0},
+              {"key": "social media","doc_count": 0},
               {"key": "email","doc_count": 0}
             ]
           }
@@ -588,7 +588,7 @@ describe('universalDataFormatter', function() {
           ["search", 0],
           ["unknown",0],
           ["partner", 0],
-          ["social-network", 0],
+          ["social media", 0],
           ["email", 0]
       ]);
     })

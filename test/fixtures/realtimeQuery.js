@@ -129,7 +129,7 @@ export default {
             },
             {
               term: {
-                referrer_type: 'social-network'
+                referrer_type: 'social media'
               }
             },
             {
