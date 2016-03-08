@@ -115,7 +115,7 @@ class ArticleView extends React.Component {
     switch (this.state.chartShown) {
       case 'timeOnPage':
         selectedGraphTitle = 'Time on page';
-        selectedGraphData = data.headlineStatsOverTime.map((row, i) => {
+        selectedGraphData = data.headlineStatsOverTime.map((row) => {
           return {
             'Average time on page' : row.avg_time_on_page.value != null ? row.avg_time_on_page.value : 0,
             "category" : row.key_as_string
@@ -131,7 +131,7 @@ class ArticleView extends React.Component {
         break;
       case 'uniqueVisitors':
         selectedGraphTitle = 'Unique Visitors';
-        selectedGraphData = data.headlineStatsOverTime.map((row, i) => {
+        selectedGraphData = data.headlineStatsOverTime.map((row) => {
           return {
             'Unique visitors' : row.unique_visitors.value != null ? row.unique_visitors.value : 0,
             "category" : row.key_as_string
@@ -142,7 +142,7 @@ class ArticleView extends React.Component {
         break;
       case 'retentionRate':
         selectedGraphTitle = 'Retention on page';
-        selectedGraphData = data.headlineStatsOverTime.map((row, i) => {
+        selectedGraphData = data.headlineStatsOverTime.map((row) => {
           return {
             'Retention' : row.is_last_page.buckets.length != 0 ? row.is_last_page.buckets[1].doc_count : 0,
             "category" : row.key_as_string
@@ -153,7 +153,7 @@ class ArticleView extends React.Component {
         break;
       case 'scrollDepth':
         selectedGraphTitle = 'Scroll depth';
-        selectedGraphData = data.scrollOverTime.map((row, i) => {
+        selectedGraphData = data.scrollOverTime.map((row) => {
           return {
             'Average scroll depth' : row.scroll_depth.average_scroll.value != null ? row.scroll_depth.average_scroll.value : 0,
             "category" : row.key_as_string
@@ -194,7 +194,7 @@ class ArticleView extends React.Component {
           analyticsView={this.props.route.analyticsView}
           publishDate={data.published}
           uuid={data.uuid}
-          />
+        />
 
         <ChunkWrapper component="modifier">
           <SectionModifier
@@ -213,7 +213,7 @@ class ArticleView extends React.Component {
               {label: 'First 3 days', value: 24 * 3},
               {label: 'First 7 days', value: 24 * 7}
              ]}
-            />
+          />
         </ChunkWrapper>
 
         <SectionHeadlineStats
@@ -232,12 +232,12 @@ class ArticleView extends React.Component {
         <SectionInteract
           data={data}
           comparatorData={comparatorData}
-          renderWho={FeatureFlag.check('article:interact')}
+          renderInteract={FeatureFlag.check('article:interact')}
         />
 
         <SectionSocial
-        data={data}
-        comparatorData={comparatorData}
+          data={data}
+          comparatorData={comparatorData}
         />
 
         <SectionJourney

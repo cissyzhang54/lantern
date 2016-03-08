@@ -18,7 +18,7 @@ export default {
     'article:bounceRate' : true,
     'article:who' : true,
     'article:where' : true,
-    'article:interact' : true,
+    'article:interact' : false,
     'article:subscription' : true,
     'article:social_shares' : true,
     'article:total_links_clicked' : true,
