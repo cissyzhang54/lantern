@@ -71,11 +71,11 @@ class SectionRealtimeView extends React.Component {
     const title = (this.props.title) ? 'Lantern - ' + this.props.title : '';
 
     const headlineStats = {
-      topicsCovered: {
+      /*topicsCovered: {
         metricType: 'integer',
         label: 'Topics Covered',
         size: 'large'
-      },
+      },*/
       totalPageViews: {
         metricType: 'integer',
         label: 'Page Views',
