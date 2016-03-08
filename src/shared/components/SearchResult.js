@@ -61,7 +61,7 @@ export default class SearchResult extends React.Component {
       return (
         <Link
           data-component='searchResult'
-          to={'/sections/168/' + section}
+          to={'/realtime/sections/' + section}
           key={i}
           style={styles.link}
         >

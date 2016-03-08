@@ -4,14 +4,11 @@ import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
 import Button from 'react-bootstrap/lib/Button';
 import Link from 'react-router/lib/Link';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import SearchResult from './SearchResult.js';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
 import ErrorHandler from '../components/ErrorHandler';
 import Table from '../components/Table.js';
-import Messaging from '../components/Messaging';
-import AnalyticsActions from '../actions/AnalyticsActions';
 
 import connectToStores from 'alt-utils/lib/connectToStores';
 import TopArticlesActions from '../actions/TopArticlesActions';
@@ -19,7 +16,6 @@ import TopArticlesStore from '../stores/TopArticlesStore';
 import TableFormatting from '../utils/tableFormatting';
 
 import _ from 'underscore';
-import moment from 'moment';
 
 const MIN_SEARCH_LENGTH = 2;
 
@@ -135,7 +131,7 @@ export default class Search extends React.Component {
       return (
         <Link
           data-component='sectionResult'
-          to={'/sections/' + section + '/168'}
+          to={'/realtime/sections/' + section}
           key={i}
           className='blockLinkStyle'
           >
@@ -190,7 +186,7 @@ export default class Search extends React.Component {
       return (
         <Link
           data-component='homeSectionsLinks'
-          to={'/sections/' + section + '/168'}
+          to={'/realtime/sections/' + section}
           key={i}
           className='homeLinkStyle'
           >
