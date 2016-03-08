@@ -235,16 +235,16 @@ class ArticleView extends React.Component {
           renderInteract={FeatureFlag.check('article:interact')}
         />
 
-        <SectionSocial
-          data={data}
-          comparatorData={comparatorData}
-        />
-
         <SectionJourney
           data={data}
           comparatorData={comparatorData}
           renderReferrers={FeatureFlag.check('article:referrers')}
           renderInternalRefTypes={FeatureFlag.check('article:referrers:internalRefTypes')}
+        />
+
+        <SectionSocial
+          data={data}
+          comparatorData={comparatorData}
         />
 
         <SectionWho

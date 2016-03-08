@@ -632,8 +632,8 @@ class ArticleRealtimeView extends React.Component {
         </ChunkWrapper>
 
         {FeatureFlag.check('articleLive:interact') ? userInteract : null}
-        {FeatureFlag.check('articleLive:socialMedia') ? socialMediaChunk : null}
         {FeatureFlag.check('articleLive:trafficSources') ? trafficSources : null}
+        {FeatureFlag.check('articleLive:socialMedia') ? socialMediaChunk : null}
         {FeatureFlag.check('articleLive:realtimeNext') ? realtimeNext : null}
         {FeatureFlag.check('articleLive:userType') ? userType : null}
 
