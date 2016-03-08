@@ -9,7 +9,7 @@ export default function RealitmeArticleListQuery(query) {
   if (query.timespan === '48h') interval = '10m';
   if (query.timespan === '24h') interval = '15m';
 
-  const termField = `primary_${query.type}`;
+  const termField = `${query.type}s_not_analyzed`;
   const esQuery = {
     query: {
       bool: {
