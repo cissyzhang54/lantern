@@ -74,12 +74,12 @@ class SectionView extends React.Component {
     const isFTComparator = this.props.params.comparator === 'FT';
 
     const headlineStats = {
-      topicsCovered: {
+      /*topicsCovered: {
         metricType: 'integer',
         label: 'Topics Covered',
         size: 'large',
         comparatorFormatName: 'topicsCovered'
-      },
+        },*/
       uniqueVisitors: {
         metricType: 'integer',
         label: 'Unique Visitors',
