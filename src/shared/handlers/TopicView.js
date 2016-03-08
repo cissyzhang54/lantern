@@ -59,7 +59,28 @@ class TopicView extends React.Component {
 
     let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrerTypes', 'Views');
     let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views');
-    let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views');
+    let [internalData, , ] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views');
+
+    let totalInternal = internalData.reduce((prev, curr) => {
+      return prev + curr.Views;
+    }, 0);
+
+    let totalExternal = refData.reduce((prev, curr) => {
+      return prev + curr.Views;
+    }, 0);
+
+    refData.push({
+      Views: totalInternal,
+      category: 'internal'
+    })
+
+    refData.sort((a, b) => {
+      return b.Views - a.Views;
+    });
+
+    refData.forEach((d) => {
+      d['Views %'] = Math.floor(d.Views / (totalExternal + totalInternal) * 100);
+    });
 
     const isFTComparator = this.props.params.comparator === 'FT';
 
@@ -153,7 +174,7 @@ class TopicView extends React.Component {
             </Row>
             <Row>
               <Col
-                sm={4}
+                sm={6}
                 xs={12}
               >
                 <h4>
@@ -162,20 +183,19 @@ class TopicView extends React.Component {
                     message='explanations.sectionJourney.articleViews.external'
                     id={'external-sources-desc'}
                   />
-                  {'External Sources'}
+                  {'Referrers'}
                 </h4>
                 <BarChart
                   category={refID}
                   data={refData}
                   keys={refKeys}
-                  usePercentages
                   xLabel="Referrer"
                   yLabel="Page Views"
                 />
               </Col>
 
               <Col
-                sm={4}
+                sm={6}
                 xs={12}
               >
                 <h4>{'Social Networks'}</h4>
@@ -183,23 +203,7 @@ class TopicView extends React.Component {
                   category={socialID}
                   data={socialData}
                   keys={socialKeys}
-                  usePercentages
                   xLabel="Social Network"
-                  yLabel="Page Views"
-                />
-              </Col>
-
-              <Col
-                sm={4}
-                xs={12}
-              >
-                <h4>{'Internal Referrer Types'}</h4>
-                <BarChart
-                  category={internalID}
-                  data={internalData}
-                  keys={internalKeys}
-                  usePercentages
-                  xLabel="Referrer"
                   yLabel="Page Views"
                 />
               </Col>

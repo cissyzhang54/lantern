@@ -69,7 +69,27 @@ class SectionView extends React.Component {
 
     let [refData, refID, refKeys] = dataFormatter.getPCTMetric('referrerTypes', 'Views');
     let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views');
-    let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views');
+    let [internalData, , ] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views');
+    let totalInternal = internalData.reduce((prev, curr) => {
+      return prev + curr.Views;
+    }, 0);
+
+    let totalExternal = refData.reduce((prev, curr) => {
+      return prev + curr.Views;
+    }, 0);
+
+    refData.push({
+      Views: totalInternal,
+      category: 'internal'
+    })
+
+    refData.sort((a, b) => {
+      return b.Views - a.Views;
+    });
+
+    refData.forEach((d) => {
+      d['Views %'] = Math.floor(d.Views / (totalExternal + totalInternal) * 100);
+    });
 
     const isFTComparator = this.props.params.comparator === 'FT';
 
@@ -223,15 +243,15 @@ class SectionView extends React.Component {
             <Row>
               <Col
                 xs={12}
-                sm={4}
+                sm={6}
               >
                 <h4>
                   <ToolTip
-                  type="html"
-                  message='explanations.sectionJourney.articleViews.external'
-                  id={'external-sources-desc'}
+                    type="html"
+                    message='explanations.sectionJourney.articleViews.external'
+                    id={'external-sources-desc'}
                   />
-                  External Sources
+                  Referrers
                 </h4>
                 <BarChart
                   data={refData}
@@ -239,13 +259,12 @@ class SectionView extends React.Component {
                   category={refID}
                   yLabel="Page Views"
                   xLabel="Referrer"
-                  usePercentages
                 />
               </Col>
 
               <Col
                 xs={12}
-                sm={4}
+                sm={6}
               >
                 <h4>Social Networks</h4>
                 <BarChart
@@ -254,24 +273,9 @@ class SectionView extends React.Component {
                   category={socialID}
                   yLabel="Page Views"
                   xLabel="Social Network"
-                  usePercentages
                 />
               </Col>
 
-              <Col
-                xs={12}
-                sm={4}
-              >
-                <h4>Internal Referrer Types</h4>
-                <BarChart
-                  data={internalData}
-                  keys={internalKeys}
-                  category={internalID}
-                  yLabel="Page Views"
-                  xLabel="Referrer"
-                  usePercentages
-                />
-              </Col>
             </Row>
           </ChunkWrapper>
 
