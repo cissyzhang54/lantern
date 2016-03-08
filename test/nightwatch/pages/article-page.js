@@ -2,9 +2,9 @@
 module.exports = {
 
   // Links
-  exampleArticleUrl : 'http://localhost:' + process.env.PORT + '/articles/07f006a6-e4f8-11e5-ac45-5c039e797d1c/48',
-  exampleArticleTitle: "Lantern - Google takes on Go grandmaster in AI test",
-  exampleArticleLink: 'http://www.ft.com/cms/s/0/07f006a6-e4f8-11e5-ac45-5c039e797d1c.html',
+  exampleArticleUrl : 'http://localhost:' + process.env.PORT + '/articles/7126ec00-e149-11e5-9217-6ae3733a2cd1/48',
+  exampleArticleTitle: "Lantern - Commodity prices signal market bottom",
+  exampleArticleLink: 'http://www.ft.com/cms/s/0/7126ec00-e149-11e5-9217-6ae3733a2cd1.html',
 
   // Modifier Section
   sectionModifier: {

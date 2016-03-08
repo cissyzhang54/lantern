@@ -28,6 +28,8 @@ export default {
     'section:who' : true,
     'section:where' : true,
     'topic:who' : true,
-    'topic:where' : true
+    'topic:where' : true,
+    'sectionWhoUsers' : true,
+    'sectionWhoEngagementGroups' : false
   }
 };

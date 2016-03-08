@@ -9,6 +9,7 @@ import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
 import Popover from 'react-bootstrap/lib/Popover';
 import Text from './Text'
 import ToolTip from '../components/ToolTip';
+import FeatureFlag from '../utils/featureFlag';
 
 const styles = {
   infoIcon : {
@@ -39,8 +40,8 @@ export default class SectionWho extends React.Component {
     let [returningData, returningID, returningKeys] = dataFormatter.getPCTMetric('isFirstVisit', 'Article', 'New', 'Returning')
     let [cohortData, cohortID, cohortKeys] = dataFormatter.getPCTMetric('userCohort', 'Article')
 
-    return (
-      <ChunkWrapper component='sectionWho'>
+    const users = (
+      <ChunkWrapper component='sectionWhoUsers'>
         <Row>
           <Col xs={12}>
             <h3>Who are the users?</h3>
@@ -79,6 +80,11 @@ export default class SectionWho extends React.Component {
             />
           </Col>
         </Row>
+      </ChunkWrapper>
+    );
+
+    const engagementGroups = (
+      <ChunkWrapper component='sectionWhoEngagementGroups'>
         <Row style={{marginTop: "35px"}}>
           <Col xs={12}>
             <h3>Who is this content appealing to?</h3>
@@ -120,6 +126,12 @@ export default class SectionWho extends React.Component {
           </Col>
         </Row>
       </ChunkWrapper>
+    );
+    return (
+      <div>
+        {FeatureFlag.check('sectionWhoUsers') ? users : null}
+        {FeatureFlag.check('sectionWhoEngagementGroups') ? engagementGroups : null}
+      </div>
     );
   }
 }
