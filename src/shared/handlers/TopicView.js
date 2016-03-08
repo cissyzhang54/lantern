@@ -61,19 +61,21 @@ class TopicView extends React.Component {
     let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views');
     let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views');
 
-    let headlineStats = {
+    const isFTComparator = this.props.params.comparator === 'FT';
+
+    const headlineStats = {
       uniqueVisitors: {
         metricType: 'integer',
         label: 'Unique Visitors',
         size: 'large',
-        comparatorFormatName: 'uniqueVisitors',
+        comparatorFormatName: isFTComparator ? null : 'uniqueVisitors',
         toolTip: (<Text message='explanations.metric.uniqueVisitors' />)
       },
       articleCount: {
         metricType: 'integer',
         label: 'Articles Published',
         size: 'large',
-        comparatorFormatName: 'articleCount'
+        comparatorFormatName: isFTComparator ? null : 'articleCount'
       }
     }
 

@@ -71,6 +71,8 @@ class SectionView extends React.Component {
     let [socialData, socialID, socialKeys] = dataFormatter.getPCTMetric('socialReferrers', 'Views');
     let [internalData, internalID, internalKeys] = dataFormatter.getPCTMetric('internalReferrerTypes', 'Views');
 
+    const isFTComparator = this.props.params.comparator === 'FT';
+
     const headlineStats = {
       topicsCovered: {
         metricType: 'integer',
@@ -82,14 +84,14 @@ class SectionView extends React.Component {
         metricType: 'integer',
         label: 'Unique Visitors',
         size: 'large',
-        comparatorFormatName: 'uniqueVisitors',
+        comparatorFormatName: isFTComparator ? null : 'uniqueVisitors',
         toolTip: (<Text message='explanations.metric.uniqueVisitors' />)
       },
       articlePublishCount: {
         metricType: 'integer',
         label: 'Articles Published',
         size: 'large',
-        comparatorFormatName: 'articlePublishCount'
+        comparatorFormatName: isFTComparator ? null : 'articlePublishCount'
       }
     }
 
