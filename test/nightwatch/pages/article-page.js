@@ -2,9 +2,9 @@
 module.exports = {
 
   // Links
-  exampleArticleUrl : 'http://localhost:' + process.env.PORT + '/articles/ff767034-da82-11e5-98fd-06d75973fe09/48',
-  exampleArticleTitle: "Lantern - ‘I wore a top hat while sleeping rough, then set up a top-hat business’",
-  exampleArticleLink: 'http://www.ft.com/cms/s/0/ff767034-da82-11e5-98fd-06d75973fe09.html',
+  exampleArticleUrl : 'http://localhost:' + process.env.PORT + '/articles/07f006a6-e4f8-11e5-ac45-5c039e797d1c/48',
+  exampleArticleTitle: "Lantern - Google takes on Go grandmaster in AI test",
+  exampleArticleLink: 'http://www.ft.com/cms/s/0/07f006a6-e4f8-11e5-ac45-5c039e797d1c.html',
 
   // Modifier Section
   sectionModifier: {

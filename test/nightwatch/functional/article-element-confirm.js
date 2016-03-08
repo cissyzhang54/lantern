@@ -28,12 +28,12 @@ module.exports = {
     browser
       .assert.attributeContains(nConcat.dataComponent(articlePage.sectionHeader.articleTitle), 'href', articlePage.exampleArticleLink,
       'href for article title is correct')
-      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articleTitle), "‘I wore a top hat while sleeping rough, then set up a top-hat business’",
-      "‘I wore a top hat while sleeping rough, then set up a top-hat business’")
-      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articleAuthor), 'Jeremy Taylor',
-      'Article author is "Jeremy Taylor"')
-      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articlePublished), 'February 26, 2016 11:22 am',
-      'Article was published "February 26, 2016 11:22 am"')
+      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articleTitle), "Google takes on Go grandmaster in AI test",
+      "Article title is correct")
+      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articleAuthor), 'Jung-a Song',
+      'Article author is correct')
+      .assert.containsText(nConcat.dataComponent(articlePage.sectionHeader.articlePublished), 'March 8, 2016 8:26 am',
+      'Article publish date is correct')
   },
 
   'Assert elements in Headline Stats Section' : function (browser) {
