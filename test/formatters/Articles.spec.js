@@ -93,7 +93,7 @@ describe('Article Formatter', function() {
         expect(data.referrerTypes).to.deep.equal([
           [ 'Unknown', 1308 ],
           [ 'search', 265 ],
-          [ 'social-network', 122 ],
+          [ 'social media', 122 ],
           [ 'news-sharing', 1 ],
           [ 'email', 0 ],
           [ 'partner', 0]

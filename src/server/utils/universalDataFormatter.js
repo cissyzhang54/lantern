@@ -63,7 +63,7 @@ const fields = {
     name: 'aggregations.realtime_scroll_depth.scroll_depth_avg.value',
     formatter: Math.round
   },
-  realtimeReferrerTypes: {name: 'aggregations.realtime_referrer.types', formatter: formatAndFilter, terms: ['search', 'unknown', 'partner', 'social-network', 'email']},
+  realtimeReferrerTypes: {name: 'aggregations.realtime_referrer.types', formatter: formatAndFilter, terms: ['search', 'unknown', 'partner', 'social media', 'email']},
   realtimeReferrerNames: {name: 'aggregations.realtime_referrer.names', formatter: format},
   realtimeReferrerUrls: {name: 'aggregations.realtime_referrer.urls', formatter: format},
   realtimeInternalReferrerArticles: {name: 'aggregations.realtime_internal_referrer.referrer_type_article.doc_count'},
@@ -91,7 +91,7 @@ const fields = {
   publishTimes: {name: 'aggregations.articles_published_over_time', formatter: format},
   channels: {name: 'aggregations.channels', formatter: format},
   referrerTotal: 'aggregations.referrer.doc_count',
-  referrerTypes: {name: 'aggregations.referrer.types', formatter: formatAndFilter, terms: ['search', 'unknown', 'partner', 'social-network', 'email']},
+  referrerTypes: {name: 'aggregations.referrer.types', formatter: formatAndFilter, terms: ['search', 'unknown', 'partner', 'social media', 'email']},
   referrerNames: {name: 'aggregations.referrer.names', formatter: format},
   referrerUrls: {name: 'aggregations.referrer.urls.filtered', formatter: format},
   socialReferrers: {name: 'aggregations.social_referrers.filtered', formatter: formatAndFilter, terms: ['Facebook', 'Twitter', 'Linked-In']},

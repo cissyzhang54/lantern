@@ -943,7 +943,7 @@ export default [{
               "doc_count": 83155
             },
             {
-              "key": "social-network",
+              "key": "social media",
               "doc_count": 59516
             },
             {

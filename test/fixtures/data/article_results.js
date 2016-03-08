@@ -639,7 +639,7 @@ export default [{
           "key": "search",
           "doc_count": 265
         }, {
-          "key": "social-network",
+          "key": "social media",
           "doc_count": 122
         }, {
           "key": "news-sharing",

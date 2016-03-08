@@ -70,7 +70,7 @@ export default function TopicComparatorAggregation(query) {
       social_referrers: {
         filter: {
           term: {
-            referrer_type: 'social-network'
+            referrer_type: 'social media'
           }
         },
         aggs: {
