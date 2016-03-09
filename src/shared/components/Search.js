@@ -95,7 +95,7 @@ export default class Search extends React.Component {
   render() {
     let data = this.props.data;
 
-    if (this.props.errorMessage) {
+    if (this.props.error) {
       return (
         <ErrorHandler
           category="Search"
