@@ -47,7 +47,7 @@ export default class RealtimeArticleList extends React.Component {
 
   render() {
     const numArticles = this.props.articleList.length;
-    const buttText = this.state.showAllArticles ? 'Show only 10 articles' : `Show all ${numArticles} articles`;
+    const buttText = this.state.showAllArticles ? 'Show only 10 stories' : `Show all ${numArticles} stories`;
     const clickHandler = this.toggleAllArticles.bind(this);
     const lastArticleIndex = this.state.showAllArticles ? numArticles - 1 : 10;
 
@@ -107,7 +107,7 @@ export default class RealtimeArticleList extends React.Component {
     });
 
     const articleListHeaders = [
-      '', 'Article', 'Publish Date',
+      '', 'Story', 'Publish Date',
       'Page Views', 'Page Views Chart',
       'Time on Page'
     ];
@@ -130,7 +130,7 @@ export default class RealtimeArticleList extends React.Component {
       <ChunkWrapper component="article-list">
         <Row>
           <Col xs={12}>
-            <h3>Stories</h3>
+            <h3>Stories published in the last 24 hours</h3>
           </Col>
         </Row>
         <Row>

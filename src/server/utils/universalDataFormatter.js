@@ -129,7 +129,7 @@ const fields = {
   topArticlesRetention: 'aggregations.top_articles_retention.buckets',
   lastPublishDate: 'aggregations.last_publish_date.buckets',
   realtimeTopicsCovered: 'aggregations.topics_covered.value',
-  realtimeArticlesPublished: 'aggregations.articles_published.distinct_articles.value'
+  realtimeArticlesPublished: 'aggregations.articles_published.value'
 }
 
 function average(agg, fieldObj) {

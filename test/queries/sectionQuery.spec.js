@@ -37,7 +37,7 @@ describe('Section Query', () => {
 
   });
 
-  describe('builds an section query', () => {
+  describe('builds a section query', () => {
 
     it('with the mandatory fields', () => {
       let comparatorQuery = SectionQuery({
@@ -57,7 +57,7 @@ describe('Section Query', () => {
               must:[
                 {
                   range:{
-                    view_timestamp: {
+                    initial_publish_date: {
                       "from": '2015-09-16T19:58:26.000Z',
                       to : '2015-10-16T19:58:26.000Z'
                     }

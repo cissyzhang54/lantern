@@ -16,7 +16,7 @@ export default function RealitmeArticleListQuery(query) {
         must: [
           {
             range: {
-              event_timestamp: {
+              initial_publish_date: {
                 gte: timespan
               }
             }
