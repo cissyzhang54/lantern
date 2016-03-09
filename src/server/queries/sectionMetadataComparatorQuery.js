@@ -19,7 +19,7 @@ export default function sectionMetadataComparatorQuery(query){
   }
 
   let matchSection = {
-    match : {  primary_section: query.comparator  }
+    match : {  sections_not_analyzed: query.comparator  }
   }
 
   let filter = {

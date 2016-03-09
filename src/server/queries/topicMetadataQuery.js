@@ -1,11 +1,11 @@
 import * as QueryUtils from '../utils/queryUtils'
 
-export default function topicQuery(query){
+export default function topicMetadataQuery(query){
   QueryUtils.checkString(query,'dateFrom');
   QueryUtils.checkString(query,'dateTo');
   QueryUtils.checkString(query,'topic');
 
-  let matchTopic = {
+  let matchCategory = {
     match : {  topics_not_analyzed: query.topic  }
   }
 
@@ -17,7 +17,7 @@ export default function topicQuery(query){
 
   let matchDates = {
     range : {
-      view_timestamp : {
+      initial_publish_date : {
         from: query.dateFrom,
         to: query.dateTo
       }
@@ -26,7 +26,7 @@ export default function topicQuery(query){
 
   let matchAll = {
     bool: {
-      must: [matchDates, matchTopic ]
+      must: [matchDates, matchCategory ]
     }
   }
 

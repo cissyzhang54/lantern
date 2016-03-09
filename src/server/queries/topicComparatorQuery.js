@@ -8,18 +8,22 @@ export default function topicComparatorQuery(query){
   QueryUtils.checkString(query,'comparator');
   QueryUtils.checkString(query,'comparatorType');
 
+  let dateFrom = moment(query.dateFrom);
+  let dateTo = moment(query.dateTo);
 
   if (query.comparatorType !== 'global') {
-      let dateFrom = moment(query.dateFrom);
-      let dateTo = moment(query.dateTo);
-      let span = dateTo - dateFrom;
+    let span = dateTo - dateFrom;
 
-      query.dateFrom = dateFrom.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD'),
-      query.dateTo = dateTo.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD')
+    dateFrom = dateFrom.clone().subtract(span, 'milliseconds');
+    dateTo = dateTo.clone().subtract(span, 'milliseconds');
   }
 
+  dateFrom = dateFrom.format('YYYY-MM-DD');
+  dateTo = dateTo.format('YYYY-MM-DD');
+
+
   let matchTopic = {
-    match : {  primary_theme: query.comparator  }
+    match : {  topics_not_analyzed : query.comparator  }
   }
 
   let filter = {
@@ -29,17 +33,24 @@ export default function topicComparatorQuery(query){
   }
 
   let matchDates = {
-    "range" : {
-      "initial_publish_date" : {
-        from: query.dateFrom,
-        to: query.dateTo
+    range : {
+      view_timestamp : {
+        from: dateFrom,
+        to: dateTo
       }
     }
   }
 
+
+  let must = [matchDates];
+
+  if (query.comparatorType !== 'global') {
+    must.push(matchTopic)
+  }
+
   let matchAll = {
     bool: {
-      must: [matchDates, matchTopic],
+      must: must
     }
   }
 

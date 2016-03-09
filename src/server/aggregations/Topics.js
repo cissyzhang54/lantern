@@ -116,6 +116,11 @@ export default function TopicAggregation(query) {
           "field": "sections",
           size: 10
         }
+      },
+      distinct_articles: {
+        cardinality: {
+          field: "article_uuid"
+        }
       }
     }
 }

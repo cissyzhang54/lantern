@@ -1,29 +1,25 @@
 import * as QueryUtils from '../utils/queryUtils'
 import moment from 'moment'
 
-export default function sectionComparatorQuery(query){
+export default function topicMetadataComparatorQuery(query){
   //This is always compared against the whole of the FT
-  QueryUtils.checkString(query,'section');
+  QueryUtils.checkString(query,'topic');
   QueryUtils.checkString(query,'dateFrom');
   QueryUtils.checkString(query,'dateTo');
   QueryUtils.checkString(query,'comparator');
   QueryUtils.checkString(query,'comparatorType');
 
-  let dateFrom = moment(query.dateFrom);
-  let dateTo = moment(query.dateTo);
-
   if (query.comparatorType !== 'global') {
+      let dateFrom = moment(query.dateFrom);
+      let dateTo = moment(query.dateTo);
       let span = dateTo - dateFrom;
 
-      dateFrom = dateFrom.clone().subtract(span, 'milliseconds'),
-      dateTo = dateTo.clone().subtract(span, 'milliseconds')
+      query.dateFrom = dateFrom.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD'),
+      query.dateTo = dateTo.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD')
   }
 
-  dateFrom = dateFrom.format('YYYY-MM-DD');
-  dateTo = dateTo.format('YYYY-MM-DD');
-
   let matchSection = {
-    match : {  sections_not_analyzed: query.comparator  }
+    match : {  topics_not_analyzed: query.comparator  }
   }
 
   let filter = {
@@ -34,9 +30,9 @@ export default function sectionComparatorQuery(query){
 
   let matchDates = {
     "range" : {
-      "view_timestamp" : {
-        from: dateFrom,
-        to: dateTo
+      "initial_publish_date" : {
+        from: query.dateFrom,
+        to: query.dateTo
       }
     }
   }
