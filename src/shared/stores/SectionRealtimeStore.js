@@ -68,7 +68,8 @@ class SectionRealtimeStore {
       totalPageViews: totalPageViews,
       articlesPublished: data.realtimeArticlesPublished,
       pageViews: data.realtimePageViews,
-      articleList: data.articleList
+      articleList: data.articleList,
+      loading: false
     });
     this.setIsLiveTimer();
   }

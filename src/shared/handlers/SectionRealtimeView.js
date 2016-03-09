@@ -13,6 +13,7 @@ import TabNav from '../components/TabNav';
 import SectionHeadlineStats from '../components/SectionHeadlineStats';
 import LiveIndicator from '../components/LiveIndicator';
 import RealtimeArticleList from '../components/RealtimeArticleList';
+import Messaging from '../components/Messaging';
 
 class SectionRealtimeView extends React.Component {
 
@@ -108,10 +109,16 @@ class SectionRealtimeView extends React.Component {
       };
     });
 
+    if (this.props.loading) {
+      return (<Messaging
+        category="Section"
+        type="LOADING"
+         />);
+    }
+
     return (
       <DocumentTitle title={title}>
         <div>
-
           <ChunkWrapper
             component="header"
             noBorder
