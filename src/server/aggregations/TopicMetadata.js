@@ -10,7 +10,7 @@ export default function TopicMetadataAggregation(query) {
           min_doc_count: 0
         }
       },
-      distinct_articles: {
+      distinct_articles_published: {
         cardinality: {
           field: "article_uuid"
         }

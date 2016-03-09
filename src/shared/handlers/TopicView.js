@@ -92,11 +92,11 @@ class TopicView extends React.Component {
         comparatorFormatName: isFTComparator ? null : 'uniqueVisitors',
         toolTip: (<Text message='explanations.metric.uniqueVisitors' />)
       },
-      articleCount: {
+      articlePublishCount: {
         metricType: 'integer',
         label: 'Articles Published',
         size: 'large',
-        comparatorFormatName: isFTComparator ? null : 'articleCount'
+        comparatorFormatName: isFTComparator ? null : 'articlePublishCount'
       }
     }
 

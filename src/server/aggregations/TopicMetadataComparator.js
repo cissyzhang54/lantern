@@ -1,8 +1,8 @@
 export default function TopicMetadataComparatorAggregation() {
   return {
-      "distinct_articles": {
-        "cardinality": {
-          "field": "article_uuid"
+      distinct_articles_published: {
+        cardinality: {
+          field: "article_uuid"
         }
       }
     }

@@ -128,10 +128,15 @@ export default function TopicComparatorAggregation(query) {
           field: 'visitor_id'
         }
       },
-      "topic_views": {
-        "terms": {
-          "field": "topics",
+      topic_views: {
+        terms: {
+          field: "topics",
           size: 10
+        }
+      },
+      distinct_articles: {
+        cardinality: {
+          field: "article_uuid"
         }
       }
     }

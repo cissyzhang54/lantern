@@ -436,13 +436,31 @@ function retrieveSectionData(queryData){
     }
 
     if (queryData.comparator) {
+      let compQuery = JSON.parse(JSON.stringify(queryData));
+      let dateFrom = moment(compQuery.dateFrom);
+      let dateTo = moment(compQuery.dateTo);
+
+      if (compQuery.comparatorType !== 'global') {
+          let span = dateTo - dateFrom;
+          dateFrom = dateFrom.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD'),
+          dateTo = dateTo.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD')
+          compQuery.dateFrom = dateFrom;
+          compQuery.dateTo = dateTo
+      }
+
+      let comparatorHeader = {
+        index: calculateIndices(compQuery, process.env.ES_INDEX_ROOT),
+        ignore_unavailable: true,
+        search_type: 'count'
+      };
+
       let metadataComparatorQueryObject = SectionMetadataComparatorQuery(queryData);
       let comparatorQueryObject = SectionComparatorQuery(queryData);
 
       request.body = request.body.concat([
         metadataHeader,
         metadataComparatorQueryObject,
-        sectionHeader,
+        comparatorHeader,
         comparatorQueryObject
       ]);
     }
@@ -485,13 +503,32 @@ function retrieveTopicData(queryData){
     }
 
     if (queryData.comparator) {
+
+      let compQuery = JSON.parse(JSON.stringify(queryData));
+      let dateFrom = moment(compQuery.dateFrom);
+      let dateTo = moment(compQuery.dateTo);
+
+      if (compQuery.comparatorType !== 'global') {
+          let span = dateTo - dateFrom;
+          dateFrom = dateFrom.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD'),
+          dateTo = dateTo.clone().subtract(span, 'milliseconds').format('YYYY-MM-DD')
+          compQuery.dateFrom = dateFrom;
+          compQuery.dateTo = dateTo
+      }
+
+      let comparatorHeader = {
+        index: calculateIndices(compQuery, process.env.ES_INDEX_ROOT),
+        ignore_unavailable: true,
+        search_type: 'count'
+      };
+
       let topicMetadataComparatorQueryObject = TopicMetadataComparatorQuery(queryData);
       let topicComparatorQueryObject = TopicComparatorQuery(queryData);
 
       request.body = request.body.concat([
         topicMetadataHeader,
         topicMetadataComparatorQueryObject,
-        topicHeader,
+        comparatorHeader,
         topicComparatorQueryObject
       ])
     }
