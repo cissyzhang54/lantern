@@ -32,7 +32,7 @@ export default function SectionRealtimeESQuery(query) {
           },
           {
             match: {
-              primary_section : query.section
+              sections_not_analyzed : query.section
             }
           },
           {
@@ -78,12 +78,23 @@ export default function SectionRealtimeESQuery(query) {
       },
       topics_covered: {
         cardinality: {
-          field: 'topics'
+          field: 'topics_not_analyzed'
         }
       },
       articles_published: {
-        cardinality: {
-          field: 'article_uuid'
+        filter: {
+          range : {
+            initial_publish_date : {
+              gte: timespan
+            }
+          }
+        },
+        aggs: {
+          distinct_articles: {
+            cardinality: {
+              field: 'article_uuid'
+            }
+          }
         }
       }
     }
