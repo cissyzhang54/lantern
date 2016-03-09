@@ -13,6 +13,7 @@ import TabNav from '../components/TabNav';
 import SectionHeadlineStats from '../components/SectionHeadlineStats';
 import LiveIndicator from '../components/LiveIndicator';
 import RealtimeArticleList from '../components/RealtimeArticleList';
+import Messaging from '../components/Messaging';
 
 class SectionRealtimeView extends React.Component {
 
@@ -108,10 +109,21 @@ class SectionRealtimeView extends React.Component {
       };
     });
 
+    let updating = (this.props.loading)
+      ? (<Messaging
+        category="Article"
+        type="UPDATING"
+         />)
+      : (<Messaging
+        category="Article"
+        type="PLACEHOLDER"
+         />)
+
     return (
       <DocumentTitle title={title}>
         <div>
 
+          {updating}
           <ChunkWrapper
             component="header"
             noBorder
