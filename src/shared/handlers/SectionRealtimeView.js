@@ -109,21 +109,16 @@ class SectionRealtimeView extends React.Component {
       };
     });
 
-    let updating = (this.props.loading)
-      ? (<Messaging
-        category="Article"
-        type="UPDATING"
-         />)
-      : (<Messaging
-        category="Article"
-        type="PLACEHOLDER"
-         />)
+    if (this.props.loading) {
+      return (<Messaging
+        category="Section"
+        type="LOADING"
+         />);
+    }
 
     return (
       <DocumentTitle title={title}>
         <div>
-
-          {updating}
           <ChunkWrapper
             component="header"
             noBorder
