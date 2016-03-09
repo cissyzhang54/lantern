@@ -54,8 +54,7 @@ describe('Event Query', () => {
                     }
                   }
                 }
-              ],
-              should:[]
+              ]
             }
           },
           query:{
@@ -83,9 +82,7 @@ describe('Event Query', () => {
                       to:"12-mar-2015"
                     }
                   }
-                }
-              ],
-              should:[
+                },
                 {
                   term:{oa:12}
                 },
@@ -97,7 +94,7 @@ describe('Event Query', () => {
                 },
                 {
                   term:{ob:'bc'}
-                },
+                }
               ]
             }
           },

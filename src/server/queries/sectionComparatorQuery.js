@@ -25,7 +25,7 @@ export default function sectionComparatorQuery(query){
 
   let filter = {
     bool: {
-      should :  QueryUtils.mapFilters(query)
+      must :  QueryUtils.mapFilters(query)
     }
   }
 

@@ -54,8 +54,7 @@ describe('Article Query', () => {
                     }
                   }
                 }
-              ],
-              should:[]
+              ]
             }
           },
           query:{
@@ -83,9 +82,7 @@ describe('Article Query', () => {
                       to:"12-mar-2015"
                     }
                   }
-                }
-              ],
-              should:[
+                },
                 {
                   term:{oa:12}
                 },
@@ -97,7 +94,7 @@ describe('Article Query', () => {
                 },
                 {
                   term:{ob:'bc'}
-                },
+                }
               ]
             }
           },
