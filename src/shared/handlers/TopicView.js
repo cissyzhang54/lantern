@@ -94,7 +94,7 @@ class TopicView extends React.Component {
       },
       articlePublishCount: {
         metricType: 'integer',
-        label: 'Articles Published',
+        label: 'Stories Published',
         size: 'large',
         comparatorFormatName: isFTComparator ? null : 'articlePublishCount'
       }
