@@ -36,6 +36,11 @@ export default function TopArticlesAggregation() {
               terms: {
                 field: "authors_not_analyzed"
               }
+            },
+            initial_publish_date : {
+              terms : {
+                field: "initial_publish_date"
+              }
             }
           }
         }
@@ -81,6 +86,11 @@ export default function TopArticlesAggregation() {
             author: {
               terms: {
                 field: "authors_not_analyzed"
+              }
+            },
+            initial_publish_date : {
+              terms : {
+                field: "initial_publish_date"
               }
             }
           }
@@ -128,6 +138,11 @@ export default function TopArticlesAggregation() {
               terms: {
                 field: "authors_not_analyzed"
               }
+            },
+            initial_publish_date : {
+              terms : {
+                field: "initial_publish_date"
+              }
             }
           }
         }
@@ -173,6 +188,11 @@ export default function TopArticlesAggregation() {
             author: {
               terms: {
                 field: "authors_not_analyzed"
+              }
+            },
+            initial_publish_date : {
+              terms : {
+                field: "initial_publish_date"
               }
             }
           }
@@ -225,6 +245,11 @@ export default function TopArticlesAggregation() {
               terms: {
                 field: "authors_not_analyzed"
               }
+            },
+            initial_publish_date : {
+              terms : {
+                field: "initial_publish_date"
+              }
             }
           }
         }
@@ -265,6 +290,11 @@ export default function TopArticlesAggregation() {
             author: {
               terms: {
                 field: "authors_not_analyzed"
+              }
+            },
+            initial_publish_date : {
+              terms : {
+                field: "initial_publish_date"
               }
             }
           }
