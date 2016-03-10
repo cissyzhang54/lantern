@@ -163,9 +163,11 @@ export default class SingleMetric extends ReactCSS.Component {
     }
 
     let button = null;
-    if (this.props.onClick) {
+
+    if (this.props.handler) {
+      let buttonActive = this.props.name == this.props.handler.currentMetric ? true : false;
       button = (
-        <Button onClick={this.props.onClick}>
+        <Button active={buttonActive} onClick={this.props.handler.onClick}>
           {'Show Chart'}
         </Button>
       );

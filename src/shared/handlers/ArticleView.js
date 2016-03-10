@@ -59,51 +59,71 @@ class ArticleView extends React.Component {
 
     let headlineStats = {
       timeOnPage: {
+        name: 'timeOnPage',
         metricType: 'time',
         label: 'Average Time on Page',
         size: 'large',
         comparatorFormatName: 'timeOnPage',
-        onClick: () => {
-          this.setState({chartShown: 'timeOnPage'})
+        handler : {
+          onClick: () => {
+            this.setState({chartShown: 'timeOnPage'})
+          },
+          currentMetric: this.state.chartShown
         }
       },
       pageViews: {
+        name: 'pageViews',
         metricType: 'integer',
         label: 'Page Views',
         size: 'large',
         comparatorFormatName: 'categoryAverageViewCount',
-        onClick: () => {
-          this.setState({chartShown: 'pageViews'})
+        handler : {
+          onClick: () => {
+            this.setState({chartShown: 'pageViews'})
+          },
+          currentMetric: this.state.chartShown
         }
       },
       uniqueVisitors: {
+        name: 'uniqueVisitors',
         metricType: 'integer',
         label: 'Unique Visitors',
         size: 'large',
         comparatorFormatName: 'categoryAverageUniqueVisitors',
         toolTip: (<Text message='explanations.story.metric.uniqueVisitors' />),
-        onClick: () => {
-          this.setState({chartShown: 'uniqueVisitors'})
+        handler : {
+          onClick: () => {
+            this.setState({chartShown: 'uniqueVisitors'})
+          },
+          currentMetric: this.state.chartShown
         }
       },
       retentionRate: {
+        name: 'retentionRate',
         metricType: 'percentage',
         label: 'Retention Rate',
         size: 'large',
         comparatorFormatName: 'retentionRate',
         toolTip: (<Text message='explanations.articleHandlers.retentionRate' />),
-        onClick: () => {
-          this.setState({chartShown: 'retentionRate'})
+        handler : {
+          onClick: () => {
+            this.setState({chartShown: 'retentionRate'})
+          },
+          currentMetric: this.state.chartShown
         }
       },
       scrollDepth: {
+        name: 'scrollDepth',
         metricType: 'percentage',
         label: 'Average Scroll Depth',
         size: 'large',
         comparatorFormatName: 'scrollDepth',
         toolTip: (<Text message='explanations.articleHandlers.scrollDepth' />),
-        onClick: () => {
-          this.setState({chartShown: 'scrollDepth'})
+        handler : {
+          onClick: () => {
+            this.setState({chartShown: 'scrollDepth'})
+          },
+          currentMetric: this.state.chartShown
         }
       }
     }
