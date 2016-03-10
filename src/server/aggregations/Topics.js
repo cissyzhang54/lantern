@@ -95,10 +95,19 @@ export default function TopicAggregation(query) {
           order: {"_term": "asc"}
         }
       },
-      is_first_visit: {
-        terms: {
-          field: "is_first_visit",
-          min_doc_count: 0
+      is_first_visit : {
+        filter: {
+          term: {
+            user_cohort: "anonymous"
+          }
+        },
+        aggs: {
+          anonymous: {
+            terms: {
+              field: "is_first_visit",
+              min_doc_count : 0
+            }
+          }
         }
       },
       is_subscription: {

@@ -119,9 +119,18 @@ export default function ArticleComparatorAggregation() {
         }
       },
       is_first_visit : {
-        terms: {
-          field: "is_first_visit",
-          min_doc_count : 0
+        filter: {
+          term: {
+            user_cohort: "anonymous"
+          }
+        },
+        aggs: {
+          anonymous: {
+            terms: {
+              field: "is_first_visit",
+              min_doc_count : 0
+            }
+          }
         }
       },
       "regions" : {
