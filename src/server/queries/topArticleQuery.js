@@ -27,8 +27,8 @@ export default function TopArticleQuery(query){
             {
               range: {
                 event_timestamp: {
-                  gt: 'now-1d/d',
-                  lt: 'now/d'
+                  gt: moment().subtract(1, 'day').startOf('day').toISOString(),
+                  lt: moment().subtract(1, 'day').endOf('day').toISOString()
                 }
               }
             },
