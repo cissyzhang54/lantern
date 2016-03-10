@@ -84,7 +84,7 @@ router.get(`/topics/:topic/:timespan/:comparatorType(${COMPTYPE_REGEX})/:compara
     });
 });
 
-router.get(`/toparticles`, (req, res, next) => {
+router.get(`/thehighlights`, (req, res, next) => {
   return getTopArticlesData(req, res)
     .then(() => next())
     .catch((err) => {
