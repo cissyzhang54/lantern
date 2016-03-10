@@ -25,7 +25,7 @@ export default function SectionRealtimeESQuery(query) {
         must: [
           {
             range: {
-              event_timestamp: {
+              initial_publish_date: {
                 gte: timespan
               }
             }
@@ -82,19 +82,8 @@ export default function SectionRealtimeESQuery(query) {
         }
       },
       articles_published: {
-        filter: {
-          range : {
-            initial_publish_date : {
-              gte: timespan
-            }
-          }
-        },
-        aggs: {
-          distinct_articles: {
-            cardinality: {
-              field: 'article_uuid'
-            }
-          }
+        cardinality: {
+          field: 'article_uuid'
         }
       }
     }

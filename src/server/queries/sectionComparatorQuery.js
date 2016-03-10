@@ -34,7 +34,7 @@ export default function sectionComparatorQuery(query){
 
   let matchDates = {
     "range" : {
-      "view_timestamp" : {
+      "initial_publish_date" : {
         from: dateFrom,
         to: dateTo
       }

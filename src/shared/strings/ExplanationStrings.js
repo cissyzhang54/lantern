@@ -59,7 +59,8 @@ export default {
     + "<b>Aggregator:</b> a curated collection of news e.g. Drudge or Huffington Post\n"
     + "<b>Partner:</b> someone we have a deal or partnership with e.g. Yahoo Finance",
 
-  'explanations.metric.uniqueVisitors' : "The number of distinct users who read the article.",
+  'explanations.story.metric.uniqueVisitors' : "The number of distinct users who read this story.",
+  'explanations.metric.uniqueVisitors' : "The number of distinct users who read these stories.",
 
   'explanations.barChart.newVsReturning' : "New refers to anonymous users that that have never visited FT.com before. Returning users "
     + "are anonymous users that have visited at least once before."

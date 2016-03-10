@@ -84,7 +84,7 @@ class SectionRealtimeView extends React.Component {
       },
       articlesPublished: {
         metricType: 'integer',
-        label: 'Articles Published',
+        label: 'Stories Published',
         size: 'large'
       }
     }

@@ -43,7 +43,7 @@ export default class ArticleList extends React.Component {
 
   render() {
     const numArticles = this.props.articleList.length;
-    const buttText = this.state.showAllArticles ? 'Show only 10 articles' : `Show all ${numArticles} articles`;
+    const buttText = this.state.showAllArticles ? 'Show only 10 stories' : `Show all ${numArticles} stories`;
     const clickHandler = this.toggleAllArticles.bind(this);
     const lastArticleIndex = this.state.showAllArticles ? numArticles - 1 : 10;
 
@@ -102,7 +102,7 @@ export default class ArticleList extends React.Component {
     });
 
     const articleListHeaders = [
-      '', 'Article', 'Publish Date',
+      '', 'Story', 'Publish Date',
       'Page Views', 'Retention Rate',
       'Time on Page'
     ];

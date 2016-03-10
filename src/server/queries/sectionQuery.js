@@ -17,7 +17,7 @@ export default function sectionQuery(query){
 
   let matchDates = {
     range : {
-      view_timestamp : {
+      initial_publish_date : {
         from: query.dateFrom,
         to: query.dateTo
       }

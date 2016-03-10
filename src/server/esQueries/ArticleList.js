@@ -5,7 +5,7 @@ export default function ArticleListQuery(query) {
   assert.equal(typeof query, 'object',
     "argument 'query' should be an object");
 
-  const termField = `primary_${query.type}`
+  const termField = `${query.type}s_not_analyzed`
   const esQuery = {
     query: {
       bool: {
