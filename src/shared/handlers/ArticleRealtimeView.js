@@ -264,15 +264,19 @@ class ArticleRealtimeView extends React.Component {
         selectedGraphTitle = 'Real time time on page';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.timeOnPageChart.realtime48h' : 'explanations.timeOnPageChart.realtime1h';
         selectedGraphData =  this.props.timeOnPage.map((d) => {
-          if (d[0] < this.props.published) {
+          let timestamp = d.key_as_string;
+          let value = d.time_on_page_avg.values['50.0'];
+
+          if (timestamp < this.props.published) {
             return {
-              date: d[0],
+              date: timestamp,
               time: null
             }
           }
+
           return {
-            date: d[0],
-            time: d[1]
+            date: timestamp,
+            time: (value === 'NaN') ? 0 : value
           }
         });
         selectedGraphKeys = ['time'];

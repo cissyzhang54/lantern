@@ -1,25 +1,14 @@
 import moment from 'moment';
+import _ from 'lodash'
 
-function getField(d, f, divisor){
-  let field = fields[f]
+function getField(data, key, divisor){
+  let field = fields[key]
   if (!field){
-    return new Error(`formatterError: ${f} does not have a formatter set in the 'fields' object`)
-  }
-  let objs = (field.name || field).split('.')
-  let parent = d;
-  while(objs.length){
-    let child = objs.shift();
-    try {
-      parent = parent[child]
-    } catch (e){
-      let error = new Error(e);
-      error.name = 'DataParsingError';
-      error.data = d;
-      //todo: throw + catch properly then test it
-    }
+    return new Error(`formatterError: ${key} does not have a formatter set in the 'fields' object`)
   }
 
-  return field.formatter ? field.formatter(parent, field, divisor, field.bucket_key) : parent
+  let datum = _.get(data, field.name || field);
+  return field.formatter ? field.formatter(datum, field, divisor, field.bucket_key) : datum;
 }
 
 
@@ -44,9 +33,7 @@ const fields = {
     formatter: format
   },
   realtimeTimeOnPage: {
-    name: 'aggregations.realtime_time_on_page.time_on_page_histogram',
-    formatter: format,
-    bucket_key: 'time_on_page_avg'
+    name: 'aggregations.realtime_time_on_page.time_on_page_histogram.buckets'
   },
   realtimeScrollDepth: 'aggregations.realtime_scroll_depth.scroll_depth_histogram.buckets',
   realtimeRetention: {
@@ -56,7 +43,7 @@ const fields = {
   },
   realtimeLinksClickedByCategory: {name: 'aggregations.realtime_links_clicked_by_category.categories', formatter: format},
   realtimeTimeOnPageAvg: {
-    name: 'aggregations.realtime_time_on_page.time_on_page_avg.value',
+    name: 'aggregations.realtime_time_on_page.time_on_page_avg.values["50.0"]',
     formatter: Math.round
   },
   realtimeScrollDepthAvg: {

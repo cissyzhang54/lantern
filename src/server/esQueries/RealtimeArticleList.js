@@ -111,8 +111,9 @@ export default function RealitmeArticleListQuery(query) {
             },
             aggs: {
               average: {
-                avg: {
-                  field: 'attention_time'
+                percentiles : {
+                  field: "attention_time",
+                  percents: [50]
                 }
               }
             }

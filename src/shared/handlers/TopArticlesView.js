@@ -69,11 +69,11 @@ class TopArticlesView extends React.Component {
     /* Average time reading the article */
     let orderedTimeOnPage = data.timeOnPageTop;
     orderedTimeOnPage = orderedTimeOnPage.sort((a, b) => {
-      return b.avg_time_on_page.avg_time_on_page.value - a.avg_time_on_page.avg_time_on_page.value;
+      return b.avg_time_on_page.avg_time_on_page.values['50.0'] - a.avg_time_on_page.avg_time_on_page.values['50.0'];
     });
     let avg_time_rows = TableFormatting(orderedTimeOnPage, 'avg_time_on_page');
     avg_time_rows = avg_time_rows.map((d) => {
-      let time = ConvertUnits.secondsToMinutes(d[2].value)
+      let time = ConvertUnits.secondsToMinutes(d[2].values['50.0'])
       time = `${time.minutes}m ${time.seconds}s`
       return [d[0], d[1], time, d[3]]
     });
