@@ -125,7 +125,7 @@ export default class ArticleList extends React.Component {
       <ChunkWrapper component="ArticleList">
         <Row>
           <Col xs={12}>
-            <h3>Stories</h3>
+            <h3>Stories published during this time frame</h3>
           </Col>
         </Row>
         <Row>
