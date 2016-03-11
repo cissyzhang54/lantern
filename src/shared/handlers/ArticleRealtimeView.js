@@ -147,38 +147,54 @@ class ArticleRealtimeView extends React.Component {
 
     let headlineStats = {
       timeOnPageAvg: {
+        name: 'timeOnPage',
         metricType: 'time',
         label: 'Average Time on Page',
         size: 'large',
-        onClick: () => {
-          this.setState({chartShown: 'timeOnPage'})
+        handler : {
+          onClick: () => {
+            this.setState({chartShown: 'timeOnPage'})
+          },
+          currentMetric: this.state.chartShown,
         }
       },
       totalPageViews: {
+        name: 'pageViews',
         metricType: 'integer',
         label: 'Page Views',
         size: 'large',
         comparatorFormatName: 'totalPageViews',
-        onClick: () => {
-          this.setState({chartShown: 'pageViews'})
+        handler : {
+          onClick: () => {
+            this.setState({chartShown: 'pageViews'})
+          },
+          currentMetric: this.state.chartShown
         }
       },
       retentionRate: {
+        name: 'retentionRate',
         metricType: 'percentage',
         label: 'Retention Rate',
         size: 'large',
-        onClick: () => {
-          this.setState({chartShown: 'retentionRate'})
+        handler : {
+          onClick: () => {
+            this.setState({chartShown: 'retentionRate'})
+          },
+          currentMetric: this.state.chartShown
         },
         toolTip: (<Text message='explanations.articleHandlers.retentionRate' />)
       },
       scrollDepthAvg: {
+        name: 'scrollDepth',
         metricType: 'percentage',
         label: 'Average Scroll Depth',
         size: 'large',
         comparatorFormatName: 'scrollDepth',
-        onClick: () => {
-          this.setState({chartShown: 'scrollDepth'})
+        handler : {
+          onClick: () => {
+            this.setState({chartShown: 'scrollDepth'})
+          },
+          currentMetric: this.state.chartShown
         },
         toolTip: (<Text message='explanations.articleHandlers.scrollDepth' />)
       }
