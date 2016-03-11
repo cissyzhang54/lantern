@@ -1168,18 +1168,21 @@ export default [{
         }
       },
       "is_first_visit": {
-        "doc_count_error_upper_bound": 0,
-        "sum_other_doc_count": 0,
-        "buckets": [
-          {
-            "key": "F",
-            "doc_count": 737979
-          },
-          {
-            "key": "T",
-            "doc_count": 175135
-          }
-        ]
+        "doc_count": 354056,
+        "anonymous": {
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0,
+          "buckets": [
+            {
+              "key": "T",
+              "doc_count": 194002
+            },
+            {
+              "key": "F",
+              "doc_count": 160054
+            }
+          ]
+        }
       },
       "social_referrers": {
         "doc_count": 59516,

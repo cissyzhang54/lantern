@@ -101,7 +101,7 @@ const fields = {
   isLastPage: {name: 'aggregations.is_last_page', formatter: format},
   userCohort: {name: 'aggregations.user_cohort', formatter: format},
   rfvCluster: {name: 'aggregations.rfv_cluster', formatter: format},
-  isFirstVisit: {name: 'aggregations.is_first_visit', formatter: format},
+  isFirstVisit: {name: 'aggregations.is_first_visit.anonymous', formatter: format},
   internalReferrerTotal: 'aggregations.internal_referrer.doc_count',
   internalReferrerUrls: {name: 'aggregations.internal_referrer.urls', formatter: format},
   internalReferrerTypes: {name: 'aggregations.internal_referrer.types', formatter: format},

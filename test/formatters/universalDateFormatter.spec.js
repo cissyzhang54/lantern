@@ -180,16 +180,8 @@ describe('universalDataFormatter', function() {
     it('formats is_first_visit', function () {
       expect(getField(sectionData, 'isFirstVisit')).to.be.a('array')
       expect(getField(sectionData, 'isFirstVisit')).to.deep.equal([
-        ["F", 737979],
-        ["T", 175135]
-      ])
-    })
-
-    it('formats is_first_visit', function () {
-      expect(getField(sectionData, 'isFirstVisit')).to.be.a('array')
-      expect(getField(sectionData, 'isFirstVisit')).to.deep.equal([
-        ["F", 737979],
-        ["T", 175135]
+        ["T", 194002],
+        ["F", 160054]
       ])
     })
 
