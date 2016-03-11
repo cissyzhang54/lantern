@@ -123,6 +123,17 @@ export default class RealtimeArticleList extends React.Component {
       </div>
     );
 
+    const showButton = (numArticles < 10
+      ? <div></div>
+      : <Row>
+          <Col xs={12}>
+            <Button onClick={clickHandler}>
+              {buttText}
+            </Button>
+          </Col>
+        </Row>
+    );
+
     articleListHeaders[this.state.sortIndex+1] = sortedEl;
     const sortHandler = this.handleSort.bind(this);
 
@@ -143,13 +154,7 @@ export default class RealtimeArticleList extends React.Component {
             />
           </Col>
         </Row>
-        <Row>
-          <Col xs={12}>
-            <Button onClick={clickHandler}>
-              {buttText}
-            </Button>
-          </Col>
-        </Row>
+        {showButton}
       </ChunkWrapper>
     );
 
