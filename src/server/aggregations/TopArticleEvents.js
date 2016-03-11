@@ -29,6 +29,11 @@ export default function TopArticleEventsAggregation() {
              terms : {
                field : "authors_not_analyzed"
              }
+           },
+           initial_publish_date : {
+             terms : {
+               field: "initial_publish_date"
+             }
            }
          }
        }
