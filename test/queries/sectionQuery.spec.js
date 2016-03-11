@@ -49,7 +49,7 @@ describe('Section Query', () => {
         filtered: {
           filter:{
             bool:{
-              should:[]
+              must:[]
             }
           },
           query:{

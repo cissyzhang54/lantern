@@ -11,7 +11,7 @@ export default function sectionMetadataQuery(query){
 
   let filter = {
     bool: {
-      should : QueryUtils.mapFilters(query)
+      must : QueryUtils.mapFilters(query)
     }
   }
 

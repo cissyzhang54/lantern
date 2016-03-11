@@ -24,7 +24,7 @@ export default function sectionMetadataComparatorQuery(query){
 
   let filter = {
     bool: {
-      should :  QueryUtils.mapFilters(query)
+      must :  QueryUtils.mapFilters(query)
     }
   }
 

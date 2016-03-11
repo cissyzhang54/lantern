@@ -1,7 +1,8 @@
 import moment from 'moment';
-import * as QueryUtils from '../utils/queryUtils'
+import * as QueryUtils from '../utils/queryUtils';
 import calculateIndices from '../utils/calculateIndices.js';
-import ArticleComparatorAggregation from '../aggregations/ArticleComparator'
+import ArticleComparatorAggregation from '../aggregations/ArticleComparator';
+import _ from 'underscore';
 
 export function _getDateRangeFromQuery(query) {
   return {
@@ -47,19 +48,22 @@ export default function ArticleComparatorQuery(query){
     match : comparatorTypes[query.comparatorType]
   }
 
-  let filter = {
-    bool: {
-      must : [
-        {
-          range : {
-            time_since_publish : {
-              from: fromDuration,
-              to: toDuration
-            }
-          }
+  let dateRange = [
+    {
+      range : {
+        time_since_publish : {
+          from: fromDuration,
+          to: toDuration
         }
-      ],
-      should :  QueryUtils.mapFilters(query)
+      }
+    }
+  ]
+
+  let filtersAndRange = _.union(dateRange, QueryUtils.mapFilters(query));
+
+  let filters = {
+    bool : {
+      must : filtersAndRange
     }
   }
 
@@ -82,7 +86,7 @@ export default function ArticleComparatorQuery(query){
 
   let filtered = {
     query : matchAll,
-    filter : filter
+    filter : filters
   }
 
   if (query.comparator === 'FT'){

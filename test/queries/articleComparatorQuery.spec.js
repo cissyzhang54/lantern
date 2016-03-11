@@ -81,13 +81,12 @@ describe('Article Comparator Query', () => {
     });
 
     const PATH_QUERY_FILTER = 'query.filtered.filter.bool';
-    const PATH_QUERY_FILTER_MUST = PATH_QUERY_FILTER + '.must[0]';
-    const PATH_QUERY_FILTER_SHOULD = PATH_QUERY_FILTER + '.should';
+    const PATH_QUERY_FILTER_MUST = PATH_QUERY_FILTER + '.must';
     const PATH_QUERY = 'query.filtered.query';
 
     it('filters by time_since_publish', () => {
       expect(sampleQuery).to.have.deep.property(
-        PATH_QUERY_FILTER_MUST + '.range.time_since_publish'
+        PATH_QUERY_FILTER_MUST + '[0].range.time_since_publish'
       ).and.include({ to: 43200, from: 0 });
     });
 
@@ -121,9 +120,9 @@ describe('Article Comparator Query', () => {
     });
 
     it('adds term filters', () => {
-      expect(sampleQuery).with.deep.property(PATH_QUERY_FILTER_SHOULD)
+      expect(sampleQuery).with.deep.property('query.filtered.filter.bool.must')
       .to.be.an('Array')
-      .and.to.have.members([{
+      .and.include({
           term:{cq1:'zx'}
         },
         {
@@ -134,8 +133,7 @@ describe('Article Comparator Query', () => {
         },
         {
           term:{cq2: 45}
-        }]);
+        });
     })
-
   })
 })
