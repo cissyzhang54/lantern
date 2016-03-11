@@ -376,7 +376,7 @@ export default {
             },
             {
               term: {
-                event_category: "scroll"
+                event_category: "scrolldepth"
               }
             },
             {
