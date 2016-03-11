@@ -45,7 +45,7 @@ export default class ArticleList extends React.Component {
     const numArticles = this.props.articleList.length;
     const buttText = this.state.showAllArticles ? 'Show only 10 stories' : `Show all ${numArticles} stories`;
     const clickHandler = this.toggleAllArticles.bind(this);
-    const lastArticleIndex = this.state.showAllArticles ? numArticles - 1 : 10;
+    const lastArticleIndex = this.state.showAllArticles ? numArticles : 10;
 
     const formatter = d3.format(',n');
 
