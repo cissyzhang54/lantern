@@ -28,11 +28,23 @@ export default {
   'explanations.pageViewsChart.realtime1h': `This chart shows page views over time for this article.
     The time scale (horizontal axis) shows the last hour.`,
 
+  'explanations.pageViewsChart.realtime6h': `This chart shows page views over time for this article.
+    The time scale (horizontal axis) shows the last 6 hours.`,
+
+  'explanations.pageViewsChart.realtime24h': `This chart shows page views over time for this article.
+    The time scale (horizontal axis) shows the last 24 hours.`,
+
   'explanations.pageViewsChart.realtime48h': `This chart shows page views over time for this article.
     The time scale (horizontal axis) shows the last 48 hours.`,
 
   'explanations.scrollDepthChart.realtime1h': `This chart shows average scroll depth over time for this article.
     The time scale (horizontal axis) shows the last hour.`,
+
+  'explanations.scrollDepthChart.realtime6h': `This chart shows average scroll depth over time for this article.
+    The time scale (horizontal axis) shows the last 6 hours.`,
+
+    'explanations.scrollDepthChart.realtime24h': `This chart shows average scroll depth over time for this article.
+      The time scale (horizontal axis) shows the last 24 hours.`,
 
   'explanations.scrollDepthChart.realtime48h': `This chart shows average scroll depth over time for this article.
     The time scale (horizontal axis) shows the last 48 hours.`,
@@ -40,11 +52,23 @@ export default {
   'explanations.timeOnPageChart.realtime1h': `This chart shows average time on page over time for this article.
     The time scale (horizontal axis) shows the last hour.`,
 
+  'explanations.timeOnPageChart.realtime6h': `This chart shows average time on page over time for this article.
+    The time scale (horizontal axis) shows the last 6 hours.`,
+
+  'explanations.timeOnPageChart.realtime24h': `This chart shows average time on page over time for this article.
+    The time scale (horizontal axis) shows the last 24 hours.`,
+
   'explanations.timeOnPageChart.realtime48h': `This chart shows average time on page over time for this article.
     The time scale (horizontal axis) shows the last 48 hours.`,
 
   'explanations.retentionRateChart.realtime1h': `This chart shows average retention rate over time for this article.
     The time scale (horizontal axis) shows the last hour.`,
+
+  'explanations.retentionRateChart.realtime6h': `This chart shows average retention rate over time for this article.
+    The time scale (horizontal axis) shows the last 6 hours.`,
+
+  'explanations.retentionRateChart.realtime24h': `This chart shows average retention rate over time for this article.
+    The time scale (horizontal axis) shows the last 24 hours.`,
 
   'explanations.retentionRateChart.realtime48h': `This chart shows average retention rate over time for this article.
     The time scale (horizontal axis) shows the last 48 hours.`,
