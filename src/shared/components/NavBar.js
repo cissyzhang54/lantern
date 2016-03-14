@@ -29,8 +29,8 @@ export default class NavBar extends React.Component {
             <li className='pull-right'>
               <Link
                 style={styles.link}
-                to={'/'}>
-                How-to guide
+                to={'https://docs.google.com/document/d/1yY1bb6CNjLG1eMRdHWQrGOECIOOFvry0ySXNCtEt-3A/view'}>
+                Help
               </Link>
             </li>
           </ul>
