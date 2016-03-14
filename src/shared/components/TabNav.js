@@ -46,7 +46,7 @@ export default class TabNav extends React.Component {
 
     let links = [
       {title: "Live", url:`/realtime/articles/${this.props.uuid}`, type: "realtime-article1h"},
-      {title: "Archive", url:`/articles/${this.props.uuid}/custom?dateFrom=${dateFrom}&dateTo=${dateTo}`, type: "article", timePeriod: 24}
+      {title: "Archive", url:`/articles/${this.props.uuid}`, type: "article", timePeriod: 24}
     ];
 
     if (this.props.links) links = this.props.links;

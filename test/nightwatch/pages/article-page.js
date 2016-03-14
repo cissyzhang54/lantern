@@ -2,7 +2,7 @@
 module.exports = {
 
   // Links
-  exampleArticleUrl : 'http://localhost:' + process.env.PORT + '/articles/7126ec00-e149-11e5-9217-6ae3733a2cd1/48',
+  exampleArticleUrl : 'http://localhost:' + process.env.PORT + '/articles/7126ec00-e149-11e5-9217-6ae3733a2cd1/custom',
   exampleArticleTitle: "Lantern - Commodity prices signal market bottom",
   exampleArticleLink: 'http://www.ft.com/cms/s/0/7126ec00-e149-11e5-9217-6ae3733a2cd1.html',
 

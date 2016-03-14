@@ -107,6 +107,10 @@ export default class Modifier extends React.Component {
       endDate = moment().toISOString();
       startDate = moment().subtract(this.props.query.timespan, 'hours').toISOString();
     }
+    else if (this.props.query.timespan === 'custom' && startDate == null && endDate == null) {
+      startDate = moment(this.props.publishDate).toISOString();
+      endDate = moment().toISOString();
+    }
 
     let sameTagLabel;
     switch (this.props.query.timespan) {

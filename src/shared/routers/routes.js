@@ -36,7 +36,7 @@ export default (
       />
     </Route>
     <Redirect from="articles/:uuid"
-      to="articles/:uuid/48"
+      to="articles/:uuid/custom"
     />
     <Route
       path="articles/:uuid"
