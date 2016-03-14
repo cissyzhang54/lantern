@@ -25,7 +25,7 @@ class ArticleView extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      chartShown: 'timeOnPage'
+      chartShown: 'pageViews'
     }
   }
 
