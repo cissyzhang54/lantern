@@ -93,12 +93,12 @@ export default class SectionReferrers extends React.Component {
           <PieChart
             data={referrers}
             keys={['referrers']}
-            />
+          />
 
         </Col>
         <Col xs={12}
-             sm={6}
-          >
+           sm={6}
+        >
           <h5>Referrers</h5>
           <BarChart
             data={externalData}
@@ -106,7 +106,8 @@ export default class SectionReferrers extends React.Component {
             category={externalID}
             yLabel="Page Views"
             xLabel="Traffic Source"
-            />
+            usePercentages
+          />
 
         </Col>
       </Row>
