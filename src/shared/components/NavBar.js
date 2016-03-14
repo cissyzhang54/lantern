@@ -27,11 +27,11 @@ export default class NavBar extends React.Component {
               <LogoSVG />
             </li>
             <li className='pull-right'>
-              <Link
+              <a target="_blank"
                 style={styles.link}
-                to={'https://docs.google.com/document/d/1yY1bb6CNjLG1eMRdHWQrGOECIOOFvry0ySXNCtEt-3A/view'}>
+                href={'https://docs.google.com/document/d/1yY1bb6CNjLG1eMRdHWQrGOECIOOFvry0ySXNCtEt-3A/view'}>
                 Help
-              </Link>
+              </a>
             </li>
           </ul>
         </nav>
