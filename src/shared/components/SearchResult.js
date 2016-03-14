@@ -86,7 +86,7 @@ export default class SearchResult extends React.Component {
       linkUrl = '/realtime' + linkUrl + '/48h';
       clickHandler = null;
     } else {
-      linkUrl += '/48';
+      linkUrl += `/custom?dateFrom=${publishedMoment.startOf('day').toISOString()}&dateTo=${now.endOf('day').toISOString()}`;
     }
 
     return (
