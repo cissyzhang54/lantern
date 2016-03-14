@@ -134,6 +134,11 @@ class HistoricalAnalyticsView extends React.Component {
     let dateTo = moment(e.endDate, 'milliseconds').toISOString();
     let comparatorPath;
 
+    AnalyticsActions.updateQuery({
+      dateFrom : dateFrom,
+      dateTo : dateTo
+    });
+
     switch (this.props.route.analyticsView) {
       case VIEW_TYPE_ARTICLE:
         comparatorPath = (params.comparator) ? `/${params.comparatorType}/${params.comparator}` : '';
