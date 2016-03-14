@@ -49,7 +49,7 @@ export default class RealtimeArticleList extends React.Component {
     const numArticles = this.props.articleList.length;
     const buttText = this.state.showAllArticles ? 'Show only 10 stories' : `Show all ${numArticles} stories`;
     const clickHandler = this.toggleAllArticles.bind(this);
-    const lastArticleIndex = this.state.showAllArticles ? numArticles - 1 : 10;
+    const lastArticleIndex = this.state.showAllArticles ? numArticles : 10;
 
     const formatter = d3.format(',n');
 
@@ -123,6 +123,17 @@ export default class RealtimeArticleList extends React.Component {
       </div>
     );
 
+    const showButton = (numArticles < 10
+      ? <div></div>
+      : <Row>
+          <Col xs={12}>
+            <Button onClick={clickHandler}>
+              {buttText}
+            </Button>
+          </Col>
+        </Row>
+    );
+
     articleListHeaders[this.state.sortIndex+1] = sortedEl;
     const sortHandler = this.handleSort.bind(this);
 
@@ -143,13 +154,7 @@ export default class RealtimeArticleList extends React.Component {
             />
           </Col>
         </Row>
-        <Row>
-          <Col xs={12}>
-            <Button onClick={clickHandler}>
-              {buttText}
-            </Button>
-          </Col>
-        </Row>
+        {showButton}
       </ChunkWrapper>
     );
 
