@@ -259,6 +259,7 @@ class SectionView extends React.Component {
                   category={refID}
                   yLabel="Page Views"
                   xLabel="Referrer"
+                  usePercentages
                 />
               </Col>
 

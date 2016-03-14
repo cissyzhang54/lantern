@@ -191,6 +191,7 @@ class TopicView extends React.Component {
                   keys={refKeys}
                   xLabel="Referrer"
                   yLabel="Page Views"
+                  usePercentages
                 />
               </Col>
 

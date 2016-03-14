@@ -155,7 +155,7 @@ class ArticleRealtimeView extends React.Component {
           onClick: () => {
             this.setState({chartShown: 'timeOnPage'})
           },
-          currentMetric: this.state.chartShown,
+          currentMetric: this.state.chartShown
         }
       },
       totalPageViews: {
@@ -478,6 +478,7 @@ class ArticleRealtimeView extends React.Component {
               category={extRefID}
               yLabel="Page Views"
               xLabel="Traffic Source"
+              usePercentages
             />
           </Col>
         </Row>
