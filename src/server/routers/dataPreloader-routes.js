@@ -248,8 +248,11 @@ function getSectionData(req, res){
       };
       return res;
     }).catch((error) => {
-      res.locals.data.AnalyticsStore = {
-        errorMessage: error.message
+      res.locals.data = {
+        AnalyticsStore : {
+          errorMessage : error.message,
+          error: error
+        }
       }
     })
 }
@@ -293,8 +296,11 @@ function getTopicData(req, res){
       };
       return res;
     }).catch((error) => {
-      res.locals.data.AnalyticsStore = {
-        errorMessage: error.message
+      res.locals.data = {
+        AnalyticsStore : {
+          errorMessage : error.message,
+          error: error
+        }
       }
     })
 
@@ -319,8 +325,11 @@ function getTopArticlesData(req, res) {
       };
       return res;
     }).catch((error) => {
-      res.locals.data.AnalyticsStore = {
-        errorMessage: error.message
+      res.locals.data = {
+        AnalyticsStore : {
+          errorMessage : error.message,
+          error: error
+        }
       }
     })
   }
