@@ -341,8 +341,9 @@ export default {
       },
       aggs: {
         time_on_page_avg : {
-          avg: {
-            field: "attention_time"
+          percentiles : {
+            field: "attention_time",
+            percents: [50]
           }
         },
         time_on_page_histogram : {
@@ -357,8 +358,9 @@ export default {
           },
           aggs : {
             time_on_page_avg: {
-              avg : {
-                field: "attention_time"
+              percentiles : {
+                field: "attention_time",
+                percents: [50]
               }
             }
           }

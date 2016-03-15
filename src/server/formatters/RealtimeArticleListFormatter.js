@@ -12,8 +12,7 @@ export default function(results) {
           b.doc_count
         ];
       }),
-      time_on_page: r.time_on_page.average.value
+      time_on_page: r.time_on_page.average.values['50.0']
     };
   });
 }
-

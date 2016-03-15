@@ -74,9 +74,10 @@ export default function TopArticlesAggregation() {
           },
           aggs: {
             avg_time_on_page: {
-                "avg" : {
-                    "field" : "attention_time"
-                }
+              percentiles : {
+                field: "attention_time",
+                percents: [50]
+              }
             },
             title: {
               terms: {
