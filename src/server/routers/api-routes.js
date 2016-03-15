@@ -11,6 +11,7 @@ import TopicDataFormatter from '../formatters/Topics';
 import TopArticlesFormatter from '../formatters/TopArticles';
 import getTitleForUrl from '../utils/getTitleFromUrl';
 import moment from 'moment';
+import newrelic from 'newrelic';
 
 const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
 
@@ -18,6 +19,7 @@ let router = express.Router();
 router.use(bodyParser.json());
 
 router.get('/queries', function(req, res) {
+  newrelic.setTransactionName('Api/Queries');
   req.pipe(esClient.queryStream).pipe(res);
 });
 
@@ -37,6 +39,7 @@ function decode(uri){
 }
 
 function getCategoryData(req, res, next) {
+  newrelic.setTransactionName('Api/Archive/Articles');
   const query = {
     uuid: decode(req.params.uuid),
     dateFrom: req.body.dateFrom,
@@ -76,6 +79,7 @@ function getCategoryData(req, res, next) {
 }
 
 function getRealtimeArticleData(req, res, next) {
+  newrelic.setTransactionName('Api/Live/Articles');
   const query = {
     uuid: decode(req.params.uuid),
     timespan: req.query.timespan
@@ -91,6 +95,7 @@ function getRealtimeArticleData(req, res, next) {
 }
 
 function getRealtimeSectionData(req, res, next) {
+  newrelic.setTransactionName('Api/Live/Sections');
   const query = {
     section: decode(req.params.section),
     timespan: req.query.timespan
@@ -106,6 +111,7 @@ function getRealtimeSectionData(req, res, next) {
 }
 
 function getSectionData(req, res, next) {
+  newrelic.setTransactionName('Api/Archive/Sections');
   const query = {
     section: decode(req.params.section),
     dateFrom: req.body.dateFrom,
@@ -126,6 +132,7 @@ function getSectionData(req, res, next) {
 
 import RealtimeArticleListFormatter from '../formatters/RealtimeArticleListFormatter';
 function getRealtimeArticleList(req, res, next) {
+  newrelic.setTransactionName('Api/Live/ArticleList');
   const query = {
     type: req.params.type,
     value: decode(req.params.value),
@@ -144,6 +151,7 @@ function getRealtimeArticleList(req, res, next) {
 
 import ArticleListFormatter from '../formatters/ArticleListFormatter';
 function getArticleList(req, res, next) {
+  newrelic.setTransactionName('Api/Archive/ArticleList');
   const query = {
     type: req.params.type,
     value: decode(req.params.value),
@@ -159,6 +167,7 @@ function getArticleList(req, res, next) {
 }
 
 function getTopicData(req, res, next) {
+  newrelic.setTransactionName('Api/Archive/Topics');
   const query = {
     topic: decode(req.params.topic),
     dateFrom: req.body.dateFrom,
@@ -178,6 +187,7 @@ function getTopicData(req, res, next) {
 }
 
 function search(req, res, next) {
+  newrelic.setTransactionName('Api/Search');
   const query = req.params.query;
   const from = 0 || req.query.from;
 
@@ -191,6 +201,7 @@ function search(req, res, next) {
 }
 
 function getTopArticlesData(req, res, next) {
+  newrelic.setTransactionName('Api/TopArticles');
   const query = {
     dateFrom: moment().subtract(1, 'days').startOf('day').toISOString(),
     dateTo: moment().subtract(1, 'days').endOf('day').toISOString()

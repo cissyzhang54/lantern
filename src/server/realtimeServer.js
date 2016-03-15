@@ -1,6 +1,7 @@
 import Server from 'socket.io';
 import ArticlePoller from './articlePoller';
 import SectionPoller from './sectionPoller';
+import newrelic from 'newrelic';
 /**
  * @param {app} Express App
  */
@@ -30,7 +31,7 @@ export default function RealtimeServer(app) {
 
   io.on('connection', (socket) => {
     // find the room and add the user to it
-    socket.on('subscribeToArticle', (query) => {
+    socket.on('subscribeToArticle', newrelic.createWebTransaction('/websocket/subscribeToArticle', (query) => {
       const uuid = query.uuid;
       const timespan = query.timespan;
       const pollerId = uuid + timespan;
@@ -39,11 +40,12 @@ export default function RealtimeServer(app) {
         // if there isn't a poller for that room
         // create it
         if (!pollers[pollerId]) createPoller('article', query);
+        newrelic.endTransaction();
       });
-    });
+    }));
 
 
-    socket.on('subscribeToSection', (query) => {
+    socket.on('subscribeToSection', newrelic.createWebTransaction('/websocket/subscribeToSection', (query) => {
       const section = query.section;
       const timespan = query.timespan;
       const pollerId = section + timespan;
@@ -52,24 +54,28 @@ export default function RealtimeServer(app) {
         // if there isn't a poller for that room
         // create it
         if (!pollers[pollerId]) createPoller('section', query);
+        newrelic.endTransaction();
       });
-    });
+    }));
 
-    socket.on('unsubscribeFromArticle', (query) => {
+    socket.on('unsubscribeFromArticle', newrelic.createWebTransaction('/websocket/unsubscribeFromArticle', (query) => {
       const pollerId = query.uuid + query.timespan;
       unsubscribe.call(socket, pollerId);
-    });
+      newrelic.endTransaction();
+    }));
 
-    socket.on('unsubscribeFromSection', (query) => {
+    socket.on('unsubscribeFromSection', newrelic.createWebTransaction('/websocket/unsubscribeFromSection', (query) => {
       const pollerId = query.section + query.timespan;
       unsubscribe.call(socket, pollerId);
-    });
+      newrelic.endTransaction();
+    }));
 
     socket.on('disconnect', unsubscribe);
 
-    socket.on('error', (error) => {
+    socket.on('error', newrelic.createWebTransaction('/websocket/error', (error) => {
+      newrelic.endTransaction();
       console.error(error);
-    })
+    }));
   });
 
   /**

@@ -1,5 +1,4 @@
 export default {
-  newrelic: true,
   jsUrl:   "",
   features : {
     'home:recentArticles' : false,
