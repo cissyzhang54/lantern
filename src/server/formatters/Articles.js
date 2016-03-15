@@ -50,17 +50,13 @@ export default function formatData(data) {
   ]
   let divisor = getField(articleComparatorData, 'articleCount')
   let articleComparatorFields = [
-    'comparator', 'timeOnPage', 'categoryTotalViewCount',
-    'articleCount', 'uniqueVisitors' , 'pageViews'
+    'timeOnPage', 'categoryTotalViewCount',
+    'articleCount', 'pageViews'
   ]
   let articleComparatorAverages = [
     'referrerTypes', 'socialReferrers', 'regions', 'internalReferrerTotal',
     'isLastPage', 'userCohort', 'rfvCluster', 'isFirstVisit', 'internalReferrerTypes',
     'categoryAverageViewCount', 'categoryAverageUniqueVisitors'
-  ]
-  let eventComparatorFields = ['scrollDepth']
-  let eventComparatorAverages = [
-    'socialSharesTotal', 'socialSharesTypes', 'totalLinksClicked', 'totalCommentsPosted', 'totalCommentsViewed'
   ]
   let articlePublishTimeFields = ['lastPublishDate']
 
@@ -86,8 +82,6 @@ export default function formatData(data) {
 
       articleComparatorFields.forEach(f => { comparatorResults[f] = getField(articleComparatorData, f)});
       articleComparatorAverages.forEach(f => { comparatorResults[f] = getField(articleComparatorData, f, divisor)});
-      eventComparatorFields.forEach(f => { comparatorResults[f] = getField(eventComparatorData, f)});
-      eventComparatorAverages.forEach(f => { comparatorResults[f] = getField(eventComparatorData, f, divisor)});
       resolve({
         data: results,
         comparatorData: comparatorResults

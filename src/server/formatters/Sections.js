@@ -40,7 +40,7 @@ export default function SectionDataFormatter(data) {
       let comparatorResults = {};
       if (compMetaData) {
         let compMetaFields = ['topicsCovered', 'topicCount', 'articlePublishCount']
-        let compSectionFields = ['comparator', 'pageViews', 'referrerTypes',
+        let compSectionFields = ['pageViews', 'referrerTypes',
           'referrerNames', 'socialReferrers', 'devices', 'countries', 'regions', 'userCohort',
           'rfvCluster', 'isFirstVisit', 'internalReferrerTypes', 'isSubscription', 'uniqueVisitors',
           'topicViews', 'articleCount'

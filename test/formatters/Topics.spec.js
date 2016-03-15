@@ -58,7 +58,6 @@ describe('Topic Formatter', function() {
           'internalReferrerTypes',
           'isSubscription',
           'uniqueVisitors',
-          'sectionCount',
           'sectionViews'
         ];
         for (let i = 0; i < props.length; i++){

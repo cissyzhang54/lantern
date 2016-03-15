@@ -23,7 +23,7 @@ export default function TopicDataFormatter(data) {
     try {
       let [metaData, topicData, compMetaData, compTopicData] = data;
       let results = {genre:[], sections:[], topics:[]};
-      let metaFields = ['articlePublishCount', 'sectionsCovered', 'sectionCount', 'publishTimes'];
+      let metaFields = ['articlePublishCount', 'publishTimes'];
       let topicFields = ['readTimes', 'pageViews', 'referrerTypes',
         'referrerNames', 'socialReferrers', 'devices', 'countries', 'regions', 'userCohort',
         'rfvCluster', 'isFirstVisit', 'internalReferrerTypes', 'isSubscription', 'uniqueVisitors',
@@ -34,11 +34,11 @@ export default function TopicDataFormatter(data) {
 
       let comparatorResults = {};
       if (compMetaData) {
-        let compMetaFields = ['articlePublishCount', 'sectionsCovered', 'sectionCount', 'publishTimes'];
-        let compTopicFields = ['comparator', 'pageViews', 'referrerTypes',
+        let compMetaFields = ['articlePublishCount'];
+        let compTopicFields = ['pageViews', 'referrerTypes',
           'referrerNames', 'socialReferrers', 'devices', 'countries', 'regions', 'userCohort',
           'rfvCluster', 'isFirstVisit', 'internalReferrerTypes', 'isSubscription', 'uniqueVisitors',
-          'sectionViews', 'articleCount'];
+          'articleCount'];
 
         compMetaFields.forEach(f => { comparatorResults[f] = getField(compMetaData, f)})
         compTopicFields.forEach(f => { comparatorResults[f] = getField(compTopicData, f)})
