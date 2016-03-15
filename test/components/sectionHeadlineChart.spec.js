@@ -1,18 +1,18 @@
 import {expect} from 'chai';
 import TestUtils from 'react-addons-test-utils';
 import {createComponent} from '../createComponent';
-import SectionWhen from '../../src/shared/components/SectionWhen';
+import SectionHeadlineChart from '../../src/shared/components/SectionHeadlineChart';
 import LineChart from '../../src/shared/components/LineChart';
 
 import fixtureData from "../fixtures/data/readTimes";
 import fixtureDataSincePublished from '../fixtures/data/readTimesSincePublish';
 import fixtureComparator from "../fixtures/data/readTimesComparator"
 
-describe ('sectionWhen component', function() {
+describe ('SectionHeadlineChart component', function() {
 
   describe('Should render ', function(){
     it ('data', function() {
-      let section = createComponent(SectionWhen, {
+      let section = createComponent(SectionHeadlineChart, {
         renderReadTimes:true,
         graphData: [
           fixtureData,

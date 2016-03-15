@@ -23,7 +23,7 @@ var Text = React.createClass({
       messages: intlData.messages,
       locales: intlData.locales,
       type : 'text',
-      message : 'explanations.sectionWhen.articleViews'
+      message : 'explanations.sectionHeadlineChart.articleViews'
     };
   },
 

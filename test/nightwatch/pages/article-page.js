@@ -124,12 +124,12 @@ module.exports = {
     }
   },
 
-  // When Section
-  sectionWhen: {
+  // Headline Chart Section
+  sectionHeadlineChart: {
     accessTime: {
-      name: 'When did the users view the story?',
+      name: 'Page views',
       selectors: {
-        container: 'div[data-component="sectionWhen"]',
+        container: 'div[data-component="sectionHeadlineChart"]',
         dataComponent: ' div[data-component="lineChart"]',
         heading: ' h3 > span:nth-child(2)'
       }

@@ -16,16 +16,16 @@ import ErrorHandler from '../components/ErrorHandler';
 import FormatData from "../utils/formatData";
 import BarChart from '../components/BarChart.js';
 import PieChart from "../components/PieChart";
-import ColumnChart from '../components/ColumnChart.js'
+import ColumnChart from '../components/ColumnChart.js';
 import Url from 'url';
-import MetricList from '../components/MetricList'
+import MetricList from '../components/MetricList';
 import TabNav from '../components/TabNav';
 import Text from '../components/Text';
 import TimespanSelector from '../components/TimespanSelector';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-import ToolTip from '../components/ToolTip'
+import ToolTip from '../components/ToolTip';
 import FeatureFlag from '../utils/featureFlag';
 
 const maxStrLen = 60;
@@ -218,51 +218,51 @@ class ArticleRealtimeView extends React.Component {
     let selectedGraphKeys;
     let selectedGraphYLabel;
     let selectedGraphToolTipMessage;
-    let timespan48h = this.props.timespan === '48h';
-
+    let selectedTimespan = this.props.timespan || "";
+    console.log(this.props)
     switch (this.state.chartShown) {
       case 'pageViews':
         selectedGraphComponentName = 'realtime-pageviews';
-        selectedGraphTitle = 'Real time page views';
-        selectedGraphToolTipMessage = timespan48h ? 'explanations.pageViewsChart.realtime48h' : 'explanations.pageViewsChart.realtime1h';
+        selectedGraphTitle = 'Page views';
+        selectedGraphToolTipMessage = `explanations.pageViewsChart.realtime${selectedTimespan}`;
         selectedGraphData = this.props.pageViews.map((d) => {
           if (d[0] < this.props.published) {
             return {
               date: d[0],
-              views: null
+              'Page views': null
             }
           }
           return {
             date: d[0],
-            views: d[1]
+            'Page views': d[1]
           }
         });
-        selectedGraphKeys = ['views'];
+        selectedGraphKeys = ['Page views'];
         selectedGraphYLabel = 'Page Views'
         break;
       case 'scrollDepth':
         selectedGraphComponentName = 'realtime-scrolldepth';
-        selectedGraphTitle = 'Real time scroll depth';
-        selectedGraphToolTipMessage = timespan48h ? 'explanations.scrollDepthChart.realtime48h' : 'explanations.scrollDepthChart.realtime1h';
+        selectedGraphTitle = 'Scroll depth';
+        selectedGraphToolTipMessage = `explanations.scrollDepthChart.realtime${selectedTimespan}`;
         selectedGraphData =  this.props.scrollDepth.map((d) => {
           if (!d.scroll_depth_avg.value) {
             return {
               date: d.key_as_string,
-              depth: 0
+              'Average scroll depth': 0
             }
           }
           return {
             date : d.key_as_string,
-            depth: d.scroll_depth_avg.value
+            'Average scroll depth': d.scroll_depth_avg.value
           };
         });
-        selectedGraphKeys = ['depth'];
+        selectedGraphKeys = ['Average scroll depth'];
         selectedGraphYLabel = 'Scroll Depth (%)'
         break;
       case 'timeOnPage':
         selectedGraphComponentName = 'realtime-timeonpage';
-        selectedGraphTitle = 'Real time time on page';
-        selectedGraphToolTipMessage = timespan48h ? 'explanations.timeOnPageChart.realtime48h' : 'explanations.timeOnPageChart.realtime1h';
+        selectedGraphTitle = 'Time on page';
+        selectedGraphToolTipMessage = `explanations.timeOnPageChart.realtime${selectedTimespan}`;
         selectedGraphData =  this.props.timeOnPage.map((d) => {
           let timestamp = d.key_as_string;
           let value = d.time_on_page_avg.values['50.0'];
@@ -270,35 +270,35 @@ class ArticleRealtimeView extends React.Component {
           if (timestamp < this.props.published) {
             return {
               date: timestamp,
-              time: null
+              'Average time on page': null
             }
           }
 
           return {
             date: timestamp,
-            time: (value === 'NaN') ? 0 : value
+            'Average time on page': (value === 'NaN') ? 0 : value
           }
         });
-        selectedGraphKeys = ['time'];
+        selectedGraphKeys = ['Average time on page'];
         selectedGraphYLabel = 'Time On Page (seconds)'
         break;
       case 'retentionRate':
         selectedGraphComponentName = 'realtime-retentionRate';
-        selectedGraphTitle = 'When did the users view the story?';
-        selectedGraphToolTipMessage = timespan48h ? 'explanations.retentionRateChart.realtime48h' : 'explanations.retentionRateChart.realtime1h';
+        selectedGraphTitle = 'Retention rate';
+        selectedGraphToolTipMessage = `explanations.retentionRateChart.realtime${selectedTimespan}`;
         selectedGraphData =  this.props.retention.map((d) => {
           if (d[0] < this.props.published || d[0] > this.props.latestEvent) {
             return {
               date: d[0],
-              retention: null
+              'Retention': null
             }
           }
           return {
             date: d[0],
-            retention: d[1]
+            'Retention': d[1]
           }
         });
-        selectedGraphKeys = ['retention'];
+        selectedGraphKeys = ['Retention'];
         selectedGraphYLabel = 'Retained Users'
         break;
       default:

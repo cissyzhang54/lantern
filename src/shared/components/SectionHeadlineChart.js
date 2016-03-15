@@ -13,11 +13,12 @@ const styles = {
   infoIcon : {
     'fontSize' : '15px',
     'color': '#039',
+    'padding-right': '8px',
     cursor:'pointer'
   }
 }
 
-export default class SectionWhen extends React.Component {
+export default class SectionHeadlineChart extends React.Component {
 
   constructor(props) {
     super(props);
@@ -38,7 +39,7 @@ export default class SectionWhen extends React.Component {
       timeData[0].category = this.props.lastPublishDates[0].key_as_string
     }
 
-    return (<ChunkWrapper component='sectionWhen'>
+    return (<ChunkWrapper component='sectionHeadlineChart'>
       <Row>
         <Col xs={12}>
           <h3>
@@ -48,7 +49,7 @@ export default class SectionWhen extends React.Component {
               rootClose
               overlay={
                 <Popover id="chart-description">
-                  <p><Text message='explanations.sectionWhen.articleViews.historical' /></p>
+                  <p><Text message={this.props.selectedGraphToolTipMessage} /></p>
                 </Popover>
               }
             >
@@ -60,9 +61,8 @@ export default class SectionWhen extends React.Component {
                 />
               </span>
             </OverlayTrigger>
-            <span >When did the users view the story?</span>
+            <span >{this.props.selectedGraphTitle}</span>
           </h3>
-          <h4>{this.props.title}</h4>
         </Col>
       </Row>
       <Row>
@@ -72,7 +72,7 @@ export default class SectionWhen extends React.Component {
             keys={timeKeys}
             category={timeID}
             yLabel={this.props.selectedGraphYLabel}
-            xLabel='Time since Published'
+            xLabel='Time'
             marks={publishDates}
             cols={12}
           />
@@ -82,6 +82,6 @@ export default class SectionWhen extends React.Component {
   }
 }
 
-SectionWhen.defaultProps = {
+SectionHeadlineChart.defaultProps = {
   lastPublishDates: []
 }

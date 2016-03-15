@@ -41,8 +41,8 @@ module.exports = {
     nExtras.assertElementsInSection(browser, articlePage.sectionHeadline);
   },
 
-  'Assert elements in When Section' : function (browser) {
-    nExtras.assertElementsInSection(browser, articlePage.sectionWhen);
+  'Assert elements in Headline Chart Section' : function (browser) {
+    nExtras.assertElementsInSection(browser, articlePage.sectionHeadlineChart);
   },
 
   /*'Assert elements in Interactive Stats Section' : function (browser) {
