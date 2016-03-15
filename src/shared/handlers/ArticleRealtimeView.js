@@ -219,7 +219,7 @@ class ArticleRealtimeView extends React.Component {
     let selectedGraphYLabel;
     let selectedGraphToolTipMessage;
     let selectedTimespan = this.props.timespan || "";
-
+    console.log(this.props)
     switch (this.state.chartShown) {
       case 'pageViews':
         selectedGraphComponentName = 'realtime-pageviews';
@@ -229,12 +229,12 @@ class ArticleRealtimeView extends React.Component {
           if (d[0] < this.props.published) {
             return {
               date: d[0],
-              views: null
+              'Page views': null
             }
           }
           return {
             date: d[0],
-            views: d[1]
+            'Page views': d[1]
           }
         });
         selectedGraphKeys = ['Page views'];
@@ -248,12 +248,12 @@ class ArticleRealtimeView extends React.Component {
           if (!d.scroll_depth_avg.value) {
             return {
               date: d.key_as_string,
-              depth: 0
+              'Average scroll depth': 0
             }
           }
           return {
             date : d.key_as_string,
-            depth: d.scroll_depth_avg.value
+            'Average scroll depth': d.scroll_depth_avg.value
           };
         });
         selectedGraphKeys = ['Average scroll depth'];
@@ -270,13 +270,13 @@ class ArticleRealtimeView extends React.Component {
           if (timestamp < this.props.published) {
             return {
               date: timestamp,
-              time: null
+              'Average time on page': null
             }
           }
 
           return {
             date: timestamp,
-            time: (value === 'NaN') ? 0 : value
+            'Average time on page': (value === 'NaN') ? 0 : value
           }
         });
         selectedGraphKeys = ['Average time on page'];
@@ -290,12 +290,12 @@ class ArticleRealtimeView extends React.Component {
           if (d[0] < this.props.published || d[0] > this.props.latestEvent) {
             return {
               date: d[0],
-              retention: null
+              'Retention': null
             }
           }
           return {
             date: d[0],
-            retention: d[1]
+            'Retention': d[1]
           }
         });
         selectedGraphKeys = ['Retention'];
