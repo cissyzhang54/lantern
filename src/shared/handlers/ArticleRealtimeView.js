@@ -16,16 +16,16 @@ import ErrorHandler from '../components/ErrorHandler';
 import FormatData from "../utils/formatData";
 import BarChart from '../components/BarChart.js';
 import PieChart from "../components/PieChart";
-import ColumnChart from '../components/ColumnChart.js'
+import ColumnChart from '../components/ColumnChart.js';
 import Url from 'url';
-import MetricList from '../components/MetricList'
+import MetricList from '../components/MetricList';
 import TabNav from '../components/TabNav';
 import Text from '../components/Text';
 import TimespanSelector from '../components/TimespanSelector';
 import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import Popover from 'react-bootstrap/lib/Popover';
 import OverlayTrigger from 'react-bootstrap/lib/OverlayTrigger';
-import ToolTip from '../components/ToolTip'
+import ToolTip from '../components/ToolTip';
 import FeatureFlag from '../utils/featureFlag';
 
 const maxStrLen = 60;

@@ -21,9 +21,20 @@ export default {
     + "<b>Occasional Skimmers:</b> mainly registered or B2B users. Read 2.4 articles and visit us 4 times per 90 days on average.\n"
     + "<b>Disengaged Long Tail:</b> mainly registered or B2B users. Read 2 articles and visit us 2.6 times per 90 day period on average.\n",
 
-  'explanations.sectionWhen.articleViews.historical': `This chart shows page views over time for this article (blue)
-    and average page views for the articles in the selected tag (orange).
-    The time scale (horizontal axis) shows time since publication.`,
+  'explanations.pageViewsChart.historical': `This chart shows page views over time for this article.
+    The time scale (horizontal axis) shows the selected timespan.`,
+
+  'explanations.scrollDepthChart.historical': `This chart shows average scroll depth over time for this article.
+    The time scale (horizontal axis) shows the selected timespan.`,
+
+  'explanations.timeOnPageChart.historical': `This chart shows average time on page over time for this article.
+    The time scale (horizontal axis) shows the selected timespan.`,
+
+  'explanations.retentionRateChart.historical': `This chart shows average retention rate over time for this article.
+    The time scale (horizontal axis) shows the selected timespan.`,
+
+  'explanations.uniqueVisitorsChart.historical': `This chart shows the number of unique visitors over time for this article.
+    The time scale (horizontal axis) shows the selected timespan.`,
 
   'explanations.pageViewsChart.realtime1h': `This chart shows page views over time for this article.
     The time scale (horizontal axis) shows the last hour.`,

@@ -42,7 +42,7 @@ module.exports = {
   },
 
   'Assert elements in When Section' : function (browser) {
-    nExtras.assertElementsInSection(browser, articlePage.sectionWhen);
+    nExtras.assertElementsInSection(browser, articlePage.sectionHeadlineChart);
   },
 
   /*'Assert elements in Interactive Stats Section' : function (browser) {

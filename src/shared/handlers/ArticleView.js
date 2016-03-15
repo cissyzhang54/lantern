@@ -6,12 +6,12 @@ import SectionHeadlineStats from "../components/SectionHeadlineStats";
 import SectionJourney from "../components/SectionJourney.js";
 import SectionWhere from "../components/SectionWhere";
 import SectionHow from "../components/SectionHow";
-import SectionWhen from "../components/SectionWhen";
+import SectionHeadlineChart from "../components/SectionHeadlineChart";
 import SectionSocial from "../components/SectionSocial";
 import SectionWho from "../components/SectionWho";
 import SectionInteract from "../components/SectionInteract";
-import Text from '../components/Text'
-import TabNav from '../components/TabNav'
+import Text from '../components/Text';
+import TabNav from '../components/TabNav';
 import Messaging from '../components/Messaging';
 import FormatData from "../utils/formatData";
 
@@ -131,10 +131,12 @@ class ArticleView extends React.Component {
     let selectedGraphTitle;
     let selectedGraphData;
     let selectedGraphYLabel;
+    let selectedGraphToolTipMessage;
 
     switch (this.state.chartShown) {
       case 'timeOnPage':
         selectedGraphTitle = 'Time on page';
+        selectedGraphToolTipMessage = 'explanations.timeOnPageChart.historical';
         selectedGraphData = data.headlineStatsOverTime.map((row) => {
           return {
             'Average time on page' : row.avg_time_on_page.value != null ? row.avg_time_on_page.value : 0,
@@ -146,11 +148,13 @@ class ArticleView extends React.Component {
         break;
       case 'pageViews':
         selectedGraphTitle = 'Page views';
+        selectedGraphToolTipMessage = 'explanations.pageViewsChart.historical';
         selectedGraphData = dataFormatter.getMetric('readTimes', 'Page views');
         selectedGraphYLabel = 'Page Views';
         break;
       case 'uniqueVisitors':
         selectedGraphTitle = 'Unique Visitors';
+        selectedGraphToolTipMessage = 'explanations.uniqueVisitorsChart.historical';
         selectedGraphData = data.headlineStatsOverTime.map((row) => {
           return {
             'Unique visitors' : row.unique_visitors.value != null ? row.unique_visitors.value : 0,
@@ -162,6 +166,7 @@ class ArticleView extends React.Component {
         break;
       case 'retentionRate':
         selectedGraphTitle = 'Retention rate';
+        selectedGraphToolTipMessage = 'explanations.retentionRateChart.historical';
         selectedGraphData = data.headlineStatsOverTime.map((row) => {
           return {
             'Retention' : row.is_last_page.buckets.length != 0 ? row.is_last_page.buckets[1].doc_count : 0,
@@ -173,6 +178,7 @@ class ArticleView extends React.Component {
         break;
       case 'scrollDepth':
         selectedGraphTitle = 'Scroll depth';
+        selectedGraphToolTipMessage = 'explanations.scrollDepthChart.historical';
         selectedGraphData = data.scrollOverTime.map((row) => {
           return {
             'Average scroll depth' : row.scroll_depth.average_scroll.value != null ? row.scroll_depth.average_scroll.value : 0,
@@ -242,11 +248,13 @@ class ArticleView extends React.Component {
           config={headlineStats}
         />
 
-        <SectionWhen
+        <SectionHeadlineChart
+          selectedGraphTitle={selectedGraphTitle}
           graphData={selectedGraphData}
           lastPublishDates={data.lastPublishDate}
           title={selectedGraphTitle}
           selectedGraphYLabel={selectedGraphYLabel}
+          selectedGraphToolTipMessage={selectedGraphToolTipMessage}
         />
 
         <SectionInteract
