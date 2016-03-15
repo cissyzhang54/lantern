@@ -55,7 +55,7 @@ export default {
 
   'explanations.sectionInteract.commentsViewed': 'This shows the number of users who read down to the comments section of the article page.',
 
-  'explanations.sectionJourney.articleViews.external' : "<b>News Sharing:</b> a news sharing site e.g. Reddit\n"
+  'explanations.sectionJourney.articleViews.referrers' : "<b>News Sharing:</b> a news sharing site e.g. Reddit\n"
     + "<b>Aggregator:</b> a curated collection of news e.g. Drudge or Huffington Post\n"
     + "<b>Partner:</b> someone we have a deal or partnership with e.g. Yahoo Finance",
 

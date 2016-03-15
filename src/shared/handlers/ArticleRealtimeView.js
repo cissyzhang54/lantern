@@ -113,17 +113,17 @@ class ArticleRealtimeView extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-     if (this.props.params.timespan !== nextProps.params.timespan) {
-       ArticleRealtimeActions.subscribeToArticle({
-         timespan: nextProps.params.timespan || '1h',
-         uuid: this.props.uuid,
-         previousArticle: {
-           timespan: this.props.timespan,
-           uuid: this.props.uuid
-         }
-       });
+    if (this.props.params.timespan !== nextProps.params.timespan) {
+      ArticleRealtimeActions.subscribeToArticle({
+        timespan: nextProps.params.timespan || '1h',
+        uuid: this.props.uuid,
+        previousArticle: {
+          timespan: this.props.timespan,
+          uuid: this.props.uuid
+        }
+      });
 
-     }
+    }
   }
 
   componentWillUnmount() {
@@ -377,24 +377,24 @@ class ArticleRealtimeView extends React.Component {
         featureflag={FeatureFlag.check('articleLive:interact')}
       >
         <h3>How did the user interact?</h3>
-          <Row>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <MetricList
-                items={linksClickedCategoryList}
-              />
-            </Col>
-            <Col
-              xs={12}
-              sm={6}
-            >
-              <MetricList
-                items={commentsList}
-              />
-            </Col>
-          </Row>
+        <Row>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <MetricList
+              items={linksClickedCategoryList}
+            />
+          </Col>
+          <Col
+            xs={12}
+            sm={6}
+          >
+            <MetricList
+              items={commentsList}
+            />
+          </Col>
+        </Row>
       </ChunkWrapper>
     );
 
@@ -448,22 +448,7 @@ class ArticleRealtimeView extends React.Component {
             xs={12}
             sm={6}
           >
-            <h4>
-              <ToolTip
-                type="html"
-                message='explanations.sectionJourney.articleViews.external'
-                id={'external-sources-desc'}
-              />
-              External Sources
-            </h4>
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            xs={12}
-            sm={6}
-          >
-            <h5>Internal vs External</h5>
+            <h4>Internal vs External</h4>
             <PieChart
               realtime
               data={referrerTotalsData}
@@ -474,32 +459,31 @@ class ArticleRealtimeView extends React.Component {
             xs={12}
             sm={6}
           >
-            <h5>Traffic Source</h5>
+            <h4>
+              <ToolTip
+                type="html"
+                message='explanations.sectionJourney.articleViews.referrers'
+                id={'referrers-desc'}
+              />
+              Referrers
+            </h4>
             <BarChart
               realtime
               data={extRefData}
               keys={extRefKeys}
               category={extRefID}
               yLabel="Page Views"
-              xLabel="Traffic Source"
+              xLabel="Referrer"
               usePercentages
             />
           </Col>
         </Row>
-        <Row>
+        <Row style={{marginTop:"10px"}}>
           <Col
             xs={12}
             sm={6}
           >
-            <h4>Internal Sources</h4>
-          </Col>
-        </Row>
-        <Row>
-          <Col
-            xs={12}
-            sm={6}
-          >
-            <h5>Top 5 Internal sources</h5>
+            <h4>Top 5 Internal sources</h4>
             <Table
               headers={['FT Source', 'Views']}
               rows={internalReferrerUrls}
@@ -509,7 +493,7 @@ class ArticleRealtimeView extends React.Component {
             xs={12}
             sm={6}
           >
-            <h5>Top 5 External sources</h5>
+            <h4>Top 5 External sources</h4>
             <Table
               headers={['Traffic Source', 'Views']}
               rows={externalReferrerUrls}
@@ -563,70 +547,70 @@ class ArticleRealtimeView extends React.Component {
 
     return (
       <DocumentTitle title={title}>
-      <div>
-        <ChunkWrapper
-          component="modifier"
-          noBorder
-        >
-          <Header
-            title={this.props.title}
-            linkURL={'http://www.ft.com/cms/s/0/' + this.props.uuid + '.html'}
-            author={'By: ' + formatAuthors.join(this.props.author)}
-            published={'First Published: ' + this.props.published_human}
+        <div>
+          <ChunkWrapper
+            component="modifier"
+            noBorder
+          >
+            <Header
+              title={this.props.title}
+              linkURL={'http://www.ft.com/cms/s/0/' + this.props.uuid + '.html'}
+              author={'By: ' + formatAuthors.join(this.props.author)}
+              published={'First Published: ' + this.props.published_human}
+              uuid={this.props.uuid}
+            />
+          </ChunkWrapper>
+
+          <TabNav
+            analyticsView={this.props.route.analyticsView + timespan}
+            publishDate={this.props.published}
             uuid={this.props.uuid}
           />
-        </ChunkWrapper>
 
-        <TabNav
-          analyticsView={this.props.route.analyticsView + timespan}
-          publishDate={this.props.published}
-          uuid={this.props.uuid}
-        />
-
-        <ChunkWrapper component="modifier">
-          <Row>
-            <Col sm={2}
-              xs={12}
-            >
-              <span style={{lineHeight: "1.5em"}}>Timespan:</span>
-            </Col>
-            <Col sm={10}
-              xs={12}
-            >
-              <TimespanSelector
-                current={this.props.timespan}
-                options={[
+          <ChunkWrapper component="modifier">
+            <Row>
+              <Col sm={2}
+                xs={12}
+              >
+                <span style={{lineHeight: "1.5em"}}>Timespan:</span>
+              </Col>
+              <Col sm={10}
+                xs={12}
+              >
+                <TimespanSelector
+                  current={this.props.timespan}
+                  options={[
                   {label: 'Last hour', value: '1h'},
                   {label: 'Last 6 hours', value: '6h'},
                   {label: 'Last 24 hours', value: '24h'},
                   {label: 'Last 48 hours', value: '48h'}
                  ]}
-                query={queryLinkProps}
-              />
-            </Col>
-          </Row>
-        </ChunkWrapper>
+                  query={queryLinkProps}
+                />
+              </Col>
+            </Row>
+          </ChunkWrapper>
 
-        <SectionHeadlineStats
-          data={this.props}
-          comparatorData={{}}
-          config={headlineStats}
-        />
+          <SectionHeadlineStats
+            data={this.props}
+            comparatorData={{}}
+            config={headlineStats}
+          />
 
-        <ChunkWrapper component={selectedGraphComponentName}>
-          <Row>
-            <Col>
-              <h3>
-                <OverlayTrigger
-                  trigger="click"
-                  rootClose
-                  placement="bottom"
-                  overlay={
+          <ChunkWrapper component={selectedGraphComponentName}>
+            <Row>
+              <Col>
+                <h3>
+                  <OverlayTrigger
+                    trigger="click"
+                    rootClose
+                    placement="bottom"
+                    overlay={
                     (<Popover id="chart-description">
                       <p><Text message={selectedGraphToolTipMessage} /></p>
                     </Popover>)
                     }
-                >
+                  >
                   <span>
                      <Glyphicon
                        glyph="question-sign"
@@ -634,31 +618,31 @@ class ArticleRealtimeView extends React.Component {
                        aria-describedby="chart-description"
                      />
                   </span>
-                </OverlayTrigger>
-                <span > {selectedGraphTitle}</span>
-              </h3>
-              <LiveIndicator isLive={this.props.isLive} />
-              <LineChart
-                data={selectedGraphData}
-                keys={selectedGraphKeys}
-                category={'date'}
-                yLabel={selectedGraphYLabel}
-                xLabel='Time'
-                marks={publishedDates}
-                realtime
-                cols={12}
-              />
-            </Col>
-          </Row>
-        </ChunkWrapper>
+                  </OverlayTrigger>
+                  <span > {selectedGraphTitle}</span>
+                </h3>
+                <LiveIndicator isLive={this.props.isLive} />
+                <LineChart
+                  data={selectedGraphData}
+                  keys={selectedGraphKeys}
+                  category={'date'}
+                  yLabel={selectedGraphYLabel}
+                  xLabel='Time'
+                  marks={publishedDates}
+                  realtime
+                  cols={12}
+                />
+              </Col>
+            </Row>
+          </ChunkWrapper>
 
-        {FeatureFlag.check('articleLive:interact') ? userInteract : null}
-        {FeatureFlag.check('articleLive:trafficSources') ? trafficSources : null}
-        {FeatureFlag.check('articleLive:socialMedia') ? socialMediaChunk : null}
-        {FeatureFlag.check('articleLive:realtimeNext') ? realtimeNext : null}
-        {FeatureFlag.check('articleLive:userType') ? userType : null}
+          {FeatureFlag.check('articleLive:interact') ? userInteract : null}
+          {FeatureFlag.check('articleLive:trafficSources') ? trafficSources : null}
+          {FeatureFlag.check('articleLive:socialMedia') ? socialMediaChunk : null}
+          {FeatureFlag.check('articleLive:realtimeNext') ? realtimeNext : null}
+          {FeatureFlag.check('articleLive:userType') ? userType : null}
 
-      </div>
+        </div>
       </DocumentTitle>
     );
 

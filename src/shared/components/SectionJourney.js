@@ -73,23 +73,11 @@ export default class SectionReferrers extends React.Component {
         </Col>
       </Row>
 
-      <Row style={{marginTop:"10px"}}>
-        <Col xs={12}>
-          <h4>
-             <ToolTip
-               type="html"
-               message='explanations.sectionJourney.articleViews.external'
-               id={'external-sources-desc'}
-             />
-             External Sources
-          </h4>
-        </Col>
-      </Row>
       <Row>
         <Col xs={12}
           sm={6}
         >
-          <h5>Internal vs External</h5>
+          <h4>Internal vs External</h4>
           <PieChart
             data={referrers}
             keys={['referrers']}
@@ -97,45 +85,46 @@ export default class SectionReferrers extends React.Component {
 
         </Col>
         <Col xs={12}
-           sm={6}
+          sm={6}
         >
-          <h5>Referrers</h5>
+          <h4>
+            <ToolTip
+              type="html"
+              message='explanations.sectionJourney.articleViews.referrers'
+              id={'referrers-desc'}
+            />
+            Referrers
+          </h4>
           <BarChart
             data={externalData}
             keys={externalKeys}
             category={externalID}
             yLabel="Page Views"
-            xLabel="Traffic Source"
+            xLabel="Referrer"
             usePercentages
           />
 
         </Col>
       </Row>
 
-      <Row style={{marginTop:"20px"}}>
-        <Col xs={12}>
-          <h4>Internal Source</h4>
-        </Col>
-      </Row>
-
-      <Row>
+      <Row style={{marginTop:"10px"}}>
         <Col xs={12}
-             sm={6}
-          >
-          <h5>Top 5 internal sources</h5>
+          sm={6}
+        >
+          <h4>Top 5 internal sources</h4>
           <Table
             headers={['FT Source', 'Views']}
             rows={internalRefUrls}
-            />
+          />
         </Col>
         <Col xs={12}
-             sm={6}
-          >
-          <h5>Top 5 external sources</h5>
+          sm={6}
+        >
+          <h4>Top 5 external sources</h4>
           <Table
             headers={['Traffic Source', 'Views']}
             rows={refUrls}
-            />
+          />
         </Col>
       </Row>
 

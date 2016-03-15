@@ -197,33 +197,33 @@ module.exports = {
     referrerTypes: {
       name: 'Internal vs External',
       selectors: {
-        container: 'div[data-component="sectionJourney"] > div:nth-child(3) > div:nth-child(1)',
+        container: 'div[data-component="sectionJourney"] > div:nth-child(2) > div:nth-child(1)',
         dataComponent: ' > div[data-component="pieChart"]:nth-child(2)',
-        heading: ' > h5:nth-child(1)'
+        heading: ' > h4'
       }
     },
     internalReferrerTypes: {
       name: 'Referrers',
       selectors: {
-        container: 'div[data-component="sectionJourney"] > div:nth-child(3) > div:nth-child(2)',
+        container: 'div[data-component="sectionJourney"] > div:nth-child(2) > div:nth-child(2)',
         dataComponent: ' div[data-component="barChart"]',
-        heading: ' > h5'
+        heading: ' > h4'
       }
     },
     topExternalUrls: {
       name: 'Top 5 internal sources',
       selectors: {
-        container: 'div[data-component="sectionJourney"] > div:nth-child(5) > div:nth-child(1)',
+        container: 'div[data-component="sectionJourney"] > div:nth-child(3) > div:nth-child(1)',
         dataComponent: ' table[data-component="table"]',
-        heading: ' > h5'
+        heading: ' > h4'
       }
     },
     topInternalUrls: {
       name: 'Top 5 external sources',
       selectors: {
-        container: 'div[data-component="sectionJourney"] > div:nth-child(5) > div:nth-child(2)',
+        container: 'div[data-component="sectionJourney"] > div:nth-child(3) > div:nth-child(2)',
         dataComponent: ' table[data-component="table"]',
-        heading: ' > h5'
+        heading: ' > h4'
       }
     }
   },
