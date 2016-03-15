@@ -161,7 +161,7 @@ class ArticleView extends React.Component {
         selectedGraphYLabel = 'Unique Visitors';
         break;
       case 'retentionRate':
-        selectedGraphTitle = 'Retention on page';
+        selectedGraphTitle = 'Retention rate';
         selectedGraphData = data.headlineStatsOverTime.map((row) => {
           return {
             'Retention' : row.is_last_page.buckets.length != 0 ? row.is_last_page.buckets[1].doc_count : 0,

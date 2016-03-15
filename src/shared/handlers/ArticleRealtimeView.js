@@ -223,7 +223,7 @@ class ArticleRealtimeView extends React.Component {
     switch (this.state.chartShown) {
       case 'pageViews':
         selectedGraphComponentName = 'realtime-pageviews';
-        selectedGraphTitle = 'Real time page views';
+        selectedGraphTitle = 'Page views';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.pageViewsChart.realtime48h' : 'explanations.pageViewsChart.realtime1h';
         selectedGraphData = this.props.pageViews.map((d) => {
           if (d[0] < this.props.published) {
@@ -242,7 +242,7 @@ class ArticleRealtimeView extends React.Component {
         break;
       case 'scrollDepth':
         selectedGraphComponentName = 'realtime-scrolldepth';
-        selectedGraphTitle = 'Real time scroll depth';
+        selectedGraphTitle = 'Scroll depth';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.scrollDepthChart.realtime48h' : 'explanations.scrollDepthChart.realtime1h';
         selectedGraphData =  this.props.scrollDepth.map((d) => {
           if (!d.scroll_depth_avg.value) {
@@ -261,7 +261,7 @@ class ArticleRealtimeView extends React.Component {
         break;
       case 'timeOnPage':
         selectedGraphComponentName = 'realtime-timeonpage';
-        selectedGraphTitle = 'Real time time on page';
+        selectedGraphTitle = 'Time on page';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.timeOnPageChart.realtime48h' : 'explanations.timeOnPageChart.realtime1h';
         selectedGraphData =  this.props.timeOnPage.map((d) => {
           let timestamp = d.key_as_string;
@@ -284,7 +284,7 @@ class ArticleRealtimeView extends React.Component {
         break;
       case 'retentionRate':
         selectedGraphComponentName = 'realtime-retentionRate';
-        selectedGraphTitle = 'When did the users view the story?';
+        selectedGraphTitle = 'Retention rate';
         selectedGraphToolTipMessage = timespan48h ? 'explanations.retentionRateChart.realtime48h' : 'explanations.retentionRateChart.realtime1h';
         selectedGraphData =  this.props.retention.map((d) => {
           if (d[0] < this.props.published || d[0] > this.props.latestEvent) {
