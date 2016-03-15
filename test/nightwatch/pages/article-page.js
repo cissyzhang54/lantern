@@ -127,7 +127,7 @@ module.exports = {
   // Headline Chart Section
   sectionHeadlineChart: {
     accessTime: {
-      name: 'When did the users view the story?',
+      name: 'Page views',
       selectors: {
         container: 'div[data-component="sectionHeadlineChart"]',
         dataComponent: ' div[data-component="lineChart"]',
