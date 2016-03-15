@@ -1,8 +1,6 @@
 let config = require("../shared/config");
 
-if (config.newrelic) {
-  require('newrelic');
-}
+let newrelic = require('newrelic');
 
 let express = require("express");
 let exphbs = require("express-handlebars");
@@ -137,6 +135,8 @@ function renderRoute(route, req, res) {
     } else if (redirectLocation) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     } else if (renderProps) {
+      const matchedRoute = renderProps.routes.map((d) => d.path).join('/')
+      newrelic.setTransactionName('Page Render ' + matchedRoute);
       let content = ReactDOMServer.renderToString(<RoutingContext {...renderProps} />);
       iso.add(content, alt.flush());
       const templateProps = {

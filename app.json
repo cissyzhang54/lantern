@@ -5,6 +5,9 @@
   },
   "env":{
     "NODE_ENV": "production",
+    "NEW_RELIC_APP_NAME" : {
+      "value": "Lantern - review"
+    },
     "USE_MEMORY_STORE": "true",
     "HEROKU_APP_NAME": {
       "required": true

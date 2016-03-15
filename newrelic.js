@@ -8,7 +8,8 @@ exports.config = {
   /**
    * Array of application names.
    */
-  app_name: ['Lantern - New Relic'],
+  app_name: ['Lantern - local-development'],
+  capture_params: true,
   /**
    * Your New Relic license key.
    */

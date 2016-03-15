@@ -2,7 +2,7 @@
 import express from 'express';
 import moment from 'moment';
 import dataApiUtils from '../../shared/utils/DataAPIUtils';
-
+import newrelic from 'newrelic';
 let router = express.Router();
 let apiKey = process.env.LANTERN_API_KEY;
 const UUID_REGEX = '[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}';
@@ -13,6 +13,7 @@ function decode(uri){
 }
 
 router.get(`/realtime/articles/:uuid(${UUID_REGEX})`, (req, res, next) => {
+  newrelic.setTransactionName('Preloader/Live/Articles');
   return getArticleRealtimeData(req, res)
     .then(() => next())
     .catch((err) => {
@@ -22,6 +23,7 @@ router.get(`/realtime/articles/:uuid(${UUID_REGEX})`, (req, res, next) => {
 });
 
 router.get(`/realtime/articles/:uuid(${UUID_REGEX})/:timespan`, (req, res, next) => {
+  newrelic.setTransactionName('Preloader/Live/Articles');
   return getArticleRealtimeData(req, res)
     .then(() => next())
     .catch((err) => {
@@ -31,6 +33,7 @@ router.get(`/realtime/articles/:uuid(${UUID_REGEX})/:timespan`, (req, res, next)
 });
 
 router.get(`/articles/:uuid(${UUID_REGEX})/:timespan`, (req, res, next) => {
+  newrelic.setTransactionName('Preloader/Archive/Articles');
   return getArticleData(req, res)
     .then(() => next())
     .catch((err) => {
@@ -40,6 +43,7 @@ router.get(`/articles/:uuid(${UUID_REGEX})/:timespan`, (req, res, next) => {
 });
 
 router.get(`/articles/:uuid(${UUID_REGEX})/:timespan/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
+  newrelic.setTransactionName('Preloader/Archive/Articles/WithComparator');
   return getArticleData(req, res)
     .then(() => next())
     .catch((err) => {
@@ -49,6 +53,7 @@ router.get(`/articles/:uuid(${UUID_REGEX})/:timespan/:comparatorType(${COMPTYPE_
 });
 
 router.get(`/sections/:section/:timespan`, (req, res, next) => {
+  newrelic.setTransactionName('Preloader/Archive/Section');
   return getSectionData(req, res)
     .then(() => next())
     .catch((err) => {
@@ -58,6 +63,7 @@ router.get(`/sections/:section/:timespan`, (req, res, next) => {
 });
 
 router.get(`/sections/:section/:timespan/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
+  newrelic.setTransactionName('Preloader/Archive/Section/WithComparator');
   return getSectionData(req, res)
     .then(() => next())
     .catch((err) => {
@@ -67,6 +73,7 @@ router.get(`/sections/:section/:timespan/:comparatorType(${COMPTYPE_REGEX})/:com
 });
 
 router.get(`/topics/:topic/:timespan`, (req, res, next) => {
+  newrelic.setTransactionName('Preloader/Archive/Topic');
   return getTopicData(req, res)
     .then(() => {next()})
     .catch((err) => {
@@ -76,6 +83,7 @@ router.get(`/topics/:topic/:timespan`, (req, res, next) => {
 });
 
 router.get(`/topics/:topic/:timespan/:comparatorType(${COMPTYPE_REGEX})/:comparator`, (req, res, next) => {
+  newrelic.setTransactionName('Preloader/Archive/Topic/WithComparator');
   return getTopicData(req, res)
     .then(() => next())
     .catch((err) => {
@@ -85,6 +93,7 @@ router.get(`/topics/:topic/:timespan/:comparatorType(${COMPTYPE_REGEX})/:compara
 });
 
 router.get(`/thehighlights`, (req, res, next) => {
+  newrelic.setTransactionName('Preloader/Highlights');
   return getTopArticlesData(req, res)
     .then(() => next())
     .catch((err) => {
