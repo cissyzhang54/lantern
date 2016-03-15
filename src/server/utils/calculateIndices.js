@@ -48,6 +48,11 @@ export function calculateRealtimeIndices(query, ES_INDEX) {
     }
     i++;
   }
-
   return ES_INDEX + indexStr;
+}
+
+
+export function calculateTopArticlesAggregationIndices(query, ES_INDEX){
+  let dateFrom = moment(moment(query.dateFrom)).format(INDEX_FORMAT);
+  return ES_INDEX + dateFrom;
 }

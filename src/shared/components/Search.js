@@ -13,7 +13,7 @@ import Table from '../components/Table.js';
 import connectToStores from 'alt-utils/lib/connectToStores';
 import TopArticlesActions from '../actions/TopArticlesActions';
 import TopArticlesStore from '../stores/TopArticlesStore';
-import TableFormatting from '../utils/tableFormatting';
+import {getFilteredColumns, createRowMarkUp} from '../utils/tableFormatting';
 
 import _ from 'underscore';
 
@@ -220,7 +220,9 @@ export default class Search extends React.Component {
     let articleHighlights = null
 
     if (data.topArticleViews) {
-      let tableData = TableFormatting(data.topArticleViews, 'top_article_views', 'doc_count');
+      let tableData = getFilteredColumns(data.topArticleViews, 'top_article_views', 'doc_count');
+      tableData = createRowMarkUp(tableData)
+
       articleHighlights = (
         <Row>
           <Col xs={12}>

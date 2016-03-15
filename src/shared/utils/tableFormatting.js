@@ -3,66 +3,84 @@ import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import * as formatAuthors from './formatAuthors';
 import moment from 'moment';
 
-export default function getFilteredColumns(data, filterName, metric) {
+const tagStyle = {
+  fontSize: '15px',
+  marginLeft: '8px'
+}
+
+export function getFilteredColumns(data, filterName, metric) {
   if (!metric) metric = filterName;
+
   const flattenedData = data.map((d) => {
     const obj = d[filterName];
     obj.key = d.key;
+
     if (metric != 'doc_count')
       obj.doc_count = d.doc_count;
-    return obj;
+
+    return {
+      uuid : obj.key,
+      value : obj.doc_count,
+      author : formatAuthors.split(obj),
+      title : obj.title.buckets[0] ? obj.title.buckets[0].key : "Unknown",
+      date : obj.initial_publish_date.buckets[0] ? obj.initial_publish_date.buckets[0].key : moment()
+    };
   });
 
-  return getColumns(flattenedData, metric);
+  return flattenedData;
 }
 
-function getColumns (data, metric) {
-  let tagStyle = {
-    fontSize: '15px',
-    marginLeft: '8px'
+export function createRowMarkUp (data) {
+  return data.map((row) => {
+    let uuid = row.uuid;
+    let title = row.title
+    let author = row.author;
+    let value = row.value;
+    let articleUrl = liveOrArchive(row.date, uuid)
+    let lanternLinkHTML = lanternLink(title, articleUrl)
+    let ftLinkHTML = ftLink(uuid)
+
+    return [lanternLinkHTML, author, value, ftLinkHTML]
+  });
+}
+
+function liveOrArchive (date, uuid) {
+  let publishDate = date ? date : moment();
+  const publishedMoment = moment(publishDate);
+  const now = moment();
+  const diff = now.diff(publishedMoment, 'hours');
+  let articleUrl = `/articles/${uuid}`;
+
+  if (diff < 24) {
+    articleUrl = '/realtime' + articleUrl;
+  } else if (diff < 48) {
+    articleUrl = '/realtime' + articleUrl + '/48h';
+  } else {
+    articleUrl += '/48';
   }
 
-  return data.map((d) => {
-    let uuid = d.key;
-    let metricVal = d[metric];
-    let title =  d.title.buckets[0] ? d.title.buckets[0].key : "Unknown"
-    let author = formatAuthors.split(d);
-    let articleUrl = `/articles/${uuid}`
+  return articleUrl;
+}
 
-    let publishDate = d.initial_publish_date.buckets.length > 0 ? d.initial_publish_date.buckets[0].key : moment();
-    const publishedMoment = moment(publishDate);
-    const now = moment();
-    const diff = now.diff(publishedMoment, 'hours');
+function lanternLink (title, articleUrl) {
+  return (
+    <a href={articleUrl}
+       target="_blank"
+      >
+      {title}
+    </a>
+  );
+}
 
-    if (diff < 24) {
-      articleUrl = '/realtime' + articleUrl;
-    } else if (diff < 48) {
-      articleUrl = '/realtime' + articleUrl + '/48h';
-    } else {
-      articleUrl += '/48';
-    }
-
-    let articleUrlHTML = (
-      <a href={articleUrl}
-         target="_blank"
-        >
-        {title}
-      </a>
-    );
-
-    let ftUrl = (
-      <a href={`http://www.ft.com/cms/s/${uuid}.html`}
-         target="_blank"
-        >
-        FT
-        <Glyphicon glyph="new-window"
-                   style={tagStyle}
-          />
-      </a>
-    );
-
-    return [
-      articleUrlHTML, author, metricVal, ftUrl
-    ];
-  });
+function ftLink (uuid) {
+  return (
+    <a href={`http://www.ft.com/cms/s/${uuid}.html`}
+       target="_blank"
+      >
+      FT
+      <Glyphicon glyph="new-window"
+                 style={tagStyle}
+        />
+    </a>
+  );
 }

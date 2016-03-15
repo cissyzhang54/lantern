@@ -1,4 +1,4 @@
-export default {
+export default [{
     "took": 1352,
     "timed_out": false,
     "_shards": {
@@ -719,4 +719,4 @@ export default {
             ]
         }
     }
-};
+}];

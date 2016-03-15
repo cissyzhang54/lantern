@@ -3,7 +3,7 @@ import getField from '../utils/universalDataFormatter';
 
 export default function formatData(data) {
   try {
-    assert.equal(Object.prototype.toString.call(data), '[object Object]',
+    assert.equal(Object.prototype.toString.call(data), '[object Array]',
       "argument 'data' should be an object");
 
   } catch (e) {
@@ -13,15 +13,18 @@ export default function formatData(data) {
     return Promise.reject(error);
   }
 
-  let articleData = data;
+  let [articleData, articleAggregationData] = data;
 
   let articleFields = [
     'timeOnPageTop',
     'topArticleViews',
     'topArticlesSearchRef',
     'topArticlesSocialRef',
-    'topArticlesRetention',
     'topArticlesCommentPosts'
+  ]
+
+  let articleAggregationFields = [
+    'topArticlesRetention'
   ]
 
   let results = {};
@@ -30,6 +33,9 @@ export default function formatData(data) {
     try {
       articleFields.forEach(f => {
         results[f] = getField(articleData, f)
+      });
+      articleAggregationFields.forEach(f => {
+        results[f] = getField(articleAggregationData, f)
       });
       resolve({
         data:results

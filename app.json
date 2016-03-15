@@ -49,6 +49,9 @@
     "ES_REALTIME_INDEX_ROOT": {
       "required":true
     },
+    "ES_AGGREGATION_INDEX_ROOT": {
+      "required":true
+    },
     "ES_ARTICLE_PUBLISHED_INDEX_ROOT": {
       "required": true
     },

@@ -113,7 +113,7 @@ const fields = {
   topArticlesCommentPosts : 'aggregations.top_article_comments_posted.buckets',
   topArticlesSocialRef: 'aggregations.top_articles_social_ref.buckets',
   topArticlesSearchRef: 'aggregations.top_articles_search_ref.buckets',
-  topArticlesRetention: 'aggregations.top_articles_retention.buckets',
+  topArticlesRetention: 'aggregations.retention_rate.buckets',
   lastPublishDate: 'aggregations.last_publish_date.buckets',
   realtimeTopicsCovered: 'aggregations.topics_covered.value',
   realtimeArticlesPublished: 'aggregations.articles_published.value'
