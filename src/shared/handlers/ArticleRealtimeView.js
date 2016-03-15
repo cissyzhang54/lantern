@@ -237,7 +237,7 @@ class ArticleRealtimeView extends React.Component {
             views: d[1]
           }
         });
-        selectedGraphKeys = ['views'];
+        selectedGraphKeys = ['Page views'];
         selectedGraphYLabel = 'Page Views'
         break;
       case 'scrollDepth':
@@ -256,7 +256,7 @@ class ArticleRealtimeView extends React.Component {
             depth: d.scroll_depth_avg.value
           };
         });
-        selectedGraphKeys = ['depth'];
+        selectedGraphKeys = ['Average scroll depth'];
         selectedGraphYLabel = 'Scroll Depth (%)'
         break;
       case 'timeOnPage':
@@ -279,7 +279,7 @@ class ArticleRealtimeView extends React.Component {
             time: (value === 'NaN') ? 0 : value
           }
         });
-        selectedGraphKeys = ['time'];
+        selectedGraphKeys = ['Average time on page'];
         selectedGraphYLabel = 'Time On Page (seconds)'
         break;
       case 'retentionRate':
@@ -298,7 +298,7 @@ class ArticleRealtimeView extends React.Component {
             retention: d[1]
           }
         });
-        selectedGraphKeys = ['retention'];
+        selectedGraphKeys = ['Retention'];
         selectedGraphYLabel = 'Retained Users'
         break;
       default:

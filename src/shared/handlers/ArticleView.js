@@ -186,7 +186,7 @@ class ArticleView extends React.Component {
           }
         })
         selectedGraphData =  [selectedGraphData, "category", ['Average scroll depth']];
-        selectedGraphYLabel = 'Scroll Depth'
+        selectedGraphYLabel = 'Scroll Depth (%)'
         break;
       default:
     }
