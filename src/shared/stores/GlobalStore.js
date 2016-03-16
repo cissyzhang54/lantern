@@ -2,6 +2,7 @@ import alt from '../alt';
 import assign from 'object-assign';
 import GlobalActions from '../actions/GlobalActions';
 import GlobalSource from '../sources/GlobalSource';
+import Raven from 'raven-js';
 const UPDATE_INTERVAL = 30000 ; // 5 minutes
 
 class GlobalStore {
@@ -46,6 +47,7 @@ class GlobalStore {
       error: error,
       data: {}
     })
+    Raven.captureException(error, this.state);
   }
 }
 

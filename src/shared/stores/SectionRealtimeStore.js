@@ -2,6 +2,7 @@ import alt from '../alt';
 import io from 'socket.io-client';
 import SectionRealtimeActions from '../actions/SectionRealtimeActions';
 import SectionRealtimeSource from '../sources/SectionRealtimeSource';
+import Raven from 'raven-js';
 
 const LIVE_TIMEOUT = 10000;
 
@@ -92,6 +93,7 @@ class SectionRealtimeStore {
       errorMessage: error.message,
       error: error
     })
+    Raven.captureException(error, this.state);
   }
 }
 

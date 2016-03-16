@@ -35,6 +35,18 @@ export default function formatData(data) {
     return Promise.reject(error);
   }
 
+  // Check all but the first data response for aggregations
+  // - the first item is the article metadata
+  let errors = data.slice(1).map((d) => {
+    if (!d.hasOwnProperty('aggregations')) {
+      let error = new Error();
+      error.name = 'NoDataError';
+      error.message = 'Unable to find data for the selected article';
+      // we throw here because we are inside a callback
+      throw error;
+    }
+  });
+
   let [metaData, articleData, eventData, articleComparatorData, eventComparatorData, articlePublishTimesData] = data;
 
   let metaFields = ['title', 'uuid', 'author', 'published', 'published_human', 'genre', 'sections', 'topics', 'primarySection']

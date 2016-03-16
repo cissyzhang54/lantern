@@ -2,6 +2,7 @@ import alt from '../alt';
 import assign from 'object-assign';
 import moment from 'moment';
 import _ from 'underscore';
+import Raven from 'raven-js';
 
 import TopArticlesActions from '../actions/TopArticlesActions';
 import TopArticlesSource from '../sources/TopArticlesSource';
@@ -52,6 +53,7 @@ class TopArticlesStore {
       dateFrom: null,
       data: {}
     })
+    Raven.captureException(error, this.state);
   }
 
   /**

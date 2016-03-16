@@ -19,11 +19,21 @@ export default function TopicDataFormatter(data) {
     return Promise.reject(error);
   }
 
+  data.slice(1).map((d) => {
+    if (!d.hasOwnProperty('aggregations')) {
+      let error = new Error();
+      error.name = 'NoDataError';
+      error.message = 'Unable to find data for the selected topic';
+      // we throw here because we are inside a callback
+      throw error;
+    }
+  });
+
   return new Promise((resolve, reject) => {
     try {
       let [metaData, topicData, compMetaData, compTopicData] = data;
       let results = {genre:[], sections:[], topics:[]};
-      let metaFields = ['articlePublishCount', 'publishTimes'];
+      let metaFields = ['articlePublishCount'];
       let topicFields = ['readTimes', 'pageViews', 'referrerTypes',
         'referrerNames', 'socialReferrers', 'devices', 'countries', 'regions', 'userCohort',
         'rfvCluster', 'isFirstVisit', 'internalReferrerTypes', 'isSubscription', 'uniqueVisitors',

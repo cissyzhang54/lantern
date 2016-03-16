@@ -20,11 +20,21 @@ export default function SectionDataFormatter(data) {
     return Promise.reject(error);
   }
 
+  data.map((d) => {
+    if (!d.hasOwnProperty('aggregations')) {
+      let error = new Error();
+      error.name = 'NoDataError';
+      error.message = 'Unable to find data for the selected section';
+      throw error;
+    }
+  });
+
   return new Promise((resolve, reject) => {
+
     let [metaData, sectionData, compMetaData, compData] = data;
     try {
       let results = {genre:[],sections:[], topics:[]}
-      let metaFields = ['topicsCovered', 'topicCount', 'publishTimes', 'articlePublishCount']
+      let metaFields = ['topicsCovered', 'topicCount', 'articlePublishCount']
       let sectionFields = [
         'readTimes', 'pageViews', 'referrerTypes',
         'referrerNames', 'socialReferrers', 'devices', 'countries',
@@ -55,25 +65,7 @@ export default function SectionDataFormatter(data) {
       });
     } catch (e) {
       let error = new Error(e);
-      if (!metaData.hasOwnProperty('aggregations')) {
-        error.name = 'NoDataError';
-        error.message = 'Unable to find metadata for the current query';
-      }
-      else if (!sectionData.hasOwnProperty('aggregations')) {
-        error.name = 'NoDataError';
-        error.message = 'Unable to find data for the current query';
-      }
-      else if (!compMetaData || !compMetaData.hasOwnProperty('aggregations')) {
-        error.name = 'NoDataError';
-        error.message = 'Unable to find metadata for the current comparator query';
-      }
-      else if (!compData || !compData.hasOwnProperty('aggregations')) {
-        error.name = 'NoDataError';
-        error.message = 'Unable to find data for the current comparator query';
-      }
-      else {
-        error.name = 'DataParsingError';
-      }
+      error.name = 'DataParsingError';
       error.response = data;
       reject(error);
     }

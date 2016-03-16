@@ -38,7 +38,21 @@ export default [{
           "update_date": "2015-11-04"
         }
       }
-    ]
+    ],
+    "aggregations": {
+      "articles_published_over_time": {
+        "buckets": [
+          {
+            "key_as_string": "2016-03-11T00:00:00.000Z",
+            "key": 1457654400000,
+            "doc_count": 2
+          }
+        ]
+      },
+      "distinct_articles_published": {
+        "value": 2
+      }
+    }
   }
 }, {
     "took": 451,
@@ -1436,18 +1450,21 @@ export default [{
         }
       },
       "is_first_visit": {
-        "doc_count_error_upper_bound": 0,
-        "sum_other_doc_count": 0,
-        "buckets": [
-          {
-            "key": "F",
-            "doc_count": 440430
-          },
-          {
-            "key": "T",
-            "doc_count": 51801
-          }
-        ]
+        "doc_count": 192,
+        "anonymous": {
+          "doc_count_error_upper_bound": 0,
+          "sum_other_doc_count": 0,
+          "buckets": [
+            {
+              "key": "F",
+              "doc_count": 109
+            },
+            {
+              "key": "T",
+              "doc_count": 83
+            }
+          ]
+        }
       },
       "social_referrers": {
         "doc_count": 17126,

@@ -10,7 +10,7 @@ export default function ArticleEventsComparatorESQuery(query) {
   let comparatorQuery = ArticleComparatorQuery(query)
 
   return {
-    "query" : comparatorQuery,
+    "query" : comparatorQuery.query,
     "size": 0,
     "aggs" : ArticleEventsComparatorAggregation()
   };

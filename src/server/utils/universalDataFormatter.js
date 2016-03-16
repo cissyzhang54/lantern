@@ -139,8 +139,7 @@ function formatPublishDate(date) {
 
 function format(agg, fieldObj, divisor=1, bucket_key='doc_count') {
   if (!agg){
-    //todo: throw + catch properly then test it
-    return new Error(`formatterError: ${fieldObj && fieldObj.name ? fieldObj.name : fieldObj} does not exist in the data`)
+    throw new Error(`formatterError: ${fieldObj && fieldObj.name ? fieldObj.name : fieldObj} does not exist in the data`)
   }
   return agg.buckets.map((d) => {
     let key = 'Unknown';
