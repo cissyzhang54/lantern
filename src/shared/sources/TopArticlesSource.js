@@ -20,6 +20,6 @@ let TopArticlesSource = {
     error: TopArticlesActions.loadingFailed,
     loading: TopArticlesActions.loadingData
   }
-}
+};
 
 export default TopArticlesSource;

@@ -66,6 +66,6 @@ let AnalyticsSource = {
 
   }
 
-}
+};
 
 export default AnalyticsSource;

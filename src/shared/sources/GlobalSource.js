@@ -30,6 +30,6 @@ let GlobalSource = {
     success: GlobalActions.updateLatestIndex,
     error: GlobalActions.loadingFailed
   }
-}
+};
 
 export default GlobalSource;
