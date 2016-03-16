@@ -3,7 +3,10 @@ import elasticsearch from 'elasticsearch';
 import awsElasticSearchConnector from 'http-aws-es';
 import ArticleComparatorQuery, {ArticleComparatorQueryHeader} from './queries/articleComparatorQuery';
 import SectionsQuery from './esQueries/Sections';
+
 import TopArticlesQuery from './esQueries/TopArticles';
+import TopArticlesAggregationQuery from './esQueries/TopArticlesAggregation.js';
+
 import SectionComparatorQuery from './esQueries/SectionComparator';
 import SectionMetadataQuery from './esQueries/SectionMetadata';
 import SectionMetadataComparatorQuery from './esQueries/SectionMetadataComparator';
@@ -26,7 +29,7 @@ import assert from 'assert';
 import LoggerFactory from './logger';
 import moment from 'moment';
 import calculateIndices from './utils/calculateIndices.js';
-import {calculateRealtimeIndices} from './utils/calculateIndices.js';
+import {calculateRealtimeIndices, calculateTopArticlesAggregationIndices} from './utils/calculateIndices.js';
 import timestampParser from './utils/timestampParser';
 import stream from 'stream';
 import assign from 'object-assign';
@@ -633,19 +636,34 @@ function retrieveRealtimeSectionData(queryData) {
 
 function retrieveTopArticleData(queryData) {
   return new Promise((resolve, reject) => {
-    let articleQuery = TopArticlesQuery(queryData);
-    let request = {
+    const articleViewQuery = TopArticlesQuery(queryData);
+    const articleViewHeader = {
       index: calculateRealtimeIndices(queryData, process.env.ES_REALTIME_INDEX_ROOT),
       ignore_unavailable: true,
-      search_type: 'count',
-      body: articleQuery
+      search_type: 'count'
     }
 
-    proxySearch('search', request, (error, response) => {
+    const articleAggregationQuery = TopArticlesAggregationQuery(queryData);
+    const articleAggregationHeader = {
+      index: calculateTopArticlesAggregationIndices(queryData, process.env.ES_AGGREGATION_INDEX_ROOT),
+      ignore_unavailable: true,
+      search_type: 'count'
+    }
+
+    let request = {
+      body: [
+        articleViewHeader,
+        articleViewQuery,
+        articleAggregationHeader,
+        articleAggregationQuery
+      ]
+    }
+
+    proxySearch('msearch', request, (error, response) => {
       if (error) {
         return reject(error);
       }
-      return resolve(response);
+      return resolve(response.responses);
     })
   })
 }

@@ -32,6 +32,7 @@ The following keys all need to placed with corresponding values within a `.env` 
 - ES_SEARCH_INDEX_ROOT
 - ES_EVENT_INDEX_ROOT
 - ES_REALTIME_INDEX_ROOT
+- ES_AGGREGATION_INDEX_ROOT
 
 #### Sentry Logging
 - RAVEN_KEY

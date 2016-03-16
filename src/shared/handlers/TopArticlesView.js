@@ -11,8 +11,10 @@ import Table from '../components/Table.js';
 import TopArticlesActions from '../actions/TopArticlesActions';
 import TopArticlesStore from '../stores/TopArticlesStore';
 import moment from 'moment';
-import TableFormatting from '../utils/tableFormatting';
 import ConvertUnits from '../utils/convertUnits';
+import * as formatAuthors from '../utils/formatAuthors';
+
+import {getFilteredColumns, createRowMarkUp} from '../utils/tableFormatting';
 
 import FeatureFlag from '../utils/featureFlag';
 
@@ -68,36 +70,56 @@ class TopArticlesView extends React.Component {
 
     /* Average time reading the article */
     let orderedTimeOnPage = data.timeOnPageTop;
+
     orderedTimeOnPage = orderedTimeOnPage.sort((a, b) => {
       return b.avg_time_on_page.avg_time_on_page.values['50.0'] - a.avg_time_on_page.avg_time_on_page.values['50.0'];
     });
-    let avg_time_rows = TableFormatting(orderedTimeOnPage, 'avg_time_on_page');
-    avg_time_rows = avg_time_rows.map((d) => {
-      let time = ConvertUnits.secondsToMinutes(d[2].values['50.0'])
-      time = `${time.minutes}m ${time.seconds}s`
-      return [d[0], d[1], time, d[3]]
+
+    let avg_time_rows = orderedTimeOnPage.map((row) => {
+      let time = ConvertUnits.secondsToMinutes(row.avg_time_on_page.avg_time_on_page.values['50.0']);
+      time = `${time.minutes}m ${time.seconds}s`;
+      return {
+        uuid: row.key,
+        value: time,
+        author : row.avg_time_on_page.author.buckets[0] ? formatAuthors.split(row.avg_time_on_page) : "Unknown",
+        title : row.avg_time_on_page.title.buckets[0] ? row.avg_time_on_page.title.buckets[0].key : "Unknown",
+        date : row.avg_time_on_page.initial_publish_date.buckets[0] ? row.avg_time_on_page.initial_publish_date.buckets[0].key : moment()
+      }
     });
+    avg_time_rows = createRowMarkUp(avg_time_rows);
 
     /* Most read article */
-    let topArticleViews = TableFormatting(data.topArticleViews, 'top_article_views', 'doc_count');
+    let topArticleViews = getFilteredColumns(data.topArticleViews, 'top_article_views', 'doc_count');
+    topArticleViews = createRowMarkUp(topArticleViews)
+
     /* Most commented article */
     let topArticleCommented = data.topArticlesCommentPosts.filter((d) => {
       return d.posts.doc_count !== 0;
     });
-    topArticleCommented = TableFormatting(topArticleCommented, 'posts', 'doc_count');
+    topArticleCommented = getFilteredColumns(topArticleCommented, 'posts', 'doc_count');
+    topArticleCommented = createRowMarkUp(topArticleCommented)
 
     /* Top referred articles from seach engines */
-    let searchReferrers = TableFormatting(data.topArticlesSearchRef, 'views', 'doc_count');
+    let searchReferrers = getFilteredColumns(data.topArticlesSearchRef, 'views', 'doc_count');
+    searchReferrers = createRowMarkUp(searchReferrers)
 
     /* Top referred articles from social sites */
-    let socialReferrers = TableFormatting(data.topArticlesSocialRef, 'views', 'doc_count');
+    let socialReferrers = getFilteredColumns(data.topArticlesSocialRef, 'views', 'doc_count')
+    socialReferrers = createRowMarkUp(socialReferrers)
 
     /* Top articles keeping users on FT */
-    let topArticlesRetention = TableFormatting(data.topArticlesRetention, 'retained_users')
-    .map((d) => {
-      d[2] = d[2].value;
-      return d;
+    let topArticlesRetention  = data.topArticlesRetention.map((row) => {
+      let article = row.metadata.hits.hits[0]._source
+      return  {
+        uuid : article.article_uuid,
+        value : `${Math.round(row.key * 100)}%`,
+        author : article.authors ? formatAuthors.join(article.authors) : "Unknown",
+        title : article.title ? article.title : "Unknown",
+        date : article.initial_publish_date ? article.initial_publish_date : moment()
+      }
     });
+    topArticlesRetention = createRowMarkUp(topArticlesRetention)
+
 
     let updating
     if (this.props.loading) {

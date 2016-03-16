@@ -30,8 +30,8 @@ describe('Top Articles Formatter', function() {
         done();
       });
   });
-  it('should reject the promise with a MalformedArgumentsError if passed an array', function(done) {
-    TopArticlesFormat([])
+  it('should reject the promise with a MalformedArgumentsError if passed an object', function(done) {
+    TopArticlesFormat({})
       .catch((error) => {
         expect(error.name).to.equal('MalformedArgumentsError');
         done();
