@@ -406,168 +406,133 @@ export default [{
             ]
         },
         "time_on_page": {
-            "doc_count_error_upper_bound": -1,
-            "sum_other_doc_count": 7190720,
-            "buckets": [
+          "doc_count": 278597,
+            "time_on_page": {
+              "doc_count_error_upper_bound": 0,
+              "sum_other_doc_count": 0,
+              "buckets": [
                 {
-                    "key": "f265e50a-dbea-11e5-a72f-1e7744c66818",
-                    "doc_count": 676910,
-                    "avg_time_on_page": {
-                        "doc_count": 12598,
-                        "time_on_page": {
-                            "value": 63.862279726940784
-                        },
-                        "author": {
-                            "doc_count_error_upper_bound": 0,
-                            "sum_other_doc_count": 0,
-                            "buckets": [
-                                {
-                                    "key": "Stephen Foley",
-                                    "doc_count": 12598
-                                }
-                            ]
-                        },
-                        "title": {
-                            "doc_count_error_upper_bound": 0,
-                            "sum_other_doc_count": 0,
-                            "buckets": [
-                                {
-                                    "key": "Warren Buffett says climate change no risk to Berkshire Hathaway",
-                                    "doc_count": 12598
-                                }
-                            ]
-                        }
+                  "key": "59d81f90-e5e7-11e5-a09b-1f8b0d268c39",
+                  "doc_count": 223,
+                  "median_time_on_page": {
+                    "values": {
+                      "50.0": 95
                     }
+                  },
+                  "author": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                      {
+                        "key": "Michael Peel",
+                        "doc_count": 223
+                      }
+                    ]
+                  },
+                  "initial_publish_date": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                      {
+                        "key": 1457635874000,
+                        "key_as_string": "2016-03-10T18:51:14.000Z",
+                        "doc_count": 223
+                      }
+                    ]
+                  },
+                  "title": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                      {
+                        "key": "Lunch with the FT: Thaksin Shinawatra",
+                        "doc_count": 223
+                      }
+                    ]
+                  }
                 },
                 {
-                    "key": "4573fd4a-dc95-11e5-827d-4dfbe0213e07",
-                    "doc_count": 226370,
-                    "avg_time_on_page": {
-                        "doc_count": 10282,
-                        "time_on_page": {
-                            "value": 727.986286714647
-                        },
-                        "author": {
-                            "doc_count_error_upper_bound": 0,
-                            "sum_other_doc_count": 0,
-                            "buckets": [
-                                {
-                                    "key": "Joe Rennison",
-                                    "doc_count": 10282
-                                },
-                                {
-                                    "key": "Kara Scannell",
-                                    "doc_count": 10282
-                                }
-                            ]
-                        },
-                        "title": {
-                            "doc_count_error_upper_bound": 0,
-                            "sum_other_doc_count": 0,
-                            "buckets": [
-                                {
-                                    "key": "JPMorgan traders sacked over compliance",
-                                    "doc_count": 10282
-                                }
-                            ]
-                        }
+                  "key": "c764675e-e6c7-11e5-a09b-1f8b0d268c39",
+                  "doc_count": 359,
+                  "median_time_on_page": {
+                    "values": {
+                      "50.0": 76.625
                     }
+                  },
+                  "author": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                      {
+                        "key": "Sebastian Payne",
+                        "doc_count": 359
+                      }
+                    ]
+                  },
+                  "initial_publish_date": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                      {
+                        "key": 1457702557000,
+                        "key_as_string": "2016-03-11T13:22:37.000Z",
+                        "doc_count": 359
+                      }
+                    ]
+                  },
+                  "title": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                      {
+                        "key": "Politics: stranger than fiction",
+                        "doc_count": 359
+                      }
+                    ]
+                  }
                 },
                 {
-                    "key": "a8894c88-de42-11e5-b67f-a61732c1d025",
-                    "doc_count": 243957,
-                    "avg_time_on_page": {
-                        "doc_count": 8830,
-                        "time_on_page": {
-                            "value": 105.82616081540203
-                        },
-                        "author": {
-                            "doc_count_error_upper_bound": 0,
-                            "sum_other_doc_count": 0,
-                            "buckets": [
-                                {
-                                    "key": "Demetri Sevastopulo",
-                                    "doc_count": 8830
-                                }
-                            ]
-                        },
-                        "title": {
-                            "doc_count_error_upper_bound": 0,
-                            "sum_other_doc_count": 0,
-                            "buckets": [
-                                {
-                                    "key": "Republicans race to derail Trump",
-                                    "doc_count": 8830
-                                }
-                            ]
-                        }
+                  "key": "f3154b96-e0c5-11e5-8d9b-e88a2a889797",
+                  "doc_count": 166,
+                  "median_time_on_page": {
+                    "values": {
+                      "50.0": 68
                     }
-                },
-                {
-                    "key": "6d7e2806-dc7c-11e5-98fd-06d75973fe09",
-                    "doc_count": 210461,
-                    "avg_time_on_page": {
-                        "doc_count": 8453,
-                        "time_on_page": {
-                            "value": 102.5736424937892
-                        },
-                        "author": {
-                            "doc_count_error_upper_bound": 0,
-                            "sum_other_doc_count": 0,
-                            "buckets": [
-                                {
-                                    "key": "Jennifer Thompson",
-                                    "doc_count": 8453
-                                },
-                                {
-                                    "key": "Judith Evans",
-                                    "doc_count": 8453
-                                }
-                            ]
-                        },
-                        "title": {
-                            "doc_count_error_upper_bound": 0,
-                            "sum_other_doc_count": 0,
-                            "buckets": [
-                                {
-                                    "key": "Investor appetite for London luxury flats ebbs",
-                                    "doc_count": 8453
-                                }
-                            ]
-                        }
-                    }
-                },
-                {
-                    "key": "2e34304e-deae-11e5-b072-006d8d362ba3",
-                    "doc_count": 165629,
-                    "avg_time_on_page": {
-                        "doc_count": 7698,
-                        "time_on_page": {
-                            "value": 68.0808002078462
-                        },
-                        "author": {
-                            "doc_count_error_upper_bound": 0,
-                            "sum_other_doc_count": 0,
-                            "buckets": [
-                                {
-                                    "key": "Matthew Garrahan",
-                                    "doc_count": 7688
-                                }
-                            ]
-                        },
-                        "title": {
-                            "doc_count_error_upper_bound": 0,
-                            "sum_other_doc_count": 0,
-                            "buckets": [
-                                {
-                                    "key": "‘Spotlight’ wins best picture on politically charged Oscars night",
-                                    "doc_count": 7698
-                                }
-                            ]
-                        }
-                    }
+                  },
+                  "author": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                      {
+                        "key": "Emma Jacobs",
+                        "doc_count": 166
+                      }
+                    ]
+                  },
+                  "initial_publish_date": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                      {
+                        "key": 1457611095000,
+                        "key_as_string": "2016-03-10T11:58:15.000Z",
+                        "doc_count": 166
+                      }
+                    ]
+                  },
+                  "title": {
+                    "doc_count_error_upper_bound": 0,
+                    "sum_other_doc_count": 0,
+                    "buckets": [
+                      {
+                        "key": "Shared parental leave: the fathers bringing up baby",
+                        "doc_count": 166
+                      }
+                    ]
+                  }
                 }
-            ]
+              ]
+            }
         },
         "top_article_views": {
             "doc_count_error_upper_bound": -1,

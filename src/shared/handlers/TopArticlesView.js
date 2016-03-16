@@ -69,21 +69,21 @@ class TopArticlesView extends React.Component {
     }
 
     /* Average time reading the article */
-    let orderedTimeOnPage = data.timeOnPageTop;
+    let orderedTimeOnPage = data.timeOnPageTop.slice(0, 5);
 
     orderedTimeOnPage = orderedTimeOnPage.sort((a, b) => {
-      return b.avg_time_on_page.avg_time_on_page.values['50.0'] - a.avg_time_on_page.avg_time_on_page.values['50.0'];
+      return b.median_time_on_page.values['50.0'] - a.median_time_on_page.values['50.0'];
     });
 
     let avg_time_rows = orderedTimeOnPage.map((row) => {
-      let time = ConvertUnits.secondsToMinutes(row.avg_time_on_page.avg_time_on_page.values['50.0']);
+      let time = ConvertUnits.secondsToMinutes(row.median_time_on_page.values['50.0']);
       time = `${time.minutes}m ${time.seconds}s`;
       return {
         uuid: row.key,
         value: time,
-        author : row.avg_time_on_page.author.buckets[0] ? formatAuthors.split(row.avg_time_on_page) : "Unknown",
-        title : row.avg_time_on_page.title.buckets[0] ? row.avg_time_on_page.title.buckets[0].key : "Unknown",
-        date : row.avg_time_on_page.initial_publish_date.buckets[0] ? row.avg_time_on_page.initial_publish_date.buckets[0].key : moment()
+        author : row.author.buckets[0] ? formatAuthors.split(row) : "Unknown",
+        title : row.title.buckets[0] ? row.title.buckets[0].key : "Unknown",
+        date : row.initial_publish_date.buckets[0] ? row.initial_publish_date.buckets[0].key : moment()
       }
     });
     avg_time_rows = createRowMarkUp(avg_time_rows);

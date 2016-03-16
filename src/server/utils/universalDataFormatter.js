@@ -106,7 +106,7 @@ const fields = {
   realtimeNextInternalUrl : 'aggregations.next_internal_url.titles.buckets',
   realtimeLinksClicked : 'aggregations.realtime_links_clicked.doc_count',
   realtimeUserTypes  : {name: 'aggregations.realtime_user_types.cohorts', formatter: format},
-  timeOnPageTop: 'aggregations.time_on_page.buckets',
+  timeOnPageTop: 'aggregations.time_on_page.time_on_page.buckets',
   realtimeComments : 'aggregations.realtime_comments.doc_count',
   realtimeCommentsRead : 'aggregations.realtime_comments_read.doc_count',
   topArticleViews: 'aggregations.top_article_views.buckets',
