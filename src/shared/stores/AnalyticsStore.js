@@ -1,7 +1,7 @@
 import alt from '../alt';
 import assign from 'object-assign';
-import moment from 'moment';
 import _ from 'underscore';
+import Raven from 'raven-js';
 
 import AnalyticsActions from '../actions/AnalyticsActions';
 import AnalyticsSource from '../sources/AnalyticsSource';
@@ -121,6 +121,7 @@ class AnalyticsStore {
       error: error,
       loading: false
     })
+    Raven.captureException(error, this.state);
   }
 
   /**

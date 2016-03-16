@@ -19,11 +19,21 @@ export default function TopicDataFormatter(data) {
     return Promise.reject(error);
   }
 
+  data.slice(1).map((d) => {
+    if (!d.hasOwnProperty('aggregations')) {
+      let error = new Error();
+      error.name = 'NoDataError';
+      error.message = 'Unable to find data for the selected topic';
+      // we throw here because we are inside a callback
+      throw error;
+    }
+  });
+
   return new Promise((resolve, reject) => {
     try {
       let [metaData, topicData, compMetaData, compTopicData] = data;
       let results = {genre:[], sections:[], topics:[]};
-      let metaFields = ['articlePublishCount', 'sectionsCovered', 'sectionCount', 'publishTimes'];
+      let metaFields = ['articlePublishCount'];
       let topicFields = ['readTimes', 'pageViews', 'referrerTypes',
         'referrerNames', 'socialReferrers', 'devices', 'countries', 'regions', 'userCohort',
         'rfvCluster', 'isFirstVisit', 'internalReferrerTypes', 'isSubscription', 'uniqueVisitors',
@@ -34,11 +44,11 @@ export default function TopicDataFormatter(data) {
 
       let comparatorResults = {};
       if (compMetaData) {
-        let compMetaFields = ['articlePublishCount', 'sectionsCovered', 'sectionCount', 'publishTimes'];
-        let compTopicFields = ['comparator', 'pageViews', 'referrerTypes',
+        let compMetaFields = ['articlePublishCount'];
+        let compTopicFields = ['pageViews', 'referrerTypes',
           'referrerNames', 'socialReferrers', 'devices', 'countries', 'regions', 'userCohort',
           'rfvCluster', 'isFirstVisit', 'internalReferrerTypes', 'isSubscription', 'uniqueVisitors',
-          'sectionViews', 'articleCount'];
+          'articleCount'];
 
         compMetaFields.forEach(f => { comparatorResults[f] = getField(compMetaData, f)})
         compTopicFields.forEach(f => { comparatorResults[f] = getField(compTopicData, f)})

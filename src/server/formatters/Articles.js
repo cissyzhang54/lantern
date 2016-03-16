@@ -35,6 +35,18 @@ export default function formatData(data) {
     return Promise.reject(error);
   }
 
+  // Check all but the first data response for aggregations
+  // - the first item is the article metadata
+  let errors = data.slice(1).map((d) => {
+    if (!d.hasOwnProperty('aggregations')) {
+      let error = new Error();
+      error.name = 'NoDataError';
+      error.message = 'Unable to find data for the selected article';
+      // we throw here because we are inside a callback
+      throw error;
+    }
+  });
+
   let [metaData, articleData, eventData, articleComparatorData, eventComparatorData, articlePublishTimesData] = data;
 
   let metaFields = ['title', 'uuid', 'author', 'published', 'published_human', 'genre', 'sections', 'topics', 'primarySection']
@@ -50,17 +62,13 @@ export default function formatData(data) {
   ]
   let divisor = getField(articleComparatorData, 'articleCount')
   let articleComparatorFields = [
-    'comparator', 'timeOnPage', 'categoryTotalViewCount',
-    'articleCount', 'uniqueVisitors' , 'pageViews'
+    'timeOnPage', 'categoryTotalViewCount',
+    'articleCount', 'pageViews'
   ]
   let articleComparatorAverages = [
     'referrerTypes', 'socialReferrers', 'regions', 'internalReferrerTotal',
     'isLastPage', 'userCohort', 'rfvCluster', 'isFirstVisit', 'internalReferrerTypes',
     'categoryAverageViewCount', 'categoryAverageUniqueVisitors'
-  ]
-  let eventComparatorFields = ['scrollDepth']
-  let eventComparatorAverages = [
-    'socialSharesTotal', 'socialSharesTypes', 'totalLinksClicked', 'totalCommentsPosted', 'totalCommentsViewed'
   ]
   let articlePublishTimeFields = ['lastPublishDate']
 
@@ -86,8 +94,6 @@ export default function formatData(data) {
 
       articleComparatorFields.forEach(f => { comparatorResults[f] = getField(articleComparatorData, f)});
       articleComparatorAverages.forEach(f => { comparatorResults[f] = getField(articleComparatorData, f, divisor)});
-      eventComparatorFields.forEach(f => { comparatorResults[f] = getField(eventComparatorData, f)});
-      eventComparatorAverages.forEach(f => { comparatorResults[f] = getField(eventComparatorData, f, divisor)});
       resolve({
         data: results,
         comparatorData: comparatorResults

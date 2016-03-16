@@ -750,15 +750,21 @@ export default [{
       "value": 67.64478311840563
     },
     "is_first_visit": {
-      "doc_count_error_upper_bound": 0,
-      "sum_other_doc_count": 0,
-      "buckets": [{
-        "key": "F",
-        "doc_count": 2100
-      }, {
-        "key": "T",
-        "doc_count": 459
-      }]
+      "doc_count": 192,
+      "anonymous": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+          {
+            "key": "F",
+            "doc_count": 109
+          },
+          {
+            "key": "T",
+            "doc_count": 83
+          }
+        ]
+      }
     },
     "next_internal_url": {
       "doc_count": 26775,
@@ -1896,15 +1902,21 @@ export default [{
       "value": 61.67519070199005
     },
     "is_first_visit": {
-      "doc_count_error_upper_bound": 0,
-      "sum_other_doc_count": 0,
-      "buckets": [{
-        "key": "F",
-        "doc_count": 3588340
-      }, {
-        "key": "T",
-        "doc_count": 987779
-      }]
+      "doc_count": 192,
+      "anonymous": {
+        "doc_count_error_upper_bound": 0,
+        "sum_other_doc_count": 0,
+        "buckets": [
+          {
+            "key": "F",
+            "doc_count": 109
+          },
+          {
+            "key": "T",
+            "doc_count": 83
+          }
+        ]
+      }
     },
     "social_referrers": {
       "doc_count": 199903,

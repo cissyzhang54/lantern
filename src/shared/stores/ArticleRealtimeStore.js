@@ -2,7 +2,7 @@ import alt from '../alt';
 import io from 'socket.io-client';
 import ArticleRealtimeActions from '../actions/ArticleRealtimeActions';
 import ArticleRealtimeSource from '../sources/ArticleRealtimeSource';
-
+import Raven from 'raven-js';
 const LIVE_TIMEOUT = 10000;
 
 class ArticleRealtimeStore {
@@ -190,6 +190,7 @@ class ArticleRealtimeStore {
       errorMessage: error.message,
       error: error
     });
+    Raven.captureException(error, this.state);
   }
 
 }

@@ -13,6 +13,7 @@ class UserStore {
 
   updateUser(user) {
     this.user = user;
+    Raven.setUserContext(user);
   }
 
   destroy() {
