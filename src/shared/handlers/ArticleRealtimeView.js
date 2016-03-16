@@ -36,7 +36,7 @@ const styles = {
     'color': '#039',
     cursor:'pointer'
   }
-}
+};
 
 function getReferrerUrls (value) {
   let urlObject = value.top_tag_hits.hits.hits[0]._source;
@@ -46,7 +46,7 @@ function getReferrerUrls (value) {
 
   let uuid = urlObject.article_uuid;
 
-  let link
+  let link;
   if(urlObject.page_type === 'article'){
     link = <a href={`http://www.ft.com/cms/s/${uuid}.html`}>{title}</a>;
   } else {
@@ -198,7 +198,7 @@ class ArticleRealtimeView extends React.Component {
         },
         toolTip: (<Text message='explanations.articleHandlers.scrollDepth' />)
       }
-    }
+    };
 
     let lastPublishDate = this.props.lastPublishDate;
     lastPublishDate.sort(function(a,b) {
@@ -210,7 +210,7 @@ class ArticleRealtimeView extends React.Component {
         value: d.key_as_string,
         text: (i) ? 'Republished' : 'Published'
       }
-    })
+    });
 
     let selectedGraphComponentName;
     let selectedGraphTitle;
@@ -218,7 +218,6 @@ class ArticleRealtimeView extends React.Component {
     let selectedGraphKeys;
     let selectedGraphYLabel;
     let selectedGraphToolTipMessage;
-    let selectedTimespan = this.props.timespan || "";
     switch (this.state.chartShown) {
       case 'pageViews':
         selectedGraphComponentName = 'realtime-pageviews';
@@ -237,7 +236,7 @@ class ArticleRealtimeView extends React.Component {
           }
         });
         selectedGraphKeys = ['Page views'];
-        selectedGraphYLabel = 'Page Views'
+        selectedGraphYLabel = 'Page Views';
         break;
       case 'scrollDepth':
         selectedGraphComponentName = 'realtime-scrolldepth';
@@ -256,7 +255,7 @@ class ArticleRealtimeView extends React.Component {
           };
         });
         selectedGraphKeys = ['Average scroll depth'];
-        selectedGraphYLabel = 'Scroll Depth (%)'
+        selectedGraphYLabel = 'Scroll Depth (%)';
         break;
       case 'timeOnPage':
         selectedGraphComponentName = 'realtime-timeonpage';
@@ -279,7 +278,7 @@ class ArticleRealtimeView extends React.Component {
           }
         });
         selectedGraphKeys = ['Average time on page'];
-        selectedGraphYLabel = 'Time On Page (seconds)'
+        selectedGraphYLabel = 'Time On Page (seconds)';
         break;
       case 'retentionRate':
         selectedGraphComponentName = 'realtime-retentionRate';
@@ -298,7 +297,7 @@ class ArticleRealtimeView extends React.Component {
           }
         });
         selectedGraphKeys = ['Retention'];
-        selectedGraphYLabel = 'Retained Users'
+        selectedGraphYLabel = 'Retained Users';
         break;
       default:
 
@@ -306,7 +305,7 @@ class ArticleRealtimeView extends React.Component {
 
     /* User Journey Section */
     // Bar Chart Data
-    let formatterData = this.props
+    let formatterData = this.props;
     let dataFormatter = new FormatData(formatterData , null);
     let [extRefData, extRefID, extRefKeys] = dataFormatter.getPCTMetric('internalExternalReferrers', 'Referrals');
     extRefData.sort(function(a,b) {
@@ -319,7 +318,7 @@ class ArticleRealtimeView extends React.Component {
 
     // Pie Chart Data
     let externalRefTotal = this.props.externalReferrerTypes.reduce((a, b) => { return a + b[1]; }, 0);
-    let referrerTotalsData = [['internal', this.props.internalReferrerTotal], ['external', externalRefTotal]]
+    let referrerTotalsData = [['internal', this.props.internalReferrerTotal], ['external', externalRefTotal]];
 
 
 
@@ -331,7 +330,7 @@ class ArticleRealtimeView extends React.Component {
       return prev + curr[1];
     }, 0);
 
-    linksClickedByCategory.unshift(['Total links clicked', linksClicked])
+    linksClickedByCategory.unshift(['Total links clicked', linksClicked]);
 
     let linksClickedCategoryList = linksClickedByCategory.map((row, index) => {
       return {
@@ -345,7 +344,7 @@ class ArticleRealtimeView extends React.Component {
     let comments = this.props.comments;
     let commentsList = [
       {term: 'Total comments posted', value: comments, header: true}, {}
-    ]
+    ];
 
 
     /* Social Media Section */
@@ -362,7 +361,7 @@ class ArticleRealtimeView extends React.Component {
     });
 
     /* Who are the users */
-    let [userTypeData, userTypeID, userTypeKeys] = dataFormatter.getPCTMetric('userTypes', 'Page Views')
+    let [userTypeData, userTypeID, userTypeKeys] = dataFormatter.getPCTMetric('userTypes', 'Page Views');
     let timespan = this.props.timespan || "";
 
     let queryLinkProps = {

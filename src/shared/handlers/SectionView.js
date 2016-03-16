@@ -32,7 +32,7 @@ class SectionView extends React.Component {
   }
 
   render() {
-    let updating
+    let updating;
     if (this.props.loading) {
       updating = (
         <Messaging
@@ -50,9 +50,9 @@ class SectionView extends React.Component {
       );
     }
 
-    let data = this.props.data
-    let query = this.props.query
-    let comparatorData = this.props.comparatorData
+    let data = this.props.data;
+    let query = this.props.query;
+    let comparatorData = this.props.comparatorData;
     comparatorData.comparator = this.props.params.comparator;
     let title = (data) ? 'Lantern - ' + this.props.params.section : '';
 
@@ -81,7 +81,7 @@ class SectionView extends React.Component {
     refData.push({
       Views: totalInternal,
       category: 'internal'
-    })
+    });
 
     refData.sort((a, b) => {
       return b.Views - a.Views;
@@ -113,7 +113,7 @@ class SectionView extends React.Component {
         size: 'large',
         comparatorFormatName: isFTComparator ? null : 'articlePublishCount'
       }
-    }
+    };
 
     let links = [
       {
@@ -198,7 +198,10 @@ class SectionView extends React.Component {
             </Row>
           </ChunkWrapper>
 
-          <ChunkWrapper featureflag={FeatureFlag.check('section:topics')} component="Topics">
+          <ChunkWrapper
+            featureflag={FeatureFlag.check('section:topics')}
+            component="Topics"
+          >
             <Row>
               <Col xs={12}>
                 <h3>Topics Published vs Topics Read</h3>

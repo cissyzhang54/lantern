@@ -1,5 +1,4 @@
 import React from 'react';
-import Link from 'react-router/lib/Link';
 import DocumentTitle from 'react-document-title';
 import Col from 'react-bootstrap/lib/Col';
 import Row from 'react-bootstrap/lib/Row';
@@ -26,16 +25,20 @@ class Error404View extends React.Component {
         <main>
           <Row>
             <Col xs={12}  >
-              <Logo message={message} error />
+              <Logo
+                message={message}
+                error
+              />
             </Col>
           </Row>
           <Row
             style={{
-              fontSize: '0.75em',
-              marginTop: '40px'
-            }}>
-            <Col xs={12} >
-              { extraMessage }
+                fontSize: '0.75em',
+                marginTop: '40px'
+            }}
+          >
+            <Col xs={12}>
+              {extraMessage}
             </Col>
           </Row>
         </main>

@@ -29,7 +29,6 @@ const comps = {
 };
 
 export default class PlaygroundLoader extends React.Component {
-
   render() {
     let componentName = this.props.params.componentName;
     let Component = comps[componentName];

@@ -90,26 +90,26 @@ class TopArticlesView extends React.Component {
 
     /* Most read article */
     let topArticleViews = getFilteredColumns(data.topArticleViews, 'top_article_views', 'doc_count');
-    topArticleViews = createRowMarkUp(topArticleViews)
+    topArticleViews = createRowMarkUp(topArticleViews);
 
     /* Most commented article */
     let topArticleCommented = data.topArticlesCommentPosts.filter((d) => {
       return d.posts.doc_count !== 0;
     });
     topArticleCommented = getFilteredColumns(topArticleCommented, 'posts', 'doc_count');
-    topArticleCommented = createRowMarkUp(topArticleCommented)
+    topArticleCommented = createRowMarkUp(topArticleCommented);
 
     /* Top referred articles from seach engines */
     let searchReferrers = getFilteredColumns(data.topArticlesSearchRef, 'views', 'doc_count');
-    searchReferrers = createRowMarkUp(searchReferrers)
+    searchReferrers = createRowMarkUp(searchReferrers);
 
     /* Top referred articles from social sites */
-    let socialReferrers = getFilteredColumns(data.topArticlesSocialRef, 'views', 'doc_count')
-    socialReferrers = createRowMarkUp(socialReferrers)
+    let socialReferrers = getFilteredColumns(data.topArticlesSocialRef, 'views', 'doc_count');
+    socialReferrers = createRowMarkUp(socialReferrers);
 
     /* Top articles keeping users on FT */
     let topArticlesRetention  = data.topArticlesRetention.map((row) => {
-      let article = row.metadata.hits.hits[0]._source
+      let article = row.metadata.hits.hits[0]._source;
       return  {
         uuid : article.article_uuid,
         value : `${Math.round(row.key * 100)}%`,
@@ -118,10 +118,10 @@ class TopArticlesView extends React.Component {
         date : article.initial_publish_date ? article.initial_publish_date : moment()
       }
     });
-    topArticlesRetention = createRowMarkUp(topArticlesRetention)
+    topArticlesRetention = createRowMarkUp(topArticlesRetention);
 
 
-    let updating
+    let updating;
     if (this.props.loading) {
       updating = (
         <Messaging

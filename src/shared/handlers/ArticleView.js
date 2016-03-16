@@ -46,7 +46,7 @@ class ArticleView extends React.Component {
     const title = (data) ? 'Lantern - ' + data.title : '';
 
     const dataFormatter = new FormatData(data, comparatorData);
-    let [retentionRateData, , keys] = dataFormatter.getPCTMetric('isLastPage', 'Article', 'Exited FT', 'Stayed on FT')
+    let [retentionRateData, , keys] = dataFormatter.getPCTMetric('isLastPage', 'Article', 'Exited FT', 'Stayed on FT');
 
     let dataPoint;
     for (let i = 0; i < retentionRateData.length; i++) {
@@ -126,7 +126,7 @@ class ArticleView extends React.Component {
           currentMetric: this.state.chartShown
         }
       }
-    }
+    };
 
     let selectedGraphTitle;
     let selectedGraphData;
@@ -184,9 +184,9 @@ class ArticleView extends React.Component {
             'Average scroll depth' : row.scroll_depth.average_scroll.value != null ? row.scroll_depth.average_scroll.value : 0,
             "category" : row.key_as_string
           }
-        })
+        });
         selectedGraphData =  [selectedGraphData, "category", ['Average scroll depth']];
-        selectedGraphYLabel = 'Scroll Depth (%)'
+        selectedGraphYLabel = 'Scroll Depth (%)';
         break;
       default:
     }
@@ -199,7 +199,7 @@ class ArticleView extends React.Component {
       : (<Messaging
         category="Article"
         type="PLACEHOLDER"
-         />)
+         />);
 
 
     return (<DocumentTitle title={title}>

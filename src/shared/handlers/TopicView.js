@@ -49,7 +49,7 @@ class TopicView extends React.Component {
     }
 
     let data = this.props.data;
-    let query = this.props.query
+    let query = this.props.query;
     let comparatorData = this.props.comparatorData;
     comparatorData.comparator = this.props.params.comparator;
     let title = (data) ? 'Lantern - ' + this.props.params.topic : '';
@@ -72,7 +72,7 @@ class TopicView extends React.Component {
     refData.push({
       Views: totalInternal,
       category: 'internal'
-    })
+    });
 
     refData.sort((a, b) => {
       return b.Views - a.Views;
@@ -98,7 +98,7 @@ class TopicView extends React.Component {
         size: 'large',
         comparatorFormatName: isFTComparator ? null : 'articlePublishCount'
       }
-    }
+    };
 
     return(<DocumentTitle title={title}>
       <div>

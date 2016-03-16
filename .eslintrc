@@ -5,7 +5,7 @@
       "clearTimeout" : true,
       "window" : true
     },
-    "parser": "espree",
+    "parser": "babel-eslint",
     "ecmaFeatures": {
       "arrowFunctions": true,
       "binaryLiterals": true,

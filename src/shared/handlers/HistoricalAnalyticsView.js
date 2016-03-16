@@ -177,15 +177,21 @@ class HistoricalAnalyticsView extends React.Component {
     switch (this.props.route.analyticsView) {
       case VIEW_TYPE_ARTICLE:
         return (
-          <ArticleView {...this.props} onDateRangeChange={ this.handleDateRangeChange.bind(this) }/>
+          <ArticleView {...this.props}
+            onDateRangeChange={this.handleDateRangeChange.bind(this)}
+          />
         );
       case VIEW_TYPE_SECTION:
         return (
-          <SectionView {...this.props} onDateRangeChange={ this.handleDateRangeChange.bind(this) } />
+          <SectionView {...this.props}
+            onDateRangeChange={this.handleDateRangeChange.bind(this)}
+          />
         );
       case VIEW_TYPE_TOPIC:
         return (
-          <TopicView {...this.props} onDateRangeChange={ this.handleDateRangeChange.bind(this) } />
+          <TopicView {...this.props}
+            onDateRangeChange={this.handleDateRangeChange.bind(this)}
+          />
         );
       default:
         return (

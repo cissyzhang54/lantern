@@ -87,7 +87,7 @@ class SectionRealtimeView extends React.Component {
         label: 'Stories Published',
         size: 'large'
       }
-    }
+    };
 
     const links = [
       {
@@ -110,10 +110,12 @@ class SectionRealtimeView extends React.Component {
     });
 
     if (this.props.loading) {
-      return (<Messaging
-        category="Section"
-        type="LOADING"
-         />);
+      return (
+        <Messaging
+          category="Section"
+          type="LOADING"
+        />
+      );
     }
 
     return (
@@ -138,8 +140,8 @@ class SectionRealtimeView extends React.Component {
           />
 
           <RealtimeArticleList component="article-list"
-                               articleList={this.props.articleList}
-            />
+            articleList={this.props.articleList}
+          />
 
           <ChunkWrapper compoonent="page-views-chart">
             <Row>
@@ -175,7 +177,7 @@ SectionRealtimeView.defaultProps = {
   section: null,
   timespan: '24h',
   isLive: false
-}
+};
 
 
 export default connectToStores(SectionRealtimeView);

@@ -20,7 +20,7 @@ export default class Playground extends React.Component {
       li : {
         listStyle: 'none'
       }
-    }
+    };
 
     const components = [
       { title : 'Bar Chart', url : '/playground/barChart' },
@@ -46,10 +46,18 @@ export default class Playground extends React.Component {
       { title : 'Tags', url : '/playground/tags' },
       { title : 'Text', url : '/playground/text' },
       { title : 'User', url : '/playground/user' }
-    ]
+    ];
 
     let navigationLinks = components.map((d, i) => {
-      return <li style={styles.li} ><Link to={d.url}>{d.title}</Link></li>
+      return (
+        <li key={i}
+          style={styles.li}
+        >
+          <Link to={d.url}>
+            {d.title}
+          </Link>
+        </li>
+      )
     });
 
     let title = 'Lantern -  Playground';
@@ -62,13 +70,20 @@ export default class Playground extends React.Component {
       </Row>
 
       <Row>
-        <Col xs={12} sm={3}>
+        <Col
+          xs={12}
+          sm={3}
+        >
           <h3>Components</h3>
           <ul style={styles.sidebarStyles}>
             {navigationLinks}
           </ul>
         </Col>
-        <Col  xs={12} sm={9}  className="stage">
+        <Col
+          xs={12}
+          sm={9}
+          className="stage"
+        >
           {this.props.children}
         </Col>
       </Row>
