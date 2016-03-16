@@ -47,51 +47,54 @@ export default function TopArticlesAggregation() {
       }
     },
     time_on_page: {
-      terms: {
-        field: "article_uuid",
-        size: 5,
-        order: {
-          avg_time_on_page: "desc"
+      "filter": {
+        "bool": {
+          "must": [
+            {
+              "term": {
+                "event_type": "page"
+              }
+            },
+            {
+              "term": {
+                "event_category": "attention"
+              }
+            }
+          ]
         }
       },
-      aggs: {
-        avg_time_on_page: {
-          filter: {
-            bool: {
-              must: [
-                {
-                  term: {
-                    event_type: "page"
-                  }
-                },
-                {
-                  term: {
-                    event_category: "attention"
-                  }
-                }
-              ]
-            }
+      "aggs": {
+        "time_on_page": {
+          "terms": {
+            "field": "article_uuid",
+            "order": {
+              "median_time_on_page[50.0]": "desc"
+            },
+            "min_doc_count": 50,
+            "size": 5000
           },
-          aggs: {
-            avg_time_on_page: {
-              percentiles : {
-                field: "attention_time",
-                percents: [50]
+          "aggs": {
+            "median_time_on_page": {
+              "percentiles": {
+                "field": "attention_time",
+                "percents": [
+                  50
+                ]
               }
             },
-            title: {
-              terms: {
-                field: "title_not_analyzed"
+            "title": {
+              "terms": {
+                "field": "title_not_analyzed"
               }
             },
-            author: {
-              terms: {
-                field: "authors_not_analyzed"
+            "author": {
+              "terms": {
+                "field": "authors_not_analyzed"
               }
             },
-            initial_publish_date : {
-              terms : {
-                field: "initial_publish_date"
+            "initial_publish_date": {
+              "terms": {
+                "field": "initial_publish_date"
               }
             }
           }
