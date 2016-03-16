@@ -380,8 +380,8 @@ export default function ArticlesRealtimeAggregation(query) {
                 }
               },
               {
-                term: {
-                  event_category: 'scrolldepth'
+                prefix: {
+                  event_category: 'scroll'
                 }
               },
               {
