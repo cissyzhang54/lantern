@@ -49,7 +49,7 @@ export default (
         component={HistoricalAnalyticsView}
         onEnter={scrollToTop}
         analyticsView="article"
-        />
+      />
     </Route>
     <Redirect from="sections/:section"
       to="sections/:section/168"
@@ -110,7 +110,7 @@ export default (
     <Redirect
       from="realtime/articles/:uuid"
       to="realtime/articles/:uuid/48h"
-      />
+    />
     <Route
       path="realtime/articles/:uuid"
       component={ArticleRealtimeView}
@@ -119,7 +119,7 @@ export default (
         path=":timespan"
         component={ArticleRealtimeView}
         onEnter={scrollToTop}
-        />
+      />
     </Route>
     <Route
       path="*"
