@@ -219,12 +219,11 @@ class ArticleRealtimeView extends React.Component {
     let selectedGraphYLabel;
     let selectedGraphToolTipMessage;
     let selectedTimespan = this.props.timespan || "";
-    console.log(this.props)
     switch (this.state.chartShown) {
       case 'pageViews':
         selectedGraphComponentName = 'realtime-pageviews';
         selectedGraphTitle = 'Page views';
-        selectedGraphToolTipMessage = `explanations.pageViewsChart.realtime${selectedTimespan}`;
+        selectedGraphToolTipMessage = `explanations.pageViewsChart.realtime`;
         selectedGraphData = this.props.pageViews.map((d) => {
           if (d[0] < this.props.published) {
             return {
@@ -243,7 +242,7 @@ class ArticleRealtimeView extends React.Component {
       case 'scrollDepth':
         selectedGraphComponentName = 'realtime-scrolldepth';
         selectedGraphTitle = 'Scroll depth';
-        selectedGraphToolTipMessage = `explanations.scrollDepthChart.realtime${selectedTimespan}`;
+        selectedGraphToolTipMessage = `explanations.scrollDepthChart.realtime`;
         selectedGraphData =  this.props.scrollDepth.map((d) => {
           if (!d.scroll_depth_avg.value) {
             return {
@@ -262,7 +261,7 @@ class ArticleRealtimeView extends React.Component {
       case 'timeOnPage':
         selectedGraphComponentName = 'realtime-timeonpage';
         selectedGraphTitle = 'Time on page';
-        selectedGraphToolTipMessage = `explanations.timeOnPageChart.realtime${selectedTimespan}`;
+        selectedGraphToolTipMessage = `explanations.timeOnPageChart.realtime`;
         selectedGraphData =  this.props.timeOnPage.map((d) => {
           let timestamp = d.key_as_string;
           let value = d.time_on_page_avg.values['50.0'];
@@ -285,7 +284,7 @@ class ArticleRealtimeView extends React.Component {
       case 'retentionRate':
         selectedGraphComponentName = 'realtime-retentionRate';
         selectedGraphTitle = 'Retention rate';
-        selectedGraphToolTipMessage = `explanations.retentionRateChart.realtime${selectedTimespan}`;
+        selectedGraphToolTipMessage = `explanations.retentionRateChart.realtime`;
         selectedGraphData =  this.props.retention.map((d) => {
           if (d[0] < this.props.published || d[0] > this.props.latestEvent) {
             return {
