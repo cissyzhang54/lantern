@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from 'react-dom';
 import Input from 'react-bootstrap/lib/Input';
 import ListGroup from 'react-bootstrap/lib/ListGroup';
 import ListGroupItem from 'react-bootstrap/lib/ListGroupItem';
@@ -48,33 +49,39 @@ export default class Search extends React.Component {
   }
 
   shouldPerformSearch(){
-    const val = (this.refs && this.refs.searchinput) ? this.refs.searchinput.getValue() : '';
+    const val = (this.searchInput) ? this.searchInput.getValue() : '';
     return val.length >= MIN_SEARCH_LENGTH;
   }
 
   componentDidMount() {
     TopArticlesActions.fetch();
 
-    let analytics = require('../utils/analytics');
+    const analytics = require('../utils/analytics');
     analytics.sendGAPageViewEvent();
     analytics.trackScroll();
 
-    let el = this.refs.searchinput.getInputDOMNode();
-    let query = this.props.query || '';
-    el.setAttribute('value', query);
-    el.focus();
-    setImmediate(()=>{
-      el.select();
-    });
+    const parentDiv = ReactDOM.findDOMNode(this.searchInput);
+    if (parentDiv) {
+      const el = parentDiv.querySelector('input');
+      let query = this.props.query || '';
+      // this could be done in a more react-ish way
+      // https://react-bootstrap.github.io/components.html
+      el.setAttribute('value', query);
+      el.focus();
+      setImmediate(()=>{
+        el.select();
+      });
 
-    if (el.setSelectionRange) {
-      el.setSelectionRange(query.length, query.length);
+      if (el.setSelectionRange) {
+        el.setSelectionRange(query.length, query.length);
+      }
     }
+
   }
 
   _handleSearchInput() {
     this.setState({
-      query: this.refs.searchinput.getValue()
+      query: this.searchInput.getValue()
     });
     if (this.shouldPerformSearch()) {
       let analytics = require('../utils/analytics');
@@ -239,7 +246,9 @@ export default class Search extends React.Component {
 
     return (<div className='search-component' data-component='search'>
       <Input
-        ref="searchinput"
+        ref={(c) => {
+          this.searchInput = c;
+        }}
         labelClassName='large'
         bsSize='large'
         type='search'
