@@ -10,6 +10,12 @@ var intlData = {
   messages: assign({}, ComponentStrings, HandlerStrings, ExplanationStrings)
 };
 
+if (global.Intl == null) {
+  var IntlPolyfill = require('intl');
+  Intl.NumberFormat = IntlPolyfill.NumberFormat;
+  Intl.DateTimeFormat = IntlPolyfill.DateTimeFormat;
+}
+
 // This older style of class was used to accomadate the React Intl Mixin
 // When React Intl is updated for full ES6 this can be updated
 var Text = React.createClass({

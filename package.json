@@ -60,7 +60,7 @@
     "history": "~1.17.0",
     "html-entities": "^1.2.0",
     "http-aws-es": "^1.1.2",
-    "intl": "^1.0.1",
+    "intl": "^1.1.0",
     "iso": "^4.2.0",
     "istanbul": "^0.3.22",
     "jquery": "^2.1.4",
