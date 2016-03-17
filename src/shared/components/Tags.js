@@ -4,7 +4,6 @@ import Tag from './Tag';
 export default class Tags extends React.Component {
 
   render() {
-    console.log(this.props.query);
     let currentTag = (this.props.currentTag || '')
     let tags = this.props.tags.map((tag, i) => {
       let selected = currentTag === tag.label;
