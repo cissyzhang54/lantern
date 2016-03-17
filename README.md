@@ -61,3 +61,7 @@ The following keys all need to placed with corresponding values within a `.env` 
 - `npm run functional` will build the static assets, start a test server and run the tests
 - `npm run functional-pre-built` will do the above without rebuilding the static assets
 - `npm run test` assumes that a build has already happened
+
+
+### Lantern Logo
+The Lantern Logo uses the [**Lantern**](https://thenounproject.com/term/lantern/154759) icon by [Transfer Studio SE](http://transferstudio.se/) from the Noun Project, licensed under Creative Commons 3.0
