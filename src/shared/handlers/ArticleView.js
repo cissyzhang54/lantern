@@ -139,7 +139,7 @@ class ArticleView extends React.Component {
         selectedGraphToolTipMessage = 'explanations.timeOnPageChart.historical';
         selectedGraphData = data.headlineStatsOverTime.map((row) => {
           return {
-            'Average time on page' : row.avg_time_on_page.value != null ? row.avg_time_on_page.value : 0,
+            'Average time on page' : row.avg_time_on_page.value != null ? parseFloat(row.avg_time_on_page.value.toFixed(1)) : 0,
             "category" : row.key_as_string
           }
         });
@@ -181,7 +181,7 @@ class ArticleView extends React.Component {
         selectedGraphToolTipMessage = 'explanations.scrollDepthChart.historical';
         selectedGraphData = data.scrollOverTime.map((row) => {
           return {
-            'Average scroll depth' : row.scroll_depth.average_scroll.value != null ? row.scroll_depth.average_scroll.value : 0,
+            'Average scroll depth' : row.scroll_depth.average_scroll.value != null ? parseFloat(row.scroll_depth.average_scroll.value.toFixed(1)) : 0,
             "category" : row.key_as_string
           }
         })

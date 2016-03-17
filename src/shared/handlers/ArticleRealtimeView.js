@@ -219,6 +219,7 @@ class ArticleRealtimeView extends React.Component {
     let selectedGraphYLabel;
     let selectedGraphToolTipMessage;
     let selectedTimespan = this.props.timespan || "";
+
     switch (this.state.chartShown) {
       case 'pageViews':
         selectedGraphComponentName = 'realtime-pageviews';
@@ -252,7 +253,7 @@ class ArticleRealtimeView extends React.Component {
           }
           return {
             date : d.key_as_string,
-            'Average scroll depth': d.scroll_depth_avg.value
+            'Average scroll depth': parseFloat(d.scroll_depth_avg.value.toFixed(1))
           };
         });
         selectedGraphKeys = ['Average scroll depth'];
@@ -275,7 +276,7 @@ class ArticleRealtimeView extends React.Component {
 
           return {
             date: timestamp,
-            'Average time on page': (value === 'NaN') ? 0 : value
+            'Average time on page': (value === 'NaN') ? 0 : parseFloat(value.toFixed(1))
           }
         });
         selectedGraphKeys = ['Average time on page'];

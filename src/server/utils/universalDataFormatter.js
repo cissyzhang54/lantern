@@ -129,6 +129,7 @@ function average(agg, fieldObj) {
 function divide(agg, fieldObj, divisor=1){
   return Math.round(agg / divisor)
 }
+
 function formatAndFilter(agg, fieldObj, divisor){
   return filterOutTerms(format(agg, fieldObj, divisor), fieldObj.terms)
 }
