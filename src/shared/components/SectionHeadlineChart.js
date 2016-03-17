@@ -13,7 +13,7 @@ const styles = {
   infoIcon : {
     'fontSize' : '15px',
     'color': '#039',
-    'padding-right': '8px',
+    'paddingRight': '8px',
     cursor:'pointer'
   }
 }
