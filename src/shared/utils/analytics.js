@@ -15,7 +15,7 @@ class Analytics {
     this.track = true;
     this.attached = false;
 
-    var options = { debug: true };
+    var options = { debug: false };
     ga.initialize(config.gaTrackingID, options)
   }
 
