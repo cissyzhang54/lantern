@@ -186,7 +186,7 @@ let DataAPI = {
           .set('Accept', 'application/json')
           .end((err, res) => {
             if (err) {
-              err.name = errorName(type, err);
+              err.name = errorName('Status', err);
               if (res && res.body) {
                 err.message = res.body.message;
               }
