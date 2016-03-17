@@ -4,13 +4,14 @@ import Tag from './Tag';
 export default class Tags extends React.Component {
 
   render() {
+    console.log(this.props.query);
     let currentTag = (this.props.currentTag || '')
     let tags = this.props.tags.map((tag, i) => {
       let selected = currentTag === tag.label;
       let link = ['',this.props.category, this.props.uuid, this.props.query.timespan, tag.url];
       let queryString = '';
 
-      if (this.props.query.timespan === 'custom') {
+      if (!this.props.query.timespan || this.props.query.timespan === 'custom') {
         queryString = `?dateFrom=${this.props.query.dateFrom}&dateTo=${this.props.query.dateTo}`
       }
 

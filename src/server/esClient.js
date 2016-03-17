@@ -170,13 +170,18 @@ export function runArticleQuery(queryData) {
     metaData = data;
 
     queryData.publishDate = moment(metaData.initial_publish_date).toISOString();
-    if (queryData.timespan && queryData.timespan !== 'custom') {
+
+    if (queryData.timespan === 'default') {
+      queryData.dateFrom = queryData.publishDate;
+      queryData.dateTo = moment().startOf('day').toISOString();
+    }
+    else if (queryData.timespan && queryData.timespan !== 'custom') {
       queryData.dateFrom = queryData.publishDate;
       queryData.dateTo = moment(queryData.publishDate).add(queryData.timespan, 'hours').toISOString();
     }
     else if (!queryData.dateFrom || !queryData.dateTo) {
       queryData.dateFrom = queryData.publishDate
-      queryData.dateTo = moment().toISOString();
+      queryData.dateTo = moment().startOf('day').toISOString();
     }
 
     if (metaData.primary_section) {

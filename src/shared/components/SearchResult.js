@@ -86,7 +86,7 @@ export default class SearchResult extends React.Component {
       linkUrl = '/realtime' + linkUrl + '/48h';
       clickHandler = null;
     } else {
-      linkUrl += '/48';
+      linkUrl += '/default';
     }
 
     return (

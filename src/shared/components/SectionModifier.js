@@ -99,7 +99,11 @@ export default class Modifier extends React.Component {
 
     let startDate = this.props.query.dateFrom, endDate = this.props.query.dateTo;
 
-    if (this.props.query.timespan !== 'custom' && this.props.category === 'articles') {
+    if (this.props.query.timespan === 'default' && this.props.category === 'articles') {
+      startDate = this.props.publishDate;
+      endDate = moment().startOf('day').toISOString();
+    }
+    else if (this.props.query.timespan !== 'custom' && this.props.category === 'articles') {
       startDate = moment(this.props.publishDate).toISOString();
       endDate = moment(this.props.publishDate).add(this.props.query.timespan, 'hours').toISOString();
     }
