@@ -69,7 +69,8 @@ class TopArticlesView extends React.Component {
     }
 
     /* Average time reading the article */
-    let orderedTimeOnPage = data.timeOnPageTop.slice(0, 5);
+    let orderedTimeOnPage = data.timeOnPageTop || [];
+    orderedTimeOnPage = orderedTimeOnPage.slice(0, 5);
 
     orderedTimeOnPage = orderedTimeOnPage.sort((a, b) => {
       return b.median_time_on_page.values['50.0'] - a.median_time_on_page.values['50.0'];
@@ -89,11 +90,13 @@ class TopArticlesView extends React.Component {
     avg_time_rows = createRowMarkUp(avg_time_rows, true);
 
     /* Most read article */
-    let topArticleViews = getFilteredColumns(data.topArticleViews, 'top_article_views', 'doc_count');
-    topArticleViews = createRowMarkUp(topArticleViews, true)
+    let topArticleViews = data.topArticleViews || [];
+    topArticleViews = getFilteredColumns(topArticleViews, 'top_article_views', 'doc_count');
+    topArticleViews = createRowMarkUp(topArticleViews, true);
 
     /* Most commented article */
-    let topArticleCommented = data.topArticlesCommentPosts.filter((d) => {
+    let topArticleCommented = data.topArticlesCommentPosts || [];
+    topArticleCommented = topArticleCommented.filter((d) => {
       return d.posts.doc_count !== 0;
     });
     topArticleCommented = getFilteredColumns(topArticleCommented, 'posts', 'doc_count');
@@ -108,7 +111,8 @@ class TopArticlesView extends React.Component {
     socialReferrers = createRowMarkUp(socialReferrers, true)
 
     /* Top articles keeping users on FT */
-    /*let topArticlesRetention  = data.topArticlesRetention.map((row) => {
+    let topArticlesRetention = data.topArticlesRetention || [];
+    topArticlesRetention  = topArticlesRetention.map((row) => {
       let article = row.metadata.hits.hits[0]._source
       return  {
         uuid : article.article_uuid,
@@ -118,7 +122,7 @@ class TopArticlesView extends React.Component {
         date : article.initial_publish_date ? article.initial_publish_date : moment()
       }
     });
-    topArticlesRetention = createRowMarkUp(topArticlesRetention)*/
+    topArticlesRetention = createRowMarkUp(topArticlesRetention)
 
 
     let updating
@@ -159,7 +163,7 @@ class TopArticlesView extends React.Component {
       </ChunkWrapper>
     );
 
-    /*const top5keptOnft = (
+    const top5keptOnft = (
       <ChunkWrapper component="Top5KeptOnFt"
         featureflag={FeatureFlag.check('highlights:retention')}
       >
@@ -177,7 +181,7 @@ class TopArticlesView extends React.Component {
           </Col>
         </Row>
       </ChunkWrapper>
-    );*/
+    );
 
     const top5MostCommented = (
       <ChunkWrapper component="Top5MostCommented"
@@ -271,6 +275,7 @@ class TopArticlesView extends React.Component {
         </ChunkWrapper>
 
         {top5TimeSpentOnPage}
+        {top5keptOnft}
         {top5MostCommented}
         {top5PageViews}
         {top5SocialMedia}
