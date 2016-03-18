@@ -2,10 +2,9 @@ import Server from 'socket.io';
 import ArticlePoller from './articlePoller';
 import SectionPoller from './sectionPoller';
 import newrelic from 'newrelic';
-const raven = require('raven');
+const ravenClient = require('./ravenClient').getInstance();
 
-const SENTRY_DSN = 'https://' + process.env.RAVEN_KEY + '@app.getsentry.com/' + process.env.RAVEN_APP_ID;
-const ravenClient = new raven.Client(SENTRY_DSN);
+
 /**
  * @param {app} Express App
  */

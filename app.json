@@ -65,7 +65,7 @@
       "required":true
     },
     "RAVEN_APP_ID": {
-      "required":true
+      "value": "lantern-dev"
     },
     "NEW_RELIC_LICENSE_KEY": {
       "required":true

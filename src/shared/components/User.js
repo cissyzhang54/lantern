@@ -7,7 +7,9 @@ export default class UserController extends React.Component {
 
   constructor(props) {
     super(props);
-    Raven.config(SENTRY_DSN_CLIENT).install();
+    Raven.config(SENTRY_DSN_CLIENT, {
+      release: process.env.RELEASE_ID
+    }).install();
     Raven.setUserContext({
       email: props.user.email
     })

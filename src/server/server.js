@@ -4,7 +4,6 @@ let newrelic = require('newrelic');
 const SENTRY_DSN = 'https://' + process.env.RAVEN_KEY + '@app.getsentry.com/' + process.env.RAVEN_APP_ID;
 let express = require("express");
 let exphbs = require("express-handlebars");
-const raven = require('raven');
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { match, RoutingContext } from "react-router";
@@ -28,8 +27,8 @@ let cacheBustId = uuid();
 const app = express();
 exphbs.create({});
 
-const ravenClient = new raven.Client(SENTRY_DSN);
-ravenClient.patchGlobal();
+const raven = require('raven');
+require('./ravenClient').getInstance();
 
 let prefetch = ['<https://fonts.googleapis.com/css?family=Work+Sans>; rel=prefetch',
   '<https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css>; rel=prefetch'];
