@@ -108,7 +108,7 @@ class TopArticlesView extends React.Component {
     socialReferrers = createRowMarkUp(socialReferrers)
 
     /* Top articles keeping users on FT */
-    let topArticlesRetention  = data.topArticlesRetention.map((row) => {
+    /*let topArticlesRetention  = data.topArticlesRetention.map((row) => {
       let article = row.metadata.hits.hits[0]._source
       return  {
         uuid : article.article_uuid,
@@ -118,7 +118,7 @@ class TopArticlesView extends React.Component {
         date : article.initial_publish_date ? article.initial_publish_date : moment()
       }
     });
-    topArticlesRetention = createRowMarkUp(topArticlesRetention)
+    topArticlesRetention = createRowMarkUp(topArticlesRetention)*/
 
 
     let updating
@@ -159,7 +159,7 @@ class TopArticlesView extends React.Component {
       </ChunkWrapper>
     );
 
-    const top5keptOnft = (
+    /*const top5keptOnft = (
       <ChunkWrapper component="Top5KeptOnFt"
         featureflag={FeatureFlag.check('highlights:retention')}
       >
@@ -177,7 +177,7 @@ class TopArticlesView extends React.Component {
           </Col>
         </Row>
       </ChunkWrapper>
-    );
+    );*/
 
     const top5MostCommented = (
       <ChunkWrapper component="Top5MostCommented"
@@ -271,7 +271,6 @@ class TopArticlesView extends React.Component {
         </ChunkWrapper>
 
         {top5TimeSpentOnPage}
-        {top5keptOnft}
         {top5MostCommented}
         {top5PageViews}
         {top5SocialMedia}
