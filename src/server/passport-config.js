@@ -4,7 +4,7 @@ import {Strategy as GoogleStrategy} from "passport-google-oauth2";
 let GOOGLE_CLIENT_ID = process.env.OAUTH_CLIENT_ID;
 let GOOGLE_CLIENT_SECRET = process.env.OAUTH_CLIENT_SECRET;
 let appUrl = process.env.HEROKU_APP_NAME ? ("http://" + process.env.HEROKU_APP_NAME + ".herokuapp.com") : null;
-let HOST_URL = appUrl || process.env.HOST_URL;
+let HOST_URL = process.env.HOST_URL || appUrl;
 
 let PassportWrapper = function() {};
 
