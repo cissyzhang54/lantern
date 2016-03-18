@@ -2,6 +2,10 @@ import Server from 'socket.io';
 import ArticlePoller from './articlePoller';
 import SectionPoller from './sectionPoller';
 import newrelic from 'newrelic';
+const raven = require('raven');
+
+const SENTRY_DSN = 'https://' + process.env.RAVEN_KEY + '@app.getsentry.com/' + process.env.RAVEN_APP_ID;
+const ravenClient = new raven.Client(SENTRY_DSN);
 /**
  * @param {app} Express App
  */
@@ -74,7 +78,7 @@ export default function RealtimeServer(app) {
 
     socket.on('error', newrelic.createWebTransaction('/websocket/error', (error) => {
       newrelic.endTransaction();
-      console.error(error);
+      ravenClient.captureException(error);
     }));
   });
 
@@ -102,6 +106,7 @@ export default function RealtimeServer(app) {
     });
     poller.on('error', (error) => {
       io.to(pollerId).emit('error', error);
+      ravenClient.captureException(error);
     });
     pollers[pollerId] = poller;
   }

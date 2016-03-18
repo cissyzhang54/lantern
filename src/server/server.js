@@ -1,9 +1,10 @@
+/*eslint-env node */
 let config = require("../shared/config");
-
 let newrelic = require('newrelic');
-
+const SENTRY_DSN = 'https://' + process.env.RAVEN_KEY + '@app.getsentry.com/' + process.env.RAVEN_APP_ID;
 let express = require("express");
 let exphbs = require("express-handlebars");
+const raven = require('raven');
 import React from "react";
 import ReactDOMServer from "react-dom/server";
 import { match, RoutingContext } from "react-router";
@@ -25,7 +26,10 @@ import moment from 'moment';
 delete process.env.BROWSER;
 let cacheBustId = uuid();
 const app = express();
-const hbs = exphbs.create({});
+exphbs.create({});
+
+const ravenClient = new raven.Client(SENTRY_DSN);
+ravenClient.patchGlobal();
 
 let prefetch = ['<https://fonts.googleapis.com/css?family=Work+Sans>; rel=prefetch',
   '<https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css>; rel=prefetch'];
@@ -98,7 +102,10 @@ app.use((req, res, next) => {
 app.use('/', ensureAuthenticated, function appRouter(req, res) {
   renderRoute(routes, req, res)
 });
-app.use(function ErrorHandler(err, req, res, next) {
+
+app.use(raven.middleware.express.errorHandler(SENTRY_DSN));
+
+app.use(function ErrorHandler(err, req, res) {
   renderRoute(errorRoutes, req, res)
 });
 
