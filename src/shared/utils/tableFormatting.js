@@ -30,13 +30,13 @@ export function getFilteredColumns(data, filterName, metric) {
   return flattenedData;
 }
 
-export function createRowMarkUp (data) {
+export function createRowMarkUp (data, isRealTime) {
   return data.map((row) => {
     let uuid = row.uuid;
     let title = row.title
     let author = row.author;
     let value = row.value;
-    let articleUrl = liveOrArchive(row.date, uuid)
+    let articleUrl = liveOrArchive(row.date, uuid, isRealTime)
     let lanternLinkHTML = lanternLink(title, articleUrl)
     let ftLinkHTML = ftLink(uuid)
 
@@ -44,14 +44,14 @@ export function createRowMarkUp (data) {
   });
 }
 
-function liveOrArchive (date, uuid) {
+function liveOrArchive (date, uuid, isRealTime) {
   let publishDate = date ? date : moment();
   const publishedMoment = moment(publishDate);
   const now = moment();
   const diff = now.diff(publishedMoment, 'hours');
   let articleUrl = `/articles/${uuid}`;
 
-  if (diff < 24) {
+  if (diff < 24 || isRealTime) {
     articleUrl = '/realtime' + articleUrl;
   } else if (diff < 48) {
     articleUrl = '/realtime' + articleUrl + '/48h';

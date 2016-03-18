@@ -86,26 +86,26 @@ class TopArticlesView extends React.Component {
         date : row.initial_publish_date.buckets[0] ? row.initial_publish_date.buckets[0].key : moment()
       }
     });
-    avg_time_rows = createRowMarkUp(avg_time_rows);
+    avg_time_rows = createRowMarkUp(avg_time_rows, true);
 
     /* Most read article */
     let topArticleViews = getFilteredColumns(data.topArticleViews, 'top_article_views', 'doc_count');
-    topArticleViews = createRowMarkUp(topArticleViews)
+    topArticleViews = createRowMarkUp(topArticleViews, true)
 
     /* Most commented article */
     let topArticleCommented = data.topArticlesCommentPosts.filter((d) => {
       return d.posts.doc_count !== 0;
     });
     topArticleCommented = getFilteredColumns(topArticleCommented, 'posts', 'doc_count');
-    topArticleCommented = createRowMarkUp(topArticleCommented)
+    topArticleCommented = createRowMarkUp(topArticleCommented, true)
 
     /* Top referred articles from seach engines */
     let searchReferrers = getFilteredColumns(data.topArticlesSearchRef, 'views', 'doc_count');
-    searchReferrers = createRowMarkUp(searchReferrers)
+    searchReferrers = createRowMarkUp(searchReferrers, true)
 
     /* Top referred articles from social sites */
     let socialReferrers = getFilteredColumns(data.topArticlesSocialRef, 'views', 'doc_count')
-    socialReferrers = createRowMarkUp(socialReferrers)
+    socialReferrers = createRowMarkUp(socialReferrers, true)
 
     /* Top articles keeping users on FT */
     /*let topArticlesRetention  = data.topArticlesRetention.map((row) => {
